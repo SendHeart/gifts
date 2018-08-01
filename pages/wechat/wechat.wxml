@@ -1,0 +1,61 @@
+<import src="../../wxParse/wxParse.wxml"/>  
+<!--index.wxml-->
+<view class="container">
+  <view class="userinfo">
+    <image   class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+    <text   class="userinfo-nickname">{{userInfo.nickName}}</text>
+     <button type="default" size="default" hover-class="button-hover" class="button" bindtap="loginBtnTap">{{logintBtnTitle}}</button>
+  </view>
+  <!--
+  <view class="voice">
+    <button type="primary" size="default" hover-class="button-hover" class="button-voice-play" bindtap="socketBtnTap">{{socktBtnTitle}}</button>
+  </view>
+   -->
+</view>
+<scroll-view scroll-y="true" style="height:{{dkheight}}px;opacity:1;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+<!--
+  <view wx:if="{{goods_owner!=username}}" class='wxParse' hidden='{{hidechatbox}}'>
+      <template is="wxParse" data="{{wxParseData:dkcontent.nodes}}"/>  
+  </view> 
+  -->
+  <view class='voice' hidden='{{hidechatbox}}'>
+    <block wx:for="{{rcvinfo}}"  wx:for-item="rcvitem" wx:key="index">
+      <view class="{{rcvitem.textclass}}" data-index="{{index}}" bindtap="feedbackTap">
+        <text style='margin-right:5px;' >[{{rcvitem.nickname}}]</text>
+        <text style='margin-right:5px;' wx:if="{{rcvitem.message}}">{{rcvitem.message}}</text>
+        <image style='margin-right:5px;width:20px;height:20px;'wx:if="{{rcvitem.pic1!='undefined'}}" src="{{rcvitem.pic1}}"></image>
+        <image style='margin-right:5px;width:20px;height:20px;'wx:if="{{rcvitem.pic2!='undefined'}}" src="{{rcvitem.pic2}}"></image>
+        <image style='margin-right:5px;width:20px;height:20px;'wx:if="{{rcvitem.pic3!='undefined'}}" src="{{rcvitem.pic3}}"></image>
+        <!-- 
+        <text style='margin-right:5px;'wx:if="{{rcvitem.addtime}}">{{rcvitem.addtime}}</text>
+        -->
+       </view>
+       <view wx:if="{{goods_owner==username}}">
+        <text style='margin-left:5px;'wx:if="{{rcvitem.reply!='undefined'}}">[回复]:{{rcvitem.reply}}</text>
+         <image style='margin-right:5px;width:20px;height:20px;'wx:if="{{rcvitem.rpypic1!='undefined'}}" src="{{rcvitem.rpypic1}}"></image>
+        <image style='margin-right:5px;width:20px;height:20px;'wx:if="{{rcvitem.rpypic2!='undefined'}}" src="{{rcvitem.rpypic2}}"></image>
+        <image style='margin-right:5px;width:20px;height:20px;'wx:if="{{rcvitem.rpypic3!='undefined'}}" src="{{rcvitem.rpypic3}}"></image>
+        <!-- 
+        <text style='margin-right:5px;'wx:if="{{rcvitem.reply!='undefined'}}">{{rcvitem.replytime}}</text>
+        -->
+      </view>
+    </block>
+  </view>
+</scroll-view>
+<form bindsubmit="formSubmit" id='2' bindreset="formReset">  
+   <view class="sendmessage" >
+    <view class="upimage">
+      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="index" >      
+         <image data-id="{{index}}" bindtap="cancel_upimg"  src="{{upimg}}"></image>       
+      </block>
+      <text wx:if="{{goods_owner==username}}" style="margin-left:5px;color:blue">回复:{{from_uid}}{{to_nickname}}[{{replyfor}}]</text>
+    </view>
+    <view class="text">   
+    <image bindtap="upimg" src='../../images/jia.png'></image>        
+    <input class="input" bindinput="bindChange" value="{{content}}"></input>
+     <button type="primary" size="default" hover-class="button-hover" 
+    class="button" bindtap="sendMessageBtnTap">发送</button>
+    </view>
+  </view>
+</form>
+ 

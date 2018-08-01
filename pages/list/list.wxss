@@ -1,0 +1,156 @@
+@import "../../lib/style/font.wxss";
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.Hui-iconfont {
+ font-family: "Hui-iconfont";
+ font-size:30rpx;
+}
+.iconv-uparrow:after {
+  content:'\e6d6';
+}
+
+.iconv-downarrow:after {
+  content:'\e6d5';
+}
+
+.container {
+    background-color: #F2f2f2;
+}
+
+.banner {
+	width: 100%;
+	height: 70rpx;
+	padding-top: 0rpx;
+	/*margin-left: 15rpx;*/
+}
+
+.banner image {
+	width: 100%;
+	height: 0rpx;
+}
+
+.banner .swiper_box {
+    width: 100%;
+}
+
+/*导航 nav*/
+.top-bar {
+  height: 72rpx;
+  background: white; 
+  white-space: nowrap;
+  position: fixed;
+  top:0;
+  z-index:99;
+}
+.top-bar-item {
+  display:inline-block;
+  width: 120rpx;
+  color: gray;
+  text-align: center;
+  /* line-height: 72rpx; */
+  font-size: 30rpx;
+}
+.top-bar-active{
+  color: red;
+  font-size: 34rpx;
+}
+
+/*辅助导航 nav2*/
+.top-bar2 {
+  height: 72rpx;
+  background: white; 
+  width:100%;
+  position: fixed;
+  margin-top: 70rpx;
+  top:0;
+  border-top: 1px solid #F2f2f2;
+  z-index:99;
+}
+.top-bar-item2 {
+  display:inline-block;
+  width: 250rpx;
+  color: gray;
+  text-align: center;
+  /* line-height: 72rpx; */
+  font-size: 32rpx;
+}
+.top-bar-active2 {
+  color: red;
+  font-size: 38rpx;
+}
+
+swiper-item image {
+    width: 100%;
+    display: inline-block;
+    overflow: hidden;
+}
+
+.venues_box {
+  width: 100%;
+  padding: 0 10rpx;
+}
+
+.venues_item {
+    display: inline-block;
+    width: 45%;
+    margin: 0 0.5%;
+    margin-left:25rpx;
+}
+
+.venues_item image{
+    width: 100%;
+    height: 250rpx;
+}
+
+ .venues_item .goods_name {
+  color: black; 
+  font-size: 8pt;
+}
+
+ .venues_item .goods_tag {
+   color: gray; 
+   font-size: 8pt;
+   margin-top:0px;
+   border: 2px solid #F2f2f2;
+   border-style: solid;  
+}
+.venues_item .goods_tag image{
+  width: 10%;
+  height: 30rpx;
+}
+ .venues_item .goods_prom {
+   color: gray; 
+   font-size: 8pt;
+   margin-top:0px;
+}
+
+.search {
+	width: 100%;
+	height: 80rpx;
+  display: flex;
+	flex-direction: row;
+	justify-content: center;/*子项横轴上居中对齐*/
+	align-items: center;/*子项纵轴上居中对齐*/
+  padding: 5rpx;
+}
+
+.search .wx-input {
+	width: 70%;
+	height: 30rpx;
+	border: 1px solid #bfbfbf;
+	border-radius: 120rpx;
+  padding-left: 5rpx;
+	/*margin: 30rpx 0 0 38rpx;*/
+}
+
+.search image {
+	width: 5%;
+	height: 40rpx;
+	border: 0px solid #bfbfbf;
+  margin-left:10rpx;
+}

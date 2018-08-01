@@ -1,0 +1,51 @@
+<view class="banner">
+ <text style="font-size:18px;">礼物预览</text>
+ <!-- 
+ <text style="font-size:12px;">点击发送，送给对方</text>
+ <view>
+ <image src="../../../images/u214.svg"></image>
+ </view>
+ -->
+</view>
+<modal hidden="{{hiddenmodalput}}" title="请修改赠送留言" confirm-text="提交" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
+    <input bindinput="bindChange" value="{{note}}" type='text'  />  
+</modal> 
+<view class="order-item" style="width:{{windowWidth*0.85}}px;margin-left:{{windowWidth*0.07}}px;margin-right:{{windowWidth*0.07}}px;height:{{windowHeight*0.8}}px;">
+  <view class="order-item-banner" >
+  <view>
+  <image src="../../../images/gift.png" style='width:150rpx;height:150rpx;' mode='aspectFill'></image>
+  </view>
+   <view class="userinfo">
+      <image class="userinfo-avatar" src="{{headimg}}"  background-size="cover" />
+      <text class="userinfo-nickname">{{nickname}}</text>
+  </view>
+   <view wx:for="{{orderskus}}" wx:key="" class="gifts-item">
+    <view  bindtap="showGoods" data-sku-id="{{item.sku_id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.goods_name}}">
+      <image class="gifts-image" src="{{item.sku_image}}" mode="aspectFill"> </image>
+    </view>
+		<text class="carts-title">{{item.goods_name}} x{{item.sku_num}}</text>
+  </view>
+  <!-- 
+  <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
+    <block wx:for="{{orderskus}}" wx:key="">
+      <swiper-item>
+        <view class="carts-item">
+          <view  bindtap="showGoods" data-sku-id="{{item.sku_id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.goods_name}}">
+            <image class="carts-image" src="{{item.sku_image}}" mode="aspectFill"> </image>
+          </view>
+			    <text class="carts-title">{{item.goods_name}} x{{item.sku_num}}</text>
+        </view>
+      </swiper-item>
+    </block>
+    </swiper>
+    -->
+    <view class="order_note">
+      <text>{{note_title}}</text>
+      <text space="ensp">    {{note}}</text>
+    </view>
+   
+  </view>
+</view>
+
+ <button open-type="share" class="button" style="width:{{windowWidth*0.4}}px;margin-left:{{windowWidth*0.3}}px;margin-right:{{windowWidth*0.3}}px;" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>转赠</button> 
+<button class="button" style="width:{{windowWidth*0.4}}px;margin-left:{{windowWidth*0.3}}px;margin-right:{{windowWidth*0.3}}px;"  bindtap="returnTapTag" hidden='{{send_status==0?true:false}}'>返回</button> 

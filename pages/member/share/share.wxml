@@ -1,0 +1,4 @@
+<text class="desc">
+	送礼就是送心
+</text>
+<image src="{{weburl}}/api/WXPay/getQRCode?username={{username}}&appid={{appid}}&secret={{secret}}" mode="widthFix" />

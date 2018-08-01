@@ -1,0 +1,64 @@
+<import src="../common/nav_order.wxml"/>
+
+<view class="banner">
+ <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv}}"/>
+</view>
+<view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}">
+	<!-- 厂家logo缩略图 -->
+  <view class="shop-text" style='width:{{windowWidth}}' >
+    <!-- 
+		<image class="logo-image" src="{{item.logo}}" mode="aspectFit"/>
+    <text class="shop-text" style="width:50%;font-size:14px;">{{item.shop_name}}</text>
+    -->
+    <!-- 
+    <text bindtap="detailTapTag" class="shop-text" style="width:10%;font-size:12px;color:blue;text-align:left" data-order-object="{{item}}">详情</text>
+    -->
+    <text class="shop-text" style="width:70%;font-size:14px;">礼物号:{{item.order_no}}</text>
+    <text wx:if="{{item.gift_status==2 && giftflag ==0}}" style="width:20%;font-size:12px;color:brown;text-align:center">已接受</text>
+    <text wx:if="{{item.gift_status==1 && giftflag ==0}}" style="width:20%;font-size:12px;color:brown;text-align:center">未接受</text>
+    <text wx:if="{{item.status==10 && giftflag ==0}}" style="width:20%;font-size:12px;color:brown;text-align:center">退款中</text>
+     <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" style="width:20%;font-size:12px;color:brown;text-align:center">已发货</text>
+    <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2}}" style="width:20%;font-size:12px;color:brown;text-align:center">未发货</text>
+  </view>
+  
+	<view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" bindtap="detailTapTag"data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
+		<view>
+			<!-- 缩略图 -->
+			<image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill"/>
+		</view>
+		<view class="carts-text">
+			<!-- 商品标题 -->
+			<text class="carts-title">{{mapping.goods_name}}</text>
+			<view class="carts-subtitle">
+				<text>x{{mapping.sku_num}}</text>
+			</view>
+		</view>
+	</view>
+	<view class="order-footer">
+    <view style="width:80%">
+     <text style="width:20%">共:{{item.order_sku_num}}件</text>
+		<text>￥{{item.order_price}}元</text>
+		<text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}}" style="border:1px solid; border-radius: 5px;color:red" >去支付</text>
+    	<text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{index}}" class="{{(item.status==2 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}}" style="border:1px solid; border-radius: 5px;color:red" >送出</text>
+		<text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}}"  style="color:red">确认收货</text>
+    <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}}" style="color:red" >接受</text>
+    </view>
+	<text wx:if="{{(giftflag==0 && item.status==2 && currenttime<item.duetime)}}" bindtap="sendAginTapTag" style="width:20%;color:gray;text-align:center;border:1px solid; border-radius: 5px">再送一次</text>
+  	<text wx:if="{{(giftflag==1 && item.status==2)}}" bindtap="sendAginTapTag" style="width:20%;color:gray;text-align:center;border:1px solid; border-radius: 5px">回赠</text>
+    	<text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="sendOtherTapTag" style="width:20%;color:red;text-align:center;border:1px solid; border-radius: 5px">转赠</text>
+      	<text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="refundTapTag" style="width:20%;color:red;text-align:center;border:1px solid; border-radius: 5px">退款</text>
+	</view>
+	<view class="order-footer">
+  <!-- 
+		<text>收货地址</text>
+		<text>{{item.address}}</text>
+   
+    <view style="width:80%">
+    <text>{{giftflag==0?'送给:':'来自:'}}</text>
+		<image src="{{giftflag==0?item.rcv_headimg:item.from_headimg}}"></image>
+    <text>{{giftflag==0?item.rcv_nickname:item.from_nickname}}</text>
+    </view>
+     -->
+	</view>
+</view>
+ <button type="default" size="default" hover-class="button-hover" class="button" bindtap="getMoreOrdersTapTag" style="margin-top:10px;"> 更多...【{{page}}/{{page_num}}】</button>
