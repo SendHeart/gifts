@@ -31,18 +31,18 @@
         "navigationBarTextStyle": "#fefefe",
         "navigationBarTitleText": "送心",
         "navigationBarBackgroundColor": "#292929",
-        "backgroundColor": "#F2f2f2",
+        "backgroundColor": "#292929",
         "enablePullDownRefresh": false
     },
-    "tabBar": {
-        "color": "#6e6d6b",
-        "selectedColor": "#880000",
-        "borderStyle": "#fefefe",
+    "tabBar": { 
+        "color": "#999999",
+        "selectedColor": "#E34C55",
+        "borderStyle": "#EEEEEE",
         "backgroundColor": "#fefefe",
         "list": [{
             "pagePath": "pages/hall/hall",
-            "iconPath": "images/logo.png",
-            "selectedIconPath": "images/logo_s.png",
+            "iconPath": "images/logo_s.png",
+            "selectedIconPath": "images/logo.png",
             "text": "送心"
         }, {
             "pagePath": "pages/index/index",
