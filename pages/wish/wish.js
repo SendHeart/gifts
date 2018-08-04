@@ -34,6 +34,7 @@ Page({
     shareflag:0,
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+    wish_id:null,
  
   },
 
@@ -205,8 +206,9 @@ Page({
     that.setData({
       wish_id:wish_id,
     })
-    console.log('onLoad', wish_id)
-   // console.log('wish_id:', wish_id)
+    console.log('onLoad', that.data.wish_id)
+    that.query_wish_cart()
+   // 
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -218,7 +220,7 @@ Page({
       }
     })
 
-    that.query_wish_cart()
+    
   },
 
 
@@ -230,16 +232,15 @@ Page({
     });
   },
 
-  query_wish_cart: function (event) {
+  query_wish_cart: function () {
     //venuesList
     var that = this
     var minusStatuses = []
     var page = that.data.page
     var pagesize = that.data.pagesize
-    var wish_id = that.data.wish_id
-    var useranme = wish_id>0 ? wish_id: username
+    var useranme = that.data.wish_id ? that.data.wish_id: username
     var token = token
-
+    
     // cart info
     wx.request({
       url: weburl + '/api/client/query_cart',
@@ -256,7 +257,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data);
+        console.log('query_cart:',res.data);
         var carts = [];
         if (!res.data.result) return
         var cartlist = res.data.result.list;
