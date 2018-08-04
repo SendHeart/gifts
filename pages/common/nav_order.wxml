@@ -1,4 +1,4 @@
-<!--导航nav组件 -->
+<!--导航nav组件 --> 
 <template name="nav_order">
     <view class="top-bar2">
       <block wx:for="{{navList_order}}" wx:key="">

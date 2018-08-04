@@ -47,7 +47,7 @@ Page({
     var that = this;
     var shareflag = !that.data.shareflag
     that.setData({
-     // shareflag: shareflag,
+      shareflag: shareflag,
     });
  
   },
@@ -218,7 +218,6 @@ Page({
     })
 
     that.query_wish_cart()
-
   },
 
 
@@ -239,8 +238,6 @@ Page({
     var wish_id = that.data.wish_id
     var useranme = wish_id>0 ? wish_id: username
     var token = token
-    var shareflag = !that.data.shareflag
-    
 
     // cart info
     wx.request({
@@ -289,13 +286,7 @@ Page({
           showmorehidden: showmorehidden,
           all_rows: carts.length,
           page_num:page_num.toFixed(0),
-        })
-        if (wish_id){
-          that.setData({
-            shareflag: shareflag,
-          })
-        }
-        
+        });
       }
     })
   },

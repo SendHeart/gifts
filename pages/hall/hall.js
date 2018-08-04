@@ -21,10 +21,10 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    main_title_Bg: weburl+"/uploads/songxin_banner1.png",
-    gifts_rcv: 0,
-    gifts_snd: 0,
-    note: '',
+    main_title_Bg: "https://czw.saleii.com/uploads/songxin_banner1.png",
+    gifts_rcv:0,
+    gifts_snd:0,
+    note:'',
     username: null,
     token: null,
     carts: [],
@@ -36,17 +36,17 @@ Page({
     itemLefts: [],
     showmorehidden: true,
     rshowmorehidden: true,
-    all_rows: 0,
-    rall_rows: 0,
+    all_rows:0,
+    rall_rows:0,
     windowWidth: 0,
     windowHeight: 0,
     carts: [],
     cartIds: null,
-    amount: 0,
+    amount:0,
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
 
-  },
+  }, 
   userTapTag: function () {
     wx.switchTab({
       url: '../my/index'
@@ -58,12 +58,12 @@ Page({
     })
   },
   bindTextAreaBlur: function (e) {
-    var that = this;
+    var that = this ;
     that.setData({
       note: e.detail.value
     })
 
-  },
+  },    
   bindMinus: function (e) {
     // loading提示
     /*
@@ -72,17 +72,17 @@ Page({
       mask: true
     });
     */
-    var that = this
+    var that =this
     var index = parseInt(e.currentTarget.dataset.index);
     var num = that.data.carts[index]['num'];
     //  
     if (num > 1) {
       num--
-    } else {
+    }else{
       num = 0  //减到0视同删除
     }
 
-
+     
     //var minusStatus = num <= 1 ? 'disabled' : 'normal';
     var minusStatus = num <= 1 ? 'normal' : 'normal';  //减到0视同删除
     // 购物车数据
@@ -221,25 +221,25 @@ Page({
     });
   },
   bindShowMore: function () {
-    var that = this;
-    var carts = that.data.carts
-    // 遍历 设置 hidden
-    for (var i = 0; i < carts.length; i++) {
-      carts[i]['hidden'] = 0;
-    }
+   var that = this;
+   var carts = that.data.carts
+   // 遍历 设置 hidden
+   for (var i = 0; i < carts.length; i++) {
+     carts[i]['hidden'] = 0;
+   }
 
-    that.setData({
-      carts: carts,
-      showmorehidden: true
-
-    });
+   that.setData({
+     carts: carts,
+     showmorehidden:true
+      
+   });
   },
   bindShowLess: function () {
     var that = this;
     var carts = that.data.carts
     // 遍历 设置 hidden
     for (var i = 0; i < carts.length; i++) {
-      if (i > 1) carts[i]['hidden'] = 0; //1  不需要收起功能了
+      if(i>1) carts[i]['hidden'] = 0; //1  不需要收起功能了
     }
 
     that.setData({
@@ -294,7 +294,7 @@ Page({
         cartselected[index++] = carts[i];
       }
     }
-    if (cartselected.length == 0) {
+    if (cartselected.length==0){
       wx.showToast({
         title: '请先添加礼物吧', /* 文案修改 */
         icon: 'success',
@@ -307,9 +307,9 @@ Page({
       amount: amount,
       carts: carts,
       cartIds: cartIds,
-      username: username,
-      token: token,
-
+      username:username,
+      token:token,
+     
     });
     that.confirmOrder()
 
@@ -329,11 +329,11 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var status = 0;
     var amount = that.data.amount;
-    var order_type = 'gift';
+    var order_type='gift';
     var order_note = that.data.note;
-    if (!order_note) order_note = '送你一份心意，愿美好长存!'; //默认祝福
+    if (!order_note) order_note='送你一份心意，愿美好长存!'; //默认祝福
     console.log('附言:' + order_note)
-
+     
 
     wx.request({
       url: weburl + '/api/client/add_order',
@@ -343,9 +343,9 @@ Page({
         access_token: token,
         sku_id: cartIds,
         buy_type: 'cart',
-        order_type: order_type,
-        note: order_note,
-
+        order_type:order_type,
+        note:order_note,
+        
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -380,19 +380,19 @@ Page({
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var index = 0
+    var index = 0 
     var objectId = 0
-    if (e) {
-      index = e.currentTarget.dataset.index ? e.currentTarget.dataset.index : 0
-      objectId = e.currentTarget.dataset.objectId;
-    } else {
+    if(e){
+       index = e.currentTarget.dataset.index ? e.currentTarget.dataset.index : 0
+       objectId = e.currentTarget.dataset.objectId;
+    }else{
       index = that.data.deleteindex
     }
-
+    
     index = parseInt(index)
     var carts = this.data.carts;
     var sku_id = this.data.carts[index]['id'];
-
+   
     // 购物车单个删除
     console.log(objectId);
     wx.showModal({
@@ -420,16 +420,16 @@ Page({
                   new_carts[j++] = carts[i];
                 }
               }
-              if (new_carts.length == 0) {
+              if (new_carts.length==0){
                 var all_rows = 0;
                 var showmorehidden = true;
-              } else {
+              }else{
                 var all_rows = new_carts.length;
                 var showmorehidden = true; // false
               }
               that.setData({
                 carts: new_carts,
-                all_rows: all_rows,
+                all_rows:all_rows,
                 showmorehidden: showmorehidden
               })
               that.sum()
@@ -451,7 +451,7 @@ Page({
         cartIds.push(this.data.carts[i]['objectId']);
       }
     }
-
+  
     return cartIds;
   },
   sum: function () {
@@ -558,8 +558,8 @@ Page({
     // auto login
     var that = this;
     var minusStatuses = []
-    var page = that.data.page
-    var pagesize = that.data.pagesize
+    var page=that.data.page
+    var pagesize=that.data.pagesize
 
     // cart info
     wx.request({
@@ -573,13 +573,13 @@ Page({
       success: function (res) {
         console.log(res.data);
         var carts = [];
-        if (!res.data.result) {
-
+        if (!res.data.result){
+          
           return
-        }
+        } 
         var cartlist = res.data.result.list;
         var showmorehidden;
-
+        
         var index = 0;
         for (var key in cartlist) {
           for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
@@ -598,9 +598,9 @@ Page({
           }
         }
 
-        if (index > 1) {
+        if(index>1) {
           showmorehidden = true // false
-        } else {
+        }else{
           showmorehidden = true
         }
         //倒序
@@ -635,11 +635,11 @@ Page({
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
       method: 'POST',
-      data: {
-        username: username,
+      data: { 
+        username: username, 
         access_token: token,
-        page: page,
-        pagesize: pagesize
+        page:page,
+        pagesize:pagesize 
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -671,7 +671,7 @@ Page({
         });
       }
     })
-
+    
     var gifts_rcv = that.data.gifts_rcv;
     var gifts_send = that.data.gifts_send;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
@@ -702,7 +702,7 @@ Page({
       success: function (res) {
         console.log('会员礼物收送信息获取');
         console.log(res.data);
-        if (res.data.result) {
+        if (res.data.result){
           var gifts_rcv = res.data.result['giftgetnum'];
           var gifts_send = res.data.result['giftsendnum'];
 
@@ -711,7 +711,7 @@ Page({
             gifts_send: gifts_send,
           })
         }
-
+       
       }
     })
 
@@ -729,7 +729,7 @@ Page({
       duration: 1000
     });
   },
-
+  
   onGotUserInfo: function (e) {
     console.log(e.detail.errMsg)
     console.log(e.detail.userInfo)
@@ -738,17 +738,17 @@ Page({
 
   onLoad: function () {
     var that = this;
-
+    
   },
   //事件处理函数
-
+ 
   //页面滑动到底部
   bindDownLoad: function () {
     var that = this;
     that.setData({
       page: page++
     });
-    // this.loadgoods(reid,this.data.navLeftItems[this.data.curIndex]['id']);
+   // this.loadgoods(reid,this.data.navLeftItems[this.data.curIndex]['id']);
     console.log("lower");
   },
   scroll: function (event) {
@@ -771,7 +771,7 @@ Page({
     var that = this;
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var username = wx.getStorageSync('username');
-
+ 
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
@@ -779,7 +779,7 @@ Page({
       })
     })
 
-
+   
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -790,7 +790,7 @@ Page({
           scrollTop: that.data.scrollTop + 10
         })
       }
-    })
+    }) 
 
     this.setData({
       username: username
@@ -803,7 +803,7 @@ Page({
     return {
       title: '送心',
       desc: '送礼就是送心',
-      path: '/pages/hall/hall?refername=' + username
+      path: '/pages/hall/hall?refername='+username
     }
-  }
+  } 
 })

@@ -1,8 +1,6 @@
 //index.js
 //获取应用实例
 var app = getApp()
-var weburl = app.globalData.weburl
-var wssurl = app.globalData.wssurl
 var socketOpen = false
 var socketMsgQueue = []
 Page({
@@ -20,7 +18,7 @@ Page({
     })
     if (!socketOpen) {
       wx.connectSocket({
-        url: wssurl+'/wss'
+        url: 'wss://czw.saleii.com/wss'
       })
       wx.onSocketError(function (res) {
         socketOpen = false

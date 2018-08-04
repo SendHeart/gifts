@@ -1,5 +1,5 @@
 var app = getApp();
-var weburl = app.globalData.weburl;//"https://czw.saleii.com";
+var weburl = "https://czw.saleii.com";
 
 Page({
 	data: {

@@ -1,5 +1,7 @@
 page {
-	background: #eee;
+	background: #F2F2F2;
+  width: 100%;
+  height: 100%;
 }
 
  
@@ -53,20 +55,23 @@ page {
 .userinfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  height: 250rpx;
-  background: white;
+  align-items:center;
+  height: 260rpx;
+  background: #292929;
 }
 
 .userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
-  margin: 20rpx;
+  width: 120rpx;
+  height: 120rpx;
+  margin-top: 40rpx;
   border-radius: 50%;
+  border: 1rpx solid #888888;
 }
 
 .userinfo-nickname {
-  color: #333;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
 }
 
 
@@ -77,39 +82,50 @@ page {
   align-items: left;
   justify-content: space-between;
   background: white;
-  padding: 20rpx;
-  margin-bottom: 20rpx;
-  margin-top: 20rpx;
+  padding:0 20rpx;
+  margin-bottom: 15rpx;
+  margin-top: 15rpx;
 }
 
 /*menu list*/
 .tableviewcell {
 	width:100%;
   padding: 20rpx;
-	border-bottom: 1rpx solid #ddd;
-	color: #666;
+	color: #444;
 	background: white;
 	display: flex;
   flex-direction: row;
 	align-items: center;
-
 }
-
+.linegray {
+	border-bottom: 1rpx solid #ddd;
+}
 /*icon*/
 .tableviewcell image {
-	width: 60rpx;
-	height: 60rpx;
+	width: 48rpx;
+	height: 48rpx;
 }
 
 /*text*/
 .tableviewcell text {
-	font-size: 16px;
-	margin-left: 10px;
+	font-size: 28rpx;
+	margin-left: 20rpx;
+}
+.inlinetips {
+  color: #999;
+  font-size: 28rpx;
 }
 
 /*button*/
 .logout {
 	margin: 30rpx;
+  border: 0;
+  background: transparent;
+  color: #999;
+  font-size: 24rpx;
+}
+.logout::after {
+  border: 0;
 }
 
 /*order*/
@@ -148,13 +164,14 @@ page {
 }
 
 .clickBtn{  
-  font-size:16px;  
+  font-size:28rpx;  
   background-color:white;  
-  color:gray;  
+  color:#444;  
   overflow:hidden;  
   margin-left:-1rpx;
+  border: 0;
 }  
   
-.clickBtn::after{  
-  border:0px solid #CC3333;  
+.clickBtn::after {
+  border: 0;
 } 

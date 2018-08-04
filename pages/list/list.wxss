@@ -1,11 +1,5 @@
 @import "../../lib/style/font.wxss";
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
-}
-
 .Hui-iconfont {
  font-family: "Hui-iconfont";
  font-size:30rpx;
@@ -18,13 +12,29 @@
   content:'\e6d5';
 }
 
+page {
+  background-color:#f2f2f2;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 .container {
     background-color: #F2f2f2;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .banner {
 	width: 100%;
-	height: 70rpx;
+	/*height: 70rpx;*/
 	padding-top: 0rpx;
 	/*margin-left: 15rpx;*/
 }
@@ -40,7 +50,7 @@
 
 /*导航 nav*/
 .top-bar {
-  height: 72rpx;
+  height: 76rpx;
   background: white; 
   white-space: nowrap;
   position: fixed;
@@ -50,38 +60,39 @@
 .top-bar-item {
   display:inline-block;
   width: 120rpx;
-  color: gray;
+  color: #444;
   text-align: center;
-  /* line-height: 72rpx; */
-  font-size: 30rpx;
+  line-height: 70rpx;
+  font-size: 32rpx;
 }
-.top-bar-active{
-  color: red;
-  font-size: 34rpx;
+.top-bar-active {
+  color: #444;
+  font-weight: bold;
+  border-bottom: 6rpx solid #E34C55;
 }
 
 /*辅助导航 nav2*/
 .top-bar2 {
-  height: 72rpx;
-  background: white; 
+  height: 70rpx;
+  background: #FFF; 
   width:100%;
   position: fixed;
-  margin-top: 70rpx;
+  margin-top: 74rpx;
   top:0;
   border-top: 1px solid #F2f2f2;
+  border-bottom: 1px solid #F2f2f2;
   z-index:99;
 }
 .top-bar-item2 {
   display:inline-block;
   width: 250rpx;
-  color: gray;
+  color: #999;
   text-align: center;
-  /* line-height: 72rpx; */
-  font-size: 32rpx;
+  line-height: 70rpx;
+  font-size: 28rpx;
 }
 .top-bar-active2 {
-  color: red;
-  font-size: 38rpx;
+  color: #444;
 }
 
 swiper-item image {
@@ -91,44 +102,72 @@ swiper-item image {
 }
 
 .venues_box {
-  width: 100%;
-  padding: 0 10rpx;
+  display:block;
+  width: 98%;
+  padding-bottom:100rpx;
+  margin-left:2%;
+  margin-top: 124rpx;
+  overflow-x: hidden;
 }
 
 .venues_item {
-    display: inline-block;
-    width: 45%;
-    margin: 0 0.5%;
-    margin-left:25rpx;
+  display: inline-block;
+  width: 47%;
+  margin: 0 1% 15rpx 1%;
+  background: #ffffff;
+  border-radius: 10rpx;
+  text-indent: 20rpx;
+  padding-bottom: 20rpx;
 }
 
-.venues_item image{
-    width: 100%;
-    height: 250rpx;
+.venues_item .mainpic {
+  display: block;
+  width: 310rpx;
+  height: 310rpx;
+  margin: 20rpx auto;
 }
 
- .venues_item .goods_name {
-  color: black; 
-  font-size: 8pt;
+.venues_item .goods_name {
+  display: block;
+  color: #444;
+  font-size:28rpx;
 }
 
- .venues_item .goods_tag {
-   color: gray; 
-   font-size: 8pt;
-   margin-top:0px;
-   border: 2px solid #F2f2f2;
-   border-style: solid;  
+.venues_item .goods_tag {
+  color: #999;
+  font-size: 20rpx;
+  padding: 2rpx 6rpx;
+  border: 1px solid #f2f2f2;
+  border-radius: 6rpx;
+  text-align: center;
 }
 .venues_item .goods_tag image{
   width: 10%;
   height: 30rpx;
 }
- .venues_item .goods_prom {
-   color: gray; 
-   font-size: 8pt;
-   margin-top:0px;
+.venues_item .goods_prom {
+  display: block;
+  color: #999;
+  font-size:28rpx;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
-
+.price-now {
+  color: #e34c55;
+  font-size:28rpx;
+  font-weight: bold;
+}
+.price-now::first-letter {
+  font-size: 20rpx;
+}
+.goods_bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 20rpx;
+  text-indent: 0;
+}
 .search {
 	width: 100%;
 	height: 80rpx;

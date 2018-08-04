@@ -1,10 +1,15 @@
 page {
-	background: #eee;
+	background: #F2F2F2;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .order-item {
-	margin-bottom: 10px;
 	background: #fff;
+  width: 96%;
+  margin: 20rpx auto;
+  border-radius: 10rpx;
+  
 }
 
 .order-item:last-child {
@@ -12,9 +17,20 @@ page {
 }
 
 .order-footer {
-	padding: 3px 0;
+  text-align: right;
+	padding: 10rpx 20rpx;
+  font-size: 28rpx;
+  color: #999;
 }
-
+.font-red {
+  color: #E34C55;
+}
+.btnpay {
+  width: 96%;
+  height: 110rpx;
+  font-size: 36rpx;
+  line-height: 110rpx;
+}
 .order-footer text {
 	font-size: 12px;
 	margin: 0 5px;
@@ -24,19 +40,19 @@ page {
 .carts-item {
 	display: flex;
 	flex-direction: row;
-	height:150rpx;
+	height:120rpx;
 	/*width属性解决标题文字太短而缩略图偏移*/
 	width:100%;
-	border-bottom: 1px solid #eee;
-	padding: 30rpx 0;
+	border-bottom: 1px solid #F2F2F2;
+  padding: 20rpx 0;
+  margin-right: 20rpx;
 }
 
 /*左部图片*/
 .carts-image {
-  margin-left: 10rpx;
-  margin-bottom: 10px;
-	width:200rpx;
-	height:200rpx;
+  width: 120rpx;
+  height: 120rpx;
+  margin: 0 20px;
 }
 
 
@@ -59,27 +75,25 @@ page {
 
 /*右部描述*/
 .carts-text {
-	margin-left: 10rpx;
 	width: 100%;
-	display: flex;
-	flex-direction: column;
-	justify-content: space-between;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
 
 /*右上部分标题*/
 .carts-title {
 	font-size: 28rpx;
-	color: #444;
-	line-height: 38rpx;
+  color: #444;
+  line-height: 30rpx;
 }
 
 /*右下部分价格与数量*/
 .carts-subtitle {
-	font-size: 25rpx;
-	color:darkgray;
-	padding: 0 20rpx;
+	font-size: 24rpx;
+	color:#999;
 	display: flex;
-	flex-direction: row;
+	flex-direction:column;
 	justify-content:space-between;
 }
 

@@ -24,45 +24,6 @@ Page({
     nickname: userInfo.nickName,
     send_status:0,
   },
-  bindTextAreaBlur: function (e) {
-    var that = this
-    var rcv_note = e.detail.value
-    var order_no = that.data.order_no
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    that.setData({
-      note: rcv_note
-    })
-    //再次确认订单状态
-    wx.request({
-      url: weburl + '/api/client/update_order_note',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        order_no: order_no,
-        rcv_note: rcv_note,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data);
-         
-        if (res.data.status=='n') {
-          /* 
-            wx.showToast({
-            title: '',
-            icon: 'loading',
-            duration: 1500
-          })
-          */
-        }  
-      }
-    })
-
-  },  
   returnTapTag: function (e) {
     /*
     wx.navigateTo({

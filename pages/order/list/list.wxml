@@ -1,6 +1,6 @@
 <import src="../../common/nav_order.wxml"/>
 
-<view class="banner">
+<view class="banner"> 
  <template is="nav_order" data="{{navList_order, activeIndex2}}"/>
 </view>
 <view class="order-item" wx:for="{{orders}}" wx:key="">

@@ -1,7 +1,7 @@
 @import "../../../lib/style/font.wxss";
 
 page {
-	background: #eee;
+	background: #f2f2f2;
 }
 
 .Hui-iconfont {
@@ -16,10 +16,15 @@ page {
   content:'\e6d5';
 }
 
-
+.container {
+  width: 100%;
+  overflow-x: hidden;
+}
 .order-item {
-	margin-bottom: 5px;
+  width: 96%;
+  margin: 15rpx auto 0 auto;
 	background: #fff;
+  border-radius: 10rpx;
 }
 
 .order-item:last-child {
@@ -27,9 +32,9 @@ page {
 }
 
 .order-footer {
-	padding: 3px 0;
+	padding: 10rpx 20rpx;
   display: flex;
-  flex-direction:row;
+  flex-direction: row;
 }
 
 .order-footer text {
@@ -57,10 +62,9 @@ page {
 
 /*左部图片*/
 .carts-image {
-  margin-left: 10rpx;
-  margin-bottom: 10px;
-	width:200rpx;
-	height:200rpx;
+  margin: 10rpx 20rpx;
+	width:110rpx;
+	height:110rpx;
 }
 
 
@@ -70,7 +74,7 @@ page {
 	width: 100%;
 	display: flex;
 	flex-direction: row;
-  font-size:14px;
+  font-size:28rpx;
 	justify-content: space-between;
 }
 
@@ -88,7 +92,7 @@ page {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-
+  color: #999;
 }
 
 /*右上部分标题*/
@@ -107,13 +111,25 @@ page {
 /*右下部分价格与数量*/
 .carts-subtitle {
 	font-size: 25rpx;
-	color:darkgray;
-	padding: 0 20rpx;
+	color:#999;
 	display: flex;
 	flex-direction: row;
 	justify-content:space-between;
 }
-
+.smallbtn {
+  border: 3rpx solid #e34c55;
+  color: #e34c55;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  margin-left:10rpx;
+}
+.smallbtn2 {
+  border: 3rpx solid #999;
+  color: #999;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  margin-right:10rpx;
+}
 /*地址*/
 .order-address {
   float: left;
@@ -144,23 +160,28 @@ page {
 /*辅助导航 nav*/
 .banner {
 	width: 100%;
-	height: 90rpx;
-  display: flex;
-	flex-direction: row;
-	padding-top: 25rpx;
-   background-color:red; 
+	height: 80rpx;
+  
 	/*margin-left: 15rpx;*/
 }
-.banner text{
+.banner text {
 	width: 100%;
-	height: auto;
-	font-size:14px;
+	height: 80rpx;
+	font-size:32rpx;
+  font-weight: bold;
   color:white;
- 
   text-align: center;
+  display: flex;
+	flex-direction: column;
+  justify-content:center;
 	/*margin-left: 15rpx;*/
 }
-
+.status1 {
+background-color: #999;
+}
+.status2 {
+background-color: #E34C55;
+}
 .top-bar2 {
   height: 72rpx;
   background: white; 
@@ -185,58 +206,56 @@ page {
 
 
 .order-detail {
-	margin-top:10rpx;
-  padding: 3px;
+  width: 96%;
+  margin: 15rpx auto 0 auto;
   display: flex;
   flex-direction:column;
-  background-color:white; 
+  background-color:#fff; 
+  border-radius: 10rpx;
+  overflow-x: hidden;
 }
 
 .order-detail-text {
-	margin-top:10rpx;
-  padding: 1px;
-  display: flex;
-  flex-direction:row;
-  background-color:white; 
-  align-items: left;
+  line-height: 2.5;
+  font-size: 24rpx;
   text-align: left;
+  color: #999;
+  padding: 0 20rpx;
 }
-.order-detail text {
-	font-size: 12px;
-	margin-left: 5px;
-  margin-right: 5px;
-  color:gray;
+.order_price {
+  color: #999;
+}
+.labeltext {
+  display: inline-block;
+  width: 20%;
 }
 
 /**/
 .order-detail image {
-	width:50rpx;
-	height:50rpx;
+	width:70rpx;
+	height:70rpx;
   border-radius: 50%;
 }
 
 
 .delivery-detail {
-	margin-top:10rpx;
-  padding: 3px;
+  width: 96%;
+  margin: 15rpx auto 0 auto;
   display: flex;
   flex-direction:column;
-  background-color:white; 
+  background-color:#fff; 
+  border-radius: 10rpx;
+  overflow-x: hidden;
 }
 
 .delivery-detail-text {
-	margin-top:10rpx;
-  padding: 1px;
-  display: flex;
-  flex-direction:row;
-  background-color:white; 
+  line-height: 2.5;
+  font-size: 24rpx;
+  text-align: left;
+  color: #999;
+  padding: 0 20rpx;
 }
-.delivery-detail text {
-	font-size: 12px;
-	margin-left: 5px;
-  margin-right: 5px;
-  color:gray;
-}
+
 
 /**/
 .delivery-detail image {
@@ -297,31 +316,33 @@ page {
 
 
 .footer {
-	background: #f9f9f9;
-	width: 100%;
-	display: flex; 
-	flex-direction: row; 
-	justify-content: space-between;
-	position: fixed;
-	bottom: 0;
+  background: #f9f9f9;
+  width: 100%;
+  padding-bottom: 50rpx;
+  position: fixed;
+  bottom: 0;
+  border-top: 1rpx solid #eee;
 }
 
 /*购物车按钮、收藏等*/
 .opt-buttons {
-	width: 100%;
-	display: flex;
+  width: 100%;
+  padding-top: 20rpx;
   text-align: center;
-	flex-direction: row-reverse;
-	justify-content: space-around;
 }
 
 /*cart*/
 .button-group {
-	display: flex;
-	flex-direction: column;
-  align-content: center;
-  align-items: center;
+  display: inline-block;
+  border: 2rpx solid #999;
+  line-height: 80rpx;
   text-align: center;
+  width: 250rpx;
+  height: 80rpx;
+  color: #999;
+  font-size: 28rpx;
+  border-radius: 10rpx;
+  margin-right: 40rpx;
 }
 
 .button-image {
@@ -333,4 +354,8 @@ page {
 .button-text {
 	font-size: 24rpx;
 	line-height: 40rpx;
+}
+
+.contact-button {
+  color: #999;
 }

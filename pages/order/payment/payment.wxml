@@ -1,10 +1,10 @@
 <view class="order-item" wx:for="{{orders}}" wx:key="">
 	<!-- 厂家logo缩略图 -->
-  <view class="shop-text">
+ 	<!--  <view class="shop-text">
 			<image class="logo-image" src="{{item.logo}}" mode="aspectFill"/>
       <text class="shop-text">{{item.shop_name}}</text>
   </view>
-  
+  -->
 	<view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" bindtap="showGoods" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
 		<view>
 			<!-- 缩略图 -->
@@ -14,12 +14,13 @@
 			<!-- 商品标题 -->
 			<text class="carts-title">{{mapping.goods_name}}</text>
 			<view class="carts-subtitle">
+      <text>{{item.act_info?item.act_info:'高端大气'}}</text>
 				<text>x{{mapping.sku_num}}</text>
 			</view>
 		</view>
 	</view>
 	<view class="order-footer">
-		<text>金额:￥{{item.order_price}}元</text>
+		<text>共计:</text><text class='font-red'>￥{{item.order_price}}</text>
 	</view>
   <!-- 
 	<view class="order-footer">
@@ -28,4 +29,4 @@
 	</view>
   -->
 </view>
-<button data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay">微信支付</button>
+<button data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay" class='btnpay'>微信支付</button>

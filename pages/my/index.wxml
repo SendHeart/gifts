@@ -1,21 +1,21 @@
-<view class="userinfo">
+<view class="userinfo"> 
 	<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </view>
 <view class="menu-area">
   <view bindtap="showWish" class="tableviewcell" style='width:{{windowWidth-35}}px' >
     <image src="../../images/u621.png" />
-	  <text >心愿单</text>
-    <text style='font-size:30rpx;margin-left:150rpx;'>分享心愿单，让Ta知道</text>
+	  <text >我的心愿单</text>
+    <text class="inlinetips">分享心愿单，让Ta知道</text>
   </view>
 
 </view>
 <view class="menu-area">
-  <view bindtap="" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+  <view bindtap="" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u628.png" />
 	  <text>如何玩转送心</text>
   </view>
-  <view bindtap="" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+  <view bindtap="" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u631.png" />
     <button class="clickBtn" open-type="contact" session-from="weapp">联系客服</button> 
   </view>
@@ -25,16 +25,16 @@
   </view>
  </view> 
  <view class="menu-area">
-  <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/shakehanding.jpg" />
+  <view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/corp.png" />
 	  <text>商务合作</text>
   </view>
   <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/ewm.png" />
+	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>
   </view>
 </view>
-<button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">重新登录</button>
+<button open-type="getUserInfo" lang="zh_CN" hover-class='none' bindgetuserinfo="onGotUserInfo" class="logout">重新登录</button>
 <!--
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->

@@ -1,61 +1,62 @@
 {
-    "pages": [
-        "pages/hall/hall",
-        "pages/index/index",
-        "pages/my/index",
-        "pages/wish/wish",
-        "pages/order/list/list",
-        "pages/classify/index",
-        "pages/wechat/wechat",
-        "pages/member/index/index",
-        "pages/member/donate/donate",
-        "pages/member/share/share",
-        "pages/member/aboutus/aboutus",
-        "pages/details/details",
-        "pages/list/list",
-        "pages/login/login",
-        "pages/cart/cart",
-        "pages/order/send/send",
-        "pages/order/receive/receive",
-        "pages/order/transfer/transfer",
-        "pages/order/checkout/checkout",
-        "pages/address/list/list",
-        "pages/order/payment/payment",
-        "pages/order/orderdetail/orderdetail",
-        "pages/address/add/add"
-        
-        
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarTextStyle": "#fefefe",
-        "navigationBarTitleText": "送心",
-        "navigationBarBackgroundColor": "#292929",
-        "backgroundColor": "#292929",
-        "enablePullDownRefresh": false
-    },
-    "tabBar": { 
-        "color": "#999999",
-        "selectedColor": "#E34C55",
-        "borderStyle": "#EEEEEE",
-        "backgroundColor": "#fefefe",
-        "list": [{
-            "pagePath": "pages/hall/hall",
-            "iconPath": "images/logo_s.png",
-            "selectedIconPath": "images/logo.png",
-            "text": "送心"
-        }, {
-            "pagePath": "pages/index/index",
-            "iconPath": "images/history.png",
-            "selectedIconPath": "images/history_s.png",
-            "text": "记录"
-        }, {
-            "pagePath": "pages/my/index",
-            "iconPath": "images/my.png",
-            "selectedIconPath": "images/my_s.png",
-            "text": "我的"
-        }]
-         
-    },
-    "debug": false
+  "pages": [
+    "pages/hall/hall",
+    "pages/index/index",
+    "pages/my/index",
+    "pages/wish/wish",
+    "pages/order/list/list",
+    "pages/classify/index",
+    "pages/wechat/wechat",
+    "pages/member/index/index",
+    "pages/member/donate/donate",
+    "pages/member/share/share",
+    "pages/member/aboutus/aboutus",
+    "pages/details/details",
+    "pages/list/list",
+    "pages/login/login",
+    "pages/cart/cart",
+    "pages/order/send/send",
+    "pages/order/receive/receive",
+    "pages/order/transfer/transfer",
+    "pages/order/checkout/checkout",
+    "pages/address/list/list",
+    "pages/order/payment/payment",
+    "pages/order/orderdetail/orderdetail",
+    "pages/address/add/add"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarTextStyle": "#fefefe",
+    "navigationBarTitleText": "送心",
+    "navigationBarBackgroundColor": "#292929",
+    "backgroundColor": "#292929",
+    "enablePullDownRefresh": false
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#E34C55",
+    "borderStyle": "#EEEEEE",
+    "backgroundColor": "#fefefe",
+    "list": [
+      {
+        "pagePath": "pages/hall/hall",
+        "iconPath": "images/logo_s.png",
+        "selectedIconPath": "images/logo.png",
+        "text": "送心"
+      },
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "images/history.png",
+        "selectedIconPath": "images/history_s.png",
+        "text": "记录"
+      },
+      {
+        "pagePath": "pages/my/index",
+        "iconPath": "images/my.png",
+        "selectedIconPath": "images/my_s.png",
+        "text": "我的"
+      }
+    ]
+  },
+  "debug": false
 }

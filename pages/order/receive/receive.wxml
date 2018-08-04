@@ -1,28 +1,34 @@
-<view class="banner" style="margin-bottom:20rpx;">
- <text wx:if='{{receive_status==0}}' style="font-size:18px;">恭喜您，收到一份礼物</text>
- <text wx:if='{{receive_status==1}}' style="font-size:18px;">该礼物已被领取</text>
- <text wx:if='{{receive_status==0}}' style="font-size:12px;color:gray">点击拆开，收取礼物</text>
- <text wx:if='{{receive_status==1}}' style="font-size:12px;color:gray">点击回赠，也给Ta送一个礼物吧</text>
- <view>
- <image  src="../../../images/u214.svg"></image>
- </view>
+<view class="subject">
+  <text class='toptitle' wx:if='{{receive_status==0}}'>恭喜，您收到一份礼物</text>
+  <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>礼物已领取</text>
+  <text wx:if='{{receive_status==0}}'>点击拆开，收取礼物</text>
+  <text wx:if='{{receive_status==1}}'>点击回赠，也给Ta送一个礼物吧</text>
 </view>
-<view class="order-item" style="width:{{windowWidth*0.85}}px;margin-left:{{windowWidth*0.07}}px;margin-right:{{windowWidth*0.07}}px;height:{{windowHeight*0.8}}px;">
-  <view class="order-item-banner" >
-  <view>
-  <image src="../../../images/gift.png" style='width:150rpx;height:150rpx;' mode='aspectFill'></image>
-  </view>
-   <view class="userinfo">
-      <image class="userinfo-avatar" src="{{headimg}}"  background-size="cover" />
-      <text class="userinfo-nickname">{{nickname}}</text>
-  </view>
-  <view wx:for="{{orderskus}}" wx:key="" class="gifts-item">
-    <view  bindtap="showGoods" data-sku-id="{{item.sku_id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.goods_name}}">
-      <image class="gifts-image" src="{{item.sku_image}}" mode="aspectFill"> </image>
+<!-- 
+ <view>
+ <image src="../../../images/u214.svg"></image>
+ </view>
+ -->
+<view class="order-item">
+  <view class="order-item-banner">
+    <view>
+      <image src="../../../images/gift.gif" style='width:378rpx;height:202rpx;' mode='aspectFill'></image>
     </view>
-		<text class="carts-title">{{item.goods_name}} x{{item.sku_num}}</text>
-  </view>
-  <!-- 
+    <view class="userinfo">
+      <image class="userinfo-avatar" src="{{headimg}}" background-size="cover" />
+      <text class="userinfo-nickname">{{nickname}}</text>
+    </view>
+    <view class="order_note">
+      <!--<text>{{note_title}}</text> -->
+      <text space="ensp">{{note}}</text>
+    </view>
+    <view wx:for="{{orderskus}}" wx:key="" class="gifts-item">
+      <view bindtap="showGoods" data-sku-id="{{item.sku_id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.goods_name}}">
+        <image class="gifts-image" src="{{item.sku_image}}" mode="aspectFill"> </image>
+      </view>
+      <text class="carts-title">{{item.goods_name}} x{{item.sku_num}}</text>
+    </view>
+    <!-- 
   <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" bindchange="swiperchange">
     <block wx:for="{{orderskus}}" wx:key="">
       <swiper-item>
@@ -36,20 +42,18 @@
     </block>
     </swiper>
     -->
-    <view class="order_note">
-      <text>{{note_title}}</text>
-      <text space="ensp">    {{note}}</text>
+    <view class="sentbtn">
+      <button class="button" data-order_no="{{order_no}}" bindtap="receiveTapTag" hidden='{{receive_status==0?false:true}}'>拆开</button>
+      <view style=width:100% display: flex;flex-direction: column;text-align:center " hidden='{{receive_status==0?false:true}}'> 
+<text>填写收货地址，礼物会很快奔向您了</text>
+</view>
+<button bindtap="showCart" hidden='{{receive_status==0?true:false}}'>回赠</button>
+<view style="width:100% display: flex;flex-direction: column;text-align:center" hidden='{{receive_status==0?true:false}}'>
+        <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
+      </view>
+
+
     </view>
-   
+
   </view>
-</view>
-
-
- <button class="button" style="width:{{windowWidth*0.4}}px;margin-left:{{windowWidth*0.3}}px;margin-right:{{windowWidth*0.3}}px;" data-order_no="{{order_no}}" bindtap="receiveTapTag" hidden='{{receive_status==0?false:true}}'>拆开</button> 
- <view style=width:100% display: flex;flex-direction: column;text-align:center" hidden='{{receive_status==0?false:true}}'> 
-<text style="font-size:12px;color:gray">填写收货地址，礼物会很快奔向您了</text>
-</view>
-<button class="button" style="width:{{windowWidth*0.4}}px;margin-left:{{windowWidth*0.3}}px;margin-right:{{windowWidth*0.3}}px;"  bindtap="returnTapTag" hidden='{{receive_status==0?true:false}}'>回赠</button>
-<view style=width:100% display: flex;flex-direction: column;text-align:center" hidden='{{receive_status==0?true:false}}'> 
-<text style="font-size:12px;color:gray">礼尚往来，回赠一份礼物让你们的联系更进一步</text>
 </view>

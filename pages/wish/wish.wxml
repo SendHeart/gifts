@@ -6,9 +6,9 @@
 	<text class="userinfo-nickname">{{userInfo.nickName?userInfo.nickName+'的心愿单':'心愿单'}}</text>
 </view>
 <view class="banner" hidden="{{shareflag==1?true:false}}">
-  <text style="color:white;font-weight:bold ;font-size:38rpx;padding-top:20rpx;">我的心愿单</text>
+  <text>我的心愿单</text>
 </view>
-<view class="banner" style="height:90rpx;margin-bottom:20rpx;"  hidden="{{shareflag==1?true:false}}">
+<view class="banner" style="height:90rpx;margin-bottom:15rpx;"  hidden="{{shareflag==1?true:false}}">
  <button wx:if="{{carts.length>0}}" open-type="share" style="width:30%;font-size:30rpx" bindtap="onShareAppMessage" type="warn">分享到微信</button>
  <button wx:if="{{carts.length==0}}" style="width:30%;font-size:30rpx" bindtap="addWishTapTag" type="warn">添加心愿单</button>
 </view>
@@ -23,18 +23,18 @@
         <view class="venues_list">
             <block wx:for="{{carts}}" wx:key="">
                 <view class="venues_item">
-                    <navigator url="../details/details?id={{item.goods_id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}">
-                        <image src="{{item.image}}"/>
+                    <navigator url="../details/details?id={{item.goods_id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class='none'>
+                        <image class="mainpic" src="{{item.image}}"/>
                          </navigator>
                         <text class="goods_name">{{item.short_name}}</text>
-				<view style="color: red; font-size: 8pt;" class="price-now">￥{{item.sell_price}}元</view>
-        <view style='text-align:left;'>
-        <text style='85%;'>已收到:{{item.sale?item.sale:0}}件</text>
+				<view class="price-now">￥{{item.sell_price}}</view>
+        <view class="goods_prom">
+        <text>已收到:{{item.sale?item.sale:0}}件</text>
         </view>
-        <view style='text-align:right;margin-top:-50rpx;' hidden="{{shareflag==1?true:false}}">
+        <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag==1?true:false}}">
         <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:15%;height:50rpx;' src="../../images/icon_delete.png"/>
         </view>
-         <view style='text-align:right;margin-top:-50rpx;' hidden="{{shareflag==1?false:true}}">
+         <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag==1?false:true}}">
         <button data-index="{{index}}" data-object-id="{{item.objectId}}" type="warn" size="mini" hover-class="button-hover" class="button" bindtap="sendGoodsTapTag" style="margin-top:10px;">送Ta</button>
         </view>
                  

@@ -1,91 +1,84 @@
-<import src="../../wxParse/wxParse.wxml"/>  
+<import src="../../wxParse/wxParse.wxml" />
 <scroll-view scroll-y="true" style="height:100%;margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
   <view class="banner">
-   <view>
-        <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" vertical="{{vertical}}"
-                autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}">
-            <block wx:for="{{goodsPicsInfo.image}}" wx:key="">
-                <swiper-item>
-                <video wx:if="{{item.ext=='mp4'}}" id="myVideo"  class="slide-image" src="{{item.url}}" controls autoplay="autoplay">
-                  <cover-view class="controls" src="{{item.image}}" mode="aspecFit">
-                  </cover-view>
-                </video>
-                <image wx:else src="{{item.url}}" class="slide-image"/>
-                </swiper-item>
-            </block>
-        </swiper>
+    <view>
+      <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
+        <block wx:for="{{goodsPicsInfo.image}}" wx:key="">
+          <swiper-item>
+            <video wx:if="{{item.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{item.url}}" controls autoplay="autoplay">
+              <cover-view class="controls" src="{{item.image}}" mode="aspecFit">
+              </cover-view>
+            </video>
+            <image wx:else src="{{item.url}}" class="slide-image" />
+          </swiper-item>
+        </block>
+      </swiper>
     </view>
     <view class="shopping_container">
-        <view class="goods-name">
-        <text style='text-align:left;'>{{goodsname?goodsname:''}}</text>
-        <text>{{goodsinfo?goodsinfo:'高端大气'}}</text>
-        </view>
-        <view class="goods-info" style="margin-top:10px;height:15%;padding-top:10rpx;">
-        <text style="background-color:red;color:white; border-bottom-right-radius: 10px;border-top-right-radius: 10px;font-size:12px;width:45%;height:100%;text-align:center;">{{goodssale>0?goodssale:'100'}}人已送</text>
-        <text style="color:red;font-size:14px;width:45%;text-align:right">￥{{goodsprice>0?goodsprice:'120'}} 元</text>
-        </view>
-        <view class="goods-info"> 
+      <view class="goods-name">
+        <text>{{goodsname?goodsname:''}}</text>
+        <text class="goods_prom">{{goodsinfo?goodsinfo:'高端大气'}}</text>
+      </view>
+      <view class="goods-info">
+        <text class="left-tag">{{goodssale>0?goodssale:'100'}}人已送</text>
+        <text class="right-tag">￥{{goodsprice>0?goodsprice:'120'}}</text>
+      </view>
+      <view>
         <!-- 
           <view style="width:50%;text-align:right"><image class="img_tag" src="../../images/u48.png"></image></view>
           -->
-         <text style="width:50%;color:gray;font-size:14px;text-align:left;margin:5px;">适合送: {{goodstag?goodstag:'朋友 同事'}}</text>
-        </view>
+        适合送
+        <text class="goods_tag">{{goodstag?goodstag:'朋友 同事'}}</text>
+      </view>
     </view>
   </view>
 
-  <view class='page'>  
-    <view class="page__bd page__bd_spacing">  
-      <button class='showGoodsinfo' bindtap="showGoodsinfo" style='font-size:14px;'>详情
-        <!--
+  <view class="shopping_container">
+    <view class="prd-detail">
+    <text>详情</text>
+      <!--<button class='showGoodsinfo' bindtap="showGoodsinfo">详情
+        
         <icon wx:if="{{!hideviewgoodsinfo}}" style="margin-top:-5rpx;" class="Hui-iconfont iconv-uparrow" />
         
         <icon wx:if="{{hideviewgoodsinfo}}" style="margin-top:-5rpx;" class="Hui-iconfont iconv-downarrow"/>
-        -->
-      </button>  
-      <view class='wxParse' hidden='{{hideviewgoodsinfo}}' style='height:{{dkheight}}px;'>
-        <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}"/>  
-      </view> 
-<!-- 
+        
+      </button>  -->
+      <view class='wxParse' hidden='{{hideviewgoodsinfo}}'>
+        <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
+      </view>
+      <!-- 
       <button class='showGoodspara' style='margin-top:5px;' bindtap="showGoodspara">参数规格</button>  
       <view class='wxParse' hidden='{{hideviewgoodspara}}' style='height:{{dkheight}}px;'>  
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}"/>  
       </view>
   -->
-    </view>  
-  </view>  
+    </view>
+  </view>
 </scroll-view>
- <view>  
-  <view >  
-    <modal title="{{attrValueList.length>0?'请选择型号规格':add_cart_title}}" hidden="{{modalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
+<view>
+  <view>
+    <modal class="modalbox" title="{{attrValueList.length>0?'选择样式':add_cart_title}}" hidden="{{modalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list">
-      <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key=""> 
-        <view>{{attrValueObj.name}}:</view>
-        <view class="attr_value {{attrIndex<=firstIndex || attrValueObj.attrValueStatus[valueIndex]?(value==attrValueObj.selectedValue?'attr_value_active':''):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus[valueIndex]}}" 
-      data-value="{{value}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" wx:for="{{attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key="">
-          <view > 
-            <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}" style="width:30px;height:30px;margin-left:2px;"></image>
-            <view wx:elif="{{attrValueObj.type == 1}}" style="margin-left:2px;">{{attrValueObj.value[valueIndex]}}</view>
-            {{attrValueObj.note[valueIndex]}}
+        <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="">
+          <view>{{attrValueObj.name}}:</view>
+          <view class="attr_value {{attrIndex<=firstIndex || attrValueObj.attrValueStatus[valueIndex]?(value==attrValueObj.selectedValue?'attr_value_active':''):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus[valueIndex]}}"
+            data-value="{{value}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" wx:for="{{attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key="">
+            <view>
+              <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}" style="width:30px;height:30px;margin-left:2px;"></image>
+              <view wx:elif="{{attrValueObj.type == 1}}" style="margin-left:2px;">{{attrValueObj.value[valueIndex]}}</view>
+              {{attrValueObj.note[valueIndex]}}
+            </view>
           </view>
         </view>
-      </view> 
-  
-    </view>
-    <view wx:if="{{goodsname}}" style="color: blue; font-size: 8pt;margin-top:1px;" class="price-now">{{sku_id}}:{{goodsname}}</view>
-		<text wx:if="{{sku_earnest_price}}" style="color: red; font-size: 8pt;" class="price-now"> ￥{{sku_sell_price}}元 </text>
-    </modal> 
-  </view>  
+      </view>
+      <view wx:if="{{goodsname}}" class="sku-code">编号: {{sku_id}}</view>
+      <view class="price-now"><text wx:if="{{sku_earnest_price}}">￥{{sku_sell_price}}</text></view>
+    </modal>
+  </view>
 </view>
 <view class="footer">
-    <view class="opt-buttons">
-        <view class="button-group" bindtap="wishCart">
-            <image src="../../../images/u51.png" class="button-image" />
-            <text class="button-text">加入心愿单</text>
-        </view>
-        <view class="button-group" bindtap="showCart">
-            <image src="../../../images/icon_home.png" class="button-image" />
-            <text class="button-text">首页</text>
-        </view>
-    </view>
-    <button class="add-cart" bindtap="goodsmodel">购买送出</button>
+  <view class="opt-buttons">
+  <button class="wish-cart" bindtap="wishCart">加入心愿单</button>
+  <button class="add-cart" bindtap="goodsmodel">购买送出</button>
+  </view>
 </view>

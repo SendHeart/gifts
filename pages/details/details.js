@@ -1,6 +1,6 @@
 var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js");
-var weburl = "https://sendheart.dreamer-inc.com";
+var weburl = "https://czw.saleii.com";
 
 Page({
     data: {
@@ -562,11 +562,10 @@ Page({
   },
 
   onShareAppMessage: function () {
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '' 
     return {
-      title: '送心',
-      desc: '送心!',
-      path: '/pages/details/details?id=' + this.data.goodsid + '&refername='+username
+      title: '展易购商城',
+      desc: '展易购3D商城!',
+      path: '/pages/index/index?id=123'
     }
   }
 })

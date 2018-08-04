@@ -20,6 +20,11 @@
 
 .container {
     background-color: #F2f2f2;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 /*user info*/
@@ -28,29 +33,35 @@
   flex-direction: column;
   align-items: center;
   height: 250rpx;
-  background: #333;
+  background: #292929;
 }
 
 .userinfo-avatar {
-  width: 128rpx;
-  height: 128rpx;
+  width: 70rpx;
+  height: 70rpx;
   margin: 20rpx;
   border-radius: 50%;
 }
 
 .userinfo-nickname {
-  color: #F2f2f2;
+  color: #fff;
+  font-size: 36rpx;
+  font-weight: bold;
 }
 
 .banner {
 	width: 100%;
 	height: 70rpx;
-	padding-top: 10rpx;
+	padding:0 10rpx;
   text-align: center;
-  background-color:#333;
+  background-color:#292929;
 	/*margin-left: 15rpx;*/
 }
-
+.banner text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FFF;
+}
 .banner image {
 	width: 100%;
 	height: 0rpx;
@@ -145,29 +156,36 @@ view.text text {
 }
 
 .venues_box {
-  width: 100%;
-  padding: 0 10rpx;
- 
+  display:block;
+  width: 98%;
+  padding-bottom:100rpx;
+  margin-left:2%;
+  margin-top: 15rpx;
+  overflow-x: hidden;
 }
 
 .venues_item {
-    display: inline-block;
-    width: 45%;
-    padding: 10rpx 10rpx;
-    background: white;
-    text-align: left;
-    margin-left:10rpx;
+  display: inline-block;
+  width: 47%;
+  margin: 0 1% 15rpx 1%;
+  background: #ffffff;
+  border-radius: 10rpx;
+  text-indent: 20rpx;
+  padding-bottom: 20rpx;
 
 }
 
-.venues_item image{
-    width: 100%;
-    height: 300rpx;
+.venues_item .mainpic {
+  display: block;
+  width: 310rpx;
+  height: 310rpx;
+  margin: 20rpx auto;
 }
 
  .venues_item .goods_name {
-  color: black; 
-  font-size: 8pt;
+  display: block;
+  color: #444;
+  font-size:28rpx;
 }
 
  .venues_item .goods_tag {
@@ -182,11 +200,20 @@ view.text text {
   height: 30rpx;
 }
  .venues_item .goods_prom {
-   color: gray; 
-   font-size: 8pt;
-   margin-top:0px;
+  display: block;
+  color: #999;
+  font-size:28rpx;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
-
+.price-now {
+  color: #e34c55;
+  font-size:28rpx;
+  font-weight: bold;
+}
+.price-now::first-letter {
+  font-size: 20rpx;
+}
 .search {
 	width: 100%;
 	height: 80rpx;

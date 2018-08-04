@@ -1,17 +1,6 @@
-@import "../../lib/style/font.wxss";
-
-page {
-  background: #f2f2f2;
-  overflow-x: hidden;
-  width: 100%;
-}
-
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
-}
-
+/*没有用到iconfont注释降低消耗*/
+/*@import "../../lib/style/font.wxss";
+ 
 .Hui-iconfont {
   font-family: "Hui-iconfont";
   font-size: 30rpx;
@@ -24,10 +13,23 @@ page {
 .iconv-downarrow:after {
   content: '\e6d5';
 }
+*/
+page {
+  background: #f2f2f2;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 
 .banner {
   width: 100%;
-  height: 300rpx;
+  height: 296rpx;
   /*margin-left: 15rpx;*/
   background-color: #f2f2f2;
   background-repeat: norepeat;
@@ -48,17 +50,22 @@ page {
   justify-content: center;
   margin: 5px;
 }
-
+.wrap {
+  width: 100%;
+  position: absolute;
+  top:200rpx;
+}
 .user {
   width: 96%;
-  margin: 15rpx auto;
+  margin: 15rpx auto 0 auto;
   background: #fff;
   display: flex;
   /*flex-flow: column nowrap;*/
   justify-content: left; /*子项横轴上居中对齐*/
   align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
   opacity: 1;
-  border-radius: 10rpx;
+  border-radius:10rpx 10rpx 0 0;
+  border: 1rpx solid #eee;
 }
 
 .user .userinfo {
@@ -105,7 +112,6 @@ page {
   align-items: center;
   justify-content: space-between;
   box-sizing: border-box;
-  border-radius: 0 0 10rpx 10rpx;
 }
 
 /*整体列表*/
@@ -114,7 +120,6 @@ page {
   display: flex;
   flex-direction: column;
   padding-left: 10rpx;
-  margin-bottom: 1rpx;
 }
 
 /*item与button的容器*/
@@ -123,6 +128,7 @@ page {
   position: relative;
   width: 100%;
   height: 162rpx;
+  border-top: 1rpx solid #eee;
 }
 
 /*每行单元格*/
@@ -133,7 +139,7 @@ page {
   flex-direction: row;
   height: 120rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #F2F2F2;
   padding: 20rpx 0;
   margin-right: 20rpx;
   position: absolute;
@@ -171,11 +177,11 @@ page {
 /*右下部分价格与数量*/
 
 .carts-subtitle {
-  font-size: 24rpx;
-  color: #999;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  font-size: 25rpx;
+	color:darkgray;
+	display: flex;
+	flex-direction: row;
+	justify-content:space-between;
 }
 
 /*价格*/
@@ -207,13 +213,8 @@ page {
 .subtitle2 {
   background: white;
   width: 100%;
-  height: 40rpx;
-  padding: 10rpx 0;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  font-size: 28rpx;
-  color: #999;
+  height: 6rpx;
+  border-radius: 0 0 10rpx 10rpx;
 }
 
 /*人民币符号*/
@@ -236,12 +237,14 @@ page {
 /*加号与减号*/
 
 .stepper text {
-  width: 24px;
-  line-height: 24px;
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 44rpx;
   text-align: center;
   float: left;
-  border: 1px solid #ccc;
+  border: 1px solid #DDD;
   border-radius: 50%;
+  color: #999;
 }
 
 /*数值*/
@@ -401,16 +404,15 @@ page {
 }
 
 .pick-goods {
-  height: 100%;
+
   width: 96%;
-  margin: 20rpx auto 0 auto;
+  margin: 0 auto;
   display: flex;
   flex-direction: row;
   justify-content: left; /*子项横轴上居中对齐*/
   text-align: left;
   bottom: 0;
   background: white;
-  border-radius: 10rpx 10rpx 0 0;
   border-bottom: 1rpx solid #eee;
   z-index: 1;
 }
@@ -451,43 +453,55 @@ page {
   height: 70rpx;
   margin-right: 1rpx;
   margin-top: 20rpx;
-  margin-left: 16rpx;
+  margin-left: 20rpx;
 }
 
 .pick-goods .image-btnbuy {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
-  width: 180rpx;
-  height: 80rpx;
+  width: 200rpx;
+  height: 60rpx;
   position: absolute;
-  right: 30rpx;
-  margin-top: 25rpx;
-  border: 3rpx solid #e34c55;
+  right: 35rpx;
+  margin-top: 40rpx;
+  border: 0rpx solid #e34c55;
   border-radius: 20rpx;
 }
-
+.rightarrow {
+  width: 32rpx;
+  height: 32rpx;
+  margin-top: 7rpx;
+  margin-left: 8rpx;
+}
 .pick-goods-action {
   color: #e34c55;
   font-size: 28rpx;
   font-weight: bold;
-  margin: 0 auto;
 }
-
+/*送出按钮*/
 .buybutton {
   display: flex;
   flex-direction: row;
-  justify-content:space-around;
+  justify-content:left;
   line-height: 100rpx;
-  
-  width: 50%;
+  width: 60%;
   height: 100rpx;
-  background-color: #e34c55;
+  /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
+  background: #e34c55;
   color: white;
   font-size: 36rpx;
-  border-radius: 10rpx;
-  border: 0;
+  border-radius: 20rpx;
   margin: 30rpx auto;
+  -webkit-box-shadow: 0px 6rpx 0px rgba(219,31,5,1);
+  -moz-box-shadow: 0px 6rpx 0px rgba(219,31,5,1);
+  box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
+}
+
+.iconbtn {
+  width: 64rpx;
+  height: 64rpx;
+  margin: 18rpx 8rpx 18rpx 20%;
 }
 
 /*推荐商品列表*/
@@ -530,36 +544,42 @@ page {
   height: 30rpx;
 }
 
+.venues_box {
+  display:block;
+  width: 98%;
+  padding-bottom:40rpx;
+  margin-left: 2%;
+}
+
 .venues_item {
   display: inline-block;
-  width: 46.5%;
-  margin: 0 1% 10rpx 2%;
+  width: 47%;
+  margin: 0 1% 15rpx 1%;
   background: #ffffff;
   border-radius: 10rpx;
-  padding-bottom: 20rpx;
-
+  text-indent: 20rpx;
+  padding-bottom: 10rpx;
 }
 
 .venues_item .mainpic {
   display: block;
-  width: 300rpx;
-  height: 300rpx;
-  margin: 20rpx auto
+  width: 310rpx;
+  height: 310rpx;
+  margin: 20rpx auto;
 }
 
 .venues_item .goods_name {
   display: block;
   color: #444;
   font-size:28rpx;
-  margin-left: 30rpx;
 }
 
 .venues_item .goods_tag {
-  color: gray;
-  font-size: 8pt;
-  margin-top: 0px;
-  border: 2px solid #f2f2f2;
-  border-style: solid;
+  color: #999;
+  font-size: 20rpx;
+  padding: 2rpx 6rpx;
+  border: 1px solid #f2f2f2;
+  border-radius: 6rpx;
 }
 
 .venues_item .goods_tag image {
@@ -568,13 +588,21 @@ page {
 }
 
 .venues_item .goods_prom {
+  display: block;
   color: #999;
   font-size:28rpx;
-  margin-left: 30rpx;
+  white-space: nowrap;
+  overflow-x: hidden;
 }
 
 .price-now {
   color: #e34c55;
-  font-size:24rpx;
-  margin-left: 30rpx;
+  font-size:28rpx;
+  text-align: right;
+  padding-right: 20rpx;
+  font-weight: bold;
+}
+
+.price-now::first-letter {
+  font-size: 20rpx;
 }
