@@ -40,8 +40,8 @@
     "list": [
       {
         "pagePath": "pages/hall/hall",
-        "iconPath": "images/logo_s.png",
-        "selectedIconPath": "images/logo.png",
+        "iconPath": "images/logo.png",
+        "selectedIconPath": "images/logo_s.png",
         "text": "送心"
       },
       {

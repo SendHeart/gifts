@@ -1,6 +1,6 @@
 var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js");
-var weburl = "https://czw.saleii.com";
+var weburl = app.globalData.weburl;//"https://czw.saleii.com";
 
 Page({
     data: {
@@ -139,7 +139,7 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-            console.log(res.data.result);
+            console.log('goods_sku:',res.data.result);
             var attrValueList = res.data.result.spec_select_list;
             var commodityAttr = res.data.result.sku_list;
             if (!commodityAttr) return; 
@@ -174,10 +174,10 @@ Page({
     //事件处理函数 选择型号规格  
     goodsmodel: function () {
       var that = this;
-     
       that.setData({
         modalHidden: !that.data.modalHidden,
         sku_id: that.data.commodityAttr[0].id,
+        sku_sell_price: that.data.commodityAttr[0].sell_price,
         add_cart_title: '商品名称',
         wishflag: 0,
       })

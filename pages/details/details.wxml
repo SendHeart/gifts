@@ -71,8 +71,8 @@
           </view>
         </view>
       </view>
-      <view wx:if="{{goodsname}}" class="sku-code">编号: {{sku_id}}</view>
-      <view class="price-now"><text wx:if="{{sku_earnest_price}}">￥{{sku_sell_price}}</text></view>
+      <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
+      <view wx:if="{{sku_sell_price}}" class="price-now"><text>￥{{sku_sell_price}}</text></view>
     </modal>
   </view>
 </view>
