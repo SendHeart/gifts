@@ -47,7 +47,7 @@ Page({
     var that = this;
     var shareflag = !that.data.shareflag
     that.setData({
-      shareflag: shareflag,
+     //shareflag: shareflag,
     });
  
   },
@@ -200,12 +200,13 @@ Page({
     console.log(e.detail.rawData)
   },
   onLoad: function (options) {
-    console.log('onLoad')
     var that = this
     var wish_id = options.wish_id ? options.wish_id:''
     that.setData({
       wish_id:wish_id,
     })
+    console.log('onLoad', wish_id)
+   // console.log('wish_id:', wish_id)
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
