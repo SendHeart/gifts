@@ -34,11 +34,16 @@ Page({
     wx.navigateTo({
       url: '../../order/list/list'
     });
-    */
+   
    
     wx.navigateTo({
-      url: '../../list/list'
+      url: '../../hall/hall'
     });
+     */
+    wx.switchTab({
+      url: '../../hall/hall'
+    })
+
   },
 
   receiveTapTag: function (e) {

@@ -34,6 +34,8 @@ Page({
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     wish_id:null,
+    wish_nickname:null,
+    wish_headimg:null,
  
   },
 
@@ -289,9 +291,29 @@ Page({
         })
        
         if (wish_id){
-          that.shareTapTag()
+          wx.request({
+            url: weburl + '/api/client/get_name',
+            method: 'POST',
+            data: {
+              username: wish_id,
+              access_token: token,
+            },
+            
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+            success: function (res) {
+              var user_info = res.data.result
+              that.setData({
+                wish_nickname: user_info['wx_nickname'],
+                wish_headimg: user_info['wx_headimg'],
+              })
+              that.shareTapTag()
+            },
+
+          })
         }
-        
       }
     })
   },

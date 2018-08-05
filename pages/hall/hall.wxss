@@ -228,10 +228,10 @@ page {
 /*stepper容器*/
 
 .stepper {
-  width: 80px;
+  width: 90px;
   margin: 0 auto;
   position: absolute;
-  right: 20rpx;
+  right: 10rpx;
 }
 
 /*加号与减号*/
