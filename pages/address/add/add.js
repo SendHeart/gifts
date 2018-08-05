@@ -1,5 +1,5 @@
 var app = getApp();
-var weburl = "https://czw.saleii.com";
+var weburl = app.globalData.weburl; 
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 var qqmapsdk;
 Page({

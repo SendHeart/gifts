@@ -2,7 +2,6 @@ import defaultData from '../../data';
 var util = require('../../utils/util.js');
 //获取应用实例
 var app = getApp();
-//var weburl = "https://czw.saleii.com";
 var weburl = app.globalData.weburl;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
@@ -44,7 +43,7 @@ Page({
   },
   // 点击获取对应分类的数据
 
-  shareTapTag: function (e) {
+  shareTapTag: function () {
     var that = this
     var shareflag = !that.data.shareflag
     that.setData({
@@ -237,8 +236,8 @@ Page({
     var minusStatuses = []
     var page = that.data.page
     var pagesize = that.data.pagesize
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var wish_id = that.data.wish_id
     console.log('query_wish_cart:', wish_id)
     wx.request({
@@ -257,6 +256,7 @@ Page({
       },
       success: function (res) {
         var carts = []
+        console.log('share wish id:', wish_id, ' result:', res.data)
         if (!res.data.result) return
         var cartlist = res.data.result.list
         var showmorehidden = that.data.showmorehidden
@@ -287,6 +287,7 @@ Page({
           all_rows: carts.length,
           page_num:page_num.toFixed(0),
         })
+       
         if (wish_id){
           that.shareTapTag()
         }

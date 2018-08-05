@@ -2,8 +2,11 @@
 //获取应用实例
 var util = require('../../utils/util.js')
 var wxparse = require("../../wxParse/wxParse.js");
-var uploadurl ='https://czw.saleii.com//api/upload/index4';
+
 var app = getApp()
+var weburl =  app.globalData.weburl;
+var wssurl = app.globalData.wssurl;
+var uploadurl = weburl + '/api/upload/index4';
 var socketOpen = false
 var socketMsgQueue = []
 var sendMsgQueue = []
@@ -198,7 +201,7 @@ Page({
     */
     if (!socketOpen) {
       wx.connectSocket({
-        url: 'wss://czw.saleii.com/wss'
+        url: wssurl + '/wss'
       })
       wx.onSocketError(function (res) {
         socketOpen = false

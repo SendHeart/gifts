@@ -5,7 +5,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    weburl: "https://czw.saleii.com",
+    weburl: "https://sendheart.dreamer-inc.com",
   },
 
   /**

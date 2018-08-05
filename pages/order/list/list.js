@@ -1,5 +1,5 @@
 var app = getApp();
-var weburl = "https://czw.saleii.com";
+var weburl = app.globalData.weburl; 
 
 var navList_order = [
   { id: "send", title: "我送出的" },

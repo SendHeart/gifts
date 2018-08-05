@@ -4,7 +4,7 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
 var appsecret = app.globalData.secret;
-//var weburl = 'https://czw.saleii.com';
+
 //console.log(url);
 Page({
 

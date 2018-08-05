@@ -1,6 +1,5 @@
 var app = getApp();
-var weburl = "https://czw.saleii.com";
-
+var weburl = app.globalData.weburl; 
 // 使用function初始化array，相比var initSubMenuDisplay = [] 既避免的引用复制的，同时方式更灵活，将来可以是多种方式实现，个数也不定的
 function initSubMenuDisplay() {
 	return ['hidden', 'hidden', 'hidden'];

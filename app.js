@@ -1,6 +1,7 @@
 //app.js
 var wxToast = require('toast/toast.js')
 var weburl = 'https://sendheart.dreamer-inc.com'
+var wssurl = 'wss://sendheart.dreamer-inc.com'
 App({
   globalData: {
     appid: 'wx986f630cc3d1a7fc',//  小程序开发账号  wxe59fb5712b45adb7

@@ -1,6 +1,6 @@
 var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js");
-var weburl = app.globalData.weburl;//"https://czw.saleii.com";
+var weburl = app.globalData.weburl;
 
 Page({
     data: {
