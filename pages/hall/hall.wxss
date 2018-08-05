@@ -36,7 +36,6 @@ page {
   align-content: center;
   opacity: 1;
   background-size: 100% 80%;
-  z-index: 1;
 }
 
 .banner image {
@@ -55,7 +54,6 @@ page {
   width: 100%;
   position: absolute;
   top:200rpx;
-  z-index: 99;
 }
 .user {
   width: 96%;
