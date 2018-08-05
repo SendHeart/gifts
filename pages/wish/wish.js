@@ -48,7 +48,7 @@ Page({
     var that = this;
     var shareflag = !that.data.shareflag
     that.setData({
-     //shareflag: shareflag,
+     shareflag: shareflag,
     });
  
   },
@@ -233,20 +233,19 @@ Page({
   },
 
   query_wish_cart: function () {
-    //venuesList
     var that = this
     var minusStatuses = []
     var page = that.data.page
     var pagesize = that.data.pagesize
-    var useranme = that.data.wish_id ? that.data.wish_id: username
-    var token = token
-    
-    // cart info
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var wish_id = that.data.wish_id
+    console.log('query_wish_cart:', wish_id)
     wx.request({
       url: weburl + '/api/client/query_cart',
       method: 'POST',
       data: { 
-        username: username, 
+        username: wish_id ? wish_id : username, 
         access_token: token,
         page:page,
         pagesize:pagesize, 
@@ -257,11 +256,11 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('query_cart:',res.data);
-        var carts = [];
+       
+        var carts = []
         if (!res.data.result) return
-        var cartlist = res.data.result.list;
-        var showmorehidden = that.data.showmorehidden;
+        var cartlist = res.data.result.list
+        var showmorehidden = that.data.showmorehidden
 
         var index = 0;
         for (var key in cartlist) {
@@ -288,7 +287,7 @@ Page({
           showmorehidden: showmorehidden,
           all_rows: carts.length,
           page_num:page_num.toFixed(0),
-        });
+        })
       }
     })
   },
@@ -313,7 +312,7 @@ Page({
       success: function (res) {
         console.log(res)
         if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
-          that.shareTapTag()
+         // that.shareTapTag()
         }
       },
       fail: function (res) {
