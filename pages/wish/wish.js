@@ -45,12 +45,12 @@ Page({
   // 点击获取对应分类的数据
 
   shareTapTag: function (e) {
-    var that = this;
+    var that = this
     var shareflag = !that.data.shareflag
     that.setData({
      shareflag: shareflag,
     });
- 
+    console.log('share wish:',that.data.shareflag)
   },
 
   addWishTapTag: function (e) {
