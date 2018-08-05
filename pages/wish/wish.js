@@ -256,7 +256,6 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-       
         var carts = []
         if (!res.data.result) return
         var cartlist = res.data.result.list
@@ -288,6 +287,10 @@ Page({
           all_rows: carts.length,
           page_num:page_num.toFixed(0),
         })
+        if (wish_id){
+          that.shareTapTag()
+        }
+        
       }
     })
   },
