@@ -21,7 +21,7 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    main_title_Bg: weburl+"/uploads/songxin_banner1.png",
+    main_title_Bg: weburl+"/uploads/songxin_banner.png",
     gifts_rcv:0,
     gifts_snd:0,
     note:'',

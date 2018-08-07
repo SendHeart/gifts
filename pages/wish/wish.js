@@ -330,11 +330,12 @@ Page({
   onShareAppMessage: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var title = that.data.nickname + '的心愿单,快打开看看吧~';
     var shareObj = {
-      title: '送心',        // 默认是小程序的名称(可以写slogan等)
+      title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: "我的心愿单",
       path: '/pages/wish/wish?wish_id=' + username,   // 默认是当前页面，必须是以‘/’开头的完整路径
-      //imageUrl: weburl + '/uploads/gift_logo.png',     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      imageUrl: weburl + '/uploads/wishlist.png',     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         console.log(res)
         if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调

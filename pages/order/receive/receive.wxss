@@ -227,7 +227,7 @@ page {
 }
 
 .subject .toptitle {
-  font-size: 48rpx;
+  font-size: 35rpx;
   font-weight: bold;
   color: #fff;
 }
