@@ -549,6 +549,7 @@ page {
   width: 98%;
   padding-bottom:40rpx;
   margin-left: 2%;
+  overflow: hidden;
 }
 
 .venues_item {
@@ -572,6 +573,9 @@ page {
   display: block;
   color: #444;
   font-size:28rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
 }
 
 .venues_item .goods_tag {

@@ -276,7 +276,7 @@ Page({
       var order_no = that.data.order_no;
       var username = that.data.username;
       var token = that.data.token;
-      var title = that.data.nickname+'送您1份礼物,拆开看看';
+      var title = '收到一份来自' + that.data.nickname + '的大礼,快打开看看吧~';
       var note = e.target.dataset.note ? e.target.dataset.note:that.data.note
       
       note = note ? note :'送你一份心意，愿美好长存!'

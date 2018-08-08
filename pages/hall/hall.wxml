@@ -150,4 +150,6 @@
 </view>
 -->
 </view>
+<!-- 
 <button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">获取用户信息</button>
+-->

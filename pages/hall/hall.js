@@ -653,7 +653,7 @@ Page({
         if (!recommentslist) return
         for (var i = 0; i < recommentslist.length; i++) {
           recommentslist[i]['image'] = weburl + '/' + recommentslist[i]['image'];
-          recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
+          //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
           if (i > 1) {
             recommentslist[i]['hidden'] = 0;  //1
           }
