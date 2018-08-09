@@ -1,8 +1,10 @@
 import defaultData from '../../data';
 var util = require('../../utils/util.js');
+
 //获取应用实例
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var navList = [
   { id: "is_recommend", title: "推荐"  ,value:"1"},
   { id: "activity_flag", title: "精品" , value: "1" }, 
@@ -44,9 +46,10 @@ Page({
     tab_value:"1",
     tab2: 'default',
     updown: 0,     //升序 降序
-    shop_type:1,  //商家类型 1普通
+    shop_type:shop_type,  //商家类型 1普通
     scrollLeft: 0,
     toView:0,
+    shop_type:shop_type,
     
   },
 
@@ -315,7 +318,7 @@ Page({
     return {
       title: '送心',
       desc: '送礼就是送心!',
-      path: '/pages/list/list?id=123'
+      path: '/pages/list/list?refername='+username
     }
   }
 })

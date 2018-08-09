@@ -1,5 +1,6 @@
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var navList_order = [
   { id: "send", title: "我送出的" },
   { id: "receive", title: "我收到的" },

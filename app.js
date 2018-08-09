@@ -11,6 +11,7 @@ App({
     openid: null,
     username: null,
     code: null,
+    shop_type:2 , //礼物类应用
    
   },
  

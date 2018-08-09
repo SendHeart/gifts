@@ -6,6 +6,7 @@ var page = 1;
 var pagesize = 20;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '15355813859';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+var shop_type = app.globalData.shop_type;
 var shop_id = 3749;
 // 请求数据
 
@@ -41,7 +42,7 @@ Page({
         pagesize: pagesize,
         username: username,
         access_token: token,
-        shop_type: 0,
+        shop_type: shop_type,
         shop_id: shop_id,
       },
       header: {

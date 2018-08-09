@@ -1,6 +1,7 @@
 var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js");
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 
 Page({
     data: {
@@ -42,6 +43,7 @@ Page({
         selectValueInfo:'',
         wishflag:0,
         goodsinfoshowflag:0,
+        shop_type:shop_type,
 
     },
 
@@ -57,6 +59,7 @@ Page({
         var goodsprice = options.goods_price
         var goodssale = options.sale
         var image = options.image
+        var shop_type =  that.data.shop_type
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
           goodsname: goodsname ? goodsname:'',
@@ -76,6 +79,7 @@ Page({
               username: options.username ? options.username : username, 
               access_token: token, 
               goods_id: options.id, 
+              shop_type:shop_type
             },
             header: {
               'Content-Type': 'application/x-www-form-urlencoded',

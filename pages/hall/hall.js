@@ -3,6 +3,8 @@ var util = require('../../utils/util.js');
 //获取应用实例
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
+
 var page = 1;
 var pagesize = 10;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -45,6 +47,7 @@ Page({
     amount:0,
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+    shop_type:shop_type,
 
   }, 
   userTapTag: function () {
@@ -560,6 +563,7 @@ Page({
     var minusStatuses = []
     var page=that.data.page
     var pagesize=that.data.pagesize
+    var shop_type = that.data.shop_type
 
     // cart info
     wx.request({
@@ -638,6 +642,7 @@ Page({
       data: { 
         username: username, 
         access_token: token,
+        shop_type:shop_type,
         page:page,
         pagesize:pagesize 
       },
