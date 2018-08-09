@@ -771,7 +771,11 @@ Page({
     var that = this;
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var username = wx.getStorageSync('username');
- 
+    if(!username){
+      wx.switchTab({
+        url: '../my/index'
+      });
+    }
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({

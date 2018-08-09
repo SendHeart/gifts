@@ -148,11 +148,11 @@ Page({
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that = this
     var status = parseInt(options.status ? options.status:0)
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     if (!username) {//登录
       wx.navigateTo({
-        url: '../login/login?wechat=1'
+        url: '../login/login'
       })
     }
     // 存为全局变量，控制支付按钮是否显示

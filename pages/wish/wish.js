@@ -43,6 +43,17 @@ Page({
   swiperchange: function (e) {
     //console.log(e.detail.current)
   },
+  //事件处理函数
+  login: function () {
+    /*
+    wx.switchTab({
+      url: '../my/index'
+    })
+    */
+    wx.navigateTo({
+      url: '../login/login'
+    })
+  },
   // 点击获取对应分类的数据
 
   shareTapTag: function () {
@@ -200,6 +211,8 @@ Page({
     console.log(e.detail.errMsg)
     console.log(e.detail.userInfo)
     console.log(e.detail.rawData)
+   
+
   },
   onLoad: function (options) {
     var that = this
@@ -208,7 +221,7 @@ Page({
       wish_id:wish_id,
     })
     console.log('onLoad', that.data.wish_id)
-    that.query_wish_cart()
+    
    // 
     wx.getSystemInfo({
       success: function (res) {
@@ -220,7 +233,7 @@ Page({
         })
       }
     })
-
+    that.query_wish_cart()
     
   },
 

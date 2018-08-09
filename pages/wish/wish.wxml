@@ -47,12 +47,15 @@
    <!-- 
     <button type="default" size="default" hover-class="button-hover" class="button" bindtap="getMoreGoodsTapTag" style="margin-top:10px;"> 更多...【{{page}}/{{page_num}}】</button>
     -->
-
-
     <loading hidden="{{loadingHidden}}">
         加载中...
     </loading>
 
 </view>
 </scroll-view>
-<button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">获取用户信息</button>
+<!-- 
+<button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">授权登录</button>
+-->
+<button wx:if="{{!userInfo}}" bindtap="login" type="warn" class="logout">登录</button>
+
+
