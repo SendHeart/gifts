@@ -1,7 +1,11 @@
 var app = getApp();
 var weburl = app.globalData.weburl;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var navList2 = [
+  { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
+  { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
+];
 Page({
   data: {
     orders: [],
@@ -23,6 +27,7 @@ Page({
     headimg:'',
     nickname: userInfo.nickName,
     send_status:0,
+    navList2: navList2,
   },
   returnTapTag: function (e) {
     /*
@@ -50,6 +55,51 @@ Page({
     //loadMore(this);
     console.log("lower");
   },
+
+  get_project_gift_para: function () {
+    var that = this
+    var navList2 = that.data.navList2
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+
+    //项目列表
+    wx.request({
+      url: weburl + '/api/client/get_project_gift_para',
+      method: 'POST',
+      data: {
+        type: 1,  //暂定
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('get_project_gift_para:', res.data.result)
+        var navList_new = res.data.result;
+        if (!navList_new) {
+          /*
+           wx.showToast({
+             title: '没有菜单项2',
+             icon: 'loading',
+             duration: 1500
+           });
+           */
+          return;
+        }
+
+        that.setData({
+          navList2: navList_new
+        })
+
+        setTimeout(function () {
+          that.setData({
+            loadingHidden: true,
+          })
+        }, 1500)
+      }
+    })
+  },
+
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that = this;
@@ -156,7 +206,8 @@ Page({
   },
 
   onShow: function () {
-    //
+    var that = this
+    that.get_project_gift_para()
   },
 
   reloadData: function () {
@@ -245,13 +296,14 @@ Page({
       var username = that.data.username;
       var token = that.data.token;
       var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
+      var imageUrl = that.data.navList2[0]['img']
       console.log('开始送礼'); 
       console.log(options);  
       var shareObj = {
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",
         path: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
-        imageUrl: weburl+'/uploads/gift_logo.png',     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+        imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       　success: function (res) {　　　
           console.log(res)
           if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
@@ -310,7 +362,7 @@ Page({
           　　　　// 此处可以修改 shareObj 中的内容
         //var orderno = order_no.split(','); //有可能一份礼物包括多个订单号 按店铺拆单的情况
         shareObj.path = '/pages/order/receive/receive?order_no=' + order_no+'&receive=1'
-        shareObj.imageUrl = weburl +'/uploads/gift_logo1.png'
+        shareObj.imageUrl = imageUrl
         console.log('礼物分享:')
         console.log(shareObj)
         

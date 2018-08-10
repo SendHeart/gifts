@@ -7,10 +7,14 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-
+var navList2 = [
+  { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
+  { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
+  { id: "trans_gift_logo", title: "转送礼logo", value: "", img: "/uploads/gift_logo.png" },
+ 
+];
 Page({
   data: {
-    images: [],
     all_rows:0,
     venuesItems: [],
     search_goodsname: null,
@@ -36,7 +40,10 @@ Page({
     wish_id:null,
     wish_nickname:null,
     wish_headimg:null,
- 
+    navList2: navList2,
+    painting: {},
+    shareImage: '',
+    showSharePic:true,
   },
 
   //事件处理函数
@@ -214,6 +221,49 @@ Page({
    
 
   },
+  get_project_gift_para: function () {
+    var that = this
+    var navList2 = that.data.navList2
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+
+    //项目列表
+    wx.request({
+      url: weburl + '/api/client/get_project_gift_para',
+      method: 'POST',
+      data: {
+        type: 1,  //暂定
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('get_project_gift_para:',res.data.result)
+        var navList_new = res.data.result;
+        if (!navList_new) {
+          /*
+           wx.showToast({
+             title: '没有菜单项2',
+             icon: 'loading',
+             duration: 1500
+           });
+           */
+          return;
+        }
+         
+        that.setData({
+          navList2: navList_new
+        })
+
+        setTimeout(function () {
+          that.setData({
+            loadingHidden: true,
+          })
+        }, 1500)
+      }
+    })
+  },
   onLoad: function (options) {
     var that = this
     var wish_id = options.wish_id ? options.wish_id:''
@@ -233,6 +283,7 @@ Page({
         })
       }
     })
+    that.get_project_gift_para()
     that.query_wish_cart()
     
   },
@@ -339,16 +390,39 @@ Page({
         userInfo: userInfo
       })
     })
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+              //wx.startRecord()
+            }
+          })
+        }
+      }
+    })
   },
+  ShareWechat: function() {
+    var that = this
+    wx.navigateTo({
+      url: '../wish/wishshare/wishshare'
+    })
+  },
+  
+ 
   onShareAppMessage: function (options) {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var title = that.data.nickname + '的心愿单,快打开看看吧~';
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+    var title = userInfo.nickName + '的心愿单,快打开看看吧~'
+    var imageUrl = that.data.navList2[1]['img']
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: "我的心愿单",
       path: '/pages/wish/wish?wish_id=' + username,   // 默认是当前页面，必须是以‘/’开头的完整路径
-      imageUrl: weburl + '/uploads/wishlist.png',     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         console.log(res)
         if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调

@@ -48,13 +48,29 @@
   font-size: 36rpx;
   font-weight: bold;
 }
-
+.banner0 {
+	width: 100%;
+	height: 70rpx;
+	padding:0 10rpx;
+  text-align: center;
+  background-color:#292929;
+ 
+	/*margin-left: 15rpx;*/
+}
+.banner0 text {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FFF;
+}
 .banner {
 	width: 100%;
 	height: 70rpx;
 	padding:0 10rpx;
   text-align: center;
   background-color:#292929;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 	/*margin-left: 15rpx;*/
 }
 .banner text {
@@ -238,4 +254,14 @@ view.text text {
 	height: 40rpx;
 	border: 0px solid #bfbfbf;
   margin-left:10rpx;
+}
+.share-image {
+  width: 600rpx;
+  height: 888rpx;
+  margin: 0 75rpx;
+  border: 1px solid black;
+}
+
+button {
+  margin-top: 20rpx;
 }

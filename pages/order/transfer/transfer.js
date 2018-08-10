@@ -3,6 +3,12 @@ var weburl = app.globalData.weburl;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var util = require('../../../utils/util.js');
 var now = new Date().getTime();
+var navList2 = [
+  { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
+  { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
+  { id: "trans_gift_logo", title: "心愿单logo", value: "", img: "/uploads/gift_logo.png" },
+
+];
 Page({
   data: {
     orders: [],
@@ -26,6 +32,7 @@ Page({
     send_status:0,
     hiddenmodalput:false,
     currenttime: now ? parseInt(now / 1000) : 0,
+    navList2: navList2,
   },
   returnTapTag: function (e) {
     /*
@@ -83,6 +90,50 @@ Page({
     //loadMore(this);
     console.log("lower");
   },
+  get_project_gift_para: function () {
+    var that = this
+    var navList2 = that.data.navList2
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+
+    //项目列表
+    wx.request({
+      url: weburl + '/api/client/get_project_gift_para',
+      method: 'POST',
+      data: {
+        type: 1,  //暂定
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('get_project_gift_para:', res.data.result)
+        var navList_new = res.data.result;
+        if (!navList_new) {
+          /*
+           wx.showToast({
+             title: '没有菜单项2',
+             icon: 'loading',
+             duration: 1500
+           });
+           */
+          return;
+        }
+
+        that.setData({
+          navList2: navList_new
+        })
+
+        setTimeout(function () {
+          that.setData({
+            loadingHidden: true,
+          })
+        }, 1500)
+      }
+    })
+  },
+
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that = this;
@@ -188,7 +239,8 @@ Page({
   },
 
   onShow: function () {
-    //
+    var that = this
+    that.get_project_gift_para()
   },
 
   reloadData: function () {
@@ -278,7 +330,7 @@ Page({
       var token = that.data.token;
       var title = '收到一份来自' + that.data.nickname + '的大礼,快打开看看吧~';
       var note = e.target.dataset.note ? e.target.dataset.note:that.data.note
-      
+      var imageUrl = that.data.navList2[2]['img']
       note = note ? note :'送你一份心意，愿美好长存!'
       console.log('开始转增礼物'); 
       console.log(note);  

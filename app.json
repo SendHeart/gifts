@@ -4,6 +4,7 @@
     "pages/index/index",
     "pages/my/index",
     "pages/wish/wish",
+    "pages/wish/wishshare/wishshare",
     "pages/order/list/list",
     "pages/classify/index",
     "pages/wechat/wechat",

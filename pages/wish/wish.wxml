@@ -6,11 +6,12 @@
   	<image wx:if="{{wish_id}}" class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover" bindtap=""></image>
 	<text class="userinfo-nickname">{{wish_nickname?wish_nickname+'的心愿单':'心愿单'}}</text>
 </view>
-<view class="banner" hidden="{{shareflag==1?true:false}}">
+<view class="banner0" hidden="{{shareflag==1?true:false}}">
   <text>我的心愿单</text>
 </view>
-<view class="banner" style="height:90rpx;margin-bottom:15rpx;"  hidden="{{shareflag==1?true:false}}">
+<view class="banner" style="height:100rpx;margin-bottom:15rpx;"  hidden="{{shareflag==1?true:false}}">
  <button wx:if="{{carts.length>0}}" open-type="share" style="width:30%;font-size:30rpx" bindtap="onShareAppMessage" type="warn">分享到微信</button>
+  <button wx:if="{{carts.length>0}}" style="width:30%;font-size:30rpx" bindtap="ShareWechat" type="warn">分享朋友圈</button>
  <button wx:if="{{carts.length==0}}" style="width:30%;font-size:30rpx" bindtap="addWishTapTag" type="warn">添加心愿单</button>
 </view>
 <!-- 
