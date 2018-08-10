@@ -42,7 +42,7 @@
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
         <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
       </view>
-      <view style="width:30%">
+      <view style="width:30%; text-align:right;">
       <text wx:if="{{(giftflag==0 && item.status==2 && currenttime<item.duetime)}}" bindtap="sendAginTapTag" class="smallbtn2">再送一次</text>
       <text wx:if="{{(giftflag==1 && item.status==2)}}" bindtap="sendAginTapTag" class="smallbtn2">回赠</text>
       <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="sendOtherTapTag" class="smallbtn2">转送</text>

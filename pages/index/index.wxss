@@ -52,7 +52,7 @@ page {
   color: #999;
   padding: 4rpx 10rpx;
   border-radius: 8rpx;
-  margin-right:10rpx;
+  margin-right:10rpx; 
 }
 
 /*接受方微信头像*/

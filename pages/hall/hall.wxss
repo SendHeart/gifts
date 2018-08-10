@@ -54,17 +54,18 @@ page {
   width: 100%;
   position: absolute;
   top:200rpx;
+  margin-bottom: 160rpx;
 }
 .user {
   width: 96%;
   margin: 15rpx auto 0 auto;
-  background: #fff;
+  background: #F2F2F2;
   display: flex;
   /*flex-flow: column nowrap;*/
   justify-content: left; /*子项横轴上居中对齐*/
   align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
   opacity: 1;
-  border-radius:10rpx 10rpx 0 0;
+  border-radius:30rpx 30rpx 0 0;
   border: 1rpx solid #eee;
 }
 
@@ -95,7 +96,7 @@ page {
   color: #999;
   width: 40%;
   text-align: right;
-  font-size: 28rpx;
+  font-size: 24rpx;
 }
 
 .usergifts text {
@@ -128,7 +129,6 @@ page {
   position: relative;
   width: 100%;
   height: 162rpx;
-  border-top: 1rpx solid #eee;
 }
 
 /*每行单元格*/
@@ -300,7 +300,7 @@ page {
   display: flex;
   flex-direction: row;
   background: white;
-  border-radius: 0 0 10rpx 10rpx;
+  border-radius: 0 0 30rpx 30rpx;
 }
 
 .note textarea {
@@ -463,7 +463,7 @@ page {
   width: 200rpx;
   height: 60rpx;
   position: absolute;
-  right: 35rpx;
+  right: 10rpx;
   margin-top: 40rpx;
   border: 0rpx solid #e34c55;
   border-radius: 20rpx;

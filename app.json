@@ -43,7 +43,13 @@
         "pagePath": "pages/hall/hall",
         "iconPath": "images/logo.png",
         "selectedIconPath": "images/logo_s.png",
-        "text": "送心"
+        "text": "送礼"
+      },
+      {
+        "pagePath": "pages/wish/wish",
+        "iconPath": "images/wish.png",
+        "selectedIconPath": "images/wish_s.png",
+        "text": "心愿单"
       },
       {
         "pagePath": "pages/index/index",

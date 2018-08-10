@@ -2,14 +2,14 @@
 	<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </view>
-<view class="menu-area">
+<!--<view class="menu-area">
   <view bindtap="showWish" class="tableviewcell" style='width:{{windowWidth-35}}px' >
     <image src="../../images/u621.png" />
 	  <text >我的心愿单</text>
     <text class="inlinetips">分享心愿单，让Ta知道</text>
   </view>
-
 </view>
+-->
 <view class="menu-area">
   <view bindtap="" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u628.png" />
@@ -25,10 +25,10 @@
   </view>
  </view> 
  <view class="menu-area">
-  <view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+  <!--<view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/corp.png" />
 	  <text>商务合作</text>
-  </view>
+  </view>-->
   <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>

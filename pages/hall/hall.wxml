@@ -23,7 +23,7 @@
       <image class="pick-goods-image" src="../../images/1.png"></image>
     </view>
     <view class="pick-goods-text">
-      <text class="pick-goods-slogan">挑选要送出的礼品</text>
+      <text class="pick-goods-slogan">挑选要送出的礼物</text>
       <text class="pick-goods-slogan2">全场正品，全国包邮</text>
     </view>
     <view class="image-btnbuy">
@@ -90,12 +90,12 @@
       <image class="pick-goods-image" src="../../images/2.png"></image>
     </view>
     <view class="pick-goods-text">
-      <text class="pick-goods-slogan">填写祝福语</text>
-      <text class="pick-goods-slogan2">写下你想要说的话</text>
+      <text class="pick-goods-slogan">写下祝福语</text>
+      <text class="pick-goods-slogan2">填写你想要说的话</text>
     </view>
   </view>
   <view class="note">
-    <textarea bindblur="bindTextAreaBlur" auto-height placeholder="点击编辑" />
+    <textarea bindblur="bindTextAreaBlur" auto-height placeholder="点击编辑" maxlength="56" />
   </view>
 
 <view class="buybutton" bindtap="bindCheckout">
