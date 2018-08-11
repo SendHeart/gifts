@@ -34,16 +34,17 @@ Page({
     scrollHeight: 0,
     showmorehidden: true,
     rshowmorehidden: true,
-    shareflag:0,
+    shareflag:true,
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
-    wish_id:null,
+    wish_id:'',
     wish_nickname:null,
     wish_headimg:null,
     navList2: navList2,
     painting: {},
     shareImage: '',
     showSharePic:true,
+  
   },
 
   //事件处理函数
@@ -65,10 +66,11 @@ Page({
 
   shareTapTag: function () {
     var that = this
-    var shareflag = true
+    var shareflag = false
     that.setData({
      shareflag: shareflag,
-    });
+   
+    })
     console.log('share wish:', shareflag)
   },
 
@@ -267,8 +269,11 @@ Page({
   onLoad: function (options) {
     var that = this
     var wish_id = options.wish_id ? options.wish_id:''
+    
+
     that.setData({
       wish_id:wish_id,
+    
     })
     console.log('onLoad', that.data.wish_id)
     
@@ -303,7 +308,7 @@ Page({
       }
     })
     that.get_project_gift_para()
-    that.query_wish_cart()
+   
     
   },
 
@@ -371,6 +376,7 @@ Page({
           showmorehidden: showmorehidden,
           all_rows: carts.length,
           page_num:page_num.toFixed(0),
+         
         })
        
         if (wish_id){
@@ -391,10 +397,15 @@ Page({
               that.setData({
                 wish_nickname: user_info['wx_nickname'],
                 wish_headimg: user_info['wx_headimg'],
+                wish_id: null,
               })
               that.shareTapTag()
             },
 
+          })
+        }else{
+          that.setData({
+            shareflag: true,
           })
         }
       }
@@ -403,7 +414,8 @@ Page({
   onShow:function(){
     //调用应用实例的方法获取全局数据
     var that=this
-    console.log('onShow')
+    console.log('onShow', that.data.wish_id)
+    that.query_wish_cart()
     
   },
   ShareWechat: function() {

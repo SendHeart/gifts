@@ -32,9 +32,19 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 250rpx;
+  text-align: center;
+  height: 200rpx;
   background: #292929;
 }
+.userinfo_my {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  height: 80rpx;
+  background: #292929;
+}
+
 
 .userinfo-avatar {
   width: 70rpx;
@@ -50,7 +60,7 @@
 }
 .banner0 {
 	width: 100%;
-	height: 70rpx;
+	height: 130rpx;
 	padding:0 10rpx;
   text-align: center;
   background-color:#292929;
@@ -62,6 +72,7 @@
   font-weight: bold;
   color: #FFF;
 }
+
 .banner {
 	width: 100%;
 	height: 70rpx;
@@ -80,7 +91,7 @@
 }
 .banner image {
 	width: 100%;
-	height: 0rpx;
+	height: 100rpx;
 }
 
 .banner .swiper_box {

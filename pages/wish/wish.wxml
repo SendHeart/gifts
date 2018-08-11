@@ -1,15 +1,17 @@
 <!--index.wxml-->
 <import src="../common/nav.wxml"/>
 <import src="../common/nav2.wxml"/>
-<view class="userinfo" hidden="{{shareflag==1?false:true}}">
-	<image wx:if="{{!wish_id}}" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
-  	<image wx:if="{{wish_id}}" class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover" bindtap=""></image>
+<view class="userinfo" hidden="{{shareflag}}">
+   <image class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover" bindtap=""></image>
 	<text class="userinfo-nickname">{{wish_nickname?wish_nickname+'的心愿单':'心愿单'}}</text>
 </view>
-<view class="banner0" wx:if="{{!wish_id}}">
-  <text>我的心愿单</text>
+<view class="userinfo_my" hidden="{{!shareflag}}">
+<!-- 
+ <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
+ -->
+  <text  class="userinfo-nickname">我的心愿单</text>
 </view>
-<view class="banner" style="height:100rpx;margin-bottom:15rpx;"  wx:if="{{!wish_id}}" >
+<view class="banner" style="height:100rpx;margin-bottom:15rpx;"   hidden="{{!shareflag}}" >
  <button wx:if="{{carts.length>0}}" open-type="share" style="width:30%;font-size:30rpx" bindtap="onShareAppMessage" type="warn">分享到微信</button>
   <button wx:if="{{carts.length>0}}" style="width:30%;font-size:30rpx" bindtap="ShareWechat" type="warn">分享朋友圈</button>
  <button wx:if="{{carts.length==0}}" style="width:30%;font-size:30rpx" bindtap="addWishTapTag" type="warn">添加心愿单</button>
@@ -33,10 +35,10 @@
         <view class="goods_prom">
         <text>已收到:{{item.sale?item.sale:0}}件</text>
         </view>
-        <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag==1?true:false}}">
+        <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{!shareflag}}">
         <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:15%;height:50rpx;' src="../../images/icon_delete.png"/>
         </view>
-         <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag==1?false:true}}">
+         <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag}}">
         <button data-index="{{index}}" data-object-id="{{item.objectId}}" type="warn" size="mini" hover-class="button-hover" class="button" bindtap="sendGoodsTapTag" style="margin-top:10px;">送Ta</button>
         </view>
                  

@@ -13,9 +13,14 @@ Page({
     avatarUrl: userInfo.avatarUrl,
   },
   showWish: function () {
+    /*
     wx.navigateTo({
-      url: '../wish/wish'
-    });
+      url: '../wish/wish?wish_id='
+    })
+    */
+    wx.switchTab({
+      url: '../wish/wish?wish_id='
+    })
   },
   navigateToOrder: function (e) {
     var status = e.currentTarget.dataset.status
