@@ -65,11 +65,11 @@ Page({
 
   shareTapTag: function () {
     var that = this
-    var shareflag = !that.data.shareflag
+    var shareflag = true
     that.setData({
      shareflag: shareflag,
     });
-    console.log('share wish:',that.data.shareflag)
+    console.log('share wish:', shareflag)
   },
 
   addWishTapTag: function (e) {
@@ -283,6 +283,25 @@ Page({
         })
       }
     })
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo
+      })
+    })
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+              //wx.startRecord()
+            }
+          })
+        }
+      }
+    })
     that.get_project_gift_para()
     that.query_wish_cart()
     
@@ -384,25 +403,8 @@ Page({
   onShow:function(){
     //调用应用实例的方法获取全局数据
     var that=this
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success() {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              //wx.startRecord()
-            }
-          })
-        }
-      }
-    })
+    console.log('onShow')
+    
   },
   ShareWechat: function() {
     var that = this

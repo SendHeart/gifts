@@ -7,6 +7,8 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var appid = wx.getStorageSync('appid') ? wx.getStorageSync('appid') : '';
+var secret = wx.getStorageSync('appsecret') ? wx.getStorageSync('appsecret') : '';
 var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -22,8 +24,7 @@ Page({
   get_project_gift_para: function () {
     var that = this
     var navList2 = that.data.navList2
-    var page = that.data.page
-    var pagesize = that.data.pagesize
+  
 
     //项目列表
     wx.request({
@@ -63,23 +64,32 @@ Page({
     })
   },
   onLoad () {
-     this.get_project_gift_para()
-    this.eventDraw()
+    var that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth,
+          dkheight: res.windowHeight - 60,
+          scrollTop: that.data.scrollTop + 10
+        })
+      }
+    })
+    that.get_project_gift_para()
+    that.eventDraw()
   },
 
   eventDraw: function () {
     var that = this
     wx.showLoading({
-      title: '绘制分享图片中',
+      title: '生成分享图片',
       mask: true
     })
-    that.setData({
-      showSharePic: !that.data.showSharePic,
-    })
+     
     that.setData({
       painting: {
         width: 375,
-        height: 555,
+        height: 580,
         clear: true,
         views: [
           {
@@ -88,7 +98,7 @@ Page({
             top: 0,
             left: 0,
             width: 375,
-            height: 555
+            height: 355
           },
           /*
          {
@@ -111,15 +121,23 @@ Page({
            bolder: true
          },
          */
-
+          {
+            type: 'image',
+            url: weburl + '/api/WXPay/getQRCode?username='+username +'&appid='+appid+'&secret='+ secret,
+            top: 370,
+            left: 130,
+            width: 128,
+            height: 128,
+            
+          },
           {
             type: 'text',
-            content: userInfo.nickName + '的心愿单',
-            fontSize: 30,
+            content: '长按上面二维码,进入小程序',
+            fontSize: 20,
             color: '#383549',
             textAlign: 'left',
-            top: 500,
-            left: 40,
+            top: 515,
+            left: 60,
             lineHeight: 20,
             MaxLineNumber: 2,
             breakWord: true,

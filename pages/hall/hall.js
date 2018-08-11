@@ -741,8 +741,19 @@ Page({
     console.log(e.detail.rawData)
   },
 
-  onLoad: function () {
-    var that = this;
+  onLoad: function (options) {
+    var that = this
+    var page_type = options.page_type
+    var order_no = options.order_no
+    var receive = options.receive
+    console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
+    if(page_type==2){
+      if (receive==1){
+        wx.navigateTo({
+          url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
+        })
+      }
+    }
     
   },
   //事件处理函数
@@ -779,7 +790,7 @@ Page({
     if(!username){
       wx.switchTab({
         url: '../my/index'
-      });
+      })
     }
     app.getUserInfo(function (userInfo) {
       //更新数据

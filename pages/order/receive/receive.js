@@ -195,7 +195,8 @@ Page({
         userInfo: userInfo
       })
     })
-   
+    
+    
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order',

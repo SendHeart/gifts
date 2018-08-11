@@ -302,7 +302,7 @@ Page({
       var shareObj = {
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",
-        path: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
+        path: '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
         imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       　success: function (res) {　　　
           console.log(res)
@@ -361,7 +361,7 @@ Page({
             // shareBtn
           　　　　// 此处可以修改 shareObj 中的内容
         //var orderno = order_no.split(','); //有可能一份礼物包括多个订单号 按店铺拆单的情况
-        shareObj.path = '/pages/order/receive/receive?order_no=' + order_no+'&receive=1'
+        shareObj.path = '/pages/hall/hall?page_type=2&order_no=' + order_no+'&receive=1'
         shareObj.imageUrl = imageUrl
         console.log('礼物分享:')
         console.log(shareObj)
