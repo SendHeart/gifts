@@ -9,12 +9,13 @@
 <!-- 
  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
  -->
-  <text class="userinfo-nickname" style='margin-top:70rpx;'>我的心愿单</text>
-</view>
-<view class="banner" hidden="{{!shareflag}}" >
+  <text class="userinfo-nickname" style='margin-top:30rpx;'>我的心愿单</text>
+
+<view class="banner" style='margin-top:20rpx;' hidden="{{!shareflag}}" >
  <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" type="warn">分享微信好友</button>
   <button wx:if="{{carts.length>0}}" bindtap="ShareWechat" type="warn">分享朋友圈</button>
   <button wx:if="{{carts.length==0}}" bindtap="addWishTapTag" type="warn">添加心愿单</button>
+</view>
 </view>
 <!-- 
 <view class="banner" style="height:90rpx;margin-bottom:20rpx;"  hidden="{{shareflag==1?false:true}}">
