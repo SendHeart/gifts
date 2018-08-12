@@ -2,5 +2,5 @@
 <view class="container" style='height:{{dkheight}}px'>
   <image src="{{shareImage}}" class="share-image"></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bind:getImage="eventGetImage"/>
-  <button bind:tap="eventSave">保存图片,分享到朋友圈</button>
-</view>
+  <button class="savebtn" bind:tap="eventSave" type='warn'>保存图片,分享到朋友圈</button>
+</view> 

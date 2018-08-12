@@ -113,7 +113,7 @@ page {
 
 .carts-text {
   margin-left: 10rpx;
-  width: 100%;
+  width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -130,7 +130,7 @@ page {
 /*右下部分价格与数量*/
 
 .carts-subtitle {
-  font-size: 25rpx;
+  font-size: 24rpx;
   color: #999;
   display: flex;
   flex-direction: row;

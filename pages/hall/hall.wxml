@@ -42,10 +42,12 @@
         <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" hidden="true" />
 
         <!-- 缩略图 -->
+
         <image class="carts-image" src="{{item.image}}" mode="aspectFill" />
         <!-- 商品标题 -->
         <view class="carts-text">
           <text class="carts-title">{{item.name}}</text>
+
           <view class="carts-text carts-subtitle">
             <view class='carts-price'>
               <!-- 价格 -->

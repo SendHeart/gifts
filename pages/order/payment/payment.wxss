@@ -75,7 +75,7 @@ page {
 
 /*右部描述*/
 .carts-text {
-	width: 100%;
+	width: 80%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
