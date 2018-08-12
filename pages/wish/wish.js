@@ -3,6 +3,7 @@ var util = require('../../utils/util.js');
 //获取应用实例
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -11,7 +12,9 @@ var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
   { id: "trans_gift_logo", title: "转送礼logo", value: "", img: "/uploads/gift_logo.png" },
- 
+  { id: "hall_banner", title: "首页banner", value: "", img: "/uploads/songxin_banner.png" },
+  { id: "wish_banner", title: "心愿单banner", value: "", img: "/uploads/wish_banner.png" },
+  { id: "wechat_gb", title: "朋友圈背景", value: "", img: "/uploads/wechat_share.png" },
 ];
 Page({
   data: {
@@ -44,6 +47,8 @@ Page({
     painting: {},
     shareImage: '',
     showSharePic:true,
+    shop_type:shop_type,
+    wish_banner:'',
   
   },
 
@@ -226,8 +231,8 @@ Page({
   get_project_gift_para: function () {
     var that = this
     var navList2 = that.data.navList2
-    var page = that.data.page
-    var pagesize = that.data.pagesize
+    var shop_type = that.data.shop_type
+    
 
     //项目列表
     wx.request({
@@ -235,6 +240,7 @@ Page({
       method: 'POST',
       data: {
         type: 1,  //暂定
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -255,7 +261,8 @@ Page({
         }
          
         that.setData({
-          navList2: navList_new
+          navList2: navList_new,
+          wish_banner: navList_new[4]['img']
         })
 
         setTimeout(function () {

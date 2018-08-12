@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js');
 //获取应用实例
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -13,25 +14,30 @@ var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
   { id: "trans_gift_logo", title: "转送礼logo", value: "", img: "/uploads/gift_logo.png" },
+  { id: "hall_banner", title: "首页banner", value: "", img: "/uploads/songxin_banner.png" },
+  { id: "wish_banner", title: "心愿单banner", value: "", img: "/uploads/wish_banner.png" },
+  { id: "wechat_share", title: "朋友圈背景", value: "", img: "/uploads/wechat_share.png" },
 
 ];
 
 Page({
   data: {
     painting: {},
-    shareImage: ''
+    shareImage: '',
+    shop_type:shop_type,
+    wechat_share: navList2[5]['img']
   },
   get_project_gift_para: function () {
     var that = this
     var navList2 = that.data.navList2
   
-
     //项目列表
     wx.request({
       url: weburl + '/api/client/get_project_gift_para',
       method: 'POST',
       data: {
         type: 1,  //暂定
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -52,7 +58,8 @@ Page({
         }
 
         that.setData({
-          navList2: navList_new
+          navList2: navList_new,
+          wechat_share: navList_new[5]['img']
         })
 
         setTimeout(function () {
@@ -60,6 +67,7 @@ Page({
             loadingHidden: true,
           })
         }, 1500)
+        that.eventDraw()
       }
     })
   },
@@ -76,11 +84,12 @@ Page({
       }
     })
     that.get_project_gift_para()
-    that.eventDraw()
+    
   },
 
   eventDraw: function () {
     var that = this
+    var wechat_share = that.data.wechat_share
     wx.showLoading({
       title: '生成分享图片',
       mask: true
@@ -89,16 +98,16 @@ Page({
     that.setData({
       painting: {
         width: 375,
-        height: 580,
+        height: 770,
         clear: true,
         views: [
           {
             type: 'image',
-            url: weburl + '/uploads/wishlist1.png',
+            url:  wechat_share,
             top: 0,
             left: 0,
             width: 375,
-            height: 355
+            height: 700
           },
           /*
          {
@@ -124,10 +133,10 @@ Page({
           {
             type: 'image',
             url: weburl + '/api/WXPay/getQRCode?username='+username +'&appid='+appid+'&secret='+ secret,
-            top: 440,
+            top: 510,
             left: 140,
-            width: 100,
-            height: 110,
+            width: 128,
+            height: 128,
             
           },
           {
@@ -136,8 +145,8 @@ Page({
             fontSize: 12,
             color: '#FFF',
             textAlign: 'left',
-            top: 565,
-            left: 100,
+            top: 650,
+            left: 115,
             lineHeight: 20,
             MaxLineNumber: 2,
             breakWord: true,
