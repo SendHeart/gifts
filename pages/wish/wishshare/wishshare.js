@@ -78,7 +78,7 @@ Page({
         that.setData({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
-          dkheight: res.windowHeight - 60,
+          //dkheight: res.windowHeight - 60,
           scrollTop: that.data.scrollTop + 10
         })
       }
@@ -98,7 +98,7 @@ Page({
     that.setData({
       painting: {
         width: 375,
-        height: 770,
+        height: 667,
         clear: true,
         views: [
           {
@@ -107,7 +107,7 @@ Page({
             top: 0,
             left: 0,
             width: 375,
-            height: 700
+            height: 667
           },
           /*
          {
@@ -133,10 +133,10 @@ Page({
           {
             type: 'image',
             url: weburl + '/api/WXPay/getQRCode?username='+username +'&appid='+appid+'&secret='+ secret,
-            top: 510,
-            left: 140,
-            width: 128,
-            height: 128,
+            top: 480,
+            left: 130,
+            width: 110,
+            height: 125,
             
           },
           {
@@ -145,9 +145,9 @@ Page({
             fontSize: 12,
             color: '#FFF',
             textAlign: 'left',
-            top: 650,
-            left: 115,
-            lineHeight: 20,
+            top: 620,
+            left: 90,
+            lineHeight: 30,
             MaxLineNumber: 2,
             breakWord: true,
             //width: 150
