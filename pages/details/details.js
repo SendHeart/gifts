@@ -253,7 +253,12 @@ Page({
             duration: 1500
           })
           if (wishflag == 1) {
+            /*
             wx.navigateTo({
+              url: '../wish/wish'
+            })
+            */
+            wx.switchTab({
               url: '../wish/wish'
             })
           } else {
