@@ -10,8 +10,8 @@
   position: absolute;
 }
 .savebtn {
-  margin-top: 40rpx;
+  margin-top: -30rpx;
   font-size: 28rpx;
   padding-top:5rpx;
-  height: 100rpx;
+  height: 80rpx;
 }
