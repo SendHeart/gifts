@@ -1,6 +1,6 @@
 <!--index.wxml-->
 <view class="container" style='height:{{dkheight}}px'>
-  <image src="{{shareImage}}" class="share-image"></image>
+  <image src="{{shareImage}}" class="share-image" mode='aspectFit' ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bind:getImage="eventGetImage"/>
   <button class="savebtn" bind:tap="eventSave" type='warn'>保存图片,分享到朋友圈</button>
 </view> 

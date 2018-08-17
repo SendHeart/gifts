@@ -8,8 +8,8 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-var appid = wx.getStorageSync('appid') ? wx.getStorageSync('appid') : '';
-var secret = wx.getStorageSync('appsecret') ? wx.getStorageSync('appsecret') : '';
+var appid = app.globalData.appid;
+var secret = app.globalData.secret;
 var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -78,7 +78,7 @@ Page({
         that.setData({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
-          //dkheight: res.windowHeight - 60,
+          dkheight: res.windowHeight - 30,
           scrollTop: that.data.scrollTop + 10
         })
       }
@@ -90,6 +90,8 @@ Page({
   eventDraw: function () {
     var that = this
     var wechat_share = that.data.wechat_share
+    var shop_type = that.data.shop_type
+    var qr_type = 'wishshare'  //
     wx.showLoading({
       title: '生成分享图片',
       mask: true
@@ -132,7 +134,7 @@ Page({
          */
           {
             type: 'image',
-            url: weburl + '/api/WXPay/getQRCode?username='+username +'&appid='+appid+'&secret='+ secret,
+            url: weburl + '/api/WXPay/getQRCode?username='+username +'&appid='+appid+'&secret='+ secret+'&shop_type='+shop_type+'&qr_type='+qr_type,
             top: 480,
             left: 130,
             width: 110,
@@ -146,7 +148,7 @@ Page({
             color: '#FFF',
             textAlign: 'left',
             top: 620,
-            left: 90,
+            left: 95,
             lineHeight: 30,
             MaxLineNumber: 2,
             breakWord: true,
