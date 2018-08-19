@@ -9,6 +9,7 @@ var navList2 = [
   { id: "trans_gift_logo", title: "心愿单logo", value: "", img: "/uploads/gift_logo.png" },
 
 ];
+var shop_type = app.globalData.shop_type
 Page({
   data: {
     orders: [],
@@ -33,6 +34,7 @@ Page({
     hiddenmodalput:false,
     currenttime: now ? parseInt(now / 1000) : 0,
     navList2: navList2,
+    shop_type:shop_type,
   },
   returnTapTag: function (e) {
     /*
@@ -95,6 +97,7 @@ Page({
     var navList2 = that.data.navList2
     var page = that.data.page
     var pagesize = that.data.pagesize
+    var shop_type = that.data.shop_type
 
     //项目列表
     wx.request({
@@ -102,6 +105,7 @@ Page({
       method: 'POST',
       data: {
         type: 1,  //暂定
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -338,7 +342,7 @@ Page({
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",
         path: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1',   // 默认是当前页面，必须是以‘/’开头的完整路径
-        imageUrl: weburl+'/uploads/gift_logo.png',     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+        imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       　success: function (res) {　　　
           console.log(res)
           if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
@@ -402,7 +406,7 @@ Page({
           duration: 1500
         })  
         shareObj.path = '/pages/order/receive/receive?order_no=' + order_no+'&receive=1'
-        shareObj.imageUrl = weburl +'/uploads/gift_logo.png'
+        shareObj.imageUrl = imageUrl
         console.log('礼物分享:')
         console.log(shareObj)
         

@@ -68,6 +68,7 @@ Page({
       method: 'POST',
       data: {
         type: 1,  //暂定
+        shop_type:2
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
