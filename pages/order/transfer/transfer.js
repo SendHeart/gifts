@@ -12,6 +12,8 @@ var navList2 = [
 var shop_type = app.globalData.shop_type
 Page({
   data: {
+    title_name: '礼物转送',
+    title_logo: '../../../images/footer-icon-05.png',
     orders: [],
     orderskus:[],
     page: 1,
@@ -35,6 +37,34 @@ Page({
     currenttime: now ? parseInt(now / 1000) : 0,
     navList2: navList2,
     shop_type:shop_type,
+  },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
   },
   returnTapTag: function (e) {
     /*
@@ -147,7 +177,7 @@ Page({
     var receive = options.receive;
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
-
+    that.setNavigation()
     console.log('礼品信息')
     console.log(order_no)
     if (receive == 1){
@@ -244,6 +274,12 @@ Page({
 
   onShow: function () {
     var that = this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/back.png'
+      })
+    }  
     that.get_project_gift_para()
   },
 

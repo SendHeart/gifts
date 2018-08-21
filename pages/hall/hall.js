@@ -15,6 +15,8 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 
 Page({
   data: {
+    title_name:'送心',
+    title_logo: '../../images/footer-icon-05.png',
     hidden: true,
     scrollTop: 0,
     scrollHeight: 0,
@@ -50,11 +52,40 @@ Page({
     shop_type:shop_type,
 
   }, 
+  setNavigation:function() {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
+  },
   userTapTag: function () {
     wx.switchTab({
       url: '../my/index'
     })
   },
+
   usergiftTapTag: function () {
     wx.switchTab({
       url: '../index/index'
@@ -746,6 +777,7 @@ Page({
     var page_type = options.page_type
     var order_no = options.order_no
     var receive = options.receive
+    that.setNavigation()
     console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
     if(page_type==2){
       if (receive==1){
@@ -787,6 +819,13 @@ Page({
     var that = this;
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var username = wx.getStorageSync('username');
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../images/back.png'
+      })
+    }  
+    
     if(!username){
       wx.switchTab({
         url: '../my/index'

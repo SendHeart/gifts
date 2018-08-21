@@ -3,7 +3,9 @@ var weburl = app.globalData.weburl;
 
 Page({
 	data: {
-		amount : 0,
+    title_name: '送出礼品',
+    title_logo: '../../images/footer-icon-05.png',
+    amount : 0,
 		carts: [],
     cartIds: null,
 		addressList: [],
@@ -11,12 +13,49 @@ Page({
     username:null,
     token:null
 	},
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
+  },
 	addressObjects: [],
 	onLoad: function (options) {
-		this.readCarts(options);
+    this.setNavigation()
+    this.readCarts(options)
+
 	},
 	onShow: function () {
-		this.loadAddress();
+    var that = this 
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/back.png'
+      })
+    }  
+    that.loadAddress()
 	},
 	readCarts: function (options) {
 		var that = this;

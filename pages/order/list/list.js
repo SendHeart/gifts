@@ -18,6 +18,28 @@ Page({
     all_rows:0,
     giftflag:0,
 	},
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    wx.switchTab({
+      url: '../hall/hall'
+    })
+  },
   onOrderTapTag: function (e) {
     var that = this;
     var tab = e.currentTarget.dataset.id;
@@ -74,14 +96,15 @@ Page({
   
 	onLoad: function (options) {
 		// 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
-		var status = parseInt(options.status);
+		var status = parseInt(options.status)
 		// 存为全局变量，控制支付按钮是否显示
     if(status){
       this.setData({
         status: status
       });
     }
-    this.reloadData();
+    this.setNavigation()
+    this.reloadData()
 	},
 	onShow: function() {
 		//

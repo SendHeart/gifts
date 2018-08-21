@@ -9,8 +9,38 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 
 Page({
   data:{
+    title_name: '我的',
+    title_logo: '../../images/footer-icon-05.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+  },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
   },
   showWish: function () {
     /*
@@ -92,6 +122,7 @@ Page({
         url: '../login/login?wechat=1'
       })
     }
+    that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -104,6 +135,7 @@ Page({
       }
     })  
 
+   
     // 送收礼物信息查询
     /*
     wx.request({
@@ -133,7 +165,13 @@ Page({
     */
   },
   onShow: function () {
-    var that = this;
+    var that = this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/left_arrow.png'
+      })
+    }  
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -141,6 +179,7 @@ Page({
         userInfo: userInfo
       })
     })
+    
   },
   chooseImage: function () {
     var that = this;

@@ -22,10 +22,40 @@ var navList2 = [
 
 Page({
   data: {
+    title_name: '分享心愿单',
+    title_logo: '../../../images/footer-icon-05.png',
     painting: {},
     shareImage: '',
     shop_type:shop_type,
     wechat_share: navList2[5]['img']
+  },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length >1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    }else{
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+   
   },
   get_project_gift_para: function () {
     var that = this
@@ -73,6 +103,7 @@ Page({
   },
   onLoad () {
     var that = this
+    that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -86,7 +117,15 @@ Page({
     that.get_project_gift_para()
     
   },
-
+  onShow:function(){
+    var that = this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+        that.setData({
+          title_logo: '../../../images/back.png'
+      })
+    }  
+  },
   eventDraw: function () {
     var that = this
     var wechat_share = that.data.wechat_share

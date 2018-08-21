@@ -8,6 +8,8 @@ var navList_order = [
 var now = new Date().getTime();
 Page({
   data: {
+    title_name: '记录',
+    title_logo: '../../images/footer-icon-05.png',
     orders: [],
     page: 1,
     pagesize: 10,
@@ -21,6 +23,28 @@ Page({
     gift_rcv:0,
     page_num:0,
     currenttime:now?parseInt(now/1000):0,
+  },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    wx.switchTab({
+      url: '../hall/hall'
+    })
   },
   onOrderTapTag: function (e) {
     var that = this;
@@ -173,7 +197,8 @@ Page({
         })
       }
     }) 
-    that.reloadData();
+    that.setNavigation()
+    that.reloadData()
   },
   onShow: function () {
     //

@@ -3,11 +3,41 @@ var weburl = app.globalData.weburl;
 
 Page({
 	data: {
-		orderNo: '',
+    title_name: '送出礼物',
+    title_logo: '../../../images/footer-icon-05.png',
+    orderNo: '',
     orders: [],
     totalFee:0,
     sku_id:'',
 	},
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
+  },
 	onLoad: function (options) {
     var that = this;
     var orderNo = options.orderNo;
@@ -15,6 +45,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
    
+    that.setNavigation()
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',
@@ -66,6 +97,15 @@ Page({
       }
     })
 	},
+  onShow:function(){
+    var that = this 
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/back.png'
+      })
+    }  
+  },
   pay: function (e) {
 		var that = this;
     var openId = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';

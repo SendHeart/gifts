@@ -21,6 +21,8 @@ var navList2 = [
 
 Page({
   data: {
+    title_name: '商城首页',
+    title_logo: '../../images/footer-icon-05.png',
     activeIndex: 0,
     activeIndex2: 0,
     navList: navList,
@@ -52,7 +54,28 @@ Page({
     shop_type:shop_type,
     
   },
-
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    wx.switchTab({
+      url: '../hall/hall'
+    })
+  },
   //事件处理函数
   swiperchange: function (e) {
     //console.log(e.detail.current)
@@ -137,14 +160,15 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log('onLoad');
-    var that = this;
-    var username = options.username;
-    var token = options.token;
+    console.log('onLoad')
+    var that = this
+    var username = options.username
+    var token = options.token
     that.setData({
       username: username,
       token: token,
     })
+    that.setNavigation()
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -171,6 +195,12 @@ Page({
   },
   onShow:function(){
     var that=this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../images/back.png'
+      })
+    }  
     
   },
   search_goodsnameTapTag: function (e) {

@@ -7,6 +7,8 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 
 Page({
   data: {
+    title_name: '记录详情',
+    title_logo: '../../../images/footer-icon-05.png',
     orders: [],
     order_no:'',
     sendtime:'',
@@ -28,6 +30,34 @@ Page({
     sku_num:0,
     giftflag:0,
      
+  },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
   },
   onTapTag2: function (e) {
     var that = this;
@@ -122,6 +152,7 @@ Page({
     var deliverycode = order_object['deliverycode'];
     var deliveryname = order_object['deliveryname'];
     var deliverystepinfo = order_object['deliverystepinfo'];
+    that.setNavigation()
     console.log('订单详情')
     console.log(order_object)
     if (order_object) sku_num = order_object['order_sku'].length ;
@@ -154,6 +185,12 @@ Page({
   onShow: function () {
     //this.reloadData();
     var that = this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/back.png'
+      })
+    }  
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({

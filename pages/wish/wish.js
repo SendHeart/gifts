@@ -18,6 +18,8 @@ var navList2 = [
 ];
 Page({
   data: {
+    title_name: '心愿单',
+    title_logo: '../../images/footer-icon-05.png',
     all_rows:0,
     venuesItems: [],
     search_goodsname: null,
@@ -51,7 +53,34 @@ Page({
     wish_banner:'',
   
   },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
 
+  },
   //事件处理函数
   swiperchange: function (e) {
     //console.log(e.detail.current)
@@ -276,7 +305,7 @@ Page({
   onLoad: function (options) {
     var that = this
     var wish_id = options.wish_id ? options.wish_id:''
-    
+    that.setNavigation()
 
     that.setData({
       wish_id:wish_id,
@@ -421,6 +450,12 @@ Page({
   onShow:function(){
     //调用应用实例的方法获取全局数据
     var that=this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/back.png'
+      })
+    }  
     console.log('onShow', that.data.wish_id)
     that.query_wish_cart()
     

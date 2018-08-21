@@ -5,6 +5,8 @@ var shop_type = app.globalData.shop_type;
 
 Page({
     data: {
+        title_name: '详情',
+        title_logo: '../../images/footer-icon-05.png',
         user:null,
         userInfo:{},
         username:null,
@@ -46,8 +48,35 @@ Page({
         shop_type:shop_type,
 
     },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
 
-    onLoad: function(options) {
+  },
+  onLoad: function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -70,7 +99,7 @@ Page({
           goodsprice: goodsprice ? goodsprice:0,
           goodssale: goodssale ? goodssale:0,
         })
-      
+    that.setNavigation()
         if (!goodsname){
           wx.request({
             url: weburl + '/api/client/get_goods_list',
@@ -540,6 +569,12 @@ Page({
     
   onShow: function () {
      var that = this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../images/back.png'
+      })
+    }  
       //console.log('App Show');
    // this.distachAttrValue(this.data.attrValueList);
       // 只有一个属性组合的时候默认选中 

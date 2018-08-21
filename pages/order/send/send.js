@@ -8,6 +8,8 @@ var navList2 = [
 ];
 Page({
   data: {
+    title_name: '礼物送出',
+    title_logo: '../../../images/footer-icon-05.png',
     orders: [],
     orderskus:[],
     page: 1,
@@ -28,6 +30,34 @@ Page({
     nickname: userInfo.nickName,
     send_status:0,
     navList2: navList2,
+  },
+  setNavigation: function () {
+    let startBarHeight = 20
+    let navgationHeight = 44
+    let that = this
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          startBarHeight: startBarHeight,
+          navgationHeight: navgationHeight
+        })
+      }
+    })
+  },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+
   },
   returnTapTag: function (e) {
     /*
@@ -108,7 +138,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var order_no = options.order_no; 
     var receive = options.receive;
-    
+    that.setNavigation()
     console.log('礼品信息')
     console.log(order_no)
   
@@ -208,6 +238,12 @@ Page({
 
   onShow: function () {
     var that = this
+    var pages = getCurrentPages()
+    if (pages.length > 1) {
+      that.setData({
+        title_logo: '../../../images/back.png'
+      })
+    }  
     that.get_project_gift_para()
   },
 
