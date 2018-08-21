@@ -72,9 +72,15 @@ Page({
     })
   },
   goBack: function () {
-    wx.switchTab({
-      url: '../hall/hall'
-    })
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../hall/hall'
+      })
+    }
+
   },
   //事件处理函数
   swiperchange: function (e) {
