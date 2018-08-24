@@ -71,7 +71,7 @@ Page({
     })
   },
   goBack: function () {
-    var pages = getCurrentPages();
+    var pages = getCurrentPages()
     if (pages.length > 1) {
       wx.navigateBack({ changed: true });//返回上一页
     } else {

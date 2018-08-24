@@ -633,8 +633,10 @@ page {
   display: block;
   color: #999;
   font-size:28rpx;
-  white-space: nowrap;
-  overflow-x: hidden;
+   
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
 }
 
 .price-now {
