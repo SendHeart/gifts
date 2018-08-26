@@ -59,8 +59,8 @@ Page({
     let that = this
     wx.getSystemInfo({
       success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
+        var model = res.model
+        if (model.search('iPhone X') != -1) {
           startBarHeight = 44
         }
         that.setData({

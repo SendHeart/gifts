@@ -25,42 +25,41 @@ page {
 }
 
 .startBar {
-  height: 75rpx;
-  background: #333;
+  background: rgba(10, 10, 10, 0.9);
   width: 100%;
   position: fixed;
   top: 0;
-  padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
 .top-title {
-  height: 75rpx;
-  background: #333;
+  height: 88rpx;
+  background: rgba(10, 10, 10, 0.9);
   width: 100%;
   position: fixed;
   top: 0;
-  padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
 .top-title-item {
   display: flex;
   flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+  text-align: center;
   width: 100%;
   color: #fff;
-  text-align: center;
-  line-height: 75rpx;
-  font-size: 48rpx;
-  padding: 10rpx;
+  line-height: 88rpx;
+  font-size: 40rpx;
+  font-weight: bold;
 }
 .top-title-item .title-image {
-  width: 70rpx;
-  height: 70rpx;
+  width: 48rpx;
+  height: 48rpx;
   margin-right: 1rpx;
   margin-top: 0rpx;
-  margin-left: 20rpx;
+  margin-left: 30rpx;
 }
+.top-title-item .title-text { width: 100%; margin-left: -78rpx;}
+/*---------------TITLEBAR END-------------*/
 .container {
     background-color: #F2f2f2;
     width: 100%;
@@ -89,22 +88,22 @@ page {
 /*导航 nav*/
 .top-bar {
   height: 76rpx;
-  background: white; 
+  background: #292929;
   white-space: nowrap;
   position: fixed;
   top:0;
-  z-index:99;
+  z-index:90;
 }
 .top-bar-item {
   display:inline-block;
   width: 120rpx;
-  color: #444;
+  color: #fff;
   text-align: center;
   line-height: 70rpx;
   font-size: 32rpx;
 }
 .top-bar-active {
-  color: #444;
+  color: #fff;
   font-weight: bold;
   border-bottom: 6rpx solid #E34C55;
 }
@@ -115,11 +114,10 @@ page {
   background: #FFF; 
   width:100%;
   position: fixed;
-  margin-top: 74rpx;
   top:0;
-  border-top: 1px solid #F2f2f2;
-  border-bottom: 1px solid #F2f2f2;
-  z-index:99;
+  border-top: 1rpx solid #F2f2f2;
+  border-bottom: 1rpx solid #F2f2f2;
+  z-index:89;
 }
 .top-bar-item2 {
   display:inline-block;
@@ -142,9 +140,9 @@ swiper-item image {
 .venues_box {
   display:block;
   width: 98%;
-  padding-bottom:100rpx;
+  padding-bottom:260rpx;
   margin-left:2%;
-  margin-top: 124rpx;
+  margin-top: 15rpx;
   overflow-x: hidden;
 }
 
@@ -155,7 +153,7 @@ swiper-item image {
   background: #ffffff;
   border-radius: 10rpx;
   text-indent: 20rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 10rpx;
 }
 
 .venues_item .mainpic {

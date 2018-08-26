@@ -21,7 +21,7 @@ var navList2 = [
 
 Page({
   data: {
-    title_name: '商城首页',
+    title_name: '礼物商城',
     title_logo: '../../images/footer-icon-05.png',
     activeIndex: 0,
     activeIndex2: 0,
@@ -60,8 +60,8 @@ Page({
     let that = this
     wx.getSystemInfo({
       success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
+        var model = res.model
+        if (model.search('iPhone X') != -1) {
           startBarHeight = 44
         }
         that.setData({

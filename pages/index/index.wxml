@@ -1,5 +1,5 @@
-<import src="../common/nav_order.wxml" />
 <import src="../common/hall_title.wxml" />
+<import src="../common/nav_order.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <view class="container" style='margin-top:{{navgationHeight+startBarHeight}}px'>

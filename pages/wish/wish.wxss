@@ -1,42 +1,42 @@
 @import "../../lib/style/font.wxss";
 
 .startBar {
-  height: 75rpx;
-  background: #333;
+  background: rgba(10, 10, 10, 0.9);
   width: 100%;
   position: fixed;
   top: 0;
-  padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
 .top-title {
-  height: 75rpx;
-  background: #333;
+  height: 88rpx;
+  background: rgba(10, 10, 10, 0.9);
   width: 100%;
   position: fixed;
   top: 0;
-  padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
 .top-title-item {
   display: flex;
   flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+  text-align: center;
   width: 100%;
   color: #fff;
-  text-align: center;
-  line-height: 75rpx;
-  font-size: 48rpx;
-  padding: 10rpx;
+  line-height: 88rpx;
+  font-size: 40rpx;
+  font-weight: bold;
 }
 .top-title-item .title-image {
-  width: 70rpx;
-  height: 70rpx;
+  width: 48rpx;
+  height: 48rpx;
   margin-right: 1rpx;
   margin-top: 0rpx;
-  margin-left: 20rpx;
+  margin-left: 30rpx;
+  display: none;
 }
+.top-title-item .title-text { width: 100%; margin-left: 0rpx;}
+/*------------titlebar end-------------*/
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -84,8 +84,8 @@
 
 
 .userinfo-avatar {
-  width: 70rpx;
-  height: 70rpx;
+  width: 100rpx;
+  height: 100rpx;
   margin: 20rpx;
   border-radius: 50%;
 }

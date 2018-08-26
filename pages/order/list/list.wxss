@@ -1,7 +1,7 @@
 @import "../../../lib/style/font.wxss";
 
 page {
-	background: #eee;
+	background: #F2F2F2;
 }
 
 .Hui-iconfont {
@@ -16,7 +16,41 @@ page {
   content:'\e6d5';
 }
 
-
+.startBar {
+  background: rgba(10, 10, 10, 0.9);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+.top-title {
+  height: 88rpx;
+  background: rgba(10, 10, 10, 0.9);
+  width: 100%;
+  position: fixed;
+  top: 0;
+  z-index: 99;
+}
+.top-title-item {
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  align-items: center;
+  text-align: center;
+  width: 100%;
+  color: #fff;
+  line-height: 88rpx;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+.top-title-item .title-image {
+  width: 48rpx;
+  height: 48rpx;
+  margin-right: 1rpx;
+  margin-top: 0rpx;
+  margin-left: 30rpx;
+}
+.top-title-item .title-text { width: 100%; margin-left: -78rpx;}
 .order-item {
 	margin-bottom: 5px;
 	background: #fff;

@@ -1,6 +1,6 @@
 <!--导航nav组件 -->
 <template name="nav2">
-    <view class="top-bar2" style='margin-top:{{navgationHeight+startBarHeight+35}}px'>
+    <view class="top-bar2" style='margin-top:{{navgationHeight+startBarHeight+38}}px'>
       <block wx:for="{{navList2}}" wx:key="">
         <view id="v_{{index}}" data-index="{{index}}" data-title="{{item.title}}" class="top-bar-item2 {{index == activeIndex2 ? 'top-bar-active2' : ''}}" catchtap="onTapTag2">{{item.title}}
        
