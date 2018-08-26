@@ -7,7 +7,7 @@
    <image class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover" bindtap=""></image>
 	<text class="userinfo-nickname">{{wish_nickname?wish_nickname+'的心愿单':'心愿单'}}</text>
 </view>
-<view class="userinfo_my" hidden="{{!shareflag}}" style="background-image: url({{wish_banner}});background-size:cover;margin-top:{{navgationHeight+startBarHeight}}px">
+<view class="userinfo_my" hidden="{{!shareflag}}" style="background-image:url({{wish_banner}});background-size:cover; margin-top:{{navgationHeight+startBarHeight}}px">
 <!-- 
  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
  -->

@@ -139,7 +139,7 @@
 /*导航 nav*/
 .top-bar {
   height: 72rpx;
-  background: white; 
+  background: #292929; 
   width:100%;
   position: fixed;
   top:0;
@@ -148,7 +148,7 @@
 .top-bar-item {
   display:inline-block;
   width: 120rpx;
-  color: gray;
+  color: #fff;
   text-align: center;
   /* line-height: 72rpx; */
   font-size: 30rpx;
@@ -161,7 +161,7 @@
 /*辅助导航 nav2*/
 .top-bar2 {
   height: 72rpx;
-  background: white; 
+  background: #292929; 
   width:100%;
   position: fixed;
   margin-top: 70rpx;
@@ -172,7 +172,7 @@
 .top-bar-item2 {
   display:inline-block;
   width: 250rpx;
-  color: gray;
+  color: #fff;
   text-align: center;
   /* line-height: 72rpx; */
   font-size: 32rpx;

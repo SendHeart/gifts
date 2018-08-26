@@ -15,7 +15,7 @@ Page({
     avatarUrl: userInfo.avatarUrl,
   },
   setNavigation: function () {
-    let startBarHeight = 20
+    let startBarHeight = 24
     let navgationHeight = 44
     let that = this
     wx.getSystemInfo({
