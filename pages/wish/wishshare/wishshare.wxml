@@ -1,8 +1,0 @@
-<!--index.wxml-->
-<import src="../../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<view class="container" style='height:{{dkheight-70}}px;'> <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-  <image src="{{shareImage}}" class="share-image" mode='aspectFit' ></image>
-  <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
-  <button class="savebtn" bindtap="eventSave" type='warn'>保存图片,分享到朋友圈</button>
-</view> 
