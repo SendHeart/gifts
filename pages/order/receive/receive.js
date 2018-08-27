@@ -212,9 +212,9 @@ Page({
     var nickname = that.data.nickname
     var note = that.data.note;
    
-    console.log('礼品信息')
-    console.log(order_no+' receive:'+receive)
     if (receive != 1){
+      console.log('礼品信息 receive')
+      console.log(order_no + ' receive:' + receive)
       return
     }
     that.setData({
@@ -264,13 +264,13 @@ Page({
         var receive_status = that.data.receive_status
         if (!res.data.result) {
           wx.showToast({
-            title: '没有该类型订单',
+            title: '没有该订单',
             icon: 'loading',
             duration: 1500
           });
           setTimeout(function () {
             wx.navigateBack();
-          }, 500);
+          }, 1500);
           that.setData({
             orders: [],
             all_rows: 0

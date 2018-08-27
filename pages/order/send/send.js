@@ -147,6 +147,11 @@ Page({
       console.log(options)
       return
     }
+    if (!order_no) {
+      console.log('礼品订单号为空 send')
+      console.log(options)
+      return
+    }
 
     //再次确认订单状态
     wx.request({
@@ -336,6 +341,10 @@ Page({
       var imageUrl = that.data.navList2[0]['img']
       console.log('开始送礼'); 
       console.log(options);  
+      if (!order_no){
+        console.log('礼品订单号为空 send')
+        return
+      }
       var shareObj = {
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",

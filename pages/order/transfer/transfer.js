@@ -374,6 +374,10 @@ Page({
       note = note ? note :'送你一份心意，愿美好长存!'
       console.log('开始转增礼物'); 
       console.log(note);  
+      if (!order_no) {
+        console.log('礼品订单号为空 trans')
+        return
+      }
       var shareObj = {
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",

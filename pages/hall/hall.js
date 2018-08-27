@@ -831,6 +831,7 @@ Page({
         url: '../my/index'
       })
     }
+    /*
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
@@ -850,7 +851,7 @@ Page({
         })
       }
     }) 
-
+*/
     this.setData({
       username: username
     })
