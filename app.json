@@ -31,7 +31,7 @@
     "navigationBarTitleText": "送心",
     "navigationBarBackgroundColor": "#292929",
     "backgroundColor": "#292929",
-    "navigationStyle": "custom",
+    "navigationStyle": "default",
     "enablePullDownRefresh": false
   },
   "tabBar": {

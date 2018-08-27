@@ -2,11 +2,13 @@ var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js");
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
+var from_page = app.globalData.from_page;
 
 Page({
     data: {
         title_name: '详情',
         title_logo: '../../images/footer-icon-05.png',
+        this_page:'/pages/details/details',
         user:null,
         userInfo:{},
         username:null,
@@ -70,6 +72,7 @@ Page({
     if (pages.length > 1) {
       wx.navigateBack({ changed: true });//返回上一页
     } else {
+      app.globalData.from_page = '/pages/details/details'
       wx.switchTab({
         url: '../../hall/hall'
       })
@@ -260,7 +263,8 @@ Page({
       
     },
     insertCart: function (sku_id,username,wishflag) {
-      var that = this;
+      var that = this
+       
       wx.request({
         url: weburl + '/api/client/add_cart',
         method: 'POST',
@@ -281,6 +285,7 @@ Page({
             title: title,
             duration: 1500
           })
+          app.globalData.from_page = '/pages/details/details'
           if (wishflag == 1) {
             /*
             wx.navigateTo({
@@ -288,11 +293,11 @@ Page({
             })
             */
             wx.switchTab({
-              url: '../wish/wish'
+              url: '../wish/wish?'
             })
           } else {
             wx.switchTab({
-              url: '../hall/hall'
+              url: '../hall/hall?'
             })
           }
 
@@ -326,6 +331,7 @@ Page({
 
  
     showCart: function () {
+      app.globalData.from_page = '/pages/details/details'
       wx.switchTab({
         url: '../hall/hall'
       });
@@ -607,9 +613,9 @@ Page({
 
   onShareAppMessage: function () {
     return {
-      title: '展易购商城',
-      desc: '展易购3D商城!',
-      path: '/pages/index/index?id=123'
+      title: '送心',
+      desc: '送礼就是送心!',
+      path: '/pages/hall/hall?refername='+username
     }
   }
 })

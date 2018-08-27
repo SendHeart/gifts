@@ -4,6 +4,7 @@ var util = require('../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
+var from_page = app.globalData.from_page;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -20,6 +21,7 @@ Page({
   data: {
     title_name: '心愿单',
     title_logo: '../../images/footer-icon-05.png',
+    this_page:'/pages/wish/wish',
     all_rows:0,
     venuesItems: [],
     search_goodsname: null,
@@ -71,13 +73,22 @@ Page({
     })
   },
   goBack: function () {
+    var that = this
+    var from_page = that.data.from_page
     var pages = getCurrentPages()
     if (pages.length > 1) {
       wx.navigateBack({ changed: true });//返回上一页
     } else {
-      wx.switchTab({
-        url: '../hall/hall'
-      })
+      if (from_page){
+        wx.navigateTo({
+          url: from_page,
+        }) 
+      }else{
+        wx.switchTab({
+          url: '../hall/hall'
+        })
+      }
+    
     }
 
   },
@@ -305,13 +316,19 @@ Page({
   onLoad: function (options) {
     var that = this
     var wish_id = options.wish_id ? options.wish_id:''
+    var from_page = options.from_page
     that.setNavigation()
-
     that.setData({
       wish_id:wish_id,
-    
     })
-    console.log('onLoad', that.data.wish_id)
+    if (from_page){
+      that.setData({
+        from_page: from_page,
+        title_logo: '../../../images/back.png'
+      })
+    }
+    
+    console.log('onLoad', that.data.wish_id,' from_page:',from_page)
     
    // 
     wx.getSystemInfo({

@@ -12,6 +12,7 @@ App({
     username: null,
     code: null,
     shop_type:2 , //礼物类应用
+    from_page:null,
    
   },
  
