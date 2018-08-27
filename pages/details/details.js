@@ -102,8 +102,8 @@ Page({
           goodsprice: goodsprice ? goodsprice:0,
           goodssale: goodssale ? goodssale:0,
         })
-    that.setNavigation()
-        if (!goodsname){
+        that.setNavigation()
+        if (goodsid>0){
           wx.request({
             url: weburl + '/api/client/get_goods_list',
             method: 'POST',
@@ -145,6 +145,9 @@ Page({
               
             }
           })
+        }else{
+          console.log('单个产品名称为空',goodsid);
+          return
         }
 
         // 商品详情图片

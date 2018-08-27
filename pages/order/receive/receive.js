@@ -96,6 +96,21 @@ Page({
       content: '确认接受吗?',
       success: function (res) {
         if (res.confirm) {
+
+          //通讯录权限
+          wx.getSetting({
+            success(res) {
+              if (!res.authSetting['scope.address']) {
+                wx.authorize({
+                  scope: 'scope.address',
+                  success() {
+                    // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+                    //wx.startRecord()
+                  }
+                })
+              }
+            }
+          })
           //收货地址选择
           wx.chooseAddress({
             success: function (res) {
