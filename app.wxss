@@ -1,0 +1,96 @@
+/**app.wxss**/
+@import "./style/layout.wxss";
+@import "./wxParse/wxParse.wxss";
+@import "./style/weui.wxss";
+/*
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+  background-size: 100%;
+} 
+*/
+.container {
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.color1{
+  color: #666;
+}
+.color2{
+  color: #cd3830;
+}
+view,button{
+  font-size: 28rpx;
+}
+.font1 {
+    color: #666;
+    font-family: Microsoft YaHei Hiragino Sans GB;
+    font-weight: 600;
+}
+.weui-tit {
+    font-size: 12px;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: .8em 0 .4em 15px;
+}
+
+.wxToast_mask{width:100%;height:100%;position:fixed;left:0px;top:0px;z-index:10000;background:rgba(0,0,0,0);opacity:0;display:none}.wxToast_show{display:block}.wxToast_content{max-width:80%;min-width:90px;position:absolute;left:50%;top:20%;transform:translate3d(-50%,0,0);padding:15px;color:#fff;font-size:17px;text-align:center;border-radius:5px;background:rgba(0,0,0,.8)}.wxToast_img{width:55px;height:55px;display:block;margin:0 auto 8px auto}
+
+.citypickers{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  min-height: 100%;
+  background-color: red;
+}
+.citybody {
+
+  position: fixed;
+  bottom: 0px;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.cityheader {
+  position: absolute;
+  top:0px;
+  width: 100%;
+  z-index: 4;
+}
+
+.city-cancel {
+  float: left;
+  margin: 20rpx;
+  color: #818181;
+}
+
+.city-true {
+  float: right;
+  margin: 20rpx;
+  color: #2FB42E
+}
+
+.section .picker {
+  background-color: #fff;
+  border-bottom: 1px #d9d9d9 solid;
+  border-top: 1px #d9d9d9 solid; 
+  padding: 20rpx; 
+}
+
+
+/*
+
+*/
+page {
+    background-color: #F2f2f2;
+}

@@ -1,0 +1,76 @@
+
+.startBar {
+  height: 75rpx;
+  background: #333;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 5rpx;
+  border-bottom: 0px solid #f2f2f2;
+  z-index: 99;
+}
+.top-title {
+  height: 75rpx;
+  background: #333;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 5rpx;
+  border-bottom: 0px solid #f2f2f2;
+  z-index: 99;
+}
+.top-title-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 75rpx;
+  font-size: 48rpx;
+  padding: 10rpx;
+}
+.top-title-item .title-image {
+  width: 70rpx;
+  height: 70rpx;
+  margin-right: 1rpx;
+  margin-top: 0rpx;
+  margin-left: 20rpx;
+}
+.amount:before {
+	content: '￥';	
+}
+
+.submit {
+	margin: 8px;
+}
+
+/*单元格*/
+.cell {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items:center;
+	margin: 4px;
+	border-bottom: 1px solid #eee;
+	line-height: 20px;
+  width:100%;
+}
+
+.cell:last-child {
+	border-bottom: 0;
+}
+
+/*label显示字符*/
+.cell text:first-child {
+	width: 80px;
+}
+
+/*请先填写地址*/
+.area_select {
+	width: 100%;
+}
+
+/*选择器*/
+picker {
+	width: 60%;
+}

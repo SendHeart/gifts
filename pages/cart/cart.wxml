@@ -1,0 +1,43 @@
+<view class="container carts-list">
+    <view wx:for="{{carts}}" class="carts-container" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}">
+    	<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+	    	<!-- 复选框图标 -->
+			<icon type="{{item.selected ? 'success_circle' : 'circle'}}" size="20" catchtap="bindCheckbox" data-index="{{index}}"/>
+			<view>
+			<!-- 缩略图 -->
+				<image class="carts-image" src="{{item.image}}" mode="aspectFill"/>
+			</view>
+			<view class="carts-text">
+				<!-- 商品标题 -->
+				<text class="carts-title">{{item.name}}</text>
+				<view class="carts-subtitle">
+            <view class='carts-price'>
+				<!-- 价格 -->
+				  	  <view class="carts-gov-price">指导价:￥{{item.gov_price}}元</view>
+              <view class="carts-en-price">定金:￥{{item.earnest_price}}元</view>
+            </view>
+				  	<!-- 数量加减 -->
+				  	<view>
+				      <view class="stepper">
+						<!-- 减号 -->
+						<text class="{{minusStatuses[index]}}" data-index="{{index}}" catchtap="bindMinus">-</text>
+						<!-- 数值 -->
+						<input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
+						<!-- 加号 -->
+						<text class="normal" data-index="{{index}}" catchtap="bindPlus">+</text>
+					  </view>
+				  	</view>
+				</view>
+			</view>
+      	</view>
+      	<button type="warn" data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">删除</button>
+    </view>
+</view>
+<view class="carts-footer">
+	<view class="select-and-amount" bindtap="bindSelectAll">
+		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18"/>
+		<text>全选</text>
+		<text>{{total}}</text>
+	</view>
+	<view class="button" bindtap="bindCheckout">立即结算</view>
+</view>

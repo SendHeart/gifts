@@ -1,0 +1,19 @@
+<!-- 
+<view class="cell" wx:if="{{addressList.length == 0}}">
+	<text>地址</text>
+	<text class="area_select" bindtap="bindCreateNew">请先添加地址</text>
+</view>
+<view class="cell" wx:else>
+	<text>地址</text>
+	<picker bindchange="bindPickerChange" value="{{index}}" range="{{addressList}}" range-key="address">
+		{{addressList[addressIndex]['prov_str']}}	{{addressList[addressIndex]['city_str']}}	{{addressList[addressIndex]['area_str']}}	{{addressList[addressIndex]['town_str']}}	{{addressList[addressIndex]['address']}}
+	</picker>
+</view>
+-->
+<import src="../common/hall_title.wxml" />
+<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
+<view class="cell" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
+	<text>金额</text>
+	<text class="amount">{{amount}}</text>
+</view>
+<button class="submit" type="primary" bindtap="confirmOrder">提交订单</button>

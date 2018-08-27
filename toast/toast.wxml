@@ -1,0 +1,8 @@
+<template name="wxToast">
+    <view class="wxToast_mask {{block ? 'wxToast_show' : ''}}" bindtap="hideToastFn" animation="{{animate}}" >
+        <div class="wxToast_content {{contentClass}}">
+            <image wx:if="{{img}}" class="wxToast_img {{imgClass}}" src="{{img}}" mode="scaleToFill"></image>
+            <text class="wxToastTitle">{{title}}</text>
+        </div>
+    </view>
+</template>
