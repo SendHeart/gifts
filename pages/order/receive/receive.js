@@ -211,7 +211,7 @@ Page({
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     var note = that.data.note;
-    that.setNavigation()
+   
     console.log('礼品信息')
     console.log(order_no+' receive:'+receive)
     if (receive != 1){
@@ -224,7 +224,8 @@ Page({
       username:username,
 
     })
-    
+    /*
+    that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -240,7 +241,7 @@ Page({
         userInfo: userInfo
       })
     })
-    
+    */
     
     //从服务器获取订单列表
     wx.request({

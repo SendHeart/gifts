@@ -330,7 +330,7 @@ Page({
     
     console.log('onLoad', that.data.wish_id,' from_page:',from_page)
     
-   // 
+   /*
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -347,6 +347,7 @@ Page({
         userInfo: userInfo
       })
     })
+    */
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.writePhotosAlbum']) {
