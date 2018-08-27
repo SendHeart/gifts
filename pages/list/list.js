@@ -153,7 +153,7 @@ Page({
     var all_rows = that.data.all_rows;
     if (page > all_rows){
       wx.showToast({
-        title: '没有更多的数据',
+        title: '已经到底了',
         icon: 'loading',
         duration: 1000
       });

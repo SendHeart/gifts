@@ -239,8 +239,8 @@ page {
 }
 
 .top-bar2 {
-  height: 74rpx;
-  background: #fff;
+  height: 76rpx;
+  background: #292929;
   width: 100%;
   position: fixed;
   top: 0;
@@ -251,16 +251,16 @@ page {
 .top-bar-item2 {
   display: inline-block;
   width: 375rpx;
-  color: #999;
+  color: #fff;
   text-align: center;
   line-height: 70rpx;
   font-size: 32rpx;
 }
 
 .top-bar-active2 {
-  color: #444;
+  color: #fff;
   font-weight: bold;
-  border-bottom: 4rpx solid #e34c55;
+  border-bottom: 6rpx solid #e34c55;
 }
 
 .morebtn {

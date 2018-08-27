@@ -141,7 +141,7 @@ Page({
       that.insertCart(sku_id, username, 0);
     } else {
       wx.showToast({
-        title: '该产品无货',
+        title: '该礼物无货',
         icon: 'loading',
         duration: 1500
       });

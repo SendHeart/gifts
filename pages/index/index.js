@@ -72,7 +72,7 @@ Page({
     var all_rows = that.data.all_rows;
     if (page > that.data.page_num) {
       wx.showToast({
-        title: '没有更多订单',
+        title: '没有更多记录了',
         icon: 'loading',
         duration: 1000
       });

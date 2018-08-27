@@ -65,7 +65,7 @@ page {
     background-color: #F2f2f2;
     width: 100%;
     height: 100%;
-    overflow: hidden;
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
 }
@@ -88,23 +88,24 @@ page {
 
 /*导航 nav*/
 .top-bar {
-  height: 76rpx;
-  background: white; 
+  height: 78rpx;
+  background: #292929; 
   white-space: nowrap;
   position: fixed;
   top:0;
   z-index:99;
+  overflow-y: hidden;
 }
 .top-bar-item {
   display:inline-block;
-  width: 120rpx;
-  color: #444;
+  width: 124rpx;
+  color: #fff;
   text-align: center;
   line-height: 70rpx;
   font-size: 32rpx;
 }
 .top-bar-active {
-  color: #444;
+  color: #fff;
   font-weight: bold;
   border-bottom: 6rpx solid #E34C55;
 }
@@ -115,15 +116,15 @@ page {
   background: #FFF; 
   width:100%;
   position: fixed;
-  margin-top: 74rpx;
+  margin-top: 76rpx;
   top:0;
-  border-top: 1px solid #F2f2f2;
-  border-bottom: 1px solid #F2f2f2;
+  border-top: 1rpx solid #F2f2f2;
+  border-bottom: 1rpx solid #F2f2f2;
   z-index:99;
 }
 .top-bar-item2 {
   display:inline-block;
-  width: 250rpx;
+  width: 248rpx;
   color: #999;
   text-align: center;
   line-height: 70rpx;
@@ -141,11 +142,9 @@ swiper-item image {
 
 .venues_box {
   display:block;
-  width: 98%;
-  padding-bottom:100rpx;
-  margin-left:2%;
-  margin-top: 124rpx;
+  width: 100%;
   overflow-x: hidden;
+  padding: 124rpx 0 124rpx 1%;
 }
 
 .venues_item {
@@ -155,7 +154,7 @@ swiper-item image {
   background: #ffffff;
   border-radius: 10rpx;
   text-indent: 20rpx;
-  padding-bottom: 20rpx;
+  padding-bottom: 10rpx;
 }
 
 .venues_item .mainpic {

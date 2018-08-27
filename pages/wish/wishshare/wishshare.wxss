@@ -42,7 +42,7 @@
 }
 .share-image {
   width: 100%;
-  height: 1000rpx;
+  height: 1334rpx;
 }
 .canvasdrawer {
   position: absolute;

@@ -24,7 +24,7 @@
  <text style="width:30%;font-size:30rpx;">只送Ta心仪的礼物</text>
 </view>
 -->
-<scroll-view scroll-y="true" style="height:{{dkheight}};margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y="true" style="height:{{dkheight}};margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
 <view class="container">  
     <view class="venues_box">
         <view class="venues_list">
@@ -52,11 +52,11 @@
    
    <!-- 
     <button type="default" size="default" hover-class="button-hover" class="button" bindtap="getMoreGoodsTapTag" style="margin-top:10px;"> 更多...【{{page}}/{{page_num}}】</button>
-    -->
+    
     <loading hidden="{{loadingHidden}}">
         加载中...
     </loading>
-
+-->
 </view>
 </scroll-view>
 <!-- 
