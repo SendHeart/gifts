@@ -94,7 +94,7 @@ page {
   flex-direction: column;
   align-items:center;
   height: 240rpx;
-  background: #292929;
+  background: #1d1d1d;
 }
 
 .userinfo-avatar {

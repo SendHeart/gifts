@@ -96,14 +96,13 @@ page {
 .user {
   width: 96%;
   margin: 15rpx auto 0 auto;
-  background: #F2F2F2;
+  background: rgba(15, 15, 15, 0.65);
   display: flex;
   /*flex-flow: column nowrap;*/
   justify-content: left; /*子项横轴上居中对齐*/
   align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
   opacity: 1;
   border-radius:30rpx 30rpx 0 0;
-  border: 1rpx solid #eee;
 }
 
 .user .userinfo {
@@ -112,7 +111,7 @@ page {
   position: relative;
   width: 60%;
   height: 100%;
-  color: #444;
+  color: #ffffff;
 }
 
 .user .userinfo .userinfo-avatar {
@@ -338,7 +337,6 @@ page {
   display: flex;
   flex-direction: row;
   background: white;
-  border-radius: 0 0 30rpx 30rpx;
 }
 
 .note textarea {
@@ -523,14 +521,14 @@ page {
   flex-direction: row;
   justify-content:left;
   line-height: 100rpx;
-  width: 60%;
+  width: 96%;
   height: 100rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
   background: #e34c55;
   color: white;
   font-size: 36rpx;
-  border-radius: 20rpx;
-  margin: 30rpx auto;
+  border-radius: 0 0 30rpx 30rpx;
+  margin: 0 auto 30rpx auto;
   -webkit-box-shadow: 0px 6rpx 0px rgba(219,31,5,1);
   -moz-box-shadow: 0px 6rpx 0px rgba(219,31,5,1);
   box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
@@ -539,7 +537,7 @@ page {
 .iconbtn {
   width: 64rpx;
   height: 64rpx;
-  margin: 18rpx 8rpx 18rpx 20%;
+  margin: 18rpx 8rpx 18rpx 33%;
 }
 
 /*推荐商品列表*/

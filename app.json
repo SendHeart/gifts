@@ -29,8 +29,8 @@
     "backgroundTextStyle": "light",
     "navigationBarTextStyle": "#fefefe",
     "navigationBarTitleText": "送心",
-    "navigationBarBackgroundColor": "#292929",
-    "backgroundColor": "#292929",
+    "navigationBarBackgroundColor": "#1D1D1D",
+    "backgroundColor": "#1D1D1D",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },

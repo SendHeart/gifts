@@ -100,7 +100,7 @@
   </view>
   <view class="note">
     <textarea bindblur="bindTextAreaBlur" auto-height placeholder="点击编辑" maxlength="56" />
-  </view>
+  </view> 
 
 <view class="buybutton" bindtap="bindCheckout">
   <image class="iconbtn" src="../../images/share.png"></image>

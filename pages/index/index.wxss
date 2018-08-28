@@ -240,7 +240,7 @@ page {
 
 .top-bar2 {
   height: 76rpx;
-  background: #292929;
+  background: #1d1d1d;
   width: 100%;
   position: fixed;
   top: 0;

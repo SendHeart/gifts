@@ -71,7 +71,7 @@
   align-items: center;
   text-align: center;
   height: 220rpx;
-  background: #292929;
+  background: #1d1d1d;
 }
 .userinfo_my {
   display: flex;

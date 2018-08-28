@@ -30,8 +30,15 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": -1,
-			"list": []
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "receivegift",
+					"pathName": "pages/order/receive/receive",
+					"scene": "1007"
+				}
+			]
 		}
 	}
 }
