@@ -1,0 +1,38 @@
+<import src="../../common/hall_title.wxml" />
+<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
+<view hidden="{{!hiddenmodalput}}"  class="subject" style=''> <!-- margin-top:{{navgationHeight+startBarHeight+10}}px -->
+  <text class='toptitle'>优惠券已经生成</text>
+  <text>点击送出发送给对方</text>
+</view>
+<modal hidden="{{hiddenmodalput}}" title="设置优惠券参数" confirm-text="提交" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">
+    <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
+      <text style='font-size:40rpx;width:20%'>券名:</text>
+      <input style='font-size:40rpx;width:70%' bindinput="bindChangeName" value="{{name}}" type='text' /> 
+    </view>
+    <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
+      <text style='font-size:35rpx;width:50%'>数量(0不限量):</text>
+      <input style='font-size:35rpx;width:50%' bindinput="bindChangeNums" value="{{nums}}" type='text' /> 
+    </view> 
+    
+    <picker mode="date" value="{{start_time}}" start="start_time" end="2999-12-12" bindchange="bindChangeStartTime">
+ 有效日期(开始): {{start_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+    </picker>
+     <picker mode="date" value="{{end_time}}" start="end_time" end="2999-12-12" bindchange="bindChangeEndTime">
+ 有效日期(结束): {{end_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+    </picker>
+    
+</modal> 
+<view hidden="{{!hiddenmodalput}}" class="order-item">
+  <view class="order-item-banner">
+    <view class="gifts-item">
+      <view bindtap="">
+        <image class="gifts-image" src="{{coupon_img}}" mode="aspectFill"></image>
+      </view>
+      <text class="carts-title">{{name}} {{nums>0?'x'+nums:''}} {{start_time?'(有效期:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
+    </view>
+    <view class="sentbtn">
+      <button open-type="share" data-order_no="{{order_no}}" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>送出</button>
+      <button bindtap="returnTapTag" hidden='{{send_status==0?true:false}}'>返回</button>
+    </view>
+  </view>
+</view>
