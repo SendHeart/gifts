@@ -175,10 +175,6 @@ Page({
         }
       }
     })
-  
-
-    
-    
   },
 
   scroll: function (event) {

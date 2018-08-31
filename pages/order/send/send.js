@@ -26,7 +26,7 @@ Page({
     duration: 2000,
     note_title:'Hi~:',
     note:'',
-    headimg:'',
+    headimg: userInfo.avatarUrl,
     nickname: userInfo.nickName,
     send_status:0,
     navList2: navList2,

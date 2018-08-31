@@ -31,6 +31,17 @@
 	  <image src="../../images/corp.png" />
 	  <text>商务合作</text>
   </view>-->
+  <view wx:if="{{user_type==2}}" bindtap="navigateToCoupon" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/iconfont-card.png" />
+	  <text>发优惠券</text>
+  </view>
+   <view bindtap="navigateToMyCoupon" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/iconfont-card.png" />
+	  <text>我的优惠券</text>
+  </view>
+</view>
+ <view class="menu-area">
+  
   <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>

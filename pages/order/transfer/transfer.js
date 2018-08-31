@@ -98,7 +98,7 @@ Page({
     })
   },
   bindChange: function (e) {
-    var that = this;
+    var that = this
     var note = e.detail.value
     that.setData({
       note:note

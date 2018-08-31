@@ -776,13 +776,23 @@ Page({
     var that = this
     var page_type = options.page_type
     var order_no = options.order_no
+    var coupons = options.coupons
     var receive = options.receive
     that.setNavigation()
-    console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
-    if(page_type==2){
+   
+    if(page_type==2){ //收到礼物
+      console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
       if (receive==1){
         wx.navigateTo({
           url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
+        })
+      }
+    }
+    if (page_type == 3) { //收到优惠券
+      console.log('hall page_type:', page_type, ' coupons:', coupons, ' receive:', receive)
+      if (receive == 1) {
+        wx.navigateTo({
+          url: '../member/couponrcv/couponrcv?coupons=' + coupons + '&receive=1'
         })
       }
     }
@@ -831,7 +841,7 @@ Page({
         url: '../my/index'
       })
     }
-    /*
+    
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
@@ -839,7 +849,7 @@ Page({
       })
     })
 
-   
+   /*
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -851,7 +861,7 @@ Page({
         })
       }
     }) 
-*/
+  */
     this.setData({
       username: username
     })

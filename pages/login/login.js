@@ -179,21 +179,24 @@ Page({
         wx_nickname:that.data.wx_nickname,
         wx_headimg:that.data.wx_headimg,
         login_type:1,
+        type:8,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result);
+        console.log('用户基本信息:',res.data.result);
         that.setData({
           username: res.data.result['username'],
           token: res.data.result['token']
-        });
-        wx.setStorageSync('token', res.data.result['token']);
-        wx.setStorageSync('extensionCode', res.data.result['extensionCode']);
-        wx.setStorageSync('username', res.data.result['username']);
-        wx.setStorageSync('m_id', res.data.result['m_id']);
+        })
+      
+        wx.setStorageSync('token', res.data.result['token'])
+        wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
+        wx.setStorageSync('username', res.data.result['username'])
+        wx.setStorageSync('m_id', res.data.result['m_id'])
+        wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.showToast({
           title: '保存成功',
           duration: 500

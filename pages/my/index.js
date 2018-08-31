@@ -13,6 +13,7 @@ Page({
     title_logo: '../../images/footer-icon-05.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+     
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -116,12 +117,15 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+   
     console.log("openid:" + openid + ' username:' + username)
     if (!username) {//登录
       wx.navigateTo({
         url: '../login/login?wechat=1'
       })
     }
+   
+    /*
     that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
@@ -134,6 +138,7 @@ Page({
         })
       }
     })  
+    */
 
    
     // 送收礼物信息查询
@@ -166,12 +171,17 @@ Page({
   },
   onShow: function () {
     var that = this
+    var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : user_type
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
-        title_logo: '../../../images/left_arrow.png'
+        title_logo: '../../../images/left_arrow.png',
       })
+      
     }  
+    that.setData({
+      user_type: user_type,
+    })
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -197,16 +207,26 @@ Page({
   navigateToAboutus: function () {
     wx.navigateTo({
       url: '/pages/member/aboutus/aboutus'
-    });
+    })
   },
   navigateToDonate: function () {
     wx.navigateTo({
       url: '/pages/member/donate/donate'
-    });
+    })
   },
   navigateToShare: function () {
     wx.navigateTo({
       url: '/pages/member/share/share'
-    });
+    })
+  },
+  navigateToCoupon: function () {
+    wx.navigateTo({
+      url: '/pages/member/couponsnd/couponsnd'
+    })
+  },
+  navigateToMyCoupon: function () {
+    wx.navigateTo({
+      url: '/pages/member/couponmy/couponmy'
+    })
   }
 })
