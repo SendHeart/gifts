@@ -4,6 +4,7 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
 var appsecret = app.globalData.secret;
+var shop_type = app.globalData.shop_type;
 
 //console.log(url);
 Page({
@@ -23,7 +24,8 @@ Page({
     wx_nickname:null,
     wx_headimg:null,
     m_id:null,
-    token:null
+    token:null,
+    shop_type:shop_type,
   },
 
   onGotUserInfo: function (e) {
@@ -150,7 +152,8 @@ Page({
   },
   login() {
     console.log(this.data.scode);
-    let that = this;
+    let that = this
+    var shop_type = that.data.shop_type
     /*
     if (!that.data.phoneNo) {
       app.wxToast({
@@ -180,6 +183,7 @@ Page({
         wx_headimg:that.data.wx_headimg,
         login_type:1,
         type:8,
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

@@ -3,6 +3,7 @@ var util = require('../../../utils/util.js');
 
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
@@ -19,7 +20,7 @@ Page({
     pagesize: 10,
     status: 0,
     all_rows: 0,
-    giftflag: 0,
+    shop_type: shop_type,
     scrollTop: 0,
     scrollHeight: 0,
     indicatorDots: true,
@@ -199,12 +200,14 @@ Page({
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type =  that.data.shop_type
     var amount = that.data.amount   //优惠券面额 
     var name = that.data.name   //优惠券名 
     var nums = that.data.nums   //优惠券数量
     var start_time = that.data.start_time   //优惠券有效期
     var end_time = that.data.end_time   //优惠券有效期
     var quan_type = 1 //送心打折券
+    var coupon_img = that.data.coupon_img
     //that.setNavigation()
     console.log('优惠券信息')
 
@@ -232,6 +235,8 @@ Page({
         start_time: start_time,
         end_time: end_time,
         quan_type: quan_type,
+        shop_type:shop_type,
+        image: coupon_img,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

@@ -5,12 +5,12 @@
   <view class="order-item-banner">
     <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="gifts-item">
       <view bindtap="">
-        <image class="gifts-image" src="{{coupon_img}}" mode="aspectFill"> </image>
+        <image class="gifts-image" src="{{item.image}}" mode="aspectFill"> </image>
       </view>
       <text class="carts-title">{{item.name}}</text>
       <text class="carts-title">{{item.id?'序号:'+item.id:''}}</text>
       <text class="carts-title">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}</text>
-       
+      
     </view>
      <button type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
   </view>

@@ -1,5 +1,6 @@
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var util = require('../../../utils/util.js');
 var now = new Date().getTime();
 var navList2 = [
@@ -12,6 +13,7 @@ Page({
     title_name: '收到优惠券',
     title_logo: '../../../images/footer-icon-05.png',
     coupon_img: weburl+'/uploads/coupon_bg.jpg',
+    shop_type:shop_type,
     orders: [],
     orderskus:[],
     openid:null,
@@ -129,7 +131,7 @@ Page({
       method: 'POST',
       data: {
         type: 1,  //暂定
-        shop_type: 2
+        shop_type: shop_type
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -170,6 +172,8 @@ Page({
     var pagesize = that.data.pagesize
     var all_rows = that.data.all_rows
     var page_num = that.data.page_num
+    var shop_type = that.data.shop_type
+     
     wx.request({
       url: weburl + '/api/client/query_coupon',
       method: 'POST',
@@ -178,6 +182,8 @@ Page({
         access_token: token,
         page:page,
         pagesize:pagesize,
+        shop_type:shop_type,
+        
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

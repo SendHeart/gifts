@@ -7,11 +7,12 @@ var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var navList = [
   { id: "is_recommend", title: "推荐"  ,value:"1"},
-  { id: "activity_flag", title: "精品" , value: "1" }, 
-  { id: "is_qianggou", title: "送Ta", value: "1" },
-  { id: "is_flag", title: "亲人", value: "1"},
-  { id: "search_goodsname", title: "美食", value: "美食"},
-  { id: "search_goodsname", title: "数码", value: "数码"}
+  { id: "activity_flag", title: "中秋" , value: "1" }, 
+  { id: "cat_id", title: "美食", value: "1" },
+  { id: "cat_id", title: "酒和茶", value: "1"},
+  { id: "cat_id", title: "美妆", value: "美妆"},
+  { id: "cat_id", title: "文创", value: "文创"},
+  { id: "cat_id", title: "数码", value: "数码" },
 ];
 var navList2 = [
   { id: "default", title: "最新" },

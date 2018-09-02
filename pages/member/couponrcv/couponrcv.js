@@ -1,5 +1,6 @@
 var app = getApp();
 var weburl = app.globalData.weburl;
+var shop_type = app.globalData.shop_type;
 var util = require('../../../utils/util.js');
 var now = new Date().getTime();
 Page({
