@@ -45,7 +45,7 @@
 
         <!-- 缩略图 -->
 
-        <image class="carts-image" src="{{item.image}}" mode="aspectFill" />
+        <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
         <!-- 商品标题 -->
         <view class="carts-text">
           <text class="carts-title">{{item.name}}</text>

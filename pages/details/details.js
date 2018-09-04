@@ -130,7 +130,8 @@ Page({
                   goodstag: goods_info[0]['goods_tag'],
                   goodsprice: goods_info[0]['sell_price'],
                   goodssale: goods_info[0]['sale'],
-                  goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : ''
+                  goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
+                  goodscoverimg: goods_info[0]['activity_image'],
                 })
               }else{
                 wx.showToast({
@@ -194,11 +195,9 @@ Page({
             })
             if (!attrValueList ) return
             for (var i = 0; i < attrValueList.length; i++) {
-              if (attrValueList[i].attrValueStatus) {
+              if (!attrValueList[i].attrValueStatus) {
                 attrValueList[i].attrValueStatus = true;
-              } else {
-                attrValueList[i].attrValueStatus = false;
-              }
+              } 
             }
            
             that.setData({
@@ -351,7 +350,7 @@ Page({
       
       if (winPage.data.hideviewgoodsinfoflag){
         if (winPage.data.goodsinfoshowflag==0){
-          wxparse.wxParse('dkcontent1', 'html', winPage.data.goodsPicsInfo.desc['desc'], winPage, 1);
+          wxparse.wxParse('dkcontent1', 'html', winPage.data.goodsPicsInfo.desc['desc'], winPage, 1)
         }
       }
       winPage.setData({
@@ -378,7 +377,7 @@ Page({
             })
           }
         })
-      wxparse.wxParse('dkcontent2', 'html', winPage.data.goodsPicsInfo.desc['desc2'], winPage, 1);
+      wxparse.wxParse('dkcontent2', 'html', winPage.data.goodsPicsInfo.desc['desc2'], winPage, 1)
       }
       winPage.setData({
         hideviewgoodsparaflag: false
@@ -425,45 +424,55 @@ Page({
       } 
       console.log(e.currentTarget.dataset); 
       */
-      var attrValueList = this.data.attrValueList;
+      var that = this
+      var attrValueList = that.data.attrValueList;
       var index = e.currentTarget.dataset.index;//属性索引 
+      var firstIndex = that.data.firstIndex
+      var valueindex = e.currentTarget.dataset.valueindex;//属性索引 
       var key = e.currentTarget.dataset.key;
       var value = e.currentTarget.dataset.value;
+      var status = e.currentTarget.dataset.status
+      var selectedvalue = e.currentTarget.dataset.selectedvalue
       this.setData({
         //includeGroup: commodityAttr,
         firstIndex: index,
+        secondIndex: valueindex,
       });
-      if (e.currentTarget.dataset.status || index == this.data.firstIndex) {
-        if (e.currentTarget.dataset.selectedvalue == e.currentTarget.dataset.value) {
+      if (status || valueindex == that.data.secondIndex) {
+        if (attrValueList[index].type==2){
+          value = attrValueList[index].note[valueindex]
+        }
+        if (selectedvalue == value) {
           // 取消选中 
-          this.disSelectValue(attrValueList, index, key, value);
+          that.disSelectValue(index, key, value);
         } else {
           // 选中 
-          this.selectValue(attrValueList, index, key, value);
+          that.selectValue( index, key, value);
         }
 
       }
-      this.setData({
+      that.setData({
         sku_id: '',
         sku_gov_price: '',
         sku_earnest_price: '',
         sku_sell_price: '',
       })
       var selectValueInfo='';
-      for (var i = 0; i < this.data.attrValueList.length; i++) {
-        if (this.data.attrValueList[i].selectedValue) {
-          selectValueInfo = selectValueInfo+this.data.attrValueList[i].selectedValue+';';
+      for (var i = 0; i < attrValueList.length; i++) {
+        if (attrValueList[i].selectedValue) {
+          selectValueInfo = selectValueInfo + attrValueList[i].selectedValue+';';
         }
       }
-      for (var i = 0; i < this.data.commodityAttr.length; i++) {
-        if (selectValueInfo.indexOf(this.data.commodityAttr[i].sku_key)>=0) {
-          this.setData({
-            sku_id: this.data.commodityAttr[i].id,
-            sku_gov_price: this.data.commodityAttr[i].gov_price,
-            sku_earnest_price: this.data.commodityAttr[i].earnest_price,
-            sku_sell_price: this.data.commodityAttr[i].sell_price,
+      
+      for (var i = 0; i < that.data.commodityAttr.length; i++) {
+        if (selectValueInfo.indexOf(that.data.commodityAttr[i].sku_key)>=0) {
+          that.setData({
+            sku_id: that.data.commodityAttr[i].id,
+            sku_gov_price: that.data.commodityAttr[i].gov_price,
+            sku_earnest_price: that.data.commodityAttr[i].earnest_price,
+            sku_sell_price: that.data.commodityAttr[i].sell_price,
           })
-          break;
+          //break
         }
         
       }
@@ -472,81 +481,22 @@ Page({
      
     },
     /* 选中 */
-    selectValue: function (attrValueList, index, key, value, unselectStatus) {
-      // console.log('firstIndex', this.data.firstIndex); 
-     // var includeGroup = [];
-      /*
-      if (index == this.data.firstIndex && !unselectStatus) { // 如果是第一个选中的属性值，则该属性所有值可选 
-        var commodityAttr = this.data.commodityAttr;
-        // 其他选中的属性值全都置空 
-        // console.log('其他选中的属性值全都置空', index, this.data.firstIndex, !unselectStatus); 
-        for (var i = 0; i < attrValueList.length; i++) {
-          attrValueList[i].selectedValue = '';
-        }
-      } else {
-        var commodityAttr = this.data.includeGroup;
-      }
-
-      // console.log('选中', commodityAttr, index, key, value); 
-      for (var i = 0; i < commodityAttr.length; i++) {
-        for (var j = 0; j < commodityAttr[i].attrValueList.length; j++) {
-          if (commodityAttr[i].attrValueList[j].attrKey == key && commodityAttr[i].attrValueList[j].attrValue == value) {
-            includeGroup.push(commodityAttr[i]);
-          }
-        }
-      }
-      */
+    selectValue: function (index, key, value) {
+      var that = this
+      var attrValueList = that.data.attrValueList
       attrValueList[index].selectedValue = value;
-      /*
-      // 判断属性是否可选 
-      for (var i = 0; i < attrValueList.length; i++) {
-        for (var j = 0; j < attrValueList[i].attrValues.length; j++) {
-          attrValueList[i].attrValueStatus[j] = false;
-        }
-      }
-      for (var k = 0; k < attrValueList.length; k++) {
-        for (var i = 0; i < includeGroup.length; i++) {
-          for (var j = 0; j < includeGroup[i].attrValueList.length; j++) {
-            if (attrValueList[k].attrKey == includeGroup[i].attrValueList[j].attrKey) {
-              for (var m = 0; m < attrValueList[k].attrValues.length; m++) {
-                if (attrValueList[k].attrValues[m] == includeGroup[i].attrValueList[j].attrValue) {
-                  attrValueList[k].attrValueStatus[m] = true;
-                }
-              }
-            }
-          }
-        }
-      }
-      // console.log('结果', attrValueList); 
-      */
-      this.setData({
+    
+      that.setData({
         attrValueList: attrValueList,
         //includeGroup: includeGroup
-      });
-      
-      
-/*
-      var count = 0;
-      for (var i = 0; i < attrValueList.length; i++) {
-        if (attrValueList[i].selectedValue) {
-          count++;
-          break;
-        }
-      }
-      if (count < 2) {// 第一次选中，同属性的值都可选 
-        this.setData({
-          firstIndex: index
-        });
-      } else {
-        this.setData({
-          firstIndex: -1
-        });
-      }
-      */
+      })
+     // console.log('selectValueInfo 选中信息:', attrValueList,' index:',index); 
     },
     /* 取消选中 */
-    disSelectValue: function (attrValueList, index, key, value) {
+    disSelectValue: function (index, key, value) {
       //var commodityAttr = this.data.commodityAttr;
+      var that = this
+      var attrValueList = that.data.attrValueList
       attrValueList[index].selectedValue = '';
       this.setData({
         //includeGroup: commodityAttr,
@@ -554,26 +504,8 @@ Page({
         sku_gov_price: '',
         sku_earnest_price: '',
         attrValueList: attrValueList
-      });
-/*
-
-      // 判断属性是否可选 
-      for (var i = 0; i < attrValueList.length; i++) {
-        for (var j = 0; j < attrValueList[i].attrValues.length; j++) {
-          attrValueList[i].attrValueStatus[j] = true;
-        }
-      }
-      this.setData({
-        includeGroup: commodityAttr,
-        attrValueList: attrValueList
-      });
-
-      for (var i = 0; i < attrValueList.length; i++) {
-        if (attrValueList[i].selectedValue) {
-          this.selectValue(attrValueList, i, attrValueList[i].name, attrValueList[i].selectedValue, true);
-        }
-      }
-      */
+      })
+     // console.log('selectValueInfo 取消选中信息:', attrValueList,' index:',index); 
     },
     
   onShow: function () {
@@ -610,8 +542,8 @@ Page({
   },
 
   onReady: function () {
-  
-    
+    this.videoContext = wx.createVideoContext('myVideo')
+    this.videoContext.seek(1)
   },
 
   onShareAppMessage: function () {
