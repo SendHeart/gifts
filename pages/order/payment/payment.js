@@ -1,5 +1,7 @@
+var util = require('../../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl; 
+var shop_type = app.globalData.shop_type; 
 
 Page({
 	data: {
@@ -9,6 +11,12 @@ Page({
     orders: [],
     totalFee:0,
     sku_id:'',
+   
+    page: 1,
+    pagesize: 5,
+    page_num: 0,
+    all_rows: 0,
+    shop_type: shop_type,
 	},
   setNavigation: function () {
     let startBarHeight = 20
@@ -30,7 +38,7 @@ Page({
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
-      wx.navigateBack({ changed: true });//返回上一页
+      wx.navigateBack({ changed: true })//返回上一页
     } else {
       wx.switchTab({
         url: '../../hall/hall'
@@ -38,14 +46,15 @@ Page({
     }
 
   },
+  
 	onLoad: function (options) {
-    var that = this;
+    var that = this
     var orderNo = options.orderNo;
-    var totalFee = options.totalFee ? options.totalFee:0;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var totalFee = options.totalFee ? options.totalFee:0
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
    
-    that.setNavigation()
+    //that.setNavigation()
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',
@@ -92,8 +101,17 @@ Page({
             title: res.data.info,
             icon: 'loading',
             duration: 1500
-          });
+          })
         }
+      }
+    })
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        console.log(winHeight);
+        that.setData({
+          dkheight: winHeight - winHeight * 0.05 - 120,
+        })
       }
     })
 	},
@@ -106,6 +124,7 @@ Page({
       })
     }  
   },
+
   pay: function (e) {
 		var that = this;
     var openId = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
@@ -155,14 +174,7 @@ Page({
             duration: 2000,
           })
         }
-        //测试
-        /*
-        console.log('支付完成准备送礼');
-        console.log(that.data.order_no);
-        wx.navigateTo({
-          url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders)
-        })
-        */
+        
         
 			},
       fail: function (response) {
@@ -199,5 +211,6 @@ Page({
      
   },
 
+  
 
 })

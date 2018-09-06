@@ -40,7 +40,6 @@
 
       <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
         <!-- 复选框图标 -->
-
         <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" hidden="true" />
 
         <!-- 缩略图 -->
@@ -49,11 +48,18 @@
         <!-- 商品标题 -->
         <view class="carts-text">
           <text class="carts-title">{{item.name}}</text>
-
+          <view style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
+            <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="" >
+              <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+              </text>
+            </view>
+          </view>
           <view class="carts-text carts-subtitle">
             <view class='carts-price'>
               <!-- 价格 -->
+              <!-- 
               <view class="carts-gov-price">{{item.act_info?item.act_info:'高端大气'}}</view>
+              -->
               <view class="carts-en-price">￥{{item.sell_price}}</view>
             </view>
             <!-- 数量加减 -->

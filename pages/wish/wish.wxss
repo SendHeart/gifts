@@ -249,6 +249,9 @@ view.text text {
   display: block;
   color: #444;
   font-size:28rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
 }
 
  .venues_item .goods_tag {

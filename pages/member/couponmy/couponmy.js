@@ -84,7 +84,22 @@ Page({
     })
 
   },
+  couponTapTag: function (e) {
+    /*
+    wx.navigateTo({
+      url: '../../order/list/list'
+    });
+   
+   wx.switchTab({
+      url: '../../hall/hall'
+    })
+    
+     */
+    wx.navigateTo({
+      url: '../../list/list'
+    });
 
+  },
   scroll: function (event) {
     //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
     this.setData({

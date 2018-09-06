@@ -34,7 +34,7 @@ Page({
     search_goodsname: null,
     keyword:'',
     page: 1,
-    pagesize: 20,
+    pagesize: 6,
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -291,7 +291,7 @@ Page({
           if (!venuesItems[i]['act_info']){
             venuesItems[i]['act_info'] = ''
           } else{
-            venuesItems[i]['act_info'] = venuesItems[i]['act_info'].substring(0, 10) + '...'
+            //venuesItems[i]['act_info'] = venuesItems[i]['act_info'].substring(0, 10) + '...'
           }
           if (!venuesItems[i]['goods_tag']) {
             venuesItems[i]['goods_tag'] = ''

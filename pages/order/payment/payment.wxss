@@ -3,6 +3,11 @@ page {
   overflow-x: hidden;
   width: 100%;
 }
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
 
 .startBar {
   height: 75rpx;
@@ -43,16 +48,16 @@ page {
 }
 .order-item {
 	background: #fff;
-  width: 96%;
-  margin: 20rpx auto;
+  width: 100%;
+  margin: 10rpx auto;
   border-radius: 10rpx;
+  
   
 }
 
 .order-item:last-child {
 	margin-bottom: 0;
 }
-
 .order-footer {
   text-align: right;
 	padding: 10rpx 20rpx;
@@ -132,6 +137,24 @@ page {
 	display: flex;
 	flex-direction:column;
 	justify-content:space-between;
+}
+
+.carts-more {
+  height: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: left; /*子项横轴上居中对齐*/
+  bottom: 0;
+  border-top: 1px solid #eee;
+  border-bottom: 1px solid #eee;
+  background: white;
+  padding: 25rpx;
+  z-index: 1;
+}
+.select-and-amount {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
 }
 
 /*地址*/

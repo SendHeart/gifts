@@ -15,8 +15,16 @@
 		<view class="carts-text">
 			<!-- 商品标题 -->
 			<text class="carts-title">{{mapping.goods_name}}</text>
+      <view style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
+        <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="">
+           <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+              </text>
+        </view>
+      </view>
 			<view class="carts-subtitle">
+      <!-- 
       <text>{{item.act_info?item.act_info:'高端大气'}}</text>
+      -->
 				<text>x{{mapping.sku_num}}</text>
 			</view>
 		</view>
@@ -24,11 +32,8 @@
 	<view class="order-footer">
 		<text>共计:</text><text class='font-red'>￥{{item.order_price}}</text>
 	</view>
-  <!-- 
-	<view class="order-footer">
-		<text>收货地址</text>
-		<text>{{item.address}}</text>
-	</view>
-  -->
+  
 </view>
+
 <button data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay" class='btnpay'>微信支付</button>
+

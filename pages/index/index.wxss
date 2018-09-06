@@ -162,6 +162,9 @@ page {
   font-size: 28rpx;
   color: #444;
   line-height: 38rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
 }
 
 /*右下部分价格与数量*/

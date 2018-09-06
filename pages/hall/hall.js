@@ -116,7 +116,6 @@ Page({
       num = 0  //减到0视同删除
     }
 
-     
     //var minusStatus = num <= 1 ? 'disabled' : 'normal';
     var minusStatus = num <= 1 ? 'normal' : 'normal';  //减到0视同删除
     // 购物车数据
@@ -312,20 +311,23 @@ Page({
   },
 
   bindCheckout: function () {
-    var that = this;
-    var amount = that.data.total;
-    var cartIds = that.calcIds();
-    cartIds = cartIds.join(',');
+    var that = this
+    var order_type = 'gift'
+    var order_note = that.data.note
+    var amount = that.data.total
+    var cartIds = that.calcIds()
+    var carts = that.data.carts
+    var cartselected = []
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 
-    var carts = that.data.carts;
-    var cartselected = [];
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    cartIds = cartIds.join(',')
+    if (!order_note) order_note = '送你一份心意，愿美好长存!'; //默认祝福
     // 遍历selected 
-    var index = 0;
+    var index = 0
     for (var i = 0; i < carts.length; i++) {
       if (carts[i]['selected']) {
-        cartselected[index++] = carts[i];
+        cartselected[index++] = carts[i]
       }
     }
     if (cartselected.length==0){
@@ -345,18 +347,18 @@ Page({
       token:token,
      
     });
-    that.confirmOrder()
+    //that.confirmOrder()
 
-    /*
+   
+    
     wx.navigateTo({
-      url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + this.data.total + '&carts=' + cartselected + '&username=' + username + '&token=' + token
+      url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
     });
-    */
+     
   },
 
   confirmOrder: function () {
-    // submit order
-    var that = this;
+    var that = this
     var carts = that.data.carts;
     var cartIds = that.data.cartIds
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -368,7 +370,6 @@ Page({
     if (!order_note) order_note='送你一份心意，愿美好长存!'; //默认祝福
     console.log('附言:' + order_note)
      
-
     wx.request({
       url: weburl + '/api/client/add_order',
       method: 'POST',
@@ -619,7 +620,7 @@ Page({
         for (var key in cartlist) {
           for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
             cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
-            cartlist[key]['sku_list'][i]['name'] = cartlist[key]['sku_list'][i]['name'].substr(0, 13) + '...';
+            //cartlist[key]['sku_list'][i]['name'] = cartlist[key]['sku_list'][i]['name'].substr(0, 13) + '...';
             cartlist[key]['sku_list'][i]['selected'] = true;
             cartlist[key]['sku_list'][i]['shop_id'] = key;
             cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id'];

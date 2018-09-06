@@ -17,7 +17,7 @@ Page({
     fun_id: 2,
     time: '点击获取', //倒计时 
     currentTime: 60,
-    phoneNo:'18605703270',
+    phoneNo:'',
     scode:'12345',
     goods_id:null,
     username:null,
@@ -26,6 +26,7 @@ Page({
     m_id:null,
     token:null,
     shop_type:shop_type,
+    logininfo_logo:weburl+'/uploads/songxin_logo.png'
   },
 
   onGotUserInfo: function (e) {
@@ -38,7 +39,7 @@ Page({
       wx_headimg: userInfo.avatarUrl
     })
     console.log(e.detail.errMsg)
-    console.log('获取授权：')
+    console.log('获取用户公开信息授权：')
     console.log(e.detail.userInfo)
     console.log(e.detail.rawData)
     wx.login({
@@ -73,6 +74,30 @@ Page({
           })
         } else {
           console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
+    })
+    //权限
+    wx.getSetting({
+      success(res) {
+        //通讯录权限
+        if (!res.authSetting['scope.address']) {
+          wx.authorize({
+            scope: 'scope.address',
+            success() {
+              // 
+            }
+          })
+        }
+        //保存到相册权限
+        if(!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success() {
+              //  
+             
+            }
+          })
         }
       }
     })
@@ -202,7 +227,7 @@ Page({
         wx.setStorageSync('m_id', res.data.result['m_id'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.showToast({
-          title: '保存成功',
+          title: '授权成功',
           duration: 500
         });
         // 等待半秒，toast消失后返回上一页
@@ -218,6 +243,14 @@ Page({
       url: '../details/index?username=' + this.data.phoneNo+'&id='+this.data.goods_id
     })
     */
+  },
+  navigateToMyAgreement: function (e) {
+    var that = this
+    var isReadAgreement = 0
+    wx.setStorageSync('isReadAgreement', isReadAgreement)
+    wx.switchTab({
+      url: '../my/index'
+    })
   },
   /**
    * 生命周期函数--监听页面加载

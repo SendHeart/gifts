@@ -1,7 +1,10 @@
+var wxparse = require("../../wxParse/wxParse.js");
 var app = getApp();
 var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
 var appsecret = app.globalData.secret;
+var user_type = app.globalData.user_type;
+var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
@@ -13,6 +16,13 @@ Page({
     title_logo: '../../images/footer-icon-05.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+    hideviewagreementinfo: true,
+    agreementinfoshowflag: 0,
+    playsxinfoshowflag: 0,
+    scrollTop: 0,
+    scrollTop_init: 10,
+    modalHiddenAgreement:true,
+    modalHiddenPlaysx: true,
      
   },
   setNavigation: function () {
@@ -53,6 +63,138 @@ Page({
       url: '../wish/wish?wish_id='
     })
   },
+  navigateToAgreement:function(){
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var art_id = '21'  //送心用户协议
+    var art_cat_id = '9'  //送心协议类
+    var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
+    if (agreementinfoshowflag == 0) {
+      wx.request({
+        url: weburl + '/api/client/query_art',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          art_id: art_id,
+          art_cat_id: art_cat_id,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          that.setData({
+            agreementInfo: res.data.result,
+          })
+          console.log('送心协议:', that.data.agreementInfo)
+          that.showAgreementinfo()
+        }
+
+      })
+    } else{
+      that.showAgreementinfo()
+    }
+    
+    
+  },
+  navigateToPlaysx: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var art_id = '22'  //玩转送心
+    var art_cat_id = '9'  //送心协议类
+    var playsxinfoshowflag = that.data.playsxinfoshowflag
+
+    if (playsxinfoshowflag == 0) {
+      wx.request({
+        url: weburl + '/api/client/query_art',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          art_id: art_id,
+          art_cat_id: art_cat_id,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          that.setData({
+            playsxInfo: res.data.result,
+          })
+          console.log('玩转送心:', that.data.playsxInfo)
+          that.showPlaysxinfo()
+        }
+
+      })
+    } else {
+      that.showPlaysxinfo()
+    }
+
+
+  },
+  showAgreementinfo: function () {
+    let winPage = this
+    //var hideviewagreementinfo = winPage.data.hideviewagreementinfo
+    var modalHiddenAgreement = winPage.data.modalHiddenAgreement
+    var agreementinfoshowflag = winPage.data.agreementinfoshowflag ? winPage.data.agreementinfoshowflag:0
+  
+    winPage.setData({
+      //hideviewagreementinfo: !hideviewagreementinfo,
+      modalHiddenAgreement: !modalHiddenAgreement,
+    })
+
+    if (!winPage.data.modalHiddenAgreement && agreementinfoshowflag == 0) {
+      wx.getSystemInfo({
+        success: function (res) {
+          let winHeight = res.windowHeight;
+          console.log(winHeight);
+          winPage.setData({
+            dkheight: winHeight - winHeight * 0.05 - 120,
+            
+          })
+        }
+      })
+      winPage.setData({
+        agreementinfoshowflag: 1,
+      })
+      wxparse.wxParse('dkcontent1', 'html', winPage.data.agreementInfo[0]['desc'], winPage, 1)
+     
+    }
+    
+  },
+
+  showPlaysxinfo: function () {
+    let winPage = this
+    //var hideviewagreementinfo = winPage.data.hideviewagreementinfo
+    var modalHiddenPlaysx = winPage.data.modalHiddenPlaysx
+    var playsxinfoshowflag = winPage.data.playsxinfoshowflag
+    winPage.setData({
+      //hideviewagreementinfo: !hideviewagreementinfo,
+      modalHiddenPlaysx: !modalHiddenPlaysx,
+    })
+
+    if (!winPage.data.modalHiddenPlaysx && playsxinfoshowflag == 0) {
+      wx.getSystemInfo({
+        success: function (res) {
+          let winHeight = res.windowHeight;
+          //console.log(winHeight);
+          winPage.setData({
+            dkheight: winHeight - winHeight * 0.05 - 120,
+          })
+        }
+      })
+      winPage.setData({
+        playsxinfoshowflag: 1,
+      })
+      wxparse.wxParse('dkcontent2', 'html', winPage.data.playsxInfo[0]['desc'], winPage, 1)
+    }
+
+  },
+
   navigateToOrder: function (e) {
     var status = e.currentTarget.dataset.status
     wx.navigateTo({
@@ -110,6 +252,33 @@ Page({
       url: '../cs/cs'
     });
   },
+  //确定按钮点击事件  用户协议
+  modalBindaconfirmAgreement: function () {
+     
+    this.setData({
+      modalHiddenAgreement: !this.data.modalHiddenAgreement,
+    })
+    wx.setStorageSync('isReadAgreement', 1) //协议阅读标志
+  },
+  //取消按钮点击事件  用户协议
+  modalBindcancelAgreement: function () {
+    this.setData({
+      modalHiddenAgreement: !this.data.modalHiddenAgreement
+    })
+  },  
+  //确定按钮点击事件  玩转送心
+  modalBindaconfirmPlaysx: function () {
+    this.setData({
+      modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
+
+    })
+  },
+  //取消按钮点击事件  玩转送心
+  modalBindcancelPlaysx: function () {
+    this.setData({
+      modalHiddenPlaysx: !this.data.modalHiddenPlaysx
+    })
+  },  
   onLoad: function () {
     var that = this;
     var gifts_rcv = that.data.gifts_rcv;
@@ -125,53 +294,12 @@ Page({
       })
     }
    
-    /*
-    that.setNavigation()
-    wx.getSystemInfo({
-      success: function (res) {
-        let winHeight = res.windowHeight;
-        that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
-          dkheight: winHeight - 200,
-          scrollTop: that.data.scrollTop + 10
-        })
-      }
-    })  
-    */
-
-   
-    // 送收礼物信息查询
-    /*
-    wx.request({
-      url: weburl + '/api/client/query_member_gift',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        openid: openid
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log('会员礼物收送信息获取');
-        console.log(res.data);
-        var gifts_rcv = res.data.result['giftgetnum'];
-        var gifts_send = res.data.result['giftsendnum'];
-
-        that.setData({
-          gifts_rcv: gifts_rcv,
-          gifts_send: gifts_send,
-        });
-      }
-    })
-    */
   },
   onShow: function () {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : user_type
+    var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement'):0
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
@@ -179,6 +307,9 @@ Page({
       })
       
     }  
+    if (isReadAgreement == 0 && username){ //已登录未阅读用户购买协议
+      that.navigateToAgreement()
+    }
     that.setData({
       user_type: user_type,
     })
@@ -189,6 +320,7 @@ Page({
         userInfo: userInfo
       })
     })
+    
     
   },
   chooseImage: function () {

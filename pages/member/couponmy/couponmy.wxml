@@ -4,7 +4,7 @@
 <view class="order-item">
   <view class="order-item-banner">
     <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="gifts-item">
-      <view bindtap="">
+      <view bindtap="couponTapTag">
         <image class="gifts-image" src="{{item.image}}" mode="aspectFill"> </image>
       </view>
       <text class="carts-title">{{item.name}}</text>

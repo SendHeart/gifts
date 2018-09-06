@@ -372,7 +372,7 @@ Page({
             let winHeight = res.windowHeight;
             console.log(winHeight);
             winPage.setData({
-              dkheight: winHeight - winHeight * 0.05 - 80,
+              dkheight: winHeight - winHeight * 0.05 - 100,
               scrollTop: winPage.data.scrollTop_init
             })
           }
@@ -535,7 +535,7 @@ Page({
         let winHeight = res.windowHeight;
         console.log(winHeight);
         that.setData({
-          dkheight: winHeight - winHeight * 0.05 - 80,
+          dkheight: winHeight - winHeight * 0.05 - 100,
         })
       }
     })

@@ -168,6 +168,9 @@ swiper-item image {
   display: block;
   color: #444;
   font-size:28rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap;  
 }
 
 .venues_item .goods_tag {
@@ -186,8 +189,9 @@ swiper-item image {
   display: block;
   color: #999;
   font-size:28rpx;
-  white-space: nowrap;
-  overflow-x: hidden;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap;  
 }
 .price-now {
   color: #e34c55;

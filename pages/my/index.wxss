@@ -214,3 +214,61 @@ page {
 .clickBtn::after {
   border: 0;
 } 
+
+
+.shopping_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /*子项横轴上居中对齐*/
+  text-align: center;
+  background: #fff;
+  border-top: 1rpx solid #eee;
+  padding: 10rpx 0 40rpx 0;
+  margin-bottom: 10rpx;
+  z-index: 1;
+}
+
+.shopping_container .img_tag {
+  width: 10%;
+  height: 30rpx;
+  margin: 10px;
+}
+
+.shopping_container .goods-name {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  width: 100%;
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #444;
+}
+
+.shopping_container .goods_prom {
+  display: block;
+  color: #999;
+  font-size: 28rpx;
+  font-weight: normal;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+.shopping_container .goods-info {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  font-size: 32rpx;
+}
+prd-detail {
+  margin: 5rpx 0 15rpx 0;
+  color: #999;
+}
+.prd-detail text {
+  font-size: 28rpx;
+}
+.modalbox {
+  background: #ffffff;
+  margin-top: 10px;
+}
