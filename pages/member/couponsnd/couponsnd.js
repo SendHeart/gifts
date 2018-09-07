@@ -15,7 +15,8 @@ Page({
     title_name: '优惠券送出',
     title_logo: '../../../images/footer-icon-05.png',
     coupon_img: weburl + '/uploads/coupon_bg.jpg',
-    
+    shop_type:shop_type,
+    weburl:weburl,
     page: 1,
     pagesize: 10,
     status: 0,
@@ -38,7 +39,9 @@ Page({
     nums:0,
     start_time: util.getDateStr(new Date,0),
     end_time: util.getDateStr(new Date,3),
-    name:'送心优惠券'
+    name:'送心优惠券',
+    hiddenqrcode:true,
+    
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -124,6 +127,20 @@ Page({
     })
     console.log('name:' + that.data.name)
   },  
+  qrcodeTapTag: function (e) {
+    var that = this
+    var qr_type = 'couponshare'  //
+    var page_type = '3'  //
+    var hiddenqrcode = that.data.hiddenqrcode
+    var hiddenmodalput = that.data.hiddenmodalput
+    var coupons_json = JSON.stringify(that.data.coupons)
+    that.setData({
+      hiddenqrcode: !hiddenqrcode,
+      coupons_json: coupons_json,
+      //hiddenmodalput: !hiddenmodalput,
+      qr_type: qr_type,
+    })
+  },
   returnTapTag: function (e) {
     /*
     wx.navigateTo({

@@ -22,6 +22,7 @@
     </picker>
     
 </modal> 
+
 <view hidden="{{!hiddenmodalput}}" class="order-item">
   <view class="order-item-banner">
     <view class="gifts-item">
@@ -32,7 +33,20 @@
     </view>
     <view class="sentbtn">
       <button open-type="share" data-order_no="{{order_no}}" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>送出</button>
+        <button data-order_no="{{order_no}}" bindtap="qrcodeTapTag" hidden='{{send_status==0?false:true}}'>二维码</button>
       <button bindtap="returnTapTag" hidden='{{send_status==0?true:false}}'>返回</button>
     </view>
+  </view>
+</view>
+<view hidden="{{hiddenqrcode}}" class="order-item">
+<view  class="order-item-banner">
+<view class="gifts-item">
+  <image  class="gifts-image"  src="{{weburl}}/api/WXPay/getQRCode?username={{username}}&appid={{appid}}&secret={{secret}}&shop_type={{shop_type}}&qr_type={{qr_type}}&coupons={{coupons_json}}&page_type={{page_type}}" mode="widthFix" />
+  </view>
+  <!--
+  <view class="sentbtn">
+    <button bindtap="returnTapTag">返回</button>
+  </view>
+  -->
   </view>
 </view>
