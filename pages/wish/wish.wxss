@@ -253,6 +253,15 @@ view.text text {
   text-overflow:ellipsis;  
   white-space:nowrap; 
 }
+.venues_item .goods_sku {
+  display: block;
+  color: #999;
+  font-size:24rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+  min-height: 36rpx;
+}
 
  .venues_item .goods_tag {
    color: gray; 
@@ -268,7 +277,7 @@ view.text text {
  .venues_item .goods_prom {
   display: block;
   color: #999;
-  font-size:28rpx;
+  font-size:24rpx;
   white-space: nowrap;
   overflow-x: hidden;
 }

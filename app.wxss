@@ -29,9 +29,7 @@
 .color2{
   color: #cd3830;
 }
-view,button{
-  font-size: 28rpx;
-}
+
 .font1 {
     color: #666;
     font-family: Microsoft YaHei Hiragino Sans GB;

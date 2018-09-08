@@ -1,6 +1,7 @@
 <import src="../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<view class="banner" style=''><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+<view class="banner" style=''>
+  <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
   <!-- 
   <view class="slogan" >
     <text style="font-size:20px;color:red;text-align:center" >送礼就是送心</text>
@@ -9,15 +10,18 @@
   -->
   <image src="{{main_title_Bg}}" background-size="cover" mode="aspectFill"></image>
 </view>
-<view class="wrap" style=''><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+<view class="wrap" style=''>
+  <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
   <view class="user">
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
     <view class="usergifts" bindtap='usergiftTapTag'>
-      <text>收到 {{gifts_rcv}}</text>
-      <text>送出 {{gifts_send}}</text>
+      <text>收到</text>
+      <text class='snum'>{{gifts_rcv}}</text>
+      <text>送出</text>
+      <text class='snum'>{{gifts_send}}</text>
     </view>
   </view>
   <view class="pick-goods" hidden="{{all_rows>0?false:false}}" bindtap="bindPickGoods">
@@ -30,7 +34,6 @@
     </view>
     <view class="image-btnbuy">
       <text class="pick-goods-action">开始挑选</text>
-      <image class="rightarrow" src="../../images/rightarrow.png"></image>
     </view>
 
   </view>
@@ -47,20 +50,18 @@
         <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
         <!-- 商品标题 -->
         <view class="carts-text">
-          <text class="carts-title">{{item.name}}</text>
-          <view style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
-            <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="" >
-              <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
-              </text>
-            </view>
+          <view class="carts-title"><text>{{item.name}}</text></view>
+          
+          <view class="carts-subtitle">
+          <view>
+          <view class="carts-sku"><text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">
+            {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}</text>
           </view>
-          <view class="carts-text carts-subtitle">
-            <view class='carts-price'>
-              <!-- 价格 -->
-              <!-- 
+            <!-- 价格 -->
+            <!-- 
               <view class="carts-gov-price">{{item.act_info?item.act_info:'高端大气'}}</view>
               -->
-              <view class="carts-en-price">￥{{item.sell_price}}</view>
+            <view class="carts-en-price">￥{{item.sell_price}}</view>
             </view>
             <!-- 数量加减 -->
             <view class="stepper">
@@ -106,14 +107,14 @@
   </view>
   <view class="note">
     <textarea bindblur="bindTextAreaBlur" auto-height placeholder="点击编辑" maxlength="56" />
-  </view> 
+  </view>
 
-<view class="buybutton" bindtap="bindCheckout">
-  <image class="iconbtn" src="../../images/share.png"></image>
-  <text>送出礼物</text>
-</view>
+  <view class="buybutton" bindtap="bindCheckout">
+    <image class="iconbtn" src="../../images/share.png"></image>
+    <text>送出礼物</text>
+  </view>
 
-<!-- 
+  <!-- 
 <view class="carts-footer" hidden="{{all_rows>0?false:true}}">
 	<view class="select-and-amount" bindtap="bindSelectAll">
 		<icon style="margin-top:-5rpx;" type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18"/>
@@ -136,21 +137,21 @@
   </view>
 </view>
 -->
-<view class="recomment-title" bindtap='bindPickGoods'>
-  <text>近期热门</text>
-</view>
-<view class="venues_box">
-  <view wx:for="{{recommentList}}" class="venues_item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">
-    <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
-    <text class="goods_name">{{item.name}}</text>
-    <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
-    <!-- 
+  <view class="recomment-title" bindtap='bindPickGoods'>
+    <text>—— 近期热门 ——</text>
+  </view>
+  <view class="venues_box">
+    <view wx:for="{{recommentList}}" class="venues_item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">
+      <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+      <text class="goods_name">{{item.name}}</text>
+      <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
+      <!-- 
     <view class="goods_tag" ><image src="../../images/u48.png"></image>{{item.goods_tag}}</view>
     -->
-    <view class="price-now">￥{{item.sell_price}}</view>
+      <view class="price-now">￥{{item.sell_price}}</view>
+    </view>
   </view>
-</view>
-<!-- 
+  <!-- 
  <view class="carts-more" hidden="{{rshowmorehidden}}">
     <text bindtap="bindShowMoreR" >更多...[{{rall_rows}}]</text>
 </view>

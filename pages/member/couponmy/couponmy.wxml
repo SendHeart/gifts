@@ -1,11 +1,11 @@
 <import src="../../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
  
-<view class="order-item">
+<view class="coupon-item">
   <view class="order-item-banner">
-    <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="gifts-item">
+    <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupon-item">
       <view bindtap="couponTapTag">
-        <image class="gifts-image" src="{{item.image}}" mode="aspectFill"> </image>
+        <image class="coupon-image" src="{{item.image}}" mode="aspectFill"> </image>
       </view>
       <text class="carts-title">{{item.name}}</text>
       <text class="carts-title">{{item.id?'序号:'+item.id:''}}</text>

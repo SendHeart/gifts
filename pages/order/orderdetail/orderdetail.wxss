@@ -18,7 +18,7 @@ page {
 
 .startBar {
   height: 75rpx;
-  background: #333;
+  background: #1d1d1d;
   width: 100%;
   position: fixed;
   top: 0;
@@ -28,7 +28,7 @@ page {
 }
 .top-title {
   height: 75rpx;
-  background: #333;
+  background: #1d1d1d;
   width: 100%;
   position: fixed;
   top: 0;

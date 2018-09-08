@@ -88,8 +88,8 @@ page {
 
 /*导航 nav*/
 .top-bar {
-  height: 78rpx;
-  background: #292929; 
+  height: 86rpx;
+  background: #1d1d1d; 
   white-space: nowrap;
   position: fixed;
   top:0;
@@ -98,11 +98,11 @@ page {
 }
 .top-bar-item {
   display:inline-block;
-  width: 124rpx;
   color: #fff;
   text-align: center;
-  line-height: 70rpx;
+  line-height: 80rpx;
   font-size: 32rpx;
+  padding: 0 30rpx;
 }
 .top-bar-active {
   color: #fff;
@@ -116,7 +116,7 @@ page {
   background: #FFF; 
   width:100%;
   position: fixed;
-  margin-top: 76rpx;
+  margin-top: 86rpx;
   top:0;
   border-top: 1rpx solid #F2f2f2;
   border-bottom: 1rpx solid #F2f2f2;
@@ -144,7 +144,7 @@ swiper-item image {
   display:block;
   width: 100%;
   overflow-x: hidden;
-  padding: 124rpx 0 124rpx 1%;
+  padding: 134rpx 0 134rpx 1%;
 }
 
 .venues_item {

@@ -135,7 +135,7 @@ page {
 	align-items: center;
 }
 .linegray {
-	border-bottom: 1rpx solid #ddd;
+	border-bottom: 1rpx solid #eee;
 }
 /*icon*/
 .tableviewcell image {
@@ -206,9 +206,10 @@ page {
   background-color:white;  
   color:#444;  
   overflow:hidden;  
-  margin-left:-1rpx;
+  margin-left:-4rpx;
   border: 0;
   text-align: left;
+  margin: 0;
 }  
   
 .clickBtn::after {
@@ -272,3 +273,7 @@ prd-detail {
   background: #ffffff;
   margin-top: 10px;
 }
+.wxParse {
+  line-height: 1.8;
+  font-size: 24rpx;
+  }

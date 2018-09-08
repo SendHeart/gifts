@@ -88,8 +88,7 @@ page {
   text-align: center;
   background: #fff;
   border-top: 1rpx solid #eee;
-  padding: 10rpx 0 40rpx 0;
-  margin-bottom: 10rpx;
+  padding: 10rpx 0 100rpx 0;
   z-index: 1;
 }
 
@@ -151,54 +150,53 @@ page {
   border-radius: 6rpx;
 }
 .prd-detail {
-  margin: 5rpx 0 15rpx 0;
+  margin:0;
   color: #999;
 }
 .prd-detail text {
   font-size: 28rpx;
 }
+
+/*购物车按钮、收藏等*/
 .footer {
-  background: #f9f9f9;
+  background: #fff;
   width: 100%;
   padding-bottom: 50rpx;
   position: fixed;
   bottom: 0;
   border-top: 1rpx solid #eee;
 }
-
-.add-cart {
-  border: 0;
-  line-height: 80rpx;
-  text-align: center;
-  width: 250rpx;
-  height: 80rpx;
-  background-color: #e34c55;
-  color: white;
-  font-size: 28rpx;
-  border-radius: 10rpx;
-}
-
-.wish-cart {
-  border: 2rpx solid #e34c55;
-  line-height: 80rpx;
-  text-align: center;
-  width: 250rpx;
-  height: 80rpx;
-  color: #e34c55;
-  font-size: 28rpx;
-  border-radius: 10rpx;
-  margin-right: 15rpx;
-}
-
-/*购物车按钮、收藏等*/
-
 .opt-buttons {
   width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding-top: 20rpx;
+}
+.opt-buttons button::after {
+border: none;
+}
+.add-cart {
+  line-height: 100rpx;
+  text-align: center;
+  width: 50%;
+  height: 100rpx;
+  background-color: #e34c55;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 0;
+}
+
+.wish-cart {
+  outline: none;  
+  background: #fff;
+  line-height: 100rpx;
+  text-align: center;
+  width: 50%;
+  height: 100rpx;
+  color: #e34c55;
+  font-size: 32rpx;
+  border-radius: 0;
 }
 
 /*cart*/
@@ -226,25 +224,27 @@ page {
 
 /*全部属性的主盒子*/
 .modalbox {
-  background: #ffffff;
+  background-color: #fff;
 }
 
 .commodity_attr_list {
-  background: #fff;
-  padding: 10rpx 20rpx;
+  background: #fafafc;
+  padding: 0 10rpx;
   font-size: 24rpx;
   overflow: hidden;
   width: auto;
 }
 
 /*每组属性的主盒子*/
-
 .attr_box {
   width: 100%;
   overflow: hidden;
   border-bottom: 1rpx solid #eee;
   display: flex;
   flex-direction: column;
+}
+.attr-title {
+  padding: 15rpx 0;
 }
 
 /*属性名*/
@@ -267,28 +267,26 @@ page {
 /*每个属性值*/
 
 .attr_value {
-  float: left;
-  padding: 5rpx 20rpx;
-  border: 4rpx solid #ccc;
+  padding: 10rpx 20rpx;
+  background: #eee;
   border-radius: 10rpx;
   margin:0 10rpx 10rpx 0;
+  font-size: 24rpx;
 }
 
 /*每个属性选中的当前样式*/
 
 .attr_value_active {
-  border-radius: 10rpx;
-  color: #E34C55;
-  padding: 5rpx 20rpx;
-  border: 4rpx solid #E34C55;
-  margin:0 10rpx 10rpx 0;
+  color: #fff;
+  background:#e34c55;
   /* background: #fff;   */
 }
 
 /*禁用属性*/
 
 .attr_value_disabled {
-  color: #ccc;
+  color: #444;
+  font-size: 24rpx!important;
 }
 
 .price-now {

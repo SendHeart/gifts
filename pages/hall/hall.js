@@ -431,8 +431,8 @@ Page({
     // 购物车单个删除
     console.log(objectId);
     wx.showModal({
-      title: '亲~',
-      content: '确认要删除该礼物吗？', /*文案修改*/
+      title: '',
+      content: '确认移除该礼物？', /*文案修改*/
       success: function (res) {
         if (res.confirm) {
           // 从网络上将它删除

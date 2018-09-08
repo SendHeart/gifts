@@ -5,29 +5,7 @@
 	<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
 </view>
-<!--<view class="menu-area">
-  <view bindtap="showWish" class="tableviewcell" style='width:{{windowWidth-35}}px' >
-    <image src="../../images/u621.png" />
-	  <text >我的心愿单</text>
-    <text class="inlinetips">分享心愿单，让Ta知道</text>
-  </view>
-</view>
--->
 <view class="menu-area">
-  <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/u628.png" />
-	  <text>如何玩转送心</text>
-  </view>
-  <view bindtap="" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/u631.png" />
-    <button class="clickBtn" open-type="contact" session-from="weapp">联系客服</button> 
-  </view>
-  <view bindtap="navigateToAgreement" class="tableviewcell" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/u633.png" />
-	  <text>用户购买协议</text>
-  </view>
- </view> 
- <view class="menu-area">
   <!--<view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/corp.png" />
 	  <text>商务合作</text>
@@ -40,21 +18,45 @@
 	  <image src="../../images/iconfont-card.png" />
 	  <text>我的优惠券</text>
   </view>
+<!--<view class="menu-area">
+  <view bindtap="showWish" class="tableviewcell" style='width:{{windowWidth-35}}px' >
+    <image src="../../images/u621.png" />
+	  <text >我的心愿单</text>
+    <text class="inlinetips">分享心愿单，让Ta知道</text>
+  </view>
 </view>
- <view class="menu-area">
+-->
   
   <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>
   </view>
+   
 </view>
+<view class="menu-area">
+  <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/u628.png" />
+	  <text>如何玩转送心</text>
+  </view>
+ 
+  <view bindtap="navigateToAgreement" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/u633.png" />
+	  <text>用户协议</text>
+  </view>
+  <view bindtap="" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/u631.png" />
+    <button class="clickBtn" open-type="contact" session-from="weapp">联系客服</button> 
+  </view>
+ </view> 
+ 
+ 
 <button open-type="getUserInfo" lang="zh_CN" hover-class='none' bindgetuserinfo="onGotUserInfo" class="logout">重新登录
 </button>
 <!--
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
  <view>
- <modal class="modalbox" title="用户购买协议" hidden="{{modalHiddenAgreement}}" confirm-text="已读" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel="">
+ <modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="已读" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel="">
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />

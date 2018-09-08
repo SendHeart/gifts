@@ -13,7 +13,7 @@
 */
 
 page {
-  background: #292929;
+  background: #1d1d1d;
 }
 
 ::-webkit-scrollbar {

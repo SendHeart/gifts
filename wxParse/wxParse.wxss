@@ -11,11 +11,10 @@
  */
 
 .wxParse{
-    margin: 15rpx 0;
-    font-family: Helvetica,sans-serif;
+    margin: 0;
     font-size: 28rpx;
     color: #666;
-    line-height: 1.8;
+    line-height: 0.9;
 }
 view{
     word-break:break-all; overflow-x:hidden;

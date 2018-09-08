@@ -1,4 +1,5 @@
 /*没有用到iconfont注释降低消耗*/
+
 /*@import "../../lib/style/font.wxss";
  
 .Hui-iconfont {
@@ -14,6 +15,7 @@
   content: '\e6d5';
 }
 */
+
 page {
   background: #f2f2f2;
   overflow-x: hidden;
@@ -37,6 +39,7 @@ page {
   border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
+
 .top-title {
   height: 75rpx;
   background: #333;
@@ -47,6 +50,7 @@ page {
   border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
+
 .top-title-item {
   display: flex;
   flex-direction: row;
@@ -57,6 +61,7 @@ page {
   font-size: 48rpx;
   padding: 10rpx;
 }
+
 .top-title-item .title-image {
   width: 70rpx;
   height: 70rpx;
@@ -64,6 +69,7 @@ page {
   margin-top: 0rpx;
   margin-left: 20rpx;
 }
+
 .banner {
   width: 100%;
   height: 315rpx;
@@ -87,22 +93,25 @@ page {
   justify-content: center;
   margin: 5px;
 }
+
 .wrap {
   width: 100%;
   position: absolute;
-  top:200rpx;
+  top: 200rpx;
   margin-bottom: 160rpx;
 }
+
 .user {
   width: 96%;
   margin: 15rpx auto 0 auto;
-  background: rgba(15, 15, 15, 0.65);
+  background: #fff;
   display: flex;
   /*flex-flow: column nowrap;*/
   justify-content: left; /*子项横轴上居中对齐*/
   align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
   opacity: 1;
-  border-radius:30rpx 30rpx 0 0;
+  border-radius: 30rpx 30rpx 0 0;
+  border-bottom: 1rpx solid #eee;
 }
 
 .user .userinfo {
@@ -111,13 +120,13 @@ page {
   position: relative;
   width: 60%;
   height: 100%;
-  color: #ffffff;
+  color: #444;
 }
 
 .user .userinfo .userinfo-avatar {
   width: 70rpx;
   height: 70rpx;
-  margin: 10rpx 20rpx;
+  margin: 15rpx 10rpx 10rpx 20rpx;
   border-radius: 50%;
 }
 
@@ -136,7 +145,15 @@ page {
 }
 
 .usergifts text {
+  margin-right: 4rpx;
+}
+
+.usergifts .snum {
+  color: #fff;
+  background: #444;
   margin-right: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 6rpx;
 }
 
 /*外部容器*/
@@ -165,7 +182,7 @@ page {
 .carts-container {
   position: relative;
   width: 100%;
-  height: 162rpx;
+  min-height: 160rpx;
 }
 
 /*每行单元格*/
@@ -174,15 +191,14 @@ page {
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 120rpx;
+  justify-content: flex-start;
   /*width属性解决标题文字太短而缩略图偏移*/
-  border-bottom: 1px solid #F2F2F2;
   padding: 20rpx 0;
   margin-right: 20rpx;
   position: absolute;
   top: 0;
   left: 0;
-  background: white;
+  background: #fff;
   z-index: 1;
 }
 
@@ -190,7 +206,7 @@ page {
 
 .carts-image {
   width: 120rpx;
-  height: 120rpx; 
+  height: 120rpx;
   margin: 0 20rpx;
 }
 
@@ -200,32 +216,37 @@ page {
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
 }
 
 /*右上部分标题*/
 
 .carts-title {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #444;
-  line-height: 30rpx;
+  line-height: 1.4;
+  padding-right: 10rpx;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+.carts-sku {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 1;
 }
 
 /*右下部分价格与数量*/
 
 .carts-subtitle {
-  font-size: 25rpx;
-	color:darkgray;
-	display: flex;
-	flex-direction: row;
-	justify-content:space-between;
+  font-size: 24rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /*价格*/
-
-.carts-price {
-  line-height: 10px;
-}
 
 .carts-gov-price {
   color: #999;
@@ -238,9 +259,9 @@ page {
 }
 
 .carts-en-price {
-  color: #e34c55;
-  font-size: 12px;
-  line-height: 18px;
+  color: #444;
+  font-size: 24rpx;
+  line-height: 2;
   width: 150rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -268,7 +289,11 @@ page {
   width: 90px;
   margin: 0 auto;
   position: absolute;
-  right: 10rpx;
+  right: 20rpx;
+  bottom: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 }
 
 /*加号与减号*/
@@ -276,11 +301,10 @@ page {
 .stepper text {
   width: 48rpx;
   height: 48rpx;
-  line-height: 44rpx;
+  line-height: 46rpx;
   text-align: center;
-  float: left;
-  border: 1px solid #DDD;
-  border-radius: 50%;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
   color: #999;
 }
 
@@ -290,8 +314,8 @@ page {
   color: #444;
   float: left;
   margin: 0 auto;
-  width: 28px;
-  height: 24px;
+  width: 60rpx;
+  height: 48rpx;
   text-align: center;
   font-size: 24rpx;
 }
@@ -299,7 +323,7 @@ page {
 /*普通样式*/
 
 .stepper .normal {
-  color: black;
+  color: #444;
 }
 
 /*禁用样式*/
@@ -336,7 +360,7 @@ page {
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  background: white;
+  background: #fff;
 }
 
 .note textarea {
@@ -345,7 +369,7 @@ page {
   margin-left: 90rpx;
   border-bottom: 1px solid #eee;
   font-size: 28rpx;
-  color: #999999;
+  color: #999;
 }
 
 /*底部按钮*/
@@ -424,9 +448,9 @@ page {
 
 .delete-button {
   width: 120rpx;
-  font-size: 16px;
-  height: 97%;
-  line-height: 88px;
+  font-size: 28rpx;
+  height: 98%;
+  line-height: 156rpx;
   border: 0;
   border-radius: 0;
   position: absolute;
@@ -440,7 +464,6 @@ page {
 }
 
 .pick-goods {
-
   width: 96%;
   margin: 0 auto;
   display: flex;
@@ -448,7 +471,7 @@ page {
   justify-content: left; /*子项横轴上居中对齐*/
   text-align: left;
   bottom: 0;
-  background: white;
+  background: #fff;
   border-bottom: 1rpx solid #eee;
   z-index: 1;
 }
@@ -462,7 +485,6 @@ page {
   bottom: 0;
   border-top: 0px solid #eee;
   border-bottom: 0px solid #eee;
-  background: white;
   margin-top: 20rpx;
   margin-right: 10rpx;
   z-index: 1;
@@ -474,6 +496,7 @@ page {
   margin-left: 8rpx;
   /*line-height: 10rpx;*/
   display: block;
+  font-weight: bold;
 }
 
 .pick-goods .pick-goods-slogan2 {
@@ -496,30 +519,40 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 200rpx;
-  height: 60rpx;
+  text-align: center;
+  width: 80rpx;
+  height: 78rpx;
   position: absolute;
-  right: 10rpx;
-  margin-top: 40rpx;
-  border: 0rpx solid #e34c55;
-  border-radius: 20rpx;
+  right: 35rpx;
+  margin-top: 15rpx;
+  border: 1rpx solid #e34c55;
+  border-radius: 14rpx;
+  background: #e34c55;
+  padding: 10rpx;
+  -webkit-box-shadow: 0px 4rpx 0px rgba(219, 31, 5, 1);
+  -moz-box-shadow: 0px 4rpx 0px rgba(219, 31, 5, 1);
+  box-shadow: 0px 4rpx 0px rgb(179, 22, 2);
 }
+
 .rightarrow {
   width: 32rpx;
   height: 32rpx;
   margin-top: 7rpx;
   margin-left: 8rpx;
 }
+
 .pick-goods-action {
-  color: #e34c55;
+  color: #fff;
   font-size: 28rpx;
-  font-weight: bold;
+  line-height: 1.4;
 }
+
 /*送出按钮*/
+
 .buybutton {
   display: flex;
   flex-direction: row;
-  justify-content:left;
+  justify-content: left;
   line-height: 100rpx;
   width: 96%;
   height: 100rpx;
@@ -529,8 +562,8 @@ page {
   font-size: 36rpx;
   border-radius: 0 0 30rpx 30rpx;
   margin: 0 auto 30rpx auto;
-  -webkit-box-shadow: 0px 6rpx 0px rgba(219,31,5,1);
-  -moz-box-shadow: 0px 6rpx 0px rgba(219,31,5,1);
+  -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
+  -moz-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
   box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
 }
 
@@ -551,7 +584,8 @@ page {
   justify-content: center; /*子项横轴上居中对齐*/
   bottom: 0;
   z-index: 1;
-  color: #999999;
+  color: #999;
+  font-size: 24rpx;
 }
 
 /*推荐商品列表头*/
@@ -581,9 +615,9 @@ page {
 }
 
 .venues_box {
-  display:block;
+  display: block;
   width: 98%;
-  padding-bottom:40rpx;
+  padding-bottom: 40rpx;
   margin-left: 2%;
   overflow: hidden;
 }
@@ -592,7 +626,7 @@ page {
   display: inline-block;
   width: 47%;
   margin: 0 1% 15rpx 1%;
-  background: #ffffff;
+  background: #fff;
   border-radius: 10rpx;
   text-indent: 20rpx;
   padding-bottom: 10rpx;
@@ -608,10 +642,10 @@ page {
 .venues_item .goods_name {
   display: block;
   color: #444;
-  font-size:28rpx;
-  overflow:hidden;  
-  text-overflow:ellipsis;  
-  white-space:nowrap; 
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .venues_item .goods_tag {
@@ -630,16 +664,15 @@ page {
 .venues_item .goods_prom {
   display: block;
   color: #999;
-  font-size:28rpx;
-   
-  overflow:hidden;  
-  text-overflow:ellipsis;  
-  white-space:nowrap; 
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .price-now {
   color: #e34c55;
-  font-size:28rpx;
+  font-size: 28rpx;
   text-align: right;
   padding-right: 20rpx;
   font-weight: bold;

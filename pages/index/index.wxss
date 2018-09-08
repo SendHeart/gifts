@@ -62,7 +62,7 @@ page {
 
 .order-item {
   width: 96%;
-  margin: 15rpx auto;
+  margin: 15rpx auto 0 auto;
   background: #fff;
   border-radius: 10rpx;
 }
@@ -271,4 +271,5 @@ page {
   border: 0;
   background: #f2f2f2;
   color: #e34c55;
+  font-size: 28rpx;
 }
