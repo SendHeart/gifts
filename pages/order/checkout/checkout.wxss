@@ -125,7 +125,7 @@ picker {
   padding: 20rpx 10rpx;
 }
 .gifts-image {
-  margin: 20rpx;
+  margin: 10rpx;
   width: 450rpx;
   height: 250rpx;
 }

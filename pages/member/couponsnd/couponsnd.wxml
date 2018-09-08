@@ -27,7 +27,7 @@
   <view class="order-item-banner">
     <view class="gifts-item">
       <view bindtap="">
-        <image class="gifts-image" src="{{coupon_img}}" mode="aspectFill"></image>
+        <image class="gifts-image" src="{{coupon_img}}" mode="aspectFit"></image>
       </view>
       <text class="carts-title">{{name}} {{nums>0?'x'+nums:''}} {{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
     </view>
@@ -55,7 +55,7 @@
 </view>
  -->
 <view hidden="{{!hiddenqrcode}}" class="container" style='height:{{dkheight-60}}px;'> <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-  <image src="{{shareImage}}" class="share-image" mode='aspectFit' ></image>
+  <image src="{{shareImage}}" class="share-image" mode='aspectFill' ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
   <button class="savebtn" bindtap="eventSave" type='warn'>保存图片,分享到朋友圈</button>
 </view> 

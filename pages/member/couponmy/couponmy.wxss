@@ -132,7 +132,7 @@ page {
 
 .coupon-image {
   width: 750rpx;
-  height: 289rpx
+  height: 350rpx
 }
 
 /*更多按钮*/

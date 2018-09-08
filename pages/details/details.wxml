@@ -1,7 +1,7 @@
 <import src="../../wxParse/wxParse.wxml" />
 <import src="../common/hall_title.wxml" /><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<scroll-view scroll-y="true" style="margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y="true" style="margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" hidden="{{!modalHidden}}">
   <view class="banner">
     <view>
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
@@ -45,11 +45,12 @@
     </view>
   </view>
 </scroll-view>
-<view>
-   
-    <modal class="modalbox" title="{{attrValueList.length>0?'选择样式':add_cart_title}}" hidden="{{modalHidden}}" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
-      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list" >
+<view hidden="{{modalHidden}}">
+    <modal class="modalbox" title="{{attrValueList.length>0?'选择样式':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
+      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="height:{{dkheight-25}}px">
+       <view style="height:{{dkheight-30}}px">
         <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
+       
           <view>{{attrValueObj.name}}:</view>
           <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
             data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >
@@ -60,6 +61,7 @@
             </view>
           </view>
         </view>
+      </view>
       </view>
       <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>

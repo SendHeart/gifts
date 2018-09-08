@@ -12,9 +12,11 @@
   <view class="order-item-banner">
     <view class="gifts-item">
       <view bindtap="">
-        <image class="gifts-image" src="{{coupon_img}}" mode="aspectFill"> </image>
+        <image class="gifts-image" src="{{coupons_info[0].image}}" mode="aspectFit"> </image>
       </view>
-      <text class="carts-title">{{item.name}}</text>
+      <text class="carts-title">{{coupons_info[0].name}}</text>
+      <text class="carts-title">{{coupons_info[0].id?'序号:'+coupons_info[0].id:''}}</text>
+      <text class="carts-title">{{coupons_info[0].start_time?'(有效期:'+coupons_info[0].start_time+'至':''}}{{coupons_info[0].end_time?coupons_info[0].end_time+')':''}}</text>
     </view>
     <view class="sentbtn">
       <button class="button" data-coupons="{{coupons}}" bindtap="receiveTapTag" hidden='{{receive_status==0?false:true}}'>领取</button>

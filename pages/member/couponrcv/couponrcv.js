@@ -174,14 +174,17 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var coupons =  options.coupons
+    var coupons_info = JSON.parse(coupons)
     var receive = options.receive;
      
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     console.log('收到的优惠券:', coupons,receive)
-   
+    coupons_info[0]['start_time'] = util.getDateStr(coupons_info[0]['start_time'] * 1000, 0)
+    coupons_info[0]['end_time'] = util.getDateStr(coupons_info[0]['end_time'] * 1000, 0)
     that.setData({
       coupons: coupons,
+      coupons_info: coupons_info,
       receive: receive,
       openid: openid,
       username:username,

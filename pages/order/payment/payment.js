@@ -96,6 +96,7 @@ Page({
             totalFee: totalFee ? totalFee:order_price,
             sku_id:sku_id,
           })
+          that.pay()
         } else {
           wx.showToast({
             title: res.data.info,
@@ -114,6 +115,7 @@ Page({
         })
       }
     })
+    
 	},
   onShow:function(){
     var that = this 

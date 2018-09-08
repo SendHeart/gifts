@@ -167,7 +167,8 @@ Page({
         }
 
         that.setData({
-          navList2: navList_new
+          navList2: navList_new,
+          //coupon_img: navList_new[7]['img'],
         })
 
         setTimeout(function () {

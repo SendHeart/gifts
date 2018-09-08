@@ -133,7 +133,7 @@ page {
 .gifts-image {
   margin: 20rpx;
   width: 450rpx;
-  height: 250rpx;
+  height: 350rpx;
 }
 
 /*立即按钮*/

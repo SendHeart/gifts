@@ -5,7 +5,7 @@
   <view class="order-item-banner">
     <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupon-item">
       <view bindtap="couponTapTag">
-        <image class="coupon-image" src="{{item.image}}" mode="aspectFill"> </image>
+        <image class="coupon-image" background-size="cover" src="{{item.image}}" mode="aspectFit"> </image>
       </view>
       <text class="carts-title">{{item.name}}</text>
       <text class="carts-title">{{item.id?'序号:'+item.id:''}}</text>

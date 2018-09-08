@@ -39,9 +39,9 @@
     </view>
  </view>    
 <view class="cell" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
-	<view style='width:10%'>合计:</view>
+	<view style='width:15%'>合计:</view>
   <view class="amount" style='width:40%'>{{payamount}}</view>
-  <view style='width:10%'>优惠:</view>
+  <view style='width:15%'>优惠:</view>
 	<view class="amount" style='width:30%;color:gray'>{{discountpay}}</view>
 </view>
  <view class="carts-more" hidden="{{showmorehidden}}"  bindtap="bindSelectAll" >
@@ -54,12 +54,13 @@
 <modal class="coupon-item" title="选择优惠券" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirmCoupon" bindcancel="modalBindcancelCoupon" no-cancel="">
   <view class="counpon-item-banner" style='height:{{dkheight}}px'>
     <view wx:for="{{coupons_list}}" wx:for-item="mapping" wx:key="index"  class="gifts-item">
-      <view bindtap="" style='display:flex;flex-direction:row;'>
-        <view class="select-and-amount"  bindtap="bindSelectCoupon" data-couponindex="{{index}}" data-couponid="{{mapping.id}}" data-starttime="{{mapping.start_time}}" data-endtime="{{mapping.end_time}}" data-couponname="{{mapping.name}}" data-coupontype="{{mapping.type}}" data-couponimage="{{mapping.image}}" >
-		      <icon style="margin-top:1rpx;" type="{{mapping.selected ? 'success_circle' : 'circle'}}" size="18"/>
-		    <text style="margin-left:10rpx;">选中</text>
+      <view bindtap="bindSelectCoupon" style='display:flex;flex-direction:row;'  data-couponindex="{{index}}" data-couponid="{{mapping.id}}" data-starttime="{{mapping.start_time}}" data-endtime="{{mapping.end_time}}" data-couponname="{{mapping.name}}" data-coupontype="{{mapping.type}}" data-couponimage="{{mapping.image}}">
+        <view class="select-and-amount">
+		      <icon style="margin-top:1rpx;margin-left:10rpx;" type="{{mapping.selected ? 'success_circle' : 'circle'}}" size="18"/>
+          <!-- 
+		    <text style="margin-left:10rpx;">选中</text>-->
 	      </view>
-        <image class="gifts-image" src="{{mapping.image}}" mode="aspectFill"> </image>
+        <image class="gifts-image" src="{{mapping.image}}" mode="aspectFit"> </image>
       </view>
       <text class="carts-title">{{mapping.name}}</text>
       <text class="carts-title">{{mapping.id?'序号:'+mapping.id:''}}</text>
@@ -72,7 +73,7 @@
 </view>
 <button class="submit" type="primary" bindtap="confirmOrder">提交订单</button>
 <view wx:if="{{HiddenSelectedCoupon>0}}" class="counpon-item-banner" style='display:flex;flex-direction:column;text-align:center;align-items:center;'  data-couponid="{{selected_coupon_id}}" data-starttime="{{selected_coupon_starttime}}" data-endtime="{{selected_coupon_endtime}}" data-couponname="{{selected_coupon_name}}" data-coupontype="{{selected_coupon_type}}" data-couponimage="{{selected_couponimage}}">
-      <image class="gifts-image" src="{{selected_couponimage}}" mode="aspectFill"> </image>
+      <image class="gifts-image" src="{{selected_couponimage}}" mode="aspectFit"> </image>
       <text class="carts-title">{{selected_coupon_name}}</text>
       <text class="carts-title">{{selected_coupon_id?'序号:'+selected_coupon_id:''}}</text>
       <text class="carts-title">{{selected_coupon_starttime?'(有效期:'+selected_coupon_starttime+'至':''}}{{selected_coupon_endtime?selected_coupon_endtime+')':''}}</text>
