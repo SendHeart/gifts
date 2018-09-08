@@ -1,27 +1,33 @@
-import defaultData from '../../../data';
-var util = require('../../../utils/util.js');
+import defaultData from '../../../data'
+var util = require('../../../utils/util.js')
 
-var app = getApp();
-var weburl = app.globalData.weburl;
-var shop_type = app.globalData.shop_type;
-var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var app = getApp()
+var weburl = app.globalData.weburl
+var shop_type = app.globalData.shop_type
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var appid = app.globalData.appid
+var secret = app.globalData.secret
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
-];
+]
 Page({
   data: {
     title_name: '优惠券送出',
     title_logo: '../../../images/footer-icon-05.png',
-    coupon_img: weburl + '/uploads/coupon_bg.jpg',
+    coupon_img: weburl + '/uploads/coupon_bg.jpg', //
+    wechat_share: '', //优惠券分享背景
     shop_type:shop_type,
     weburl:weburl,
     page: 1,
     pagesize: 10,
     status: 0,
     all_rows: 0,
-    shop_type: shop_type,
     scrollTop: 0,
     scrollHeight: 0,
     indicatorDots: true,
@@ -140,6 +146,7 @@ Page({
       //hiddenmodalput: !hiddenmodalput,
       qr_type: qr_type,
     })
+    
   },
   returnTapTag: function (e) {
     /*
@@ -170,6 +177,7 @@ Page({
 
   get_project_gift_para: function () {
     var that = this
+    var shop_type= that.data.shop_type
     var navList2 = that.data.navList2
     var page = that.data.page
     var pagesize = that.data.pagesize
@@ -180,7 +188,7 @@ Page({
       method: 'POST',
       data: {
         type: 1,  //暂定
-        shop_type:2
+        shop_type:shop_type
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -201,7 +209,8 @@ Page({
         }
 
         that.setData({
-          navList2: navList_new
+          navList2: navList_new,
+          wechat_share: navList_new[6]['img'],
         })
 
         setTimeout(function () {
@@ -209,6 +218,7 @@ Page({
             loadingHidden: true,
           })
         }, 1500)
+        that.eventDraw()
       }
     })
   },
@@ -260,8 +270,8 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('生成优惠券:', res.data.result);
-        var couponObjects = res.data.result;
+        console.log('生成优惠券:', res.data.result)
+        var couponObjects = res.data.result
         if (!couponObjects) {
           wx.showToast({
             title: res.data.info ? res.data.info : '无法生成优惠券',
@@ -269,7 +279,7 @@ Page({
             duration: 1500
           })
           setTimeout(function () {
-            wx.navigateBack();
+            wx.navigateBack()
           }, 1500);
           return
         } else {
@@ -309,7 +319,81 @@ Page({
     }  
     that.get_project_gift_para()
   },
+  eventDraw: function () {
+    var that = this
+    var wechat_share = that.data.wechat_share
+    var shop_type = that.data.shop_type
+    var qr_type = 'couponshare'  //
+    var coupons_json = JSON.stringify(that.data.coupons)
+    
+    wx.showLoading({
+      title: '生成优惠券扫码图片',
+      mask: true
+    })
 
+    that.setData({
+      painting: {
+        width: 375,
+        height: 667,
+        clear: true,
+        views: [
+          {
+            type: 'image',
+            url: wechat_share,
+            top: 0,
+            left: 0,
+            width: 375,
+            height: 667
+          },
+         
+          {
+            type: 'image',
+            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons=' + coupons_json,
+            top: 450,
+            left: 130,
+            width: 110,
+            height: 125,
+
+          },
+          {
+            type: 'text',
+            content: '长按识别二维码，领取优惠券',
+            fontSize: 18,
+            color: '#dc344d',
+            textAlign: 'left',
+            top: 580,
+            left: 70,
+            lineHeight: 30,
+            MaxLineNumber: 2,
+            breakWord: true,
+            //width: 150
+          }
+        ]
+      }
+    })
+  },
+  eventSave: function () {
+    wx.saveImageToPhotosAlbum({
+      filePath: this.data.shareImage,
+      success(res) {
+        wx.showToast({
+          title: '保存图片成功',
+          icon: 'success',
+          duration: 2000
+        })
+      }
+    })
+  },
+  eventGetImage: function (event) {
+    console.log(event)
+    wx.hideLoading()
+    const { tempFilePath, errMsg } = event.detail
+    if (errMsg === 'canvasdrawer:ok') {
+      this.setData({
+        shareImage: tempFilePath
+      })
+    }
+  },
   reloadData: function () {
     /*
     var that = this;
