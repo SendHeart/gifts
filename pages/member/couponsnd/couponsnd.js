@@ -146,7 +146,11 @@ Page({
       //hiddenmodalput: !hiddenmodalput,
       qr_type: qr_type,
     })
-    
+    //that.eventDraw()
+    wx.navigateTo({
+      url: '../share/share?coupons=' + coupons_json
+    })
+
   },
   returnTapTag: function (e) {
     /*
@@ -219,7 +223,7 @@ Page({
             loadingHidden: true,
           })
         }, 1500)
-        that.eventDraw()
+       // that.eventDraw()
       }
     })
   },
@@ -288,6 +292,7 @@ Page({
           that.setData({
             coupons: coupons
           })
+         
         }
       }
     })
@@ -320,18 +325,21 @@ Page({
     }  
     that.get_project_gift_para()
   },
+  /*
   eventDraw: function () {
     var that = this
     var wechat_share = that.data.wechat_share
     var shop_type = that.data.shop_type
     var qr_type = 'couponshare'  //
-    var coupons_json = JSON.stringify(that.data.coupons)
+    var coupons = that.data.coupons[0]
+    
+    var coupons_json = JSON.stringify(coupons)
     
     wx.showLoading({
       title: '生成优惠券扫码图片',
       mask: true
     })
-
+    //console.log('优惠券扫码图片信息:', coupons)
     that.setData({
       painting: {
         width: 375,
@@ -346,9 +354,10 @@ Page({
             width: 375,
             height: 667
           },
-         
+       //'&coupons_addtime=' + coupons['addtime']+'&coupons_endtime=' + coupons['end_time']+ '&coupons_starttime=' + coupons['start_time']+ '&coupons_amount=' + coupons['amount']+ '&coupons_image=' + coupons['image']+ '&coupons_status=' + coupons['status']+ '&coupons_shoptype=' + coupons['shop_type']+ '&coupons_type=' + coupons['type']+ '&coupons_name=' + coupons['name']+ '&coupons_adminid=' + coupons['admin_id'] + '&coupons_flag=' + coupons['flag']
           {
             type: 'image',
+            //url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_status=' + coupons['status'] + '&coupons_flag=' + coupons['flag'] + '&coupons_name=' + coupons['name'] + '&coupons_type=' + coupons['type'] + '&coupons_name=' + coupons['name'] + '&coupons_amount=' + coupons['amount'],
             url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons=' + coupons_json,
             top: 450,
             left: 130,
@@ -372,6 +381,7 @@ Page({
         ]
       }
     })
+    console.log('二维码 paint:', that.data.painting)
   },
   eventSave: function () {
     wx.saveImageToPhotosAlbum({
@@ -386,7 +396,7 @@ Page({
     })
   },
   eventGetImage: function (event) {
-    console.log(event)
+    console.log('eventGetImage:',event)
     wx.hideLoading()
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
@@ -395,6 +405,7 @@ Page({
       })
     }
   },
+  */
   reloadData: function () {
     /*
     var that = this;

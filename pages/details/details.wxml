@@ -47,8 +47,8 @@
 </scroll-view>
 <view hidden="{{modalHidden}}">
     <modal class="modalbox" title="{{attrValueList.length>0?'选择样式':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
-      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="height:{{dkheight-25}}px">
-       <view style="height:{{dkheight-30}}px">
+      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
+       <view style="max-height:{{dkheight-30}}px">
         <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
        
           <view>{{attrValueObj.name}}:</view>

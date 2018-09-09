@@ -8,6 +8,7 @@ Page({
     title_name: '收到优惠券',
     title_logo: '../../../images/footer-icon-05.png',
     coupon_img: weburl + '/uploads/coupon_bg.jpg',
+    shop_type:shop_type,
     orders: [],
     orderskus:[],
     openid:null,
@@ -116,16 +117,17 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-    var coupons = that.data.coupons
+    var coupons_info = that.data.coupons_info
+    var coupons_json = JSON.stringify(coupons_info)
     var receive = that.data.receive
- 
+    console.log('接收优惠券 coupons_info:', coupons_info);
     wx.request({
       url: weburl + '/api/client/band_coupon',
       method: 'POST',
       data: {
         username: username,
         access_token: token,
-        coupons: that.data.coupons,
+        coupons: coupons_json,
         coupon_type: 'receive',
       },
       header: {
@@ -167,29 +169,93 @@ Page({
     })
 
   },
-  onLoad: function (options) {
-    // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
+  query_pubcoupon: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+
+    var shop_type = that.data.shop_type
+    var coupons_id = that.data.coupons_id
+    var coupons_flag = that.data.coupons_flag
+
+    wx.request({
+      url: weburl + '/api/client/query_pubcoupon',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        coupons_flag: coupons_flag,
+        coupons_id: coupons_id,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('查询优惠券发行信息:', res.data.result);
+        var coupons_info = res.data.result
+        if (!res.data.result) {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '暂无该批次券',
+            icon: 'loading',
+            duration: 1500
+          })
+          setTimeout(function () {
+            //wx.navigateBack()
+            wx.switchTab({
+              url: '../../my/index'
+            })
+
+          }, 1500);
+
+        } else {
+
+          for (var i = 0; i < coupons_info.length; i++) {
+            coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
+            coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
+          }
+          that.setData({
+            coupons_info: coupons_info,
+          })
+        }
+      }
+
+    })
+
+  },
+  onLoad: function (options) {
+    // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
+    var that = this
     var coupons =  options.coupons
     var coupons_info = JSON.parse(coupons)
-    var receive = options.receive;
+    var receive = options.receive
+    var coupons_id = coupons?coupons_info[0]['id']:0
+    var coupons_flag = coupons ? coupons_info[0]['flag']:0
      
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     console.log('收到的优惠券:', coupons,receive)
-    coupons_info[0]['start_time'] = util.getDateStr(coupons_info[0]['start_time'] * 1000, 0)
-    coupons_info[0]['end_time'] = util.getDateStr(coupons_info[0]['end_time'] * 1000, 0)
     that.setData({
       coupons: coupons,
       coupons_info: coupons_info,
+      coupons_id: coupons_id,
+      coupons_flag: coupons_flag,
       receive: receive,
-      openid: openid,
-      username:username,
 
     })
+    if (coupons_flag =='999999999999'){
+      that.query_pubcoupon()
+    }else{
+      coupons_info[0]['start_time'] = util.getDateStr(coupons_info[0]['start_time'] * 1000, 0)
+      coupons_info[0]['end_time'] = util.getDateStr(coupons_info[0]['end_time'] * 1000, 0)
+      that.setData({
+        coupons_info: coupons_info,
+      })
+    }
+    
+  
     /*
     that.setNavigation()
     wx.getSystemInfo({

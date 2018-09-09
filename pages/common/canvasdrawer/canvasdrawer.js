@@ -75,7 +75,7 @@ Component({
     downLoadImages (index) {
       const { imageList, tempFileList } = this.data
       if (index < imageList.length) {
-        // console.log(imageList[index])
+        //console.log('downLoadImages:',imageList[index])
         this.getImageInfo(imageList[index]).then(file => {
           tempFileList.push(file)
           this.setData({
@@ -234,6 +234,8 @@ Component({
                   this.cache[url] = res.path
                   resolve(res.path)
                 } else {
+                  console.log('getImageInfo url:',url)
+                  console.log('res:', res)
                   this.triggerEvent('getImage', {errMsg: 'canvasdrawer:download fail'})
                   reject(new Error('getImageInfo fail'))
                 }
