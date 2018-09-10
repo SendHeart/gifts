@@ -10,7 +10,7 @@
       <input style='font-size:40rpx;width:70%' bindinput="bindChangeName" value="{{name}}" type='text' /> 
     </view>
     <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
-      <text style='font-size:35rpx;width:50%'>数量(0不限量):</text>
+      <text style='font-size:35rpx;width:50%'>数量{{nums==0?'(0不限量)':'(最多20)'}}:</text>
       <input style='font-size:35rpx;width:50%' bindinput="bindChangeNums" value="{{nums}}" type='text' /> 
     </view> 
     
@@ -33,7 +33,7 @@
     </view>
     <view class="sentbtn">
       <button open-type="share" data-order_no="{{order_no}}" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>送出</button>
-        <button data-order_no="{{order_no}}" bindtap="qrcodeTapTag" hidden='{{send_status==0?false:true}}'>二维码</button>
+        <button data-order_no="{{order_no}}" bindtap="qrcodeTapTag" hidden='{{(send_status==0&&nums==0)?false:true}}'>二维码</button>
       <button bindtap="returnTapTag" hidden='{{send_status==0?true:false}}'>返回</button>
     </view>
   </view>

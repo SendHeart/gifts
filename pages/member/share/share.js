@@ -206,11 +206,11 @@ Page({
     var hiddenqrcode = that.data.hiddenqrcode
     var appid = that.data.appid
     var secret = that.data.secret
-    var coupons_json = options.coupons ? options.coupons:null
-    var coupons = coupons_json?JSON.parse(coupons_json):null
-    var coupons_name = coupons_json?coupons[0]['name']:null
-    var coupons_id = coupons_json?coupons[0]['id']:null
-    var coupons_flag = coupons_json?coupons[0]['flag']:null
+    var coupons_json = options.coupons ? options.coupons:''
+    var coupons = coupons_json?JSON.parse(coupons_json):[{}]
+    var coupons_name = coupons_json?coupons[0]['name']:''
+    var coupons_id = coupons_json?coupons[0]['id']:0
+    var coupons_flag = coupons_json?coupons[0]['flag']:0
     console.log('share options:', coupons_json)
     //that.setNavigation()
   	this.setData({
