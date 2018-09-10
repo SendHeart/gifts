@@ -7,7 +7,7 @@ var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var navList = [
   { id: "is_recommend", title: "推荐"  ,value:"1"},
-  { id: "activity_flag", title: "中秋" , value: "1" }, 
+  { id: "act_id", title: "中秋" , value: "hz" }, 
   { id: "cat_id", title: "美食", value: "1" },
   { id: "cat_id", title: "酒和茶", value: "1"},
   { id: "cat_id", title: "美妆", value: "美妆"},
@@ -167,15 +167,18 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log('onLoad')
+    console.log('onLoad',options)
     var that = this
     var username = options.username
     var token = options.token
+    var navlist_toView = options.navlist ? options.navlist:0
+     
     that.setData({
       username: username,
       token: token,
+      navlist_toView: navlist_toView,
     })
-    that.setNavigation()
+    //that.setNavigation()
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -198,7 +201,6 @@ Page({
     })
     console.log(that.data.sliderOffset)
     that.get_menubar()
-    that.get_goods_list()
   },
   onShow:function(){
     var that=this
@@ -213,7 +215,7 @@ Page({
   search_goodsnameTapTag: function (e) {
     var that = this;
     var keyword = e.detail.value;
-    this.setData({
+    that.setData({
       keyword: keyword
     })
 
@@ -269,7 +271,7 @@ Page({
 
       },
       success: function (res) {
-        console.log(res.data.result)
+        console.log('get_goods_list:',res.data.result)
         var venuesItems = res.data.result;
         var page = that.data.page;
         var all_rows = res.data.all_rows;
@@ -317,7 +319,8 @@ Page({
     })
   },
   get_menubar: function (event) { //获取菜单项
-    var that = this;
+    var that = this
+    var navlist_toView = that.data.navlist_toView
     wx.request({
       url: weburl + '/api/client/get_menubar',
       method: 'POST',
@@ -330,19 +333,24 @@ Page({
 
       },
       success: function (res) {
-        console.log(res.data.result)
+        console.log('get_menubar:',res.data.result)
         var navList_new = res.data.result;
         if (!navList_new) {
           wx.showToast({
-            title: '没有定义菜单项',
+            title: '没有菜单项',
             icon: 'loading',
             duration: 1500
           });
           return;
         }
         that.setData ({
-          navList: navList_new
+          navList: navList_new,
+          index: navlist_toView,
+          activeIndex: navlist_toView,
+          tab: navList_new[navlist_toView]['id'],
+          tab_value: navList_new[navlist_toView]['value'],
         })
+        that.get_goods_list()
         setTimeout(function () {
           that.setData({
             loadingHidden: true,

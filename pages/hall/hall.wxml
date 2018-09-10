@@ -1,6 +1,6 @@
 <import src="../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<view class="banner" style=''>
+<view class="banner" style='' bindtap='bannerTapTag' data-bannerlink="{{banner_link}}">
   <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
   <!-- 
   <view class="slogan" >
