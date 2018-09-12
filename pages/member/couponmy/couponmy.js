@@ -8,12 +8,20 @@ var navList2 = [
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
 ];
+var navList_order = [
+  { id: "avaliable", title: "未使用" },
+  { id: "used", title: "已使用" },
+  { id: "overdue", title: "已过期" },
+];
 Page({
   data: {
     title_name: '收到优惠券',
     title_logo: '../../../images/footer-icon-05.png',
     coupon_img: weburl+'/uploads/coupon_bg.jpg',
     shop_type:shop_type,
+    navList_order:navList_order,
+    tab2: 'avaliable',
+    activeIndex2: 0,
     orders: [],
     orderskus:[],
     openid:null,
@@ -67,6 +75,27 @@ Page({
       })
     }
 
+  },
+  onOrderTapTag: function (e) {
+    var that = this
+    var tab = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+    var giftflag = that.data.giftflag;
+    if (tab == 'avaliable') {
+      giftflag = 0
+    } else if(tab == 'used') {
+      giftflag = 1
+    } else if(tab == 'overdue') {
+      giftflag = 2
+    }
+    that.setData({
+      activeIndex2: index,
+      tab2: tab,
+      page: 1,
+      giftflag: giftflag,
+    })
+    console.log('tab:' + tab, ' giftflag:', giftflag)
+    that.query_coupon()
   },
   returnTapTag: function (e) {
     /*
@@ -184,6 +213,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var coupons_status = that.data.tab2;
     var page = that.data.page
     var pagesize = that.data.pagesize
     var all_rows = that.data.all_rows
@@ -199,7 +229,7 @@ Page({
         page:page,
         pagesize:pagesize,
         shop_type:shop_type,
-        
+        coupons_status: coupons_status,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

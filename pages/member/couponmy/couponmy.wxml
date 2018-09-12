@@ -1,13 +1,14 @@
 <import src="../../common/hall_title.wxml" />
+<import src="../../common/nav_order.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
- 
+ <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <view class="coupon-item">
   <view class="order-item-banner">
     <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupon-item">
       <view bindtap="couponTapTag">
         <image class="coupon-image" background-size="cover" src="{{item.image}}" mode="aspectFit"> </image>
       </view>
-      <text class="carts-title">{{item.name}}</text>
+      <text class="carts-title">{{giftflag==0?'【未使用】':''}}{{giftflag==1?'【已使用】':''}}{{giftflag==2?'【已过期】':''}}{{item.name}}</text>
       <text class="carts-title">{{item.id?'序号:'+item.id:''}}</text>
       <text class="carts-title">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}</text>
       
