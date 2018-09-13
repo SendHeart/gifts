@@ -7,7 +7,9 @@ Page({
   data: {
     title_name: '收到优惠券',
     title_logo: '../../../images/footer-icon-05.png',
-    coupon_img: weburl + '/uploads/coupon_bg.jpg',
+    coupon_img: weburl + '/uploads/coupon_bg.png',
+    coupon_footer: '', //
+    coupon_content: '', //
     shop_type:shop_type,
     orders: [],
     orderskus:[],

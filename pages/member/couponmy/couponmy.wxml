@@ -4,14 +4,17 @@
  <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <view class="coupon-item">
   <view class="order-item-banner">
-    <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupon-item">
+    <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupon-item" style="height:380rpx;background-image:url('{{item.image}}');background-size: 100% 100%;"  bindtap="couponTapTag">
+    <!-- 
       <view bindtap="couponTapTag">
         <image class="coupon-image" background-size="cover" src="{{item.image}}" mode="aspectFit"> </image>
       </view>
-      <text class="carts-title">{{giftflag==0?'【未使用】':''}}{{giftflag==1?'【已使用】':''}}{{giftflag==2?'【已过期】':''}}{{item.name}}</text>
-      <text class="carts-title">{{item.id?'序号:'+item.id:''}}</text>
-      <text class="carts-title">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}</text>
-      
+      -->
+      <text class="coupon-name">{{item.name}}{{item.id?'  序号:'+item.id:''}}</text>
+      <text class="coupon-content">{{item.content}}</text>
+      <text class="coupon-dueday">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}{{giftflag==0?'【未使用】':''}}{{giftflag==1?'【已使用】':''}}{{giftflag==2?'【已过期】':''}}</text>
+      <text class="coupon-footer">{{item.footer}}</text>
+      <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
     </view>
      <button type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
   </view>

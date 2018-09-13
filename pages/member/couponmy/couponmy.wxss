@@ -95,16 +95,6 @@ page {
   padding: 40rpx;
 }
 
-.coupon-item {
-  width: 95%;
-  display: flex;
-  flex-direction: row;
-  text-align: center;
-  align-content: center;
-  background: #2c2c2c;
-  margin: 20rpx auto;
-}
-
 /*user info*/
 
 .userinfo {
@@ -154,13 +144,45 @@ page {
   text-align: center;
   /*width属性解决标题文字太短而缩略图偏移*/
   width: 100%;
+  align-content: center;
+  background: #2c2c2c;
+  margin: 20rpx auto;
 }
 
 .coupon-image {
   width: 750rpx;
-  height: 350rpx
+  height: 360rpx
+}
+.coupon-name {
+  font-size: 32rpx;
+  color: #ebdddd;
+  line-height: 30rpx;
+  width: 100%;
+  margin-top:68rpx; 
 }
 
+.coupon-content {
+  font-size: 42rpx;
+  color: #ebdddd;
+  line-height: 150rpx;
+  width: 100%;
+  
+}
+
+.coupon-dueday {
+  font-size: 22rpx;
+  color: #ebdddd;
+  line-height: 25rpx;
+  width: 100%;
+  
+}
+.coupon-footer {
+  font-size: 22rpx;
+  color: #ebdddd;
+  line-height: 25rpx;
+  width: 100%;
+  
+}
 /*更多按钮*/
 .morebtn {
   font-size: 24rpx;
@@ -228,7 +250,6 @@ page {
   justify-content: space-between;
 }
 
-/*右上部分标题*/
 
 .carts-title {
   font-size: 24rpx;
@@ -236,6 +257,7 @@ page {
   line-height: 30rpx;
   width: 100%;
 }
+
 
 /*隐藏元素*/
 

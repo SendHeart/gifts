@@ -137,6 +137,37 @@ page {
   height: 350rpx;
 }
 
+
+.coupon-name {
+  font-size: 22rpx;
+  color: #ebdddd;
+  line-height: 30rpx;
+  width: 100%;
+  margin-top:25rpx;
+}
+
+.coupon-content {
+  font-size: 42rpx;
+  color: #ebdddd;
+  line-height: 100rpx;
+  width: 100%;
+  
+}
+
+.coupon-dueday {
+  font-size: 22rpx;
+  color: #ebdddd;
+  line-height: 25rpx;
+  width: 100%;
+  
+}
+.coupon-footer {
+  font-size: 22rpx;
+  color: #ebdddd;
+  line-height: 25rpx;
+  width: 100%;
+  
+}
 /*立即按钮*/
 
 .sentbtn {

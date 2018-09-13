@@ -20,7 +20,9 @@ Page({
   data: {
     title_name: '优惠券送出',
     title_logo: '../../../images/footer-icon-05.png',
-    coupon_img: weburl + '/uploads/coupon_bg.jpg', //
+    coupon_img: weburl + '/uploads/coupon_bg.png', //
+    coupon_content: '', //
+    coupon_footer: '', //
     wechat_share: '', //优惠券分享背景
     shop_type:shop_type,
     weburl:weburl,
@@ -216,6 +218,8 @@ Page({
           navList2: navList_new,
           wechat_share: navList_new[6]['img'],
           coupon_img: navList_new[7]['img'],
+          coupon_footer: navList_new[7]['footer'],
+          coupon_content: navList_new[7]['content'],
         })
 
         setTimeout(function () {
@@ -240,6 +244,8 @@ Page({
     var end_time = that.data.end_time   //优惠券有效期
     var quan_type = 1 //送心打折券
     var coupon_img = that.data.coupon_img
+    var coupon_footer = that.data.coupon_footer
+    var coupon_content = that.data.coupon_content
     //that.setNavigation()
     console.log('优惠券信息')
 
@@ -269,6 +275,8 @@ Page({
         quan_type: quan_type,
         shop_type:shop_type,
         image: coupon_img,
+        footer:coupon_footer,
+        content: coupon_content,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

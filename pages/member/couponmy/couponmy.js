@@ -17,7 +17,9 @@ Page({
   data: {
     title_name: '收到优惠券',
     title_logo: '../../../images/footer-icon-05.png',
-    coupon_img: weburl+'/uploads/coupon_bg.jpg',
+    coupon_img: weburl+'/uploads/coupon_bg.png',
+    coupon_footer: '', //
+    coupon_content: '', //
     shop_type:shop_type,
     navList_order:navList_order,
     tab2: 'avaliable',
@@ -246,10 +248,11 @@ Page({
           })
           setTimeout(function () {
             //wx.navigateBack()
+            /*
             wx.switchTab({
               url: '../../my/index'
             })
-
+          */
           }, 1500);
 
         } else {

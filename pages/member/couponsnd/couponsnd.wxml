@@ -25,11 +25,18 @@
 
 <view hidden="{{!hiddenmodalput}}" class="order-item">
   <view class="order-item-banner">
-    <view class="gifts-item">
-      <view bindtap="">
-        <image class="gifts-image" src="{{coupon_img}}" mode="aspectFit"></image>
+    <view class="gifts-item" style="background-image:url('{{coupon_img}}');">
+      <view bindtap="" >
+        <!--
+        <image class="gifts-image" background-size="cover" src="{{coupon_img}}" mode="aspectFit"> </image>
+        -->
+        
       </view>
-      <text class="carts-title">{{name}} {{nums>0?'x'+nums:''}} {{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
+       <text class="coupon-name">{{name}} {{nums>0?'x'+nums:''}} {{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
+      <text class="coupon-content">{{coupon_content}}</text>
+      <text class="coupon-footer">{{coupon_footer}}</text>
+      <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+     
     </view>
     <view class="sentbtn">
       <button open-type="share" data-order_no="{{order_no}}" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>送出</button>
