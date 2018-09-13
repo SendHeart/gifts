@@ -17,12 +17,13 @@
  <view class="container carts-list">
     <view class="carts-container" wx:for="{{carts}}"  wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" bindtap="showGoods">
       <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" >
-        <!-- 缩略图 -->
+        <!-- 缩略图  -->
         <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
         <!-- 商品标题 -->
         <view class="carts-text">
+        
           <text class="carts-title">{{item.name}}</text>
-          <view style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
+          <view class='carts-sku'>
             <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index" >
               <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
@@ -30,8 +31,7 @@
           </view>
           <view class="carts-text carts-subtitle">
             <view class='carts-price'>
-              <view class=""> {{item.num>0?'数量:'+item.num+'  ':''}}{{item.sell_price>0?' 价格:￥'+item.sell_price:''}}</view>
-            
+            <view>{{item.sell_price>0?'￥'+item.sell_price:''}} {{item.num>0?'x'+item.num+'  ':''}}</view>
             </view>
           </view>
         </view>
@@ -42,7 +42,7 @@
 	<view style='width:15%'>合计:</view>
   <view class="amount" style='width:40%'>{{payamount}}</view>
   <view style='width:15%'>优惠:</view>
-	<view class="amount" style='width:30%;color:gray'>{{discountpay}}</view>
+	<view class="amount" style='width:30%;color:#999'>{{discountpay}}</view>
 </view>
  <view class="carts-more" hidden="{{showmorehidden}}"  bindtap="bindSelectAll" >
     <view class="select-and-amount">
@@ -71,7 +71,7 @@
   </view>
 </modal>
 </view>
-<button class="submit" type="primary" bindtap="confirmOrder">提交订单</button>
+<button class="submit" type="warn" bindtap="confirmOrder">确认订单</button>
 <view wx:if="{{HiddenSelectedCoupon>0}}" class="counpon-item-banner" style='display:flex;flex-direction:column;text-align:center;align-items:center;'  data-couponid="{{selected_coupon_id}}" data-starttime="{{selected_coupon_starttime}}" data-endtime="{{selected_coupon_endtime}}" data-couponname="{{selected_coupon_name}}" data-coupontype="{{selected_coupon_type}}" data-couponimage="{{selected_couponimage}}">
       <image class="gifts-image" src="{{selected_couponimage}}" mode="aspectFit"> </image>
       <text class="carts-title">{{selected_coupon_name}}</text>
