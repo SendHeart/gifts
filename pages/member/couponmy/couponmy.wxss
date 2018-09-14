@@ -158,7 +158,7 @@ page {
   color: #ebdddd;
   line-height: 30rpx;
   width: 100%;
-  margin-top:68rpx; 
+  margin-top:75rpx; 
 }
 
 .coupon-content {
@@ -172,7 +172,7 @@ page {
 .coupon-dueday {
   font-size: 22rpx;
   color: #ebdddd;
-  line-height: 25rpx;
+  line-height: 50rpx;
   width: 100%;
   
 }

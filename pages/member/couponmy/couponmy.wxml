@@ -10,11 +10,11 @@
         <image class="coupon-image" background-size="cover" src="{{item.image}}" mode="aspectFit"> </image>
       </view>
       -->
-      <text class="coupon-name">{{item.name}}{{item.id?'  序号:'+item.id:''}}</text>
-      <text class="coupon-content">{{item.content}}</text>
-      <text class="coupon-dueday">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}{{giftflag==0?'【未使用】':''}}{{giftflag==1?'【已使用】':''}}{{giftflag==2?'【已过期】':''}}</text>
-      <text class="coupon-footer">{{item.footer}}</text>
-      <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+      <text class="coupon-name" style="{{giftflag>0?'color:gray':'#ebdddd'}};">{{item.name}}{{item.id?'  序号:'+item.id:''}}</text>
+      <text class="coupon-content" style="{{giftflag>0?'color:gray':'#ebdddd'}};">{{item.content}}</text>
+      <text class="coupon-dueday" style="{{giftflag>0?'color:gray':'#ebdddd'}};">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}{{giftflag==0?'【未使用】':''}}{{giftflag==1?'【已使用】':''}}{{giftflag==2?'【已过期】':''}}</text>
+      <text class="coupon-footer" style="{{giftflag>0?'color:gray':'#ebdddd'}};">{{item.footer}}</text>
+      <text class="coupon-footer" style="{{giftflag>0?'color:gray':'#ebdddd'}};">本优惠券最终解释权归送心所有</text>
     </view>
      <button type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
   </view>
