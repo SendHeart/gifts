@@ -256,7 +256,7 @@ Page({
           }, 1500);
 
         } else {
-      
+          all_rows = res.data.all_rows
           for (var i=0; i < coupons_list.length; i++){
             coupons_list[i]['start_time'] = util.getDateStr(coupons_list[i]['start_time']*1000,0)
             coupons_list[i]['end_time'] = util.getDateStr(coupons_list[i]['end_time']*1000, 0)
