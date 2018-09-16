@@ -16,6 +16,6 @@
       <text class="coupon-footer" style="{{giftflag>0?'color:gray':'#ebdddd'}};">{{item.footer}}</text>
       <text class="coupon-footer" style="{{giftflag>0?'color:gray':'#ebdddd'}};">本优惠券最终解释权归送心所有</text>
     </view>
-     <button type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
+     <button wx:if="{{page_num > 0}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
   </view>
 </view>

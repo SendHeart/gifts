@@ -17,13 +17,12 @@
  <view class="container carts-list">
     <view class="carts-container" wx:for="{{carts}}"  wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" bindtap="showGoods">
       <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" >
-        <!-- 缩略图  -->
+        <!-- 缩略图 -->
         <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
         <!-- 商品标题 -->
         <view class="carts-text">
-        
           <text class="carts-title">{{item.name}}</text>
-          <view class='carts-sku'>
+          <view style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
             <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index" >
               <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
@@ -31,7 +30,8 @@
           </view>
           <view class="carts-text carts-subtitle">
             <view class='carts-price'>
-            <view>{{item.sell_price>0?'￥'+item.sell_price:''}} {{item.num>0?'x'+item.num+'  ':''}}</view>
+              <view class=""> {{item.num>0?'数量:'+item.num+'  ':''}}{{item.sell_price>0?' 价格:￥'+item.sell_price:''}}</view>
+            
             </view>
           </view>
         </view>
@@ -42,7 +42,7 @@
 	<view style='width:15%'>合计:</view>
   <view class="amount" style='width:40%'>{{payamount}}</view>
   <view style='width:15%'>优惠:</view>
-	<view class="amount" style='width:30%;color:#999'>{{discountpay}}</view>
+	<view class="amount" style='width:30%;color:gray'>{{discountpay}}</view>
 </view>
  <view class="carts-more" hidden="{{showmorehidden}}"  bindtap="bindSelectAll" >
     <view class="select-and-amount">
@@ -50,32 +50,58 @@
 		  <text style="margin-left:10rpx;">使用优惠券</text>
 	  </view>
   </view>
-  <view hidden="{{modalHiddenCoupon}}" >
+  <view hidden="{{modalHiddenCoupon}}" style='width:100%;'>
 <modal class="coupon-item" title="选择优惠券" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirmCoupon" bindcancel="modalBindcancelCoupon" no-cancel="">
-  <view class="counpon-item-banner" style='height:{{dkheight}}px'>
+  <view class="counpon-item-banner" style='width:{{}};height:{{dkheight}}px'>
     <view wx:for="{{coupons_list}}" wx:for-item="mapping" wx:key="index"  class="gifts-item">
-      <view bindtap="bindSelectCoupon" style='display:flex;flex-direction:row;'  data-couponindex="{{index}}" data-couponid="{{mapping.id}}" data-starttime="{{mapping.start_time}}" data-endtime="{{mapping.end_time}}" data-couponname="{{mapping.name}}" data-coupontype="{{mapping.type}}" data-couponimage="{{mapping.image}}">
+      <view bindtap="bindSelectCoupon" style='display:flex;flex-direction:row;'  data-couponindex="{{index}}" data-couponid="{{mapping.id}}" data-starttime="{{mapping.start_time}}" data-endtime="{{mapping.end_time}}" data-couponname="{{mapping.name}}" data-couponcontent="{{mapping.content}}" data-couponfooter="{{mapping.footer}}" data-coupontype="{{mapping.type}}" data-couponimage="{{mapping.image}}">
         <view class="select-and-amount">
-		      <icon style="margin-top:1rpx;margin-left:10rpx;" type="{{mapping.selected ? 'success_circle' : 'circle'}}" size="18"/>
+		      <icon style="margin-top:1rpx;margin-right:10rpx;" type="{{mapping.selected ? 'success_circle' : 'circle'}}" size="18"/>
           <!-- 
 		    <text style="margin-left:10rpx;">选中</text>-->
 	      </view>
+        <view style="display:flex;flex-direction:column;width:480rpx;height:300rpx;background-image:url('{{mapping.image}}');background-size: 100% 100%;">
+        <!-- 
         <image class="gifts-image" src="{{mapping.image}}" mode="aspectFit"> </image>
+        -->
+          <text class="coupon-name">{{mapping.name}} </text>
+          <text class="coupon-dueday">{{mapping.id?'序号:'+mapping.id:''}}</text>
+          <text class="coupon-content">{{mapping.content}}</text>
+          <text class="coupon-dueday">{{mapping.start_time?'(有效期:'+mapping.start_time+'至':''}}{{mapping.end_time?mapping.end_time+')':''}}</text>
+          <text class="coupon-footer">{{mapping.footer}}</text>
+          <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+        </view>
       </view>
-      <text class="carts-title">{{mapping.name}}</text>
-      <text class="carts-title">{{mapping.id?'序号:'+mapping.id:''}}</text>
-      <text class="carts-title">{{mapping.start_time?'(有效期:'+mapping.start_time+'至':''}}{{mapping.end_time?mapping.end_time+')':''}}</text>
-      
     </view>
-     <button type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
+    <button wx:if="{{page_num > 0}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多 ({{page}}/{{page_num}})</button>
   </view>
 </modal>
 </view>
-<button class="submit" type="warn" bindtap="confirmOrder">确认订单</button>
+<button class="submit" type="primary" bindtap="confirmOrder">提交订单</button>
 <view wx:if="{{HiddenSelectedCoupon>0}}" class="counpon-item-banner" style='display:flex;flex-direction:column;text-align:center;align-items:center;'  data-couponid="{{selected_coupon_id}}" data-starttime="{{selected_coupon_starttime}}" data-endtime="{{selected_coupon_endtime}}" data-couponname="{{selected_coupon_name}}" data-coupontype="{{selected_coupon_type}}" data-couponimage="{{selected_couponimage}}">
+<!--
       <image class="gifts-image" src="{{selected_couponimage}}" mode="aspectFit"> </image>
       <text class="carts-title">{{selected_coupon_name}}</text>
       <text class="carts-title">{{selected_coupon_id?'序号:'+selected_coupon_id:''}}</text>
       <text class="carts-title">{{selected_coupon_starttime?'(有效期:'+selected_coupon_starttime+'至':''}}{{selected_coupon_endtime?selected_coupon_endtime+')':''}}</text>
+
+       <view class="select-and-amount">
+		      <icon style="margin-top:1rpx;margin-right:10rpx;" type="{{mapping.selected ? 'success_circle' : 'circle'}}" size="18"/>
+          
+          
+		    <text style="margin-left:10rpx;">选中</text>
+	      </view> -->
+        
+        <view style="display:flex;flex-direction:column;width:580rpx;height:300rpx;background-image:url('{{selected_couponimage}}');background-size: 100% 100%;">
+        <!-- 
+        <image class="gifts-image" src="{{mapping.image}}" mode="aspectFit"> </image>
+        -->
+          <text class="coupon-name">{{selected_coupon_name}} </text>
+          <text class="coupon-dueday">{{selected_coupon_id?'序号:'+selected_coupon_id:''}}</text>
+          <text class="coupon-content">{{selected_coupon_content}}</text>
+          <text class="coupon-dueday">{{selected_coupon_starttime?'(有效期:'+selected_coupon_starttime+'至':''}}{{selected_coupon_endtime?selected_coupon_endtime+')':''}}</text>
+          <text class="coupon-footer">{{selected_coupon_footer}}</text>
+          <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+        </view>
       
 </view>

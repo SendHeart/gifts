@@ -223,6 +223,8 @@ Page({
     var selected_coupon_index = e.currentTarget.dataset.couponindex ? e.currentTarget.dataset.couponindex : 0;
     var selected_coupon_id = e.currentTarget.dataset.couponid ? e.currentTarget.dataset.couponid : 0
     var selected_coupon_name = e.currentTarget.dataset.couponname ? e.currentTarget.dataset.couponname : ''
+    var selected_coupon_content = e.currentTarget.dataset.couponcontent?e.currentTarget.dataset.couponcontent:''
+    var selected_coupon_footer = e.currentTarget.dataset.couponfooter ? e.currentTarget.dataset.couponfooter : ''
     var selected_coupon_starttime = e.currentTarget.dataset.starttime
     var selected_coupon_endtime = e.currentTarget.dataset.endtime
     var selected_coupon_type = e.currentTarget.dataset.coupontype ? e.currentTarget.dataset.coupontype : 1
@@ -239,6 +241,8 @@ Page({
     that.setData({
       selected_coupon_id: selected_coupon_id,
       selected_coupon_name: selected_coupon_name,
+      selected_coupon_content: selected_coupon_content,
+      selected_coupon_footer: selected_coupon_footer,
       selected_coupon_starttime: selected_coupon_starttime,
       selected_coupon_endtime: selected_coupon_endtime,
       selected_coupon_type: selected_coupon_type,
@@ -275,6 +279,7 @@ Page({
     var all_rows = that.data.all_rows
     var page_num = that.data.page_num
     var shop_type = that.data.shop_type
+    var coupons_status = 'avaliable'
     /*
     if (page > that.data.page_num) {
       return
@@ -289,6 +294,7 @@ Page({
         page: page,
         pagesize: pagesize,
         shop_type: shop_type,
+        coupons_status: coupons_status,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -304,6 +310,12 @@ Page({
             icon: 'loading',
             duration: 1500
           })
+          if(page == 1){
+            that.setData({
+              coupons_list:{},
+              page_num:0,
+            })
+          }
         } else {
           for (var i = 0; i < coupons_list.length; i++) {
             coupons_list[i]['start_time'] = util.getDateStr(coupons_list[i]['start_time'] * 1000, 0)

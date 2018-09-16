@@ -153,6 +153,7 @@ page {
   width: 750rpx;
   height: 360rpx
 }
+
 .coupon-name {
   font-size: 32rpx;
   color: #ebdddd;

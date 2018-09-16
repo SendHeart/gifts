@@ -246,14 +246,13 @@ Page({
             icon: 'loading',
             duration: 1500
           })
-          setTimeout(function () {
-            //wx.navigateBack()
-            /*
-            wx.switchTab({
-              url: '../../my/index'
+          if(page ==1){
+            that.setData({
+              coupons_list: {},
+              all_rows:0,
+              page_num: 0,
             })
-          */
-          }, 1500);
+          }
 
         } else {
           all_rows = res.data.all_rows
