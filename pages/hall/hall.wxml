@@ -138,7 +138,8 @@
 </view>
 -->
   <view class="recomment-title" bindtap='bindPickGoods'>
-    <text>—— 近期热门 ——</text>
+    <text>近期热门</text>
+    <text class='more'>更多</text>
   </view>
   <view class="venues_box">
     <view wx:for="{{recommentList}}" class="venues_item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">

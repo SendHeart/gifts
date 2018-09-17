@@ -67,7 +67,7 @@ page {
   width: 100%;
   position: fixed;
   top: 0;
-  border-bottom: 1px solid #f2f2f2;
+  /*border-bottom: 1px solid #f2f2f2;*/
   z-index: 99;
 }
 
@@ -92,7 +92,7 @@ page {
   flex-direction: column;
   text-align: center;
   align-content: left;
-  padding: 40rpx;
+  margin-top: 76rpx;
 }
 
 /*user info*/
@@ -137,16 +137,19 @@ page {
 
 /*每行单元格*/
 
-.coupon-item {
+.coupons {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
   /*width属性解决标题文字太短而缩略图偏移*/
-  width: 100%;
   align-content: center;
-  background: #2c2c2c;
-  margin: 20rpx auto;
+  background: #1d1d1d;
+  margin: 30rpx auto;
+  width: 552rpx;
+  height: 171rpx;
+  background-size: 100% 100%;
+  padding: 55rpx 0 20rpx 0;
 }
 
 .coupon-image {
@@ -159,13 +162,12 @@ page {
   color: #ebdddd;
   line-height: 30rpx;
   width: 100%;
-  margin-top:75rpx; 
 }
 
 .coupon-content {
   font-size: 42rpx;
   color: #ebdddd;
-  line-height: 150rpx;
+  line-height: 2;
   width: 100%;
   
 }
@@ -173,21 +175,21 @@ page {
 .coupon-dueday {
   font-size: 22rpx;
   color: #ebdddd;
-  line-height: 50rpx;
+  line-height: 1.5;
   width: 100%;
   
 }
 .coupon-footer {
   font-size: 22rpx;
   color: #ebdddd;
-  line-height: 25rpx;
+  line-height: 1.5;
   width: 100%;
   
 }
 /*更多按钮*/
 .morebtn {
   font-size: 24rpx;
-  background-color: #333;
+  background-color: #444;
 }
 
 .sentbtn text {

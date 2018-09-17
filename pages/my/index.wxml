@@ -56,7 +56,7 @@
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
  <view>
- <modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="已读" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel="">
+ <modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel="true">
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />

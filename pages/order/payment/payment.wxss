@@ -50,9 +50,6 @@ page {
 	background: #fff;
   width: 100%;
   margin: 10rpx auto;
-  border-radius: 10rpx;
-  
-  
 }
 
 .order-item:last-child {

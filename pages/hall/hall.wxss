@@ -578,14 +578,22 @@ page {
 /*推荐商品列表头*/
 
 .recomment-title {
-  height: 60rpx;
   display: flex;
   flex-direction: row;
-  justify-content: center; /*子项横轴上居中对齐*/
-  bottom: 0;
-  z-index: 1;
-  color: #999;
-  font-size: 24rpx;
+  justify-content: space-between; /*子项横轴上对齐*/
+  padding:20rpx 4%;
+  color: #444;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.recomment-title text{
+  width: 150rpx;
+}
+.recomment-title .more {
+  font-size: 28rpx;
+  color: #666;
+  font-weight: normal;
+  text-align: right;
 }
 
 /*推荐商品列表头*/

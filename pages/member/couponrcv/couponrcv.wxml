@@ -16,11 +16,11 @@
         <image class="gifts-image" src="{{coupons_info[0].image}}" mode="aspectFit"> </image>
       </view>
       -->
-      <text class="coupon-name">{{coupons_info[0].name}}{{coupons_info[0].id?'  序号:'+coupons_info[0].id:''}}</text>
+      <text class="coupon-name">{{coupons_info[0].name}}</text>
       <text class="coupon-content">{{coupons_info[0].content}}</text>
-      <text class="coupon-dueday">{{coupons_info[0].start_time?'(有效期:'+coupons_info[0].start_time+'至':''}}{{coupons_info[0].end_time?coupons_info[0].end_time+')':''}}</text>
       <text class="coupon-footer">{{coupons_info[0].footer}}</text>
-      <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+      <text class="coupon-dueday">{{coupons_info[0].start_time?'(有效期:'+coupons_info[0].start_time+'至':''}}{{coupons_info[0].end_time?coupons_info[0].end_time+')':''}}</text>
+      
     
     </view>
     <view class="sentbtn">

@@ -32,10 +32,10 @@
         -->
         
       </view>
-       <text class="coupon-name">{{name}} {{nums>0?'x'+nums:''}} {{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
+       <text class="coupon-name">{{name}} {{nums>0?'x'+nums:''}}</text>
       <text class="coupon-content">{{coupon_content}}</text>
       <text class="coupon-footer">{{coupon_footer}}</text>
-      <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+      <text class="coupon-dueday">{{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
      
     </view>
     <view class="sentbtn">
