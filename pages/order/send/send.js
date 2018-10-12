@@ -337,6 +337,7 @@ Page({
 
   onShareAppMessage: function (options ) {
       var that = this 
+      var shop_type = that.data.shop_type
       var res
       var order_no = that.data.order_no;
       var username = that.data.username;
@@ -363,6 +364,7 @@ Page({
               method: 'POST',
               data: {
                 username: username,
+                shop_type,shop_type,
                 access_token: token,
                 status_info: 'send',
                 order_no: order_no,

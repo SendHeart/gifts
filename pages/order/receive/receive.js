@@ -80,6 +80,7 @@ Page({
 
   receiveTapTag: function (e) {
    var that = this 
+   var shop_type = that.data.shop_type
    var order_no = that.data.orderNo
    var openid = that.data.openid
    var nickname = that.data.userInfo.nickName
@@ -144,6 +145,7 @@ Page({
                 method: 'POST',
                 data: {
                   username: that.data.username,
+                  shop_type:shop_type,
                   openid: that.data.openid,
                   nickname: that.data.nickname,
                   headimg: that.data.headimg,
