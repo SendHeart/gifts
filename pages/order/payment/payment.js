@@ -53,7 +53,7 @@ Page({
     var totalFee = options.totalFee ? options.totalFee:0
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-   
+    var shop_type = that.data.shop_type
     //that.setNavigation()
     wx.request({
       url: weburl + '/api/client/query_order',
@@ -62,6 +62,7 @@ Page({
         username: username,
         access_token: token,
         order_no: orderNo,
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

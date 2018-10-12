@@ -1,6 +1,7 @@
 var app = getApp();
 var weburl = app.globalData.weburl;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var shop_type = app.globalData.shop_type; 
 var util = require('../../../utils/util.js');
 var now = new Date().getTime();
 var navList2 = [
@@ -14,6 +15,7 @@ Page({
   data: {
     title_name: '礼物转送',
     title_logo: '../../../images/footer-icon-05.png',
+    shop_type:shop_type,
     orders: [],
     orderskus:[],
     page: 1,
@@ -177,6 +179,7 @@ Page({
     var receive = options.receive;
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
+    var shop_type = that.data.shop_type
     that.setNavigation()
     console.log('礼品信息')
     console.log(order_no)
@@ -194,6 +197,7 @@ Page({
         access_token: token,
         order_no: order_no,
         order_type: 'send',
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

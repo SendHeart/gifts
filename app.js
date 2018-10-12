@@ -47,8 +47,8 @@ App({
                   wx.setStorageSync('session_key', user.session_key);
                   //wx.setStorageSync('username', user.openid); //用openid代替用户手机号登录
                   //wx.setStorageSync('username', ''); //测试
-                  console.log('获取用户OpenId:');
-                  console.log(user.openid);
+                  console.log('获取用户OpenId:', user.openid);
+                  //console.log(user.openid);
                   
                 }
               })

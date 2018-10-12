@@ -120,6 +120,7 @@ Page({
     var selected_coupon_type = that.data.selected_coupon_type
     var selectedAllStatus = that.data.selectedAllStatus
     var status = 0
+    var shop_type = that.data.shop_type
     var amount = that.data.amount
     var order_type = 'gift'
     var order_note = that.data.note
@@ -131,6 +132,7 @@ Page({
       data: {
         username: username,
         access_token: token,
+        shop_type: shop_type,
         sku_id: cartIds,
         buy_type: 'cart',
         order_type: order_type,
@@ -387,7 +389,7 @@ Page({
     var selectedAllStatus = that.data.selectedAllStatus
     var selected_coupon_index = that.data.selected_coupon_index ? that.data.selected_coupon_index : 0
     var coupon_list = that.data.coupons_list
-    var couponSelectedStatus = coupon_list[selected_coupon_index]['selected']
+    var couponSelectedStatus = coupon_list[selected_coupon_index] ? coupon_list[selected_coupon_index]['selected']:0
     that.setData({
       modalHiddenCoupon: !this.data.modalHiddenCoupon,
       selectedAllStatus: couponSelectedStatus ? true : false,

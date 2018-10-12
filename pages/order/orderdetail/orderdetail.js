@@ -4,7 +4,7 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-
+var shop_type = app.globalData.shop_type;
 Page({
   data: {
     title_name: '记录详情',
@@ -29,6 +29,7 @@ Page({
     order_id:0,
     sku_num:0,
     giftflag:0,
+    shop_type:shop_type,
      
   },
   setNavigation: function () {
@@ -203,7 +204,8 @@ Page({
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var status = that.data.status;
+    var status = that.data.status
+    var shop_type = that.data.shop_type
     var order_id = that.data.order_id;
     //从服务器获取订单列表
     wx.request({
@@ -213,6 +215,7 @@ Page({
         username: username,
         access_token: token,
         status: status,
+        shop_type:shop_type,
         order_id: order_id,
       },
       header: {

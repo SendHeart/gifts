@@ -103,7 +103,7 @@ Page({
 
         that.setData({
           navList2: navList_new,
-          wechat_share: navList_new[6]['img'],
+          wechat_share: navList_new[6]['img2'],
           coupon_img: navList_new[7]['img'],
         })
 

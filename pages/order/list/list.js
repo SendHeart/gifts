@@ -1,6 +1,6 @@
 var app = getApp();
 var weburl = app.globalData.weburl; 
-
+var shop_type = app.globalData.shop_type; 
 var navList_order = [
   { id: "send", title: "我送出的" },
   { id: "receive", title: "我收到的" },
@@ -17,6 +17,7 @@ Page({
     activeIndex2:0,
     all_rows:0,
     giftflag:0,
+    shop_type:shop_type,
 	},
   setNavigation: function () {
     let startBarHeight = 20
@@ -115,9 +116,11 @@ Page({
     var order_type= that.data.tab2;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var status = that.data.status;
-    var page = that.data.page;
+    var status = that.data.status
+    var shop_type = that.data.shop_type
+    var page = that.data.page
     var pagesize = that.data.pagesize;
+    console.log('reloadData shop_type:',that.data.shop_type);
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_list',
@@ -126,6 +129,7 @@ Page({
         username: username, 
         access_token: token,
         status: status,
+        shop_type: shop_type,
         order_type:order_type, 
         page:page,
       },

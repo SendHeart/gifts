@@ -125,12 +125,13 @@ Page({
     */
     var that =this
     var index = parseInt(e.currentTarget.dataset.index);
-    var num = that.data.carts[index]['num'];
+    var num = that.data.carts[index]['num']
+    var num_cur = num
     //  
-    if (num > 1) {
+    if (num_cur > 1) {
       num--
     }else{
-      num = 0  //减到0视同删除
+      num_cur = 0  //减到0视同删除
     }
 
     //var minusStatus = num <= 1 ? 'disabled' : 'normal';
@@ -154,7 +155,7 @@ Page({
     that.updateCart(username, sku_id, num, token)
     wx.hideLoading()
     this.sum()
-    if (num == 0) {
+    if (num_cur == 0) {
       that.setData({
         deleteindex: index,
       })
@@ -699,8 +700,8 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('会员推荐商品列表获取');
-        console.log(res.data);
+        console.log('会员推荐商品列表获取:', res.data);
+         
         var recommentslist = res.data.result;
         var rshowmorehidden;
         if (!recommentslist) return
@@ -712,7 +713,7 @@ Page({
           }
 
         }
-        if (recommentslist.length > 1) {
+        if (recommentslist.length > 0) {
           rshowmorehidden = true // false
         } else {
           rshowmorehidden = true

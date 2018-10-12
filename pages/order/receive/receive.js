@@ -2,10 +2,12 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var util = require('../../../utils/util.js');
 var now = new Date().getTime();
+var shop_type = app.globalData.shop_type; 
 Page({
   data: {
     title_name: '收到礼物',
     title_logo: '../../../images/footer-icon-05.png',
+    shop_type:shop_type,
     orders: [],
     orderskus:[],
     openid:null,
@@ -206,7 +208,8 @@ Page({
     var note_title = that.data.note_title
     var headimg = that.data.headimg
     var nickname = that.data.nickname
-    var note = that.data.note;
+    var note = that.data.note
+    var shop_type = that.data.shop_type
    
     if (receive != 1){
       console.log('礼品信息 receive')
@@ -248,6 +251,7 @@ Page({
         access_token: token,
         order_no: that.data.order_no,
         order_type: 'receive',
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

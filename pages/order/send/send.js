@@ -1,6 +1,7 @@
 var app = getApp();
 var weburl = app.globalData.weburl;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var shop_type = app.globalData.shop_type; 
 var navList2 = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -10,6 +11,7 @@ Page({
   data: {
     title_name: '礼物送出',
     title_logo: '../../../images/footer-icon-05.png',
+    shop_type:shop_type,
     orders: [],
     orderskus:[],
     page: 1,
@@ -138,6 +140,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var order_no = options.order_no; 
     var receive = options.receive;
+    var shop_type = that.data.shop_type
     that.setNavigation()
     console.log('礼品信息')
     console.log(order_no)
@@ -162,6 +165,7 @@ Page({
         access_token: token,
         order_no: order_no,
         order_type: 'send',
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

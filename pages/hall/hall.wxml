@@ -53,15 +53,17 @@
           <view class="carts-title"><text>{{item.name}}</text></view>
           
           <view class="carts-subtitle">
-          <view>
-          <view class="carts-sku"><text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">
-            {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}</text>
-          </view>
+            <view>
+              <view class="carts-sku">
+              <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">
+              {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+              </text>
+              </view>
             <!-- 价格 -->
             <!-- 
               <view class="carts-gov-price">{{item.act_info?item.act_info:'高端大气'}}</view>
               -->
-            <view class="carts-en-price">￥{{item.sell_price}}</view>
+              <view class="carts-en-price">￥{{item.sell_price}}</view>
             </view>
             <!-- 数量加减 -->
             <view class="stepper">

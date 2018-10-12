@@ -235,6 +235,9 @@ page {
   font-size: 24rpx;
   color: #999;
   line-height: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 /*右下部分价格与数量*/
