@@ -87,7 +87,7 @@ Page({
             }
             order_price = order_price + orderObjects[i]['order_price']
           }
-          totalFee = totalFee > 0 ? totalFee : order_price.toFixed(2)*100
+          totalFee = order_price.toFixed(2)*100
           //totalFee = totalFee.toFixed(0)
           console.log('order_price:'+order_price)
           that.setData({

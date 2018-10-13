@@ -79,7 +79,7 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-    that.loadAddress()
+    //that.loadAddress()
 	},
 	readCarts: function (options) {
 		var that = this
