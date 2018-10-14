@@ -149,7 +149,8 @@ Page({
   },
 
   insertCart: function (sku_id, username, wishflag) {
-    var that = this;
+    var that = this
+    var shop_type = that.data.shop_type
 
     // 加入购物车
     var title = wishflag == 1 ? '确认要加入心愿单吗' : '确认要购买送出吗'
@@ -159,7 +160,7 @@ Page({
       success: function (res) {
         if (res.confirm) {
           // 加入购物车
-          var that = this;
+          var that = this
           wx.request({
             url: weburl + '/api/client/add_cart',
             method: 'POST',
@@ -167,7 +168,8 @@ Page({
               username: username,
               access_token: "1",
               sku_id: sku_id,
-              wishflag: wishflag
+              wishflag: wishflag,
+              shop_type:shop_type,
             },
             header: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -200,7 +202,8 @@ Page({
   },
 
   deleteTapTag: function (e) {
-    var that = this;
+    var that = this
+    var shop_type = that.data.shop_type
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var index = parseInt(e.currentTarget.dataset.index);
@@ -227,6 +230,7 @@ Page({
               access_token: token, 
               sku_id: sku_id,
               wishflag:1, 
+              shop_type:shop_type,
               },
             header: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -377,6 +381,7 @@ Page({
 
   query_wish_cart: function () {
     var that = this
+    var shop_type = that.data.shop_type
     var minusStatuses = []
     var page = that.data.page
     var pagesize = that.data.pagesize
@@ -393,6 +398,7 @@ Page({
         page:page,
         pagesize:pagesize, 
         wishflag:1,
+        shop_type:shop_type,
         },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

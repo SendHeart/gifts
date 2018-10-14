@@ -429,7 +429,8 @@ Page({
   },
 
   delete: function (e) {
-    var that = this;
+    var that = this
+    var shop_type = that.data.shop_type
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var index = 0 
@@ -457,7 +458,12 @@ Page({
           wx.request({
             url: weburl + '/api/client/delete_cart',
             method: 'POST',
-            data: { username: username, access_token: token, sku_id: sku_id },
+            data: { 
+              username: username, 
+              access_token: token, 
+              sku_id: sku_id,
+              shop_type:shop_type,
+            },
             header: {
               'Content-Type': 'application/x-www-form-urlencoded',
               'Accept': 'application/json'
@@ -582,14 +588,21 @@ Page({
     });
   },
   updateCart: function (username, sku_id, buy_num, token) {
-    var that = this;
+    var that = this
+    var shop_type = that.data.shop_type
     var token = that.data.token;
 
     // 加入购物车
     wx.request({
       url: weburl + '/api/client/update_cart',
       method: 'POST',
-      data: { username: username, access_token: token, sku_id: sku_id, buy_num: buy_num },
+      data: { 
+        username: username, 
+        access_token: token, 
+        sku_id: sku_id, 
+        buy_num: buy_num,
+        shop_type:shop_type, 
+      },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
@@ -618,7 +631,11 @@ Page({
     wx.request({
       url: weburl + '/api/client/query_cart',
       method: 'POST',
-      data: { username: username, access_token: token },
+      data: { 
+        username: username, 
+        access_token: token,
+        shop_type:shop_type,
+      },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'

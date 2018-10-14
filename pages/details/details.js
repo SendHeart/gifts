@@ -266,7 +266,7 @@ Page({
     },
     insertCart: function (sku_id,username,wishflag) {
       var that = this
-       
+      var shop_type = that.data.shop_type
       wx.request({
         url: weburl + '/api/client/add_cart',
         method: 'POST',
@@ -274,7 +274,8 @@ Page({
           username: username,
           access_token: "1",
           sku_id: sku_id,
-          wishflag: wishflag
+          wishflag: wishflag,
+          shop_type:shop_type,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',
