@@ -82,6 +82,7 @@ Page({
   onLoad: function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+        username = options.username ? options.username : username
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
         var page = that.data.page
         var goodsname = options.name
@@ -152,10 +153,17 @@ Page({
         }
 
         // 商品详情图片
+        console.log('商品详情图片', username);
         wx.request({
           url: weburl+'/api/client/get_goodsdesc_list',
           method: 'POST',
-          data: { username: options.username ? options.username : this.data.username, access_token: token, goods_id: options.id, page: page },
+          data: { 
+            username: username, 
+            access_token: token, 
+            goods_id: options.id, 
+            page: page,
+            shop_type: shop_type 
+          },
           header: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
