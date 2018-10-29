@@ -160,6 +160,9 @@ Page({
 	},
   loadAddress: function (options) {
     var that = this;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
     var addressId = options.objectId;
     if (addressId != undefined) {
       that.setData({
@@ -169,6 +172,9 @@ Page({
         url: weburl + '/api/client/get_member_address',
         method: 'POST',
         data: { 
+          username: options.username ? options.username : username,
+          access_token: token,
+          shop_type: shop_type,
           address_id: addressId 
           },
         header: {

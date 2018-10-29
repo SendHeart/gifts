@@ -156,13 +156,18 @@ Page({
       return;
     }
     console.log(this.data.phoneNo)
-    var that= this;
-    this.getVerificationCode();
+    var that= this
+    var shop_type = that.data.shop_type
+    this.getVerificationCode()
     
     wx.request({
       url: weburl + '/api/web/user/login/login_sms_send',
       method: 'POST',
-      data: { phoneNo: this.data.phoneNo, extensionCode: "09016" },
+      data: { 
+        phoneNo: this.data.phoneNo, 
+        extensionCode: "09016" ,
+        shop_type:shop_type,
+      },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
