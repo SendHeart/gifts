@@ -87,9 +87,10 @@ Page({
 
   sendAginTapTag: function (e) {
     var that = this;
-
+    var username = wx.getStorageSync('username')
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     wx.navigateTo({
-      url: '../list/list'
+       url: '../list/list?username=' + username + '&token=' + token
     });
   },
   send: function (e) {

@@ -74,7 +74,8 @@ Page({
   },
   
   expressTapTag: function (e) {
-    var that = this;
+    var that = this
+    var shop_type = that.data.shop_type
     var order_no = that.data.order_no
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
@@ -90,6 +91,7 @@ Page({
         username: username,
         access_token: token,
         order_no:order_no,
+        shop_type: shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
