@@ -764,7 +764,8 @@ Page({
       data: {
         username: username,
         access_token: token,
-        openid: openid
+        openid: openid,
+        shop_type:shop_type
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
