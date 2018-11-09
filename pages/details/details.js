@@ -181,15 +181,21 @@ Page({
         wx.request({
           url: weburl+'/api/client/get_goodssku_list',
           method: 'POST',
-          data: { username: options.username ? options.username:this.data.username, access_token: token, goods_id: options.id, page: page },
+          data: { 
+            username: username,
+            access_token: token, 
+            goods_id: options.id, 
+            shop_type:shop_type,
+            page: page 
+          },
           header: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
           },
           success: function (res) {
             console.log('goods_sku:',res.data.result);
-            var attrValueList = res.data.result.spec_select_list;
-            var commodityAttr = res.data.result.sku_list;
+            var attrValueList = res.data.result.spec_select_list ? res.data.result.spec_select_list:'{}';
+            var commodityAttr = res.data.result.sku_list ? res.data.result.sku_list:'{}';
             if (!commodityAttr) return; 
             for (var i = 0; i < commodityAttr.length; i++) {
               if (commodityAttr[i].attrValueStatus) {

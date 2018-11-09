@@ -312,6 +312,7 @@ Page({
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var shop_type = that.data.shop_type
     wx.showModal({
       title: '请确认',
       content: '确认要收货吗',
@@ -326,6 +327,7 @@ Page({
               username: username,
               access_token: token,
               id: objectId,
+              shop_type:shop_type,
             },
             header: {
               'Content-Type': 'application/x-www-form-urlencoded',
