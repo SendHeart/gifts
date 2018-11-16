@@ -161,6 +161,7 @@ Page({
             'signType': 'MD5',
             'paySign': response.data.paySign,
             'success': function (res) {
+              console.log('支付成功:' + res);
               wx.showToast({
                 title: '支付成功'
               })
@@ -193,6 +194,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var sku_id = that.data.sku_id
+    var shop_type = that.data.shop_type
     console.log('payment delete_cart sku_id:', sku_id);
     // 购物车单个删除
     wx.request({
@@ -201,7 +203,8 @@ Page({
       data: { 
         username: username, 
         access_token: token, 
-        sku_id: sku_id 
+        sku_id: sku_id,
+        shop_type:shop_type
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

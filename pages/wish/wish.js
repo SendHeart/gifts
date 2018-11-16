@@ -445,6 +445,7 @@ Page({
             method: 'POST',
             data: {
               username: wish_id,
+              shop_type:shop_type,
               access_token: token,
             },
             
