@@ -34,7 +34,7 @@ Page({
     note:'',
     headimg:'',
     nickname: userInfo.nickName,
-    send_status:0,
+    send_status:1,
     hiddenmodalput:false,
     currenttime: now ? parseInt(now / 1000) : 0,
     navList2: navList2,
@@ -215,7 +215,6 @@ Page({
           setTimeout(function () {
             wx.navigateBack();
           }, 1500);
-
           return
         } else {
           if (orderObjects[0]['gift_status'] !=1 || currenttime < orderObjects[0]['duetime']) {
@@ -228,11 +227,11 @@ Page({
               wx.navigateBack();
             }, 1500)
             return
-
           }
-
         }
-
+        that.setData({
+          send_status: 0,
+        });
       }
     })
     var orders = JSON.parse(options.orders);
@@ -383,6 +382,51 @@ Page({
         console.log('礼品订单号为空 trans')
         return
       }
+    wx.request({ //更新发送状态
+      url: weburl + '/api/client/update_order_status',
+      method: 'POST',
+      data: {
+        username: username,
+        shop_type: shop_type,
+        access_token: token,
+        status_info: 'transfer',
+        rcv_note: note,
+        order_no: order_no,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('礼物转赠完成:',res.data)
+        /*
+        if (res.data.result) {
+          wx.showToast({
+            title: '礼物转赠成功',
+            icon: 'success',
+            duration: 1500
+          })
+          that.setData({
+            send_status: 1,
+          });
+        } else {
+          wx.showToast({
+            title: '礼物转赠失败',
+            icon: 'success',
+            duration: 1500
+          })
+        }
+        */
+        /*
+        wx.navigateTo({
+          url: '../../order/list/list?username=' + username
+        });
+        */
+        wx.switchTab({
+          url: '../../index/index'
+        })
+      }
+    })
       var shareObj = {
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",
@@ -392,43 +436,9 @@ Page({
       　success: function (res) {　　　
           console.log(res)
           if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
-            wx.request({ //更新发送状态
-              url: weburl + '/api/client/update_order_status',
-              method: 'POST',
-              data: {
-                username: username,
-                shop_type:shop_type,
-                access_token: token,
-                status_info: 'transfer',
-                rcv_note: note,
-                order_no: order_no,
-              },
-              header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-              },
-              success: function (res) {
-                console.log(res.data.result);
-                wx.showToast({
-                  title: '礼物转赠成功',
-                  icon: 'success',
-                  duration: 1500
-                })   
-                that.setData({
-                  send_status: 1,
-                });
-                /*
-                wx.navigateTo({
-                  url: '../../order/list/list?username=' + username
-                });
-                */
-                wx.switchTab({
-                  url: '../../index/index'
-                });
-              }
-            })
-            }
-      　　},
+          
+          }
+      　},
        fail: function (res) {　　
             console.log(res)
             if (res.errMsg == 'shareAppMessage:fail cancel') {// 转发失败之后的回调

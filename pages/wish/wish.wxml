@@ -14,8 +14,9 @@
   <text class="userinfo-nickname" style='margin-top:30rpx;'>我的心愿单</text>
 
 <view class="banner" style='margin-top:20rpx;' hidden="{{!shareflag}}" >
- <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" type="warn">分享微信好友</button>
-  <button wx:if="{{carts.length>0}}" bindtap="ShareWechat" type="warn">分享朋友圈</button>
+  
+  <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" type="warn">分享微信好友</button>
+ 
   <button wx:if="{{carts.length==0}}" bindtap="addWishTapTag" type="warn">添加心愿单</button>
 </view>
 </view>
@@ -67,7 +68,8 @@
 </scroll-view>
 <!-- 
 <button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">授权登录</button>
--->
 <button wx:if="{{!userInfo}}" bindtap="login" type="warn" class="logout">登录</button>
+-->
+
 
 

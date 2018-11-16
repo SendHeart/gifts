@@ -28,7 +28,7 @@ Page({
     note:'',
     headimg:'',
     nickname:'',
-    receive_status:0,
+    receive_status:1,
     receive:0,
     order_no:'',
     currenttime: now ? parseInt(now / 1000) : 0,
@@ -129,7 +129,6 @@ Page({
               address_telNumber = res.telNumber
 
               that.setData({
-                receive_status: 1,
                 address_userName: address_userName,
                 address_postalCode: address_postalCode,
                 address_provinceName: address_provinceName,
@@ -165,12 +164,28 @@ Page({
                   'Accept': 'application/json'
                 },
                 success: function (res) {
-                  console.log(res.data.result);
-                  wx.showToast({
-                    title: '礼物已接收',
-                    icon: 'success',
-                    duration: 1500
-                  })
+                  console.log('礼物已接收:',res.data.result);
+                  if (res.data.result){
+                    wx.showToast({
+                      title: '礼物已接收',
+                      icon: 'success',
+                      duration: 1500
+                    })
+                    that.setData({
+                      receive_status: 1,
+                    })
+                   
+                  }else{
+                    wx.showToast({
+                      title: '礼物接收失败',
+                      icon: 'success',
+                      duration: 1500
+                    })
+                    that.setData({
+                      receive_status: 0,
+                    });
+                  }
+                 
 
                 }
               })
@@ -260,7 +275,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result);
+        console.log(' 礼物订单查询:',res.data.result);
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows ? res.data.all_rows:0;
         var receive_status = that.data.receive_status

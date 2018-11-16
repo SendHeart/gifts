@@ -15,7 +15,7 @@ var navList2 = [
   { id: "trans_gift_logo", title: "转送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "hall_banner", title: "首页banner", value: "", img: "/uploads/songxin_banner.png" },
   { id: "wish_banner", title: "心愿单banner", value: "", img: "/uploads/wish_banner.png" },
-  { id: "wechat_gb", title: "朋友圈背景", value: "", img: "/uploads/wechat_share.png" },
+  { id: "wechat_gb", title: "背景", value: "", img: "/uploads/wechat_share.png" },
 ];
 Page({
   data: {

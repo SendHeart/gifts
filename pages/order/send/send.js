@@ -30,7 +30,7 @@ Page({
     note:'',
     headimg: userInfo.avatarUrl,
     nickname: userInfo.nickName,
-    send_status:0,
+    send_status:1,
     navList2: navList2,
   },
   setNavigation: function () {
@@ -196,11 +196,12 @@ Page({
               wx.navigateBack();
             }, 1500)
             return
-
+          }else{
+            that.setData({
+              send_status: 0, 
+            })
           }
-
         }
-
       }
     })
 
@@ -336,95 +337,117 @@ Page({
   },
 
   onShareAppMessage: function (options ) {
-      var that = this 
-      var shop_type = that.data.shop_type
-      var res
-      var order_no = that.data.order_no;
-      var username = that.data.username;
-      var token = that.data.token;
-      var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
-      var imageUrl = that.data.navList2[0]['img']
-      console.log('开始送礼'); 
-      console.log(options);  
-      if (!order_no){
-        console.log('礼品订单号为空 send')
-        return
-      }
-      var shareObj = {
-        title: title,        // 默认是小程序的名称(可以写slogan等)
-        desc:"礼物代表我的心意",
-        //path: '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
-        path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
-        imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
-      　success: function (res) {　　　
-          console.log(res)
-          if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
-            wx.request({ //更新发送状态
-              url: weburl + '/api/client/update_order_status',
-              method: 'POST',
-              data: {
-                username: username,
-                shop_type,shop_type,
-                access_token: token,
-                status_info: 'send',
-                order_no: order_no,
-              },
-              header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-              },
-              success: function (res) {
-                console.log(res.data.result);
-                wx.showToast({
-                  title: '礼物发送成功',
-                  icon: 'success',
-                  duration: 1500
-                })   
-                that.setData({
-                  send_status: 1,
-                });
-                /*
-                wx.navigateTo({
-                  url: '../../order/list/list?username=' + username
-                });
-                
-                wx.switchTab({
-                  url: '../../index/index'
-                })
-                */
-              }
-            })
-            }
-      　　},
-       fail: function (res) {　　
-            console.log(res)
-            if (res.errMsg == 'shareAppMessage:fail cancel') {// 转发失败之后的回调
-          　　　　　　　　// 用户取消转发
-        　　　} else if (res.errMsg == 'shareAppMessage:fail') {
-          　　　　　　　　// 转发失败，其中 detail message 为详细失败信息
-        　　　}
-      　　},
-          complete: function() { // 转发结束之后的回调（转发成不成功都会执行）
-        　　　　　　
-      　　　　
-  　　    },
+    var that = this 
+    var shop_type = that.data.shop_type
+    var order_no = that.data.order_no;
+    var username = that.data.username;
+    var token = that.data.token;
+    var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
+    var imageUrl = that.data.navList2[0]['img']
+    console.log('开始送礼 options:',options); 
+    //console.log(options);  
+    if (!order_no){
+      console.log('礼品订单号为空 send')
+      return
+    }
+    that.setData({
+      send_status: 1,
+    })
+    var shareObj = {
+      title: title,        // 默认是小程序的名称(可以写slogan等)
+      desc: "礼物代表我的心意",
+      //path: '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
+      path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
+      imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      success: function (res) {
+        console.log('更新发送状态:', res)
+        if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
+
         }
+
+      },
+      fail: function (res) {
+        console.log('转发失败之后', res)
+        if (res.errMsg == 'shareAppMessage:fail cancel') {// 转发失败之后的回调
+          wx.showToast({
+            title: '用户取消转发',
+            icon: 'success',
+            duration: 1500
+          })  　// 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          wx.showToast({
+            title: '礼物发送失败',
+            icon: 'loading',
+            duration: 1500
+          }) 　　　　　// 转发失败，其中 detail message 为详细失败信息
+        }
+      },
+      complete: function (res) { // 转发结束之后的回调（转发成不成功都会执行）
+        console.log('转发结束:', res)
+        wx.showToast({
+          title: '礼物发送完成',
+          icon: 'loading',
+          duration: 1500
+        })
+
+      },
+    }
+    wx.request({ //更新发送状态
+      url: weburl + '/api/client/update_order_status',
+      method: 'POST',
+      data: {
+        username: username,
+        shop_type, shop_type,
+        access_token: token,
+        status_info: 'send',
+        order_no: order_no,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('礼物发送返回:', res.data)
+        /*
+        if (res.data.status='y') {
+          wx.showToast({
+            title: '礼物发送成功',
+            icon: 'success',
+            duration: 1500
+          })
+         
+        } else {
+          wx.showToast({
+            title: '礼物发送失败',
+            icon: 'success',
+            duration: 1500
+          })
+          return
+        }
+        */
+
+        /*
+        wx.navigateTo({
+          url: '../../order/list/list?username=' + username
+        });
+        
+        wx.switchTab({
+          url: '../../index/index'
+        })
+        */
+      }
+    })
+    
       if (options.from === 'button') {
           // 来自页面内转发按钮
-            // shareBtn
-          　　　　// 此处可以修改 shareObj 中的内容
-        //var orderno = order_no.split(','); //有可能一份礼物包括多个订单号 按店铺拆单的情况
-        //shareObj.path = '/pages/hall/hall?page_type=2&order_no=' + order_no+'&receive=1'
-        //shareObj.imageUrl = imageUrl
-        console.log('礼物分享:')
-        console.log(shareObj)
+        console.log('礼物分享:', shareObj)
+        //console.log(shareObj)
         
-        }
+      }
         // 返回shareObj
-        return shareObj;
+      return shareObj
+     
     
   } ,
    
-
-  
 });

@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "分享心愿单到朋友圈",
+  "navigationBarTitleText": "分享心愿单",
   "usingComponents": {
     "canvasdrawer": "../../common/canvasdrawer/canvasdrawer"
   }
