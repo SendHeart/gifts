@@ -340,7 +340,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 
     cartIds = cartIds.join(',')
-    if (!order_note) order_note = '送你一份心意，愿美好长存!'; //默认祝福
+    if (!order_note) order_note = '送你一份礼物，希望你喜欢!'; //默认祝福
     // 遍历selected 
     var index = 0
     for (var i = 0; i < carts.length; i++) {
