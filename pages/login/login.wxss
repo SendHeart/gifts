@@ -95,13 +95,14 @@ background-color:#fff;
   display: flex;
   flex-direction: column;
   align-items:center;
-  height: 380rpx;
+  line-height: 200%;
+  height: 480rpx;
   
 }
 
 .logininfo-logo {
-  width: 150rpx;
-  height: 150rpx;
+  width: 120rpx;
+  height: 120rpx;
   margin: 40rpx;
   border-radius: 50%;
 }

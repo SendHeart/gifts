@@ -29,11 +29,11 @@
       <image class="pick-goods-image" src="../../images/1.png"></image>
     </view>
     <view class="pick-goods-text">
-      <text class="pick-goods-slogan">挑选要送出的礼物</text>
+      <text class="pick-goods-slogan">微信好友送礼</text>
       <text class="pick-goods-slogan2">全场正品，全国包邮</text>
     </view>
     <view class="image-btnbuy">
-      <text class="pick-goods-action">开始挑选</text>
+      <text class="pick-goods-action">挑选礼物</text>
     </view>
 
   </view>

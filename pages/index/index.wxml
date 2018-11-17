@@ -45,7 +45,7 @@
         <text style="width:20%">共:{{item.order_sku_num}}件</text>
         <text style="color:#e34c55;">￥{{item.order_price}}</text>
         <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">去支付</text>
-        <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{index}}" class="{{(item.status==2 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">送出</text>
+        <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{index}}" class="{{(item.status==2 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
         <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
       </view>

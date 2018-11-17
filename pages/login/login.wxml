@@ -3,7 +3,7 @@
 </view>
 <view class="logininfo" style=''> 
 	<image class="logininfo-logo" src="{{logininfo_logo}}" background-size="cover"></image>
-	<text class="logininfo-auth">送心SH申请获取以下权限</text>
+	<text class="logininfo-auth">送心礼物申请获取以下权限</text>
   <text class="logininfo-authinfo">获得您的公开信息(昵称、头像)</text>
   <text class="logininfo-authinfo">获得调用您通信地址的权限</text>
   <text class="logininfo-authinfo">获得保存到您系统和相册的权限</text>
