@@ -12,7 +12,7 @@ var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var navList2 = [
-  { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
+  { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo3.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
   { id: "trans_gift_logo", title: "转送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "hall_banner", title: "首页banner", value: "", img: "/uploads/songxin_banner.png" },

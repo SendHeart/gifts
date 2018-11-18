@@ -17,6 +17,7 @@
     "pages/member/couponmy/couponmy",
     "pages/details/details",
     "pages/list/list",
+    "pages/activity/activity",
     "pages/login/login",
     "pages/cart/cart",
     "pages/order/send/send",

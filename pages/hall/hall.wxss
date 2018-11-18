@@ -97,7 +97,7 @@ page {
 .wrap {
   width: 100%;
   position: absolute;
-  top: 200rpx;
+  top: 230rpx;
   margin-bottom: 160rpx;
 }
 

@@ -1,0 +1,180 @@
+/*没有用到iconfont注释降低消耗*/
+
+/*@import "../../lib/style/font.wxss";
+ 
+.Hui-iconfont {
+  font-family: "Hui-iconfont";
+  font-size: 30rpx;
+}
+
+.iconv-uparrow:after {
+  content: '\e6d6';
+}
+
+.iconv-downarrow:after {
+  content: '\e6d5';
+}
+*/
+
+page {
+  background: #f2f2f2;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.banner {
+  width: 100%;
+  /*margin-left: 15rpx;*/
+  background-color: #f2f2f2;
+  background-repeat: norepeat;
+  align-content: center;
+  opacity: 1;
+  background-size: 100% 100%;
+}
+
+.banner image {
+  width: 100%;
+}
+
+.footer {
+  width: 100%;
+  background-color: #f2f2f2;
+  background-repeat: norepeat;
+  align-content: center;
+  opacity: 1;
+  background-size: 100% 100%;
+}
+
+.footer image {
+  width: 100%;
+}
+
+.wrap {
+  width: 100%;
+  position: relative;
+  top: 0rpx;
+}
+
+/*推荐商品列表*/
+
+/*推荐商品列表头*/
+
+.recomment-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /*子项横轴上对齐*/
+  padding:10rpx 2%;
+  color: #444;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.recomment-title image{
+  width: 100%;
+}
+.recomment-title .more {
+  font-size: 24rpx;
+  color: #999;
+  font-weight: normal;
+  text-align: right;
+}
+
+/*推荐商品列表头*/
+
+.item {
+  height: 180rpx;
+  margin-left: 0rpx;
+  margin-top: 0rpx;
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 25rpx;
+  overflow: hidden;
+}
+
+.item .img {
+  width: 180rpx;
+  height: 170rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
+  margin-left: 10rpx;
+  float: left;
+}
+
+.item .img_tag {
+  width: 5%;
+  height: 30rpx;
+}
+
+.venues_box {
+  display: block;
+  width: 100%;
+  padding-bottom: 40rpx;
+  
+  overflow: hidden;
+}
+
+.venues_item {
+  display: inline-block;
+  width: 47%;
+  margin: 0 1% 15rpx 1%;
+  background: #fff;
+  border-radius: 10rpx;
+  text-indent: 20rpx;
+  padding-bottom: 10rpx;
+}
+
+.venues_item .mainpic {
+  display: block;
+  width: 310rpx;
+  height: 310rpx;
+  margin: 20rpx auto;
+}
+
+.venues_item .goods_name {
+  display: block;
+  color: #444;
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.venues_item .goods_tag {
+  color: #999;
+  font-size: 20rpx;
+  padding: 2rpx 6rpx;
+  border: 1px solid #f2f2f2;
+  border-radius: 6rpx;
+}
+
+.venues_item .goods_tag image {
+  width: 10%;
+  height: 30rpx;
+}
+
+.venues_item .goods_prom {
+  display: block;
+  color: #999;
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price-now {
+  color: #e34c55;
+  font-size: 28rpx;
+  text-align: right;
+  padding-right: 20rpx;
+  font-weight: bold;
+}
+
+.price-now::first-letter {
+  font-size: 20rpx;
+}

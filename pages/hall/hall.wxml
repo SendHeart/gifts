@@ -8,7 +8,7 @@
     <text style="font-size:14px;color:red;margin-left:5px;margin-top:5px;text-align:center">精选 合意 省心</text>
   </view> 
   -->
-  <image src="{{main_title_Bg}}" background-size="cover" mode="aspectFill"></image>
+  <image src="{{main_title_Bg}}" background-size="cover" mode="widthFix"></image>
 </view>
 <view class="wrap" style=''>
   <!-- margin-top:{{navgationHeight+startBarHeight}}px -->

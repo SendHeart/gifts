@@ -1,0 +1,20 @@
+<view class="banner" style='' bindtap='bannerTapTag' data-bannerlink="{{banner_link}}">
+  <image src="{{main_title_Bg}}" background-size="cover" mode="widthFix"></image>
+</view>
+<view class="wrap" style=''>
+    <view wx:for="{{activityList.goods_list}}"  wx:for-item="act_goods_list" wx:key="">
+      <view class="recomment-title" bindtap='bindPickGoods'>
+        <image src="{{act_goods_list.banner_url}}" mode="widthFix"></image>
+      </view>
+      <view wx:for="{{act_goods_list.list}}" class="venues_item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">
+        <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+        <text class="goods_name">{{item.name}}</text>
+        <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
+        <view class="price-now">￥{{item.sell_price}}</view>
+      </view>
+    </view>
+</view>
+<view class="footer" style='' bindtap='bannerTapTag' data-bannerlink="{{footer_link}}">
+  <image src="{{main_footer_Bg}}" mode="widthFix"></image>
+</view>
+ 
