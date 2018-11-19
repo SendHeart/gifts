@@ -168,11 +168,10 @@ page {
 }
 
 .price-now {
-  color: #e34c55;
-  font-size: 28rpx;
+  color: #444;
+  font-size: 24rpx;
   text-align: right;
   padding-right: 20rpx;
-  font-weight: bold;
 }
 
 .price-now::first-letter {

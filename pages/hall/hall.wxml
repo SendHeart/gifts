@@ -140,7 +140,7 @@
 </view>
 -->
   <view class="recomment-title" bindtap='bindPickGoods'>
-    <text>近期热门</text>
+    <text>近期热门<text class='title_ex'>大家都在送...</text></text>
     <text class='more'>更多</text>
   </view>
   <view class="venues_box">

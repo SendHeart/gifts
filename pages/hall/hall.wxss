@@ -585,14 +585,21 @@ page {
   flex-direction: row;
   justify-content: space-between; /*子项横轴上对齐*/
   padding:20rpx 4%;
+  
+}
+.recomment-title text{
+  width: 350rpx;
   color: #444;
   font-size: 32rpx;
   font-weight: bold;
 }
-.recomment-title text{
-  width: 150rpx;
+.recomment-title text.title_ex{
+  color: #999;
+  font-size: 24rpx;
+  font-weight: normal;
+  margin-left: 10rpx;
 }
-.recomment-title .more {
+.recomment-title text.more {
   font-size: 24rpx;
   color: #999;
   font-weight: normal;
