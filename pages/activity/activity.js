@@ -350,7 +350,7 @@ Page({
       username: username
     })
     this.reloadData(username, token);
-    
+     
   },
   onShareAppMessage: function () {
     return {

@@ -3,7 +3,7 @@
 </view>
 <view class="wrap" style=''>
     <view wx:for="{{activityList.goods_list}}"  wx:for-item="act_goods_list" wx:key="">
-      <view class="recomment-title" bindtap='bindPickGoods' data-banner-link="{{act_goods_list.banner_link}}" >
+      <view class="recomment-title" bindtap='bannerTapTag' data-bannerlink="{{act_goods_list.banner_link}}" >
         <image src="{{act_goods_list.banner_url}}" mode="widthFix"></image>
       </view>
       <view wx:for="{{act_goods_list.list}}" class="venues_item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">
