@@ -7,7 +7,7 @@ var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var navList = [
   { id: "is_recommend", title: "推荐"  ,value:"1"},
-  { id: "act_id", title: "中秋" , value: "hz" }, 
+  { id: "act_id", title: "节" , value: "hz" }, 
   { id: "cat_id", title: "美食", value: "1" },
   { id: "cat_id", title: "酒和茶", value: "1"},
   { id: "cat_id", title: "美妆", value: "美妆"},
@@ -169,10 +169,10 @@ Page({
   onLoad: function (options) {
     console.log('onLoad',options)
     var that = this
-    var username = options.username
-    var token = options.token
+    var username = options.username ? options.username : wx.getStorageSync('username')
+    var token = options.token ? options.token : wx.getStorageSync('token')
     var navlist_toView = options.navlist ? options.navlist:0
-     
+    
     that.setData({
       username: username,
       token: token,

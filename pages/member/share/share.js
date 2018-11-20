@@ -127,14 +127,16 @@ Page({
     var coupons_id = that.data.coupons_id
     var coupons_flag = that.data.coupons_flag
     var coupons_name = that.data.coupons_name
-
+    that.setData({
+      qr_type: qr_type,
+    })
     /*
     wx.showLoading({
       title: '生成优惠券扫码图片',
       mask: true
     })
     */
-    console.log('优惠券扫码图片信息:', coupons)
+    console.log('优惠券扫码图片信息:', coupons,'qr_type:',qr_type)
     that.setData({
       painting: {
         width: 375,
@@ -213,7 +215,7 @@ Page({
     var coupons_flag = coupons_json?coupons[0]['flag']:0
     console.log('share options:', coupons_json)
     //that.setNavigation()
-  	this.setData({
+    that.setData({
       username:username,
       appid: appid,
       secret: secret,
