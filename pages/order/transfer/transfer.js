@@ -375,7 +375,7 @@ Page({
       var title = '收到一份来自' + that.data.nickname + '的大礼,快打开看看吧~';
       var note = e.target.dataset.note ? e.target.dataset.note:that.data.note
       var imageUrl = that.data.navList2[2]['img']
-      note = note ? note :'送你一份心意，愿美好长存!'
+      note = note ? note :'送你一份礼物，愿你喜欢!'
       console.log('开始转增礼物'); 
       console.log(note);  
       if (!order_no) {

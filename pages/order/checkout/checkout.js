@@ -124,7 +124,7 @@ Page({
     var amount = that.data.amount
     var order_type = 'gift'
     var order_note = that.data.note
-    if (!order_note) order_note = '送你一份心意，愿美好长存!'; //默认祝福
+    if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
     console.log('选中优惠券类型:', selected_coupon_type)
     wx.request({
       url: weburl + '/api/client/add_order',
