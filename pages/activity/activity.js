@@ -37,7 +37,7 @@ Page({
     interval: 3000,
     duration: 1000,
     main_title_Bg: weburl +"/uploads/activity_info/activity_banner.gif", //默认的banner图
-    banner_link: "/pages/hall/hall?navlist=1", //默认的banner图 跳转链接
+    banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接
     gifts_rcv:0,
     gifts_snd:0,
     note:'',

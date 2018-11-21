@@ -232,24 +232,26 @@ Page({
     console.log('收到的优惠券:', options)
     var that = this
     //var options = util.formatString(options)
-    var coupons = options.coupons ? options.coupons:''
-    coupons = util.formatString(coupons)
+    //var coupons = options.coupons ? options.coupons:''
+    //coupons = util.formatString(coupons)
     var receive = options.receive
-    var coupons_info = coupons?JSON.parse(coupons):[{}]
-    var coupons_id = options.coupons_id ? options.coupons_id : coupons_info[0]['id']
-    var coupons_flag = options.coupons_flag ? options.coupons_flag : coupons_info[0]['flag']
+    //var coupons_info = coupons?JSON.parse(coupons):[{}]
+    var coupons_id = options.coupons_id ? options.coupons_id : 0
+    var coupons_flag = options.coupons_flag ? options.coupons_flag : '999999999999'
      
     var headimg = that.data.headimg
     var nickname = that.data.nickname
    
     that.setData({
-      coupons: coupons,
-      coupons_info: coupons_info,
+      //coupons: coupons,
+      //coupons_info: coupons_info,
       coupons_id: coupons_id,
       coupons_flag: coupons_flag,
       receive: receive,
 
     })
+    that.query_pubcoupon()
+    /*
     if (coupons_flag =='999999999999'){
       that.query_pubcoupon()
     }else{
@@ -259,7 +261,7 @@ Page({
         coupons_info: coupons_info,
       })
     }
-    
+    */
     /*
     that.setNavigation()
     wx.getSystemInfo({

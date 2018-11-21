@@ -109,6 +109,17 @@ Page({
             //wx.navigateBack();
           }, 500);
         } else {
+          if (res.data.result['status_list'].length<2){
+            wx.showToast({
+              title:'暂未轨迹信息',
+              icon: 'loading',
+              duration: 1500
+            });
+            setTimeout(function () {
+              //wx.navigateBack();
+            }, 500);
+          }
+        
           var deliveryinfo = res.data.result
           var status_list = deliveryinfo['status_list']
           var delivery_status = that.data.delivery_status
