@@ -2,7 +2,7 @@
 <template name="nav2">
     <view class="top-bar2" style=''><!-- margin-top:{{navgationHeight+startBarHeight+35}}px -->
       <block wx:for="{{navList2}}" wx:key="">
-        <view id="v_{{index}}" data-index="{{index}}" data-title="{{item.title}}" class="top-bar-item2 {{index == activeIndex2 ? 'top-bar-active2' : ''}}" catchtap="onTapTag2">{{item.title}}
+        <view id="v_{{index}}" data-index="{{index}}" data-title="{{item.title}}" data-tabid="{{item.id}}" class="top-bar-item2 {{index == activeIndex2 ? 'top-bar-active2' : ''}}" catchtap="onTapTag2">{{item.title}}
        
           <icon wx:if="{{ updown==0 && index == activeIndex2}}" style="margin-top:-5rpx;" class="Hui-iconfont iconv-uparrow" catchtap="" data-index="{{index}}" />
           <icon wx:if="{{updown==1 && index == activeIndex2}}" style="margin-top:-5rpx;" class="Hui-iconfont iconv-downarrow" catchtap="" data-index="{{index}}" />

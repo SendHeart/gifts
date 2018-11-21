@@ -37,7 +37,7 @@ Page({
     interval: 3000,
     duration: 1000,
     main_title_Bg: weburl +"/uploads/activity_info/activity_banner.gif", //默认的banner图
-    banner_link: "/pages/list/list?navlist=2", //默认的banner图 跳转链接
+    banner_link: "/pages/hall/hall?navlist=1", //默认的banner图 跳转链接
     gifts_rcv:0,
     gifts_snd:0,
     note:'',
@@ -94,12 +94,46 @@ Page({
     }
 
   },
+  
   bannerTapTag: function (e) {
     var that = this
     var banner_link = e.currentTarget.dataset.bannerlink
-    wx.navigateTo({
-      url: banner_link+'&username='+username+'&token='+token
-    });
+    var nav_path = banner_link.split("/")
+    console.log('bannerTapTag:', nav_path)
+    if (nav_path[2] == 'hall' || nav_path[2] == 'wish' || nav_path[2] == 'index' || nav_path[2] == 'my'){
+      var pagelist = getCurrentPages()
+      var len = pagelist.length
+      var init = 0
+      var index = 0;
+      for (var i = 0; i < len; i++) {
+        if (pagelist[i].route.indexOf("hall/hall") >= 0) {//看路由里面是否有首页
+          init = 1
+          index = i
+        }
+      }
+      if (init == 1) {
+        wx.navigateBack({
+          delta: len - i - 1
+        })
+      } else {
+        /*
+        wx.reLaunch({
+          url: "/pages/hall/hall"//这个是默认的单页
+        })
+        */
+        wx.switchTab({
+          url: '/pages/hall/hall'
+        })
+
+      }
+      
+    
+      
+    }else{
+      wx.navigateTo({
+        url: banner_link + '&username=' + username + '&token=' + token
+      })
+    }
     
   },
   userTapTag: function () {
@@ -113,7 +147,22 @@ Page({
       url: '../index/index'
     })
   },
-  
+  qrcodeTapTag: function (e) {
+    var that = this
+    var qr_type = 'activityshare'  //
+    var act_id = that.data.act_id
+    var act_title = that.data.act_title ? that.data.act_title:'送心活动'
+    var page_type = '4'  //
+    that.setData({
+      qr_type: qr_type,
+    })
+    //that.eventDraw()
+    wx.navigateTo({
+      url: '../member/share/share?qr_type=' + qr_type + '&act_id=' + act_id + '&act_title=' + act_title
+    })
+
+  },
+
   showGoods: function (e) {
     // 点击购物车某件商品跳转到商品详情
     var objectId = e.currentTarget.dataset.objectId;
@@ -229,7 +278,6 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('get_activity_info:', res.data)
         var activityList_new = res.data.result;
         if (!activityList_new) {
           /*
@@ -241,19 +289,17 @@ Page({
            */
           return;
         }
-        for (var i = 0; i < activityList_new.length; i++) {
-          activityList_new[i]['selected'] = selectedAllStatus;
-          // update selected status to db
-        }
 
         that.setData({
           activityList: activityList_new,
+          act_id: activityList_new['act_id'],
+          act_title: activityList_new['act_title'],
           main_title_Bg: activityList_new['activity_banner_url'], //活动页banner图
           banner_link: activityList_new['activity_banner_link'], //活动页banner图跳转链接
           main_footer_Bg: activityList_new['activity_footer_url'], //活动页banner图
           footer_link: activityList_new['activity_footer_link'], //活动页banner图跳转链接
         })
-
+        //console.log('get_activity_info:', activityList_new, 'banner_link', that.data.banner_link)
         setTimeout(function () {
           that.setData({
             loadingHidden: true,
@@ -263,23 +309,31 @@ Page({
     })
   },
 
+ 
   onLoad: function (options) {
     var that = this
-    var page_type = options.page_type
-    var order_no = options.order_no
-    var coupons = options.coupons
-    var receive = options.receive
-    that.setNavigation()
-   
+    var page_type = options.page_type ? options.page_type:''
+    var order_no = options.order_no ? options.order_no:''
+    var act_id = options.act_id ? options.act_id:''
+    var coupons = options.coupons ? options.coupons:''
+    var receive = options.receive ? options.receive:''
+
+    that.setData({
+      act_id: act_id,
+      page_type: page_type,
+      order_no: order_no,
+      coupons: coupons,
+      receive: receive,
+    })
+    //that.setNavigation()
+    console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id)
     if(page_type==2){ //收到礼物
-      console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
       if (receive==1){
         wx.navigateTo({
           url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
         })
       }
     }
-    
     that.get_activity_info()
   },
   //事件处理函数

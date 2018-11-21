@@ -121,7 +121,9 @@ Page({
     var that = this
     var wechat_share = that.data.wechat_share
     var shop_type = that.data.shop_type
-    var qr_type = 'couponshare'  //
+    var qr_type = that.data.qr_type ? that.data.qr_type:'couponshare'  //
+    var act_id = that.data.act_id ? that.data.act_id : ''  //
+    var act_title = that.data.act_title ? that.data.act_title : ''  //
     var coupons = that.data.coupons
     var coupons_json = that.data.coupons_json
     var coupons_id = that.data.coupons_id
@@ -154,7 +156,7 @@ Page({
           
           {
             type: 'image',
-            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag+'&coupons_id=' + coupons_id,
+            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json + '&act_id=' + act_id ,
             top: 450,
             left: 130,
             width: 110,
@@ -208,6 +210,9 @@ Page({
     var hiddenqrcode = that.data.hiddenqrcode
     var appid = that.data.appid
     var secret = that.data.secret
+    var qr_type = options.qr_type ? options.qr_type:''
+    var act_id = options.act_id ? options.act_id : ''
+    var act_title = options.act_title ? options.act_title : ''
     var coupons_json = options.coupons ? options.coupons:''
     var coupons = coupons_json?JSON.parse(coupons_json):[{}]
     var coupons_name = coupons_json?coupons[0]['name']:''
@@ -219,9 +224,12 @@ Page({
       username:username,
       appid: appid,
       secret: secret,
+      qr_type: qr_type,
+      act_id: act_id,
+      act_title: act_title,
       coupons: coupons,
       coupons_json: coupons_json,
-      hiddenqrcode: coupons_json ? !hiddenqrcode : hiddenqrcode,
+      hiddenqrcode:true,
       coupons_name: coupons_name,
       coupons_id: coupons_id,
       coupons_flag: coupons_flag,

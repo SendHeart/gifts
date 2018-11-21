@@ -121,9 +121,10 @@ Page({
   },
   onTapTag2: function (e) {
     var that = this;
-    var tab = e.currentTarget.id;
-    var index = e.currentTarget.dataset.index; 
-    var updown = that.data.updown==1?0:1 ; 
+    var id = e.currentTarget.id
+    var tab = e.currentTarget.dataset.tabid
+    var index = e.currentTarget.dataset.index
+    var updown = that.data.updown==1?0:1 
     that.setData({
       activeIndex2: index,
       tab2: tab,

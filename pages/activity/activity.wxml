@@ -17,4 +17,9 @@
 <view class="footer" style='' bindtap='bannerTapTag' data-bannerlink="{{footer_link}}">
   <image src="{{main_footer_Bg}}" mode="widthFix"></image>
 </view>
+<view class="sentbtn">
+   <button bindtap="goBack">返回</button>
+   <button bindtap="qrcodeTapTag">二维码</button>
+</view>
+
  

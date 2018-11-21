@@ -871,10 +871,10 @@ Page({
       }
     }
     if (page_type == 3) { //收到优惠券
-      console.log('hall page_type:', page_type, ' coupons:', coupons, ' receive:', receive)
+      console.log('收到优惠券 Hall page_type:', page_type, ' coupons_flag:', coupons_flag, ' coupons_id:', coupons_id,  ' receive:', receive)
       if (receive == 1) {
         wx.navigateTo({
-          url: '../member/couponrcv/couponrcv?coupons=' + coupons + '&receive=1'
+          url: '../member/couponrcv/couponrcv?coupons_flag=' + coupons_flag + '&coupons_id' + coupons_id+'&receive=1'
         })
       }
     }

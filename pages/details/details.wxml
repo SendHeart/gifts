@@ -50,7 +50,6 @@
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
        <view style="max-height:{{dkheight-30}}px">
         <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
-       
           <view>{{attrValueObj.name}}:</view>
           <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
             data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >

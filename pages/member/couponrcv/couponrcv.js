@@ -148,7 +148,7 @@ Page({
           setTimeout(function () {
             //wx.navigateBack()
             wx.switchTab({
-              url: '../../my/index'
+              url: '../../hall/hall'
             })
 
           }, 1500);
@@ -162,7 +162,7 @@ Page({
           setTimeout(function () {
             //wx.navigateBack()
             wx.switchTab({
-              url: '../../my/index'
+              url: '../../hall/hall'
             })
           }, 1500);
         }
@@ -229,16 +229,19 @@ Page({
   },
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
+    console.log('收到的优惠券:', options)
     var that = this
-    var coupons =  options.coupons
-    var coupons_info = JSON.parse(coupons)
+    //var options = util.formatString(options)
+    var coupons = options.coupons ? options.coupons:''
+    coupons = util.formatString(coupons)
     var receive = options.receive
-    var coupons_id = coupons?coupons_info[0]['id']:0
-    var coupons_flag = coupons ? coupons_info[0]['flag']:0
+    var coupons_info = coupons?JSON.parse(coupons):[{}]
+    var coupons_id = options.coupons_id ? options.coupons_id : coupons_info[0]['id']
+    var coupons_flag = options.coupons_flag ? options.coupons_flag : coupons_info[0]['flag']
      
     var headimg = that.data.headimg
     var nickname = that.data.nickname
-    console.log('收到的优惠券:', coupons,receive)
+   
     that.setData({
       coupons: coupons,
       coupons_info: coupons_info,
@@ -257,7 +260,6 @@ Page({
       })
     }
     
-  
     /*
     that.setNavigation()
     wx.getSystemInfo({

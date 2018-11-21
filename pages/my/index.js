@@ -348,7 +348,7 @@ Page({
   },
   navigateToShare: function () {
     wx.navigateTo({
-      url: '/pages/member/share/share'
+      url: '/pages/member/share/share?qr_type=membershare'
     })
   },
   navigateToCoupon: function () {

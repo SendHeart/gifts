@@ -267,7 +267,6 @@ Page({
       }else{
         if (that.data.sku_id){
           that.insertCart(that.data.sku_id, username,that.data.wishflag);
-          
         }else{
           wx.showToast({
             title: '该产品无货',

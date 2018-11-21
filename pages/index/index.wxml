@@ -69,5 +69,5 @@
      -->
     </view>
   </view>
-  <button type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多记录 {{page}}/{{page_num}}</button>
+  <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多记录 {{page}}/{{page_num}}</button>
 </view>

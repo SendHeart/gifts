@@ -241,19 +241,19 @@ Page({
         var all_rows = res.data.all_rows;
         if (!res.data.result) {
           wx.showToast({
-            title: '没有该更多订单',
+            title: '暂时没有订单',
             icon: 'loading',
             duration: 1500
           });
           setTimeout(function () {
             wx.navigateBack();
           }, 500)
-          /*
+          
           that.setData({
             orders: [],
             all_rows: 0
           })
-          */
+          
         } else {
           // 存储地址字段
           for (var i = 0; i < orderObjects.length; i++) {
