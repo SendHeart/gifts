@@ -264,6 +264,7 @@ Page({
     var that = this
     var activityList = that.data.activityList
     var shop_type = that.data.shop_type
+    var act_id = that.data.act_id
 
     //活动列表
     wx.request({
@@ -272,6 +273,7 @@ Page({
       data: {
         type: 1,  //暂定
         shop_type: shop_type,
+        act_id:act_id,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
