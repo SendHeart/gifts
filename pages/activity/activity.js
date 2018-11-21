@@ -89,7 +89,7 @@ Page({
       wx.navigateBack({ changed: true });//返回上一页
     } else {
       wx.switchTab({
-        url: '../../hall/hall'
+        url: '../hall/hall'
       })
     }
 

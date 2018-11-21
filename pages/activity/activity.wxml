@@ -18,7 +18,8 @@
   <image src="{{main_footer_Bg}}" mode="widthFix"></image>
 </view>
 <view class="sentbtn">
-   <button bindtap="qrcodeTapTag">分享给朋友</button>
+  <button bindtap="qrcodeTapTag">分享给朋友</button>
+  <button bindtap="goBack">返回</button>
 </view>
 
  
