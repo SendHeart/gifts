@@ -225,23 +225,42 @@ Page({
     },
     //事件处理函数 选择型号规格  
     goodsmodel: function () {
-      var that = this;
-      that.setData({
-        modalHidden: !that.data.modalHidden,
-        sku_id: that.data.commodityAttr[0].id,
-        sku_sell_price: that.data.commodityAttr[0].sell_price,
-        add_cart_title: '商品名称',
-        wishflag: 0,
-      })
+      var that = this
+      var attrValueList = that.data.attrValueList
+      if(attrValueList.length>0){
+        that.setData({
+          modalHidden: !that.data.modalHidden,
+          sku_id: that.data.commodityAttr[0].id,
+          sku_sell_price: that.data.commodityAttr[0].sell_price,
+          add_cart_title: '商品名称',
+          wishflag: 0,
+        })
+      }else{
+        that.setData({
+          sku_id: that.data.commodityAttr[0].id,
+          wishflag: 0,
+        })
+        that.addCart()
+      }
+      
     },
     wishCart: function () {
       var that = this
-      that.setData({
-        modalHidden: !that.data.modalHidden,
-        sku_id: that.data.commodityAttr[0].id,
-        add_cart_title:'商品名称',
-        wishflag: 1,
-      })
+      if (attrValueList.length > 0) {
+        that.setData({
+          modalHidden: !that.data.modalHidden,
+          sku_id: that.data.commodityAttr[0].id,
+          add_cart_title: '商品名称',
+          wishflag: 1,
+        })
+      } else {
+        that.setData({
+          sku_id: that.data.commodityAttr[0].id,
+          wishflag: 1,
+        })
+        that.addCart()
+      }
+      
     },
     //确定按钮点击事件  
     modalBindaconfirm: function () {

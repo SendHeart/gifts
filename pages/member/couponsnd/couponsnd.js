@@ -138,6 +138,7 @@ Page({
   qrcodeTapTag: function (e) {
     var that = this
     var qr_type = 'couponshare'  //
+    var name = that.data.name
     var page_type = '3'  //
     var hiddenqrcode = that.data.hiddenqrcode
     var hiddenmodalput = that.data.hiddenmodalput
@@ -150,7 +151,7 @@ Page({
     })
     //that.eventDraw()
     wx.navigateTo({
-      url: '../share/share?coupons=' + coupons_json
+      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name
     })
 
   },

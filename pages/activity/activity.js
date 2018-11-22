@@ -1,4 +1,4 @@
-import defaultData from '../../data';
+
 var util = require('../../utils/util.js');
 //获取应用实例
 var app = getApp();

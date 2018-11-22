@@ -23,6 +23,7 @@ Page({
     scrollTop_init: 10,
     modalHiddenAgreement:true,
     modalHiddenPlaysx: true,
+    shop_type:shop_type,
      
   },
   setNavigation: function () {
@@ -69,6 +70,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var art_id = '21'  //送心用户协议
     var art_cat_id = '9'  //送心协议类
+    var shop_type = that.data.shop_type
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
     if (agreementinfoshowflag == 0) {
       wx.request({
@@ -79,6 +81,7 @@ Page({
           access_token: token,
           art_id: art_id,
           art_cat_id: art_cat_id,
+          shop_type:shop_type,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',

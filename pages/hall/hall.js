@@ -31,9 +31,10 @@ Page({
     vertical: false,
     autoplay: true,
     interval: 3000,
-    duration: 1000,
+    duration: 3000,
+    circular:true,
     main_title_Bg: weburl+"/uploads/songxin_banner.png", //默认的banner图
-    banner_link: "/pages/list/list?navlist=2", //默认的banner图 跳转链接
+    banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接
     gifts_rcv:0,
     gifts_snd:0,
     note:'',
@@ -366,7 +367,6 @@ Page({
      
     });
     //that.confirmOrder()
-
     wx.navigateTo({
       url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
     });
@@ -818,7 +818,7 @@ Page({
       url: weburl + '/api/client/get_project_gift_para',
       method: 'POST',
       data: {
-        type: 1,  //暂定
+        type: 2,  //暂定 1首页单图片 2首页轮播  
         shop_type: shop_type,
       },
       header: {
@@ -841,8 +841,9 @@ Page({
 
         that.setData({
           navList2: navList_new,
-          main_title_Bg: navList_new[3]['img'], //首页banner图
-          banner_link:navList_new[3]['link'], //首页banner图跳转链接
+          hall_banner: navList_new[3], //首页banner图
+          //main_title_Bg: navList_new[3]['img'], //首页banner图
+          //banner_link:navList_new[3]['link'], //首页banner图跳转链接
         })
 
         setTimeout(function () {
