@@ -50,6 +50,7 @@ Page({
         shop_type:shop_type,
 
     },
+    /*
   setNavigation: function () {
     let startBarHeight = 20
     let navgationHeight = 44
@@ -67,6 +68,7 @@ Page({
       }
     })
   },
+  */
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -103,7 +105,7 @@ Page({
           goodsprice: goodsprice ? goodsprice:0,
           goodssale: goodssale ? goodssale:0,
         })
-        that.setNavigation()
+        //that.setNavigation()
         if (goodsid>0){
           wx.request({
             url: weburl + '/api/client/get_goods_list',
@@ -246,6 +248,7 @@ Page({
     },
     wishCart: function () {
       var that = this
+      var attrValueList = that.data.attrValueList
       if (attrValueList.length > 0) {
         that.setData({
           modalHidden: !that.data.modalHidden,

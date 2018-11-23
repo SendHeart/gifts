@@ -10,10 +10,10 @@
           <swiper-item>
             <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}"  controls autoplay="" custom-cache="{{false}}" objectFit="contain"> <!-- poster="{{goodscoverimg}}" -->
               <cover-view class="controls" mode="aspecFit" >
-              <cover-image class="img"  src="{{banner_list.pic}}" />
+              <cover-image class="img"  src="{{banner_list.pic}}" mode="aspectFill" />
               </cover-view>
             </video>
-            <image wx:else src="{{banner_list.img}}" class="slide-image" />
+            <image wx:else src="{{banner_list.img}}" class="slide-image" mode="aspectFill"/>
           </swiper-item>
         </view>
       </block>

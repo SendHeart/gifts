@@ -36,8 +36,8 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    main_title_Bg: weburl +"/uploads/activity_info/activity_banner.gif", //默认的banner图
-    banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接
+    main_title_Bg: null,  
+    banner_link: null,
     gifts_rcv:0,
     gifts_snd:0,
     note:'',
@@ -66,6 +66,7 @@ Page({
     navList2: navList2,
 
   }, 
+  /*
   setNavigation:function() {
     let startBarHeight = 20
     let navgationHeight = 44
@@ -83,6 +84,7 @@ Page({
       }
     })
   },
+  */
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -136,17 +138,7 @@ Page({
     }
     
   },
-  userTapTag: function () {
-    wx.switchTab({
-      url: '../my/index'
-    })
-  },
-
-  usergiftTapTag: function () {
-    wx.switchTab({
-      url: '../index/index'
-    })
-  },
+  
   qrcodeTapTag: function (e) {
     var that = this
     var qr_type = 'activityshare'  //
@@ -247,13 +239,7 @@ Page({
 
   },
   
-  showCartToast: function (message) {
-    wx.showToast({
-      title: message ? message : '',
-      icon: 'success',
-      duration: 1000
-    });
-  },
+ 
   
   onGotUserInfo: function (e) {
     console.log(e.detail.errMsg)

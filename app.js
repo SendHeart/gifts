@@ -13,15 +13,16 @@ App({
     code: null,
     shop_type:2 , //礼物类应用
     from_page:null,
-    user_type:0
+    user_type:0,
+    navList2:null,
   },
  
-    onLaunch: function() {
+  onLaunch: function() {
         console.log('App Launch');
         var that = this;
             //调用API从本地缓存中获取数据
-        var appid = this.globalData.appid;
-        var appsecret = this.globalData.secret
+        var appid = that.globalData.appid;
+        var appsecret = that.globalData.secret
         wx.setStorageSync('appid', appid);
         wx.setStorageSync('appsecret', appsecret);
         
@@ -56,10 +57,46 @@ App({
               console.log('获取用户登录态失败！' + res.errMsg)
             }
           }
-        })
-    },
+      })
+      that.get_project_gift_para()
+  },
     
-    getUserInfo: function (cb) {
+  get_project_gift_para: function () {
+    var that = this
+    var navList2 = that.globalData.navList2
+    var shop_type = that.globalData.shop_type
+
+    //项目列表
+    wx.request({
+      url: weburl + '/api/client/get_project_gift_para',
+      method: 'POST',
+      data: {
+        type: 2,  //暂定 1首页单图片 2首页轮播  
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('app.js get_project_gift_para:', res.data.result)
+        var navList_new = res.data.result;
+        if (!navList_new) {
+          /*
+           wx.showToast({
+             title: '没有菜单项2',
+             icon: 'loading',
+             duration: 1500
+           });
+           */
+          return;
+        }
+        wx.setStorageSync('navList2', navList_new)
+        that.globalData.navList2 = navList_new
+      }
+    })
+  },
+  getUserInfo: function (cb) {
       var that = this
       if (that.globalData.userInfo) {
         typeof cb == "function" && cb(that.globalData.userInfo)
@@ -88,15 +125,15 @@ App({
         })
       }
 
-    },
+  },
     
 
-    onShow: function() {
+  onShow: function() {
         console.log('App Show')
         var that = this;
-    },
-    onHide: function() {
+  },
+  onHide: function() {
         console.log('App Hide')
-    },
+  },
    
 })

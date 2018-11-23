@@ -1,24 +1,25 @@
-import defaultData from '../../data';
-var util = require('../../utils/util.js');
+import defaultData from '../../data'
+var util = require('../../utils/util.js')
 //获取应用实例
-var app = getApp();
-var weburl = app.globalData.weburl;
-var shop_type = app.globalData.shop_type;
+var app = getApp()
+var weburl = app.globalData.weburl
+var shop_type = app.globalData.shop_type
 
-var page = 1;
-var pagesize = 10;
-var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
-var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-var navList2 = [
+var page = 1
+var pagesize = 10
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo3.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
   { id: "trans_gift_logo", title: "转送礼logo", value: "", img: "/uploads/gift_logo.png" },
-  { id: "hall_banner", title: "首页banner", value: "", img: "/uploads/songxin_banner.png" },
+  { id: "hall_banner", title: "首页banner", value: "", img: "" },
   { id: "wish_banner", title: "心愿单banner", value: "", img: "/uploads/wish_banner.png" },
   { id: "wechat_gb", title: "背景", value: "", img: "/uploads/wechat_share.png" },
-];
+]
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
 
 Page({
   data: {
@@ -747,7 +748,7 @@ Page({
     var gifts_send = that.data.gifts_send;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     console.log("openid:" + openid + ' username:' + username)
-    // 加载的使用进行网络访问，把需要的数据设置到data数据对象
+  
     /*
     
     app.getUserInfo(function (userInfo) {
@@ -809,50 +810,52 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    var navList2 = that.data.navList2
+    var navList_new = that.data.navList2
     var shop_type = that.data.shop_type
+    console.log('hall get_project_gift_para navList2:', navList2)
+    if (!navList_new){
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定 1首页单图片 2首页轮播  
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return;
+          }
 
-
-    //项目列表
-    wx.request({
-      url: weburl + '/api/client/get_project_gift_para',
-      method: 'POST',
-      data: {
-        type: 2,  //暂定 1首页单图片 2首页轮播  
-        shop_type: shop_type,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log('get_project_gift_para:', res.data.result)
-        var navList_new = res.data.result;
-        if (!navList_new) {
-          /*
-           wx.showToast({
-             title: '没有菜单项2',
-             icon: 'loading',
-             duration: 1500
-           });
-           */
-          return;
         }
+      })
+    } 
 
-        that.setData({
-          navList2: navList_new,
-          hall_banner: navList_new[3], //首页banner图
-          //main_title_Bg: navList_new[3]['img'], //首页banner图
-          //banner_link:navList_new[3]['link'], //首页banner图跳转链接
-        })
-
-        setTimeout(function () {
-          that.setData({
-            loadingHidden: true,
-          })
-        }, 1500)
-      }
+    that.setData({
+      navList2: navList_new,
+      hall_banner: navList_new[3], //首页banner图
+      //main_title_Bg: navList_new[3]['img'], //首页banner图
+      //banner_link:navList_new[3]['link'], //首页banner图跳转链接
     })
+
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
   },
 
   onLoad: function (options) {
@@ -861,8 +864,8 @@ Page({
     var order_no = options.order_no
     var coupons = options.coupons
     var receive = options.receive
-    that.setNavigation()
-   
+    //that.setNavigation()
+    that.get_project_gift_para()
     if(page_type==2){ //收到礼物
       console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
       if (receive==1){
@@ -879,7 +882,7 @@ Page({
         })
       }
     }
-    that.get_project_gift_para()
+   
   },
   //事件处理函数
  

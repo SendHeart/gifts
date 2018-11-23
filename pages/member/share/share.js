@@ -10,11 +10,13 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 var appid = app.globalData.appid
 var secret = app.globalData.secret
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
-var navList2 = [
+var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
 ]
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+
 Page({
   data:{
     title_name: '二维码',
@@ -28,6 +30,7 @@ Page({
     shop_type: shop_type,
     coupon_img: weburl + '/uploads/coupon_bg.jpg', //
     wechat_share: '', //优惠券分享背景
+    navList2:navList2 ,
     
   },
   setNavigation: function () {
@@ -70,51 +73,52 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    var shop_type = that.data.shop_type
-    var navList2 = that.data.navList2
     var page = that.data.page
     var pagesize = that.data.pagesize
-
-    //项目列表
-    wx.request({
-      url: weburl + '/api/client/get_project_gift_para',
-      method: 'POST',
-      data: {
-        type: 1,  //暂定
-        shop_type: shop_type
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log('get_project_gift_para:', res.data.result)
-        var navList_new = res.data.result;
-        if (!navList_new) {
-          /*
-           wx.showToast({
-             title: '没有菜单项2',
-             icon: 'loading',
-             duration: 1500
-           });
-           */
-          return;
+    var navList_new = that.data.navList2
+    var shop_type = that.data.shop_type
+    console.log('share get_project_gift_para navList2:', navList2)
+    if (!navList_new) {
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定
+          shop_type: shop_type
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return;
+          }
         }
-
-        that.setData({
-          navList2: navList_new,
-          wechat_share: navList_new[6]['img2'],
-          coupon_img: navList_new[7]['img'],
-        })
-
-        setTimeout(function () {
-          that.setData({
-            loadingHidden: true,
-          })
-        }, 1500)
-        that.eventDraw()
-      }
+      })
+    }
+    that.setData({
+      navList2: navList_new,
+      //wechat_share: navList_new[6]['img2'],
+      //coupon_img: navList_new[7]['img'],
     })
+
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
+    that.eventDraw()
   },
 
   eventDraw: function () {

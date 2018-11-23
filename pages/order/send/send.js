@@ -2,11 +2,12 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var shop_type = app.globalData.shop_type; 
-var navList2 = [
+var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
-];
+]
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
 Page({
   data: {
     title_name: '礼物送出',
@@ -90,47 +91,51 @@ Page({
 
   get_project_gift_para: function () {
     var that = this
-    var navList2 = that.data.navList2
+    var navList_new = that.data.navList2
+    var shop_type = that.data.shop_type
     var page = that.data.page
     var pagesize = that.data.pagesize
 
-    //项目列表
-    wx.request({
-      url: weburl + '/api/client/get_project_gift_para',
-      method: 'POST',
-      data: {
-        type: 1,  //暂定
-        shop_type:2
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log('get_project_gift_para:', res.data.result)
-        var navList_new = res.data.result;
-        if (!navList_new) {
-          /*
-           wx.showToast({
-             title: '没有菜单项2',
-             icon: 'loading',
-             duration: 1500
-           });
-           */
-          return;
+ 
+    console.log('send get_project_gift_para navList2:', navList2)
+    if (!navList_new) {
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定
+          shop_type: shop_type
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return;
+          }
         }
-
-        that.setData({
-          navList2: navList_new
-        })
-
-        setTimeout(function () {
-          that.setData({
-            loadingHidden: true,
-          })
-        }, 1500)
-      }
+      })
+    }
+    that.setData({
+      navList2: navList_new
     })
+
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
   },
 
   onLoad: function (options) {
