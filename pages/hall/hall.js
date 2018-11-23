@@ -31,8 +31,8 @@ Page({
     indicatorDots: true,
     vertical: false,
     autoplay: true,
-    interval: 3000,
-    duration: 3000,
+    interval: 8000,
+    duration: 300,
     circular:true,
     main_title_Bg: weburl+"/uploads/songxin_banner.png", //默认的banner图
     banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接

@@ -34,7 +34,7 @@
     "navigationBarTextStyle": "#fefefe",
     "navigationBarTitleText": "送心礼物",
     "navigationBarBackgroundColor": "#1D1D1D",
-    "backgroundColor": "#1D1D1D",
+    "backgroundColor": "#FEFEFE",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },
@@ -60,7 +60,7 @@
         "pagePath": "pages/index/index",
         "iconPath": "images/history.png",
         "selectedIconPath": "images/history_s.png",
-        "text": "记录"
+        "text": "礼物袋"
       },
       {
         "pagePath": "pages/my/index",
