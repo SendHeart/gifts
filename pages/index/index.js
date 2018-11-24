@@ -308,6 +308,64 @@ Page({
       url: '../order/payment/payment?orderNo=' + objectId + '&totalFee=' + totalFee
     });
   },
+  cancel: function (e) {
+    var that = this;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var order_no = e.currentTarget.dataset.objectId;
+    var order_index = e.currentTarget.dataset.index;
+    var shop_type = that.data.shop_type
+    wx.showModal({
+      title: '请确认',
+      content: '确认要取消订单吗',
+      success: function (res) {
+        if (res.confirm) {
+          wx.request({
+            url: weburl + '/api/client/update_order_status',
+            method: 'POST',
+            data: {
+              username: username,
+              access_token: token,
+              order_no: order_no,
+              status_info: 'cancel',
+              shop_type: shop_type,
+            },
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+            success: function (res) {
+              console.log(res.data.result);
+              console.log(res.data.info);
+              if (!res.data.info) {
+                wx.showToast({
+                  title: '订单取消完成',
+                  icon: 'success',
+                  duration: 1000
+                })
+                var orders = that.data.orders
+                orders[order_index]['status'] = 8  // 8 订单取消
+                that.setData({
+                  orders: orders,
+            
+                })
+
+              } else {
+                wx.showToast({
+                  title: res.data.info,
+                  icon: 'loading',
+                  duration: 1500,
+
+                });
+              }
+
+            }
+          })
+
+        }
+      }
+    })
+  },
   receive: function (e) {
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
