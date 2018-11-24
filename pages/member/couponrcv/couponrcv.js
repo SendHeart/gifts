@@ -196,7 +196,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('查询优惠券发行信息:', res.data.result);
+       
         var coupons_info = res.data.result
         if (!res.data.result) {
           wx.showToast({
@@ -213,7 +213,6 @@ Page({
           }, 1500);
 
         } else {
-
           for (var i = 0; i < coupons_info.length; i++) {
             coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
             coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
@@ -222,6 +221,7 @@ Page({
             coupons_info: coupons_info,
           })
         }
+        console.log('查询优惠券发行信息 coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
       }
 
     })

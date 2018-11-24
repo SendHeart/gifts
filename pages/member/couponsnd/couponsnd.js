@@ -48,9 +48,11 @@ Page({
     nums:0,
     start_time: util.getDateStr(new Date,0),
     end_time: util.getDateStr(new Date,3),
-    name:'送心优惠券',
+    name:'',
     hiddenqrcode:true,
-    
+    coupons_flag:'999999999999',
+    index:0,
+ 
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -237,7 +239,83 @@ Page({
     }, 1500)
      // that.eventDraw()
   },
+  query_pubcoupon: function () {
+    var that = this
+    
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 
+    var shop_type = that.data.shop_type
+    //var coupons_id = that.data.coupons_id
+    var coupons_flag = that.data.coupons_flag
+
+    wx.request({
+      url: weburl + '/api/client/query_pubcoupon',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        coupons_flag: coupons_flag,
+        //coupons_id: coupons_id,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        
+        var coupons_info = res.data.result
+        if (!res.data.result) {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '暂无该批次券',
+            icon: 'loading',
+            duration: 1500
+          })
+          setTimeout(function () {
+            //wx.navigateBack()
+            wx.switchTab({
+              url: '../../my/index'
+            })
+
+          }, 1500);
+
+        } else {
+          for (var i = 0; i < coupons_info.length; i++) {
+            coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
+            coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
+          }
+          that.setData({
+            coupons_info: coupons_info,
+          })
+        }
+        console.log('查询优惠券发行信息 coupons_info:', coupons_info, ' coupons_info.length:', coupons_info.length);
+      }
+
+    })
+
+  },
+  bindPickerChange: function (e) {
+    var that = this
+    var selected_index = e.detail.value
+    var name = that.data.coupons_info[selected_index]['name']
+    var coupon_content = that.data.coupons_info[selected_index]['content']
+    var coupon_footer = that.data.coupons_info[selected_index]['footer']
+    var start_time = that.data.coupons_info[selected_index]['start_time']
+    var end_time = that.data.coupons_info[selected_index]['end_time']
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      index: selected_index,
+      name:name,
+      coupon_content: coupon_content,
+      coupon_footer: coupon_footer,
+      start_time: start_time,
+      end_time: end_time,
+    })
+    console.log('自定义值:', that.data.coupons_info[selected_index]['name']);
+  },
+ 
   get_coupon:function(){
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -337,7 +415,8 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-    that.get_project_gift_para()
+    //that.get_project_gift_para()
+    that.query_pubcoupon()
   },
   /*
   eventDraw: function () {

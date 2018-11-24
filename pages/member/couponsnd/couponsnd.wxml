@@ -4,23 +4,34 @@
   <text class='toptitle'>优惠券已经生成</text>
   <text>点击送出发送给对方</text>
 </view>
-<modal hidden="{{hiddenmodalput}}" title="设置优惠券参数" confirm-text="确定" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">
+<modal hidden="{{hiddenmodalput}}" title="选择优惠券" confirm-text="确定" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">
+  <!-- 
     <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
       <text style='font-size:40rpx;width:20%'>券名:</text>
       <input style='font-size:40rpx;width:70%' bindinput="bindChangeName" value="{{name}}" type='text' /> 
     </view>
+    -->
+ <view class="picker_box">
+    <picker bindchange="bindPickerChange" value="{{coupons_info[index].id}}" data-selecthx="{{coupons_info[index].name}}" range="{{coupons_info}}" range-key="{{'name'}}">
+      <view class="picker">
+         {{coupons_info[index]['name']}}({{coupons_info[index]['start_time']}}至{{coupons_info[index]['end_time']}}）
+      </view>
+    </picker>
+  </view>
+ 
+    <!--
     <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
       <text style='font-size:35rpx;width:50%'>数量{{nums==0?'(0不限量)':'(最多20)'}}:</text>
       <input style='font-size:35rpx;width:50%' bindinput="bindChangeNums" value="{{nums}}" type='text' /> 
     </view> 
-    
+   
     <picker mode="date" value="{{start_time}}" start="start_time" end="2999-12-12" bindchange="bindChangeStartTime">
  有效日期(开始): {{start_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
     </picker>
      <picker mode="date" value="{{end_time}}" start="end_time" end="2999-12-12" bindchange="bindChangeEndTime">
  有效日期(结束): {{end_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
     </picker>
-    
+     -->
 </modal> 
 
 <view hidden="{{!hiddenmodalput}}" class="order-item">

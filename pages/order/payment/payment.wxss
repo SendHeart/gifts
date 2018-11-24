@@ -179,3 +179,26 @@ page {
 .hidden {
 	display: none;
 }
+.banner {
+  width: 100%;
+  height: 315rpx;
+  /*margin-left: 15rpx;*/
+  background-color: #f2f2f2;
+  background-repeat: norepeat;
+  align-content: center;
+  opacity: 1;
+  background-size: 100% 80%;
+}
+
+.banner image {
+  width: 100%;
+  height: 300rpx;
+}
+
+.banner .slogan {
+  border: solid 0px black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 5px;
+}

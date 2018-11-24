@@ -2,7 +2,7 @@ var util = require('../../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl; 
 var shop_type = app.globalData.shop_type; 
-
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
 Page({
 	data: {
     title_name: '送出礼物',
@@ -11,7 +11,7 @@ Page({
     orders: [],
     totalFee:0,
     sku_id:'',
-   
+    navList2: navList2,
     page: 1,
     pagesize: 5,
     page_num: 0,
@@ -54,7 +54,9 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
+    var navList2 = that.data.navList2
     //that.setNavigation()
+
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',
@@ -98,7 +100,7 @@ Page({
             totalFee: totalFee ? totalFee:order_price,
             sku_id:sku_id,
           })
-          that.pay()
+          //that.pay()
         } else {
           wx.showToast({
             title: res.data.info,
