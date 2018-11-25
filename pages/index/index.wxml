@@ -16,9 +16,11 @@
       <text>礼物号: {{item.order_no}}</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==0}}" class="status2">对方已接受</text>
       <text wx:if="{{item.gift_status==1 && giftflag ==0}}" class="status">对方未接受</text>
+      <text wx:if="{{giftflag==0 && item.status == 8}}" class="status2">已取消</text>
       <text wx:if="{{item.status==10 && giftflag ==0}}" class="status2">退款中</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" class="status2">已发货</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2}}" class="status2">未发货</text>
+     
     </view>
 
     <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">

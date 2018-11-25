@@ -100,10 +100,25 @@ Page({
   //确认  
   confirm: function () {
     var that = this
+   
+    var name = that.data.coupons_info[that.data.index]['name']
+    var coupon_content = that.data.coupons_info[that.data.index]['content']
+    var coupon_footer = that.data.coupons_info[that.data.index]['footer']
+    var start_time = that.data.coupons_info[that.data.index]['start_time']
+    var end_time = that.data.coupons_info[that.data.index]['end_time']
+    var coupon_share_img = that.data.coupons_info[that.data.index]['share_image']
+    var coupons = that.data.coupons_info[that.data.index]
     that.setData({
-      hiddenmodalput: true
+      hiddenmodalput: true,
+      name: name,
+      coupon_content: coupon_content,
+      coupon_footer: coupon_footer,
+      start_time: start_time,
+      end_time: end_time,
+      coupon_share_img: coupon_share_img,
+      coupons: coupons,
     })
-    that.get_coupon()
+    //that.get_coupon()
   },
   bindChangeNums: function (e) {
     var that = this
@@ -241,7 +256,6 @@ Page({
   },
   query_pubcoupon: function () {
     var that = this
-    
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -304,6 +318,7 @@ Page({
     var coupon_footer = that.data.coupons_info[selected_index]['footer']
     var start_time = that.data.coupons_info[selected_index]['start_time']
     var end_time = that.data.coupons_info[selected_index]['end_time']
+    var coupon_share_img = that.data.coupons_info[selected_index]['share_image']
     console.log('picker发送选择改变，携带值为', e.detail.value)
     that.setData({
       index: selected_index,
@@ -312,6 +327,8 @@ Page({
       coupon_footer: coupon_footer,
       start_time: start_time,
       end_time: end_time,
+      coupon_share_img: coupon_share_img,
+      coupons: that.data.coupons_info[selected_index],
     })
     console.log('自定义值:', that.data.coupons_info[selected_index]['name']);
   },
@@ -581,12 +598,12 @@ Page({
   onShareAppMessage: function (options ) {
     var that = this 
     var res
-    var coupons = that.data.coupons
+    var coupons = that.data.coupons_info
     var username = that.data.username
     var token = that.data.token;
     var nickname = that.data.nickname
     var title = '收到一张'+that.data.name+'~';
-    var imageUrl = that.data.navList2[6]['img']
+    var imageUrl = that.data.coupon_share_img //navList2[6]['img']
     console.log('开始送优惠券', options)
       
     if (!coupons){
@@ -636,6 +653,4 @@ Page({
     
   } ,
    
-
-  
 });

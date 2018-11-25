@@ -93,7 +93,7 @@
       <text class="labeltext">运单号:</text>
       <text>{{deliverycode?deliverycode:''}}</text>
     </view>
-    <view class="delivery-detail-text">
+    <view class="delivery-detail-text" style='margin-bottom:15rpx;'>
       <text class="labeltext">当前状态:</text>
       <text>{{deliverystepinfo?deliverystepinfo:''}}</text>
       <!--

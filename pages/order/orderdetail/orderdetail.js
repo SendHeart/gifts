@@ -30,7 +30,16 @@ Page({
     sku_num:0,
     giftflag:0,
     shop_type:shop_type,
+    scrollTop:1000,
      
+  },
+  pageScrollToBottom: function () {
+    wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
+      // 使页面滚动到底部
+      wx.pageScrollTo({
+        scrollTop: 450
+      })
+    }).exec()
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -101,7 +110,7 @@ Page({
         console.log(res.data.result);
         if (!res.data.result) {
           wx.showToast({
-            title: '暂无',
+            title: '暂无物流信息',
             icon: 'loading',
             duration: 1500
           });
@@ -111,7 +120,7 @@ Page({
         } else {
           if (res.data.result['status_list'].length<2){
             wx.showToast({
-              title:'暂未轨迹信息',
+              title:'暂无轨迹信息',
               icon: 'loading',
               duration: 1500
             });
@@ -134,7 +143,9 @@ Page({
             deliveryinfo: deliveryinfo,
             delivery_status: delivery_status,
             deliveryflag:1
-          });
+          })
+
+          that.pageScrollToBottom()
         }
       }
     })

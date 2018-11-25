@@ -210,6 +210,7 @@ Page({
   
 	onLoad: function (options) {
     var that = this
+    console.log('share options:', options)
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var hiddenqrcode = that.data.hiddenqrcode
     var appid = that.data.appid
@@ -219,10 +220,10 @@ Page({
     var act_title = options.act_title ? options.act_title : ''
     var coupons_json = options.coupons ? options.coupons:''
     var coupons = coupons_json?JSON.parse(coupons_json):[{}]
-    var coupons_name = coupons_json?coupons[0]['name']:''
-    var coupons_id = coupons_json?coupons[0]['id']:0
-    var coupons_flag = coupons_json?coupons[0]['flag']:0
-    console.log('share options:', coupons_json)
+    var coupons_name = coupons_json?coupons['name']:''
+    var coupons_id = coupons_json?coupons['id']:0
+    var coupons_flag = coupons_json?coupons['flag']:0
+    
     //that.setNavigation()
     that.setData({
       username:username,

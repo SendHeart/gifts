@@ -40,7 +40,7 @@
 </view>
 
 <button data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay" class='btnpay'>微信支付</button>
-<view class="banner" style='margin-top:10rpx;'>
-   <image src="{{navList2[3][0].img}}" background-size="cover" mode="widthFix"></image>
+<view class="pay_recomment" style='margin-top:10rpx;'>
+   <image src="{{navList2[6].img}}" background-size="cover" mode="widthFix"></image>
 </view>
 
