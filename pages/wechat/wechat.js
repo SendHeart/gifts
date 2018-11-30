@@ -95,11 +95,6 @@ Page({
         }
       })
     }
-   
-    
-    /*that.setData({
-      formdata: ''
-    })*/
   },
   upimg: function () {
     var that = this;

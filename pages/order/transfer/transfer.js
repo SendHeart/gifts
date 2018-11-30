@@ -10,7 +10,7 @@ var navList2_init = [
   { id: "trans_gift_logo", title: "心愿单logo", value: "", img: "/uploads/gift_logo.png" },
 
 ];
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 Page({
   data: {
     title_name: '礼物转送',

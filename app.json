@@ -27,7 +27,8 @@
     "pages/address/list/list",
     "pages/order/payment/payment",
     "pages/order/orderdetail/orderdetail",
-    "pages/address/add/add"
+    "pages/address/add/add",
+    "pages/goods/comment/comment"
   ],
   "window": {
     "backgroundTextStyle": "light",

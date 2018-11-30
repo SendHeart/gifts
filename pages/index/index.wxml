@@ -23,8 +23,8 @@
      
     </view>
 
-    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
-      <view>
+    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" >
+      <view bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
         <!-- 缩略图 -->
         <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill" />
       </view>
@@ -39,6 +39,7 @@
           </view>
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
+           <text style="width:20%;" bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{(item.status==4 && item.gift_status==2) ? '': 'hidden'}} smallbtn">点评</text>
         </view>
       </view>
     </view>
@@ -51,6 +52,8 @@
         <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{index}}" class="{{(item.status==2 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
         <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
+       
+
       </view>
       <view style="width:30%; text-align:right;">
       <text wx:if="{{(giftflag==0 && item.status==2 && currenttime<item.duetime)}}" bindtap="sendAginTapTag" class="smallbtn2">再送一次</text>

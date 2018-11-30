@@ -19,7 +19,7 @@ var navList2_init = [
   { id: "wish_banner", title: "心愿单banner", value: "", img: "/uploads/wish_banner.png" },
   { id: "wechat_gb", title: "背景", value: "", img: "/uploads/wechat_share.png" },
 ]
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 
 Page({
   data: {
@@ -812,7 +812,7 @@ Page({
     var that = this
     var navList_new = that.data.navList2
     var shop_type = that.data.shop_type
-    console.log('hall get_project_gift_para navList2:', navList2)
+    console.log('hall get_project_gift_para navList2:', navList_new)
     if (!navList_new){
       //项目列表
       wx.request({

@@ -290,6 +290,16 @@ Page({
     })
 
   },
+  comment: function (e) {
+    var goods_id = e.currentTarget.dataset.goodsId;
+    var goods_skuid = e.currentTarget.dataset.goodsSkuid;
+    var order_skuid = e.currentTarget.dataset.skuId;
+    console.log('礼物评价 goods_id:', goods_id, 'goods skuid:', goods_skuid,'order skuid:', order_skuid);
+    
+    wx.navigateTo({
+      url: '../goods/comment/comment?goods_id=' + goods_id + '&goods_skuid=' + goods_skuid + '&order_skuid=' + order_skuid
+    });
+  },
   accept: function (e) {
     var objectId = e.currentTarget.dataset.objectId;
     var totalFee = e.currentTarget.dataset.totalFee;

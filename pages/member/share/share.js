@@ -15,7 +15,7 @@ var navList2_init = [
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
 ]
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 
 Page({
   data:{
@@ -249,6 +249,5 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-    
   }
 })

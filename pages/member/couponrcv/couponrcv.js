@@ -137,7 +137,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('接收优惠券:', res.data.result);
+        console.log('接收优惠券返回:', res.data.result);
         var coupons_update = res.data.result;
         if (!res.data.result) {
           wx.showToast({

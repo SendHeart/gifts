@@ -83,6 +83,7 @@ page {
   padding: 4rpx 10rpx;
   border-radius: 8rpx;
   margin-left:10rpx;
+  text-align:center;
 }
 .smallbtn2 {
   border: 3rpx solid #999;

@@ -19,7 +19,7 @@ var navList2_init = [
   { id: "wechat_share", title: "背景", value: "", img: "/uploads/wechat_share.png" },
 
 ]
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 
 Page({
   data: {
@@ -225,5 +225,4 @@ Page({
       })
     }
   }
-
 })

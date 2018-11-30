@@ -43,4 +43,3 @@
 <view class="pay_recomment" style='margin-top:10rpx;'>
    <image src="{{navList2[6].img}}" background-size="cover" mode="widthFix"></image>
 </view>
-

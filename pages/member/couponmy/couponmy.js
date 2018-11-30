@@ -8,7 +8,7 @@ var navList2_init = [
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
 
 ];
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 var navList_order = [
   { id: "avaliable", title: "未使用" },
   { id: "used", title: "已使用" },
