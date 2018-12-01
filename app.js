@@ -8,13 +8,14 @@ App({
     secret: 'add3c71b7907a7ce99722d0e9cbac7f1',//   9666f44dd87410cf85949f3a053dc14a
     weburl:'https://sendheart.dreamer-inc.com', //https://xcx.itoldfarmer.com
     wssurl:'wss://sendheart.dreamer-inc.com' ,
+    uploadurl: weburl+'/api/upload/index4',
     openid: null,
     username: null,
     code: null,
     shop_type:2 , //礼物类应用
     from_page:null,
     user_type:0,
-    navList2:null,
+    navList2:[],
   },
  
   onLaunch: function() {
