@@ -1,0 +1,47 @@
+<view class='container'>
+  <view  class="carts-item" bindtap="showGoods" data-sku-id="{{goods_skuid}}" data-goods-id="{{goodsid}}" data-goods-name="{{goodsname}}" data-goods-price="{{commodityAttr[0].sell_price}}">
+      <view>
+        <!-- 缩略图 -->
+        <image class="carts-image" src="{{goods_img}}" mode="aspectFill" />
+      </view>
+      <view class="carts-text">
+        <!-- 商品标题 -->
+        <text class="carts-title">{{goodsname}}</text>
+        <text class="carts-title">{{commodityAttr[0].gov_price}}</text>
+        <text class="carts-title">{{commodityAttr[0].sell_price?'￥'+commodityAttr[0].sell_price:''}}</text>
+    </view>
+  </view>
+</view>
+<view class="star-level">
+    <view style="width:20%;" style="padding:20rpx;margin-left:10rpx;">推荐度</view>
+      <image data-star-id="1" bindtap='comment_star' style="width:50rpx;height:50rpx;padding:5rpx;margin-left:20rpx;" src="{{comment_level>0?'../../../images/star_on.png':'../../../images/star.png'}}" />
+      <image data-star-id="2" bindtap='comment_star' style="width:50rpx;height:50rpx;padding:5rpx;margin-left:20rpx;" src="{{comment_level>1?'../../../images/star_on.png':'../../../images/star.png'}}" />
+      <image data-star-id="3" bindtap='comment_star' style="width:50rpx;height:50rpx;padding:5rpx;margin-left:20rpx;" src="{{comment_level>2?'../../../images/star_on.png':'../../../images/star.png'}}" />
+      <image data-star-id="4" bindtap='comment_star' style="width:50rpx;height:50rpx;padding:5rpx;margin-left:20rpx;" src="{{comment_level>3?'../../../images/star_on.png':'../../../images/star.png'}}" />
+      <image data-star-id="5" bindtap='comment_star' style="width:50rpx;height:50rpx;padding:5rpx;margin-left:20rpx;" src="{{comment_level>4?'../../../images/star_on.png':'../../../images/star.png'}}" />
+    </view>
+ 
+<form bindsubmit="formSubmit" id='2' bindreset="formReset">  
+   <view class="sendmessage" >
+    <view class="note">
+      <textarea bindblur="bindTextAreaBlur" value="{{content}}" auto-height placeholder="请写下您的宝贵意见和建议" maxlength="56" />
+    </view>
+    <view class="upimage">
+      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="" >      
+         <image data-id="{{index}}" bindtap="cancel_upimg"  src="{{upimg}}"></image>       
+      </block>
+      
+      <block wx:for="{{new_img_arr}}" wx:for-item="upimg_new" wx:key="" >      
+         <image data-id="{{index}}" bindtap="cancel_new_upimg"  src="{{upimg_new}}"></image>       
+      </block>
+    </view>
+    <image bindtap="upimg" style='width:50rpx;height:50rpx;' src='../../../images/jia.png'></image>     
+  </view>
+</form>
+<view class="footer">
+    <view class="opt-buttons">
+        <view class="button-group">
+         <button type="warn" size="default" hover-class="button-hover" class="button" bindtap="sendCommentBtnTap">提交</button>
+        </view>
+    </view>
+</view>

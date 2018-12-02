@@ -1,0 +1,26 @@
+<view class='container'>
+  <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="" class="comm-item" >
+    <view class="comm-title">
+        <image class="comm-image" src="{{comm.wx_headimg}}" mode="aspectFill" />
+        <view class="comm-sub-title">
+          <text style='margin-left:15rpx;font-size:28rpx;'>{{comm.wx_nickname}}</text>
+          <view class="star-level">
+          <image style="width:30rpx;height:30rpx;padding:0rpx;margin-left:15rpx;" src="{{comm.level>0?'../../../images/star_on.png':'../../../images/star.png'}}" />
+          <image style="width:30rpx;height:30rpx;padding:0rpx;margin-left:15rpx;" src="{{comm.level>1?'../../../images/star_on.png':'../../../images/star.png'}}" />
+          <image style="width:30rpx;height:30rpx;padding:0rpx;margin-left:15rpx;" src="{{comm.level>2?'../../../images/star_on.png':'../../../images/star.png'}}" />
+          <image style="width:30rpx;height:30rpx;padding:0rpx;margin-left:15rpx;" src="{{comm.level>3?'../../../images/star_on.png':'../../../images/star.png'}}" />
+          <image style="width:30rpx;height:30rpx;padding:0rpx;margin-left:15rpx;" src="{{comm.level>4?'../../../images/star_on.png':'../../../images/star.png'}}" />
+        </view>    
+      </view>
+    </view>
+   <view>
+    <text class="comm-content-text">{{comm.desc}}</text>
+    </view>
+    <view class="comm-content-image">
+      <image src="{{comm.img1}}"></image>  
+      <image src="{{comm.img2}}"></image>  
+      <image src="{{comm.img3}}"></image>     
+    </view>
+  </view>
+</view>
+<button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreCommentTapTag">更多 {{page}}/{{page_num}}</button>

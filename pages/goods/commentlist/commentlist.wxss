@@ -1,0 +1,144 @@
+/*总菜单容器*/
+.menu {
+ 	display: block;
+	height: 38px;
+}
+
+/*一级菜单*/
+.menu dt {
+	font-size: 15px;
+	float: left;
+	/*hack*/
+	width: 33%;
+	height: 38px;
+	border-right: 1px solid #d2d2d2;
+	border-bottom: 1px solid #d2d2d2;
+	text-align: center;
+	background-color: #f4f4f4;
+	color: #5a5a5a;
+	line-height: 38px;
+}
+
+/*二级菜单外部容器样式*/
+.menu dd{
+	position: absolute;
+	width: 100%;
+	/*hack*/
+	top:39px;
+	left:0;
+	z-index:999;
+}
+
+/*二级菜单普通样式*/
+.menu li{
+	font-size: 14px;
+	line-height: 34px;
+	color: #575757;
+	height: 34px;
+	display: block;
+	padding-left: 8px;
+	background-color: #fff;
+	border-bottom: 1px solid #dbdbdb;
+}
+
+/*二级菜单高亮样式*/
+.menu li.highlight{
+	background-color: #f4f4f4;
+	color: #48C23D;
+}
+
+/* 显示与隐藏 */
+.show {
+	display: block;
+}
+
+.hidden {
+	display: none;
+}
+
+.comm-text {
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  font-size: 24rpx;
+  color: #999;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+.comm-item {
+ 	display: flex;
+	flex-direction: column;
+	width:100%;
+	border-bottom: 1px solid #eee;
+	padding: 0rpx 0;
+  text-align: left;
+  align-items: left;
+  background-color: #fff;
+}
+
+.comm-title {
+ 	display: flex;
+	flex-direction: row;
+	width:100%;
+	border-bottom: 0px solid #eee;
+	padding: 0rpx 0;
+  text-align: left;
+  align-items: left;
+}
+.comm-sub-title {
+ 	display: flex;
+	flex-direction: column;
+	padding: 10rpx 0;
+  text-align: left;
+  align-items: left;
+}
+.star-level {
+	display: flex;
+	flex-direction: row;
+	padding: 10rpx 0;
+  text-align: center;
+  align-items: center;
+}
+
+.comm-image {
+  margin: 15rpx;
+  width: 80rpx;
+  height:80rpx;
+  border-radius: 50%;
+}
+
+.comm-content-text{
+  margin-left:20rpx;
+  font-size:28rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
+.comm-content-image {
+ 	display: flex;
+	flex-direction: row;
+	width:100%;
+	border-bottom: 1px solid #aaaaaa;
+	padding: 10rpx 0;
+  text-align: left;
+  align-items: left;
+  background-color: #fff;
+}
+ 
+.comm-content-image image {
+ /*被图片设置宽高*/ 
+  width: 40px; 
+  height: 40px; 
+  padding-left:10px;
+  padding-bottom: 10rpx;
+  
+}
+.morebtn {
+  margin: 20rpx;
+  border: 0;
+  background: #f2f2f2;
+  color: #e34c55;
+  font-size: 28rpx;
+}
