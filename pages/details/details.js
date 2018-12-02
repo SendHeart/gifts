@@ -93,7 +93,7 @@ Page({
     var goods_skuid = that.data.commodityAttr[0]['id']
     var goods_id = that.data.goodsid
     wx.navigateTo({
-      url: '../goods/comment/comment?goods_id=' + goods_id + '&goods_skuid' + goods_skuid
+      url: '../goods/comment/comment?goods_id=' + goods_id + '&goods_skuid=' + goods_skuid +'&comm_type='+1
     })
 
   },

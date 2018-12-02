@@ -164,11 +164,14 @@ Page({
     var goods_id = options.goods_id ? options.goods_id:0
     var goods_skuid = options.goods_skuid ? options.goods_skuid:0
     var order_skuid = options.order_skuid ? options.order_skuid:0
+    var comm_type = options.comm_type ? options.comm_type : 0
     that.setData({
       goods_id: goods_id,
       goods_skuid: goods_skuid,
       order_skuid: order_skuid,
+      comm_type: comm_type,
     })
+    console.log('comment onload comm_type:',comm_type,' goods_id:',goods_id,'goods_skuid:',goods_skuid,' order_skuid:'.order_skuid)
     that.get_goods_list()
 	},
 
@@ -185,6 +188,7 @@ Page({
     var order_skuid = that.data.order_skuid
     var shop_type = that.data.shop_type
     var img_arr = that.data.img_arr
+   
     if (goods_id > 0) {
       wx.request({
         url: weburl + '/api/client/get_order_comment',
@@ -391,12 +395,13 @@ Page({
     var upimg_url = that.data.upimg_url
     upimg_url = upimg_url.concat(that.data.img_arr)
     upimg_url = upimg_url.concat(that.data.new_img_url)
-    var comment_img1 = upimg_url[0];
-    var comment_img2 = upimg_url[1];
-    var comment_img3 = upimg_url[2];
-    var content = that.data.content
-    var product_comment_level = that.data.comment_level
+    var comment_img1 = upimg_url[0] ? upimg_url[0]:'';
+    var comment_img2 = upimg_url[1] ? upimg_url[1]:'';
+    var comment_img3 = upimg_url[2] ? upimg_url[2]:'';
+    var content = that.data.content ? that.data.content:''
+    var product_comment_level = that.data.comment_level ? that.data.comment_level:0
     var shop_type = that.data.shop_type
+    var comm_type = that.data.comm_type
 
     console.log('提交点评:',upimg_url, content) 
     wx.request({
@@ -414,6 +419,7 @@ Page({
         content: content, 
         product_comment_level: product_comment_level,
         shop_type: shop_type,
+        comm_type:comm_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
