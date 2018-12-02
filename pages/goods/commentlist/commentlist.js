@@ -43,7 +43,19 @@ Page({
     star: [],
   
 	},
-
+  /** 
+     * 预览图片
+     */
+  imgYu: function (event) {
+    var src = event.currentTarget.dataset.src;//获取data-src
+    var imgList = event.currentTarget.dataset.list;//获取data-list
+    //图片预览
+    wx.previewImage({
+      current: src, // 当前显示图片的http链接
+      urls: imgList, // 需要预览的图片http链接列表
+    })
+  },
+ 
 	onLoad: function(options){
     var that = this
     var goods_id = options.goods_id
@@ -102,7 +114,17 @@ Page({
               all_rows: all_rows,
               page_num: page_num.toFixed(0),
             })
-           
+            
+            for (var i = 0; i < comm_list.length; i++){
+              var img_arr = []
+              if (comm_list[i]['img1']) img_arr.push(comm_list[i]['img1'])
+              if (comm_list[i]['img2']) img_arr.push(comm_list[i]['img2'])
+              if (comm_list[i]['img3']) img_arr.push(comm_list[i]['img3'])
+              comm_list[i]['img_arr'] = img_arr
+            }
+            that.setData({
+              comm_list: comm_list,
+            })
             console.log('获取商品评论信息:', comm_list, 'all_rows:', all_rows)
           }else{
             wx.showToast({

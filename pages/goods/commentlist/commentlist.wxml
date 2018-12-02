@@ -16,10 +16,8 @@
    <view>
     <text class="comm-content-text">{{comm.desc}}</text>
     </view>
-    <view class="comm-content-image">
-      <image src="{{comm.img1}}"></image>  
-      <image src="{{comm.img2}}"></image>  
-      <image src="{{comm.img3}}"></image>     
+    <view class="comm-content-image" >
+     <image bindtap="imgYu" data-list="{{comm.img_arr}}" data-src="{{dImg}}" wx:for="{{comm.img_arr}}" wx:for-item="dImg" wx:key="index" src="{{dImg}}"></image>
     </view>
   </view>
 </view>

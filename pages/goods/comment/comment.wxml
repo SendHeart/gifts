@@ -26,7 +26,7 @@
     <view class="note">
       <textarea bindblur="bindTextAreaBlur" value="{{content}}" auto-height placeholder="请写下您的宝贵意见和建议" maxlength="56" />
     </view>
-    <view class="upimage">
+    <view class="upimage" >
       <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="" >      
          <image data-id="{{index}}" bindtap="cancel_upimg"  src="{{upimg}}"></image>       
       </block>
@@ -35,6 +35,7 @@
          <image data-id="{{index}}" bindtap="cancel_new_upimg"  src="{{upimg_new}}"></image>       
       </block>
     </view>
+    
     <image bindtap="upimg" style='width:50rpx;height:50rpx;' src='../../../images/jia.png'></image>     
   </view>
 </form>
