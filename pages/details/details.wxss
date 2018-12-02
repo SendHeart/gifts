@@ -304,3 +304,62 @@ border: none;
   font-size: 20rpx;
   margin: 10rpx 0 0 20rpx;
 }
+
+
+.comm-text {
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  font-size: 24rpx;
+  color: #999;
+  justify-content: space-between;
+  background-color: #fff;
+ 
+}
+.comm-content{
+  margin-left:20rpx;
+  font-size:28rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
+
+.comm-status {
+  color: #e34c55;
+}
+
+.comm-item {
+ 	display: flex;
+	flex-direction: column;
+	height:160rpx;
+	width:100%;
+	border-bottom: 1px solid #eee;
+	padding: 10rpx 0;
+  text-align: left;
+  align-items: left;
+  background-color: #fff;
+}
+
+.comm-title {
+ 	display: flex;
+	flex-direction: row;
+	height:80rpx;
+	width:100%;
+	border-bottom: 0px solid #eee;
+	padding: 10rpx 0;
+  text-align: center;
+  align-items: center;
+}
+
+/*左部图片*/
+
+.comm-image {
+  margin-left: 10rpx;
+  margin-bottom: 10rpx;
+  width: 70rpx;
+  height:70rpx;
+  border-radius: 50%;
+}
+
+ 

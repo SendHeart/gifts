@@ -48,7 +48,7 @@ Page({
         wishflag:0,
         goodsinfoshowflag:0,
         shop_type:shop_type,
-
+        comm_list: [],
     },
     /*
   setNavigation: function () {
@@ -79,6 +79,13 @@ Page({
         url: '../../hall/hall'
       })
     }
+
+  },
+  commTapTag: function () {
+    var that = this
+    wx.navigateTo({
+      url: '../goods/commentlist/commentlist?goods_id=' + that.data.goodsid
+    })
 
   },
   onLoad: function(options) {
@@ -196,7 +203,7 @@ Page({
           },
           success: function (res) {
             console.log('goods_sku:',res.data.result);
-            var attrValueList = res.data.result.spec_select_list ? res.data.result.spec_select_list:'{}';
+            var attrValueList = res.data.result.spec_select_list ? res.data.result.spec_select_list:'';
             var commodityAttr = res.data.result.sku_list ? res.data.result.sku_list:'{}';
             if (!commodityAttr) return; 
             for (var i = 0; i < commodityAttr.length; i++) {
@@ -209,10 +216,11 @@ Page({
             that.setData({
               commodityAttr: commodityAttr
             })
+            
             if (!attrValueList ) return
             for (var i = 0; i < attrValueList.length; i++) {
               if (!attrValueList[i].attrValueStatus) {
-                attrValueList[i].attrValueStatus = true;
+                attrValueList[i].attrValueStatus = true
               } 
             }
            
@@ -221,10 +229,41 @@ Page({
             })
 
           }
-        })
-      
-
+      })
+  
+      // 商品评价
+      wx.request({
+        url: weburl + '/api/client/get_order_comment',
+        method: 'POST',
+          data: {
+          username: username,
+          access_token: token,
+          goods_id: goodsid,
+          query_type: 1,  //1查商品所有评价 0查本人对商品的评价
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          var comm_list = res.data.result
+          var ret_info = res.data.info
+          var all_rows = res.data.all_rows ? res.data.all_rows : 1
+          
+          if (comm_list) {
+            
+            that.setData({
+              comm_list: that.data.comm_list.concat(comm_list),
+              all_rows: all_rows,
+            })
+            //console.log('获取订单评论信息 :' + comm_list, 'goods_id:', goodsid );
+            console.log('获取订单评论信息:', comm_list, ' all rows:',all_rows)
+          }
+        }
+      })
     },
+  
     //事件处理函数 选择型号规格  
     goodsmodel: function () {
       var that = this

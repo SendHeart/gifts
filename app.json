@@ -28,7 +28,8 @@
     "pages/order/payment/payment",
     "pages/order/orderdetail/orderdetail",
     "pages/address/add/add",
-    "pages/goods/comment/comment"
+    "pages/goods/comment/comment",
+    "pages/goods/commentlist/commentlist"
   ],
   "window": {
     "backgroundTextStyle": "light",

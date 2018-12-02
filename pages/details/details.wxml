@@ -35,13 +35,26 @@
       </view>
     </view>
   </view>
-
+  <view wx:if="{{all_rows>0}}" class="comm-text" style='width:{{windowWidth}}'>
+    <text>商品评价: {{all_rows>0?'('+all_rows+')':''}}</text>
+    <text  bindtap="commTapTag" class="comm-status">查看全部</text>
+  </view>
+  <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="" class="comm-item" >
+    <view  bindtap="commTapTag" class="comm-title">
+      <image class="comm-image" src="{{comm.wx_headimg}}" mode="aspectFill" />
+      <view>
+        <text style='margin-left:20rpx;font-size:28rpx;'>{{comm.wx_nickname}}</text>
+      </view>
+    </view>
+     <view>
+        <text class="comm-content">{{comm.desc}}</text>
+      </view>
+  </view>
   <view class="shopping_container">
     <view class="prd-detail">
       <view class='wxParse' hidden='{{hideviewgoodsinfo}}'>
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
       </view>
-      
     </view>
   </view>
 </scroll-view>
