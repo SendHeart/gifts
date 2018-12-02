@@ -88,6 +88,15 @@ Page({
     })
 
   },
+  mycommTapTag: function () {
+    var that = this
+    var goods_skuid = that.data.commodityAttr[0]['id']
+    var goods_id = that.data.goodsid
+    wx.navigateTo({
+      url: '../goods/comment/comment?goods_id=' + goods_id + '&goods_skuid' + goods_skuid
+    })
+
+  },
   onLoad: function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

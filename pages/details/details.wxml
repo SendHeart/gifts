@@ -35,8 +35,9 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{all_rows>0}}" class="comm-text" style='width:{{windowWidth}}'>
+  <view class="comm-text" style='width:{{windowWidth}}'>
     <text>商品评价: {{all_rows>0?'('+all_rows+')':''}}</text>
+    <text  bindtap="mycommTapTag" class="comm-status2">我要评价</text>
     <text  bindtap="commTapTag" class="comm-status">查看全部</text>
   </view>
   <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="" class="comm-item" >

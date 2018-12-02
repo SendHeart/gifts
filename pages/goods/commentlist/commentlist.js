@@ -104,6 +104,12 @@ Page({
             })
            
             console.log('获取商品评论信息:', comm_list, 'all_rows:', all_rows)
+          }else{
+            wx.showToast({
+              title: '暂无评论信息',
+              icon: 'loading',
+              duration: 1000
+            })
           }  
         }
       })
@@ -127,7 +133,17 @@ Page({
     })
     that.get_order_comment()
   },
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
 
+  },
 	showCartToast: function () {
 		wx.showToast({
 			title: '已加入购物车',

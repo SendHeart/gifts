@@ -111,7 +111,8 @@
 
 /*右部描述*/
 .carts-text {
-	margin-left: 10rpx;
+	margin-left: 20rpx;
+  margin-top:10rpx;
 	width: 100%;	
   height:130rpx;
 	display: flex;

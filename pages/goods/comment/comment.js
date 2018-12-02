@@ -161,9 +161,9 @@ Page({
 
 	onLoad: function(options){
     var that = this
-    var goods_id = options.goods_id
-    var goods_skuid = options.goods_skuid
-    var order_skuid = options.order_skuid
+    var goods_id = options.goods_id ? options.goods_id:0
+    var goods_skuid = options.goods_skuid ? options.goods_skuid:0
+    var order_skuid = options.order_skuid ? options.order_skuid:0
     that.setData({
       goods_id: goods_id,
       goods_skuid: goods_skuid,

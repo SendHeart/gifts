@@ -327,8 +327,12 @@ border: none;
 
 .comm-status {
   color: #e34c55;
+  
 }
-
+.comm-status2 {
+  color: #e34c55;
+  border: 3rpx solid #e34c55;
+}
 .comm-item {
  	display: flex;
 	flex-direction: column;
