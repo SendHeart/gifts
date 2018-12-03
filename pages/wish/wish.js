@@ -146,7 +146,7 @@ Page({
         title: '该礼物无货',
         icon: 'loading',
         duration: 1500
-      });
+      })
     }
   },
 

@@ -18,20 +18,21 @@
 	  <image src="../../images/iconfont-card.png" />
 	  <text>我的优惠券</text>
   </view>
-<!--<view class="menu-area">
-  <view bindtap="showWish" class="tableviewcell" style='width:{{windowWidth-35}}px' >
-    <image src="../../images/u621.png" />
-	  <text >我的心愿单</text>
-    <text class="inlinetips">分享心愿单，让Ta知道</text>
-  </view>
-</view>
--->
   
   <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>
   </view>
-   
+</view>
+<view class="menu-area">
+  <view bindtap="navigateToAccount" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/u633.png" />
+	  <text>我的账户</text>
+  </view>
+   <view bindtap="get_bank_info" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/bankcard.png" />
+	  <text>我的银行卡</text>
+  </view>
 </view>
 <view class="menu-area">
   <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
@@ -56,19 +57,34 @@
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
  <view>
- <modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel="true">
+<modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
       </view> 
     </view>
 </modal>
-<modal class="modalbox" title="如何玩转送心" hidden="{{modalHiddenPlaysx}}" confirm-text="返回" cancel-text="取消" bindconfirm="modalBindaconfirmPlaysx" bindcancel="modalBindcancelPlaysx" no-cancel="true">
+<modal class="modalbox" title="如何玩转送心" hidden="{{modalHiddenPlaysx}}" confirm-text="返回" cancel-text="取消" bindconfirm="modalBindaconfirmPlaysx" bindcancel="modalBindcancelPlaysx" no-cancel >
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
       </view> 
     </view>
+</modal>
+<modal class="modalbox" title="银行卡" hidden="{{modalHiddenBankcard}}" confirm-text="确认" cancel-text="返回" bindconfirm="modalBindaconfirmBankcard" bindcancel="modalBindcancelBankcard">
+  <view class="picker_box">
+    <picker bindchange="bindPickerChange" value="{{bank_info[index].id}}" data-selecthx="{{bank_info[index].bank_name}}" range="{{bank_info}}" range-key="{{'bank_name'}}">
+      <view class="picker">
+         {{bank_info[index]['bank_name']}}
+      </view>
+    </picker>
+  </view>
+  <view style='display: flex;flex-direction: row;line-height: 75rpx;margin-top:20rpx;'>
+    <input style='font-size:35rpx;width:90%' bindinput="bindchangeBankcardno" value="{{bankcard_no}}" type='number' placeholder="请输入银行卡号" />
+  </view>
+  <view style='display: flex;flex-direction: row;line-height: 75rpx;margin-top:20rpx;'>
+    <input style='font-size:35rpx;width:70%' bindinput="bindchangeBankcardname" value="{{bankcard_name}}" type='text' placeholder="请输入持卡人姓名" /> 
+  </view>
 </modal>
 </view>
  

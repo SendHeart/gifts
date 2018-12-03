@@ -1,11 +1,14 @@
-var app = getApp();
-var weburl = app.globalData.weburl;
-var shop_type = app.globalData.shop_type;
+var app = getApp()
+var weburl = app.globalData.weburl
+var shop_type = app.globalData.shop_type
 var navList_order = [
   { id: "send", title: "我送出的" },
   { id: "receive", title: "我收到的" },
 ];
-var now = new Date().getTime();
+var now = new Date().getTime()
+ 
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+
 Page({
   data: {
     title_name: '记录',
@@ -22,8 +25,11 @@ Page({
     giftflag: 0,
     gift_send:0,
     gift_rcv:0,
-    page_num:0,
+    page_num: 0, 
+    hiddenmodalput: true,
     currenttime:now?parseInt(now/1000):0,
+    navList2: navList2,
+    buyin_rate: navList2[7]['value'] ? navList2[7]['value']:100,  //礼物折现率
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -46,6 +52,43 @@ Page({
     wx.switchTab({
       url: '../hall/hall'
     })
+  },
+  //点击按钮指定的hiddenmodalput弹出框  
+  modalinput_buyin: function (e) {
+    var that = this
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_skuid = e.currentTarget.dataset.goodsSkuid
+    var order_skuid = e.currentTarget.dataset.skuId
+    var sku_price = e.currentTarget.dataset.orderSkuPrice;
+    var sku_num = e.currentTarget.dataset.orderSkuNum;
+    var buyin_rate = that.data.buyin_rate
+    var buyin_price = (sku_price * sku_num * buyin_rate/100).toFixed(2)
+    that.setData({
+        hiddenmodalput: !that.data.hiddenmodalput,
+        goods_id: goods_id,
+        goods_skuid: goods_skuid,
+        order_skuid: order_skuid,
+        buyin_price: buyin_price,
+    })
+
+  },
+  //取消按钮  
+  cancel_buyin: function () {
+    var that = this
+    that.setData({
+      hiddenmodalput: !that.data.hiddenmodalput
+    })
+    setTimeout(function () {
+      wx.navigateBack();
+    }, 500);
+  },
+  //确认  
+  confirm_buyin: function () {
+    var that = this
+    that.setData({
+      hiddenmodalput: !that.data.hiddenmodalput
+    })
+    that.buyin()
   },
   onOrderTapTag: function (e) {
     var that = this;
@@ -91,7 +134,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     wx.navigateTo({
        url: '../list/list?username=' + username + '&token=' + token
-    });
+    })
   },
   send: function (e) {
     var that = this
@@ -290,12 +333,57 @@ Page({
     })
 
   },
+  buyin: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = that.data.goods_id //e.currentTarget.dataset.goodsId
+    var goods_skuid = that.data.goods_skuid //e.currentTarget.dataset.goodsSkuid
+    var order_skuid = that.data.order_skuid //e.currentTarget.dataset.skuId
+    var shop_type = that.data.shop_type
+    console.log('礼物折现 goods_id:', goods_id, 'goods skuid:', goods_skuid,'order skuid:', order_skuid)
+    //礼物折现
+    wx.request({
+      url: weburl + '/api/client/buyin',
+      method: 'POST',
+      data: {
+        username: username,
+        m_id: m_id,
+        access_token: token,
+        order_skuid: order_skuid,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        var orderObjects = res.data.result;
+        if (res.data.status != 'y') {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '折现失败',
+            icon: 'loading',
+            duration: 1500
+          })
+
+        } else {
+          wx.showToast({
+            title: '折现完成',
+            icon: 'success',
+            duration: 1500
+          })
+        }
+      }
+    })
+  },
   comment: function (e) {
     var goods_id = e.currentTarget.dataset.goodsId;
     var goods_skuid = e.currentTarget.dataset.goodsSkuid;
     var order_skuid = e.currentTarget.dataset.skuId;
-    console.log('礼物评价 goods_id:', goods_id, 'goods skuid:', goods_skuid,'order skuid:', order_skuid);
-    
+    console.log('礼物评价 goods_id:', goods_id, 'goods skuid:', goods_skuid, 'order skuid:', order_skuid);
+
     wx.navigateTo({
       url: '../goods/comment/comment?goods_id=' + goods_id + '&goods_skuid=' + goods_skuid + '&order_skuid=' + order_skuid
     });
@@ -318,7 +406,7 @@ Page({
       url: '../order/payment/payment?orderNo=' + objectId + '&totalFee=' + totalFee
     });
   },
-  cancel: function (e) {
+  cancel_order: function (e) {
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';

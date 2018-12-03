@@ -22,8 +22,10 @@ Page({
     scrollTop: 0,
     scrollTop_init: 10,
     modalHiddenAgreement:true,
+    modalHiddenBankcard: true,
     modalHiddenPlaysx: true,
     shop_type:shop_type,
+    index: 0,
      
   },
   setNavigation: function () {
@@ -54,16 +56,180 @@ Page({
     }
 
   },
-  showWish: function () {
-    /*
-    wx.navigateTo({
-      url: '../wish/wish?wish_id='
+  bindPickerChange: function (e) {
+    var that = this
+    var selected_index = e.detail.value
+    var bank_name = that.data.bank_info[selected_index]['bank_name']
+    var bank_id = that.data.bank_info[selected_index]['id']
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      index: selected_index,
+      bank_name: bank_name,
+      bank_id: bank_id
     })
-    */
-    wx.switchTab({
-      url: '../wish/wish?wish_id='
-    })
+    console.log('自定义值:', that.data.bank_info[selected_index]['bank_name']);
   },
+
+  bindchangeBankcardno: function (e) {
+    var that = this
+    var bankcard_no = e.detail.value
+
+    that.setData({
+      bankcard_no: bankcard_no
+    })
+    console.log('bankcard_no:' + that.data.bankcard_no)
+  },
+  bindchangeBankcardname: function (e) {
+    var that = this
+    var bankcard_name = e.detail.value
+    that.setData({
+      bankcard_name: bankcard_name
+    })
+    console.log('bankcard_name:' + that.data.bankcard_name)
+  },
+  //绑定银行卡
+  get_bank_info: function () {
+    var that = this 
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
+   //获取银行列表
+    wx.request({
+      url: weburl + '/api/client/get_bankinfo',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if(res.data.status=='y'){
+          var bank_info  = res.data.result
+          var index = that.data.index
+          that.setData({
+            bank_info: bank_info,
+            modalHiddenBankcard: !that.data.modalHiddenBankcard,
+            bank_name: bank_info[index]['bank_name'],
+            bank_id: bank_info[index]['id']
+          })
+           
+          console.log('获取银行列表完成:', res.data.result)
+          //获取我的银行列表
+          wx.request({
+            url: weburl + '/api/client/get_member_bankcardinfo',
+            method: 'POST',
+            data: {
+              username: username,
+              access_token: token,
+              shop_type: shop_type,
+            },
+            header: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              'Accept': 'application/json'
+            },
+            success: function (res) {
+              if (res.data.status == 'y') {
+                var mbank_info = res.data.result
+                
+                that.setData({
+                  bank_name: mbank_info[0]['bank_name'],
+                  bank_id: mbank_info[0]['bank_id'],
+                  bankcard_no: mbank_info[0]['bank_cardno'],
+                  bankcard_name: mbank_info[0]['bank_cardname'],
+                })
+                if (mbank_info[0]['id']){
+                  for (var i = 0; i < that.data.bank_info.length; i++) {
+                    if (that.data.bank_info[i]['id'] == mbank_info[0]['bank_id']){
+                      that.setData({
+                        index : i,
+                      })
+                      //console.log('获取我的银行列表 index:', i, 'my bank id:', mbank_info[0]['bank_id'])
+                    }
+                  }
+                }
+               
+                console.log('获取我的银行列表完成:', res.data.result)
+              }
+            }
+          })
+        }else{
+          wx.showToast({
+            title: res.data.info+'[失败]',
+            icon: 'none',
+            duration: 1500
+          })
+        }
+       
+      }
+
+    })
+   
+
+  },
+
+  //绑定银行卡
+  band_bank_card: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
+    var bank_id = that.data.bank_id
+    var bank_cardno = that.data.bankcard_no
+    var bank_cardname = that.data.bankcard_name
+
+    var regNum = new RegExp('[0-9]', 'g')//判断是否为数字
+    var rsNum = regNum.exec(bank_cardno)
+
+    if (rsNum) {
+      wx.request({
+        url: weburl + '/api/client/update_member_bankcardinfo',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          shop_type: shop_type,
+          bank_id: bank_id,
+          bank_cardno: bank_cardno,
+          bank_cardname: bank_cardname,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          if (res.data.status == 'y') {
+            wx.showToast({
+              title: '银行卡绑定成功',
+              icon: 'none',
+              duration: 1500
+            })
+            console.log('银行卡绑定完')
+          } else {
+            wx.showToast({
+              title: res.data.info + '[失败]',
+              icon: 'none',
+              duration: 1500
+            })
+          }
+
+        }
+
+      })
+    } else {
+      wx.showToast({
+        title: '银行卡输入有误',
+        icon: 'loading',
+        duration: 1500
+      });
+    }
+     
+     
+  },
+
   navigateToAgreement:function(){
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -204,6 +370,11 @@ Page({
       url: '../../order/list/list?status=' + status
     });
   },
+  navigateToAccount: function (e) {
+    wx.navigateTo({
+      url: '../member/account/account?'
+    })
+  },
   logout: function () {
 
   },
@@ -255,9 +426,24 @@ Page({
       url: '../cs/cs'
     });
   },
+  //确定按钮点击事件  银行卡
+  modalBindaconfirmBankcard: function () {
+    var that = this
+    that.setData({
+      modalHiddenBankcard: !that.data.modalHiddenBankcard,
+    })
+    that.band_bank_card()
+  },
+  //取消按钮点击事件  银行卡
+  modalBindcancelBankcard: function () {
+    var that = this
+    that.setData({
+      modalHiddenBankcard: !that.data.modalHiddenBankcard
+    })
+  },  
+
   //确定按钮点击事件  用户协议
   modalBindaconfirmAgreement: function () {
-     
     this.setData({
       modalHiddenAgreement: !this.data.modalHiddenAgreement,
     })
