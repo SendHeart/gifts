@@ -213,9 +213,9 @@ Page({
           console.log('获取订单评论信息 :' + res.data,'goods_id:',goods_id,)
           //console.log(res.data);
           if (comm_list) {
-            if (comm_list[0]['img1']!='undefined') img_arr[0] = comm_list[0]['img1']
-            if (comm_list[0]['img2']!='undefined') img_arr[1] = comm_list[0]['img2'] 
-            if (comm_list[0]['img3']!='undefined') img_arr[2] = comm_list[0]['img3'] 
+            if (comm_list[0]['img1'] != 'undefined' && comm_list[0]['img1'] != '') img_arr[0] = comm_list[0]['img1']
+            if (comm_list[0]['img2'] != 'undefined' && comm_list[0]['img2'] != '') img_arr[1] = comm_list[0]['img2'] 
+            if (comm_list[0]['img3'] != 'undefined' && comm_list[0]['img3'] != '') img_arr[2] = comm_list[0]['img3'] 
              
             that.setData({
               comm_list: that.data.comm_list.concat(comm_list),
