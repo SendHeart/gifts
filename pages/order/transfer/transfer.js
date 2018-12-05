@@ -36,6 +36,7 @@ Page({
     nickname: userInfo.nickName,
     send_status:1,
     hiddenmodalput:false,
+    overtime_status: 0,
     currenttime: now ? parseInt(now / 1000) : 0,
     navList2: navList2,
     shop_type:shop_type,
@@ -173,23 +174,59 @@ Page({
   },
 
   onLoad: function (options) {
-    // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
-    var that = this;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var order_no = options.order_no; 
-    var receive = options.receive;
+    var that = this
+    var order_no = options.order_no
+    var receive = options.receive
+    var orders = options.orders
+    that.setData({
+      order_no: order_no,
+      receive: receive,
+      orders: orders,
+    })
+    that.reloadData()
+
+    wx.getSystemInfo({
+      success: function (res) {
+        that.setData({
+          windowWidth: res.windowWidth,
+          windowHeight: res.windowHeight,
+        })
+      }
+    })  
+  },
+
+  overtimeData: function () {
+    var that = this
+    var headimg = that.data.headimg
+    var nickname = that.data.nickname
+    console.log(' 超时处理 headimg:', headimg, ' nickname:', nickname)
+    if (!headimg) {
+      that.setData({
+        overtime_status: 1 //超时标志
+      })
+    }
+  },
+  // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
+  reloadData: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var order_no = that.data.order_no
+    var receive = that.data.receive
+    var orders = that.data.orders
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
     var shop_type = that.data.shop_type
-    that.setNavigation()
-    console.log('礼品信息')
-    console.log(order_no)
-    if (receive == 1){
-      console.log('礼品接受处理')
-      console.log(options)
+    //that.setNavigation()
+    console.log('礼品信息:', order_no)
+   
+    if (receive == 1) {
+      console.log('礼品接受处理 order_no:', order_no,' receive:',receive)
       return
     }
+    setTimeout(function () { //3秒超时
+      that.overtimeData()
+    }, 3000)
     //再次确认订单状态
     wx.request({
       url: weburl + '/api/client/query_order',
@@ -199,7 +236,7 @@ Page({
         access_token: token,
         order_no: order_no,
         order_type: 'send',
-        shop_type:shop_type,
+        shop_type: shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -219,24 +256,27 @@ Page({
           }, 1500);
           return
         } else {
-          if (orderObjects[0]['gift_status'] !=1 || currenttime < orderObjects[0]['duetime']) {
+          if (orderObjects[0]['gift_status'] != 1 || currenttime < orderObjects[0]['duetime']) {
             wx.showToast({
               title: '不满足转增条件',
               icon: 'loading',
               duration: 1500
             })
             setTimeout(function () {
-              wx.navigateBack();
+              wx.navigateBack()
             }, 1500)
             return
+          }else{
+            
           }
         }
         that.setData({
           send_status: 0,
-        });
+        })
+        console.log('满足转增条件 send_status:', that.data.send_status,' over time status:',that.data.overtime_status)
       }
     })
-    var orders = JSON.parse(options.orders);
+    var orders = JSON.parse(orders);
     var orderskus = that.data.orderskus;
     var note_title = that.data.note_title
     var headimg = that.data.headimg
@@ -245,11 +285,11 @@ Page({
     note = orders[0]['rcv_note'];
     headimg = orders[0]['from_headimg'];
     nickname = orders[0]['from_nickname'];
-   
+
     // order_sku 合并在一个对象中
     for (var i = 0; i < orders.length; i++) {
       for (var j = 0; j < orders[i]['order_sku'].length; j++) {
-        orders[i]['order_sku'][j]['goods_name'] = orders[i]['order_sku'][j]['goods_name'].substring(0,15)
+        orders[i]['order_sku'][j]['goods_name'] = orders[i]['order_sku'][j]['goods_name'].substring(0, 15)
         orderskus.push(orders[i]['order_sku'][j])
       }
     }
@@ -258,23 +298,15 @@ Page({
     that.setData({
       order_no: order_no,
       orders: orders,
-      orderskus:orderskus,
-      note:note,
-      note_title:note_title,
-      headimg:headimg,
-      nickname:nickname,
-      username:username,
-      token:token,
-    });
+      orderskus: orderskus,
+      note: note,
+      note_title: note_title,
+      headimg: headimg,
+      nickname: nickname,
+      username: username,
+      token: token,
+    })
 
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
-        })
-      }
-    })  
   },
 
   onShow: function () {
@@ -288,71 +320,6 @@ Page({
     that.get_project_gift_para()
   },
 
-  reloadData: function () {
-    /*
-    var that = this;
-    var order_type = that.data.tab2;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var status = that.data.status;
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
-    //从服务器获取订单列表
-    wx.request({
-      url: weburl + '/api/client/query_order_list',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        status: status,
-        order_type: order_type,
-        page: page,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data.result);
-        var orderObjects = res.data.result;
-        var all_rows = res.data.all_rows;
-        if (!res.data.result) {
-          wx.showToast({
-            title: '没有该类型订单',
-            icon: 'loading',
-            duration: 1500
-          });
-          setTimeout(function () {
-            wx.navigateBack();
-          }, 500);
-          that.setData({
-            orders: [],
-            all_rows: 0
-          });
-        } else {
-          // 存储地址字段
-          for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
-            }
-
-          }
-          if (page > 1 && orderObjects) {
-            //向后合拼
-            orderObjects = that.data.orders.concat(orderObjects);
-          }
-          that.setData({
-            orders: orderObjects,
-            all_rows: all_rows
-          });
-        }
-
-
-      }
-    })
-*/
-  },
   
   showGoods: function (e) {
     var skuId = e.currentTarget.dataset.skuId;

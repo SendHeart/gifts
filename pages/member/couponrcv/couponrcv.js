@@ -32,6 +32,7 @@ Page({
     headimg:'',
     nickname:'',
     receive_status:0,
+    overtime_status: 0,
     receive:0,
     order_no:'',
     currenttime: now ? parseInt(now / 1000) : 0,
@@ -171,6 +172,16 @@ Page({
     })
 
   },
+  overtimeData: function () {
+    var that = this
+    var coupons_info = that.data.coupons_info
+    console.log(' 超时处理 coupon image:', coupons_info[0].image)
+    if (!coupons_info[0].image) {
+      that.setData({
+        overtime_status: 1 //超时标志
+      })
+    }
+  },
   query_pubcoupon: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -181,6 +192,9 @@ Page({
     var coupons_id = that.data.coupons_id
     var coupons_flag = that.data.coupons_flag
 
+    setTimeout(function () { //3秒超时
+      that.overtimeData()
+    }, 3000)
     wx.request({
       url: weburl + '/api/client/query_pubcoupon',
       method: 'POST',
@@ -196,7 +210,6 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-       
         var coupons_info = res.data.result
         if (!res.data.result) {
           wx.showToast({
@@ -243,25 +256,13 @@ Page({
     var nickname = that.data.nickname
    
     that.setData({
-      //coupons: coupons,
-      //coupons_info: coupons_info,
       coupons_id: coupons_id,
       coupons_flag: coupons_flag,
       receive: receive,
 
     })
     that.query_pubcoupon()
-    /*
-    if (coupons_flag =='999999999999'){
-      that.query_pubcoupon()
-    }else{
-      coupons_info[0]['start_time'] = util.getDateStr(coupons_info[0]['start_time'] * 1000, 0)
-      coupons_info[0]['end_time'] = util.getDateStr(coupons_info[0]['end_time'] * 1000, 0)
-      that.setData({
-        coupons_info: coupons_info,
-      })
-    }
-    */
+   
     /*
     that.setNavigation()
     wx.getSystemInfo({
@@ -293,72 +294,6 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-  },
-
-  reloadData: function () {
-    /*
-    var that = this;
-    var order_type = that.data.tab2;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var status = that.data.status;
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
-    //从服务器获取订单列表
-    wx.request({
-      url: weburl + '/api/client/query_order_list',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        status: status,
-        order_type: order_type,
-        page: page,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data.result);
-        var orderObjects = res.data.result;
-        var all_rows = res.data.all_rows;
-        if (!res.data.result) {
-          wx.showToast({
-            title: '没有该类型订单',
-            icon: 'loading',
-            duration: 1500
-          });
-          setTimeout(function () {
-            wx.navigateBack();
-          }, 500);
-          that.setData({
-            orders: [],
-            all_rows: 0
-          });
-        } else {
-          // 存储地址字段
-          for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
-            }
-
-          }
-          if (page > 1 && orderObjects) {
-            //向后合拼
-            orderObjects = that.data.orders.concat(orderObjects);
-          }
-          that.setData({
-            orders: orderObjects,
-            all_rows: all_rows
-          });
-        }
-
-
-      }
-    })
-*/
   },
   
   showGoods: function (e) {
@@ -421,4 +356,4 @@ Page({
    
 
   
-});
+})

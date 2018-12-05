@@ -47,8 +47,9 @@
     </swiper>
     -->
    <view class="sentbtn">
-      <button open-type="share" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>转赠</button>
-      <button bindtap="returnTapTag" hidden='{{send_status==0?true:false}}'>返回</button>
+      <button open-type="share" bindtap="onShareAppMessage" hidden='{{send_status==1 || overtime_status==1 ?true:false}}'>转赠</button>
+      <button bindtap="reloadData" hidden='{{overtime_status==0?true:false}}'>超时刷新</button>
+      <button bindtap="returnTapTag" hidden='{{send_status==0 || overtime_status==1?true:false}}'>返回</button>
     </view>
    
   </view>

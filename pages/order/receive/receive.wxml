@@ -46,16 +46,17 @@
     </swiper>
     -->
     <view class="sentbtn">
-      <button class="button" data-order_no="{{order_no}}" bindtap="receiveTapTag" hidden='{{receive_status==0?false:true}}'>拆开</button>
+      <button class="button" data-order_no="{{order_no}}" bindtap="receiveTapTag" hidden='{{receive_status==1 || overtime_status==1?true:false}}'>拆开</button>
+      <button bindtap="reloadData" hidden='{{overtime_status==0?true:false}}'>超时刷新</button>
       <view style="width:100%; display: flex;flex-direction: column;text-align:center;" wx:if='{{receive_status==0}}'>
         <text style='margin-top:10rpx;'>填写收货地址，礼物会很快奔向您了</text>
         <view bindtap='returnTapTag' style='margin-top:40rpx;'>
           <text style='color:#E34C55;font-size:28rpx;'>暂不接受，看看其他内容</text>
         </view>
       </view>
-
-      <button bindtap="returnTapTag" hidden='{{receive_status==0?true:false}}'>回赠</button>
-      <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:20rpx;" wx:if='{{receive_status==1}}'>
+    
+      <button bindtap="returnTapTag" hidden='{{receive_status==0 || overtime_status==1?true:false}}'>回赠</button>
+      <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:20rpx;" wx:if='{{receive_status==1 && overtime_status==0}}'>
         <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
       </view>
     </view>
