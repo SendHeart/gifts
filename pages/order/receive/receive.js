@@ -299,6 +299,7 @@ Page({
     setTimeout(function () { //3秒超时
       that.overtimeData()
     }, 3000)
+    
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',

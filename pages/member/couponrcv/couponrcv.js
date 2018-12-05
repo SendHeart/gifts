@@ -175,7 +175,7 @@ Page({
   overtimeData: function () {
     var that = this
     var coupons_info = that.data.coupons_info
-    console.log(' 超时处理 coupon image:', coupons_info[0].image)
+    console.log('超时处理 coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
     if (!coupons_info[0].image) {
       that.setData({
         overtime_status: 1 //超时标志
@@ -195,6 +195,7 @@ Page({
     setTimeout(function () { //3秒超时
       that.overtimeData()
     }, 3000)
+
     wx.request({
       url: weburl + '/api/client/query_pubcoupon',
       method: 'POST',
@@ -234,7 +235,7 @@ Page({
             coupons_info: coupons_info,
           })
         }
-        console.log('查询优惠券发行信息 coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
+        console.log('查询优惠券发行信息 query_pubcoupon coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
       }
 
     })
