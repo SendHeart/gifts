@@ -309,6 +309,7 @@ background-color: #E34C55;
   flex-direction:column;
   background-color:white; 
  
+ 
 }
 .delivery-detail-info-text {
 	display: flex;
@@ -317,38 +318,13 @@ background-color: #E34C55;
 	margin-left: 5px;
   margin-right: 5px;
   color:gray;
-  
 }
-
 
 .timeline-date {
 	overflow: hidden;
 	position: relative;
   display: inline-block;
-}
-
-.timeline-date-image {
-	background-size: 16px;
-  width:50rpx;
-	zoom: 1;
-
-}
-
-.timeline-date ul li dl {
-	margin-top: -5px;
-}
-
-.timeline-date ul li dl.right {
-	float: left;
-	margin-left: 35px;
-	margin-top: -5px;
-	display: block;
-}
-
-.timeline-date ul li dl span {
-	display: block;
-	font-size: 12px;
-	padding: 6px 10px 0px 30px;
+  
 }
 
 

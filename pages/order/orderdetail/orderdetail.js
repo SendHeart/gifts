@@ -9,6 +9,7 @@ Page({
   data: {
     title_name: '记录详情',
     title_logo: '../../../images/footer-icon-05.png',
+    delivery_background: weburl+'/uploads/line.png',
     orders: [],
     order_no:'',
     sendtime:'',
@@ -107,7 +108,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result);
+        console.log(res.data);
         if (!res.data.result) {
           wx.showToast({
             title: '暂无物流信息',

@@ -101,23 +101,23 @@
    -->
     </view>
   </view>
-  <view class="delivery-detail-info">
-    <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key="">
-      <view class="timeline-date">
+  <view class="delivery-detail-info" style='background: url({{delivery_background}}) repeat-y 9px 0;'>
+    <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key=""  >
+      <view class="timeline-date" style='margin-top:-3px;'>
         <image style="width:5%;height:40rpx;" src='../../../images/icon24.png' />
       </view>
-      <view class="delivery-detail-info-text">
-        <view class="timeline-date">
-          <text style="width:10%;margin-right:20rpx;">|</text>
-          <text style="width:80%;overflow:hidden;position:relative">{{itme.AcceptStation}}</text>
+      <view class="delivery-detail-info-text" >
+        <view class="timeline-date" style='margin-left:10px;'>
+          <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
+          <text style="width:80%;overflow:hidden;position:relative;margin-left:10px;">{{itme.AcceptStation}}</text>
         </view>
-        <view class="timeline-date">
-          <text style="width:10%;margin-right:20rpx;">|</text>
-          <text style="width:80%">{{itme.operator}}</text>
+        <view class="timeline-date" style='margin-left:10px;'>
+           <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
+          <text style="width:80%;margin-left:10px;">{{itme.operator}}</text>
         </view>
-        <view class="timeline-date">
-          <text style="width:10%;margin-right:20rpx;">|</text>
-          <text style="width:80%">{{itme.AcceptTime}}</text>
+        <view class="timeline-date" style='margin-left:10px;'>
+           <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
+          <text style="width:80%;margin-left:10px;">{{itme.AcceptTime}}</text>
         </view>
       </view>
     </block>
