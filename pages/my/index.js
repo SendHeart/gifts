@@ -444,10 +444,13 @@ Page({
 
   //确定按钮点击事件  用户协议
   modalBindaconfirmAgreement: function () {
-    this.setData({
-      modalHiddenAgreement: !this.data.modalHiddenAgreement,
+    var that = this
+    that.setData({
+      modalHiddenAgreement: !that.data.modalHiddenAgreement,
     })
     wx.setStorageSync('isReadAgreement', 1) //协议阅读标志
+    that.goBack()
+
   },
   //取消按钮点击事件  用户协议
   modalBindcancelAgreement: function () {
