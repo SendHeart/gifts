@@ -243,9 +243,6 @@ line-height: 1.5;
   content: '';
 }
 
-
-
-
 .select-and-amount {
   display: flex;
   flex-direction: row;
