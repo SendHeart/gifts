@@ -11,13 +11,15 @@
 <!-- 
  <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
  -->
-  <text class="userinfo-nickname" style='margin-top:30rpx;'>我的心愿单</text>
+  <text class="userinfo-nickname" style='margin-top:20rpx;'>我的心愿单</text>
 
 <view class="banner" style='margin-top:20rpx;' hidden="{{!shareflag}}" >
   
-  <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" type="warn">分享微信好友</button>
- 
+  <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" class="btnshare">分享微信好友</button>
+ <!-- 
   <button wx:if="{{carts.length==0}}" bindtap="addWishTapTag" type="warn">添加心愿单</button>
+  -->
+  <button bindtap="addWishTapTag" class="btnadd">+</button>
 </view>
 </view>
 <!-- 
@@ -28,7 +30,6 @@
 <scroll-view scroll-y="true" style="height:{{dkheight}};margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
 <view class="container">  
     <view class="venues_box">
-        <view class="venues_list">
             <block wx:for="{{carts}}" wx:key="">
                 <view class="venues_item">
                     <navigator url="../details/details?id={{item.goods_id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class='none'>
@@ -54,7 +55,6 @@
                  
                 </view>
             </block>
-        </view>
     </view>
    
    <!-- 

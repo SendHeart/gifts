@@ -141,16 +141,20 @@ swiper-item image {
 }
 
 .venues_box {
-  display:block;
-  width: 100%;
-  overflow-x: hidden;
-  padding: 134rpx 0 134rpx 1%;
+  padding: 134rpx 0;
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  align-content:center;
+  justify-content:space-around;
+  width: 98%;
+  margin: 0 auto;
+  overflow: hidden;
 }
 
 .venues_item {
-  display: inline-block;
-  width: 47%;
-  margin: 0 1% 15rpx 1%;
+  width: 48%;
+  margin-bottom:15rpx;
   background: #ffffff;
   border-radius: 10rpx;
   text-indent: 20rpx;
@@ -194,9 +198,8 @@ swiper-item image {
   white-space:nowrap;  
 }
 .price-now {
-  color: #e34c55;
+  color: #444;
   font-size:28rpx;
-  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 20rpx;

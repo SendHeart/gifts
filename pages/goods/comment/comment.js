@@ -403,7 +403,7 @@ Page({
     var shop_type = that.data.shop_type
     var comm_type = that.data.comm_type
 
-    console.log('提交点评:',upimg_url, content) 
+    console.log('提交评论:',upimg_url, content) 
     wx.request({
       url: weburl + '/api/client/order_comment',
       method: 'POST',

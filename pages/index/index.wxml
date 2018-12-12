@@ -40,7 +40,7 @@
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
           <text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>
-          <text style="width:20%;" bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} smallbtn">点评</text>
+          <text style="width:20%;" bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} smallbtn">评论</text>
           <text style="width:20%;" bindtap="modalinput_buyin" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} smallbtn">折现</text>
           <text style="width:20%;" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1) ? '': 'hidden'}} status2">已折现</text>
         </view>

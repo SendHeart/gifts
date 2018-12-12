@@ -1,7 +1,7 @@
 <import src="../../wxParse/wxParse.wxml" />
 <import src="../common/hall_title.wxml" /><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<scroll-view scroll-y="true" style="margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}" hidden="{{!modalHidden}}">
+<view class="pagewrap">
   <view class="banner">
     <view>
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
@@ -17,7 +17,9 @@
         </block>
       </swiper>
     </view>
-    <view class="shopping_container">
+    
+  </view>
+  <view class="shopping_container">
       <view class="goods-name">
         <text>{{goodsname?goodsname:''}}</text>
         <text class="goods_prom">{{goodsinfo?goodsinfo:'高端大气'}}</text>
@@ -26,65 +28,61 @@
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
         <text class="right-tag">￥{{goodsprice>0?goodsprice:'0'}}</text>
       </view>
-      <view>
-        <!-- 
-          <view style="width:50%;text-align:right"><image class="img_tag" src="../../images/u48.png"></image></view>
-          -->
-        适合送
+      <view class="fitfor">
+        <text>适合送</text>
         <text class="goods_tag">{{goodstag?goodstag:'朋友 同事'}}</text>
       </view>
     </view>
-  </view>
-  <view class="comm-text" style='width:{{windowWidth}}'>
-    <text>商品评价: {{all_rows>0?'('+all_rows+')':''}}</text>
-    <text  bindtap="mycommTapTag" class="comm-status2">我要评价</text>
-    <text  bindtap="commTapTag" class="comm-status">查看全部</text>
+  <view class="comm-text">
+    <text class="comm-name">礼物评论</text>
+    <text  bindtap="commTapTag" class="comm-status">查看全部{{all_rows>0?'('+all_rows+')':''}}</text>
   </view>
   <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="" class="comm-item" >
     <view  bindtap="commTapTag" class="comm-title">
       <image class="comm-image" src="{{comm.wx_headimg}}" mode="aspectFill" />
       <view>
-        <text style='margin-left:20rpx;font-size:28rpx;'>{{comm.wx_nickname}}</text>
+        <text>{{comm.wx_nickname}}</text>
       </view>
     </view>
-     <view>
-        <text class="comm-content">{{comm.desc}}</text>
+     <view class="comm-content">
+        <text>{{comm.desc}}</text>
       </view>
   </view>
-  <view class="shopping_container">
+  <view>
+  <view class="prd-title">商品详情</view>
     <view class="prd-detail">
-      <view class='wxParse' hidden='{{hideviewgoodsinfo}}'>
+      <view class="wxParse" hidden="{{hideviewgoodsinfo}}">
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
       </view>
     </view>
   </view>
-</scroll-view>
 <view hidden="{{modalHidden}}">
-    <modal class="modalbox" title="{{attrValueList.length>0?'选择样式':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
+    <modal class="modalbox" title="{{attrValueList.length>0?'':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
        <view style="max-height:{{dkheight-30}}px">
         <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
-          <view>{{attrValueObj.name}}:</view>
+          <view class="sku_title">选择{{attrValueObj.name}}</view>
           <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
             data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >
-            <view>
-              <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}" style="width:30px;height:30px;margin-left:2px;"></image>
-              <view wx:elif="{{attrValueObj.type == 1}}" style="margin-left:2px;">{{attrValueObj.value[valueIndex]}}</view>
-              {{attrValueObj.note[valueIndex]}}
-            </view>
+            
+              <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}"></image>
+              <text wx:elif="{{attrValueObj.type == 1}}">{{attrValueObj.value[valueIndex]}}</text>
+              <text>{{attrValueObj.note[valueIndex]}}</text>
           </view>
         </view>
       </view>
       </view>
       <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
-      <view wx:if="{{sku_sell_price}}" class="price-now"><text>￥{{sku_sell_price}}</text></view>
+      <view class="price-now"><text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text></view>
     </modal>
   
 </view>
 <view class="footer">
   <view class="opt-buttons">
-  <button class="wish-cart" bindtap="wishCart">加入心愿单</button>
+  <button class="sec-btn" bindtap="mycommTapTag">我要评论</button>
+  <button class="sec-btn" bindtap="wishCart">加入心愿单</button>
   <button class="add-cart" bindtap="goodsmodel">购买送出</button>
   </view>
+</view>
 </view>

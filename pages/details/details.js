@@ -366,10 +366,10 @@ Page({
         },
         success: function (res) {
           console.log(res.data.result);
-          var title = wishflag == 1 ? '加入心愿单完成' : '购买送出完成'
+          var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物袋'
           wx.showToast({
             title: title,
-            duration: 1500
+            duration: 2000
           })
           app.globalData.from_page = '/pages/details/details'
           if (wishflag == 1) {
@@ -379,9 +379,10 @@ Page({
             })
             */
             wx.switchTab({
-              url: '../wish/wish?'
+              url: '/pages/details/details'
             })
-          } else {
+          } 
+          else {
             wx.switchTab({
               url: '../hall/hall?'
             })
@@ -409,7 +410,7 @@ Page({
     },
     showCartToast: function (message) {
       wx.showToast({
-        title: message ? message:'已加入购物车',
+        title: message ? message:'添加成功',
         icon: 'success',
         duration: 1000
       });

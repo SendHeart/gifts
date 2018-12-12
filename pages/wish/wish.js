@@ -217,8 +217,8 @@ Page({
     console.log(objectId);
     
     wx.showModal({
-      title: '提示',
-      content: '确认要删除吗',
+      title: '确定移除心愿单吗？',
+      content: '',
       success: function (res) {
         if (res.confirm) {
           // 从网络上将它删除

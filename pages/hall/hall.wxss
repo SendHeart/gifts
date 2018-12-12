@@ -357,23 +357,7 @@ page {
   z-index: 1;
 }
 
-.note {
-  width: 96%;
-  height: 180rpx;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: row;
-  background: #fff;
-}
 
-.note textarea {
-  width: 80%;
-  height: 160rpx;
-  margin-left: 90rpx;
-  border-bottom: 1px solid #eee;
-  font-size: 24rpx;
-  color: #999;
-}
 
 /*底部按钮*/
 
@@ -471,32 +455,47 @@ page {
   margin: 0 auto;
   display: flex;
   flex-direction: row;
-  justify-content: left; /*子项横轴上居中对齐*/
+  justify-content:center; /*子项横轴上居中对齐*/
   text-align: left;
   bottom: 0;
   background: #fff;
   border-bottom: 1rpx solid #eee;
   z-index: 1;
 }
-
+.jcleft {
+  flex-direction: column;
+  justify-content: left;
+}
 .pick-goods-text {
-  height: 110rpx;
   display: flex;
   flex-direction: column;
   justify-content: left; /*子项横轴上居中对齐*/
   text-align: left;
   bottom: 0;
-  border-top: 0px solid #eee;
-  border-bottom: 0px solid #eee;
-  margin-top: 20rpx;
-  margin-right: 10rpx;
+  margin: 10rpx;
   z-index: 1;
 }
+.note {
+  width: 96%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+}
 
+.note textarea {
+  width: 100%;
+  height: 60rpx;
+  margin: 0 10rpx 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #F2F2F2;
+  border-radius: 14rpx;
+}
 .pick-goods-slogan {
-  font-size: 32rpx;
+  font-size: 28rpx;
   color: #444;
-  margin-left: 8rpx;
+  margin-left: 20rpx;
   /*line-height: 10rpx;*/
   display: block;
   font-weight: bold;
@@ -513,28 +512,31 @@ page {
 .pick-goods .pick-goods-image {
   width: 70rpx;
   height: 70rpx;
-  margin-right: 1rpx;
-  margin-top: 20rpx;
-  margin-left: 20rpx;
+  margin-left: 10rpx;
 }
 
 .pick-goods .image-btnbuy {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: left;
   text-align: center;
-  width: 80rpx;
+  width: 40%;
   height: 78rpx;
-  position: absolute;
-  right: 35rpx;
-  margin-top: 15rpx;
+  margin: 15rpx;
   border: 1rpx solid #e34c55;
   border-radius: 14rpx;
   background: #e34c55;
   padding: 10rpx;
-  -webkit-box-shadow: 0px 4rpx 0px rgba(219, 31, 5, 1);
-  -moz-box-shadow: 0px 4rpx 0px rgba(219, 31, 5, 1);
+  -webkit-box-shadow: 0px 4rpx 0px rgba(179, 22, 2, 1);
+  -moz-box-shadow: 0px 4rpx 0px rgba(179, 22, 2, 1);
   box-shadow: 0px 4rpx 0px rgb(179, 22, 2);
+}
+.pick-goods .disabled {
+  background: #E7904D;
+  border: 1rpx solid #E7904D;
+  -webkit-box-shadow: 0px 4rpx 0px rgba(149,80,31, 1);
+  -moz-box-shadow: 0px 4rpx 0px rgba(149,80,31, 1);
+  box-shadow: 0px 4rpx 0px rgb(149,80,31);
 }
 
 .rightarrow {
@@ -543,19 +545,28 @@ page {
   margin-top: 7rpx;
   margin-left: 8rpx;
 }
-
-.pick-goods-action {
+.pick-goods .image-btntext {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+}
+.pick-goods .pick-goods-action {
   color: #fff;
   font-size: 28rpx;
   line-height: 1.4;
 }
-
+.pick-goods .pick-goods-btntips {
+  color: #fff;
+  font-size: 22rpx;
+  line-height: 1.4;
+}
 /*送出按钮*/
 
 .buybutton {
   display: flex;
   flex-direction: row;
-  justify-content: left;
+  justify-content: center;
   line-height: 100rpx;
   width: 96%;
   height: 100rpx;
@@ -563,6 +574,7 @@ page {
   background: #e34c55;
   color: white;
   font-size: 36rpx;
+  font-weight: bold;
   border-radius: 0 0 30rpx 30rpx;
   margin: 0 auto 30rpx auto;
   -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
@@ -573,7 +585,7 @@ page {
 .iconbtn {
   width: 64rpx;
   height: 64rpx;
-  margin: 18rpx 8rpx 18rpx 33%;
+  margin: 18rpx 8rpx;
 }
 
 /*推荐商品列表*/
@@ -633,17 +645,21 @@ page {
 }
 
 .venues_box {
-  display: block;
+  display: flex;
+  flex-direction: row;
+  flex-wrap:wrap;
+  align-content:center;
+  justify-content:space-around;
   width: 98%;
+  margin: 0 auto;
   padding-bottom: 40rpx;
-  margin-left: 2%;
   overflow: hidden;
 }
 
 .venues_item {
-  display: inline-block;
-  width: 47%;
-  margin: 0 1% 15rpx 1%;
+  width: 48%;
+  margin-top: 0;
+  margin-bottom:15rpx;
   background: #fff;
   border-radius: 10rpx;
   text-indent: 20rpx;
@@ -689,11 +705,10 @@ page {
 }
 
 .price-now {
-  color: #e34c55;
-  font-size: 28rpx;
+  color: #444444;
+  font-size: 24rpx;
   text-align: right;
   padding-right: 20rpx;
-  font-weight: bold;
 }
 
 .price-now::first-letter {

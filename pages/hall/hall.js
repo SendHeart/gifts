@@ -63,6 +63,7 @@ Page({
     navList2: navList2,
 
   }, 
+  
   setNavigation:function() {
     let startBarHeight = 20
     let navgationHeight = 44

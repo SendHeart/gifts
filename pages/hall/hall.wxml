@@ -34,16 +34,26 @@
       <text class='snum'>{{gifts_send}}</text>
     </view>
   </view>
-  <view class="pick-goods" hidden="{{all_rows>0?false:false}}" bindtap="bindPickGoods">
+  <view class="pick-goods" hidden="{{all_rows>0?false:false}}" style="border:none;">
+    
+    <view class="image-btnbuy" bindtap="bindPickGoods">
     <view>
-      <image class="pick-goods-image" src="../../images/1.png"></image>
+    <image class="pick-goods-image" src="../../images/1.png"></image>
     </view>
-    <view class="pick-goods-text">
-      <text class="pick-goods-slogan">微信好友送礼</text>
-      <text class="pick-goods-slogan2">全场正品，全国包邮</text>
-    </view>
-    <view class="image-btnbuy">
+    <view class="image-btntext">
       <text class="pick-goods-action">挑选礼物</text>
+      <text class="pick-goods-btntips">全场正品,全国包邮</text>
+    </view>
+    </view>
+
+    <view class="image-btnbuy disabled">
+     <view>
+    <image class="pick-goods-image" src="../../images/2.png"></image>
+    </view>
+    <view class="image-btntext">
+      <text class="pick-goods-action">智能选礼</text>
+      <text class="pick-goods-btntips">敬请期待...</text>
+    </view>
     </view>
 
   </view>
@@ -108,22 +118,20 @@
 </view>
 -->
   </view>
-  <view class="pick-goods" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
-    <view>
-      <image class="pick-goods-image" src="../../images/2.png"></image>
-    </view>
+  <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
+   
     <view class="pick-goods-text">
-      <text class="pick-goods-slogan">写下祝福语</text>
-      <text class="pick-goods-slogan2">填写你想要说的话</text>
+      <text class="pick-goods-slogan">写下留言</text>
     </view>
+    <view class="note">
+    <textarea bindblur="bindTextAreaBlur" auto-height placeholder="送你一份礼物，愿你喜欢！" maxlength="56" />
   </view>
-  <view class="note">
-    <textarea bindblur="bindTextAreaBlur" auto-height placeholder="点击编辑" maxlength="56" />
   </view>
+  
 
   <view class="buybutton" bindtap="bindCheckout">
     <image class="iconbtn" src="../../images/share.png"></image>
-    <text>送出礼物</text>
+    <text>送出</text>
   </view>
 
   <!-- 

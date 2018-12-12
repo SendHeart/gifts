@@ -23,8 +23,18 @@ page {
   width: 100%;
   height: 100%;
   overflow-x: hidden;
+  -webkit-overflow-scrolling:touch;
 }
-
+.pagewrap {
+  width: 100%;
+  height: 100%;
+}
+.wxParse {
+  background: #fff;
+}
+.wxParse scroll-view {
+  height: 100%;
+}
 .startBar {
   height: 75rpx;
   background: #333;
@@ -63,7 +73,7 @@ page {
   margin-left: 20rpx;
 }
 .banner {
-  margin-bottom: 15rpx;
+  margin-bottom: 1rpx;
 }
 .image {
   width: 100% !important;
@@ -88,7 +98,8 @@ page {
   text-align: center;
   background: #fff;
   border-top: 1rpx solid #eee;
-  padding: 10rpx 0 100rpx 0;
+  margin-bottom: 1rpx;
+  padding: 10rpx 0 30rpx 0;
   z-index: 1;
 }
 
@@ -136,21 +147,39 @@ page {
 }
 
 .goods-info .right-tag {
-  font-size: 36rpx;
-  color: #e34c55;
+  font-size: 32rpx;
+  color: #444444;
   text-align: right;
   padding-right: 20rpx;
 }
-
-.goods_tag {
+.fitfor {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 28rpx;
+}
+.fitfor .goods_tag {
+  display:inline-block;
   color: #999;
   font-size: 24rpx;
-  padding: 2rpx 6rpx;
+  padding: 2rpx 10rpx;
   border: 1px solid #f2f2f2;
   border-radius: 6rpx;
+  width: auto;
+  margin: 0 auto;
+}
+.prd-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 28rpx;
+  color: #444444;
+  background: #ffffff;
+  padding: 10rpx 0;
+  margin-top: 10rpx;
 }
 .prd-detail {
-  margin:0;
+  padding-bottom:100rpx;
   color: #999;
 }
 .prd-detail text {
@@ -172,31 +201,33 @@ page {
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  border-bottom: 1rpx solid #eee;
 }
 .opt-buttons button::after {
 border: none;
 }
 .add-cart {
-  line-height: 100rpx;
+  line-height: 90rpx;
   text-align: center;
   width: 50%;
-  height: 100rpx;
+  height: 90rpx;
   background-color: #e34c55;
   color: #fff;
-  font-size: 32rpx;
+  font-size: 28rpx;
   border-radius: 0;
 }
 
-.wish-cart {
+.sec-btn {
   outline: none;  
   background: #fff;
-  line-height: 100rpx;
+  line-height: 90rpx;
   text-align: center;
-  width: 50%;
-  height: 100rpx;
-  color: #e34c55;
-  font-size: 32rpx;
+  width: 25%;
+  height: 90rpx;
+  color: #444444;
+  font-size: 24rpx;
   border-radius: 0;
+  border-right: 1rpx solid #eee;
 }
 
 /*cart*/
@@ -226,7 +257,10 @@ border: none;
 .modalbox {
   background-color: #fff;
 }
-
+.sku_title {
+ font-size: 28rpx;
+ margin-bottom: 10rpx;
+}
 .commodity_attr_list {
   background: #fafafc;
   padding: 0 10rpx;
@@ -267,13 +301,23 @@ border: none;
 /*每个属性值*/
 
 .attr_value {
+  display: flex;
+  flex-direction: row;
   padding: 10rpx 20rpx;
   background: #eee;
   border-radius: 10rpx;
-  margin:0 10rpx 10rpx 0;
+  margin-bottom:10rpx;
   font-size: 24rpx;
 }
-
+.attr_value image {
+  width: 60rpx;
+  height: 60rpx;
+}
+.attr_value text {
+  display: inline-block;
+  line-height: 60rpx;
+  margin-left: 10rpx;
+}
 /*每个属性选中的当前样式*/
 
 .attr_value_active {
@@ -294,7 +338,6 @@ border: none;
   height: 40rpx;
   line-height: 40rpx;
   margin-left: 20rpx;
-  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 24rpx;
@@ -303,31 +346,37 @@ border: none;
   color: #999;
   font-size: 20rpx;
   margin: 10rpx 0 0 20rpx;
+  display: none;
 }
 
 
 .comm-text {
-  margin-left: 20rpx;
-  margin-right: 20rpx;
   display: flex;
   flex-direction: row;
   font-size: 24rpx;
   color: #999;
   justify-content: space-between;
   background-color: #fff;
- 
+  padding: 10rpx 20rpx;
+  margin-top: 10rpx;
+}
+.comm-name {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #444;
 }
 .comm-content{
-  margin-left:20rpx;
-  font-size:28rpx;
-  overflow:hidden;  
-  text-overflow:ellipsis;  
-  white-space:nowrap; 
+  font-size:24rpx;
+  color: #999999;
+  overflow:hidden;
+  padding-left: 70rpx;
+  text-overflow:ellipsis;
+  white-space:nowrap;
 }
 
 .comm-status {
   color: #e34c55;
-  
+  font-size: 24rpx;
 }
 .comm-status2 {
   color: #e34c55;
@@ -336,10 +385,9 @@ border: none;
 .comm-item {
  	display: flex;
 	flex-direction: column;
-	height:160rpx;
 	width:100%;
-	border-bottom: 1px solid #eee;
-	padding: 10rpx 0;
+	border-bottom: 1px solid #F2F2F2;
+	padding: 20rpx 20rpx;
   text-align: left;
   align-items: left;
   background-color: #fff;
@@ -348,10 +396,8 @@ border: none;
 .comm-title {
  	display: flex;
 	flex-direction: row;
-	height:80rpx;
 	width:100%;
-	border-bottom: 0px solid #eee;
-	padding: 10rpx 0;
+  font-size: 28rpx;
   text-align: center;
   align-items: center;
 }
@@ -359,10 +405,9 @@ border: none;
 /*左部图片*/
 
 .comm-image {
-  margin-left: 10rpx;
-  margin-bottom: 10rpx;
-  width: 70rpx;
-  height:70rpx;
+  margin-right: 10rpx;
+  width: 60rpx;
+  height:60rpx;
   border-radius: 50%;
 }
 

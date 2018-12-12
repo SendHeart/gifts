@@ -20,7 +20,7 @@
 
 <scroll-view scroll-y="true" class="container" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}">
   <view class="venues_box">
-    <view class="venues_list">
+    
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
           <navigator url="../details/details?id={{item.id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class="none">
@@ -38,7 +38,7 @@
           </view>
         </view>
       </block>
-    </view>
+    
   </view>
 
   <!--使用懒加载替代

@@ -26,11 +26,11 @@
 </view>
 <view class="menu-area">
   <view bindtap="navigateToAccount" class="tableviewcell" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/u633.png" />
+	  <image src="../../images/account.png" />
 	  <text>我的账户</text>
   </view>
    <view bindtap="get_bank_info" class="tableviewcell" style='width:{{windowWidth-35}}px'>
-	  <image src="../../images/bankcard.png" />
+	  <image src="../../images/mycards.png" />
 	  <text>我的银行卡</text>
   </view>
 </view>
