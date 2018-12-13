@@ -95,7 +95,7 @@ Page({
             goodssale: goods_info[0]['sale'],
             goods_img: goods_info[0]['image']
           })
-          that.get_order_comment()
+          //that.get_order_comment()
           // 商品SKU
           wx.request({
             url: weburl + '/api/client/get_goodssku_list',
