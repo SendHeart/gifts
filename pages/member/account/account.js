@@ -43,10 +43,27 @@ Page({
   //确认  
   confirm_withdraw: function () {
     var that = this
-    that.setData({
-      hiddenmodalput: !that.data.hiddenmodalput
-    })
-    that.withdraw_member_account()
+    var withdrawNum = that.data.withdrawNum ? that.data.withdrawNum:0
+    var balance = that.data.balance
+    if (withdrawNum > balance){
+      wx.showToast({
+        title: '大于可提现余额',
+        icon: 'loading',
+        duration: 1500
+      })
+    } else if (withdrawNum == 0){
+      wx.showToast({
+        title: '提现金额为空',
+        icon: 'loading',
+        duration: 1500
+      })
+    }else{
+      that.setData({
+        hiddenmodalput: !that.data.hiddenmodalput
+      })
+      that.withdraw_member_account()
+    }
+   
   },
   bindChangeNum: function (e) {
     var that = this;

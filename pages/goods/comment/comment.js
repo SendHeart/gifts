@@ -375,13 +375,22 @@ Page({
   sendCommentBtnTap: function () {
     var that = this
     var upimage = that.data.new_img_arr
-    if (upimage.length > 0) {
-      that.upload()
+    var content = that.data.content ? that.data.content : ''
+    if (content=='') {
+      wx.showToast({
+        title: '评论内容为空',
+        icon: 'loading',
+        duration: 1500
+      })
     } else{
-      //console.log('本次没有需上传图片:', upimage) 
-      that.send_comment()
+      if (upimage.length > 0) {
+        that.upload()
+      } else {
+        //console.log('本次没有需上传图片:', upimage) 
+        that.send_comment()
+      }
     }
-    
+   
   },
 
   send_comment: function () {
