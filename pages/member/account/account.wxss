@@ -1,1 +1,163 @@
-/* pages/member/account/account.wxss */
+
+.balance {
+  width: 100%;
+  margin: 15rpx auto 0 auto;
+  background: #fff;
+  display: flex;
+  /*flex-flow: column nowrap;*/
+  justify-content: left; /*子项横轴上居中对齐*/
+  align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
+  opacity: 1;
+  border-bottom: 1rpx solid #eee;
+}
+
+.balance .balance-title {
+  display: flex;
+  flex-direction: row;
+  position: relative;
+  width: 60%;
+  height: 100%;
+  color: #444;
+}
+
+.balance .balance-title .balance-title-bal {
+  margin: 15rpx 10rpx 10rpx 20rpx; 
+}
+
+.balance-content  {
+  color: #999;
+  width: 40%;
+  text-align: right;
+  font-size: 24rpx;
+}
+
+.balance-content text {
+  margin-right: 4rpx;
+}
+
+.balance-content .snum {
+  color: #333;
+  margin-right: 20rpx;
+  padding: 2rpx 8rpx;
+  border-radius: 6rpx;
+  font-size:36rpx;
+}
+
+/* 显示与隐藏 */
+.show {
+	display: block;
+}
+
+.hidden {
+	display: none;
+}
+
+.bal-text {
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  font-size: 24rpx;
+  color: #999;
+  justify-content: space-between;
+  background-color: #fff;
+}
+
+.bal-item {
+ 	display: flex;
+	flex-direction: column;
+	width:100%;
+	border-bottom: 1px solid #eee;
+	padding: 0rpx 0;
+  text-align: left;
+  align-items: left;
+  background-color: #fff;
+}
+
+.bal-title {
+ 	display: flex;
+	flex-direction: row;
+	width:100%;
+	border-bottom: 0px solid #eee;
+	padding: 0rpx 0;
+  text-align: left;
+  align-items: left;
+}
+.bal-sub-title {
+ 	display: flex;
+	flex-direction: column;
+	padding: 10rpx 0;
+  text-align: left;
+  align-items: left;
+}
+ 
+.bal-content-text{
+  margin-left:20rpx;
+  font-size:28rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
+.bal-content-image {
+ 	display: flex;
+	flex-direction: row;
+	width:100%;
+	border-bottom: 1px solid #aaaaaa;
+	padding: 10rpx 0;
+  text-align: left;
+  align-items: left;
+  background-color: #fff;
+}
+ 
+.bal-content-image image {
+ /*被图片设置宽高*/ 
+  width: 40px; 
+  height: 40px; 
+  padding-left:10px;
+  padding-bottom: 10rpx;
+  
+}
+
+.select-and-amount-mark {
+  position: relative;
+  top: 10rpx;
+  left: 20rpx;
+  font-size: 28rpx;
+}
+
+.morebtn {
+  margin: 20rpx;
+  border: 0;
+  background: #f2f2f2;
+  color: #e34c55;
+  font-size: 28rpx;
+}
+/*购物车按钮、收藏等*/
+.footer {
+  background: #fff;
+  width: 100%;
+  padding-bottom: 50rpx;
+  position: fixed;
+  bottom: 0;
+  border-top: 1rpx solid #eee;
+}
+.opt-buttons {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+.opt-buttons button::after {
+  border: none;
+}
+.withdraw {
+  line-height: 100rpx;
+  text-align: center;
+  width: 50%;
+  height: 100rpx;
+  background-color: #e34c55;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 0;
+}
