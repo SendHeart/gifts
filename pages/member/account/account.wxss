@@ -4,6 +4,7 @@
   margin: 15rpx auto 0 auto;
   background: #fff;
   display: flex;
+  flex-direction: column;
   /*flex-flow: column nowrap;*/
   justify-content: left; /*子项横轴上居中对齐*/
   align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
@@ -13,22 +14,19 @@
 
 .balance .balance-title {
   display: flex;
-  flex-direction: row;
+  flex-direction:row;
   position: relative;
-  width: 60%;
-  height: 100%;
   color: #444;
+  margin: 40rpx auto 0 auto;
 }
-
-.balance .balance-title .balance-title-bal {
-  margin: 15rpx 10rpx 10rpx 20rpx; 
+.balance-title-bal {
+  font-size: 32rpx;
 }
 
 .balance-content  {
   color: #999;
-  width: 40%;
-  text-align: right;
-  font-size: 24rpx;
+  text-align:center;
+  margin-bottom: 20rpx;
 }
 
 .balance-content text {
@@ -36,11 +34,9 @@
 }
 
 .balance-content .snum {
-  color: #333;
-  margin-right: 20rpx;
+  color: #e34c55;
   padding: 2rpx 8rpx;
-  border-radius: 6rpx;
-  font-size:36rpx;
+  font-size:48rpx;
 }
 
 /* 显示与隐藏 */
@@ -97,6 +93,7 @@
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:nowrap; 
+  color: #999;
 }
 .bal-content-image {
  	display: flex;
@@ -119,9 +116,8 @@
 }
 
 .select-and-amount-mark {
-  position: relative;
-  top: 10rpx;
-  left: 20rpx;
+  display: flex;
+  justify-content: center;
   font-size: 28rpx;
 }
 
@@ -154,10 +150,26 @@
 .withdraw {
   line-height: 100rpx;
   text-align: center;
-  width: 50%;
+  width: 100%;
   height: 100rpx;
   background-color: #e34c55;
   color: #fff;
   font-size: 32rpx;
   border-radius: 0;
+}
+.formfill {
+display: flex;
+flex-direction:row;
+justify-content: center;
+margin: 40rpx auto;
+}
+.formfill text {
+font-size: 28rpx;
+color: #e34c55;
+}
+.formfill input {
+  width: 50%;
+  background: #f2f2f2;
+  border-radius: 14rpx;
+  padding: 8rpx 15rpx;
 }

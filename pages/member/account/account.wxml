@@ -20,13 +20,13 @@
   </view>
 </view> 
 <modal hidden="{{hiddenmodalput}}" title="可提现金额 ￥{{balance?balance:0}}" confirm-text="确定" cancel-text="返回" bindcancel="cancel_withdraw" bindconfirm="confirm_withdraw">
-  <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
-    <text style='font-size:35rpx;width:20%'>￥</text>
-    <input style='font-size:35rpx;width:70%' bindinput="bindChangeNum" value="{{withdrawNum}}" type='digit' placeholder="请输入提现金额" /> 
+  <view class='formfill'>
+    <text>￥</text>
+    <input bindinput="bindChangeNum" value="{{withdrawNum}}" type='digit' placeholder="请输入金额" /> 
   </view>
   <view class="select-and-amount-mark">
 		    <icon type="{{withdraw_selected==1 ? 'success_circle' : 'circle'}}" size="18" color='#333' data-withdraw-type="1" bindtap="withdrawSelect" />
-		    <text style="margin-left:10rpx;">微信</text>
+		    <text>提现到微信钱包</text>
         <!--  
         <icon type="{{withdraw_selected==2 ? 'success_circle' : 'circle'}}" size="18" color='#333' style='margin-left:30rpx;' data-withdraw-type="2" bindtap="withdrawSelect" />
 		    <text style="margin-left:10rpx;">银行卡</text>
@@ -36,6 +36,6 @@
 <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">更多 {{page}}/{{page_num}}</button>
 <view class="footer">
   <view class="opt-buttons">
-    <button class="withdraw" bindtap="modalinput_withdraw">提现申请</button>
+    <button class="withdraw" bindtap="modalinput_withdraw">申请提现</button>
   </view>
 </view>

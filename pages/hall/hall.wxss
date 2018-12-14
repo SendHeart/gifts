@@ -27,6 +27,7 @@ page {
   width: 0;
   height: 0;
   color: transparent;
+  display: none;
 }
 
 .startBar {
@@ -213,7 +214,7 @@ page {
 /*右部描述*/
 
 .carts-text {
-  width: 80%;
+  width: 75%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -289,10 +290,10 @@ page {
 /*stepper容器*/
 
 .stepper {
-  width: 90px;
+  width: 80px;
   margin: 0 auto;
   position: absolute;
-  right: 20rpx;
+  right: 28rpx;
   bottom: 20rpx;
   display: flex;
   flex-direction: row;
@@ -304,11 +305,12 @@ page {
 .stepper text {
   width: 48rpx;
   height: 48rpx;
-  line-height: 46rpx;
+  line-height: 44rpx;
   text-align: center;
   border: 2rpx solid #ddd;
-  border-radius: 10rpx;
+  border-radius: 50%;
   color: #999;
+  font-size: 32rpx;
 }
 
 /*数值*/
@@ -317,11 +319,12 @@ page {
   color: #444;
   float: left;
   margin: 0 auto;
-  width: 60rpx;
+  width: 30rpx;
   height: 48rpx;
   text-align: center;
   font-size: 24rpx;
 }
+
 
 /*普通样式*/
 
@@ -520,23 +523,17 @@ page {
   flex-direction: row;
   justify-content: left;
   text-align: center;
-  width: 40%;
+  width: 42%;
   height: 78rpx;
-  margin: 15rpx;
+  margin: 12rpx;
   border: 1rpx solid #e34c55;
   border-radius: 14rpx;
   background: #e34c55;
   padding: 10rpx;
-  -webkit-box-shadow: 0px 4rpx 0px rgba(179, 22, 2, 1);
-  -moz-box-shadow: 0px 4rpx 0px rgba(179, 22, 2, 1);
-  box-shadow: 0px 4rpx 0px rgb(179, 22, 2);
 }
 .pick-goods .disabled {
   background: #E7904D;
   border: 1rpx solid #E7904D;
-  -webkit-box-shadow: 0px 4rpx 0px rgba(149,80,31, 1);
-  -moz-box-shadow: 0px 4rpx 0px rgba(149,80,31, 1);
-  box-shadow: 0px 4rpx 0px rgb(149,80,31);
 }
 
 .rightarrow {
@@ -567,25 +564,33 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  line-height: 100rpx;
+  line-height: 114rpx;
   width: 96%;
-  height: 100rpx;
-  /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
-  background: #e34c55;
-  color: white;
-  font-size: 36rpx;
-  font-weight: bold;
+  height: 114rpx;
+  background: #fff;
   border-radius: 0 0 30rpx 30rpx;
   margin: 0 auto 30rpx auto;
-  -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  -moz-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
+  
+}
+.btnconfirm {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 93%;
+  height: 90rpx;
+  background: #e34c55;
+  box-shadow: 0px 4rpx 0px rgb(179, 22, 2);
+  border-radius:14rpx;
+  color: #fff;
+  font-size: 34rpx;
+  font-weight: bold;
+  line-height: 90rpx;
 }
 
-.iconbtn {
-  width: 64rpx;
-  height: 64rpx;
-  margin: 18rpx 8rpx;
+.btnconfirm image {
+  width: 48rpx;
+  height: 48rpx;
+  margin: 21rpx 6rpx;
 }
 
 /*推荐商品列表*/

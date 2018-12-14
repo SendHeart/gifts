@@ -12,6 +12,7 @@
 
 .wxParse{
     margin: 0;
+    padding-bottom: 100rpx;
     font-size: 28rpx;
     color: #666;
     line-height: 0.9;

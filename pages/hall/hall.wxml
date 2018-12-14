@@ -121,7 +121,7 @@
   <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
    
     <view class="pick-goods-text">
-      <text class="pick-goods-slogan">写下留言</text>
+      <text class="pick-goods-slogan">附赠留言</text>
     </view>
     <view class="note">
     <textarea bindblur="bindTextAreaBlur" auto-height placeholder="送你一份礼物，愿你喜欢！" maxlength="56" />
@@ -129,9 +129,11 @@
   </view>
   
 
-  <view class="buybutton" bindtap="bindCheckout">
-    <image class="iconbtn" src="../../images/share.png"></image>
-    <text>送出</text>
+  <view class="buybutton">
+  <view class="btnconfirm" bindtap="bindCheckout">
+  <image src="../../images/share.png"></image>
+  <text>送出礼物</text>
+  </view>
   </view>
 
   <!-- 

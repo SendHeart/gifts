@@ -27,7 +27,7 @@
 <view class="menu-area">
   <view bindtap="navigateToAccount" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/account.png" />
-	  <text>我的账户</text>
+	  <text>我的钱包</text>
   </view>
   <!-- 
    <view bindtap="get_bank_info" class="tableviewcell" style='width:{{windowWidth-35}}px'>

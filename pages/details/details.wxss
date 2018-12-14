@@ -179,7 +179,6 @@ page {
   margin-top: 10rpx;
 }
 .prd-detail {
-  padding-bottom:100rpx;
   color: #999;
 }
 .prd-detail text {

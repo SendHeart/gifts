@@ -11,8 +11,8 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 
 Page({
   data: {
-    title_name: '记录',
-    title_logo: '../../images/footer-icon-05.png',
+    title_name: '礼物袋',
+    title_logo: '../../images/history_s.png',
     orders: [],
     shop_type:shop_type,
     page: 1,
@@ -116,7 +116,7 @@ Page({
     var all_rows = that.data.all_rows;
     if (page > that.data.page_num) {
       wx.showToast({
-        title: '没有更多记录了',
+        title: '没有更多了',
         icon: 'loading',
         duration: 1000
       });
@@ -342,7 +342,7 @@ Page({
     var goods_skuid = that.data.goods_skuid //e.currentTarget.dataset.goodsSkuid
     var order_skuid = that.data.order_skuid //e.currentTarget.dataset.skuId
     var shop_type = that.data.shop_type
-    console.log('礼物折现 goods_id:', goods_id, 'goods skuid:', goods_skuid,'order skuid:', order_skuid)
+    console.log('礼物回收 goods_id:', goods_id, 'goods skuid:', goods_skuid,'order skuid:', order_skuid)
     //礼物折现
     wx.request({
       url: weburl + '/api/client/buyin',
@@ -363,14 +363,14 @@ Page({
         var orderObjects = res.data.result;
         if (res.data.status != 'y') {
           wx.showToast({
-            title: res.data.info ? res.data.info : '折现失败',
+            title: res.data.info ? res.data.info : '回收失败',
             icon: 'loading',
             duration: 1500
           })
 
         } else {
           wx.showToast({
-            title: '折现完成',
+            title: '回收完成',
             icon: 'success',
             duration: 1500
           })
@@ -415,7 +415,7 @@ Page({
     var shop_type = that.data.shop_type
     wx.showModal({
       title: '请确认',
-      content: '确认要取消订单吗',
+      content: '确认要取消吗',
       success: function (res) {
         if (res.confirm) {
           wx.request({
@@ -437,7 +437,7 @@ Page({
               console.log(res.data.info);
               if (!res.data.info) {
                 wx.showToast({
-                  title: '订单取消完成',
+                  title: '取消完成',
                   icon: 'success',
                   duration: 1000
                 })

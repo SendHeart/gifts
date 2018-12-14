@@ -17,10 +17,10 @@
       <text wx:if="{{item.gift_status==2 && giftflag ==0}}" class="status2">对方已接受</text>
       <text wx:if="{{item.gift_status==1 && giftflag ==0}}" class="status">对方未接受</text>
       <text wx:if="{{giftflag==0 && item.status == 8}}" class="status2">已取消</text>
-      <text wx:if="{{item.status==10 && giftflag ==0}}" class="status2">退款中</text>
+      <text wx:if="{{item.status==10 && giftflag ==0}}" class="status">退款中</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" class="status2">已发货</text>
-      <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2}}" class="status2">未发货</text>
-     
+      <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2  && mapping.status==0}}" class="status2">未发货</text>
+      <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="status2">已折现</text>
     </view>
 
     <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" >
@@ -40,14 +40,24 @@
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
           <text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>
-          <text style="width:20%;" bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} smallbtn">评论</text>
-          <text style="width:20%;" bindtap="modalinput_buyin" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} smallbtn">折现</text>
-          <text style="width:20%;" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1) ? '': 'hidden'}} status2">已折现</text>
+          
+          
+          
         </view>
       </view>
     </view>
-    <modal hidden="{{hiddenmodalput}}" title="确认折现" confirm-text="确定" cancel-text="返回" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
-      <text style="color:#e34c55;">折现金额￥{{buyin_price}}</text>
+    <modal class="modalbox" height="70%" hidden="{{hiddenmodalput}}" title="确认回收该礼物?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
+      <view class="buyin_title">
+      <text>回收金额:</text><text style="color:#e34c55;font-size:48rpx;height:80rpx;">￥{{buyin_price}}</text>
+      </view>
+      <view class="buyin_content">
+      <text class="buyin_text" style="font-size:32rpx;">重要提示：</text>
+      
+      <text class="buyin_text">1. 平台会收取该订单金额<text style="color:#e34c55;">10%</text>的手续费。</text>
+      <text class="buyin_text">2. 回收的金额会自动转到您的送心钱包账户中，您可以在“我的-钱包”中查询。</text>
+      <text class="buyin_text">3. 如有遇到问题，请联系我们的客服人员。</text>
+      
+      </view>
     </modal>
     <view class="order-footer">
       <view style="width:80%">
@@ -58,7 +68,7 @@
         <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{index}}" class="{{(item.status==2 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
         <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
-       
+       <text bindtap="modalinput_buyin" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} smallbtn">礼物回收</text>
 
       </view>
       <view style="width:30%; text-align:right;">
@@ -66,6 +76,7 @@
       <text wx:if="{{(giftflag==1 && item.status==2)}}" bindtap="sendAginTapTag" class="smallbtn2">回赠</text>
       <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="sendOtherTapTag" class="smallbtn2">转送</text>
       <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="refundTapTag" class="smallbtn2">退款</text>
+      <text bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} smallbtn">评论</text>
       </view>
     </view>
     <view class="order-footer">
