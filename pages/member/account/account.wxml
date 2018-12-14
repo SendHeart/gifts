@@ -27,8 +27,10 @@
   <view class="select-and-amount-mark">
 		    <icon type="{{withdraw_selected==1 ? 'success_circle' : 'circle'}}" size="18" color='#333' data-withdraw-type="1" bindtap="withdrawSelect" />
 		    <text style="margin-left:10rpx;">微信</text>
+        <!--  
         <icon type="{{withdraw_selected==2 ? 'success_circle' : 'circle'}}" size="18" color='#333' style='margin-left:30rpx;' data-withdraw-type="2" bindtap="withdrawSelect" />
 		    <text style="margin-left:10rpx;">银行卡</text>
+        -->
 	</view>
 </modal>
 <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">更多 {{page}}/{{page_num}}</button>
