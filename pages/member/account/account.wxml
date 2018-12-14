@@ -24,6 +24,9 @@
     <text style='font-size:35rpx;width:20%'>￥</text>
     <input style='font-size:35rpx;width:70%' bindinput="bindChangeNum" value="{{withdrawNum}}" type='digit' placeholder="请输入提现金额" /> 
   </view>
+   <view wx:if="{{withdraw_selected==1}}" style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
+     <input style='font-size:35rpx;width:70%' bindinput="bindChangeWx" value="{{withdrawWx}}" type='digit' placeholder="请输入微信号" /> 
+  </view>
    <view class="select-and-amount-mark">
 		    <icon type="{{withdraw_selected==1 ? 'success_circle' : 'circle'}}" size="18" color='#333' data-withdraw-type="1" bindtap="withdrawSelect" />
 		    <text style="margin-left:10rpx;">微信</text>

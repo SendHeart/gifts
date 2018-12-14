@@ -22,6 +22,7 @@ Page({
     userInfo: userInfo,
     hiddenmodalput: true,
     withdrawNum:null,
+    withdrawWx:null,
     withdraw_selected:1,
   
   },
@@ -44,6 +45,8 @@ Page({
   confirm_withdraw: function () {
     var that = this
     var withdrawNum = that.data.withdrawNum ? that.data.withdrawNum:0
+    var withdrawWx = that.data.withdrawWx ? that.data.withdrawWx : ''
+    var withdraw_selected = that.data.withdraw_selected ? that.data.withdraw_selected : 1
     var balance = that.data.balance
     if (withdrawNum > balance){
       wx.showToast({
@@ -54,6 +57,12 @@ Page({
     } else if (withdrawNum == 0){
       wx.showToast({
         title: '提现金额为空',
+        icon: 'loading',
+        duration: 1500
+      })
+    } else if (withdrawWx == '' && withdraw_selected==1) {
+      wx.showToast({
+        title: '微信号为空',
         icon: 'loading',
         duration: 1500
       })
@@ -73,6 +82,14 @@ Page({
     })
     console.log('withdrawNum:' + that.data.withdrawNum)
   },
+  bindChangeWx: function (e) {
+    var that = this;
+    var withdrawWx = e.detail.value
+    that.setData({
+      withdrawWx: withdrawWx
+    })
+    console.log('withdrawNum:' + that.data.withdrawNum)
+  },
   withdrawSelect: function (e) {
     var that = this
     var withdraw_selected = e.currentTarget.dataset.withdrawType;
@@ -88,6 +105,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
     var withdrawNum = that.data.withdrawNum ? parseFloat(that.data.withdrawNum):0
+    var withdrawWx = that.data.withdrawWx ? withdrawWx : ''
     var withdraw_selected = that.data.withdraw_selected
     var balance = that.data.balance
     console.log('账户提现申请 withdrawNum:' + withdrawNum, ' balance:', balance)
@@ -152,8 +170,6 @@ Page({
           }
         }
       })
-
-      
     } else if (withdrawNum > 0 && withdrawNum <= balance && withdraw_selected == 1){ //微信提现
       wx.request({
         url: weburl + '/api/client/withdraw_member_account',
@@ -164,7 +180,7 @@ Page({
           shop_type: shop_type,
           withdraw_type:1,
           amount: withdrawNum * 100,
-         
+          wxname: withdrawWx,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -207,7 +223,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
-    
+  
     wx.request({
       url: weburl + '/api/client/get_member_account_bal',
       method: 'POST',
@@ -226,12 +242,13 @@ Page({
         if (balance_info) {
           var balance = 0 
           balance = balance_info['balance']/100
+          var withdrawWx = balance_info['wx_name']
           that.setData({
             balance: balance.toFixed(2),
-        
+            withdrawWx: withdrawWx,  //微信号
           })
 
-          console.log('获取账户余额:', balance)
+          console.log('获取账户余额:', balance, ' 微信号:', withdrawWx)
         } else {
           wx.showToast({
             title: '暂无账户信息',
