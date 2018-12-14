@@ -60,12 +60,12 @@ Page({
         icon: 'loading',
         duration: 1500
       })
-    } else if (withdrawWx == '' && withdraw_selected==1) {
+    /* }else if (withdrawWx == '' && withdraw_selected==1) {
       wx.showToast({
         title: '微信号为空',
         icon: 'loading',
         duration: 1500
-      })
+      })*/
     }else{
       that.setData({
         hiddenmodalput: !that.data.hiddenmodalput
