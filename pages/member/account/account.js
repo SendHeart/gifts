@@ -48,10 +48,11 @@ Page({
     var withdrawWx = that.data.withdrawWx ? that.data.withdrawWx : ''
     var withdraw_selected = that.data.withdraw_selected ? that.data.withdraw_selected : 1
     var balance = that.data.balance
-    if (withdrawNum > balance){
+    console.log('withdrawNum:' + that.data.withdrawNum,'balance:'+balance)
+    if (withdrawNum - balance >0){
       wx.showToast({
-        title: '大于可提现余额',
-        icon: 'loading',
+        title: '大于可提现余额' + balance, withdrawNum,
+        icon: 'none',
         duration: 1500
       })
     } else if (withdrawNum == 0){
@@ -77,6 +78,7 @@ Page({
   bindChangeNum: function (e) {
     var that = this;
     var withdrawNum = e.detail.value
+     
     that.setData({
       withdrawNum: withdrawNum
     })
@@ -88,7 +90,7 @@ Page({
     that.setData({
       withdrawWx: withdrawWx
     })
-    console.log('withdrawNum:' + that.data.withdrawNum)
+    console.log('withdrawWx:' + that.data.withdrawWx)
   },
   withdrawSelect: function (e) {
     var that = this
@@ -158,6 +160,8 @@ Page({
                     duration: 1000
                   })
                   console.log('提现申请完成', withdrawNum)
+                  that.get_member_account_bal()
+                  that.get_member_account_detail()
                 } else {
                   wx.showToast({
                     title: res.data.info + '[失败]',
@@ -194,6 +198,8 @@ Page({
               duration: 1000
             })
             console.log('提现申请完成', withdrawNum)
+            that.get_member_account_bal()
+            that.get_member_account_detail()
           } else {
             wx.showToast({
               title: res.data.info + '[失败]',
