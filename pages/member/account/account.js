@@ -297,7 +297,7 @@ Page({
           var page_num = that.data.page_num
           page_num = (all_rows / pagesize + 0.5)
           for (var i = 0; i < balance_detail_info.length; i++) {
-            balance_detail_info[i]['addtime'] = util.getDateStr(balance_detail_info[i]['addtime'] * 1000, 0)
+            balance_detail_info[i]['addtime'] = util.formatTime(new Date(balance_detail_info[i]['addtime'] * 1000))
             balance_detail_info[i]['amount'] = (balance_detail_info[i]['amount'] / 100).toFixed(2)
           }
           that.setData({
