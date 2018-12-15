@@ -24,6 +24,7 @@ Page({
     withdrawNum:null,
     withdrawWx:null,
     withdraw_selected:1,
+    balance_detail:[],
   
   },
  
@@ -274,6 +275,7 @@ Page({
     var all_rows = that.data.all_rows
     var page = that.data.page
     var pagesize = that.data.pagesize
+    var balance_detail = that.data.balance_detail
     wx.request({
       url: weburl + '/api/client/get_member_account_detail',
       method: 'POST',
@@ -299,11 +301,11 @@ Page({
             balance_detail_info[i]['amount'] = (balance_detail_info[i]['amount'] / 100).toFixed(2)
           }
           that.setData({
-            balance_detail: balance_detail_info,
+            balance_detail: balance_detail.concat(balance_detail_info),
             all_rows: all_rows,
             page_num: page_num.toFixed(0),
           })
-          console.log('获取账户明细:', balance_detail_info)
+          console.log('获取账户明细:', balance_detail_info, that.data.page_num )
         } else {
           wx.showToast({
             title: '暂无账户明细',
