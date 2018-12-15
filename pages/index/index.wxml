@@ -3,7 +3,7 @@
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <view class="container" style=''><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-  <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}">
+  <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
       <!-- 
@@ -23,7 +23,7 @@
       
     </view>
 
-    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" >
+    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:for-index="sku_idx" wx:key="" class="carts-item" >
       <view bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
         <!-- 缩略图 -->
         <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill" />
@@ -32,7 +32,7 @@
         <!-- 商品标题 -->
         <text class="carts-title">{{mapping.goods_name}}</text>
         <view  class="carts-title" style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
-            <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="" >
+            <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value"  wx:key="" >
               <text  >{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
             </view>
@@ -41,20 +41,19 @@
           <text>x{{mapping.sku_num}}</text>
           <text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>
             <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="status2">已折现</text>
-              <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1}}" bindtap="modalinput_buyin" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} smallbtn">礼物回收</text>
+              <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1}}" bindtap="modalinput_buyin" data-order-index="{{order_idx}}" data-sku-index="{{sku_idx}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} smallbtn">礼物回收</text>
         </view>
       </view>
     </view>
-    <modal class="modalbox" height="70%" hidden="{{hiddenmodalput}}" title="确认回收该礼物?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
+    <modal class="modalbox" height="90%" hidden="{{hiddenmodalput}}" title="确认回收该礼物?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
       <view class="buyin_title">
       <text>回收金额:</text><text style="color:#e34c55;font-size:48rpx;height:80rpx;">￥{{buyin_price}}</text>
       </view>
       <view class="buyin_content">
       <text class="buyin_text" style="font-size:32rpx;">重要提示：</text>
-      
-      <text class="buyin_text">1. 平台会收取该订单金额<text style="color:#e34c55;">10%</text>的手续费。</text>
+      <text class="buyin_text">1. 平台会收取该订单金额<text style="color:#e34c55;">{{100-buyin_rate}}%</text>的手续费。</text>
       <text class="buyin_text">2. 回收的金额会自动转到您的送心钱包账户中，您可以在“我的-钱包”中查询。</text>
-      <text class="buyin_text">3. 如有遇到问题，请联系我们的客服人员。</text>
+      <text class="buyin_text">\n 3. 如有遇到问题，请联系我们的客服人员。</text>
       
       </view>
     </modal>

@@ -277,7 +277,7 @@ page {
 
 
 .modalbox {
-  height: 70%;
+  height: 90%;
 }
 .buyin_title {
   display: flex;
@@ -299,10 +299,11 @@ page {
   justify-content: left;
   margin: 30rpx auto;
   font-size: 24rpx;
+  height:230rpx;
 }
 .buyin_content .buyin_text {
   display: block;
   font-size: 28rpx;
   color: #999;
-  height: 36rpx;
+  height: 46rpx;
 }

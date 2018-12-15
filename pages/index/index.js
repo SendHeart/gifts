@@ -56,6 +56,8 @@ Page({
   //点击按钮指定的hiddenmodalput弹出框  
   modalinput_buyin: function (e) {
     var that = this
+    var sku_index = e.currentTarget.dataset.skuIndex
+    var order_index = e.currentTarget.dataset.orderIndex
     var goods_id = e.currentTarget.dataset.goodsId
     var goods_skuid = e.currentTarget.dataset.goodsSkuid
     var order_skuid = e.currentTarget.dataset.skuId
@@ -63,12 +65,15 @@ Page({
     var sku_num = e.currentTarget.dataset.orderSkuNum;
     var buyin_rate = that.data.buyin_rate
     var buyin_price = (sku_price * sku_num * buyin_rate/100).toFixed(2)
+    console.log('order_index:' + order_index, ' sku_index:', sku_index)
     that.setData({
         hiddenmodalput: !that.data.hiddenmodalput,
         goods_id: goods_id,
         goods_skuid: goods_skuid,
         order_skuid: order_skuid,
         buyin_price: buyin_price,
+        order_index: order_index,
+        sku_index: sku_index,
     })
 
   },
@@ -342,7 +347,9 @@ Page({
     var goods_skuid = that.data.goods_skuid //e.currentTarget.dataset.goodsSkuid
     var order_skuid = that.data.order_skuid //e.currentTarget.dataset.skuId
     var shop_type = that.data.shop_type
-    console.log('礼物回收 goods_id:', goods_id, 'goods skuid:', goods_skuid,'order skuid:', order_skuid)
+    var order_index = that.data.order_index
+    var sku_index = that.data.sku_index
+    console.log('礼物回收 goods_id:', goods_id, 'goods skuid:', goods_skuid, 'order skuid:', order_skuid, ' order_index:', order_index)
     //礼物折现
     wx.request({
       url: weburl + '/api/client/buyin',
@@ -373,6 +380,11 @@ Page({
             title: '回收完成',
             icon: 'success',
             duration: 1500
+          })
+          var orders = that.data.orders
+          orders[order_index]['order_sku'][sku_index]['status'] = 1
+          that.setData({
+            orders: orders,
           })
         }
       }
