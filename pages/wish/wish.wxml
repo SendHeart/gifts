@@ -15,7 +15,9 @@
 
 <view class="banner" style='margin-top:20rpx;' hidden="{{!shareflag}}" >
   
-  <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" class="btnshare">分享微信好友</button>
+  <button wx:if="{{carts.length>0}}" open-type="share" bindtap="onShareAppMessage" class="btnshare">
+  <image class="shareto" src="../../images/shareto.png"></image>
+  分享</button>
  <!-- 
   <button wx:if="{{carts.length==0}}" bindtap="addWishTapTag" type="warn">添加心愿单</button>
   -->

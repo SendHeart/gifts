@@ -353,8 +353,8 @@ Page({
     }
     if (cartselected.length==0){
       wx.showToast({
-        title: '请先添加礼物吧', /* 文案修改 */
-        icon: 'success',
+        title: '请先挑选礼物~', /* 文案修改 */
+        icon: 'none',
         duration: 1000
       })
       return

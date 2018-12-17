@@ -31,7 +31,7 @@
       <view class="carts-text">
         <!-- 商品标题 -->
         <text class="carts-title">{{mapping.goods_name}}</text>
-        <view  class="carts-title" style="font-size:24rpx;color:gray;display: flex;flex-direction: row;align-items:center">
+        <view  class="carts-title"> 
             <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value"  wx:key="" >
               <text  >{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
@@ -39,9 +39,9 @@
           </view>
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
-          <text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>
-            <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="status2">已折现</text>
-              <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1}}" bindtap="modalinput_buyin" data-order-index="{{order_idx}}" data-sku-index="{{sku_idx}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} smallbtn">礼物回收</text>
+          <!--<text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>-->
+            <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="recyclestatus">已折现</text>
+              <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1}}" bindtap="modalinput_buyin" data-order-index="{{order_idx}}" data-sku-index="{{sku_idx}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} recyclebtn">礼物回收</text>
         </view>
       </view>
     </view>
@@ -58,7 +58,7 @@
       </view>
     </modal>
     <view class="order-footer">
-      <view style="width:80%">
+      <view style="width:70%">
         <text style="width:20%">共:{{item.order_sku_num}}件</text>
         <text style="color:#e34c55;">￥{{item.order_price}}</text>
         <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">去支付</text>

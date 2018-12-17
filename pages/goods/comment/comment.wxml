@@ -38,8 +38,10 @@
          <image data-id="{{index}}" bindtap="cancel_new_upimg"  src="{{upimg_new}}" mode='aspectFit'></image>       
       </block>
     </view>
+    <view bindtap="upimg" class='upimg'>
     <text class='text'>添加图片</text>
-    <image bindtap="upimg" class='btnjia' src='../../../images/jia.png'></image>
+    <image class='btnjia' src='../../../images/jia.png'></image>
+    </view>
   </view>
 </form>
 <view class="footer">

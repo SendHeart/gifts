@@ -155,8 +155,8 @@ Page({
     var all_rows = that.data.all_rows;
     if (page > all_rows){
       wx.showToast({
-        title: '已经到底了',
-        icon: 'loading',
+        title: '没有更多了~',
+        icon: 'none',
         duration: 1000
       });
       return

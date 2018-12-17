@@ -1,1 +1,5 @@
-{"navigationBarTitleText": "送心"}
+{"navigationBarTitleText": "钱包",
+ "enablePullDownRefresh": true,
+ "backgroundTextStyle": "dark"
+
+}

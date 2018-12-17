@@ -55,8 +55,9 @@ Page({
     showSharePic:true,
     shop_type:shop_type,
     wish_banner:'',
-  
+    
   },
+
   setNavigation: function () {
     let startBarHeight = 20
     let navgationHeight = 44
@@ -538,5 +539,11 @@ Page({
     }
     // 返回shareObj
     return shareObj;
-  }
+  },
+
+  onPullDownRefresh: function () {
+    //下拉刷新
+    wx.stopPullDownRefresh();
+  },
+
 })

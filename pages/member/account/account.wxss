@@ -3,31 +3,29 @@
 }
 .balance {
   width: 100%;
-  margin: 15rpx auto 0 auto;
-  background: #fff;
+  margin: 0 auto;
+  background: #e34c55;
   display: flex;
   flex-direction: column;
   /*flex-flow: column nowrap;*/
   justify-content: left; /*子项横轴上居中对齐*/
-  align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
+  align-items: left; /*子项纵轴上居中对齐*//*align-content: center;*/
   opacity: 1;
-  border-bottom: 1rpx solid #eee;
 }
 
 .balance .balance-title {
   display: flex;
   flex-direction:row;
   position: relative;
-  color: #444;
-  margin: 40rpx auto 0 auto;
+  color: #FFC9CE;
+  margin: 40rpx 0 0 20rpx;
 }
 .balance-title-bal {
-  font-size: 32rpx;
+  font-size: 28rpx;
 }
 
 .balance-content  {
   color: #999;
-  text-align:center;
   margin-bottom: 20rpx;
 }
 
@@ -36,9 +34,9 @@
 }
 
 .balance-content .snum {
-  color: #e34c55;
+  color: #fff;
   padding: 2rpx 8rpx;
-  font-size:48rpx;
+  font-size:64rpx;
 }
 
 /* 显示与隐藏 */
@@ -65,8 +63,8 @@
  	display: flex;
 	flex-direction: column;
 	width:100%;
-	border-bottom: 1px solid #eee;
-	padding: 0rpx 0;
+	border-bottom: 1px solid #f2f2f2;
+	padding: 0;
   text-align: left;
   align-items: left;
   background-color: #fff;
@@ -74,13 +72,13 @@
 }
 
 .bal-title {
- 	display: flex;
-	flex-direction: row;
-	width:100%;
-	border-bottom: 0px solid #eee;
-	padding: 0rpx 0;
-  text-align: left;
-  align-items: left;
+ 	margin-left:20rpx;
+  font-size:24rpx;
+  line-height: 32rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+  color: #999;
 }
 .bal-sub-title {
  	display: flex;
@@ -96,7 +94,7 @@
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:nowrap; 
-  color: #999;
+  color: #444;
 }
 .bal-content-image {
  	display: flex;
@@ -125,11 +123,11 @@
 }
 
 .morebtn {
-  margin-bottom: 100rpx;
-  border: 0;
+  margin:20rpx auto 200rpx auto;
+  border:none;
   background: #f2f2f2;
-  color: #e34c55;
-  font-size: 28rpx;
+  color: #999;
+  font-size: 24rpx;
 }
 /*购物车按钮、收藏等*/
 .footer {

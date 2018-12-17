@@ -289,8 +289,8 @@ Page({
         var all_rows = res.data.all_rows;
         if (!res.data.result) {
           wx.showToast({
-            title: '暂时没有订单',
-            icon: 'loading',
+            title:"空空如也,快去送礼吧！",
+            icon: 'none',
             duration: 1500
           });
           setTimeout(function () {

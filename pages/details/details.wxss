@@ -173,7 +173,7 @@ page {
   flex-direction: row;
   justify-content: center;
   font-size: 28rpx;
-  color: #444444;
+  color: #999;
   background: #ffffff;
   padding: 10rpx 0;
   margin-top: 10rpx;

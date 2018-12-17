@@ -1,7 +1,7 @@
 <view class='container'>
   <view class="balance">
     <view class="balance-title">
-      <text class="balance-title-bal">当前余额:</text>
+      <text class="balance-title-bal">账户余额(元)</text>
     </view>
     <view class="balance-content"> 
       <text class='snum'>{{balance?'￥'+balance:''}}</text>
@@ -9,7 +9,7 @@
   </view> 
   <view wx:for="{{balance_detail}}" wx:for-item="blist" wx:key="" class="bal-item" >
     <view>
-      <text class="bal-content-text">{{blist.addtime}}</text>   
+      <text class="bal-title">{{blist.addtime}}</text>   
     </view>
     <view>
       <text class="bal-content-text">{{blist.note}}</text>
@@ -18,7 +18,7 @@
       <text class="bal-content-text" style="{{(blist.type==1 && blist.amount>0) ?'':' color:red'}}">{{(blist.type==1 && blist.amount>0) ?'':' -'}}{{blist.amount?'￥'+blist.amount:''}}</text>
     </view>
   </view>
-  <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">更多 ({{page}}/{{page_num}})</button>
+  <view wx:if="{{page_num>1}}" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">展开更多 ({{page}}/{{page_num}})</view>
 </view> 
 <modal hidden="{{hiddenmodalput}}" title="可提现金额 ￥{{balance?balance:0}}" confirm-text="确定" cancel-text="返回" bindcancel="cancel_withdraw" bindconfirm="confirm_withdraw">
   <view class='formfill'>

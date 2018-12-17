@@ -515,7 +515,7 @@ page {
 .pick-goods .pick-goods-image {
   width: 70rpx;
   height: 70rpx;
-  margin-left: 10rpx;
+  margin:0 6rpx 0 4rpx;
 }
 
 .pick-goods .image-btnbuy {
@@ -526,14 +526,14 @@ page {
   width: 42%;
   height: 78rpx;
   margin: 12rpx;
-  border: 1rpx solid #e34c55;
+  border: 1rpx solid #eee;
+  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.3);
   border-radius: 14rpx;
-  background: #e34c55;
+  background: #F2F2F2;
   padding: 10rpx;
 }
 .pick-goods .disabled {
-  background: #E7904D;
-  border: 1rpx solid #E7904D;
+ 
 }
 
 .rightarrow {
@@ -549,12 +549,12 @@ page {
   text-align: left;
 }
 .pick-goods .pick-goods-action {
-  color: #fff;
+  color: #444;
   font-size: 28rpx;
   line-height: 1.4;
 }
 .pick-goods .pick-goods-btntips {
-  color: #fff;
+  color: #999;
   font-size: 22rpx;
   line-height: 1.4;
 }
@@ -579,7 +579,7 @@ page {
   width: 93%;
   height: 90rpx;
   background: #e34c55;
-  box-shadow: 0px 4rpx 0px rgb(179, 22, 2);
+  box-shadow: 0rpx 4rpx 0rpx rgba(179, 22, 2, 1);
   border-radius:14rpx;
   color: #fff;
   font-size: 34rpx;

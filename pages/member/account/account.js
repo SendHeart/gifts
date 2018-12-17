@@ -346,5 +346,9 @@ Page({
     }
 
   },
+  onPullDownRefresh: function () {
+    //下拉刷新
+    wx.stopPullDownRefresh();
+  },
  
 })

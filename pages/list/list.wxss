@@ -1,5 +1,5 @@
 @import "../../lib/style/font.wxss";
-
+ 
 .Hui-iconfont {
  font-family: "Hui-iconfont";
  font-size:30rpx;
@@ -101,18 +101,17 @@ page {
   color: #fff;
   text-align: center;
   line-height: 80rpx;
-  font-size: 32rpx;
+  font-size: 28rpx;
   padding: 0 30rpx;
 }
 .top-bar-active {
   color: #fff;
-  font-weight: bold;
   border-bottom: 6rpx solid #E34C55;
 }
 
 /*辅助导航 nav2*/
 .top-bar2 {
-  height: 70rpx;
+  height: 60rpx;
   background: #FFF; 
   width:100%;
   position: fixed;
@@ -127,8 +126,8 @@ page {
   width: 248rpx;
   color: #999;
   text-align: center;
-  line-height: 70rpx;
-  font-size: 28rpx;
+  line-height: 60rpx;
+  font-size: 24rpx;
 }
 .top-bar-active2 {
   color: #444;
@@ -141,7 +140,7 @@ swiper-item image {
 }
 
 .venues_box {
-  padding: 134rpx 0;
+  padding: 124rpx 0;
   display: flex;
   flex-direction: row;
   flex-wrap:wrap;
