@@ -276,18 +276,24 @@ Page({
     //事件处理函数 选择型号规格  
     goodsmodel: function () {
       var that = this
+      var modalHidden = that.data.modalHidden
+      var sku_id = that.data.commodityAttr[0].id
       var attrValueList = that.data.attrValueList
+      var sku_sell_price = that.data.commodityAttr[0].sell_price
       if(attrValueList.length>0){
+        
         that.setData({
-          modalHidden: !that.data.modalHidden,
-          sku_id: that.data.commodityAttr[0].id,
-          sku_sell_price: that.data.commodityAttr[0].sell_price,
+          modalHidden: !modalHidden,
+          sku_id: sku_id,
+          sku_sell_price: sku_sell_price,
           add_cart_title: '商品名称',
           wishflag: 0,
         })
+        console.log('购买送出 挑选 sku_id:' + that.data.commodityAttr[0].id, 'modalHidden:', that.data.modalHidden);
       }else{
+        console.log('购买送出 sku_id:' + that.data.commodityAttr[0].id, 'attrValueList:', attrValueList);
         that.setData({
-          sku_id: that.data.commodityAttr[0].id,
+          sku_id: sku_id,
           wishflag: 0,
         })
         that.addCart()

@@ -142,7 +142,6 @@ Page({
             }
           })
 
-         
         } else {
           wx.showToast({
             title: '服务已暂停',
