@@ -42,6 +42,7 @@
           <!--<text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>-->
             <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="recyclestatus">已折现</text>
               <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1}}" bindtap="modalinput_buyin" data-order-index="{{order_idx}}" data-sku-index="{{sku_idx}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} recyclebtn">礼物回收</text>
+              <text bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} smallbtn">评论</text>
         </view>
       </view>
     </view>
@@ -66,14 +67,14 @@
         <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{index}}" class="{{(item.status==2 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
         <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
-     
+       
       </view>
       <view style="width:30%; text-align:right;">
       <text wx:if="{{(giftflag==0 && item.status==2 && currenttime<item.duetime)}}" bindtap="sendAginTapTag" class="smallbtn2">再送一次</text>
       <text wx:if="{{(giftflag==1 && item.status==2)}}" bindtap="sendAginTapTag" class="smallbtn2">回赠</text>
       <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="sendOtherTapTag" class="smallbtn2">转送</text>
       <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="refundTapTag" class="smallbtn2">退款</text>
-      <text bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} smallbtn">评论</text>
+     
       </view>
     </view>
     <view class="order-footer">
