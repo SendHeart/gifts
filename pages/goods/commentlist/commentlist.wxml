@@ -14,7 +14,7 @@
       </view>
     </view>
    <view>
-    <text class="comm-content-text">{{comm.desc}}</text>
+    <view class="comm-content-text">{{comm.desc}}</view>
     </view>
     <view class="comm-content-image" >
      <image bindtap="imgYu" data-list="{{comm.img_arr}}" data-src="{{dImg}}" wx:for="{{comm.img_arr}}" wx:for-item="dImg" wx:key="index" src="{{dImg}}" mode='aspectFit'></image>

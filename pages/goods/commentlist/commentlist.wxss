@@ -71,12 +71,13 @@
 }
 
 .comm-content-text{
-  margin-left:120rpx;
+  margin-left:100rpx;
+  margin-right:20rpx;
   font-size:28rpx;
   color: #666;
   overflow:hidden;  
   text-overflow:ellipsis;  
-  white-space:nowrap; 
+  white-space:wrap; 
 }
 .comm-content-image {
  	display: flex;
