@@ -58,8 +58,8 @@ Page({
       })
     } else if (withdrawNum == 0){
       wx.showToast({
-        title: '提现金额为空',
-        icon: 'loading',
+        title: '提现金额不能为空',
+        icon: 'none',
         duration: 1500
       })
     /* }else if (withdrawWx == '' && withdraw_selected==1) {
@@ -259,7 +259,7 @@ Page({
         } else {
           wx.showToast({
             title: '暂无账户信息',
-            icon: 'loading',
+            icon: 'none',
             duration: 1000
           })
         }
@@ -309,7 +309,7 @@ Page({
         } else {
           wx.showToast({
             title: '暂无账户明细',
-            icon: 'loading',
+            icon: 'none',
             duration: 1000
           })
         }

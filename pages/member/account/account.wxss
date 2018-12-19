@@ -162,15 +162,24 @@
 display: flex;
 flex-direction:row;
 justify-content: center;
-margin: 40rpx auto;
+margin: 20rpx auto;
 }
 .formfill text {
 font-size: 28rpx;
 color: #e34c55;
 }
 .formfill input {
-  width: 50%;
+  width: 80%;
   background: #f2f2f2;
   border-radius: 14rpx;
   padding: 8rpx 15rpx;
+}
+.tips {
+  display: flex;
+  flex-direction: column;
+  margin: 40rpx 0;
+}
+.strong {
+  font-weight: bold;
+  line-height: 200%;
 }

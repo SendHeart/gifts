@@ -26,13 +26,17 @@
     <input bindinput="bindChangeNum" value="{{withdrawNum}}" type='digit' placeholder="请输入金额" /> 
   </view>
   <view class="select-and-amount-mark">
-		    <icon type="{{withdraw_selected==1 ? 'success_circle' : 'circle'}}" size="18" color='#333' data-withdraw-type="1" bindtap="withdrawSelect" />
-		    <text>提现到微信钱包</text>
+		    提现到: <icon type="{{withdraw_selected==1 ? 'success_circle' : 'circle'}}" size="18" color='#333' data-withdraw-type="1" bindtap="withdrawSelect" />
+		    <text>微信钱包</text>
         <!--  
         <icon type="{{withdraw_selected==2 ? 'success_circle' : 'circle'}}" size="18" color='#333' style='margin-left:30rpx;' data-withdraw-type="2" bindtap="withdrawSelect" />
 		    <text style="margin-left:10rpx;">银行卡</text>
         -->
 	</view>
+  <view class='tips'>
+  <text class='strong'>提现说明：</text>
+  <text>到账微信钱包时间为1-2个工作日，如遇节假日顺延，敬请理解。</text>
+  </view>
 </modal>
 
 <view class="footer">
