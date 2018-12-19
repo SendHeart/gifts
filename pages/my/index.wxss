@@ -276,6 +276,7 @@ prd-detail {
 .wxParse {
   line-height: 1.8;
   font-size: 24rpx;
+  height: 600rpx;
   }
  
  

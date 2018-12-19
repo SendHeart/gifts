@@ -61,7 +61,7 @@
  <view>
 <modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
     <view class="prd-detail">
-      <view class='wxParse'  style="height:{{dkheight}}px">
+      <view class='wxParse'>
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
       </view> 
     </view>
