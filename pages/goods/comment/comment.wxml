@@ -39,7 +39,6 @@
       </block>
     </view>
     <view bindtap="upimg" class='upimg'>
-    <text class='text'>添加图片</text>
     <image class='btnjia' src='../../../images/jia.png'></image>
     </view>
   </view>

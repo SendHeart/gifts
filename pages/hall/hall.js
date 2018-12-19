@@ -451,8 +451,8 @@ Page({
     // 购物车单个删除
     console.log(objectId);
     wx.showModal({
-      title: '',
-      content: '确认移除该礼物？', /*文案修改*/
+      title: '确认移除该礼物？',
+      content: '', /*文案修改*/
       success: function (res) {
         if (res.confirm) {
           // 从网络上将它删除
@@ -549,6 +549,7 @@ Page({
       url: '../details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&token=' + token + '&username=' + username
     });
   },
+  /*
   touchStart: function (e) {
     var startX = e.touches[0].clientX;
     this.setData({
@@ -556,6 +557,7 @@ Page({
       itemLefts: []
     });
   },
+  
   touchMove: function (e) {
     var index = e.currentTarget.dataset.index;
     var movedX = e.touches[0].clientX;
@@ -589,6 +591,7 @@ Page({
       itemLefts: itemLefts
     });
   },
+  */
   updateCart: function (username, sku_id, buy_num, token) {
     var that = this
     var shop_type = that.data.shop_type

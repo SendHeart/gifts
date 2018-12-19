@@ -61,7 +61,8 @@
     <view wx:for="{{carts}}" class="carts-container" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}"
       hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
 
-      <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+      <!--<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">-->
+      <view class="carts-item" data-index="{{index}}">
         <!-- 复选框图标 -->
         <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" hidden="true" />
 
@@ -88,16 +89,17 @@
             <!-- 数量加减 -->
             <view class="stepper">
               <!-- 减号 -->
-              <text class="{{minusStatuses[index]}}" data-index="{{index}}" catchtap="bindMinus">-</text>
+              <text class="normal" data-index="{{index}}" catchtap="bindMinus">-</text>
               <!-- 数值 -->
               <input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
               <!-- 加号 -->
               <text class="normal" data-index="{{index}}" catchtap="bindPlus">+</text>
+              <view data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
             </view>
           </view>
         </view>
       </view>
-      <button type="warn" data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">删除</button>
+      
     </view>
 
     <!-- 

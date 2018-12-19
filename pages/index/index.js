@@ -122,7 +122,7 @@ Page({
     if (page > that.data.page_num) {
       wx.showToast({
         title: '没有更多了',
-        icon: 'loading',
+        icon: 'none',
         duration: 1000
       });
       return

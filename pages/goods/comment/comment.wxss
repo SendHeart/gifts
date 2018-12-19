@@ -211,8 +211,8 @@ margin-left: 20rpx;
 }
 .sendmessage .btnjia {
   margin: 20rpx;
-  width: 44rpx;
-  height: 45rpx;
+  width: 96rpx;
+  height: 97rpx;
 }
 .sendmessage .text {
   font-size: 24rpx;

@@ -161,6 +161,11 @@ Page({
       });
       return
     }
+    wx.showToast({
+      title: '加载中...',
+      icon: 'none',
+      duration: 500
+    });
     that.setData({
       page: page,
     });

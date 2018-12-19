@@ -56,8 +56,10 @@ page {
   margin-left: 20rpx;
 }
 .container {
-  padding: 80rpx 0;
+  padding-top: 80rpx;
   background: #f2f2f2;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 .order-item {
@@ -66,6 +68,7 @@ page {
   margin: 15rpx auto 0 auto;
   background: #fff;
   border-radius: 10rpx;
+  z-index: 0;
 }
 
 
@@ -96,25 +99,41 @@ page {
   position: absolute;
   top:20rpx;
   right: 20rpx;
-  width: 50rpx;
-  height: 50rpx;
-  border: 3rpx solid #e34c55;
-  color: #e34c55;
-  padding: 8rpx;
-  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #e34c55;
+  color: #fff;
+  padding: 8rpx 12rpx;
+  border-radius: 8rpx;
   text-align:center;
-  font-size: 22rpx;
+  font-size: 24rpx;
   line-height: 24rpx;
+}
+.recyclebtn image {
+  width: 24rpx;
+  height: 24rpx;
+  margin: 0 6rpx;
 }
 .recyclestatus {
   position: absolute;
   top:20rpx;
-  right: 20rpx;
+  right: 20rpx; 
   color: #999;
   font-size: 24rpx;
   line-height: 24rpx;
 }
-
+.commbtn {
+  
+  display: -webkit-box;
+  border: 3rpx solid #e34c55;
+  color: #e34c55;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  margin-left:10rpx;
+  text-align:center;
+  z-index: 99;
+}
 /*接受方微信头像*/
 
 .order-footer image {
@@ -185,6 +204,14 @@ page {
   font-size: 28rpx;
   color: #444;
   line-height: 38rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
+.carts-sku {
+  font-size: 24rpx;
+  color: #999;
+  line-height: 32rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:nowrap; 
@@ -300,6 +327,7 @@ page {
 
 .modalbox {
   height: 90%;
+  z-index: 99;
 }
 .buyin_title {
   display: flex;

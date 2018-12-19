@@ -71,7 +71,7 @@
 }
 
 .comm-content-text{
-  margin-left:100rpx;
+  margin-left:118rpx;
   margin-right:20rpx;
   font-size:28rpx;
   color: #666;

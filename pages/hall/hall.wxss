@@ -290,11 +290,12 @@ page {
 /*stepper容器*/
 
 .stepper {
-  width: 80px;
+  width: 210rpx;
+  height: 48rpx;
   margin: 0 auto;
   position: absolute;
   right: 28rpx;
-  bottom: 20rpx;
+  bottom: 10rpx;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -304,12 +305,11 @@ page {
 
 .stepper text {
   width: 48rpx;
-  height: 48rpx;
-  line-height: 44rpx;
+  height: 40rpx;
+  line-height: 38rpx;
   text-align: center;
-  border: 2rpx solid #ddd;
-  border-radius: 50%;
-  color: #999;
+  border: 2rpx solid #ccc;
+  border-radius: 14rpx;
   font-size: 32rpx;
 }
 
@@ -318,9 +318,9 @@ page {
 .stepper input {
   color: #444;
   float: left;
-  margin: 0 auto;
-  width: 30rpx;
-  height: 48rpx;
+  margin: 0;
+  width: 40rpx;
+  height: 40rpx;
   text-align: center;
   font-size: 24rpx;
 }
@@ -329,7 +329,7 @@ page {
 /*普通样式*/
 
 .stepper .normal {
-  color: #444;
+  color: #ddd;
 }
 
 /*禁用样式*/
@@ -437,16 +437,15 @@ page {
 /*删除按钮*/
 
 .delete-button {
-  width: 120rpx;
+  display: flex;
+  flex-direction: row;
   font-size: 28rpx;
-  height: 98%;
-  line-height: 156rpx;
-  border: 0;
-  border-radius: 0;
-  position: absolute;
-  right: 1rpx;
-  top: 1rpx;
-  z-index: 0;
+  color: #444;
+  margin-left: 20rpx;
+}
+.delete-button image {
+  width: 48rpx;
+  height: 48rpx;
 }
 
 .delete-button:before {

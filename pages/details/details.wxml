@@ -1,7 +1,8 @@
 <import src="../../wxParse/wxParse.wxml" />
 <import src="../common/hall_title.wxml" /><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<view class="pagewrap">
+
+<scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top >
   <view class="banner">
     <view>
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
@@ -45,7 +46,7 @@
       </view>
     </view>
      <view class="comm-content">
-        <text>{{comm.desc}}</text>
+        {{comm.desc}}
       </view>
   </view>
   <view>
@@ -56,6 +57,8 @@
       </view>
     </view>
   </view>
+</scroll-view>
+
 <view hidden="{{modalHidden}}">
     <modal class="modalbox" title="{{attrValueList.length>0?'':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
@@ -78,11 +81,11 @@
     </modal>
   
 </view>
+
 <view class="footer">
   <view class="opt-buttons">
   <button class="sec-btn" bindtap="mycommTapTag">我要评论</button>
   <button class="sec-btn" bindtap="wishCart">加入心愿单</button>
   <button class="add-cart" bindtap="goodsmodel">购买送出</button>
   </view>
-</view>
 </view>

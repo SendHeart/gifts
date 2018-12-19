@@ -148,19 +148,20 @@ Page({
         console.log('提交订单:',res.data.result);
         var order_data = res.data.result;
         if (!res.data.info) {
-          wx.showToast({
+          /*wx.showToast({
             title: '订单提交完成',
             icon: 'success',
             duration: 1500
           })
+          */
           wx.navigateTo({
             url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay']
           })
         } else {
           wx.showToast({
             title: res.data.info,
-            icon: 'loading',
-            duration: 1500
+            icon: 'none',
+            duration: 2000
           })
         }
       
@@ -260,8 +261,8 @@ Page({
     var all_rows = that.data.all_rows;
     if (page > that.data.page_num) {
       wx.showToast({
-        title: '没有更多记录了',
-        icon: 'loading',
+        title: '没有更多了~',
+        icon: 'none',
         duration: 1000
       });
       return
@@ -308,9 +309,9 @@ Page({
         var all_rows = res.data.all_rows
         if (!res.data.result) {
           wx.showToast({
-            title: res.data.info ? res.data.info : '暂无优惠券',
-            icon: 'loading',
-            duration: 1500
+            title: res.data.info ? res.data.info : '暂无优惠券~',
+            icon: 'none',
+            duration: 2000
           })
           if(page == 1){
             that.setData({
@@ -364,9 +365,9 @@ Page({
     if (discountpay == 0 && selectedAllStatus){
       that.modalBindcancelCoupon()
       wx.showToast({
-        title:'无需优惠券',
-        icon: 'loading',
-        duration: 1500
+        title:'该商品无法使用优惠券',
+        icon: 'none',
+        duration: 1000
       })
     }
   },
