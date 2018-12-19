@@ -76,10 +76,10 @@
       <text>回收金额:</text><text style="color:#e34c55;font-size:48rpx;height:80rpx;">￥{{buyin_price}}</text>
       </view>
       <view class="buyin_content">
-      <text class="buyin_text" style="font-size:32rpx;">重要提示：</text>
-      <text class="buyin_text">1. 平台会收取该订单金额<text style="color:#e34c55;">{{100-buyin_rate}}%</text>的手续费。</text>
-      <text class="buyin_text">2. 回收的金额会自动转到您的送心钱包账户中，您可以在“我的-钱包”中查询。</text>
-      <text class="buyin_text">\n 3. 如有遇到问题，请联系我们的客服人员。</text>
+      <text class="buyin_text" style="font-size:32rpx; font-weight:bold;">重要提示：</text>
+      <text class="buyin_text">1. 礼物回收仅限于接受礼物后，尚未发货时可以申请折现。</text>
+      <text class="buyin_text">2. 回收会收取该订单金额<text style="color:#e34c55;">{{100-buyin_rate}}%</text>的手续费。</text>
+      <text class="buyin_text">\n 3. 回收的金额会自动转到您的[送心钱包]账户中，您可以在“我的-钱包”中查询。</text>
       
       </view>
     </modal>
