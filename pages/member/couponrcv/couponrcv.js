@@ -83,11 +83,13 @@ Page({
   },
 
   receiveTapTag: function (e) {
-   var that = this 
-   var order_no = that.data.orderNo
-   var openid = that.data.openid
-   var nickname = that.data.userInfo.nickName
-   var headimg = that.data.userInfo.avatarUrl
+    var that = this 
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var order_no = that.data.orderNo
+    var openid = that.data.openid
+    var nickname = that.data.userInfo.nickName
+    var headimg = that.data.userInfo.avatarUrl
     wx.showModal({
       title: '请确认',
       content: '确认接受吗?',
@@ -123,12 +125,13 @@ Page({
     var coupons_info = that.data.coupons_info
     var coupons_json = JSON.stringify(coupons_info)
     var receive = that.data.receive
+    
     console.log('接收优惠券 coupons_info:', coupons_info);
     wx.request({
       url: weburl + '/api/client/band_coupon',
       method: 'POST',
       data: {
-        username: username,
+        username: username ? username : openid,
         access_token: token,
         coupons: coupons_json,
         coupon_type: 'receive',
@@ -200,7 +203,7 @@ Page({
       url: weburl + '/api/client/query_pubcoupon',
       method: 'POST',
       data: {
-        username: username,
+        username: username ? username : openid,
         access_token: token,
         coupons_flag: coupons_flag,
         coupons_id: coupons_id,
@@ -218,14 +221,6 @@ Page({
             icon: 'loading',
             duration: 1500
           })
-          setTimeout(function () {
-            //wx.navigateBack()
-            wx.switchTab({
-              url: '../../my/index'
-            })
-
-          }, 1500);
-
         } else {
           for (var i = 0; i < coupons_info.length; i++) {
             coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
@@ -234,17 +229,17 @@ Page({
           that.setData({
             coupons_info: coupons_info,
           })
+          console.log('查询优惠券发行信息 query_pubcoupon coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
         }
-        console.log('查询优惠券发行信息 query_pubcoupon coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
       }
 
     })
-
   },
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     console.log('收到的优惠券:', options)
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     //var options = util.formatString(options)
     //var coupons = options.coupons ? options.coupons:''
     //coupons = util.formatString(coupons)
@@ -255,7 +250,11 @@ Page({
      
     var headimg = that.data.headimg
     var nickname = that.data.nickname
-   
+    if (!username) {
+      wx.navigateTo({
+        url: '../login/login'
+      })
+    }
     that.setData({
       coupons_id: coupons_id,
       coupons_flag: coupons_flag,
@@ -263,28 +262,7 @@ Page({
 
     })
     that.query_pubcoupon()
-   
-    /*
-    that.setNavigation()
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
-        })
-      }
-    })  
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    */
     
-    
-
   },
 
   onShow: function () {

@@ -5,8 +5,6 @@ var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
 var appsecret = app.globalData.secret;
 var shop_type = app.globalData.shop_type;
-
-//console.log(url);
 Page({
 
   /**

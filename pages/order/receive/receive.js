@@ -210,6 +210,7 @@ Page({
     //loadMore(this);
     console.log("lower");
   },
+
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that = this;
@@ -225,7 +226,17 @@ Page({
     var nickname = that.data.nickname
     var note = that.data.note
     var shop_type = that.data.shop_type
-   
+    
+    if (!username) {
+      /*
+      wx.switchTab({
+        url: '/pages/my/index'
+      })
+      */
+      wx.navigateTo({
+        url: '../login/login'
+      })
+    }
     if (receive != 1){
       console.log('礼品信息 order_no:',order_no + ' receive:' + receive)
       return
@@ -261,12 +272,14 @@ Page({
 
   onShow: function () {
     var that = this
+    
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../../images/back.png'
       })
     }  
+   
   },
 
   overtimeData: function () {
@@ -431,6 +444,4 @@ Page({
     
   } ,
    
-
-  
 });

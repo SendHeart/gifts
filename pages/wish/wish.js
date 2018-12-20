@@ -277,8 +277,7 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-
-    var navList_new = that.data.navList2
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
     var shop_type = that.data.shop_type
     console.log('wish get_project_gift_para navList2:', navList2)
     if (!navList_new) {
@@ -306,14 +305,21 @@ Page({
              });
              */
             return;
+          }else{
+            that.setData({
+              navList2: navList_new,
+              wish_banner: navList_new[4]['img']
+            })
           }
         }
       })
+    }else{
+      that.setData({
+        navList2: navList_new,
+        wish_banner: navList_new[4]['img']
+      })
     }
-    that.setData({
-      navList2: navList_new,
-      wish_banner: navList_new[4]['img']
-    })
+  
 
     setTimeout(function () {
       that.setData({

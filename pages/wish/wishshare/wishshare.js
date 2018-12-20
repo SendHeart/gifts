@@ -28,7 +28,7 @@ Page({
     painting: {},
     shareImage: '',
     shop_type:shop_type,
-    wechat_share: navList2[5]['img']
+    wechat_share: ''
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -61,7 +61,7 @@ Page({
   get_project_gift_para: function () {
     var that = this
     
-    var navList_new = that.data.navList2
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
     var shop_type = that.data.shop_type
     console.log('wishshare get_project_gift_para navList2:', navList2)
     if (!navList_new) {
@@ -89,16 +89,21 @@ Page({
              });
              */
             return;
+          }else{
+            that.setData({
+              navList2: navList_new,
+              wechat_share: navList_new[5]['img']
+            })
           }
-
-         
         }
       })
+    }else{
+      that.setData({
+        navList2: navList_new,
+        wechat_share: navList_new[5]['img']
+      })
     }
-    that.setData({
-      navList2: navList_new,
-      wechat_share: navList_new[5]['img']
-    })
+   
 
     setTimeout(function () {
       that.setData({
@@ -108,6 +113,16 @@ Page({
     that.eventDraw()
   },
   onLoad () {
+    if (app.globalData.openid && app.globalData.openid != '') {
+      // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
+
+    } else {
+      app.openidCallBack = openid => {
+        if (openid != '') {
+
+        }
+      }
+    }
     var that = this
     that.setNavigation()
     wx.getSystemInfo({

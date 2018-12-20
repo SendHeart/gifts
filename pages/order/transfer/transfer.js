@@ -178,6 +178,7 @@ Page({
     var order_no = options.order_no
     var receive = options.receive
     var orders = options.orders
+    console.log(' 转赠 order_no:', order_no, ' orders:', orders)
     that.setData({
       order_no: order_no,
       receive: receive,

@@ -3,7 +3,7 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
 var appsecret = app.globalData.secret;
-var user_type = app.globalData.user_type;
+var user_type = app.globalData.user_type ? app.globalData.user_type:0;
 var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
@@ -490,7 +490,7 @@ Page({
   onShow: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : user_type
+    var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : 0
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement'):0
     var pages = getCurrentPages()
     if (pages.length > 1) {

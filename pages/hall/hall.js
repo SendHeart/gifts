@@ -1,4 +1,3 @@
-import defaultData from '../../data'
 var util = require('../../utils/util.js')
 //获取应用实例
 var app = getApp()
@@ -119,13 +118,7 @@ Page({
 
   },    
   bindMinus: function (e) {
-    // loading提示
-    /*
-    wx.showLoading({
-      title: '操作中',
-      mask: true
-    });
-    */
+  
     var that =this
     var index = parseInt(e.currentTarget.dataset.index);
     var num = that.data.carts[index]['num']
@@ -376,58 +369,6 @@ Page({
   },
 
   confirmOrder: function () {
-    /*
-    var that = this
-    var carts = that.data.carts;
-    var cartIds = that.data.cartIds
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var status = 0;
-    var amount = that.data.amount;
-    var order_type='gift';
-    var order_note = that.data.note;
-    if (!order_note) order_note='送你一份礼物，愿你喜欢!'; //默认祝福
-    console.log('附言:' + order_note)
-     
-    wx.request({
-      url: weburl + '/api/client/add_order',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        sku_id: cartIds,
-        buy_type: 'cart',
-        order_type:order_type,
-        note:order_note,
-        
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data.result);
-        var order_data = res.data.result;
-
-        if (!res.data.info) {
-          wx.showToast({
-            title: '订单提交完成',
-            icon: 'success',
-            duration: 1500
-          });
-        } else {
-          wx.showToast({
-            title: res.data.info,
-            icon: 'loading',
-            duration: 1500
-          });
-        }
-        wx.navigateTo({
-          url: '../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay']
-        });
-      }
-    })
-*/
   },
 
   delete: function (e) {
@@ -549,49 +490,7 @@ Page({
       url: '../details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&token=' + token + '&username=' + username
     });
   },
-  /*
-  touchStart: function (e) {
-    var startX = e.touches[0].clientX;
-    this.setData({
-      startX: startX,
-      itemLefts: []
-    });
-  },
-  
-  touchMove: function (e) {
-    var index = e.currentTarget.dataset.index;
-    var movedX = e.touches[0].clientX;
-    var distance = this.data.startX - movedX;
-    var itemLefts = this.data.itemLefts;
-    itemLefts[index] = -distance;
-    this.setData({
-      itemLefts: itemLefts
-    });
-  },
-  touchEnd: function (e) {
-    var index = e.currentTarget.dataset.index;
-    var endX = e.changedTouches[0].clientX;
-    var distance = this.data.startX - endX;
-    // button width is 60
-    var buttonWidth = 60;
-    if (distance <= 0) {
-      distance = 0;
-    } else {
-      if (distance >= buttonWidth) {
-        distance = buttonWidth;
-      } else if (distance >= buttonWidth / 2) {
-        distance = buttonWidth;
-      } else {
-        distance = 0;
-      }
-    }
-    var itemLefts = this.data.itemLefts;
-    itemLefts[index] = -distance;
-    this.setData({
-      itemLefts: itemLefts
-    });
-  },
-  */
+ 
   updateCart: function (username, sku_id, buy_num, token) {
     var that = this
     var shop_type = that.data.shop_type
@@ -753,15 +652,6 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     console.log("openid:" + openid + ' username:' + username)
   
-    /*
-    
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    */
     // 送收礼物信息查询
     wx.request({
       url: weburl + '/api/client/query_member_gift',
@@ -814,7 +704,7 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    var navList_new = that.data.navList2
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
     console.log('hall get_project_gift_para navList2:', navList_new)
     if (!navList_new){
@@ -841,20 +731,24 @@ Page({
                duration: 1500
              });
              */
-            return;
-          }
+            return
+          }else{
+            wx.setStorageSync('navList2', navList_new)
+            that.setData({
+              navList2: navList_new,
+              hall_banner: navList_new[3], //首页banner图
 
+            })
+          }
         }
       })
-    } 
-
-    that.setData({
-      navList2: navList_new,
-      hall_banner: navList_new[3], //首页banner图
-      //main_title_Bg: navList_new[3]['img'], //首页banner图
-      //banner_link:navList_new[3]['link'], //首页banner图跳转链接
-    })
-
+    } else{
+      that.setData({
+        navList2: navList_new,
+        hall_banner: navList_new[3], //首页banner图
+      })
+    }
+ 
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
@@ -869,7 +763,8 @@ Page({
     var coupons = options.coupons
     var receive = options.receive
     //that.setNavigation()
-    that.get_project_gift_para()
+   
+    
     if(page_type==2){ //收到礼物
       console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
       if (receive==1){
@@ -917,8 +812,8 @@ Page({
   },
   onShow: function () {
     var that = this;
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var username = wx.getStorageSync('username');
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var username = wx.getStorageSync('username')
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
@@ -931,27 +826,14 @@ Page({
         url: '../my/index'
       })
     }
-    
+    console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}])
+    that.get_project_gift_para()
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         userInfo: userInfo
       })
     })
-
-   /*
-    wx.getSystemInfo({
-      success: function (res) {
-        let winHeight = res.windowHeight;
-        that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
-          dkheight: winHeight - 60,
-          scrollTop: that.data.scrollTop + 10
-        })
-      }
-    }) 
-  */
     this.setData({
       username: username
     })

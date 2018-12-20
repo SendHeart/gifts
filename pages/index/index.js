@@ -29,7 +29,7 @@ Page({
     hiddenmodalput: true,
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
-    buyin_rate: navList2[7]['value'] ? navList2[7]['value']:100,  //礼物折现率
+    buyin_rate:90,  //礼物折现率
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -217,6 +217,58 @@ Page({
     wx.navigateTo({
       url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2
     });
+  },
+  get_project_gift_para: function () {
+    var that = this
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+    var shop_type = that.data.shop_type
+    console.log('hall get_project_gift_para navList2:', navList_new)
+    if (!navList_new) {
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定 1首页单图片 2首页轮播  
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return
+          }else{
+            wx.setStorageSync('navList2', navList_new)
+            that.setData({
+              navList2: navList_new,
+              buyin_rate: navList2[7]['value'] ? navList2[7]['value'] : buyin_rate,
+            })
+          }
+        }
+      })
+    }else{
+      that.setData({
+        navList2: navList_new,
+        buyin_rate: navList2[7]['value'] ? navList2[7]['value'] : buyin_rate,
+      })
+    }
+   
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
   },
 
   onLoad: function (options) {

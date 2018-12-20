@@ -18,7 +18,6 @@
         </view>
       </block>
     </swiper>
-
 </view>
 <view class="wrap" style=''>
   <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
