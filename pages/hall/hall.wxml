@@ -5,7 +5,7 @@
  <image src="{{main_title_Bg}}" background-size="cover" mode="widthFix"></image>
  -->
    <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
-      <block wx:for="{{hall_banner}}" wx:key="" wx:for-item="banner_list">
+      <block wx:for="{{hall_banner}}" wx:key="index_banner" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
             <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}"  controls autoplay="" custom-cache="{{false}}" objectFit="contain"> <!-- poster="{{goodscoverimg}}" -->
@@ -57,10 +57,8 @@
 
   </view>
   <view class="container carts-list">
-    <view wx:for="{{carts}}" class="carts-container" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}"
+    <view wx:for="{{carts}}" class="carts-container" wx:for-index="cart_idx" wx:key="index_cart" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}"
       hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
-
-      <!--<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">-->
       <view class="carts-item" data-index="{{index}}">
         <!-- 复选框图标 -->
         <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" hidden="true" />
@@ -75,25 +73,21 @@
           <view class="carts-subtitle">
             <view>
               <view class="carts-sku">
-              <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">
+              <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index_sku_value">
               {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
               </view>
-            <!-- 价格 -->
-            <!-- 
-              <view class="carts-gov-price">{{item.act_info?item.act_info:'高端大气'}}</view>
-              -->
               <view class="carts-en-price">￥{{item.sell_price}}</view>
             </view>
             <!-- 数量加减 -->
             <view class="stepper">
               <!-- 减号 -->
-              <text class="normal" data-index="{{index}}" catchtap="bindMinus">-</text>
+              <text class="normal" data-index="{{cart_idx}}" catchtap="bindMinus">-</text>
               <!-- 数值 -->
-              <input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
+              <input type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
               <!-- 加号 -->
-              <text class="normal" data-index="{{index}}" catchtap="bindPlus">+</text>
-              <view data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
+              <text class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
+              <view data-index="{{cart_idx}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
             </view>
           </view>
         </view>
@@ -101,23 +95,6 @@
       
     </view>
 
-    <!-- 
-<view class="carts-more" hidden="{{showmorehidden}}" >
-    <view class="select-and-amount" bindtap="bindSelectAll" hidden="true">
-		<icon style="margin-top:-5rpx;" type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18"/>
-		<text>全选</text>
-	</view>
-  <text style="60%;margin-left:60rpx;" bindtap="bindShowMore" >更多...[{{all_rows}}]</text>
-     
-</view>
-<view class="carts-more" hidden="{{(showmorehidden && all_rows>0)?false:true}}">
- <view class="select-and-amount" bindtap="bindSelectAll"  hidden="true">
-		<icon style="margin-top:-5rpx;" type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" />
-		<text>全选</text>
-	</view>
-  <text style="60%;margin-left:60rpx;" bindtap="bindShowLess" >收起...[{{all_rows}}]</text>
-</view>
--->
   </view>
   <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
    
@@ -165,26 +142,11 @@
     <text class='more'>更多</text>
   </view>
   <view class="venues_box">
-    <view wx:for="{{recommentList}}" class="venues_item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">
+    <view wx:for="{{recommentList}}" class="venues_item" wx:key="index_recomm" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" hidden="{{item.hidden==1?true:false}}">
       <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       <text class="goods_name">{{item.name}}</text>
       <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
-      <!-- 
-    <view class="goods_tag" ><image src="../../images/u48.png"></image>{{item.goods_tag}}</view>
-    -->
       <view class="price-now">￥{{item.sell_price}}</view>
     </view>
   </view>
-  <!-- 
- <view class="carts-more" hidden="{{rshowmorehidden}}">
-    <text bindtap="bindShowMoreR" >更多...[{{rall_rows}}]</text>
 </view>
-
-<view class="carts-more" hidden="{{rshowmorehidden?false:true}}">
-    <text bindtap="bindShowLessR" >收起...[{{rall_rows}}]</text>
-</view>
--->
-</view>
-<!-- 
-<button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">获取用户信息</button>
--->

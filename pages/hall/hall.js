@@ -33,7 +33,7 @@ Page({
     interval: 8000,
     duration: 300,
     circular:true,
-    main_title_Bg: weburl+"/uploads/songxin_banner.png", //默认的banner图
+    hall_banner: weburl+"/uploads/songxin_banner.png", //默认的banner图
     banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接
     gifts_rcv:0,
     gifts_snd:0,
@@ -706,6 +706,7 @@ Page({
     var that = this
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
+    var hall_banner = that.data.hall_banner
     console.log('hall get_project_gift_para navList2:', navList_new)
     if (!navList_new){
       //项目列表
@@ -736,7 +737,7 @@ Page({
             wx.setStorageSync('navList2', navList_new)
             that.setData({
               navList2: navList_new,
-              hall_banner: navList_new[3], //首页banner图
+              hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
 
             })
           }
@@ -745,7 +746,7 @@ Page({
     } else{
       that.setData({
         navList2: navList_new,
-        hall_banner: navList_new[3], //首页banner图
+        hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
       })
     }
  
