@@ -60,8 +60,8 @@
       <view style="width:30%; text-align:right;">
       <text wx:if="{{(giftflag==0 && item.status==2 && currenttime<item.duetime)}}" bindtap="sendAginTapTag" class="smallbtn2">再送一次</text>
       <text wx:if="{{(giftflag==1 && item.status==2)}}" bindtap="sendAginTapTag" class="smallbtn2">回赠</text>
-      <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="sendOtherTapTag" class="smallbtn2">转送</text>
-      <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{index}}" bindtap="refundTapTag" class="smallbtn2">退款</text>
+      <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{order_idx}}" bindtap="sendOtherTapTag" class="smallbtn2">转送</text>
+      <text wx:if="{{(giftflag==0 && item.status==2 && item.gift_status==1 && currenttime>item.duetime)}}" data-order-no="{{item.order_no}}" data-index="{{order_idx}}" bindtap="refundTapTag" class="smallbtn2">退款</text>
      
       </view>
     </view>
