@@ -218,12 +218,13 @@ Page({
       url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2
     });
   },
+
   get_project_gift_para: function () {
     var that = this
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
-    console.log('hall get_project_gift_para navList2:', navList_new)
-    if (!navList_new) {
+    console.log('index get_project_gift_para navList2:', navList_new)
+    if (navList2.length == 0) {
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
@@ -260,7 +261,7 @@ Page({
     }else{
       that.setData({
         navList2: navList_new,
-        buyin_rate: navList2[7]['value'] ? navList2[7]['value'] : buyin_rate,
+        buyin_rate: navList2? navList2[7]['value'] : buyin_rate,
       })
     }
    
@@ -282,6 +283,7 @@ Page({
         url: '../login/login'
       })
     }
+    that.get_project_gift_para()
     // 存为全局变量，控制支付按钮是否显示
     if (status) {
       that.setData({
@@ -339,7 +341,7 @@ Page({
         console.log(res.data);
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows;
-        if (!res.data.result) {
+        if (!res.data.result && page==1) {
           wx.showToast({
             title:"空空如也,快去送礼吧！",
             icon: 'none',
@@ -356,35 +358,36 @@ Page({
           
         } else {
           // 存储地址字段
-          for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
-              orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length:1
+          if (orderObjects.length > 0){
+            for (var i = 0; i < orderObjects.length; i++) {
+              orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
+              for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+                orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
+              }
             }
-
+            if (page > 1 && orderObjects) {
+              //向后合拼
+              orderObjects = that.data.orders.concat(orderObjects);
+            }
+            var gift_send = that.data.gift_send
+            var gift_rcv = that.data.gift_rcv
+            var page_num = that.data.page_num
+            page_num = (all_rows / pagesize + 0.5)
+            if (order_type == 'send') {
+              gift_send = all_rows
+            } else {
+              gift_rcv = all_rows
+            }
+            that.setData({
+              orders: orderObjects,
+              all_rows: all_rows,
+              gift_send: gift_send,
+              gift_rcv: gift_rcv,
+              page_num: page_num.toFixed(0),
+            });
+            console.log('gift_send:' + gift_send + ' gift_rcv:' + gift_rcv);
           }
-          if (page > 1 && orderObjects) {
-            //向后合拼
-            orderObjects = that.data.orders.concat(orderObjects);
-          }
-          var gift_send  = that.data.gift_send
-          var gift_rcv = that.data.gift_rcv
-          var page_num = that.data.page_num
-          page_num = (all_rows/pagesize+0.5)
-          if (order_type=='send'){
-            gift_send = all_rows 
-          }else{
-            gift_rcv = all_rows 
-          }
-          that.setData({
-            orders: orderObjects,
-            all_rows: all_rows,
-            gift_send: gift_send,
-            gift_rcv: gift_rcv,
-            page_num: page_num.toFixed(0),
-          });
-          console.log('gift_send:'+gift_send+' gift_rcv:'+gift_rcv);
         }
       }
     })

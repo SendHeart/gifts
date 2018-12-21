@@ -161,6 +161,10 @@ Page({
                     duration: 1000
                   })
                   console.log('提现申请完成', withdrawNum)
+                  that.setData({
+                    balance_detail: [],
+                    page:1,
+                  })
                   that.get_member_account_bal()
                   that.get_member_account_detail()
                 } else {
@@ -199,6 +203,10 @@ Page({
               duration: 1000
             })
             console.log('提现申请完成', withdrawNum)
+            that.setData({
+              balance_detail: [],
+              page: 1,
+            })
             that.get_member_account_bal()
             that.get_member_account_detail()
           } else {
@@ -301,7 +309,7 @@ Page({
             balance_detail_info[i]['amount'] = (balance_detail_info[i]['amount'] / 100).toFixed(2)
           }
           that.setData({
-            balance_detail: balance_detail.concat(balance_detail_info),
+            balance_detail: page == 1 ?balance_detail_info:balance_detail.concat(balance_detail_info),
             all_rows: all_rows,
             page_num: page_num.toFixed(0),
           })

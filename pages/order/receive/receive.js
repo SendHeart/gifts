@@ -234,7 +234,7 @@ Page({
       })
       */
       wx.navigateTo({
-        url: '../login/login'
+        url: '../../login/login'
       })
     }
     if (receive != 1){

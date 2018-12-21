@@ -133,7 +133,7 @@ Page({
     var pagesize = that.data.pagesize
    
     console.log('transfer get_project_gift_para navList2:', navList2)
-    if (!navList_new) {
+    if (navList2.length == 0) {
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
@@ -173,12 +173,71 @@ Page({
     }, 1500)
   },
 
+  get_project_gift_para: function () {
+    var that = this
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+    var shop_type = that.data.shop_type
+    console.log('transfer get_project_gift_para navList2:', navList_new)
+    if (navList2.length == 0) {
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定 1首页单图片 2首页轮播  
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return
+          } else {
+            wx.setStorageSync('navList2', navList_new)
+            that.setData({
+              navList2: navList_new,
+              buyin_rate: navList2 ? navList2[7]['value'] : buyin_rate,
+            })
+          }
+        }
+      })
+    } else {
+      that.setData({
+        navList2: navList_new,
+        buyin_rate: navList2 ? navList2[7]['value'] : buyin_rate,
+      })
+    }
+
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
+  },
+
   onLoad: function (options) {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var order_no = options.order_no
     var receive = options.receive
     var orders = options.orders
     console.log(' 转赠 order_no:', order_no, ' orders:', orders)
+    if (!username) {//登录
+      wx.navigateTo({
+        url: '../../login/login'
+      })
+    }
     that.setData({
       order_no: order_no,
       receive: receive,
@@ -211,6 +270,7 @@ Page({
   reloadData: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var order_no = that.data.order_no
     var receive = that.data.receive
@@ -218,6 +278,7 @@ Page({
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
     var shop_type = that.data.shop_type
+    username = username?username:openid
     //that.setNavigation()
     console.log('礼品信息:', order_no)
    
@@ -267,8 +328,6 @@ Page({
               wx.navigateBack()
             }, 1500)
             return
-          }else{
-            
           }
         }
         that.setData({
@@ -323,13 +382,14 @@ Page({
 
   
   showGoods: function (e) {
-    var skuId = e.currentTarget.dataset.skuId;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var goods_id = e.currentTarget.dataset.goodsId;
-    var goods_name = e.currentTarget.dataset.goodsName;
+    var skuId = e.currentTarget.dataset.skuId
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_name = e.currentTarget.dataset.goodsName
+    
     console.log('showGoods')
-    console.log(goods_name + ' ' + goods_id);
+    console.log(goods_name + ' ' + goods_id)
     wx.navigateTo({
       url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
     });
@@ -344,7 +404,8 @@ Page({
       var token = that.data.token;
       var title = '收到一份来自' + that.data.nickname + '的大礼,快打开看看吧~';
       var note = e.target.dataset.note ? e.target.dataset.note:that.data.note
-      var imageUrl = that.data.navList2[2]['img']
+      var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : title_logo
+      var imageUrl = navList2?navList2[2]['img'] : title_logo
       note = note ? note :'送你一份礼物，愿你喜欢!'
       console.log('开始转增礼物'); 
       console.log(note);  
@@ -400,8 +461,8 @@ Page({
       var shareObj = {
         title: title,        // 默认是小程序的名称(可以写slogan等)
         desc:"礼物代表我的心意",
-        //path: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1',   // 默认是当前页面，必须是以‘/’开头的完整路径
-        path : '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1',
+        path: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1',   // 默认是当前页面，必须是以‘/’开头的完整路径
+        //path : '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1',
         imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       　success: function (res) {　　　
           console.log(res)
@@ -432,8 +493,8 @@ Page({
           icon: 'loading',
           duration: 1500
         })  
-        //shareObj.path = '/pages/order/receive/receive?order_no=' + order_no+'&receive=1'
-        shareObj.path = '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1'
+        shareObj.path = '/pages/order/receive/receive?order_no=' + order_no+'&receive=1'
+        //shareObj.path = '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1'
         shareObj.imageUrl = imageUrl
         console.log('礼物分享:')
         console.log(shareObj)

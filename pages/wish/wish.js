@@ -55,6 +55,7 @@ Page({
     showSharePic:true,
     shop_type:shop_type,
     wish_banner:'',
+    navList2_init:navList2_init,
     
   },
 
@@ -277,10 +278,10 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
-    console.log('wish get_project_gift_para navList2:', navList2)
-    if (!navList_new) {
+    console.log('wish get_project_gift_para navList2:', navList2, navList2.length)
+    if (navList2.length==0) {
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
@@ -320,7 +321,6 @@ Page({
       })
     }
   
-
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
@@ -329,9 +329,17 @@ Page({
   },
   onLoad: function (options) {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var wish_id = options.wish_id ? options.wish_id:''
     var from_page = options.from_page
-    that.setNavigation()
+    /*
+    if (!username) {//登录
+      wx.navigateTo({
+        url: '../login/login'
+      })
+    }
+    */
+    //that.setNavigation()
     that.setData({
       wish_id:wish_id,
     })
@@ -344,24 +352,6 @@ Page({
     
     console.log('onLoad', that.data.wish_id,' from_page:',from_page)
     
-   /*
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          windowHeight: res.windowHeight,
-          windowWidth: res.windowWidth,
-          dkheight: res.windowHeight - 60,
-          scrollTop: that.data.scrollTop + 10
-        })
-      }
-    })
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    */
     wx.getSetting({
       success(res) {
         if (!res.authSetting['scope.writePhotosAlbum']) {

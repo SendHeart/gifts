@@ -708,7 +708,7 @@ Page({
     var shop_type = that.data.shop_type
     var hall_banner = that.data.hall_banner
     console.log('hall get_project_gift_para navList2:', navList_new)
-    if (!navList_new){
+    if (navList2.length == 0){
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
