@@ -287,9 +287,12 @@ Page({
     // 存为全局变量，控制支付按钮是否显示
     if (status) {
       that.setData({
-        status: status
+        status: status,
       })
     }
+    that.setData({
+      username: username,
+    })
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
