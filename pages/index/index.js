@@ -114,6 +114,27 @@ Page({
     console.log('tab:' + tab, ' giftflag:', giftflag)
     that.reloadData()
   },
+
+  // 获取滚动条当前位置
+  scrolltoupper: function (e) {
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true
+      });
+    } else {
+      this.setData({
+        floorstatus: false
+      })
+    }
+  },
+
+  //回到顶部
+  goTop: function (e) {  // 一键回到顶部
+    var that = this
+    that.setData({
+      scrollTop: 0
+    })
+  },
   getMoreOrdersTapTag: function (e) {
     var that = this;
     var page = that.data.page + 1;

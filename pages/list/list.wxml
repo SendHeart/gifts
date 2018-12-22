@@ -18,9 +18,12 @@
   -->
 </view>
 
-<scroll-view scroll-y class="container" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}">
+<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+  <view class='goTop'>{{page}}/{{all_rows}}</view>
+</view>
+
   <view class="venues_box">
-    
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
           <navigator url="../details/details?id={{item.id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class="none">
@@ -34,7 +37,6 @@
                 <text space="ensp">{{item.goods_tag}} </text>
               </view>
               <view class="price-now">￥{{item.sell_price}}</view>
-          
           </view>
         </view>
       </block>

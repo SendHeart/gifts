@@ -236,3 +236,21 @@ swiper-item image {
 	border: 0px solid #bfbfbf;
   margin-left:10rpx;
 }
+/* 返回顶部 */
+.goTop{
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  
+  height: 70rpx;
+  width: 70rpx;
+  position: fixed;
+  bottom: 30rpx;
+  background: rgba(0,0,0,.3);
+  right: 30rpx;
+  border-radius: 50%;
+  color:#fff;
+  font-size: 8;
+  z-index: 999;
+}
+

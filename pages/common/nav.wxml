@@ -1,6 +1,6 @@
 <!--导航nav组件 -->
 <template name="nav">
-    <scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toView}}"  class="top-bar" style=''><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+    <scroll-view scroll-x="true" scroll-into-view="v_{{toView}}"  class="top-bar" style=''><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
       <block wx:for="{{navList}}" wx:key="{{item.id}}">
         <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="top-bar-item {{index == activeIndex ? 'top-bar-active' : ''}}"       catchtap="onTapTag">{{item.title}}</view>
       </block>

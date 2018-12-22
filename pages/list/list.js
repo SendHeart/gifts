@@ -135,14 +135,26 @@ Page({
     that.get_goods_list()
   },
 
-//定位数据  
-  getleft: function (e) {
-    var that = this;
-    this.setData({
-      scrollLeft: that.data.scrollLeft + 10
+// 获取滚动条当前位置
+  scrolltoupper:function(e){
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true
+      });
+    } else {
+      this.setData({
+        floorstatus: false
+      })
+    }
+  },
+ 
+  //回到顶部
+  goTop: function (e) {  // 一键回到顶部
+    var that = this
+    that.setData({
+      scrollTop: 0
     })
   },
-
   searchTapTag: function (e) {
     var that = this;
     console.log('搜索关键字：' + that.data.search_goodsname)
@@ -226,17 +238,6 @@ Page({
     })
 
   },
-
-  // 定位数据  
-  menu_scroll: function (e) {
-    var that = this;
-    var scrollTop = e.detail.scrollTop
-    that.setData({
-      scrollTop: scrollTop+10,
-    });
-    console.log('scrollTop:' + that.data.scrollTop)
-  },
-
   
   get_goods_list: function (event) {
     //venuesList

@@ -59,7 +59,8 @@ App({
             }
           }
       })
-      that.get_project_gift_para()
+    that.get_project_gift_para()
+  
   },
     
   get_project_gift_para: function () {
@@ -94,6 +95,7 @@ App({
         }
         wx.setStorageSync('navList2', navList_new)
         that.globalData.navList2 = navList_new
+        
       }
     })
   },
