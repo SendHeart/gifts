@@ -1,8 +1,11 @@
 <!--index.wxml-->
 <import src="../common/nav.wxml" />
 <import src="../common/nav2.wxml" />
+
+<!-- 
 <import src="../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
+-->
 <view class="banner">
   <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,startBarHeight}}" />
 </view>
@@ -18,12 +21,13 @@
   -->
 </view>
 
-<scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
 <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-  <view class='goTop'>{{page}}/{{all_rows}}</view>
+  <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
+  <view class='' style="margin-top:-25rpx;">{{page}}/{{all_rows}}</view>
 </view>
 
-  <view class="venues_box">
+  <view class="venues_box" >
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
           <navigator url="../details/details?id={{item.id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class="none">

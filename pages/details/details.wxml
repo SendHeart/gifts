@@ -1,14 +1,15 @@
 <import src="../../wxParse/wxParse.wxml" />
-<import src="../common/hall_title.wxml" /><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-
-<scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top >
+<!-- <import src="../common/hall_title.wxml" /> -->
+<!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+<!-- <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" /> -->
+<!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
+<view  class="pagewrap" >
   <view class="banner">
     <view>
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
         <block wx:for="{{goodsPicsInfo.image}}" wx:key="">
           <swiper-item>
-            <video wx:if="{{item.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{item.url}}"  controls autoplay="" custom-cache="{{false}}" objectFit="contain"> <!-- poster="{{goodscoverimg}}" -->
+            <video wx:if="{{item.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{item.url}}"  controls autoplay="" objectFit="cover"> <!-- poster="{{goodscoverimg}}" -->
               <cover-view class="controls" mode="aspecFit" >
               <cover-image class="img"  src="{{item.activity_image}}" />
               </cover-view>
@@ -18,7 +19,6 @@
         </block>
       </swiper>
     </view>
-    
   </view>
   <view class="shopping_container">
       <view class="goods-name">
@@ -57,7 +57,8 @@
       </view>
     </view>
   </view>
-</scroll-view>
+<!-- </scroll-view> -->
+</view>
 
 <view hidden="{{modalHidden}}">
     <modal class="modalbox" title="{{attrValueList.length>0?'':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">

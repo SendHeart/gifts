@@ -239,11 +239,11 @@ swiper-item image {
 /* 返回顶部 */
 .goTop{
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;  
-  
-  height: 70rpx;
-  width: 70rpx;
+  height: 80rpx;
+  width: 80rpx;
   position: fixed;
   bottom: 30rpx;
   background: rgba(0,0,0,.3);
@@ -252,5 +252,10 @@ swiper-item image {
   color:#fff;
   font-size: 8;
   z-index: 999;
+}
+
+.scroll-view-x{
+   background-color: #fff;
+   white-space: nowrap;
 }
 

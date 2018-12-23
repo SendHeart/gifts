@@ -27,7 +27,9 @@ page {
 }
 .pagewrap {
   width: 100%;
+  /*
   height: 100%;
+  */
 }
 .wxParse {
   background: #fff;
@@ -74,6 +76,7 @@ page {
 }
 .banner {
   margin-bottom: 1rpx;
+  position: relative;
 }
 .image {
   width: 100% !important;
@@ -81,12 +84,12 @@ page {
 
 .swiper_box {
   width: 100%;
-  height: 750rpx;
+  height: 650rpx;
 }
 
 .swiper_box .slide-image {
   width: 100%;
-  height: 750rpx;
+  height: 650rpx;
   display: inline-block;
   overflow: hidden;
 }

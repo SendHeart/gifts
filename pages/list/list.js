@@ -87,13 +87,43 @@ Page({
   swiperchange: function (e) {
     //console.log(e.detail.current)
   },
+
+  touchStart(e) {
+    var that = this
+    // console.log(e)
+    that.setData({
+      "startX": e.changedTouches[0].clientX,
+      "startY": e.changedTouches[0].clientY
+    })
+  },
+  touchEnd(e) {
+    var that = this
+    let endX = e.changedTouches[0].clientX
+    let endY = e.changedTouches[0].clientY
+    let direction = util.getTouchData(endX, endY, that.data.startX, that.data.startY)
+    var toView = that.data.toView
+    if (direction=='right'){
+      if (that.data.toView < that.data.navList.length) {
+        toView--
+      }  
+    }else if (direction == 'left'){
+      if (that.data.toView > 0) {
+        toView++
+      } 
+    }else{
+      //that.scrolltoupper(e)
+    }
+    that.setData({
+      toView: toView,
+    })
+  },
+  
   // 点击获取对应分类的数据
   onTapTag: function (e) {
     var that = this;
     //var tab = e.currentTarget.id;
     var tab = e.currentTarget.dataset.id;
     var tab_value = e.currentTarget.dataset.value;
-    var sliderOffset = e.currentTarget.offsetLeft;
     var index = e.currentTarget.dataset.index;
     var search_goodsname = e.currentTarget.dataset.title;
     var navList = that.data.navList ;
@@ -115,6 +145,7 @@ Page({
       page: 1,
       search_goodsname: search_goodsname,
       toView: toView ? toView : 0,
+      scrollTop:0,
     })
     console.log('toView:' + that.data.toView)
     that.get_goods_list()
@@ -212,12 +243,11 @@ Page({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
           dkheight: res.windowHeight - 60,
-          sliderLeft: 0, 
-          sliderOffset: res.windowWidth/that.data.navList.length * that.data.activeIndex ,
+         
         })
       }
     })
-    console.log(that.data.sliderOffset)
+    
     that.get_menubar()
   },
   onShow:function(){
