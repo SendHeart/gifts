@@ -207,7 +207,7 @@ Page({
         wx.hideToast()
       })
       wx.onSocketOpen(function (res) {
-        console.log('WebSocket连接已打开！')
+        console.log('WebSocket连接已打开', wssurl + '/wss')
         wx.hideToast()
         that.setData({
           socktBtnTitle: '断开socket'
@@ -229,12 +229,10 @@ Page({
         for (var i = 0; i < socketMsgQueue.length; i++) {
           that.setData({
             content: socketMsgQueue[i],
-           
           })
           that.sendSocketMessage()
         }
         socketMsgQueue = []
-        
         
       })
       wx.onSocketMessage(function (res) {

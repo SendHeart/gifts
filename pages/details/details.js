@@ -187,10 +187,23 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
+            console.log('get_goodsdesc_list:', res.data.result)
+            var goodsPicsInfo = res.data.result
+            var image_pic = []
+            var image_video = []
+            for (var i = 0; i < goodsPicsInfo.image.length;i++){
+              if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
+                image_video.push(goodsPicsInfo.image[i])
+              }else{
+                image_pic.push(goodsPicsInfo.image[i])
+              }
+            }
             that.setData({
               goodsPicsInfo: res.data.result,
-              
+              image_video: image_video,
+              image_pic: image_pic,
             })
+            //console.log('get_goodsdesc_list image_video:', that.data.image_video)
           that.showGoodsinfo()
           }
          

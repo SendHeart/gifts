@@ -3,7 +3,12 @@ var util = require('../../utils/util.js')
 var app = getApp()
 var weburl = app.globalData.weburl
 var shop_type = app.globalData.shop_type
-
+var wssurl = app.globalData.wssurl
+var socketOpen = false
+var socketMsgQueue = []
+var sendMsgQueue = []
+var message = ""
+var text = '';
 var page = 1
 var pagesize = 10
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -61,8 +66,13 @@ Page({
     shop_type:shop_type,
     navList2: navList2,
 
+    socktBtnTitle: '连接socket',
+    message: '',
+    text: text,
+    content: '',
   }, 
   
+  /*
   setNavigation:function() {
     let startBarHeight = 20
     let navgationHeight = 44
@@ -80,6 +90,126 @@ Page({
       }
     })
   },
+*/
+ 
+  reSend: function () { //失败后重新发送
+    var that = this;
+    //失败重发
+    var reSendMsgQueue = sendMsgQueue
+    for (var i = 0; i < reSendMsgQueue.length; i++) {
+      wx.sendSocketMessage({
+        data: reSendMsgQueue[i],
+        success: function (res) {
+          console.log("sendSocketMessage 重发完成")
+          console.log(rcvnew)
+          sendMsgQueue.splice(i, 1);
+        },
+        fail: function (res) {
+          console.log("sendSocketMessage 重发失败")
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 2000
+          });
+        }
+      })
+    }
+
+  },
+  initSocketMessage: function () {
+    var that = this
+    var remindTitle = socketOpen ? '正在关闭' : '正在连接'
+    /*
+    wx.showToast({
+      title: remindTitle,
+      icon: 'loading',
+      duration: 10000
+    })
+    */
+    if (!socketOpen) {
+      wx.connectSocket({
+        url: wssurl + '/wss'
+      })
+      wx.onSocketError(function (res) {
+        socketOpen = false
+        console.log('WebSocket连接打开失败，请检查！')
+        that.setData({
+          socktBtnTitle: '连接socket'
+        })
+        wx.hideToast()
+      })
+      wx.onSocketOpen(function (res) {
+        console.log('WebSocket连接已打开', wssurl + '/wss')
+        wx.hideToast()
+        that.setData({
+          socktBtnTitle: '断开socket'
+        })
+        socketOpen = true;
+        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+        var uid = username+'_'+shop_type
+        wx.sendSocketMessage({
+          data: uid
+        })
+
+        for (var i = 0; i < socketMsgQueue.length; i++) {
+          that.setData({
+            message: socketMsgQueue[i],
+          })
+          that.sendSocketMessage()
+        }
+        //socketMsgQueue = []
+
+      })
+      wx.onSocketMessage(function (res) {
+        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+        var retinfo = JSON.parse(res.data.trim(), true);
+        console.log('收到服务器内容：' + res.data.trim())
+       
+      })
+      wx.onSocketClose(function (res) {
+        socketOpen = false
+        console.log('WebSocket 已关闭！')
+        wx.hideToast()
+        that.setData({
+          socktBtnTitle: '连接socket'
+        })
+      })
+    } else {
+      //wx.closeSocket()
+
+    }
+
+  },
+  sendSocketMessage: function () {
+    var that = this;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var myDate = util.formatTime(new Date)
+    var message = that.data.message
+   
+    if (!socketOpen) {
+      socketMsgQueue.push(message)
+      that.initSocketMessage()
+    } else {
+      wx.sendSocketMessage({
+        data: message,
+        success: function (res) {
+          console.log("sendSocketMessage 完成", res)
+  
+        },
+        fail: function (res) {
+          console.log("sendSocketMessage 通讯失败")
+          wx.showToast({
+            title: '网络故障',
+            icon: 'loading',
+            duration: 1500
+          });
+        }
+      })
+    }
+
+  },
+
+
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -145,9 +275,9 @@ Page({
     })
 
     // update database
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var sku_id = carts[index]['id'];
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var sku_id = carts[index]['id']
     that.updateCart(username, sku_id, num, token)
     wx.hideLoading()
     this.sum()
@@ -763,8 +893,28 @@ Page({
     var order_no = options.order_no
     var coupons = options.coupons
     var receive = options.receive
+    var message = '获取个人消息'
+    var myDate = util.formatTime(new Date)
+    var message_info = {
+      addtime : myDate,
+      username : username,
+      shop_type : shop_type,
+      message : message,
+      message_type : 1,
+    }
+    that.setData({
+      message: JSON.stringify(message_info)
+    })
+    socketMsgQueue.push(that.data.message)
     //that.setNavigation()
-   
+    that.initSocketMessage()
+    setInterval(function () {
+      that.initSocketMessage()
+    }, 20000)
+
+    setInterval(function () {
+      //that.reSend()
+    }, 5000)
     
     if(page_type==2){ //收到礼物
       console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)

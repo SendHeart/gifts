@@ -5,16 +5,20 @@
 <!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
 <view  class="pagewrap" >
   <view class="banner">
-    <view>
+    <view hidden="{{!modalHidden}}">
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
-        <block wx:for="{{goodsPicsInfo.image}}" wx:key="">
+        <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
-            <video wx:if="{{item.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{item.url}}"  controls autoplay="" objectFit="cover"> <!-- poster="{{goodscoverimg}}" -->
+            <video id="myVideo" class="slide-image" src="{{video.url}}"  controls autoplay="" objectFit="cover">
               <cover-view class="controls" mode="aspecFit" >
-              <cover-image class="img"  src="{{item.activity_image}}" />
+              <cover-image class="img"  src="{{video.activity_image}}" />
               </cover-view>
             </video>
-            <image wx:else src="{{item.url}}" class="slide-image" />
+          </swiper-item>
+        </block>
+        <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key="">
+          <swiper-item>
+            <image src="{{pic.url}}" class="slide-image" />
           </swiper-item>
         </block>
       </swiper>
@@ -60,7 +64,7 @@
 <!-- </scroll-view> -->
 </view>
 
-<view hidden="{{modalHidden}}">
+<view hidden="{{modalHidden}}" style='z-index:999;'>
     <modal class="modalbox" title="{{attrValueList.length>0?'':add_cart_title}}"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
        <view style="max-height:{{dkheight-30}}px">

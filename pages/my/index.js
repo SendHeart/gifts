@@ -375,6 +375,7 @@ Page({
       url: '../member/account/account?'
     })
   },
+
   logout: function () {
 
   },
