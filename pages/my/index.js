@@ -375,10 +375,12 @@ Page({
       url: '../member/account/account?'
     })
   },
-
-  logout: function () {
-
+  navigateToMessage: function (e) {
+    wx.navigateTo({
+      url: '../member/message/message?'
+    })
   },
+
   onGotUserInfo: function (e) {
     var that = this
     console.log(e.detail.errMsg)
@@ -473,20 +475,19 @@ Page({
     })
   },  
   onLoad: function () {
-    var that = this;
-    var gifts_rcv = that.data.gifts_rcv;
-    var gifts_send = that.data.gifts_send;
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var that = this
+    var gifts_rcv = that.data.gifts_rcv
+    var gifts_send = that.data.gifts_send
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
    
     console.log("openid:" + openid + ' username:' + username)
-    if (!username) {//登录
+    if (!username) { // 登录
       wx.navigateTo({
-        url: '../login/login?wechat=1'
+        url: '../login/login?'
       })
     }
-   
   },
   onShow: function () {
     var that = this
@@ -498,7 +499,6 @@ Page({
       that.setData({
         title_logo: '../../../images/left_arrow.png',
       })
-      
     }  
     if (isReadAgreement == 0 && username){ //已登录未阅读用户购买协议
       that.navigateToAgreement()
@@ -513,19 +513,16 @@ Page({
         userInfo: userInfo
       })
     })
-    
-    
   },
   chooseImage: function () {
-    var that = this;
+    var that = this
     wx.chooseImage({
       count: 1, // 默认9
       sizeType: ['original', 'compressed'], // 可以指定是原图还是压缩图，默认二者都有
       sourceType: ['album', 'camera'], // 可以指定来源是相册还是相机，默认二者都有
       success: function (res) {
         // 返回选定照片的本地文件路径列表，tempFilePath可以作为img标签的src属性显示图片
-        var tempFilePath = res.tempFilePaths[0];
-
+        var tempFilePath = res.tempFilePaths[0]
       }
     })
   },

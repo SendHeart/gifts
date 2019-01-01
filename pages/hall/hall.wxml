@@ -62,9 +62,7 @@
       <view class="carts-item" data-index="{{cart_idx}}">
         <!-- 复选框图标 -->
         <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{cart_idx}}" hidden="true" />
-
         <!-- 缩略图 -->
-
         <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
         <!-- 商品标题 -->
         <view class="carts-text">
@@ -92,12 +90,10 @@
           </view>
         </view>
       </view>
-      
     </view>
 
   </view>
-  <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
-   
+  <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">  
     <view class="pick-goods-text">
       <text class="pick-goods-slogan">附赠留言</text>
     </view>
@@ -106,7 +102,6 @@
   </view>
   </view>
   
-
   <view class="buybutton">
   <view class="btnconfirm" bindtap="bindCheckout">
   <image src="../../images/share.png"></image>
@@ -137,6 +132,46 @@
   </view>
 </view>
 -->
+<!-- 
+  <modal title="{{resp_message.title}}" hidden="{{messageHidden}}" no-cancel="{{nocancel}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="查看" cancel-text="取消">
+    <view style="height:{{dkheight-25}}px;background-image:url('{{resp_message.image}}');">
+      <text>{{resp_message.message}}</text>
+    </view>
+  </modal>
+  -->
+  <view>
+  <view class="message" hidden="{{messageHidden}}" bindtap="messageCandel" style="height:{{dkheight}}px;">
+    <view class="t_w">
+    <!--右上角图标开始-->
+    <!-- 
+      <view class="t_image"  bindtap="messageCandel">
+        <image class="t_image1" src="{{resp_message.image}}"></image>
+      </view>
+    -->
+    <!--右上角图标结束-->
+    <!--弹出框开始-->
+      <view class="tanchu_view" style="height:{{dkheight-70}}px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+        <view>
+          <view class="bg_view">{{resp_message.message}}</view>
+        <!--
+          <view class="txtys">{{resp_message.message}}</view>
+        -->
+        <!--确定开始-->
+        <!-- 
+          <view class="txtsure">
+            <view class="txtsurebg" bindtap="messageCandel">
+              <text class="txtsurename">确定</text>
+            </view>        
+          </view>
+        -->
+        <!--确定结束-->
+          </view>
+        </view>
+    <!--弹出框结束-->
+    </view>
+  </view>
+  </view>
+ 
   <view class="recomment-title" bindtap='bindPickGoods'>
     <text>近期热门<text class='title_ex'>大家都在送...</text></text>
     <text class='more'>更多</text>

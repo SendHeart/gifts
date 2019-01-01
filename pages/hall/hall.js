@@ -8,6 +8,7 @@ var socketOpen = false
 var socketMsgQueue = []
 var sendMsgQueue = []
 var message = ""
+
 var text = '';
 var page = 1
 var pagesize = 10
@@ -30,6 +31,9 @@ Page({
     title_name:'送心',
     title_logo: '../../images/footer-icon-05.png',
     hidden: true,
+    resp_message:{},
+    messageHidden : true,
+    dkheight: 300,
     scrollTop: 0,
     scrollHeight: 0,
     indicatorDots: true,
@@ -114,18 +118,10 @@ Page({
         }
       })
     }
-
   },
   initSocketMessage: function () {
     var that = this
     var remindTitle = socketOpen ? '正在关闭' : '正在连接'
-    /*
-    wx.showToast({
-      title: remindTitle,
-      icon: 'loading',
-      duration: 10000
-    })
-    */
     if (!socketOpen) {
       wx.connectSocket({
         url: wssurl + '/wss'
@@ -162,9 +158,17 @@ Page({
       })
       wx.onSocketMessage(function (res) {
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var retinfo = JSON.parse(res.data.trim(), true);
+        var response = JSON.parse(res.data.trim(), true);
+        var messageHidden = that.data.messageHidden
         console.log('收到服务器内容：' + res.data.trim())
-       
+        if (response.status=='y'){
+          var resp_message = response.result
+          resp_message['title'] = '我的消息'
+          that.setData({
+            resp_message: resp_message,
+            messageHidden: false
+          })
+        }
       })
       wx.onSocketClose(function (res) {
         socketOpen = false
@@ -176,7 +180,6 @@ Page({
       })
     } else {
       //wx.closeSocket()
-
     }
 
   },
@@ -653,6 +656,24 @@ Page({
       }
     })
   },
+
+  //确定按钮点击事件 
+  messageConfirm: function () {
+    var that = this
+    var messageHidden = that.data.messageHidden
+    that.setData({
+      messageHidden: !messageHidden,
+    })
+     
+  },
+  //取消按钮点击事件  
+  messageCandel: function () {
+    var that = this
+    that.setData({
+      messageHidden: true,
+    })
+
+  },  
   reloadData: function (username, token) {
     // auto login
     var that = this;
@@ -915,7 +936,16 @@ Page({
     setInterval(function () {
       //that.reSend()
     }, 5000)
-    
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        console.log('getSystemInfo:',winHeight);
+        that.setData({
+          dkheight: winHeight,
+        })
+      }
+    })
+
     if(page_type==2){ //收到礼物
       console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
       if (receive==1){
