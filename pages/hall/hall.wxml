@@ -152,10 +152,10 @@
     <!--弹出框开始-->
       <view class="tanchu_view" style="height:{{dkheight-70}}px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
         <view>
-          <view class="bg_view">{{resp_message.message}}</view>
-        <!--
+          <view class="bg_view">{{resp_message.title}}</view>
+          <!-- 
           <view class="txtys">{{resp_message.message}}</view>
-        -->
+          -->
         <!--确定开始-->
         <!-- 
           <view class="txtsure">

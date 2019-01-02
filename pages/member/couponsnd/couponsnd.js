@@ -296,15 +296,18 @@ Page({
           }, 1500);
 
         } else {
-          for (var i = 0; i < coupons_info.length; i++) {
-            coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
-            coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
+          if (coupons_info.length>0){
+            for (var i = 0; i < coupons_info.length; i++) {
+              coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
+              coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
+            }
+            that.setData({
+              coupons_info: coupons_info,
+            })
+            console.log('查询优惠券发行信息 coupons_info:', coupons_info, ' coupons_info.length:', coupons_info.length);
           }
-          that.setData({
-            coupons_info: coupons_info,
-          })
         }
-        console.log('查询优惠券发行信息 coupons_info:', coupons_info, ' coupons_info.length:', coupons_info.length);
+       
       }
 
     })

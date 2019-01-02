@@ -163,7 +163,7 @@ Page({
         console.log('收到服务器内容：' + res.data.trim())
         if (response.status=='y'){
           var resp_message = response.result
-          resp_message['title'] = '我的消息'
+          resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
           that.setData({
             resp_message: resp_message,
             messageHidden: false
