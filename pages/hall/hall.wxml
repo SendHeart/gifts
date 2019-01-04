@@ -139,39 +139,49 @@
     </view>
   </modal>
   -->
-  <view>
-  <view class="message" hidden="{{messageHidden}}" bindtap="messageCandel" style="height:{{dkheight}}px;">
+  
+  <view class="message" hidden="{{messageHidden}}"  bindtap="messageConfirm" style="height:{{dkheight}}px;">
     <view class="t_w">
-    <!--右上角图标开始-->
-    <!-- 
+      <!--右上角图标开始-->
+      <!-- 
       <view class="t_image"  bindtap="messageCandel">
         <image class="t_image1" src="{{resp_message.image}}"></image>
       </view>
-    -->
-    <!--右上角图标结束-->
-    <!--弹出框开始-->
-      <view class="tanchu_view" style="height:{{dkheight-70}}px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
-        <view>
-          <view class="bg_view">{{resp_message.title}}</view>
+      -->
+      <!--右上角图标结束-->
+      <!--弹出框开始-->
+      <!-- 红包 -->
+      <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="height:{{dkheight-70}}px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+          <!-- <view class="bg_view">{{resp_message.title}}</view> -->
+          <text class="red-name">{{resp_message.message}}</text>
+          <text class="red-value">{{resp_message.amount_type==1?'现金￥'+resp_message.amount+'元':'积分:'+resp_message.amount}}</text>
+          <text class="red-content">{{resp_message.content}}</text>
+          <text class="red-footer">{{resp_message.footer}}</text>
+          <text class="red-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
           <!-- 
           <view class="txtys">{{resp_message.message}}</view>
           -->
-        <!--确定开始-->
-        <!-- 
+          <!--确定开始-->
+          <!-- 
           <view class="txtsure">
             <view class="txtsurebg" bindtap="messageCandel">
               <text class="txtsurename">确定</text>
             </view>        
           </view>
-        -->
-        <!--确定结束-->
-          </view>
-        </view>
-    <!--弹出框结束-->
+          -->
+          <!--确定结束-->
+      </view>
+      <!-- 优惠券 -->
+      <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="height:{{dkheight-340}}px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+        <text class="coupon-name">{{resp_message.message}}</text>
+        <text class="coupon-content">{{resp_message.content}}</text>
+        <text class="coupon-footer">{{resp_message.footer}}</text>
+        <text class="coupon-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
+      </view>
     </view>
+     <!--弹出框结束-->
   </view>
-  </view>
- 
+  
   <view class="recomment-title" bindtap='bindPickGoods'>
     <text>近期热门<text class='title_ex'>大家都在送...</text></text>
     <text class='more'>更多</text>

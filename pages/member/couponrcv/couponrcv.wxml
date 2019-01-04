@@ -15,7 +15,6 @@
       <text class="coupon-content">{{coupons_info[0].content}}</text>
       <text class="coupon-footer">{{coupons_info[0].footer}}</text>
       <text class="coupon-dueday">{{coupons_info[0].start_time?'(有效期:'+coupons_info[0].start_time+'至':''}}{{coupons_info[0].end_time?coupons_info[0].end_time+')':''}}</text>
-      
     </view>
     <view class="sentbtn">
       <button class="button" data-coupons="{{coupons}}" bindtap="receiveTapTag" hidden='{{receive_status==1 || overtime_status==1?true:flase}}'>领取</button>

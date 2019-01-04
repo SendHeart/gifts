@@ -765,13 +765,13 @@ page {
  
 /*确定背景*/
 .message .txtsurebg{
-  width: 300rpx;
-  height: 300rpx;
+  width: 100rpx;
+  height: 100rpx;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 50%;
-  margin: 50rpx;
+  margin: 150rpx;
   background-color: burlywood;
    flex-direction: column;
 }
@@ -779,15 +779,15 @@ page {
 /*确定图标*/
 .message .txtsureimg{
   display:block;
-  width:120rpx;
-  height:120rpx;
+  width:60rpx;
+  height:60rpx;
 }
  
 /*确定文本*/
 .message .txtsurename{
-   margin-bottom: 0rpx;
+   margin-bottom: 10rpx;
    color: white;
-   font-size: 70rpx;
+   font-size: 30rpx;
 }
  
 /*右上角图标*/
@@ -803,4 +803,94 @@ page {
   width:60rpx;
 }
 
+.coupon-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /*width属性解决标题文字太短而缩略图偏移*/
+  width: 80%;
+  padding: 20rpx 10rpx;
+  margin:35% auto;
+}
+
+
+.coupon-name {
+  font-size: 28rpx;
+  color: #ebdddd;
+  line-height: 30rpx;
+  width: 100%;
+  margin-top:45rpx;
+}
+
+.coupon-content {
+  font-size: 45rpx;
+  color: #ebdddd;
+  line-height: 100rpx;
+  width: 100%;
+  
+}
+
+.coupon-dueday {
+  font-size: 28rpx;
+  color: #ebdddd;
+  line-height: 30rpx;
+  width: 100%;
+  margin-top:20rpx;
+}
+.coupon-footer {
+  font-size: 28rpx;
+  color: #ebdddd;
+  line-height: 30rpx;
+  width: 100%;
+  margin-top:20rpx;
+}
  
+.red-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  /*width属性解决标题文字太短而缩略图偏移*/
+  width: 80%;
+  padding: 20rpx 10rpx;
+  margin:10% auto;
+}
+
+.red-name {
+  font-size: 35rpx;
+  color: #ebdddd;
+  line-height: 38rpx;
+  width: 100%;
+  margin-top:60rpx;
+}
+
+.red-content {
+  font-size: 45rpx;
+  color: #ebdddd;
+  line-height: 100rpx;
+  width: 100%;
+  margin-top:20rpx;
+}
+.red-value {
+  font-size: 45rpx;
+  color: #ebdddd;
+  line-height: 60rpx;
+  margin-top:20rpx;
+  width: 100%;
+}
+
+.red-dueday {
+  font-size: 35rpx;
+  color: #ebdddd;
+  line-height: 38rpx;
+  width: 100%;
+  margin-top:20rpx;
+}
+.red-footer {
+  font-size: 35rpx;
+  color: #ebdddd;
+  line-height: 38rpx;
+  width: 100%;
+  margin-top:20rpx;
+} 

@@ -164,10 +164,18 @@ Page({
         if (response.status=='y'){
           var resp_message = response.result
           resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
+          resp_message['start_time'] = util.getDateStr(resp_message['start_time'] * 1000, 0)
+          resp_message['end_time'] = util.getDateStr(resp_message['end_time'] * 1000, 0)
           that.setData({
             resp_message: resp_message,
             messageHidden: false
           })
+          setTimeout(function () {
+            that.setData({
+              messageHidden: true,
+            })
+          }, 9000)
+
         }
       })
       wx.onSocketClose(function (res) {
@@ -229,8 +237,7 @@ Page({
     var banner_link = e.currentTarget.dataset.bannerlink
     wx.navigateTo({
       url: banner_link+'&username='+username+'&token='+token
-    });
-    
+    })
   },
   userTapTag: function () {
     wx.switchTab({
@@ -360,7 +367,7 @@ Page({
     // 写回经点击修改后的数组
     that.setData({
       carts: carts,
-    });
+    })
     // update database
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
@@ -664,7 +671,9 @@ Page({
     that.setData({
       messageHidden: !messageHidden,
     })
-     
+    wx.navigateTo({
+      url: '/pages/member/message/message'
+    })
   },
   //取消按钮点击事件  
   messageCandel: function () {
