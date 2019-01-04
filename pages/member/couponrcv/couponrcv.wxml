@@ -1,30 +1,29 @@
-<import src="../../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <view class="subject" style=''>
   <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-  <text class='toptitle' wx:if='{{receive_status==0}}'>恭喜，您收到一张优惠券</text>
-  <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>优惠券已领取</text>
-  <text wx:if='{{receive_status==0}}'>点击领取，获得优惠券</text>
+  <text class='toptitle' wx:if='{{receive_status==0}}'>恭喜，您收到{{coupons_info[0].type==1?'一张优惠券':'一个红包'}}</text>
+  <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>{{coupons_info[0].type==1?'优惠券已领取':'红包已领取'}}</text>
+  <text wx:if='{{receive_status==0}}'>点击领取，获得{{coupons_info[0].type==1?'优惠券':'红包'}}</text>
   <!-- <text wx:if='{{receive_status==1}}'>点击回赠，也给Ta送一个礼物吧</text> -->
 </view>
  
-<view class="order-item">
+<view class="order-item" style="{{coupons_info[0].type>1?'height:420px':''}}">
   <view class="order-item-banner">
-    <view class="gifts-item" style="background-image:url('{{coupons_info[0].image}}');background-size: 100% 100%;">
-      <text class="coupon-name">{{coupons_info[0].name}}</text>
+    <view class="gifts-item" style="background-image:url('{{coupons_info[0].image}}');background-size: 100% 100%;{{coupons_info[0].type>1?'height:300px':''}}" >
+      <text wx:if="{{coupons_info[0].type==1}}" class="coupon-name">{{coupons_info[0].name}}</text>
       <text class="coupon-content">{{coupons_info[0].content}}</text>
+      <text wx:if="{{coupons_info[0].type==2}}" class="coupon-content">￥{{coupons_info[0].amount}}元</text>
+      <text wx:if="{{coupons_info[0].type==3}}" class="coupon-content">积分:{{coupons_info[0].amount}}</text>
       <text class="coupon-footer">{{coupons_info[0].footer}}</text>
       <text class="coupon-dueday">{{coupons_info[0].start_time?'(有效期:'+coupons_info[0].start_time+'至':''}}{{coupons_info[0].end_time?coupons_info[0].end_time+')':''}}</text>
     </view>
     <view class="sentbtn">
       <button class="button" data-coupons="{{coupons}}" bindtap="receiveTapTag" hidden='{{receive_status==1 || overtime_status==1?true:flase}}'>领取</button>
-      <button class="button" bindtap="receiveTapTag" hidden='{{overtime_status==0?true:false}}'>请刷新重试</button>
+      <button class="button" bindtap="query_pubcoupon" hidden='{{overtime_status==0?true:false}}'>请刷新重试</button>
       <view style="width:100%; display: flex;flex-direction: column;text-align:center;" wx:if='{{receive_status==0}}'>
         <view bindtap='returnTapTag' style='margin-top:40rpx;'>
           <text style='color:#E34C55;font-size:28rpx;'>暂不领取，看看其他内容</text>
         </view>
       </view>   
     </view>
-
   </view>
 </view>

@@ -284,7 +284,7 @@ Page({
         if (!res.data.result) {
           wx.showToast({
             title: res.data.info ? res.data.info : '暂无该批次券',
-            icon: 'loading',
+            icon: 'none',
             duration: 1500
           })
           setTimeout(function () {
@@ -392,7 +392,7 @@ Page({
         if (!couponObjects) {
           wx.showToast({
             title: res.data.info ? res.data.info : '无法生成优惠券',
-            icon: 'loading',
+            icon: 'none',
             duration: 1500
           })
           setTimeout(function () {

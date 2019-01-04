@@ -84,6 +84,7 @@ Page({
     var tab = e.currentTarget.dataset.id;
     var index = e.currentTarget.dataset.index;
     var giftflag = that.data.giftflag;
+    var coupons_list = that.data.coupons_list
     if (tab == 'avaliable') {
       giftflag = 0
     } else if(tab == 'used') {
@@ -96,6 +97,7 @@ Page({
       tab2: tab,
       page: 1,
       giftflag: giftflag,
+      coupons_list:[],
     })
     console.log('tab:' + tab, ' giftflag:', giftflag)
     that.query_coupon()
@@ -224,6 +226,7 @@ Page({
     var all_rows = that.data.all_rows
     var page_num = that.data.page_num
     var shop_type = that.data.shop_type
+    var coupons_type = that.data.coupons_type ? that.data.coupons_type:1
      
     wx.request({
       url: weburl + '/api/client/query_coupon',
@@ -235,7 +238,7 @@ Page({
         pagesize:pagesize,
         shop_type:shop_type,
         coupons_status: coupons_status,
-        type:1, //1优惠券 2红包 3积分券
+        quan_type: coupons_type, //1优惠券 2红包 3积分券
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -284,8 +287,18 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var red = options.red ? options.red:0
   
     console.log('查询我的优惠券')
+    if(red>0){
+      wx.setNavigationBarTitle({
+        title: '送心红包'
+      })
+      that.setData({
+        coupons_type: 2
+      })
+    }
+  
     that.query_coupon()
     /*
     that.setNavigation()

@@ -550,5 +550,10 @@ Page({
     wx.navigateTo({
       url: '/pages/member/couponmy/couponmy'
     })
+  },
+   navigateToMyRedpackage: function () {
+    wx.navigateTo({
+      url: '/pages/member/couponmy/couponmy?red=1'
+    })
   }
 })

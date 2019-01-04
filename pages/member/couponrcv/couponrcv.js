@@ -125,6 +125,7 @@ Page({
     var coupons_info = that.data.coupons_info
     var coupons_json = JSON.stringify(coupons_info)
     var receive = that.data.receive
+    var msg_id = that.data.msg_id
     
     console.log('接收优惠券 coupons_info:', coupons_info);
     wx.request({
@@ -135,6 +136,7 @@ Page({
         access_token: token,
         coupons: coupons_json,
         coupon_type: 'receive',
+        msg_id:msg_id,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -145,8 +147,8 @@ Page({
         var coupons_update = res.data.result;
         if (!res.data.result) {
           wx.showToast({
-            title: res.data.info ? res.data.info : '优惠券已被领取',
-            icon: 'loading',
+            title: res.data.info ? res.data.info : '已被领取',
+            icon: 'none',
             duration: 1500
           })
           setTimeout(function () {
@@ -159,8 +161,8 @@ Page({
 
         } else {
           wx.showToast({
-            title: '优惠券领取成功',
-            icon: 'loading',
+            title: '领取成功',
+            icon: 'success',
             duration: 1500
           })
           setTimeout(function () {
@@ -178,8 +180,8 @@ Page({
   overtimeData: function () {
     var that = this
     var coupons_info = that.data.coupons_info
-    console.log('超时处理 coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
-    if (!coupons_info[0].image) {
+    console.log('超时处理 coupons_info:', coupons_info)
+    if (!coupons_info) {
       that.setData({
         overtime_status: 1 //超时标志
       })
@@ -194,7 +196,7 @@ Page({
     var shop_type = that.data.shop_type
     var coupons_id = that.data.coupons_id
     var coupons_flag = that.data.coupons_flag
-
+    var coupons_type = that.data.coupons_type
     setTimeout(function () { //3秒超时
       that.overtimeData()
     }, 3000)
@@ -208,6 +210,7 @@ Page({
         coupons_flag: coupons_flag,
         coupons_id: coupons_id,
         shop_type: shop_type,
+        coupons_type: coupons_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -215,11 +218,12 @@ Page({
       },
       success: function (res) {
         var coupons_info = res.data.result
-        if (!res.data.result) {
+        console.log('query_pubcoupon:', res.data)
+        if (res.data.status=='n') {
           wx.showToast({
-            title: res.data.info ? res.data.info : '暂无该批次券',
-            icon: 'loading',
-            duration: 1500
+            title: res.data.info ? res.data.info : '已过期',
+            icon: 'none',
+            duration: 2000
           })
         } else {
           for (var i = 0; i < coupons_info.length; i++) {
@@ -246,8 +250,9 @@ Page({
     var receive = options.receive
     //var coupons_info = coupons?JSON.parse(coupons):[{}]
     var coupons_id = options.coupons_id ? options.coupons_id : 0
+    var msg_id = options.msg_id ? options.msg_id : 0
     var coupons_flag = options.coupons_flag ? options.coupons_flag : '999999999999'
-     
+    var coupons_type = options.coupons_type ? options.coupons_type : '1'
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     if (!username) {
@@ -259,10 +264,10 @@ Page({
       coupons_id: coupons_id,
       coupons_flag: coupons_flag,
       receive: receive,
-
+      coupons_type: coupons_type,
+      msg_id:msg_id,
     })
     that.query_pubcoupon()
-    
   },
 
   onShow: function () {
