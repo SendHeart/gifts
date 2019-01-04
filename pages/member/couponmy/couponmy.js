@@ -235,6 +235,7 @@ Page({
         pagesize:pagesize,
         shop_type:shop_type,
         coupons_status: coupons_status,
+        type:1, //1优惠券 2红包 3积分券
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
