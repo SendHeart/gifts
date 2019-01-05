@@ -100,24 +100,34 @@ Page({
   //确认  
   confirm: function () {
     var that = this
-   
     var name = that.data.coupons_info[that.data.index]['name']
     var coupon_content = that.data.coupons_info[that.data.index]['content']
+    var coupon_id = that.data.coupons_info[that.data.index]['id']
+    var coupon_flag = that.data.coupons_info[that.data.index]['flag']
+    var coupon_type = that.data.coupons_info[that.data.index]['type']
+    var coupon_amount = that.data.coupons_info[that.data.index]['amount']
+   
     var coupon_footer = that.data.coupons_info[that.data.index]['footer']
     var start_time = that.data.coupons_info[that.data.index]['start_time']
     var end_time = that.data.coupons_info[that.data.index]['end_time']
     var coupon_share_img = that.data.coupons_info[that.data.index]['share_image']
     var coupons = that.data.coupons_info[that.data.index]
+    console.log('confirm name:', name,'coupon_id:',coupon_id)
     that.setData({
       hiddenmodalput: true,
       name: name,
       coupon_content: coupon_content,
+      coupon_type: coupon_type, 
+      coupon_id:coupon_id,
+      coupon_amount: coupon_amount,
+      coupon_flag: coupon_flag,
       coupon_footer: coupon_footer,
       start_time: start_time,
       end_time: end_time,
       coupon_share_img: coupon_share_img,
       coupons: coupons,
     })
+   that.get_project_gift_para()
     //that.get_coupon()
   },
   bindChangeNums: function (e) {
@@ -161,6 +171,7 @@ Page({
     var hiddenqrcode = that.data.hiddenqrcode
     var hiddenmodalput = that.data.hiddenmodalput
     var coupons_json = JSON.stringify(that.data.coupons)
+    console.log('qrcodeTapTag coupons_json:', coupons_json)
     that.setData({
       hiddenqrcode: !hiddenqrcode,
       coupons_json: coupons_json,
@@ -206,7 +217,10 @@ Page({
     var navList_new = that.data.navList2
     var page = that.data.page
     var pagesize = that.data.pagesize
-    console.log('couponsnd get_project_gift_para navList2:', navList2)
+    var coupon_type = that.data.coupon_type
+    var coupon_img = that.data.coupon_img
+ 
+    console.log('couponsnd get_project_gift_para navList2:', navList2,'coupon_type:',coupon_type)
     if (!navList_new) {
       //项目列表
       wx.request({
@@ -232,19 +246,43 @@ Page({
              });
              */
             return;
+          }else{
+            if (coupon_type == 1) {
+              coupon_img = navList_new[8]['img']
+              
+            } else if (coupon_type == 2) {
+              coupon_img = navList_new[9]['img']
+              
+            } else if (coupon_type == 3) {
+              coupon_img = navList_new[10]['img']
+              
+            }
+            that.setData({
+              navList2: navList_new,
+              wechat_share: navList_new[5]['img'],
+              coupon_img: coupon_img,
+              
+            })
           }
-
-          
-         
         }
       })
     }
+
+    if (coupon_type == 1) {
+      coupon_img = navList_new[8]['img']
+     
+    } else if (coupon_type == 2) {
+      coupon_img = navList_new[9]['img']
+     
+    } else if (coupon_type == 3) {
+      coupon_img = navList_new[10]['img']
+      
+    }
     that.setData({
       navList2: navList_new,
-      wechat_share: navList_new[6]['img'],
-      coupon_img: navList_new[7]['img'],
-      coupon_footer: navList_new[7]['footer'],
-      coupon_content: navList_new[7]['content'],
+      wechat_share: navList_new[5]['img'],
+      coupon_img: coupon_img,
+      
     })
 
     setTimeout(function () {
@@ -272,6 +310,7 @@ Page({
         access_token: token,
         coupons_flag: coupons_flag,
         //coupons_id: coupons_id,
+        coupons_type:999, //优惠券 & 红包
         shop_type: shop_type,
       },
       header: {
@@ -318,15 +357,17 @@ Page({
     var selected_index = e.detail.value
     var name = that.data.coupons_info[selected_index]['name']
     var coupon_content = that.data.coupons_info[selected_index]['content']
+    var coupon_type = that.data.coupons_info[selected_index]['type']
     var coupon_footer = that.data.coupons_info[selected_index]['footer']
     var start_time = that.data.coupons_info[selected_index]['start_time']
     var end_time = that.data.coupons_info[selected_index]['end_time']
     var coupon_share_img = that.data.coupons_info[selected_index]['share_image']
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+    console.log('picker发送选择改变，携带值为', e.detail.value, 'coupon_type:', coupon_type)
     that.setData({
       index: selected_index,
       name:name,
       coupon_content: coupon_content,
+      coupon_type: coupon_type,
       coupon_footer: coupon_footer,
       start_time: start_time,
       end_time: end_time,
@@ -346,7 +387,7 @@ Page({
     var nums = that.data.nums   //优惠券数量
     var start_time = that.data.start_time   //优惠券有效期
     var end_time = that.data.end_time   //优惠券有效期
-    var quan_type = 1 //送心打折券
+    var quan_type = that.data.coupon_type ? that.data.coupon_type:1 //1送心打折券 2红包 3积分奖励
     var coupon_img = that.data.coupon_img
     var coupon_footer = that.data.coupon_footer
     var coupon_content = that.data.coupon_content
@@ -435,7 +476,7 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-    //that.get_project_gift_para()
+   
     that.query_pubcoupon()
   },
   /*
@@ -605,8 +646,19 @@ Page({
     var username = that.data.username
     var token = that.data.token;
     var nickname = that.data.nickname
-    var title = '收到一张'+that.data.name+'~';
+    var title = that.data.coupon_type == 1 ? '收到一张' + that.data.name + '~' :'收到一个'+that.data.name+'~';
     var imageUrl = that.data.coupon_share_img //navList2[6]['img']
+    var coupon_type = that.data.coupon_type ? that.data.coupon_type:1
+    var coupon_id = that.data.coupon_id ? that.data.coupon_id : 0
+    var coupon_flag = that.data.coupon_flag ? that.data.coupon_flag : 9
+    var desc = ''
+    if (coupon_type==1){
+      desc ='一张优惠券'
+    } else if (coupon_type == 2){
+      desc = '一个红包'
+    } else if (coupon_type == 3) {
+      desc = '一个积分奖励'
+    }
     console.log('开始送优惠券', options)
       
     if (!coupons){
@@ -615,17 +667,16 @@ Page({
     }
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
-      desc:"一张优惠券",
+      desc: desc,
       //path: '/pages/hall/hall?page_type=3&coupons=' + JSON.stringify(coupons)  + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
-      path: '/pages/member/couponrcv/couponrcv?coupons_flag=' + coupons[0]['flag'] + '&coupons_id=' + coupons[0]['id']+ '&receive=1',   // 默认是当前页面，必须是以‘/’开头的完整路径
+      path: '/pages/member/couponrcv/couponrcv?coupons_flag=' + coupon_flag + '&coupons_id=' + coupon_id + '&coupons_type=' + coupon_type +  '&receive=1',   // 默认是当前页面，必须是以‘/’开头的完整路径
         imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
         success: function (res) {　　　
           console.log(res)
           if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
             that.setData({
               send_status: 1,
-               
-            });
+            })
           }
         },
         fail: function (res) {　　

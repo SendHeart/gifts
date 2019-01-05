@@ -1,10 +1,10 @@
 <import src="../../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <view hidden="{{!hiddenmodalput}}"  class="subject" style=''> <!-- margin-top:{{navgationHeight+startBarHeight+10}}px -->
-  <text class='toptitle'>优惠券已经生成</text>
+  <text class='toptitle'>{{coupon_type==1?'优惠券':''}}{{coupon_type==2?'红包':''}}{{coupon_type==3?'积分奖励':''}}已经生成</text>
   <text>点击送出发送给对方</text>
 </view>
-<modal hidden="{{hiddenmodalput}}" title="选择优惠券" confirm-text="确定" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">
+<modal hidden="{{hiddenmodalput}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">
   <!-- 
     <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
       <text style='font-size:40rpx;width:20%'>券名:</text>
@@ -18,7 +18,6 @@
       </view>
     </picker>
   </view>
- 
     <!--
     <view style='display: flex;flex-direction: row;line-height: 75rpx;align-items: center;'>
       <text style='font-size:35rpx;width:50%'>数量{{nums==0?'(0不限量)':'(最多20)'}}:</text>
@@ -34,9 +33,9 @@
      -->
 </modal> 
 
-<view hidden="{{!hiddenmodalput}}" class="order-item">
+<view hidden="{{!hiddenmodalput}}" class="order-item" style="{{coupon_type>1?'height:420px':''}}">
   <view class="order-item-banner">
-    <view class="gifts-item" style="background-image:url('{{coupon_img}}');">
+    <view class="gifts-item" style="background-image:url('{{coupon_img}}');{{coupon_type>1?'height:300px':''}}">
       <view bindtap="" >
         <!--
         <image class="gifts-image" background-size="cover" src="{{coupon_img}}" mode="aspectFit"> </image>
@@ -45,6 +44,8 @@
       </view>
        <text class="coupon-name">{{name}} {{nums>0?'x'+nums:''}}</text>
       <text class="coupon-content">{{coupon_content}}</text>
+      <text wx:if="{{coupon_type==2}}" class="coupon-content">￥{{coupon_amount}}元</text>
+      <text wx:if="{{coupon_type==3}}" class="coupon-content">积分:{{coupon_amount}}</text>
       <text class="coupon-footer">{{coupon_footer}}</text>
       <text class="coupon-dueday">{{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
      

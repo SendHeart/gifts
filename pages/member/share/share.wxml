@@ -5,7 +5,7 @@
   <text class="desc" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
 	  {{act_title==''?'送礼就是送心':act_title}}
   </text>
-   <image  class="gifts-image"  src="{{weburl}}/api/WXPay/getQRCode?username={{username}}&appid={{appid}}&secret={{secret}}&shop_type={{shop_type}}&qr_type={{qr_type}}&coupons_flag={{coupons_flag}}&coupons_id={{coupons_id}}&coupons={{coupons_json}}&act_id={{act_id}}" mode="widthFix" />
+   <image  class="gifts-image"  src="{{weburl}}/api/WXPay/getQRCode?username={{username}}&appid={{appid}}&secret={{secret}}&shop_type={{shop_type}}&qr_type={{qr_type}}&coupons_flag={{coupons_flag}}&coupons_type={{coupons_type}}&coupons_id={{coupons_id}}&coupons={{coupons_json}}&act_id={{act_id}}" mode="widthFix" />
     <view class="sentbtn">
       <button bindtap="goBack">返回</button>
     </view>

@@ -131,6 +131,7 @@ Page({
     var coupons = that.data.coupons
     var coupons_json = that.data.coupons_json
     var coupons_id = that.data.coupons_id
+    var coupons_type = that.data.coupons_type
     var coupons_flag = that.data.coupons_flag
     var coupons_name = that.data.coupons_name
     that.setData({
@@ -160,7 +161,7 @@ Page({
           
           {
             type: 'image',
-            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json + '&act_id=' + act_id ,
+            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type +'&coupons_id=' + coupons_id + '&coupons=' + coupons_json + '&act_id=' + act_id ,
             top: 450,
             left: 130,
             width: 110,
@@ -222,6 +223,7 @@ Page({
     var coupons = coupons_json?JSON.parse(coupons_json):[{}]
     var coupons_name = coupons_json?coupons['name']:''
     var coupons_id = coupons_json?coupons['id']:0
+    var coupons_type = coupons_json ? coupons['type'] : 1
     var coupons_flag = coupons_json?coupons['flag']:0
     
     //that.setNavigation()
@@ -237,6 +239,7 @@ Page({
       hiddenqrcode:true,
       coupons_name: coupons_name,
       coupons_id: coupons_id,
+      coupons_type: coupons_type,
       coupons_flag: coupons_flag,
 		})
     that.get_project_gift_para()
