@@ -96,6 +96,7 @@ Page({
       activeIndex2: index,
       tab2: tab,
       page: 1,
+      page_num:1,
       giftflag: giftflag,
       coupons_list:[],
     })
@@ -158,7 +159,7 @@ Page({
     if (page > that.data.page_num) {
       wx.showToast({
         title: '没有更多记录了',
-        icon: 'loading',
+        icon: 'none',
         duration: 1000
       });
       return
@@ -249,8 +250,8 @@ Page({
         var coupons_list = res.data.result
         if (!res.data.result) {
           wx.showToast({
-            title: res.data.info ? res.data.info : '暂无优惠券',
-            icon: 'loading',
+            title: res.data.info ? res.data.info : coupons_type == 1 ? '暂无优惠券' :'暂无红包',
+            icon: 'none',
             duration: 1500
           })
           if(page ==1){
@@ -339,10 +340,11 @@ Page({
       var order_no = that.data.order_no;
       var username = that.data.username;
       var token = that.data.token;
+      var coupons_type = that.data.coupons_type
       console.log('开始分享优惠券'); 
       console.log(options);  
       var shareObj = {
-      　title: "优惠券",        // 默认是小程序的名称(可以写slogan等)
+        title: coupons_type==1?"送心优惠券":'送心红包',        // 默认是小程序的名称(可以写slogan等)
         path: '/pages/hall/hall',   // 默认是当前页面，必须是以‘/’开头的完整路径
       　imgUrl: '',     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       　success: function (res) {　　　

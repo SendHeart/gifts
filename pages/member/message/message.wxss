@@ -270,7 +270,7 @@
   /*width属性解决标题文字太短而缩略图偏移*/
   width: 80%;
   padding: 20rpx 10rpx;
-  margin:35% auto;
+  margin:40% auto;
 }
 
 
@@ -314,7 +314,7 @@
   /*width属性解决标题文字太短而缩略图偏移*/
   width: 80%;
   padding: 20rpx 10rpx;
-  margin:10% auto;
+  margin:40% auto;
 }
 
 .red-name {

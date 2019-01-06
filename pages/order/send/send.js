@@ -146,18 +146,24 @@ Page({
     var order_no = options.order_no; 
     var receive = options.receive;
     var shop_type = that.data.shop_type
-    that.setNavigation()
-    console.log('礼品信息')
-    console.log(order_no)
-  
+    //that.setNavigation()
+    console.log('礼品信息 order_no:', order_no)
+   
     if (receive == 1){
-      console.log('礼品接受处理')
-      console.log(options)
+      console.log('礼品接受处理:', options)
+      wx.navigateBack()
       return
     }
     if (!order_no) {
-      console.log('礼品订单号为空 send')
-      console.log(options)
+      console.log('礼品订单号为空:', options)
+      wx.showToast({
+        title: '礼品订单号为空' + options,
+        icon: 'none',
+        duration: 1500
+      })
+      setTimeout(function () {
+        wx.navigateBack()
+      }, 1500);
       return
     }
 
@@ -177,16 +183,16 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result);
+        console.log('再次确认订单状态:',res.data.result);
         var orderObjects = res.data.result;
         if (!orderObjects) {
           wx.showToast({
             title: '没有该订单',
-            icon: 'loading',
+            icon: 'none',
             duration: 1500
           })
           setTimeout(function () {
-            wx.navigateBack();
+            wx.navigateBack()
           }, 1500);
           
           return
@@ -194,7 +200,7 @@ Page({
           if (orderObjects[0]['gift_status']>0) {
             wx.showToast({
               title: '该订单已送出',
-              icon: 'loading',
+              icon: 'none',
               duration: 1500
             })
             setTimeout(function () {
@@ -204,13 +210,14 @@ Page({
           }else{
             that.setData({
               send_status: 0, 
+              orders :orderObjects,
             })
           }
         }
       }
     })
 
-    var orders = JSON.parse(options.orders);
+    var orders = options.orders ? JSON.parse(options.orders) : that.data.orders
     var orderskus = that.data.orderskus;
     var note_title = that.data.note_title
     var headimg = that.data.headimg

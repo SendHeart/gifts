@@ -106,7 +106,7 @@ Page({
     var coupon_flag = that.data.coupons_info[that.data.index]['flag']
     var coupon_type = that.data.coupons_info[that.data.index]['type']
     var coupon_amount = that.data.coupons_info[that.data.index]['amount']
-   
+    var coupon_img = that.data.coupons_info[that.data.index]['image']
     var coupon_footer = that.data.coupons_info[that.data.index]['footer']
     var start_time = that.data.coupons_info[that.data.index]['start_time']
     var end_time = that.data.coupons_info[that.data.index]['end_time']
@@ -120,6 +120,7 @@ Page({
       coupon_type: coupon_type, 
       coupon_id:coupon_id,
       coupon_amount: coupon_amount,
+      coupon_img:coupon_img,
       coupon_flag: coupon_flag,
       coupon_footer: coupon_footer,
       start_time: start_time,
@@ -127,7 +128,7 @@ Page({
       coupon_share_img: coupon_share_img,
       coupons: coupons,
     })
-   that.get_project_gift_para()
+    //that.get_project_gift_para()
     //that.get_coupon()
   },
   bindChangeNums: function (e) {

@@ -151,7 +151,7 @@
       <!--右上角图标结束-->
       <!--弹出框开始-->
       <!-- 红包 -->
-      <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="height:430px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+      <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
           <!-- <view class="bg_view">{{resp_message.title}}</view> -->
           <text class="red-name">{{resp_message.message}}</text>
           <text class="red-value">{{resp_message.amount_type==1?'现金￥'+resp_message.amount+'元':'积分:'+resp_message.amount}}</text>
@@ -172,7 +172,7 @@
           <!--确定结束-->
       </view>
       <!-- 优惠券 -->
-      <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="height:150px;background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+      <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
         <text class="coupon-name">{{resp_message.message}}</text>
         <text class="coupon-content">{{resp_message.content}}</text>
         <text class="coupon-footer">{{resp_message.footer}}</text>

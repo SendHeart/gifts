@@ -147,7 +147,7 @@ page {
   background: #1d1d1d;
   margin: 30rpx auto;
   width: 552rpx;
-  height: 171rpx;
+  height: 200rpx;
   background-size: 100% 100%;
   padding: 55rpx 0 20rpx 0;
 }

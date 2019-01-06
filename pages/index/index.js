@@ -168,7 +168,7 @@ Page({
     var index = e.currentTarget.dataset.index
     var orders = []
     orders[0] = that.data.orders[index]
-    console.log('送出:', order_no,' order info:',orders)
+    console.log('送出:', order_no, ' order info:', orders, 'index:', index)
     wx.navigateTo({
       url: '../order/send/send?order_no=' + order_no+'&orders=' + JSON.stringify(orders)
     })

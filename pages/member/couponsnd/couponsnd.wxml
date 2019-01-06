@@ -33,22 +33,20 @@
      -->
 </modal> 
 
-<view hidden="{{!hiddenmodalput}}" class="order-item" style="{{coupon_type>1?'height:420px':''}}">
+<view hidden="{{!hiddenmodalput}}" class="order-item">
   <view class="order-item-banner">
-    <view class="gifts-item" style="background-image:url('{{coupon_img}}');{{coupon_type>1?'height:300px':''}}">
+    <view class="gifts-item" style="background-image:url('{{coupon_img}}');background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
       <view bindtap="" >
         <!--
         <image class="gifts-image" background-size="cover" src="{{coupon_img}}" mode="aspectFit"> </image>
         -->
-        
       </view>
-       <text class="coupon-name">{{name}} {{nums>0?'x'+nums:''}}</text>
+      <text class="coupon-name">{{name}} {{nums>0?'x'+nums:''}}</text>
       <text class="coupon-content">{{coupon_content}}</text>
       <text wx:if="{{coupon_type==2}}" class="coupon-content">￥{{coupon_amount}}元</text>
       <text wx:if="{{coupon_type==3}}" class="coupon-content">积分:{{coupon_amount}}</text>
       <text class="coupon-footer">{{coupon_footer}}</text>
       <text class="coupon-dueday">{{start_time?'(期限:'+start_time+'至':''}}{{end_time?end_time+')':''}}</text>
-     
     </view>
     <view class="sentbtn">
       <button open-type="share" data-order_no="{{order_no}}" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>送出</button>

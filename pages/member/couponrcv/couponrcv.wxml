@@ -6,9 +6,9 @@
   <!-- <text wx:if='{{receive_status==1}}'>点击回赠，也给Ta送一个礼物吧</text> -->
 </view>
  
-<view class="order-item" style="{{coupons_type>1?'height:420px':''}}">
+<view class="order-item">
   <view class="order-item-banner">
-    <view class="gifts-item" style="background-image:url('{{coupons_info[0].image}}');background-size: 100% 100%;{{coupons_type>1?'height:300px':''}}" >
+    <view class="gifts-item" style="background-image:url('{{coupons_info[0].image}}');background-size: 100% 100%;" >
       <text wx:if="{{coupons_info[0].type==1}}" class="coupon-name">{{coupons_info[0].name}}</text>
       <text class="coupon-content">{{coupons_info[0].content}}</text>
       <text wx:if="{{coupons_type==2}}" class="coupon-content">￥{{coupons_info[0].amount}}元</text>

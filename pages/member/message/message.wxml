@@ -28,7 +28,7 @@
       <!--右上角图标结束-->
       <!--弹出框开始-->
       <!-- 红包 -->
-      <view wx:if="{{message.message_type==1||message.message_type==2}}" class="red-item" style="height:430px;background-image:url('{{message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+      <view wx:if="{{message.message_type==1||message.message_type==2}}" class="red-item" style="background-image:url('{{message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
           <!-- <view class="bg_view">{{resp_message.title}}</view> -->
           <text class="red-name">{{message.message}}</text>
           <text class="red-value">{{message.message_type==1?'现金￥'+message.amount+'元':'积分:'+message.amount}}</text>

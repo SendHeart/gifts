@@ -3,7 +3,7 @@
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
  <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
   <view class="order-item-banner">
-    <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupons" style="background-image:url('{{item.image}}');{{item.type>1?'height:300px':''}}"  bindtap="couponTapTag">
+    <view wx:for="{{coupons_list}}" wx:key="{{index}}"  class="coupons" style="background-image:url('{{item.image}}');"  bindtap="couponTapTag">
     <!-- 
       <view bindtap="couponTapTag">
         <image class="coupon-image" background-size="cover" src="{{item.image}}" mode="aspectFit"> </image>
@@ -14,5 +14,5 @@
       <text class="coupon-footer">{{item.footer}}</text>
       <text class="coupon-dueday">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}</text>
     </view>
-     <button wx:if="{{page_num>0}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多</button>
+     <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多({{page}}/{{page_num}})</button>
   </view>

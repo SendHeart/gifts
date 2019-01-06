@@ -65,6 +65,7 @@ page {
   text-align: center;
   align-content: left;
   padding: 40rpx;
+  margin-left:-15rpx;
 }
 
 .order-item {
@@ -74,7 +75,7 @@ page {
   text-align: center;
   align-content: center;
   background: white;
-  margin: 20rpx auto;
+  margin: 10rpx auto;
   border-radius: 20rpx;
 }
 
@@ -127,7 +128,7 @@ page {
   text-align: center;
   /*width属性解决标题文字太短而缩略图偏移*/
   width: 100%;
-  padding: 20rpx 10rpx;
+  padding: 10rpx;
   background-size: 100% 100%;
   
 }
