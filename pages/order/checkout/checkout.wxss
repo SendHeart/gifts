@@ -119,6 +119,7 @@ picker {
   text-align: center;
   /*width属性解决标题文字太短而缩略图偏移*/
   width: 100%;
+  margin-bottom: 10rpx;
 }
 .gifts-image {
   margin: 10rpx;
