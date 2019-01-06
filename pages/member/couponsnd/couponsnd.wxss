@@ -65,7 +65,7 @@ page {
   text-align: center;
   align-content: left;
   padding: 40rpx;
-  margin-left:-15rpx;
+  margin-left:-18rpx;
 }
 
 .order-item {
