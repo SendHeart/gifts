@@ -137,6 +137,7 @@ Page({
     var amount_type = e.currentTarget.dataset.amountType
     var footer = e.currentTarget.dataset.footer
     var content = e.currentTarget.dataset.content
+    var accept_time = e.currentTarget.dataset.acceptTime
     var start_time = e.currentTarget.dataset.startTime
     var end_time = e.currentTarget.dataset.endTime
     var image = e.currentTarget.dataset.image
@@ -144,7 +145,7 @@ Page({
     var message = that.data.message
     start_time = util.getDateStr(start_time * 1000, 0)
     end_time = util.getDateStr(end_time * 1000, 0)
-    console.log('message_detail message:',message)
+    if (message_type>3) return
     message = {
       message: message_info,
       message_type: message_type,
@@ -160,6 +161,7 @@ Page({
       message: message,
       messageHidden: !messageHidden,
     })
+    console.log('message_detail message:', that.data.message)
   },
   onLoad: function (options) {
     var that = this

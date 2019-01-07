@@ -79,6 +79,7 @@
   text-overflow:ellipsis;  
   white-space:nowrap; 
   color: #999;
+
 }
 .bal-sub-title {
  	display: flex;
@@ -90,11 +91,13 @@
  
 .msg-content-text{
   margin-left:20rpx;
+  margin-right:20rpx;
   font-size:28rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
-  white-space:nowrap; 
+  white-space:wrap; 
   color: #444;
+  padding: 20rpx;
 }
 .msg-content-image {
  	display: flex;
@@ -111,7 +114,7 @@
   font-size:28rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
-  white-space:nowrap; 
+  white-space:wrap; 
   color: #444;
 }
  
