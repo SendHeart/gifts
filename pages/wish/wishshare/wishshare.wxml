@@ -4,5 +4,8 @@
 <view class="container" style='height:{{dkheight}}px;'> <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
   <image src="{{shareImage}}" class="share-image" mode='aspectFit' ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
-  <button class="savebtn" bindtap="eventSave" type='warn'>保存图片</button>
+   <view class="sentbtn">
+  <button class="" bindtap="eventSave" type='warn'>保存图片</button>
+  <button class="" open-type="share" bindtap="onShareAppMessage">分享</button>
+  </view>
 </view> 

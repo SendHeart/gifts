@@ -239,6 +239,9 @@ Page({
     }
     if (receive != 1){
       console.log('礼品信息 order_no:',order_no + ' receive:' + receive)
+      wx.switchTab({
+        url: '/pages/hall/hall'
+      })
       return
     }
     that.setData({

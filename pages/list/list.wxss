@@ -196,6 +196,25 @@ swiper-item image {
   text-overflow:ellipsis;  
   white-space:nowrap;  
 }
+
+.price-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
+  padding: 10rpx;
+}
+
+.price-market {
+  color: #999;
+  font-size: 28rpx;
+  text-align: right;
+  padding-right: 10rpx;
+  text-decoration:line-through;
+}
+.price-market::first-letter {
+  font-size: 20rpx;
+}
 .price-now {
   color: #444;
   font-size:28rpx;

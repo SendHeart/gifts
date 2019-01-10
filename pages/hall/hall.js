@@ -45,7 +45,8 @@ Page({
     hall_banner: weburl+"/uploads/songxin_banner.png", //默认的banner图
     banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接
     gifts_rcv:0,
-    gifts_snd:0,
+    gifts_send:0,
+    messages_num:0,
     note:'',
     username: null,
     token: null,
@@ -163,19 +164,22 @@ Page({
         console.log('收到服务器内容：' + res.data.trim())
         if (response.status=='y'){
           var resp_message = response.result
+          var messages_num = that.data.messages_num
           resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
           resp_message['start_time'] = util.getDateStr(resp_message['start_time'] * 1000, 0)
           resp_message['end_time'] = util.getDateStr(resp_message['end_time'] * 1000, 0)
           that.setData({
             resp_message: resp_message,
-            messageHidden: false
+            messages_num: messages_num+1,
+            //messageHidden: false
           })
+          /*
           setTimeout(function () {
             that.setData({
               messageHidden: true,
             })
           }, 9000)
-
+          */
         }
       })
       wx.onSocketClose(function (res) {
@@ -239,6 +243,16 @@ Page({
       url: banner_link+'&username='+username+'&token='+token
     })
   },
+
+  messagesTapTag: function () {
+    var that = this
+    that.setData({
+      messages_num: 0
+    })
+    wx.navigateTo({
+      url: '/pages/member/message/message'
+    })
+  },
   userTapTag: function () {
     wx.switchTab({
       url: '../my/index'
@@ -258,7 +272,6 @@ Page({
 
   },    
   bindMinus: function (e) {
-  
     var that =this
     var index = parseInt(e.currentTarget.dataset.index);
     var num = that.data.carts[index]['num']
@@ -919,11 +932,18 @@ Page({
 
   onLoad: function (options) {
     var that = this
-    var page_type = options.page_type
-    var order_no = options.order_no
-    var coupons = options.coupons
-    var receive = options.receive
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var shop_type = that.data.shop
+    var page_type = options.page_type ? options.page_type:0
+    var order_no = options.order_no ? options.order_no:0
+    var coupons = options.coupons ? options.coupons:''
+    var receive = options.receive ? options.receive:0
+    var refername = options.refername ? options.refername : ''
+    var task = options.task ? options.task : 0
+    var msg_id = options.msg_id ? options.msg_id : 0
     var message = '获取个人消息'
+    var messages_num = that.data.messages_num
     var myDate = util.formatTime(new Date)
     var message_info = {
       addtime : myDate,
@@ -971,7 +991,28 @@ Page({
         })
       }
     }
-   
+    if (task>0) { //收到任务分享
+      console.log('收到任务分享 Hall task:',task, ' refername:', refername, ' msg_id:', msg_id)
+      wx.request({
+        url: weburl + '/api/client/get_task_refer',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          shop_type: shop_type,
+          refername:refername,
+          msg_id:msg_id,
+          task:task,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('hall get_task_refer:', res.data)  
+        }
+      })
+    }
   },
   //事件处理函数
  
@@ -1035,7 +1076,7 @@ Page({
     return {
       title: '送心',
       desc: '送礼就是送心',
-      path: '/pages/hall/hall?refername='+username
+      path: '/pages/hall/hall?refername='+username+'&mainpage=1'
     }
   } 
 })

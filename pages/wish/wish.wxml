@@ -44,11 +44,15 @@
               </text>
         </view>
       </view>
-				<view class="price-now">￥{{item.sell_price}}</view>
-        <view class="goods_prom">
+			
+      <view class="price-list">
+        <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+      	<view class="price-now">￥{{item.sell_price}}</view>
+      </view>
+      <view class="goods_prom">
         <text>已收到:{{item.sale?item.sale:0}}件</text>
-        </view>
-        <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{!shareflag}}">
+      </view>
+      <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{!shareflag}}">
         <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:15%;height:50rpx;' src="../../images/icon_delete.png"/>
         </view>
          <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag}}">

@@ -32,6 +32,10 @@
       <text>送出</text>
       <text class='snum'>{{gifts_send}}</text>
     </view>
+    <view class="messages" catchtap="messagesTapTag" >
+      <view class='message-num' style='{{messages_num==0?"background:gray":""}}'>{{messages_num}}</view>
+      <icon style="margin-top:-40rpx;" class="Hui-iconfont iconv-message"  />
+    </view>
   </view>
   <view class="pick-goods" hidden="{{all_rows>0?false:false}}" style="border:none;">
     
@@ -151,13 +155,15 @@
       <!--右上角图标结束-->
       <!--弹出框开始-->
       <!-- 红包 -->
+      <!-- 
       <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
-          <!-- <view class="bg_view">{{resp_message.title}}</view> -->
+           <view class="bg_view">{{resp_message.title}}</view>  
           <text class="red-name">{{resp_message.message}}</text>
           <text class="red-value">{{resp_message.amount_type==1?'现金￥'+resp_message.amount+'元':'积分:'+resp_message.amount}}</text>
           <text class="red-content">{{resp_message.content}}</text>
           <text class="red-footer">{{resp_message.footer}}</text>
           <text class="red-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
+          -->
           <!-- 
           <view class="txtys">{{resp_message.message}}</view>
           -->
@@ -172,17 +178,21 @@
           <!--确定结束-->
       </view>
       <!-- 优惠券 -->
+      <!-- 
       <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
         <text class="coupon-name">{{resp_message.message}}</text>
         <text class="coupon-content">{{resp_message.content}}</text>
         <text class="coupon-footer">{{resp_message.footer}}</text>
         <text class="coupon-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
       </view>
+      -->
        <!-- 消息通知 -->
+       <!-- 
       <view wx:if="{{resp_message.message_type>3}}" class="coupon-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;height:130rpx; text-align: left;align-items: left; padding:20rpx;">
         <text class="coupon-name" style='font-size:30rpx; text-overflow:ellipsis; white-space:wrap;'>{{resp_message.message}}</text>
       </view>
     </view>
+    -->
      <!--弹出框结束-->
   </view>
   
@@ -195,7 +205,10 @@
       <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       <text class="goods_name">{{item.name}}</text>
       <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
+      <view class="price-list">
+      <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
       <view class="price-now">￥{{item.sell_price}}</view>
+      </view>
     </view>
   </view>
 </view>

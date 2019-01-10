@@ -108,6 +108,7 @@ Page({
         var goodsid = options.id
         var goodsinfo = options.goods_info ? options.goods_info:''
         var goodsprice = options.goods_price
+        
         var goodssale = options.sale
         var image = options.image
         var shop_type =  that.data.shop_type
@@ -148,6 +149,7 @@ Page({
                   goodsinfo: goods_info[0]['act_info'],
                   goodstag: goods_info[0]['goods_tag'],
                   goodsprice: goods_info[0]['sell_price'],
+                  marketprice: goods_info[0]['market_price'],
                   goodssale: goods_info[0]['sale'],
                   goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
                   goodscoverimg: goods_info[0]['activity_image'],

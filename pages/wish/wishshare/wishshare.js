@@ -28,7 +28,9 @@ Page({
     painting: {},
     shareImage: '',
     shop_type:shop_type,
-    wechat_share: ''
+    wechat_share: '',
+    nickname: userInfo.nickName,
+    start_time: util.getDateStr(new Date, 0),
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -112,26 +114,23 @@ Page({
     }, 1500)
     that.eventDraw()
   },
-  onLoad () {
-    if (app.globalData.openid && app.globalData.openid != '') {
-      // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
-
-    } else {
-      app.openidCallBack = openid => {
-        if (openid != '') {
-
-        }
-      }
-    }
+  onLoad (options) {
     var that = this
-    that.setNavigation()
+    var task = options.task ? options.task:0
+    var task_image = options.image ?options.image: ''
+    var msg_id = options.msg_id ? options.msg_id : ''
+    that.setData({
+      task: task,
+      task_image: task_image,
+      msg_id: msg_id,
+    })
+    //that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
           dkheight: res.windowHeight - 30,
-          scrollTop: that.data.scrollTop + 10
         })
       }
     })
@@ -149,11 +148,13 @@ Page({
   },
   eventDraw: function () {
     var that = this
-    var wechat_share = that.data.wechat_share
+    var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image ;
     var shop_type = that.data.shop_type
     var qr_type = 'wishshare'  //
+    var task = that.data.task
+    var msg_id = that.data.msg_id
     wx.showLoading({
-      title: '生成分享图片',
+      title: '生成图片',
       mask: true
     })
      
@@ -194,7 +195,7 @@ Page({
          */
           {
             type: 'image',
-            url: weburl + '/api/WXPay/getQRCode?username='+username +'&appid='+appid+'&secret='+ secret+'&shop_type='+shop_type+'&qr_type='+qr_type,
+            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&task=' + task + '&msg_id=' + msg_id,
             top: 480,
             left: 130,
             width: 110,
@@ -203,7 +204,7 @@ Page({
           },
           {
             type: 'text',
-            content: '长按识别二维码，查看我的心愿单',
+            content: '长按识别二维码，进入送心小程序',
             fontSize: 12,
             color: '#FFF',
             textAlign: 'left',
@@ -239,5 +240,53 @@ Page({
         shareImage: tempFilePath
       })
     }
-  }
+  },
+  onShareAppMessage: function (options) {
+    var that = this
+    var res
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var nickname = that.data.nickname
+    var msg_id = that.data.msg_id
+    var task = that.data.task
+    var start_time = that.data.start_time
+    var title = '收到一个' + nickname + '的送礼分享~';
+    var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
+    
+    var desc = '送心礼物分享'
+     
+    console.log('开始分享送礼任务', options)
+
+    var shareObj = {
+      title: title,        // 默认是小程序的名称(可以写slogan等)
+      desc: desc,
+      path: '/pages/hall/hall?task=' + task + '&msg_id=' + msg_id + '&refername=' + username + '&sharetime=' + start_time,   // 默认是当前页面，必须是以‘/’开头的完整路径
+      imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      success: function (res) {
+        console.log(res)
+        if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
+          that.setData({
+            send_status: 1,
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res)
+        if (res.errMsg == 'shareAppMessage:fail cancel') {// 转发失败之后的回调
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+        }
+      },
+      complete: function () { // 转发结束之后的回调（转发成不成功都会执行）
+      },
+    }
+    if (options.from === 'button') {
+      console.log('任务分享', shareObj)
+    }
+    // 返回shareObj
+    return shareObj;
+
+  },
+
 })

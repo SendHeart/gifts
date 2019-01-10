@@ -31,7 +31,11 @@
       </view>
       <view class="goods-info">
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
-        <text class="right-tag">￥{{goodsprice>0?goodsprice:'0'}}</text>
+        
+        <view class="right-tag">
+        <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
+        ￥{{goodsprice>0?goodsprice:'0'}}
+        </view>
       </view>
       <view class="fitfor">
         <text>适合送</text>

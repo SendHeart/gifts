@@ -14,9 +14,10 @@
     "pages/classify/index",
     "pages/wechat/wechat",
     "pages/member/index/index",
-    "pages/member/donate/donate",
+    "pages/member/task/task",
     "pages/member/share/share",
     "pages/member/account/account",
+    "pages/member/message/message",
     "pages/member/couponsnd/couponsnd",
     "pages/member/couponrcv/couponrcv",
     "pages/member/couponmy/couponmy",
@@ -57,6 +58,12 @@
         "iconPath": "images/wish.png",
         "selectedIconPath": "images/wish_s.png",
         "text": "心愿单"
+      },
+      {
+        "pagePath": "pages/member/task/task",
+        "iconPath": "images/waimai.png",
+        "selectedIconPath": "images/waimai_select.png",
+        "text": "小亮"
       },
       {
         "pagePath": "pages/index/index",

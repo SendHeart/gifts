@@ -49,7 +49,6 @@
           <text style='color:#E34C55;font-size:28rpx;'>暂不接受，看看其他内容</text>
         </view>
       </view>
-    
       <button bindtap="returnTapTag" hidden='{{receive_status==0 || overtime_status==1?true:false}}'>回赠</button>
       <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:20rpx;" wx:if='{{receive_status==1 && overtime_status==0}}'>
         <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>

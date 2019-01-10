@@ -45,33 +45,7 @@ Page({
       hiddenmodalput: !that.data.hiddenmodalput
     })
   },
-  //确认  
-  confirm_withdraw: function () {
-    var that = this
-    var withdrawNum = that.data.withdrawNum ? that.data.withdrawNum : 0
-    var withdrawWx = that.data.withdrawWx ? that.data.withdrawWx : ''
-    var withdraw_selected = that.data.withdraw_selected ? that.data.withdraw_selected : 1
-    var balance = that.data.balance
-    console.log('withdrawNum:' + that.data.withdrawNum, 'balance:' + balance)
-    if (withdrawNum - balance > 0) {
-      wx.showToast({
-        title: '大于可提现余额' + balance, withdrawNum,
-        icon: 'none',
-        duration: 1500
-      })
-    } else if (withdrawNum == 0) {
-      wx.showToast({
-        title: '提现金额不能为空',
-        icon: 'none',
-        duration: 1500
-      })
-    } else {
-      that.setData({
-        hiddenmodalput: !that.data.hiddenmodalput
-      })
-      that.withdraw_member_account()
-    }
-  },
+ 
   bindChangeNum: function (e) {
     var that = this;
     var withdrawNum = e.detail.value
@@ -103,21 +77,14 @@ Page({
     })
   },
   //领取 
-  get_red_package: function (e) {
+  task_action: function (e) {
     var that = this
     var msg_id = e.currentTarget.dataset.msgId
-    var coupon_id = e.currentTarget.dataset.couponId
-    var coupons_type = e.currentTarget.dataset.amountType
-    if (coupons_type == 1) {
-      coupons_type=2
-    } else if (coupons_type == 2){
-      coupons_type = 3
-    }else {
-      coupons_type = 1
-    }
-
+    var url = e.currentTarget.dataset.url
+    var image = e.currentTarget.dataset.image
+    
     wx.navigateTo({
-      url: '/pages/member/couponrcv/couponrcv?receive=1&coupons_flag=9&coupons_type=' + coupons_type+'&coupons_id=' + coupon_id+'&msg_id='+msg_id
+      url: '/pages/wish/wishshare/wishshare?task=1&image=' + image+'&msg_id='+msg_id
     })
   },
   //确定按钮点击事件 
@@ -178,12 +145,14 @@ Page({
    
 
   },
-  onShow: function(){
+
+  onShow: function () {
     var that = this
-    that.get_member_message()
+    that.get_member_task()
   },
+
   //获取消息
-  get_member_message: function () {
+  get_member_task: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -196,7 +165,7 @@ Page({
         username: username,
         access_token: token,
         shop_type: shop_type,
-        message_type:5, //5消息通知
+        message_type:6, //6任务
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

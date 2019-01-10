@@ -116,7 +116,6 @@ App({
                   typeof cb == "function" && cb(that.globalData.userInfo)
                   console.log('getUserInfo获取用户登录态:' + res.userInfo.nickName)
                 }
-
               })
             } else {
               console.log('获取用户登录态失败！' + res.errMsg)
