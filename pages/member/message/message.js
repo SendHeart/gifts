@@ -6,6 +6,10 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var navList_order = [
+  { id: "task", title: "任务" },
+  { id: "message", title: "系统消息" },
+];
 var now = new Date().getTime()
 Page({
   data: {
@@ -26,51 +30,36 @@ Page({
     withdrawWx: null,
     withdraw_selected: 1,
     message_list: [],
+    task_list: [],
     messageHidden: true,
     dkheight: 300,
     message:{},
+    messageflag: 0,
+    task_num: 0,
+    message_num: 0,
+    navList_order: navList_order,
+    tab2: 'task',
+    activeIndex2: 0,
     currenttime: now ? parseInt(now / 1000) : 0,
   },
-  //点击按钮指定的hiddenmodalput弹出框  
-  modalinput_withdraw: function () {
-    var that = this
-    that.setData({
-      hiddenmodalput: !that.data.hiddenmodalput
-    })
-  },
-  //取消按钮  
-  cancel_withdraw: function () {
-    var that = this
-    that.setData({
-      hiddenmodalput: !that.data.hiddenmodalput
-    })
-  },
-  //确认  
-  confirm_withdraw: function () {
-    var that = this
-    var withdrawNum = that.data.withdrawNum ? that.data.withdrawNum : 0
-    var withdrawWx = that.data.withdrawWx ? that.data.withdrawWx : ''
-    var withdraw_selected = that.data.withdraw_selected ? that.data.withdraw_selected : 1
-    var balance = that.data.balance
-    console.log('withdrawNum:' + that.data.withdrawNum, 'balance:' + balance)
-    if (withdrawNum - balance > 0) {
-      wx.showToast({
-        title: '大于可提现余额' + balance, withdrawNum,
-        icon: 'none',
-        duration: 1500
-      })
-    } else if (withdrawNum == 0) {
-      wx.showToast({
-        title: '提现金额不能为空',
-        icon: 'none',
-        duration: 1500
-      })
+  onOrderTapTag: function (e) {
+    var that = this;
+    var tab = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
+    var messageflag = that.data.messageflag;
+    if (tab == 'task') { //task
+      messageflag = 0;
     } else {
-      that.setData({
-        hiddenmodalput: !that.data.hiddenmodalput
-      })
-      that.withdraw_member_account()
+      messageflag = 1; //message
     }
+    that.setData({
+      activeIndex2: index,
+      tab2: tab,
+      page: 1,
+      messageflag: messageflag,
+    });
+    console.log('tab:' + tab, ' messageflag:', messageflag)
+    //that.reloadData()
   },
   bindChangeNum: function (e) {
     var that = this;
@@ -103,22 +92,30 @@ Page({
     })
   },
   //领取 
-  get_red_package: function (e) {
+  message_action: function (e) {
     var that = this
     var msg_id = e.currentTarget.dataset.msgId
+    var msg_type = e.currentTarget.dataset.msgType
     var coupon_id = e.currentTarget.dataset.couponId
     var coupons_type = e.currentTarget.dataset.amountType
-    if (coupons_type == 1) {
-      coupons_type=2
-    } else if (coupons_type == 2){
-      coupons_type = 3
-    }else {
-      coupons_type = 1
-    }
+    if(msg_type==5){
+      if (coupons_type == 1) {
+        coupons_type = 2
+      } else if (coupons_type == 2) {
+        coupons_type = 3
+      } else {
+        coupons_type = 1
+      }
 
-    wx.navigateTo({
-      url: '/pages/member/couponrcv/couponrcv?receive=1&coupons_flag=9&coupons_type=' + coupons_type+'&coupons_id=' + coupon_id+'&msg_id='+msg_id
-    })
+      wx.navigateTo({
+        url: '/pages/member/couponrcv/couponrcv?receive=1&coupons_flag=9&coupons_type=' + coupons_type + '&coupons_id=' + coupon_id + '&msg_id=' + msg_id
+      })
+    } else if (msg_type == 6){
+      wx.switchTab({
+        url: '/pages/member/task/task'
+      })
+    }
+    
   },
   //确定按钮点击事件 
   messageConfirm: function () {
@@ -180,10 +177,10 @@ Page({
   },
   onShow: function(){
     var that = this
-    that.get_member_message()
+    that.get_member_messages()
   },
   //获取消息
-  get_member_message: function () {
+  get_member_messages: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -196,19 +193,30 @@ Page({
         username: username,
         access_token: token,
         shop_type: shop_type,
-        message_type:5, //5消息通知
+        message_type:0, //所有消息
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
-        var message_list = res.data
-        if (message_list['status']=='y') {
+        var messages_all = res.data
+        if (messages_all['status']=='y') {
+          var messages = messages_all['result']
+          var task_list =[]
+          var message_list = []
+          for (var i = 0; i < messages.length;i++){
+            if(messages[i].type==6) {
+              task_list.push(messages[i])
+            }else{
+              message_list.push(messages[i])
+            }
+          }
           that.setData({
-            message_list: message_list['result'],
+            message_list: message_list,
+            task_list: task_list,
           })
-          console.log('获取消息:', message_list['result'])
+          console.log('获取消息:', messages)
         } else {
           wx.showToast({
             title: '暂无消息',

@@ -60,7 +60,7 @@
         "text": "心愿单"
       },
       {
-        "pagePath": "pages/member/task/task",
+        "pagePath": "pages/member/message/message",
         "iconPath": "images/waimai.png",
         "selectedIconPath": "images/waimai_select.png",
         "text": "小亮"

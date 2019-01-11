@@ -63,11 +63,28 @@ Page({
 
   },
   returnTapTag: function (e) {
-    /*
-    wx.navigateTo({
-      url: '../../order/list/list'
-    });
-    */
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var order_no = that.data.order_no
+    wx.request({ //更新发送状态
+      url: weburl + '/api/client/update_order_status',
+      method: 'POST',
+      data: {
+        username: username,
+        shop_type, shop_type,
+        access_token: token,
+        status_info: 'send',
+        order_no: order_no,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('礼物发送状态更新完成:', res.data)
+      }
+    }) 
     wx.switchTab({
       url: '../../index/index'
     });
@@ -409,51 +426,7 @@ Page({
           // 来自页面内转发按钮
         console.log('礼物分享:', shareObj)
         //console.log(shareObj)
-        wx.request({ //更新发送状态
-          url: weburl + '/api/client/update_order_status',
-          method: 'POST',
-          data: {
-            username: username,
-            shop_type, shop_type,
-            access_token: token,
-            status_info: 'send',
-            order_no: order_no,
-          },
-          header: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-          },
-          success: function (res) {
-            console.log('礼物发送返回:', res.data)
-          /*
-          if (res.data.status='y') {
-            wx.showToast({
-              title: '礼物发送成功',
-              icon: 'success',
-              duration: 1500
-            })
-           
-          } else {
-            wx.showToast({
-              title: '礼物发送失败',
-              icon: 'success',
-              duration: 1500
-            })
-            return
-          }
-          */
-
-          /*
-          wx.navigateTo({
-            url: '../../order/list/list?username=' + username
-          });
-          
-          wx.switchTab({
-            url: '../../index/index'
-          })
-          */
-          }
-      }) 
+        
     }
         // 返回shareObj
     return shareObj

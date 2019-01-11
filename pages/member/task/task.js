@@ -80,12 +80,14 @@ Page({
   task_action: function (e) {
     var that = this
     var msg_id = e.currentTarget.dataset.msgId
-    var url = e.currentTarget.dataset.url
+    var task_status = e.currentTarget.dataset.taskStatus ? e.currentTarget.dataset.taskStatus:0
     var image = e.currentTarget.dataset.image
-    
-    wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?task=1&image=' + image+'&msg_id='+msg_id
-    })
+    if (task_status<9){
+      wx.navigateTo({
+        url: '/pages/wish/wishshare/wishshare?task=1&image=' + image + '&msg_id=' + msg_id
+      })
+    }
+   
   },
   //确定按钮点击事件 
   messageConfirm: function () {

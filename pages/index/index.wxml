@@ -1,8 +1,4 @@
 <import src="../common/nav_order.wxml" />
-<!--
-<import src="../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
- -->
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <scroll-view class="container" scroll-y bindscrolltolower="getMoreOrdersTapTag" bindscroll="scrolltoupper" scroll-top="{{scrollTop}}">
   <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">

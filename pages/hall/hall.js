@@ -205,6 +205,7 @@ Page({
       socketMsgQueue.push(message)
       that.initSocketMessage()
     } else {
+      console.log('sendSocketMessage message:', message)
       wx.sendSocketMessage({
         data: message,
         success: function (res) {
@@ -249,7 +250,7 @@ Page({
     that.setData({
       messages_num: 0
     })
-    wx.navigateTo({
+    wx.switchTab({
       url: '/pages/member/message/message'
     })
   },
@@ -934,7 +935,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var shop_type = that.data.shop
+    var shop_type = that.data.shop_type
     var page_type = options.page_type ? options.page_type:0
     var order_no = options.order_no ? options.order_no:0
     var coupons = options.coupons ? options.coupons:''

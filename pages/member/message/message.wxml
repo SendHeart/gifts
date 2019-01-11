@@ -1,22 +1,44 @@
+<import src="../../common/nav_order.wxml" />
+<template is="nav_order" data="{{navList_order, activeIndex2,navgationHeight,startBarHeight}}" />
 <view class='container'>
-  <view wx:for="{{message_list}}" wx:for-item="blist" wx:key="" class="msg-item" >
+  <view wx:if="{{messageflag==1}}" wx:for="{{message_list}}" wx:for-item="blist" wx:key="" class="msg-list" >
     <view class="msg-title"  style='width:{{windowWidth}}'>
       <text style="margin-top:10rpx;">{{blist.addtime}}</text>
-		  <text bindtap="get_red_package" data-msg-id="{{blist.msg_id}}"  data-coupon-id="{{blist.message_info.coupon_id}}" data-amount-type="{{blist.message_info.amount_type}}" class="{{(blist.msg_status !=1 && currenttime<=blist.message_info.end_time)? '': 'hidden'}}" style="margin-left:20rpx;margin-top:10rpx;margin-right:20rpx;color:red" >领取</text>  
-       <text class="{{blist.msg_status ==1 ? '': 'hidden'}}" style="margin-left:20rpx;margin-top:10rpx;margin-right:20rpx;color:gray" >已领取</text>  
+		  <text bindtap="message_action" data-msg-id="{{blist.msg_id}}" data-msg-type="{{blist.type}}"  data-coupon-id="{{blist.message_info.coupon_id}}" data-amount-type="{{blist.message_info.amount_type}}" class="{{(blist.msg_status !=1 && currenttime<=blist.message_info.end_time)? '': 'hidden'}}" style="margin-left:20rpx;margin-top:10rpx;margin-right:20rpx;color:red" >{{(blist.type==4 && blist.message_info.task_status==0)?'领取':''}}{{(blist.type==6 && blist.message_info.task_status==0)?'查看':''}}</text>  
     </view>
-    <view style='height:70rpx;'>
-      <text class="msg-content-text">{{blist.title}}{{( blist.message_info.amount_type==1)?' (现金￥'+blist.message_info.amount+'元)':''}}{{(blist.message_info.amount_type==2)?' (积分:'+blist.message_info.amount+')':''}}</text>
+    <view class="msg-item">
+       <image class="msg-content-image"bindtap="imgYu" data-list="{{blist.message_info.image}}" data-message="{{blist.message_info.message}}" data-message-type="{{blist.message_info.message_type}}" data-amount="{{blist.message_info.amount}}" data-amount-type="{{blist.message_info.amount_type}}" data-content="{{blist.message_info.content}}"  data-footer="{{blist.message_info.footer}}" data-accept-time="{{blist.message_info.accept_time}}" data-start-time="{{blist.message_info.start_time}}" data-end-time="{{blist.message_info.end_time}}" data-image="{{blist.message_info.image}}" src="{{blist.message_info.image}}" mode='aspectFill'></image>
+      <view class="msg-item-content">
+        <view class="" style='height:65rpx;'>
+          <text class="msg-content-text">{{blist.title}}{{( blist.message_info.amount_type==1)?' (现金￥'+blist.message_info.amount+'元)':''}}{{(blist.message_info.amount_type==2)?' (积分:'+blist.message_info.amount+')':''}}</text>
+        </view>
+        <view style='height:130rpx;'>
+          <text class="msg-content-text2">{{blist.message_info.message}}</text>
+        </view>
+      </view>
     </view>
-      <view style='height:130rpx;'>
-      <text class="msg-content-text">{{blist.message_info.message}}</text>
+  </view>
+  <view wx:if="{{messageflag==0}}" wx:for="{{task_list}}" wx:for-item="blist" wx:key="" class="msg-list" >
+    <view class="msg-title"  style='width:{{windowWidth}}'>
+      <text style="margin-top:10rpx;">{{blist.addtime}}</text>
+		  <text bindtap="task_action" data-msg-id="{{blist.msg_id}}"   data-task-status="{{blist.message_info.task_status}}"  data-url="{{blist.message_info.url}}" data-image="{{blist.message_info.image}}" class="{{(blist.msg_status !=1 && currenttime<=blist.message_info.end_time)? '': 'hidden'}}" style="margin-left:20rpx;margin-top:10rpx;margin-right:20rpx;{{blist.message_info.task_status==9?' color:gray':' color:red'}};" >{{blist.message_info.task_status==0?'分享':''}}{{blist.message_info.task_status==9?'已完成':''}}</text>  
     </view>
-     <view class="msg-content-image" >
-     <image wx:if="{{blist.message_info.message_type<4}}" bindtap="message_detail" data-list="{{blist.message_info.image}}" data-message="{{blist.message_info.message}}" data-message-type="{{blist.message_info.message_type}}" data-amount="{{blist.message_info.amount}}" data-amount-type="{{blist.message_info.amount_type}}" data-content="{{blist.message_info.content}}"  data-footer="{{blist.message_info.footer}}" data-accept-time="{{blist.message_info.accept_time}}" data-start-time="{{blist.message_info.start_time}}" data-end-time="{{blist.message_info.end_time}}" data-image="{{blist.message_info.image}}" src="{{blist.message_info.image}}" mode='aspectFit'></image>
+    <view class="msg-item">
+      <image class="msg-content-image"bindtap="imgYu" data-list="{{blist.message_info.image}}" data-message="{{blist.message_info.message}}" data-message-type="{{blist.message_info.message_type}}" data-amount="{{blist.message_info.amount}}" data-amount-type="{{blist.message_info.amount_type}}" data-content="{{blist.message_info.content}}"  data-footer="{{blist.message_info.footer}}" data-accept-time="{{blist.message_info.accept_time}}" data-start-time="{{blist.message_info.start_time}}" data-end-time="{{blist.message_info.end_time}}" data-image="{{blist.message_info.image}}" src="{{blist.message_info.image}}" mode='aspectFill'></image>
+      <view class="msg-item-content">
+        <view class="" style='height:65rpx;'>
+          <text class="msg-content-text">{{blist.title}}{{( blist.message_info.amount_type==1)?' (现金￥'+blist.message_info.amount+'元)':''}}{{(blist.message_info.amount_type==2)?' (积分:'+blist.message_info.amount+')':''}}</text>
+        </view>
+        <view style='height:130rpx;'>
+          <text class="msg-content-text2">{{blist.message_info.message}}</text>
+        </view>
+        
+      </view>
     </view>
   </view>
   <view wx:if="{{page_num>1}}" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">展开更多 ({{page}}/{{page_num}})</view>
 </view> 
+
  <view class="message" hidden="{{messageHidden}}"  bindtap="messageConfirm" style="height:{{dkheight}}px;">
     <view class="t_w">
       <!--右上角图标开始-->

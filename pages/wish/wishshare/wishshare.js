@@ -250,7 +250,7 @@ Page({
     var msg_id = that.data.msg_id
     var task = that.data.task
     var start_time = that.data.start_time
-    var title = '收到一个' + nickname + '的送礼分享~';
+    var title = '收到' + nickname + '的送礼分享~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
     
     var desc = '送心礼物分享'
