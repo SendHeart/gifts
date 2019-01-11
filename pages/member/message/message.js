@@ -82,14 +82,70 @@ Page({
      * 预览图片
      */
   imgYu: function (event) {
+    var that = this
+    var shop_type = that.data.shop_type
     var src = event.currentTarget.dataset.src;//获取data-src
+    var order_no = event.currentTarget.dataset.orderNo
+    var message_type = event.currentTarget.dataset.messageType
     var imgList =[]
      imgList.push(event.currentTarget.dataset.list)//获取data-list
-    //图片预览
-    wx.previewImage({
-      current: src, // 当前显示图片的http链接
-      urls: imgList, // 需要预览的图片http链接列表
-    })
+    if(order_no){
+      wx.request({
+        url: weburl + '/api/client/query_order',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          order_no: order_no,
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('message gift info:', res.data.result)
+          var orderObjects = res.data.result
+          var sku_id = that.data.sku_id
+          if (!res.data.info) {
+            var order_price = 0
+            for (var i = 0; i < orderObjects.length; i++) {
+              orderObjects[i]['logo'] = weburl + orderObjects[i]['logo'];
+              for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+                if (sku_id != '') {
+                  sku_id = sku_id + ',' + orderObjects[i]['order_sku'][j]['sku_id']
+                } else {
+                  sku_id = orderObjects[i]['order_sku'][j]['sku_id']
+                }
+
+              }
+              //order_price = order_price + orderObjects[i]['order_price']
+            }
+            //totalFee = order_price.toFixed(2) * 100
+            that.setData({
+              orderObjects: orderObjects[0],
+            })
+            wx.navigateTo({
+              url: '/pages/order/orderdetail/orderdetail?order_object=' + JSON.stringify(that.data.orderObjects) + '&order_id=' + orderObjects['id']
+            })
+          } else {
+            wx.showToast({
+              title: res.data.info,
+              icon: 'loading',
+              duration: 1500
+            })
+          }
+        }
+      })
+    }else{
+       //图片预览
+       wx.previewImage({
+         current: src, // 当前显示图片的http链接
+         urls: imgList, // 需要预览的图片http链接列表
+       })
+     }
+   
   },
   //领取 
   message_action: function (e) {

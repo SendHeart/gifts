@@ -179,18 +179,17 @@ Page({
     var deliveryname = order_object['deliveryname'];
     var deliverystepinfo = order_object['deliverystepinfo'];
     that.setNavigation()
-    console.log('订单详情')
-    console.log(order_object)
+    console.log('订单详情',order_object)
     if (order_object) sku_num = order_object['order_sku'].length ;
     orders.push(order_object);
     console.log(orders)
     that.setData({
-        order_id: order_id,
+        order_id: order_id?order_id:0,
         orders: orders,
         status:status,
-        giftflag: giftflag,
+        giftflag: giftflag ? giftflag:0,
         gift_status: gift_status,
-        send_rcv: send_rcv,
+        send_rcv: send_rcv ? send_rcv : 0,
         sku_num:sku_num,
         order_no:order_no,
         sendtime:sendtime,
@@ -201,12 +200,10 @@ Page({
         fullname:fullname,
         from_nickname: from_nickname,
         from_headimg: from_headimg,
-        deliverycode:deliverycode,
-        deliveryname:deliveryname,
-        deliverystepinfo:deliverystepinfo
-      });
-    
-
+        deliverycode: deliverycode ? deliverycode:'',
+        deliveryname: deliveryname ? deliveryname:'',
+        deliverystepinfo: deliverystepinfo ? deliverystepinfo:''
+      })
   },
   onShow: function () {
     //this.reloadData();
