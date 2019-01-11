@@ -117,6 +117,20 @@ Page({
     }
     
   },
+
+  //领取 
+  task_action: function (e) {
+    var that = this
+    var msg_id = e.currentTarget.dataset.msgId
+    var task_status = e.currentTarget.dataset.taskStatus ? e.currentTarget.dataset.taskStatus : 0
+    var image = e.currentTarget.dataset.image
+    if (task_status < 9) {
+      wx.navigateTo({
+        url: '/pages/wish/wishshare/wishshare?task=1&image=' + image + '&msg_id=' + msg_id
+      })
+    }
+
+  },
   //确定按钮点击事件 
   messageConfirm: function () {
     var that = this
