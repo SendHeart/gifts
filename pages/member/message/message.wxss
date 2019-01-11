@@ -72,7 +72,7 @@
   background-color: #fff;
 }
  
-.msg-content-text{
+.msg-item-text{
   margin-left:20rpx;
   margin-right:20rpx;
   font-size:30rpx;
@@ -82,7 +82,7 @@
   white-space:wrap; 
   color: #444;
 }
-.msg-content-text2{
+.msg-item-text2{
   margin-left:20rpx;
   margin-right:20rpx;
   font-size:28rpx;
@@ -92,9 +92,9 @@
   color: #444;
   padding: 20rpx;
 }
-.msg-content-image {
+.msg-item-image {
 	width:100rpx;
-  height:100rpx;
+  height:90rpx;
 	padding: 10rpx 0;
   margin-left:15rpx;
   text-align: center;

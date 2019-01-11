@@ -5,7 +5,8 @@
   <image src="{{shareImage}}" class="share-image" mode='aspectFit' ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
    <view class="sentbtn">
-  <button class="" bindtap="eventSave" type='warn'>保存图片</button>
-  <button class="" open-type="share" bindtap="onShareAppMessage">分享</button>
+
+  <button class=""  hidden ='{{overtime_status==1?true:false}}' bindtap="eventSave" type='warn'>保存图片</button>
+  <button class=""  hidden ='{{overtime_status==1?true:false}}' open-type="share" bindtap="onShareAppMessage">分享</button>
   </view>
 </view> 

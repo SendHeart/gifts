@@ -294,6 +294,8 @@ Page({
     if (!headimg){
       that.setData({
         overtime_status: 1 ,//超时标志
+        orders: [],
+        all_rows: 0,
       })
     }
   },

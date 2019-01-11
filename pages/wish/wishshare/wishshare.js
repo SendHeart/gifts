@@ -31,6 +31,7 @@ Page({
     wechat_share: '',
     nickname: userInfo.nickName,
     start_time: util.getDateStr(new Date, 0),
+    overtime_status: 0,
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -105,15 +106,14 @@ Page({
         wechat_share: navList_new[5]['img']
       })
     }
-   
-
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
       })
-    }, 1500)
+    }, 2000)
     that.eventDraw()
   },
+
   onLoad (options) {
     var that = this
     var task = options.task ? options.task:0
@@ -146,6 +146,8 @@ Page({
       })
     }  
   },
+
+  
   eventDraw: function () {
     var that = this
     var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image ;
@@ -157,7 +159,7 @@ Page({
       title: '生成图片',
       mask: true
     })
-     
+    
     that.setData({
       painting: {
         width: 375,
