@@ -946,6 +946,8 @@ Page({
     var message = '获取个人消息'
     var messages_num = that.data.messages_num
     var myDate = util.formatTime(new Date)
+    var scene = decodeURIComponent(options.scene)
+    console.log('hall onload scene:', scene)
     var message_info = {
       addtime : myDate,
       username : username,
