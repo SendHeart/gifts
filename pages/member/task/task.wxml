@@ -33,7 +33,9 @@
   <view wx:for="{{task_list}}" wx:key="{{index}}" wx:for-index="order_idx" class="task-list">
     <view class="order-item-title">{{item.title}}</view>
     <view class="order-item-message">{{item.message_info.message?'  '+item.message_info.message:''}}</view>
-    <button open-type="share" bindtap="onShareAppMessage" style='color:white;width:50%;font-size:30rpx;background:#0000FF;margin-bottom:30rpx;'>{{item.message_info.task_status==9?'已完成':item.task_info.step_info!='undefined'?'开始(完成比例)':''}}</button>
+    <view class="sentbtn" >
+    <button open-type="share" bindtap="onShareAppMessage" style='{{item.message_info.task_status<9?" background:blue":""}}'>{{item.message_info.task_status==9?'已完成':item.task_info.step_info!='undefined'?'开始(完成比例)':''}}</button>
+    </view>
 </view>
 </scroll-view>
 <view class="sentbtn">
