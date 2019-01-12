@@ -16,6 +16,7 @@
 }
 */
 
+
 page {
   background: #f2f2f2;
   overflow-x: hidden;
@@ -67,10 +68,11 @@ page {
   text-align: center;
   line-height: 100rpx;
   padding: 10rpx;
+  background: #999;
 }
 
 .gifts-item-text {
-  color: #999;
+  color: #fff;
   font-size: 28rpx;
 }
 .wrap {
@@ -112,9 +114,49 @@ page {
   font-size: 24rpx;
   color: #999;
 }
-.savebtn {
-  font-size: 28rpx;
-  padding-top:1rpx;
-  height: 80rpx;
-  margin-top:10px;
+
+
+.wrap{
+  background:#999;
+}
+.container { 
+  width: 100%; 
+  background-color: #939393; 
+  color: #fff;
+}
+.task-list {
+  width:95%;
+  height: 95%;
+  flex-direction: column;
+  background-color: #fff; 
+  border-radius: 20rpx;
+  margin:20rpx;
+  justify-content:center; 
+  text-align: left;
+  align-content: left;
+  align-items: left; 
+}
+.order-item {
+  border-radius: 20rpx;
+}
+.order-item-title {
+  text-align: center;
+  align-content: center;
+  padding: 20rpx;
+  font-size:35rpx;
+  font-weight: bold;
+  color: #333;
+  background: #fff;
+}
+
+.order-item-message {
+  width: 90%;
+  color: #444;
+  line-height: 38rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:wrap; 
+  padding: 20rpx;
+  font-size:30rpx;
+  margin-left:20rpx;
 }

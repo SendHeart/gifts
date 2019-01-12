@@ -30,11 +30,9 @@ Page({
     duration: 1000,
     main_title_Bg: null,
     banner_link: null,
-
     note: '',
     username: null,
     token: null,
-   
     windowWidth: 0,
     windowHeight: 0,
     amount: 0,
@@ -45,25 +43,7 @@ Page({
     gifts_list: [],
 
   },
-  /*
-  setNavigation:function() {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
-  },
-  */
+ 
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -99,13 +79,6 @@ Page({
           console.log('get_project_gift_para:', res.data.result)
           navList_new = res.data.result;
           if (!navList_new) {
-            /*
-             wx.showToast({
-               title: '没有菜单项2',
-               icon: 'loading',
-               duration: 1500
-             });
-             */
             return
           } else {
             wx.setStorageSync('navList2', navList_new)
@@ -154,25 +127,16 @@ Page({
           delta: len - i - 1
         })
       } else {
-        /*
-        wx.reLaunch({
-          url: "/pages/hall/hall"//这个是默认的单页
-        })
-        */
         wx.switchTab({
           url: '/pages/hall/hall'
         })
 
       }
-
-
-
     } else {
       wx.navigateTo({
         url: banner_link + '&username=' + username + '&token=' + token
       })
     }
-
   },
 
   qrcodeTapTag: function (e) {
@@ -184,7 +148,6 @@ Page({
     that.setData({
       qr_type: qr_type,
     })
-    //that.eventDraw()
     wx.navigateTo({
       url: '../share/share?qr_type=' + qr_type + '&act_id=' + act_id + '&act_title=' + act_title
     })
@@ -261,21 +224,7 @@ Page({
     var gifts_send = that.data.gifts_send;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     console.log("openid:" + openid + ' username:' + username)
-    // 加载的使用进行网络访问，把需要的数据设置到data数据对象
-    /*
-    
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    */
-
-
   },
-
-
 
   onGotUserInfo: function (e) {
     console.log(e.detail.errMsg)
@@ -306,20 +255,11 @@ Page({
         var messages_all = res.data
         if (messages_all['status'] == 'y') {
           var messages = messages_all['result']
-          var task_list = []
-          var message_list = []
-          for (var i = 0; i < messages.length; i++) {
-            if (messages[i].type == 6) {
-              task_list.push(messages[i])
-            } else {
-              message_list.push(messages[i])
-            }
-          }
+  
           that.setData({
-            message_list: message_list,
-            task_list: task_list,
+            task_list: messages
           })
-          console.log('获取消息:', messages)
+          console.log('获取消息 task list:', that.data.task_list)
         } else {
           wx.showToast({
             title: '暂无消息',
@@ -330,7 +270,6 @@ Page({
       }
     })
   },
-
 
   onLoad: function (options) {
     var that = this
