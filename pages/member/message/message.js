@@ -182,7 +182,7 @@ Page({
     var image = e.currentTarget.dataset.image
     if (task_status < 9) {
       wx.navigateTo({
-        url: '/pages/wish/wishshare/wishshare?task=1&image=' + image + '&msg_id=' + msg_id
+        url: '/pages/member/task/task?task=1&image=' + image + '&msg_id=' + msg_id
       })
     }
 
@@ -327,7 +327,8 @@ Page({
   },
   onPullDownRefresh: function () {
     //下拉刷新
-    wx.stopPullDownRefresh()
+    //wx.startPullDownRefresh()
+    //wx.stopPullDownRefresh()
   },
 
 })

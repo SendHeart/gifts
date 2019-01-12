@@ -110,7 +110,7 @@ Page({
       that.setData({
         loadingHidden: true,
       })
-    }, 2000)
+    }, 1500)
     that.eventDraw()
   },
 
@@ -243,6 +243,7 @@ Page({
       })
     }
   },
+ 
   onShareAppMessage: function (options) {
     var that = this
     var res
