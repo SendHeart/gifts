@@ -34,13 +34,42 @@
     <view class="order-item-title">{{item.title}}</view>
     <view class="order-item-message">{{item.message_info.message?'  '+item.message_info.message:''}}</view>
     <view class="sentbtn" >
-    <text style='color:#999'>{{item.task_info.task_status!=9?item.task_info.step_info:''}}</text>
+    <text style='color:#999' bindtap='refer_detail' data-refer-list="{{item.task_info.refer_list}}">{{item.task_info.task_status!=9?item.task_info.step_info:''}}</text>
      <button wx:if="{{item.message_info.message_type==0}}" open-type="button" bindtap="task_action" style='{{item.task_info.task_status<9?" background:blue":" background:#999"}}'>去送礼</button>
      <button wx:if="{{item.task_info.task_status==9 && item.message_info.message_type!=0}}" open-type="button" bindtap="" style='{{item.task_info.task_status<9?" background:blue":" background:#999"}}'>已完成</button>
     <button wx:if="{{item.task_info.task_status!=9 && item.message_info.message_type!=0}}"  open-type="share" bindtap="onShareAppMessage" style='{{item.task_info.task_status<9?" background:blue":" background:#999"}}' data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >{{item.task_info.step_no>0?'继续':'开始'}}</button>
     </view>
 </view>
 </scroll-view>
+<view class="message" hidden="{{messageHidden}}"  bindtap="messageConfirm" style="height:{{dkheight}}px;">
+    <view class="t_w">
+      <!--右上角图标开始-->
+      <!-- 
+      <view class="t_image"  bindtap="messageCandel">
+        <image class="t_image1" src="{{resp_message.image}}"></image>
+      </view>
+      -->
+      <!--右上角图标结束-->
+      <!--弹出框开始-->
+      <!-- 分享人列表 -->
+      <view  class="red-item" style="background-image:url('{{message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+          <view wx:for="{{refer_list}}" wx:key="" wx:for-item="refer_list">
+          <text class="red-name">{{refer_list.wx_nickname?'好友昵称:'+refer_list.wx_nickname:''}}</text>
+          <text class="red-dueday">{{refer_list.time?' 点击日期:'+refer_list.time:''}}</text>
+          </view>
+          <!--确定开始-->
+          <!-- 
+          <view class="txtsure">
+            <view class="txtsurebg" bindtap="messageCandel">
+              <text class="txtsurename">确定</text>
+            </view>        
+          </view>
+          -->
+          <!--确定结束-->
+      </view>
+    </view>
+     <!--弹出框结束-->
+  </view>
 <view class="sentbtn">
   <button bindtap="goBack">返回</button>
 </view>

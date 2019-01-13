@@ -1,4 +1,4 @@
-
+        
 var util = require('../../../utils/util.js');
 //获取应用实例
 var app = getApp();
@@ -19,39 +19,52 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var now = new Date().getTime()
 Page({
   data: {
-    title_name: '新手免费送大礼',
-    title_logo: '../../images/footer-icon-05.png',
     currenttime: now ? parseInt(now) : 0,
     new_task_image: weburl + "/uploads/gift_logo.png", //默认的新人送礼图片
     hidden: true,
-    scrollTop: 0,
-    scrollHeight: 0,
-    indicatorDots: true,
-    vertical: false,
-    autoplay: true,
-    interval: 3000,
-    duration: 1000,
-    main_title_Bg: null,
-    banner_link: null,
-    note: '',
-    username: null,
-    token: null,
     windowWidth: 0,
     windowHeight: 0,
-    amount: 0,
+    winHeight:300,
+  
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     shop_type: shop_type,
     navList2: navList2,
-    gifts_list: [],
+   
     page: 1,
     pagesize: 10,
     status: 0,
     all_rows: 0,
     page_num: 0,
-
+    messageHidden: true,
   },
  
+  //确定按钮点击事件 
+  messageConfirm: function () {
+    var that = this
+    var messageHidden = that.data.messageHidden
+    that.setData({
+      messageHidden: !messageHidden,
+    })
+  },
+  refer_detail: function (e) {
+    var that = this
+    var messageHidden = that.data.messageHidden
+    var refer_list = e.currentTarget.dataset.referList
+    console.log('refer_detail refer list:', refer_list)
+    if (refer_list){
+      for (var i = 0; i < refer_list.length; i++) {
+        refer_list[i]['time'] = util.getDateStr(refer_list[i]['time'] * 1000, 0)
+      } 
+
+      that.setData({
+        refer_list: refer_list,
+        messageHidden: !messageHidden,
+      })
+      console.log('refer_detail message:', that.data.refer_list)
+    }
+   
+  },
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -403,20 +416,16 @@ Page({
         userInfo: userInfo
       })
     })
-
-    /*
-     wx.getSystemInfo({
-       success: function (res) {
-         let winHeight = res.windowHeight;
-         that.setData({
-           windowWidth: res.windowWidth,
-           windowHeight: res.windowHeight,
-           dkheight: winHeight - 60,
-           scrollTop: that.data.scrollTop + 10
-         })
-       }
-     }) 
-   */
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        console.log('getSystemInfo:', winHeight);
+        that.setData({
+          dkheight: winHeight,
+        })
+      }
+    })
+    
     this.setData({
       username: username
     })

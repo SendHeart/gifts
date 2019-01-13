@@ -160,3 +160,137 @@ page {
   font-size:30rpx;
   margin-left:20rpx;
 }
+
+
+
+.message{
+  position:fixed;
+  width:100%;
+  top:0px;
+  background:rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 999;
+}
+.message .t_w{
+  position:relative;
+}
+.message .tanchu_view{
+  width: 80%;
+  margin:10% auto;
+  overflow: hidden;
+  background-color: #fff1e6;
+  border-radius: 10rpx;
+  padding: 4rpx;
+}
+
+.message .bg_view{
+  margin:0rpx auto 30rpx auto;
+  color:#fcb712;
+  font-size:50rpx;
+  background-color: #fff1e6;
+  padding:0rpx 30rpx;
+  text-align: center;
+}
+
+.message .txtys{
+    font-size: 50rpx;
+    text-align: center;
+    margin-bottom: 200rpx;
+}
+ 
+.message .txtsure{
+ width: 100%;
+ height: 100%;
+ display: flex;
+ justify-content: center;
+ margin: 20rpx;
+}
+ 
+/*确定背景*/
+.message .txtsurebg{
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 150rpx;
+  background-color: burlywood;
+   flex-direction: column;
+}
+ 
+/*确定图标*/
+.message .txtsureimg{
+  display:block;
+  width:60rpx;
+  height:60rpx;
+}
+ 
+/*确定文本*/
+.message .txtsurename{
+   margin-bottom: 10rpx;
+   color: white;
+   font-size: 30rpx;
+}
+ 
+/*右上角图标*/
+.message .t_image{
+  position: absolute;
+  top: -6%;
+  left:88%;
+}
+ 
+/*右上角图标*/
+.message .t_image1{
+  display:block;
+  width:60rpx;
+}
+
+.red-item {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  text-align: left;
+  /*width属性解决标题文字太短而缩略图偏移*/
+  width: 80%;
+  padding: 20rpx 10rpx;
+  margin:40% auto;
+}
+
+.red-name {
+  font-size: 35rpx;
+  color: #ebdddd;
+  line-height: 38rpx;
+  width: 100%;
+  margin-top:60rpx;
+}
+
+.red-content {
+  font-size: 45rpx;
+  color: #ebdddd;
+  line-height: 100rpx;
+  width: 100%;
+  margin-top:20rpx;
+}
+.red-value {
+  font-size: 45rpx;
+  color: #ebdddd;
+  line-height: 60rpx;
+  margin-top:20rpx;
+  width: 100%;
+}
+
+.red-dueday {
+  font-size: 35rpx;
+  color: #ebdddd;
+  line-height: 38rpx;
+  width: 100%;
+  margin-top:20rpx;
+}
+.red-footer {
+  font-size: 35rpx;
+  color: #ebdddd;
+  line-height: 38rpx;
+  width: 100%;
+  margin-top:20rpx;
+} 
