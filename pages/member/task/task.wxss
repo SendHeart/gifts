@@ -258,7 +258,7 @@ page {
 }
 
 .red-name {
-  font-size: 35rpx;
+  font-size: 30rpx;
   color: #ebdddd;
   line-height: 38rpx;
   width: 100%;
@@ -281,7 +281,7 @@ page {
 }
 
 .red-dueday {
-  font-size: 35rpx;
+  font-size: 30rpx;
   color: #ebdddd;
   line-height: 38rpx;
   width: 100%;
