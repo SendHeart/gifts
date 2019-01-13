@@ -13,6 +13,7 @@ var navList_order = [
 var now = new Date().getTime()
 Page({
   data: {
+    new_task_image: weburl + "/uploads/gift_logo.png", //默认的新人送礼图片
     shop_type: shop_type,
     user: null,
     userInfo: {},
@@ -40,7 +41,7 @@ Page({
     navList_order: navList_order,
     tab2: 'task',
     activeIndex2: 0,
-    currenttime: now ? parseInt(now / 1000) : 0,
+    currenttime: now ? parseInt(now) : 0,
   },
   onOrderTapTag: function (e) {
     var that = this;
@@ -282,11 +283,32 @@ Page({
               message_list.push(messages[i])
             }
           }
+          if (task_list.length==0){//为空时虚拟一条送礼任务
+            var message_info = {
+              message_type: 0,
+              message: '请完成一次送礼',
+              image: that.data.new_task_image
+            }
+            var task_info = {
+              step_no: 0,
+              task_status: 0,
+              step_info: '未开始'
+            }
+            var new_task = [{
+              addtime: util.getDateStr(that.data.currenttime,0), 
+              msg_id:0,
+              msg_status:0,
+              title:'新人送礼任务',
+              type:6, //送礼类型
+              message_info:message_info,
+              task_info:task_info,
+            }]
+          }
           that.setData({
             message_list: message_list,
-            task_list: task_list,
+            task_list: task_list.length>0?task_list:new_task,
           })
-          console.log('获取消息:', messages)
+          console.log('获取消息:', that.data.message_list, that.data.task_list)
         } else {
           wx.showToast({
             title: '暂无消息',

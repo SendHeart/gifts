@@ -34,9 +34,10 @@
     <view class="order-item-title">{{item.title}}</view>
     <view class="order-item-message">{{item.message_info.message?'  '+item.message_info.message:''}}</view>
     <view class="sentbtn" >
-    <text style='color:#999'>{{item.task_info.step_no>0?item.task_info.step_info:''}}</text>
-     <button wx:if="{{item.message_info.task_status==9}}" open-type="button" bindtap="" style='{{item.message_info.task_status<9?" background:blue":" background:#999"}}'>已完成</button>
-    <button wx:if="{{item.message_info.task_status!=9}}"  open-type="share" bindtap="onShareAppMessage" style='{{item.message_info.task_status<9?" background:blue":" background:#999"}}' data-msg-id="{{item.msg_id}}" data-task-status="{{item.message_info.task_status}}" >{{item.task_info.step_no>0?'继续':'开始'}}</button>
+    <text style='color:#999'>{{item.task_info.task_status!=9?item.task_info.step_info:''}}</text>
+     <button wx:if="{{item.message_info.message_type==0}}" open-type="button" bindtap="task_action" style='{{item.task_info.task_status<9?" background:blue":" background:#999"}}'>去送礼</button>
+     <button wx:if="{{item.task_info.task_status==9 && item.message_info.message_type!=0}}" open-type="button" bindtap="" style='{{item.task_info.task_status<9?" background:blue":" background:#999"}}'>已完成</button>
+    <button wx:if="{{item.task_info.task_status!=9 && item.message_info.message_type!=0}}"  open-type="share" bindtap="onShareAppMessage" style='{{item.task_info.task_status<9?" background:blue":" background:#999"}}' data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >{{item.task_info.step_no>0?'继续':'开始'}}</button>
     </view>
 </view>
 </scroll-view>

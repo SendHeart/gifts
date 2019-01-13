@@ -4,7 +4,7 @@ var util = require('../../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
-
+var now = new Date().getTime()
 var page = 1;
 var pagesize = 10;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -21,7 +21,8 @@ Page({
   data: {
     title_name: '新手免费送大礼',
     title_logo: '../../images/footer-icon-05.png',
-    currenttime: now ? parseInt(now / 1000) : 0,
+    currenttime: now ? parseInt(now) : 0,
+    new_task_image: weburl + "/uploads/gift_logo.png", //默认的新人送礼图片
     hidden: true,
     scrollTop: 0,
     scrollHeight: 0,
@@ -248,19 +249,59 @@ Page({
         var messages_all = res.data
         if (messages_all['status'] == 'y') {
           var messages = messages_all['result']
+         
           that.setData({
             task_list: messages.reverse()
           })
           console.log('获取消息 task list:', that.data.task_list)
         } else {
+          /*
           wx.showToast({
             title: '暂无消息',
             icon: 'none',
             duration: 1000
           })
+          */
+          //为空 生成一条新人送礼任务
+          var message_info = {
+            message_type: 0,
+            message: '请完成一次送礼',
+            image: that.data.new_task_image
+          }
+          var task_info = {
+            step_no: 0,
+            task_status: 0,
+            step_info: '未开始'
+          }
+          var new_task = [{
+            addtime: util.getDateStr(that.data.currenttime, 0),
+            msg_id: 0,
+            msg_status: 0,
+            title: '新人送礼任务',
+            type: 6, //送礼类型
+            message_info: message_info,
+            task_info: task_info,
+          }]
+          that.setData({
+            task_list: new_task
+          })
+          console.log('获取消息 task list:', that.data.task_list)
         }
       }
     })
+  },
+
+  task_action: function (e) {
+    var that = this
+    var msg_id = 0
+    var task_status = 0
+    var image = that.data.new_task_image
+    if (task_status == 0 && msg_id==0) {
+      wx.navigateTo({
+        url: '/pages/details/details?id=7480'
+      })
+    }
+
   },
   getMoreOrdersTapTag: function (e) {
     var that = this
