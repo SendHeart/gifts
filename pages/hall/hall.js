@@ -994,8 +994,11 @@ Page({
         })
       }
     }
-    if (task>0) { //收到任务分享
+    if (task>0) { //收到任务分享人信息
       console.log('收到任务分享 Hall task:',task, ' refername:', refername, ' msg_id:', msg_id)
+      if (username != refername){ //保留分享人信息
+        wx.setStorageSync('taskrefername', refername);
+      }
       wx.request({
         url: weburl + '/api/client/get_task_refer',
         method: 'POST',

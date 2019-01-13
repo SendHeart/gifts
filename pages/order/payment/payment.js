@@ -140,6 +140,13 @@ Page({
     console.log('openid:'+openId);
     console.log('totalFee:' + totalFee);
 		//统一下单接口对接
+    if (totalFee<=0){
+      that.delete_cart()
+      wx.navigateTo({
+        url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders)
+      })
+        return
+    }
 		wx.request({
       url: weburl+'/api/WXPay',
 			data: {
@@ -181,7 +188,6 @@ Page({
             duration: 2000,
           })
         }
-        
         
 			},
       fail: function (response) {

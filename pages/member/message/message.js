@@ -155,7 +155,7 @@ Page({
     var msg_type = e.currentTarget.dataset.msgType
     var coupon_id = e.currentTarget.dataset.couponId
     var coupons_type = e.currentTarget.dataset.amountType
-    if(msg_type==5){
+    if(msg_type==4){
       if (coupons_type == 1) {
         coupons_type = 2
       } else if (coupons_type == 2) {
