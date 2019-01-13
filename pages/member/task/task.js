@@ -16,10 +16,12 @@ var navList2 = [
   { id: "activity_footer", title: "活动说明", value: "", img: "/uploads/activity_info/activity_footer.png" },
 ];
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+var now = new Date().getTime()
 Page({
   data: {
     title_name: '新手免费送大礼',
     title_logo: '../../images/footer-icon-05.png',
+    currenttime: now ? parseInt(now / 1000) : 0,
     hidden: true,
     scrollTop: 0,
     scrollHeight: 0,
@@ -41,6 +43,11 @@ Page({
     shop_type: shop_type,
     navList2: navList2,
     gifts_list: [],
+    page: 1,
+    pagesize: 10,
+    status: 0,
+    all_rows: 0,
+    page_num: 0,
 
   },
  
@@ -211,21 +218,6 @@ Page({
     });
   },
 
-  reloadData: function (username, token) {
-    // auto login
-    var that = this;
-    var minusStatuses = []
-    var page = that.data.page
-    var pagesize = that.data.pagesize
-    var shop_type = that.data.shop_type
-
-
-    var gifts_rcv = that.data.gifts_rcv;
-    var gifts_send = that.data.gifts_send;
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
-    console.log("openid:" + openid + ' username:' + username)
-  },
-
   onGotUserInfo: function (e) {
     console.log(e.detail.errMsg)
     console.log(e.detail.userInfo)
@@ -237,7 +229,8 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
-
+    var page = that.data.page
+    var pagesize = that.data.pagesize
     wx.request({
       url: weburl + '/api/client/get_member_messages',
       method: 'POST',
@@ -255,9 +248,8 @@ Page({
         var messages_all = res.data
         if (messages_all['status'] == 'y') {
           var messages = messages_all['result']
-  
           that.setData({
-            task_list: messages
+            task_list: messages.reverse()
           })
           console.log('获取消息 task list:', that.data.task_list)
         } else {
@@ -270,7 +262,24 @@ Page({
       }
     })
   },
-
+  getMoreOrdersTapTag: function (e) {
+    var that = this
+    var page = that.data.page + 1;
+    var pagesize = that.data.pagesize;
+    var all_rows = that.data.all_rows;
+    if (page > that.data.page_num) {
+      wx.showToast({
+        title: '没有更多记录了',
+        icon: 'none',
+        duration: 1000
+      });
+      return
+    }
+    that.setData({
+      page: page,
+    })
+    that.get_member_messages()
+  },
   onLoad: function (options) {
     var that = this
     var page_type = options.page_type ? options.page_type : ''
@@ -278,6 +287,9 @@ Page({
     var act_id = options.act_id ? options.act_id : ''
     var coupons = options.coupons ? options.coupons : ''
     var receive = options.receive ? options.receive : ''
+    var task = options.task ? options.task : 0
+    var msg_id = options.msg_id ? options.msg_id : 0
+    var task_image = options.image ? options.image : ''
 
     that.setData({
       act_id: act_id,
@@ -285,6 +297,9 @@ Page({
       order_no: order_no,
       coupons: coupons,
       receive: receive,
+      task:task,
+      msg_id:msg_id,
+      task_iimage:task_image,
     })
     //that.setNavigation()
     console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id)
@@ -364,7 +379,7 @@ Page({
     this.setData({
       username: username
     })
-    this.reloadData(username, token);
+    //this.reloadData(username, token);
 
   },
   onShareAppMessage: function (options) {
@@ -373,20 +388,18 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var nickname = that.data.nickname
-    var msg_id = that.data.msg_id
     var task = that.data.task
-    var start_time = that.data.start_time
+    var msg_id = that.data.msg_id
+    var currenttime = that.data.currenttime
     var title = '收到' + nickname + '的送礼分享~';
-    var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
-
+    var imageUrl = that.data.task_image ? that.data.task_image : that.data.navList2[9]['img']
     var desc = '送心礼物分享'
 
     console.log('开始分享送礼任务', options)
-
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: desc,
-      path: '/pages/hall/hall?task=' + task + '&msg_id=' + msg_id + '&refername=' + username + '&sharetime=' + start_time,   // 默认是当前页面，必须是以‘/’开头的完整路径
+      path: '/pages/hall/hall?task=' + task + '&msg_id=' + msg_id + '&refername=' + username + '&sharetime=' + currenttime,   // 默认是当前页面，必须是以‘/’开头的完整路径
       imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         console.log(res)
