@@ -33,6 +33,7 @@ Page({
     hidden: true,
     resp_message:{},
     messageHidden : true,
+    notehidden : false,
     dkheight: 300,
     scrollTop: 0,
     scrollHeight: 0,
@@ -684,16 +685,19 @@ Page({
     var messageHidden = that.data.messageHidden
     that.setData({
       messageHidden: !messageHidden,
+      notehidden: !that.data.notehidden,
     })
     wx.navigateTo({
-      url: '/pages/member/message/message'
+      url: '/pages/member/task/task'
     })
+    
   },
   //取消按钮点击事件  
   messageCandel: function () {
     var that = this
     that.setData({
       messageHidden: true,
+      notehidden: !that.data.notehidden,
     })
 
   },  
@@ -948,6 +952,11 @@ Page({
     var myDate = util.formatTime(new Date)
     var scene = decodeURIComponent(options.scene)
     console.log('hall onload scene:', scene)
+    if (!username) {
+      wx.switchTab({
+        url: '../my/index'
+      })
+    }
     var message_info = {
       addtime : myDate,
       username : username,
@@ -1018,6 +1027,14 @@ Page({
           console.log('hall get_task_refer:', res.data)  
         }
       })
+      that.setData({
+        messageHidden: !that.data.messageHidden,
+        main_prom_image:that.data.navList2[10]['img'],
+        main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title']:'送心礼物',
+        main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '送心礼物欢迎您！',
+        notehidden: !that.data.notehidden,
+      })
+
     }
   },
   //事件处理函数

@@ -748,7 +748,12 @@ page {
 .price-now::first-letter {
   font-size: 20rpx;
 }
-
+.main-prom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
 
 .message{
   position:fixed;
@@ -803,7 +808,7 @@ page {
   border-radius: 50%;
   margin: 150rpx;
   background-color: burlywood;
-   flex-direction: column;
+  flex-direction: column;
 }
  
 /*确定图标*/
