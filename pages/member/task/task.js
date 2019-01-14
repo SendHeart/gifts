@@ -311,7 +311,7 @@ Page({
     var image = that.data.new_task_image
     if (task_status == 0 && msg_id==0) {
       wx.navigateTo({
-        url: '/pages/details/details?id=7480'
+        url: '/pages/details/details?id=7482'
       })
     }
 
