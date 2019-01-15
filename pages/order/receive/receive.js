@@ -172,6 +172,9 @@ Page({
                       icon: 'success',
                       duration: 1500
                     })
+                    that.setData({
+                      receive_status: 1,
+                    })
                     if (goods_flag == 3) { //虚拟商品订单
                       setTimeout(function () {
                         //wx.switchTab({
@@ -181,11 +184,7 @@ Page({
                           url: '/pages/member/task/task',
                         })
                       }, 1500)
-                    }else{
-                      that.setData({
-                        receive_status: 1,
-                      })
-                    }
+                    } 
                   }else{
                     wx.showToast({
                       title: '礼物接收失败',
