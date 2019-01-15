@@ -653,10 +653,13 @@ Page({
   },
 
   onShareAppMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var goodsid = that.data.goodsid
     return {
       title: '送心',
       desc: '送礼就是送心!',
-      path: '/pages/hall/hall?refername='+username
+      path: '/pages/details/details?id='+goodsid+'&refername='+username
     }
   }
 })
