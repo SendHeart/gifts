@@ -35,12 +35,12 @@ Page({
     messageHidden: true,
     dkheight: 300,
     message:{},
-    messageflag: 0,
+    messageflag: 1,
     task_num: 0,
     message_num: 0,
     navList_order: navList_order,
     tab2: 'task',
-    activeIndex2: 0,
+    activeIndex2: 1,
     currenttime: now ? parseInt(now) : 0,
   },
   onOrderTapTag: function (e) {
@@ -233,6 +233,7 @@ Page({
   },
   onLoad: function (options) {
     var that = this
+    var activeIndex2 = options.messageflag ? options.messageflag : that.data.activeIndex2
     console.log('onLoad:', that.data.currenttime)
     wx.getSystemInfo({
       success: function (res) {
@@ -278,7 +279,9 @@ Page({
           var message_list = []
           for (var i = 0; i < messages.length;i++){
             if(messages[i].type==6) {
-              task_list.push(messages[i])
+              if (messages[i]['task_info']['task_status']!=9){
+                task_list.push(messages[i])
+              }
             }else{
               message_list.push(messages[i])
             }
@@ -298,7 +301,7 @@ Page({
               addtime: util.getDateStr(that.data.currenttime,0), 
               msg_id:0,
               msg_status:0,
-              title:'新人送礼任务',
+              title:'新手免费送大礼',
               type:6, //送礼类型
               message_info:message_info,
               task_info:task_info,

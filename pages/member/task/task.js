@@ -277,7 +277,7 @@ Page({
               addtime: util.getDateStr(that.data.currenttime, 0),
               msg_id: 0,
               msg_status: 0,
-              title: '新人送礼任务',
+              title: '新手免费送大礼',
               type: 6, //送礼类型
               message_info: message_info,
               task_info: task_info,

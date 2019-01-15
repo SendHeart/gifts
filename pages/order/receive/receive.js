@@ -83,6 +83,7 @@ Page({
    var that = this 
    var shop_type = that.data.shop_type
    var order_no = that.data.orderNo
+   var goods_flag = that.data.goods_flag
    var openid = that.data.openid
    var nickname = that.data.userInfo.nickName
    var headimg = that.data.userInfo.avatarUrl
@@ -171,10 +172,20 @@ Page({
                       icon: 'success',
                       duration: 1500
                     })
-                    that.setData({
-                      receive_status: 1,
-                    })
-                   
+                    if (goods_flag == 3) { //虚拟商品订单
+                      setTimeout(function () {
+                        //wx.switchTab({
+                        //  url: '/pages/member/message/message',
+                        //})
+                        wx.navigateTo({
+                          url: '/pages/member/task/task',
+                        })
+                      }, 1500)
+                    }else{
+                      that.setData({
+                        receive_status: 1,
+                      })
+                    }
                   }else{
                     wx.showToast({
                       title: '礼物接收失败',
@@ -219,6 +230,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = options.order_no
     var receive = options.receive
+    var goods_flag = options.goods_flag
     var orders = that.data.orders
     var orderskus = that.data.orderskus
     var note_title = that.data.note_title
@@ -249,7 +261,7 @@ Page({
       receive: receive,
       openid: openid,
       username:username,
-
+      goods_flag: goods_flag,
     })
     that.reloadData()
     /*
@@ -306,6 +318,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = that.data.order_no
+    var goods_flag = that.data.goods_flag
     var orders = that.data.orders
     var orderskus = that.data.orderskus
     var shop_type = that.data.shop_type
@@ -342,10 +355,18 @@ Page({
             title: '没有该订单',
             icon: 'loading',
             duration: 1500
-          });
-          setTimeout(function () {
-            wx.navigateBack();
-          }, 1500)
+          })
+          if(goods_flag==3){ //虚拟商品订单
+            setTimeout(function () {
+              wx.navigateTo({
+                url: 'pages/member/task/task'
+              });
+            }, 1500)
+          }else{
+            setTimeout(function () {
+              wx.navigateBack();
+            }, 1500)
+          }
           that.setData({
             orders: [],
             all_rows: 0
