@@ -68,10 +68,14 @@ Page({
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
-      wx.navigateBack({ changed: true });//返回上一页
+      wx.switchTab({
+        url: '/pages/hall/hall'
+      })
+
+      //wx.navigateBack({ changed: true });//返回上一页
     } else {
       wx.switchTab({
-        url: '../hall/hall'
+        url: '/pages/hall/hall'
       })
     }
 
@@ -260,8 +264,10 @@ Page({
       },
       success: function (res) {
         var messages_all = res.data
+        var messages = messages_all['result'].reverse()
+        console.log('task get_member_messages:', messages_all)
         if (messages_all['status'] == 'y') {
-          var messages = messages_all['result']
+          /*
           if (messages.length == 0) {//为空时虚拟一条送礼任务
             var message_info = {
               message_type: 0,
@@ -273,52 +279,61 @@ Page({
               task_status: 0,
               step_info: '未开始'
             }
-            var new_task = [{
-              addtime: util.getDateStr(that.data.currenttime, 0),
-              msg_id: 0,
-              msg_status: 0,
-              title: '新手免费送大礼',
-              type: 6, //送礼类型
-              message_info: message_info,
-              task_info: task_info,
-            }]
-          } 
-            that.setData({
-              task_list: messages.length > 0 ? messages : new_task,
-            })
-            console.log('获取消息:', that.data.message_list, that.data.task_list)
+            var message_info2 = {
+              message_type: 0,
+              message: '把这个活动分享给5个好友，并且他们都点击查看了你的分享',
+              image: that.data.new_task_image
+            }
+            var task_info2 = {
+              step_no: 0,
+              task_status: 0,
+              step_info: '已完成(0/5)',
+              refer_list:[],
+            }
+             
+            var new_task = [
+              {
+                addtime: util.getDateStr(that.data.currenttime, 0),
+                msg_id: 0,
+                msg_status: 0,
+                title: '任务一：',
+                type: 6, //送礼类型
+                message_info: message_info,
+                task_info: task_info,
+              },
+              {
+                addtime: util.getDateStr(that.data.currenttime, 0),
+                msg_id: 0,
+                msg_status: 0,
+                title: '任务二：',
+                type: 6, //送礼类型
+                message_info: message_info2,
+                task_info: task_info2,
+              }
+            ]
+           
+          }  
+          */
+          for (var i = 0; i < messages.length;i++){
+            if(i>0){
+              messages[i]['task_info']['last_status'] = messages[i-1]['task_info']['task_status'] 
+            }else{
+              messages[i]['task_info']['last_status'] = 9
+              messages[i]['message_info']['message_type'] = messages[i]['task_info']['task_status'] != 9 ? 0 : messages[i]['message_info']['message_type']
+            }
+            if (i == 0) messages[i]['title'] = '任务一'
+            if (i == 1) messages[i]['title'] = '任务二'
+          }
+          that.setData({
+            task_list: messages,
+          })
+          console.log('获取消息:',that.data.task_list)
         } else {
-          /*
           wx.showToast({
             title: '暂无消息',
             icon: 'none',
             duration: 1000
           })
-          */
-          //为空 生成一条新人送礼任务
-          var message_info = {
-            message_type: 0,
-            message: '请完成一次送礼',
-            image: that.data.new_task_image
-          }
-          var task_info = {
-            step_no: 0,
-            task_status: 0,
-            step_info: '未开始'
-          }
-          var new_task = [{
-            addtime: util.getDateStr(that.data.currenttime, 0),
-            msg_id: 0,
-            msg_status: 0,
-            title: '新人送礼任务',
-            type: 6, //送礼类型
-            message_info: message_info,
-            task_info: task_info,
-          }]
-          that.setData({
-            task_list: new_task
-          })
-          console.log('获取消息 task list:', that.data.task_list)
         }
       }
     })
@@ -334,6 +349,112 @@ Page({
         url: '/pages/details/details?id=7482'
       })
     }
+
+  },
+  query_pubcoupon: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var shop_type = that.data.shop_type
+    var coupons_id = e.currentTarget.dataset.couponId
+    var msg_id = e.currentTarget.dataset.msgId
+    
+    wx.request({
+      url: weburl + '/api/client/query_pubcoupon',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        coupons_id: coupons_id,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        var coupons_info = res.data.result
+        console.log('task query_pubcoupon:', res.data)
+        if (res.data.status == 'n') {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '已过期',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          for (var i = 0; i < coupons_info.length; i++) {
+            coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
+            coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
+          }
+          that.setData({
+            coupons_info: coupons_info,
+            goods_id: coupons_info[0]['object_goods'],
+            msg_id:msg_id,
+          })
+          console.log('任务 查询红包信息 query_pubcoupon coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
+          that.band_coupon()
+        }
+      }
+
+    })
+  },
+  band_coupon: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var coupons_info = that.data.coupons_info
+    var coupons_json = JSON.stringify(coupons_info)
+    var msg_id = that.data.msg_id
+    var goods_id = that.data.goods_id
+
+    console.log('领取红包 band_coupon coupons_info:', coupons_info);
+    wx.request({
+      url: weburl + '/api/client/band_coupon',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        coupons: coupons_json,
+        coupon_type: 'receive',
+        msg_id: msg_id,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('领取红包返回:', res.data);
+        var coupons_update = res.data.result;
+        if (!res.data.result) {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '已被领取',
+            icon: 'none',
+            duration: 1500
+          })
+
+        } else {
+          wx.showToast({
+            title: '领取成功',
+            icon: 'success',
+            duration: 1500
+          })
+         
+        }
+        if (goods_id) {
+          wx.navigateTo({
+            url: '/pages/details/details?id=' + goods_id
+          })
+        }else{
+          wx.switchTab({
+            url: '/pages/hall/hall'
+          })
+        }
+      
+      }
+
+    })
 
   },
   getMoreOrdersTapTag: function (e) {

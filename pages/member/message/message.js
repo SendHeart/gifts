@@ -2,6 +2,7 @@ var util = require('../../../utils/util.js')
 var app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
+var messageflag = app.globalData.messageflag;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -35,12 +36,12 @@ Page({
     messageHidden: true,
     dkheight: 300,
     message:{},
-    messageflag: 1,
+    messageflag: messageflag,
     task_num: 0,
     message_num: 0,
     navList_order: navList_order,
     tab2: 'task',
-    activeIndex2: 1,
+    activeIndex2: 0,
     currenttime: now ? parseInt(now) : 0,
   },
   onOrderTapTag: function (e) {
@@ -233,8 +234,6 @@ Page({
   },
   onLoad: function (options) {
     var that = this
-    var activeIndex2 = options.messageflag ? options.messageflag : that.data.activeIndex2
-    console.log('onLoad:', that.data.currenttime)
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -244,11 +243,16 @@ Page({
         })
       }
     })
-   
-
   },
   onShow: function(){
     var that = this
+    var activeIndex2 = app.globalData.messageflag == 0 ? 0 : 1
+    console.log('message onShow messageflag:', app.globalData.messageflag, 'activeIndex2:', activeIndex2)
+    that.setData({
+      activeIndex2: activeIndex2,
+      messageflag: app.globalData.messageflag,
+    })
+    app.globalData.messageflag = 0
     that.get_member_messages()
   },
   //获取消息
@@ -273,19 +277,23 @@ Page({
       },
       success: function (res) {
         var messages_all = res.data
+       
         if (messages_all['status']=='y') {
           var messages = messages_all['result']
           var task_list =[]
           var message_list = []
           for (var i = 0; i < messages.length;i++){
             if(messages[i].type==6) {
+              console.log('message get_member_messages messages[i]:',i, messages[i])
               if (messages[i]['task_info']['task_status']!=9){
-                task_list.push(messages[i])
+               // if (task_list.length==0) task_list.push(messages[i])
+                task_list[0] = messages[i]
               }
             }else{
               message_list.push(messages[i])
             }
           }
+          /*
           if (task_list.length==0){//为空时虚拟一条送礼任务
             var message_info = {
               message_type: 0,
@@ -307,6 +315,7 @@ Page({
               task_info:task_info,
             }]
           }
+          */
           that.setData({
             message_list: message_list,
             task_list: task_list.length>0?task_list:new_task,

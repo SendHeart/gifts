@@ -71,6 +71,7 @@ Page({
   */
   goBack: function () {
     var pages = getCurrentPages();
+    console.log('details goBack pages:', pages)
     if (pages.length > 1) {
       wx.navigateBack({ changed: true });//返回上一页
     } else {
@@ -164,7 +165,6 @@ Page({
                   wx.navigateBack();
                 }, 1500);
               }
-              
             }
           })
         }else{
@@ -399,11 +399,12 @@ Page({
               url: '../wish/wish'
             })
             */
-            wx.switchTab({
+            wx.navigateTo({
               url: '/pages/details/details'
             })
           } 
           else {
+            console.log('details insertCart wishflag:', wishflag)
             wx.switchTab({
               url: '../hall/hall?'
             })
@@ -440,6 +441,7 @@ Page({
  
     showCart: function () {
       app.globalData.from_page = '/pages/details/details'
+      console.log('details insertCart showCart:', app.globalData.from_page )
       wx.switchTab({
         url: '../hall/hall'
       });

@@ -151,6 +151,7 @@ Page({
                   headimg: that.data.headimg,
                   order_no: that.data.order_no,
                   status_info: 'receive',
+                  goods_flag:goods_flag,
                   address_userName: address_userName,
                   address_postalCode: address_postalCode,
                   address_provinceName: address_provinceName,
@@ -165,8 +166,8 @@ Page({
                   'Accept': 'application/json'
                 },
                 success: function (res) {
-                  console.log('礼物已接收:',res.data.result);
-                  if (res.data.result){
+                  console.log('礼物已接收:',res.data);
+                  if (res.data.status='y'){
                     wx.showToast({
                       title: '礼物已接收',
                       icon: 'success',
@@ -177,13 +178,10 @@ Page({
                     })
                     if (goods_flag == 3) { //虚拟商品订单
                       setTimeout(function () {
-                        //wx.switchTab({
-                        //  url: '/pages/member/message/message',
-                        //})
                         wx.navigateTo({
                           url: '/pages/member/task/task',
                         })
-                      }, 1500)
+                      }, 200)
                     } 
                   }else{
                     wx.showToast({
@@ -360,7 +358,7 @@ Page({
               wx.navigateTo({
                 url: 'pages/member/task/task'
               });
-            }, 1500)
+            }, 500)
           }else{
             setTimeout(function () {
               wx.navigateBack();
@@ -382,6 +380,13 @@ Page({
             nickname = orderObjects[i]['from_nickname']
           }
           receive_status = orderObjects[0]['gift_status'] == 2 ? 1 : 0
+          if (receive_status==1 && goods_flag == 3) { //虚拟商品订单
+            setTimeout(function () {
+              wx.navigateTo({
+                url: '/pages/member/task/task',
+              })
+            }, 100)
+          } 
           if (orderObjects) {
             //向后合拼
             orderObjects = that.data.orders.concat(orderObjects);
@@ -408,7 +413,6 @@ Page({
         }
       }
     })
-
   },
   
   showGoods: function (e) {

@@ -67,6 +67,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_flag= that.data.goods_flag
     var order_no = that.data.order_no
     wx.request({ //更新发送状态
       url: weburl + '/api/client/update_order_status',
@@ -77,6 +78,7 @@ Page({
         access_token: token,
         status_info: 'send',
         order_no: order_no,
+        goods_flag:goods_flag,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

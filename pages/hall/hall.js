@@ -251,6 +251,8 @@ Page({
     that.setData({
       messages_num: 0
     })
+    app.globalData.messageflag = 1 //1系统消息
+    console.log('hall messagesTapTag: messageflag:', app.globalData.messageflag)
     wx.switchTab({
       url: '/pages/member/message/message'
     })
