@@ -386,7 +386,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log(res.data.result);
+          console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
           var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物袋'
           wx.showToast({
             title: title,
@@ -396,11 +396,11 @@ Page({
           if (wishflag == 1) {
             /*
             wx.navigateTo({
-              url: '../wish/wish'
+              url: '/pages/details/details'
             })
             */
             wx.navigateTo({
-              url: '/pages/details/details'
+              url: '/pages/wish/wish'
             })
           } 
           else {
