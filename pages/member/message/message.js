@@ -51,8 +51,10 @@ Page({
     var messageflag = that.data.messageflag;
     if (tab == 'task') { //task
       messageflag = 0;
+      app.globalData.messageflag = messageflag
     } else {
       messageflag = 1; //message
+      app.globalData.messageflag = messageflag
     }
     that.setData({
       activeIndex2: index,
@@ -252,7 +254,7 @@ Page({
       activeIndex2: activeIndex2,
       messageflag: app.globalData.messageflag,
     })
-    app.globalData.messageflag = 0
+ 
     that.get_member_messages()
   },
   //获取消息
