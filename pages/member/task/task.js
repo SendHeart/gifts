@@ -433,14 +433,12 @@ Page({
             icon: 'none',
             duration: 1500
           })
-
         } else {
           wx.showToast({
             title: '领取成功',
             icon: 'success',
             duration: 1500
           })
-         
         }
         if (goods_id) {
           wx.navigateTo({

@@ -959,6 +959,7 @@ Page({
         url: '../my/index'
       })
     }
+    that.get_project_gift_para()
     var message_info = {
       addtime : myDate,
       username : username,

@@ -183,11 +183,11 @@ Page({
     var task_status = e.currentTarget.dataset.taskStatus ? e.currentTarget.dataset.taskStatus : 0
     var image = e.currentTarget.dataset.image
     if (task_status < 9) {
-      wx.navigateTo({
-        url: '/pages/member/task/task?task=1&image=' + image + '&msg_id=' + msg_id
-      })
+    
     }
-
+    wx.navigateTo({
+      url: '/pages/member/task/task?task=1&image=' + image + '&msg_id=' + msg_id
+    })
   },
   //确定按钮点击事件 
   messageConfirm: function () {
@@ -287,8 +287,9 @@ Page({
               console.log('message get_member_messages messages[i]:',i, messages[i])
               if (messages[i]['task_info']['task_status']!=9){
                // if (task_list.length==0) task_list.push(messages[i])
-                task_list[0] = messages[i]
+                
               }
+              if (task_list.length==0) task_list.push(messages[i])
             }else{
               message_list.push(messages[i])
             }
@@ -318,7 +319,7 @@ Page({
           */
           that.setData({
             message_list: message_list,
-            task_list: task_list.length>0?task_list:new_task,
+            task_list: task_list,
           })
           console.log('获取消息:', that.data.message_list, that.data.task_list)
         } else {

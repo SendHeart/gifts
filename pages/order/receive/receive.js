@@ -470,7 +470,6 @@ Page({
         }
         // 返回shareObj
         return shareObj;
-    
   } ,
    
 });
