@@ -226,7 +226,13 @@ Page({
 
   },
 
-
+  bindMiddleGoods: function (e) {
+    var that = this
+    var goods_type = e.currentTarget.dataset.goodsType
+    wx.navigateTo({
+      url: '/pages/goods/list/list?goods_type_value=' + goods_type
+    });
+  },
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -421,7 +427,7 @@ Page({
   },
   bindPickGoods: function () {
     wx.navigateTo({
-      url: '../list/list?username=' + username + '&token=' + token
+      url: '/pages/list/list?username=' + username + '&token=' + token
     });
   },
   bindShowMore: function () {
@@ -918,7 +924,18 @@ Page({
             that.setData({
               navList2: navList_new,
               hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
-
+              middle1_img: navList_new[11]['img'],
+              middle2_img: navList_new[12]['img'],
+              middle3_img: navList_new[13]['img'],
+              middle4_img: navList_new[14]['img'],
+              middle1_title: navList_new[11]['title'],
+              middle2_title: navList_new[12]['title'],
+              middle3_title: navList_new[13]['title'],
+              middle4_title: navList_new[14]['title'],
+              middle1_note: navList_new[11]['note'],
+              middle2_note: navList_new[12]['note'],
+              middle3_note: navList_new[13]['note'],
+              middle4_note: navList_new[14]['note'],
             })
           }
         }
@@ -927,9 +944,21 @@ Page({
       that.setData({
         navList2: navList_new,
         hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
+        middle1_img: navList_new[11]['img'],
+        middle2_img: navList_new[12]['img'],
+        middle3_img: navList_new[13]['img'],
+        middle4_img: navList_new[14]['img'],
+        middle1_title: navList_new[11]['title'],
+        middle2_title: navList_new[12]['title'],
+        middle3_title: navList_new[13]['title'],
+        middle4_title: navList_new[14]['title'],
+        middle1_note: navList_new[11]['note'],
+        middle2_note: navList_new[12]['note'],
+        middle3_note: navList_new[13]['note'],
+        middle4_note: navList_new[14]['note'],
       })
     }
- 
+   
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
@@ -956,88 +985,87 @@ Page({
     console.log('hall onload scene:', scene)
     if (!username) {
       wx.switchTab({
-        url: '../my/index'
+        url: '/pages/my/index'
       })
-    }
-    that.get_project_gift_para()
-    var message_info = {
-      addtime : myDate,
-      username : username,
-      shop_type : shop_type,
-      message : message,
-      message_type : 1,
-    }
-    that.setData({
-      message: JSON.stringify(message_info)
-    })
-    socketMsgQueue.push(that.data.message)
-    //that.setNavigation()
-    that.initSocketMessage()
-    setInterval(function () {
+    }else{
+      that.get_project_gift_para()
+      var message_info = {
+        addtime: myDate,
+        username: username,
+        shop_type: shop_type,
+        message: message,
+        message_type: 1,
+      }
+      that.setData({
+        message: JSON.stringify(message_info)
+      })
+      socketMsgQueue.push(that.data.message)
+      //that.setNavigation()
       that.initSocketMessage()
-    }, 20000)
+      setInterval(function () {
+        that.initSocketMessage()
+      }, 20000)
 
-    setInterval(function () {
-      //that.reSend()
-    }, 5000)
-    wx.getSystemInfo({
-      success: function (res) {
-        let winHeight = res.windowHeight;
-        console.log('getSystemInfo:',winHeight);
-        that.setData({
-          dkheight: winHeight,
-        })
-      }
-    })
-
-    if(page_type==2){ //收到礼物
-      console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
-      if (receive==1){
-        wx.navigateTo({
-          url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
-        })
-      }
-    }
-    if (page_type == 3) { //收到优惠券
-      console.log('收到优惠券 Hall page_type:', page_type, ' coupons_flag:', coupons_flag, ' coupons_id:', coupons_id,  ' receive:', receive)
-      if (receive == 1) {
-        wx.navigateTo({
-          url: '../member/couponrcv/couponrcv?coupons_flag=' + coupons_flag + '&coupons_id' + coupons_id+'&receive=1'
-        })
-      }
-    }
-    if (task>0) { //收到任务分享人信息
-      console.log('收到任务分享 Hall task:',task, ' refername:', refername, ' msg_id:', msg_id)
-      if (username != refername){ //保留分享人信息
-        wx.setStorageSync('taskrefername', refername);
-      }
-      wx.request({
-        url: weburl + '/api/client/get_task_refer',
-        method: 'POST',
-        data: {
-          username: username,
-          access_token: token,
-          shop_type: shop_type,
-          refername:refername,
-          msg_id:msg_id,
-          task:task,
-        },
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        },
+      setInterval(function () {
+        //that.reSend()
+      }, 5000)
+      wx.getSystemInfo({
         success: function (res) {
-          console.log('hall get_task_refer:', res.data)  
+          let winHeight = res.windowHeight;
+          console.log('getSystemInfo:', winHeight);
+          that.setData({
+            dkheight: winHeight,
+          })
         }
       })
-      that.setData({
-        messageHidden: !that.data.messageHidden,
-        main_prom_image:that.data.navList2[10]['img'],
-        main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title']:'送心礼物',
-        main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '送心礼物欢迎您！',
-        notehidden: !that.data.notehidden,
-      })
-
+      if (page_type == 2) { //收到礼物
+        console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
+        if (receive == 1) {
+          wx.navigateTo({
+            url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
+          })
+        }
+      }
+      if (page_type == 3) { //收到优惠券
+        console.log('收到优惠券 Hall page_type:', page_type, ' coupons_flag:', coupons_flag, ' coupons_id:', coupons_id, ' receive:', receive)
+        if (receive == 1) {
+          wx.navigateTo({
+            url: '../member/couponrcv/couponrcv?coupons_flag=' + coupons_flag + '&coupons_id' + coupons_id + '&receive=1'
+          })
+        }
+      }
+      if (task > 0) { //收到任务分享人信息
+        console.log('收到任务分享 Hall task:', task, ' refername:', refername, ' msg_id:', msg_id)
+        if (username != refername) { //保留分享人信息
+          wx.setStorageSync('taskrefername', refername);
+        }
+        wx.request({
+          url: weburl + '/api/client/get_task_refer',
+          method: 'POST',
+          data: {
+            username: username,
+            access_token: token,
+            shop_type: shop_type,
+            refername: refername,
+            msg_id: msg_id,
+            task: task,
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            console.log('hall get_task_refer:', res.data)
+          }
+        })
+        that.setData({
+          messageHidden: !that.data.messageHidden,
+          main_prom_image: that.data.navList2[10]['img'],
+          main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title'] : '送心礼物',
+          main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '送心礼物欢迎您！',
+          notehidden: !that.data.notehidden,
+        })
+      }
     }
   },
   //事件处理函数
@@ -1082,21 +1110,23 @@ Page({
       wx.switchTab({
         url: '../my/index'
       })
+    }else{
+      that.get_project_gift_para()
+      app.getUserInfo(function (userInfo) {
+        //更新数据
+        that.setData({
+          userInfo: userInfo
+        })
+      })
+      this.setData({
+        username: username
+      })
+      this.reloadData(username, token);
+      // sum
+      this.sum();
     }
     console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}])
-    that.get_project_gift_para()
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    this.setData({
-      username: username
-    })
-    this.reloadData(username, token);
-    // sum
-    this.sum();
+    
     //app.globalData.messageflag = 0
   },
   onShareAppMessage: function () {
