@@ -245,6 +245,8 @@ Page({
       wx.navigateTo({
         url: '../../login/login'
       })
+    }else{
+      
     }
     if (receive != 1){
       console.log('礼品信息 order_no:',order_no + ' receive:' + receive)
@@ -354,7 +356,7 @@ Page({
             icon: 'loading',
             duration: 1500
           })
-          if(goods_flag==3){ //虚拟商品订单
+          if (goods_flag == 3 && username){ //虚拟商品订单
             setTimeout(function () {
               wx.navigateTo({
                 url: 'pages/member/task/task'

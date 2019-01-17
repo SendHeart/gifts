@@ -983,41 +983,22 @@ Page({
     var myDate = util.formatTime(new Date)
     var scene = decodeURIComponent(options.scene)
     console.log('hall onload scene:', scene)
+    that.get_project_gift_para()
+    var message_info = {
+      addtime: myDate,
+      username: username,
+      shop_type: shop_type,
+      message: message,
+      message_type: 1,
+    }
+    that.setData({
+      message: JSON.stringify(message_info)
+    })
     if (!username) {
       wx.switchTab({
         url: '/pages/my/index'
       })
     }else{
-      that.get_project_gift_para()
-      var message_info = {
-        addtime: myDate,
-        username: username,
-        shop_type: shop_type,
-        message: message,
-        message_type: 1,
-      }
-      that.setData({
-        message: JSON.stringify(message_info)
-      })
-      socketMsgQueue.push(that.data.message)
-      //that.setNavigation()
-      that.initSocketMessage()
-      setInterval(function () {
-        that.initSocketMessage()
-      }, 20000)
-
-      setInterval(function () {
-        //that.reSend()
-      }, 5000)
-      wx.getSystemInfo({
-        success: function (res) {
-          let winHeight = res.windowHeight;
-          console.log('getSystemInfo:', winHeight);
-          that.setData({
-            dkheight: winHeight,
-          })
-        }
-      })
       if (page_type == 2) { //收到礼物
         console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
         if (receive == 1) {
@@ -1066,7 +1047,28 @@ Page({
           notehidden: !that.data.notehidden,
         })
       }
-    }
+    } 
+   
+    socketMsgQueue.push(that.data.message)
+    //that.setNavigation()
+    that.initSocketMessage()
+    setInterval(function () {
+      that.initSocketMessage()
+    }, 20000)
+
+    setInterval(function () {
+      //that.reSend()
+    }, 5000)
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        console.log('getSystemInfo:', winHeight);
+        that.setData({
+          dkheight: winHeight,
+        })
+      }
+    })
+    
   },
   //事件处理函数
  
@@ -1111,20 +1113,21 @@ Page({
         url: '../my/index'
       })
     }else{
-      that.get_project_gift_para()
-      app.getUserInfo(function (userInfo) {
-        //更新数据
-        that.setData({
-          userInfo: userInfo
-        })
-      })
-      this.setData({
-        username: username
-      })
-      this.reloadData(username, token);
-      // sum
-      this.sum();
+      
     }
+    that.get_project_gift_para()
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo
+      })
+    })
+    this.setData({
+      username: username
+    })
+    this.reloadData(username, token);
+    // sum
+    this.sum();
     console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}])
     
     //app.globalData.messageflag = 0
