@@ -1097,7 +1097,7 @@ Page({
     this.reloadData(username, token);
     // sum
     this.sum();
-    app.globalData.messageflag = 0
+    //app.globalData.messageflag = 0
   },
   onShareAppMessage: function () {
     return {
