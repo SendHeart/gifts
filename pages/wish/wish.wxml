@@ -34,7 +34,7 @@
     <view class="venues_box">
             <block wx:for="{{carts}}" wx:key="">
                 <view class="venues_item">
-                    <navigator url="../details/details?id={{item.goods_id}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class='none'>
+                    <navigator url="/pages/details/details?id={{item.goods_id}}&image={{item.activity_image?item.activity_image:item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class='none'>
                         <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"/>
                          </navigator>
                         <text class="goods_name">{{item.name}}</text>
