@@ -27,7 +27,7 @@
   <view class="shopping_container">
       <view class="goods-name">
         <text>{{goodsname?goodsname:''}}</text>
-        <text class="goods_prom">{{goodsinfo?goodsinfo:'高端大气'}}</text>
+        <text class="goods_prom">{{goodsinfo?goodsinfo:''}}</text>
       </view>
       <view class="goods-info">
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
@@ -39,7 +39,7 @@
       </view>
       <view class="fitfor">
         <text>适合送</text>
-        <text class="goods_tag">{{goodstag?goodstag:'朋友 同事'}}</text>
+        <text class="goods_tag">{{goodstag?goodstag:''}}</text>
       </view>
     </view>
   <view class="comm-text">

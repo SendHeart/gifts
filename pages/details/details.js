@@ -111,7 +111,7 @@ Page({
         var goodsid = options.id
         var goodsinfo = options.goods_info ? options.goods_info:''
         var goodsprice = options.goods_price
-        
+  
         var goodssale = options.sale
         var image = options.image
         var shop_type =  that.data.shop_type
@@ -133,7 +133,7 @@ Page({
           goodsprice: goodsprice ? goodsprice:0,
           goodssale: goodssale ? goodssale:0,
         })
-    console.log('detail onLoad goodsid:', goodsid, ' image:', image);
+    console.log('detail onLoad goodsid:', goodsid, ' image:', image,' goodsname:',goodsname);
         //that.setNavigation()
         if (goodsid>0){
           wx.request({
