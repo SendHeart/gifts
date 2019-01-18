@@ -29,6 +29,7 @@
     "pages/order/payment/payment",
     "pages/order/orderdetail/orderdetail",
     "pages/address/add/add",
+    "pages/goods/list/list",
     "pages/goods/comment/comment",
     "pages/goods/commentlist/commentlist"
   ],
