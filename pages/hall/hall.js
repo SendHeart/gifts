@@ -647,10 +647,11 @@ Page({
     var goods_price = e.currentTarget.dataset.goodsPrice;
     var goods_info = e.currentTarget.dataset.goodsInfo;
     var goods_sale = e.currentTarget.dataset.sale;
+    var image = e.currentTarget.dataset.image
     //var carts = this.data.carts;
     var sku_id = objectId;
     wx.navigateTo({
-      url: '../details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&token=' + token + '&username=' + username
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&image=' + image+'&token=' + token + '&username=' + username
     });
   },
  

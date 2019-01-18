@@ -33,6 +33,7 @@ Page({
         includeGroup:[],
         firstIndex:0,
         image:'',
+        image_pic:[],
         hideviewgoodsinfo:true,
         hideviewgoodspara:true,
         dkheight: 300,
@@ -114,16 +115,25 @@ Page({
         var goodssale = options.sale
         var image = options.image
         var shop_type =  that.data.shop_type
+        var image_video = []
+        var image_pic = []
+        var image_init = {
+          id:0,
+          goods_id:goodsid,
+          url:image,
+        }
+        if (image) image_pic.push(image_init)
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
           goodsname: goodsname ? goodsname:'',
           goodsinfo: goodsinfo ? goodsinfo:'',
           goodsshortname: goodsshortname ? goodsshortname:'',
-          image: image ? image:'',
+          image_pic: image_pic,
           goodsid: goodsid ? goodsid:0,
           goodsprice: goodsprice ? goodsprice:0,
           goodssale: goodssale ? goodssale:0,
         })
+    console.log('detail onLoad goodsid:', goodsid, ' image:', image);
         //that.setNavigation()
         if (goodsid>0){
           wx.request({
@@ -142,9 +152,8 @@ Page({
             success: function (res) {
               var goods_info = res.data.result
               var ret_info = res.data.info
-              console.log('获取单个产品信息');
-              console.log(res.data);
-              console.log(goods_info);
+              console.log('获取单个产品信息 res.data:',res.data,' goods info:',goods_info);
+             
               if (goods_info) {
                 that.setData({
                   goodsname: goods_info[0]['name'],
@@ -174,7 +183,8 @@ Page({
         }
 
         // 商品详情图片
-        console.log('商品详情图片', username);
+        console.log('商品详情图片', image_pic)
+      
         wx.request({
           url: weburl+'/api/client/get_goodsdesc_list',
           method: 'POST',
@@ -192,9 +202,8 @@ Page({
           success: function (res) {
             console.log('get_goodsdesc_list:', res.data.result)
             var goodsPicsInfo = res.data.result
-            var image_pic = []
-            var image_video = []
-            for (var i = 0; i < goodsPicsInfo.image.length;i++){
+           
+            for (var i = 1; i < goodsPicsInfo.image.length;i++){
               if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
                 image_video.push(goodsPicsInfo.image[i])
               }else{
