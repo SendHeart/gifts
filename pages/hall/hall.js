@@ -651,7 +651,7 @@ Page({
     //var carts = this.data.carts;
     var sku_id = objectId;
     wx.navigateTo({
-      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&image=' + image+'&token=' + token + '&username=' + username
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name+'&image=' + image+'&token=' + token + '&username=' + username
     });
   },
  
