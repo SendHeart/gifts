@@ -215,7 +215,7 @@
     <text class='more'>更多</text>
   </view>
   <view class="venues_box">
-    <view wx:for="{{recommentList}}" class="venues_item" wx:key="id" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-image="{{item.activity_image?item.activity_image:item.image}}" hidden="{{item.hidden==1?true:false}}">
+    <view wx:for="{{recommentList}}" class="venues_item" wx:key="id" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" hidden="{{item.hidden==1?true:false}}">
       <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       <text class="goods_name">{{item.name}}</text>
       <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
