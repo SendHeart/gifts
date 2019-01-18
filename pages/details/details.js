@@ -76,8 +76,9 @@ Page({
       wx.navigateBack({ changed: true });//返回上一页
     } else {
       app.globalData.from_page = '/pages/details/details'
+      app.globalData.hall_gotop = 1
       wx.switchTab({
-        url: '../../hall/hall'
+        url: '/pages/hall/hall'
       })
     }
 
@@ -405,8 +406,9 @@ Page({
           } 
           else {
             console.log('details insertCart wishflag:', wishflag)
+            app.globalData.hall_gotop = 1
             wx.switchTab({
-              url: '../hall/hall?'
+              url: '/pages/hall/hall?'
             })
           }
 

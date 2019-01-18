@@ -78,26 +78,26 @@ Page({
     content: '',
   }, 
   
-  /*
-  setNavigation:function() {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
+  //回到顶部，内部调用系统API
+  goTop: function () {  // 一键回到顶部
+    if (wx.pageScrollTo) {
+      // wx.pageScrollTo(OBJECT)
+      // 基础库 1.4.0 开始支持，低版本需做兼容处理
+      // 将页面滚动到目标位置。
+      // OBJECT参数说明：
+      // 参数名	类型	必填	说明
+      // scrollTop	Number	是	滚动到页面的目标位置（单位px）
+      // duration	Number	否	滚动动画的时长，默认300ms，单位 ms
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
+      })
+    }
   },
-*/
- 
   reSend: function () { //失败后重新发送
     var that = this;
     //失败重发
@@ -1114,6 +1114,9 @@ Page({
       })
     }else{
       
+    }
+    if(app.globalData.hall_gotop == 1){
+      that.goTop()
     }
     that.get_project_gift_para()
     app.getUserInfo(function (userInfo) {
