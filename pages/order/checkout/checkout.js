@@ -50,7 +50,7 @@ Page({
   },
   order_num: function (e) {
     var that = this
-    var order_num = parseInt(e.detail.value) == 0 ?1:parseInt(e.detail.value);
+    var order_num = parseInt(e.detail.value ? e.detail.value:0)
     var amount = that.data.amount
     var discountpay = that.data.discountpay ? that.data.discountpay:0
     var payamount = (amount*order_num - discountpay).toFixed(2)
