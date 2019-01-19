@@ -390,7 +390,7 @@ Page({
           var goods_id = coupons_info[0]['object_goods'].split(",") //多个goods_id
           that.setData({
             coupons_info: coupons_info,
-            goods_id: goods_id[0] ? goods_id[0]:'7474',
+            goods_id: goods_id[0] ? goods_id[0]:'7362',
             msg_id:msg_id,
           })
           console.log('任务 查询红包信息 query_pubcoupon coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
