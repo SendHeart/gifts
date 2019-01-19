@@ -334,3 +334,14 @@ line-height: 1.5;
   width: 100%;
   
 }
+
+.order-num {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  align-items: center;
+  align-content: center;
+  text-align: left;
+  width: 100%;
+  margin-bottom: 10rpx;
+}
