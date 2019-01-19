@@ -387,9 +387,10 @@ Page({
             coupons_info[i]['start_time'] = util.getDateStr(coupons_info[i]['start_time'] * 1000, 0)
             coupons_info[i]['end_time'] = util.getDateStr(coupons_info[i]['end_time'] * 1000, 0)
           }
+          var goods_id = coupons_info[0]['object_goods'].split(",") //多个goods_id
           that.setData({
             coupons_info: coupons_info,
-            goods_id: coupons_info[0]['object_goods'],
+            goods_id: goods_id[0] ? goods_id[0]:'7474',
             msg_id:msg_id,
           })
           console.log('任务 查询红包信息 query_pubcoupon coupons_info:', coupons_info, 'coupons_info.length:', coupons_info.length)
