@@ -110,6 +110,9 @@ Page({
       tab2: tab,
       page: 1,
       giftflag: giftflag,
+      all_rows:0,
+      page:1,
+      page_num:1
     });
     console.log('tab:' + tab, ' giftflag:', giftflag)
     that.reloadData()
@@ -382,7 +385,7 @@ Page({
           
         } else {
           // 存储地址字段
-          if (orderObjects.length > 0){
+          if (orderObjects){
             for (var i = 0; i < orderObjects.length; i++) {
               orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
               for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
