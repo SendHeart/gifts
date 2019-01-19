@@ -23,7 +23,7 @@
 </view>  
 <view class="order-num">
   <text style='font-size:30rpx; color:red;font-weight:bold;'>份数:</text>
-  <input style="font-size:30rpx;" type="number" bindinput="order_num" value="1" />
+  <input style="font-size:30rpx;" type="number" bindinput="order_num" value="{{order_num==0?1:order_num}}" />
 </view> 
 <view class="cell" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
 	<view style='width:15%'>合计:</view>

@@ -50,13 +50,13 @@ Page({
   },
   order_num: function (e) {
     var that = this
-    var order_num = parseInt(e.detail.value) > 0 ?parseInt(e.detail.value):1;
+    var order_num = parseInt(e.detail.value) == 0 ?1:parseInt(e.detail.value);
     var amount = that.data.amount
     var discountpay = that.data.discountpay ? that.data.discountpay:0
     var payamount = (amount*order_num - discountpay).toFixed(2)
     console.log('order_num amount:', amount, ' discountpay:', discountpay,' order_num:',order_num,' payamount:',payamount)
-    this.setData({
-      order_num: order_num,
+    that.setData({
+      order_num: order_num==0?1:order_num,
       payamount: payamount,
     });
   },
