@@ -50,13 +50,13 @@ Page({
   },
   order_num: function (e) {
     var that = this
-    var order_num = parseInt(e.detail.value ? e.detail.value:1)
+    var order_num = parseInt(e.detail.value ? e.detail.value:0)
     var amount = that.data.amount
     var discountpay = that.data.discountpay ? that.data.discountpay:0
     var payamount = (amount*order_num - discountpay).toFixed(2)
     console.log('order_num amount:', amount, ' discountpay:', discountpay,' order_num:',order_num,' payamount:',payamount)
     that.setData({
-      order_num: order_num==0?1:order_num,
+      order_num: order_num,
       payamount: payamount,
     });
   },
@@ -129,6 +129,16 @@ Page({
 
   confirmOrder: function () {
     var that = this
+    var order_num = that.data.order_num
+    if (order_num ==0){
+      wx.showToast({
+        title: '请输入份数',
+        icon: 'loading',
+        duration: 2000
+      })
+      return
+    }
+
     var carts = that.data.carts
     var cartIds = that.data.cartIds
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
