@@ -164,6 +164,7 @@ modal {
   align-items: center;
   text-align: center;
   position: relative;
+  left: 15rpx;
 }
 .messages .message-num {
   position: absolute;
@@ -634,13 +635,13 @@ modal {
   flex-direction: row;
   justify-content: left;
   text-align: center;
-  width: 45%;
+  width: 46%;
   height: 90rpx;
   border: 1rpx solid #eee;
   border-radius: 14rpx;
   background: #fff;
   padding: 10rpx;
-  margin: 15rpx 2% 0 0;
+  margin: 10rpx 1% 0 0;
   box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
 }
 .middle-goods .middle-goods-image {
@@ -849,9 +850,7 @@ modal {
 main_message .main_red{
   display: flex;
   align-items: center;
-  justify-content: center;  
-  width: 100%;
-  height: 100%;
+  justify-content: center;
 }
 .main_message .bg_view{
   margin:0rpx auto 30rpx auto;
@@ -906,8 +905,8 @@ main_message .main_red{
 /*右上角图标*/
 .main_message .t_image{
   position: absolute;
-  top: 2%;
-  left:88%;
+  top: 15%;
+  right:30rpx;
 }
  
 /*右上角图标*/
