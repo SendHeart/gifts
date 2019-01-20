@@ -28,6 +28,7 @@ Page({
     selectedRedAllStatus: false,
     discountpay:0, //折扣差额
     payamount:0, //实际支付金额
+    order_num:1,//订单份数
     
 	},
   setNavigation: function () {
@@ -46,6 +47,18 @@ Page({
         })
       }
     })
+  },
+  order_num: function (e) {
+    var that = this
+    var order_num = parseInt(e.detail.value ? e.detail.value:0)
+    var amount = that.data.amount
+    var discountpay = that.data.discountpay ? that.data.discountpay:0
+    var payamount = (amount*order_num - discountpay).toFixed(2)
+    console.log('order_num amount:', amount, ' discountpay:', discountpay,' order_num:',order_num,' payamount:',payamount)
+    that.setData({
+      order_num: order_num,
+      payamount: payamount,
+    });
   },
   goBack: function () {
     var pages = getCurrentPages();
@@ -116,6 +129,16 @@ Page({
 
   confirmOrder: function () {
     var that = this
+    var order_num = that.data.order_num
+    if (order_num ==0){
+      wx.showToast({
+        title: '请输入份数',
+        icon: 'loading',
+        duration: 2000
+      })
+      return
+    }
+
     var carts = that.data.carts
     var cartIds = that.data.cartIds
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -123,7 +146,8 @@ Page({
     var selectedAllStatus = that.data.selectedAllStatus
     var selectedRedAllStatus = that.data.selectedRedAllStatus
     var selected_coupon_quan_index = that.data.selected_coupon_quan_index ? that.data.selected_coupon_quan_index:0
-    var selected_coupon_red_index = that.data.selected_coupon_red_index ? selected_coupon_red_index:0
+    var selected_coupon_red_index = that.data.selected_coupon_red_index ? that.data.selected_coupon_red_index:0
+    console.log('confirmOrder selected_coupon_quan_index:', that.data.selected_coupon_quan_index, 'selected_coupon_red_index:', that.data.selected_coupon_red_index, ' coupons_red_list:', that.data.coupons_red_list)
     var selected_coupon_amount = selectedAllStatus ? that.data.coupons_quan_list[selected_coupon_quan_index]['amount'] : 0
     var selected_coupon_id = selectedAllStatus ? that.data.coupons_quan_list[selected_coupon_quan_index]['id']:0
     var selected_coupon_type = selectedAllStatus?that.data.coupons_quan_list[selected_coupon_quan_index]['type'] : 1
@@ -131,13 +155,12 @@ Page({
     var selected_coupon_red_id = selectedRedAllStatus?that.data.coupons_red_list[selected_coupon_red_index]['id']:0
     var selected_coupon_red_type = selectedRedAllStatus?that.data.coupons_red_list[selected_coupon_red_index]['type']:1
 
-    console.log('confirmOrder selected_coupon_quan_index:', that.data.selected_coupon_quan_index, 'selected_coupon_red_index:', that.data.selected_coupon_red_index)
-   
     var status = 0
     var shop_type = that.data.shop_type
     var amount = that.data.amount
     var order_type = 'gift'
     var order_note = that.data.note
+    var order_num = that.data.order_num
     if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
     console.log('选中 优惠券 类型:', selected_coupon_type, 'coupon_id:', selected_coupon_id, ' 红包 red coupon_type:', selected_coupon_red_type, ' red coupon_id:', selected_coupon_red_id, 'red amount:', selected_coupon_red_amount)
     wx.request({
@@ -157,6 +180,7 @@ Page({
         coupon_red_id: selectedRedAllStatus ? selected_coupon_red_id : 0,
         coupon_red_type: selectedRedAllStatus ? selected_coupon_red_type : 0,
         coupon_red_amount: selectedRedAllStatus ? selected_coupon_red_amount : 0,
+        buy_num:order_num?order_num:1
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -454,6 +478,7 @@ Page({
     var that = this
     var coupon_type = that.data.couponType
     var amount = that.data.amount
+    var order_num = that.data.order_num
     var payamount = that.data.payamount
     var selectedAllStatus = that.data.selectedAllStatus
     var selectedRedAllStatus = that.data.selectedRedAllStatus
@@ -481,7 +506,7 @@ Page({
     }
    
    
-    payamount = (amount - discountpay).toFixed(2)
+    payamount = (amount * order_num - discountpay).toFixed(2)
     that.setData({
       discountpay: discountpay,
       payamount: payamount,
