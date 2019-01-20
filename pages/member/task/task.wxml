@@ -21,7 +21,7 @@
         <view bindtap='' data-task-link="{{gifts_list.link}}">
           <swiper-item>
             <view class='gifts-item'>
-            <image src="{{gifts_list.img}}" class="gifts-item-image" style='' mode="aspectFill"/>
+            <image src="{{gifts_list.img2}}" class="gifts-item-image" style='' mode="aspectFill"/>
             <text class='gifts-item-text'>{{gifts_list.note}}</text>
             </view>
           </swiper-item>

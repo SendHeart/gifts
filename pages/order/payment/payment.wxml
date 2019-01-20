@@ -32,11 +32,12 @@
 				<text>x{{mapping.sku_num}}</text>
 			</view>
 		</view>
+    <text style='font-size:22rpx; color:red;margin-left:-20rpx;'>{{item.buy_num>1?'份数:'+item.buy_num:''}}</text>
 	</view>
 	<view class="order-footer">
 		<text>共计:</text><text class='font-red'>￥{{item.order_price}}</text>
 	</view>
-  
+
 </view>
 
 <button data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay" class='btnpay'>微信支付</button>
