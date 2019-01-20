@@ -180,7 +180,7 @@ Page({
         coupon_red_id: selectedRedAllStatus ? selected_coupon_red_id : 0,
         coupon_red_type: selectedRedAllStatus ? selected_coupon_red_type : 0,
         coupon_red_amount: selectedRedAllStatus ? selected_coupon_red_amount : 0,
-        buy_num:order_num?order_num:1
+        order_num:order_num?order_num:1
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
