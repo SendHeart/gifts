@@ -121,7 +121,7 @@
   </modal>
    -->
   
-  <view class="main_message" style="height:{{dkheight}}px;">
+  <view class="main_message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
     <view class="t_w">
       <!--右上角图标开始-->
       <view class="t_image"  bindtap="messageCandel">
@@ -163,7 +163,7 @@
       </view>
       -->
        <!-- 消息通知 -->
-      <view class="main_red" style="width:600rpx;height:683rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;" bindtap="messageConfirm" >
+      <view wx:if="{{main_prom_image}}" class="main_red" style="width:600rpx;height:683rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;" bindtap="messageConfirm" >
       <!--
         <text class="" style='margin-top:250rpx;font-size:40rpx;color:#fff;'>{{main_prom_note?'':''}}</text>
       -->
