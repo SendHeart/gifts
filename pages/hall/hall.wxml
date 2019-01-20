@@ -111,11 +111,12 @@
   </view>
   </view>
 
-  <modal title="{{main_prom_title}}" no-cancel="{{nocancel}}" hidden="{{messageHidden}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="开始新手任务" cancel-text="跳过">
+  <modal title="" no-cancel="{{nocancel}}" hidden="{{messageHidden}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="开始新手任务" cancel-text="跳过">
     <view style="height:{{dkheight-200}}px;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
-      <view class="main-prom">
+      <!--<view class="main-prom">
       <text style='margin-top:250rpx;font-size:40rpx;color:#fff;'>{{main_prom_note}}</text>
       </view>
+      -->
     </view>
   </modal>
   

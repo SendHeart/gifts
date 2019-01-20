@@ -33,13 +33,14 @@ page {
 .banner {
   width: 100%;
   /*margin-left: 15rpx;*/
-  background-color: #f2f2f2;
   background-repeat: norepeat;
   align-content: center;
   opacity: 1;
-  background-size: 100% 100%;
 }
-
+.slide-image {
+  width: 750rpx;
+  height: 343rpx;
+}
 .banner image {
   width: 100%;
 }

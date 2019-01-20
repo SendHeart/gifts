@@ -1,5 +1,6 @@
 {
-  "navigationBarTitleText": "新手免费送大礼",
+  "navigationBarTitleText": "新手任务",
   "enablePullDownRefresh": true,
-  "backgroundTextStyle": "dark"
+  "backgroundColor": "#1d1d1d"
+
 }
