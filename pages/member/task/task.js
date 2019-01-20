@@ -581,11 +581,11 @@ Page({
     var task = that.data.task
     var msg_id = that.data.msg_id
     var currenttime = that.data.currenttime
-    var title = '收到' + nickname + '的送礼分享~';
+    var desc = '新手任务免费得大礼'
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.navList2[9]['img']
-    var desc = '送心礼物分享'
+    var title = '好友' + nickname + '邀请你一起参与送心礼物任务~'
 
-    console.log('开始分享送礼任务', options)
+    console.log('开始分享送礼任务', options,' task:',task)
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: desc,

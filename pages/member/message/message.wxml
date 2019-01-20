@@ -10,13 +10,8 @@
     <view class="msg-item" bindtap="task_action">
       <image class="msg-item-image"  data-order-no="{{blist.message_info.order_no}}" data-list="{{blist.message_info.image}}" data-message="{{blist.message_info.message}}" data-message-type="{{blist.message_info.message_type}}" data-amount="{{blist.message_info.amount}}" data-amount-type="{{blist.message_info.amount_type}}" data-content="{{blist.message_info.content}}"  data-footer="{{blist.message_info.footer}}" data-accept-time="{{blist.message_info.accept_time}}" data-start-time="{{blist.message_info.start_time}}" data-end-time="{{blist.message_info.end_time}}" data-image="{{blist.message_info.image}}" src="{{blist.message_info.image}}" mode='aspectFill'></image>
       <view class="msg-item-content">
-        
           <text class="msg-item-text">{{blist.title}}</text>
-        
-        
-          <text class="msg-item-text2">{{blist.message_info.message}}</text>
-        
-        
+          <text class="msg-item-text2">{{blist.message_info.message}}</text> 
       </view>
     </view>
   </view>
@@ -29,12 +24,7 @@
     <view class="msg-item" bindtap="imgYu" data-list="{{blist.message_info.image}}" data-message="{{blist.message_info.message}}"  data-order-no="{{blist.message_info.order_no}}" data-message-type="{{blist.message_info.message_type}}" data-amount="{{blist.message_info.amount}}" data-amount-type="{{blist.message_info.amount_type}}" data-content="{{blist.message_info.content}}"  data-footer="{{blist.message_info.footer}}" data-accept-time="{{blist.message_info.accept_time}}" data-start-time="{{blist.message_info.start_time}}" data-end-time="{{blist.message_info.end_time}}">
        <image class="msg-item-image" data-image="{{blist.message_info.image}}" src="{{blist.message_info.image}}" mode='aspectFill'></image>
       <view class="msg-item-content">
-        
-          
-        
-        
           <text class="msg-item-text2">{{blist.message_info.message}}</text>
-        
       </view>
     </view>
   </view>

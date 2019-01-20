@@ -983,7 +983,7 @@ Page({
     var messages_num = that.data.messages_num
     var myDate = util.formatTime(new Date)
     var scene = decodeURIComponent(options.scene)
-    console.log('hall onload scene:', scene)
+    console.log('hall onload scene:', scene,' task:',task)
     that.get_project_gift_para()
     var message_info = {
       addtime: myDate,

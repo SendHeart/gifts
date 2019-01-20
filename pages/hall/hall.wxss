@@ -164,8 +164,6 @@ modal {
   align-items: center;
   text-align: center;
   position: relative;
-  width: 80rpx;
-  height: 90rpx;
 }
 .messages .message-num {
   position: absolute;
@@ -823,7 +821,7 @@ modal {
   flex-direction: column;
 }
 
-.message{
+.main_message{
   position:fixed;
   width:100%;
   top:0px;
@@ -831,10 +829,15 @@ modal {
   overflow: hidden;
   z-index: 999;
 }
-.message .t_w{
+.main_message .t_w{
   position:relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  width: 100%;
+  height: 100%;
 }
-.message .tanchu_view{
+.main_message .tanchu_view{
   width: 80%;
   margin:10% auto;
   overflow: hidden;
@@ -843,7 +846,14 @@ modal {
   padding: 4rpx;
 }
 
-.message .bg_view{
+main_message .main_red{
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  width: 100%;
+  height: 100%;
+}
+.main_message .bg_view{
   margin:0rpx auto 30rpx auto;
   color:#fcb712;
   font-size:50rpx;
@@ -852,13 +862,13 @@ modal {
   text-align: center;
 }
 
-.message .txtys{
+.main_message .txtys{
     font-size: 50rpx;
     text-align: center;
     margin-bottom: 200rpx;
 }
  
-.message .txtsure{
+.main_message .txtsure{
  width: 100%;
  height: 100%;
  display: flex;
@@ -867,7 +877,7 @@ modal {
 }
  
 /*确定背景*/
-.message .txtsurebg{
+.main_message .txtsurebg{
   width: 100rpx;
   height: 100rpx;
   display: flex;
@@ -880,30 +890,32 @@ modal {
 }
  
 /*确定图标*/
-.message .txtsureimg{
+.main_message .txtsureimg{
   display:block;
   width:60rpx;
   height:60rpx;
 }
  
 /*确定文本*/
-.message .txtsurename{
+.main_message .txtsurename{
    margin-bottom: 10rpx;
    color: white;
    font-size: 30rpx;
 }
  
 /*右上角图标*/
-.message .t_image{
+.main_message .t_image{
   position: absolute;
-  top: -6%;
+  top: 2%;
   left:88%;
 }
  
 /*右上角图标*/
-.message .t_image1{
+.main_message .t_image1{
   display:block;
   width:60rpx;
+  height: 60rpx;
+  opacity:0.8;
 }
 
 .coupon-item {
