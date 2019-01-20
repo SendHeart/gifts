@@ -125,7 +125,7 @@ swiper-item image {
   align-content:center;
   justify-content:space-around;
   width: 98%;
-  margin: 0 auto;
+  margin: 20rpx auto;
   overflow: hidden;
 }
 
@@ -140,9 +140,8 @@ swiper-item image {
 
 .venues_item .mainpic {
   display: block;
-  width: 310rpx;
-  height: 310rpx;
-  margin: 20rpx auto;
+  width: 356rpx;
+  height: 356rpx;
 }
 
 .venues_item .goods_name {
@@ -179,23 +178,25 @@ swiper-item image {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 100%;
   padding: 10rpx;
 }
 
 .price-market {
+  text-indent: 0;
   color: #999;
-  font-size: 28rpx;
-  text-align: right;
-  padding-right: 10rpx;
+  font-size: 24rpx;
+  line-height: 1.8;
+  padding-right: 4rpx;
   text-decoration:line-through;
 }
 .price-market::first-letter {
   font-size: 20rpx;
 }
 .price-now {
-  color: #444;
-  font-size:28rpx;
+  text-indent: 0;
+  color: #e34c55;
+  font-size: 28rpx;
+  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 20rpx;

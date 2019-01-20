@@ -25,17 +25,19 @@
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+      <view class="messages" catchtap="messagesTapTag" >
+      <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
+      <image class="icon-message" src="../../images/u72.png"></image>
     </view>
+    </view>
+    
     <view class="usergifts" bindtap='usergiftTapTag'>
       <text>收到</text>
       <text class='snum'>{{gifts_rcv}}</text>
       <text>送出</text>
       <text class='snum'>{{gifts_send}}</text>
     </view>
-    <view class="messages" catchtap="messagesTapTag" >
-      <view class='message-num' style='{{messages_num==0?"background:gray":""}}'>{{messages_num}}</view>
-      <icon style="margin-top:-40rpx;" class="Hui-iconfont iconv-message"  />
-    </view>
+    
   </view>
   <view class="pick-goods" style="border:none;">
     <view class="image-btnbuy" bindtap="bindPickGoods">
@@ -109,7 +111,7 @@
   </view>
   </view>
 
-  <modal title="{{main_prom_title}}" hidden="{{messageHidden}}" no-cancel="{{nocancel}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="查看" cancel-text="取消">
+  <modal title="{{main_prom_title}}" no-cancel="{{nocancel}}" hidden="{{messageHidden}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="开始新手任务" cancel-text="跳过">
     <view style="height:{{dkheight-200}}px;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
       <view class="main-prom">
       <text style='margin-top:250rpx;font-size:40rpx;color:#fff;'>{{main_prom_note}}</text>
@@ -170,7 +172,7 @@
      <!--弹出框结束-->
   </view>
   
-  <view class="middle-goods" style="border:none;">
+  <view class="middle-goods">
     <view class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1'>
       <view>
         <image class="middle-goods-image" src="{{middle1_img}}"></image>
@@ -180,7 +182,7 @@
         <text class="middle-goods-btntips">{{middle1_note}}</text>
       </view>
     </view>
-    <view class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='2'>
+    <view class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods"  data-goods-type='2'>
       <view>
         <image class="middle-goods-image" src="{{middle2_img}}"></image>
       </view>
@@ -189,8 +191,7 @@
         <text class="middle-goods-btntips">{{middle2_note}}</text>
       </view>
     </view>
-  </view>  
-  <view class="middle-goods" style="border:none;">
+  
     <view class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='3'>
       <view>
         <image class="middle-goods-image" src="{{middle3_img}}"></image>
@@ -200,7 +201,7 @@
         <text class="middle-goods-btntips">{{middle3_note}}</text>
       </view>
     </view>
-    <view class="image-btn"  bindtap="bindMiddleGoods"  data-goods-type='4'>
+    <view class="image-btn" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='4'>
       <view>
         <image class="middle-goods-image" src="{{middle4_img}}"></image>
       </view>
@@ -211,8 +212,8 @@
     </view>
   </view>  
   <view class="recomment-title" bindtap='bindPickGoods'>
-    <text>近期热门<text class='title_ex'>大家都在送...</text></text>
-    <text class='more'>更多</text>
+    <text>近期热门<text class='title_ex'>大家都在送</text></text>
+    <text class='more'>更多...</text>
   </view>
   <view class="venues_box">
     <view wx:for="{{recommentList}}" class="venues_item" wx:key="id" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" hidden="{{item.hidden==1?true:false}}">

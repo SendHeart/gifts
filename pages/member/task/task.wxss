@@ -18,7 +18,7 @@
 
 
 page {
-  background: #f2f2f2;
+  background: #E34C55;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -62,17 +62,15 @@ page {
 }
 
 .gifts-item-title {
-  color: #444;
-  font-size: 40rpx;
-  font-weight: bold;
+  color: #FFF;
+  font-size: 36rpx;
   text-align: center;
   line-height: 100rpx;
   padding: 10rpx;
-  background: #f2f2f2;
 }
 
 .gifts-item-text {
-  color: #999;
+  color: #FFF;
   font-size: 28rpx;
 }
 .wrap {
@@ -102,10 +100,7 @@ page {
   background: #cf1010;
   color: #fff;
   font-size: 30rpx;
-  border-radius: 20rpx;
-  -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  -moz-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
+  border-radius: 14rpx;
   margin:20rpx auto;
   margin-bottom:30rpx;
 }
@@ -116,12 +111,8 @@ page {
 }
 
 
-.wrap{
-  background:#f2f2f2;
-}
 .container { 
   width: 100%; 
-  background-color: #f2f2f2; 
   color: #fff;
 }
 .task-list {
@@ -245,47 +236,60 @@ page {
   display:block;
   width:60rpx;
 }
-
+.layerframe {
+display: flex;
+  flex-direction: column;
+  background: #fff;
+  border-radius: 20rpx;
+  width: 80%;
+  margin:30% auto;
+}
 .red-item {
   display: flex;
   flex-direction: column;
   align-items: left;
   text-align: left;
   /*width属性解决标题文字太短而缩略图偏移*/
-  width: 80%;
-  padding: 20rpx 10rpx;
-  margin:40% auto;
+  
+  padding: 20rpx;
 }
-
+.name-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 98%;
+}
 .red-name {
-  font-size: 30rpx;
-  color: #ebdddd;
+  font-size: 28rpx;
+  color: #444;
   line-height: 38rpx;
   width: 100%;
-  margin-top:60rpx;
 }
-
+.red-title {
+  font-size: 28rpx;
+  font-weight: bold;
+}
 .red-content {
   font-size: 45rpx;
-  color: #ebdddd;
+  color: #999;
   line-height: 100rpx;
   width: 100%;
   margin-top:20rpx;
 }
 .red-value {
   font-size: 45rpx;
-  color: #ebdddd;
+  color: #999;
   line-height: 60rpx;
   margin-top:20rpx;
   width: 100%;
 }
 
 .red-dueday {
-  font-size: 30rpx;
-  color: #ebdddd;
+  font-size: 24rpx;
+  color: #999;
   line-height: 38rpx;
   width: 100%;
-  margin-top:20rpx;
+  text-align: right;
 }
 .red-footer {
   font-size: 35rpx;

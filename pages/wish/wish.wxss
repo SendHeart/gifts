@@ -271,9 +271,8 @@ view.text text {
 
 .venues_item .mainpic {
   display: block;
-  width: 310rpx;
-  height: 310rpx;
-  margin: 20rpx auto;
+  width: 356rpx;
+  height: 356rpx;
 }
 
  .venues_item .goods_name {

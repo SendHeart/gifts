@@ -939,7 +939,7 @@ Page({
               middle4_note: navList_new[14]['note'],
             })
           }
-        }
+        } 
       })
     } else{
       that.setData({

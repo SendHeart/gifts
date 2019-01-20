@@ -9,7 +9,7 @@ var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var navList_order = [
   { id: "task", title: "任务" },
-  { id: "message", title: "系统消息" },
+  { id: "message", title: "消息" },
 ];
 var now = new Date().getTime()
 Page({

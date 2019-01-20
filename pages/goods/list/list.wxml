@@ -30,7 +30,7 @@
                 <!--<image src="../../images/u48.png"></image>-->
                 <text space="ensp">{{item.goods_tag}} </text>
               </view>
-              <view class="price-list">
+              <view class="price-list"> 
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
                 <view class="price-now">￥{{item.sell_price}}</view>
               </view>

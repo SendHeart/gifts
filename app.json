@@ -38,7 +38,7 @@
     "navigationBarTextStyle": "#fefefe",
     "navigationBarTitleText": "送心礼物",
     "navigationBarBackgroundColor": "#1D1D1D",
-    "backgroundColor": "#FEFEFE",
+    "backgroundColor": "#F3F3F3",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },
@@ -62,9 +62,9 @@
       },
       {
         "pagePath": "pages/member/message/message",
-        "iconPath": "images/waimai.png",
-        "selectedIconPath": "images/waimai_select.png",
-        "text": "小亮"
+        "iconPath": "images/ai.png",
+        "selectedIconPath": "images/ai_s.png",
+        "text": "智能助手"
       },
       {
         "pagePath": "pages/index/index",

@@ -34,14 +34,17 @@
     <view class="order-item-title">{{item.title}}</view>
     <view class="order-item-message">{{item.message_info.message?'  '+item.message_info.message:''}}</view>
     <view class="sentbtn" >
-    <text style='color:#999' bindtap='refer_detail' data-refer-list="{{item.task_info.refer_list}}">{{item.task_info.task_status!=9?item.task_info.step_info:''}}</text>
-    <button wx:if="{{item.message_info.message_type==0 && item.task_info.task_status!=9}}" open-type="button" bindtap="task_action" style='background:#999'>去送礼</button>
+    <text style='color:#E34C55' bindtap='refer_detail' data-refer-list="{{item.task_info.refer_list}}">{{item.task_info.task_status!=9?item.task_info.step_info:''}}</text>
+    <button wx:if="{{item.message_info.message_type==0 && item.task_info.task_status!=9}}" open-type="button" bindtap="task_action">去送礼</button>
     <button wx:if="{{item.task_info.task_status==9 && item.message_info.message_type!=10}}" open-type="button" bindtap="" style='background:#999'>已完成</button>
-    <button wx:if="{{item.task_info.last_status!=9 && item.task_info.last_status!=9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}" open-type="button" bindtap="" style='background:#999'>未开始</button>
-    <button wx:if="{{item.task_info.task_status!=9 && item.task_info.last_status==9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}"  open-type="share" bindtap="onShareAppMessage" style='background:blue;' data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >继续</button>
-     <button wx:if="{{item.task_info.task_status!=9 && item.message_info.message_type==10}}"  open-type="button" bindtap="query_pubcoupon" style='background:blue' data-coupon-id="{{item.message_info.coupon_id}}" data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >领取奖励</button>
+    <button wx:if="{{item.task_info.last_status!=9 && item.task_info.last_status!=9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}" open-type="button" bindtap="">立即开始</button>
+    <button wx:if="{{item.task_info.task_status!=9 && item.task_info.last_status==9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}"  open-type="share" bindtap="onShareAppMessage" data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >继续完成</button>
+     <button wx:if="{{item.task_info.task_status!=9 && item.message_info.message_type==10}}"  open-type="button" bindtap="query_pubcoupon" data-coupon-id="{{item.message_info.coupon_id}}" data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >领取奖励</button>
        <button wx:if="{{item.task_info.task_status==9 && item.message_info.message_type==10}}"  open-type="button" style='background:#999' data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >已领取</button>
     </view>
+</view>
+<view class="sentbtn">
+  <text bindtap="goBack">查看更多好礼任务></text>
 </view>
 </scroll-view>
 <view class="message" hidden="{{messageHidden}}"  bindtap="messageConfirm" style="height:{{dkheight}}px;">
@@ -55,10 +58,12 @@
       <!--右上角图标结束-->
       <!--弹出框开始-->
       <!-- 分享人列表 -->
+      <view class='layerframe'>
       <view  class="red-item" style="background-image:url('{{message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
-          <view wx:for="{{refer_list}}" wx:key="" wx:for-item="refer_list">
-          <text class="red-name">{{refer_list.wx_nickname?'好友昵称:'+refer_list.wx_nickname:''}}</text>
-          <text class="red-dueday">{{refer_list.time?' 点击日期:'+refer_list.time:''}}</text>
+      <text class='red-title'>已查看的好友</text>
+          <view class='name-list' wx:for="{{refer_list}}" wx:key="" wx:for-item="refer_list">
+          <text class="red-name">{{refer_list.wx_nickname?refer_list.wx_nickname:''}}</text>
+          <text class="red-dueday">{{refer_list.time?refer_list.time:''}}</text>
           </view>
           <!--确定开始-->
           <!-- 
@@ -70,11 +75,10 @@
           -->
           <!--确定结束-->
       </view>
+      </view>
     </view>
      <!--弹出框结束-->
-  </view>
-<view class="sentbtn">
-  <button bindtap="goBack">返回</button>
 </view>
+
 
  

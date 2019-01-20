@@ -94,6 +94,7 @@ page {
   color: #999;
   padding: 4rpx 10rpx;
   border-radius: 8rpx;
+  margin-right: 6rpx;
 }
 .recyclebtn {
   position: absolute;

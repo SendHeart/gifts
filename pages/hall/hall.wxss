@@ -1,4 +1,4 @@
-/*没有用到iconfont注释降低消耗*/
+/*没有用到iconfont注释降低消耗
 
 @import "../../lib/style/font.wxss";
  
@@ -10,9 +10,9 @@
 .iconv-message:after {
   content: '\e68a';
 }
-
+*/
 page {
-  background: #F2F2F2;
+  background: #F3F3F3;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -24,7 +24,11 @@ page {
   color: transparent;
   display: none;
 }
-
+modal {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
 .startBar {
   height: 75rpx;
   background: #333;
@@ -135,7 +139,7 @@ page {
 
 .usergifts {
   color: #999;
-  width: 35%;
+  width: 45%;
   text-align: right;
   font-size: 24rpx;
 }
@@ -154,21 +158,32 @@ page {
 
  
 .messages {
-  border: solid 0px black;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
-  margin-top:2rpx;
+  position: relative;
+  width: 80rpx;
+  height: 90rpx;
 }
 .messages .message-num {
+  position: absolute;
+  top: 12rpx;
+  right: 12rpx;
   color: #fff;
-  background: rgb(233, 15, 15);
-  font-size: 8px;
-  width:40rpx;
-  height:40rpx;
+  background: rgb(227, 76, 85);
+  font-size: 20rpx;
+  font-weight: bold;
+  width:32rpx;
+  height:32rpx;
+  border: 1rpx solid #fff;
   border-radius: 50%;
+}
+
+.icon-message {
+  width: 40rpx;
+  height: 40rpx;
 }
 /*外部容器*/
 
@@ -505,7 +520,7 @@ page {
   padding: 15rpx;
   font-size: 24rpx;
   color: #999;
-  background: #F2F2F2;
+  background: #F3F3F3;
   border-radius: 14rpx;
 }
 .pick-goods-slogan {
@@ -514,7 +529,6 @@ page {
   margin-left: 20rpx;
   /*line-height: 10rpx;*/
   display: block;
-  font-weight: bold;
 }
 
 .pick-goods .pick-goods-slogan2 {
@@ -540,9 +554,9 @@ page {
   height: 78rpx;
   margin: 12rpx;
   border: 1rpx solid #eee;
-  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.3);
+  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
   border-radius: 14rpx;
-  background: #F2F2F2;
+  background: #F3F3F3;
   padding: 10rpx;
 }
  
@@ -574,23 +588,23 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  line-height: 114rpx;
+  line-height: 94rpx;
   width: 96%;
-  height: 114rpx;
+  height: 94rpx;
   background: #fff;
   border-radius: 0 0 30rpx 30rpx;
-  margin: 0 auto 30rpx auto;
+  margin: 0 auto 20rpx auto;
   
 }
 .btnconfirm {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 93%;
+  width: 100%;
   height: 90rpx;
   background: #e34c55;
   box-shadow: 0rpx 4rpx 0rpx rgba(179, 22, 2, 1);
-  border-radius:14rpx;
+  border-radius: 0 0 30rpx 30rpx;
   color: #fff;
   font-size: 34rpx;
   font-weight: bold;
@@ -610,10 +624,10 @@ page {
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
   justify-content:center; /*子项横轴上居中对齐*/
   text-align: left;
-  bottom: 0;
-  border-bottom: 1rpx solid #eee;
+  padding-bottom: 3rpx;
   z-index: 1;
 }
 
@@ -622,19 +636,19 @@ page {
   flex-direction: row;
   justify-content: left;
   text-align: center;
-  width: 42%;
-  height: 78rpx;
-  margin: 12rpx;
+  width: 45%;
+  height: 90rpx;
   border: 1rpx solid #eee;
-  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.3);
-  border-radius: 20rpx;
+  border-radius: 14rpx;
   background: #fff;
   padding: 10rpx;
+  margin: 15rpx 2% 0 0;
+  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
 }
 .middle-goods .middle-goods-image {
   width: 70rpx;
   height: 70rpx;
-  margin:0 6rpx 0 4rpx;
+  margin:10rpx;
 }
 
 .middle-goods .image-btntext {
@@ -642,6 +656,7 @@ page {
   flex-direction: column;
   justify-content: left;
   text-align: left;
+  margin-top: 10rpx;
 }
 .middle-goods .middle-goods-action {
   color: #444;
@@ -663,6 +678,7 @@ page {
   flex-direction: row;
   justify-content: space-between; /*子项横轴上对齐*/
   padding:20rpx 4%;
+  margin-top: 10rpx;
   
 }
 .recomment-title text{
@@ -679,6 +695,7 @@ page {
 }
 .recomment-title text.more {
   font-size: 24rpx;
+  line-height: 50rpx;
   color: #999;
   font-weight: normal;
   text-align: right;
@@ -734,9 +751,8 @@ page {
 
 .venues_item .mainpic {
   display: block;
-  width: 310rpx;
-  height: 310rpx;
-  margin: 20rpx auto;
+  width: 356rpx;
+  height: 356rpx;
 }
 
 .venues_item .goods_name {
@@ -779,18 +795,22 @@ page {
 }
 
 .price-market {
+  text-indent: 0;
   color: #999;
   font-size: 24rpx;
-  text-align: right;
-  padding-right: 10rpx;
+  line-height: 1.8;
   text-decoration:line-through;
+  margin-right: 4rpx;
 }
-
+.price-market::first-letter {
+  font-size: 20rpx;
+}
 .price-now {
-  color: #444444;
-  font-size: 24rpx;
-  text-align: right;
-  padding-right: 20rpx;
+  text-indent: 0;
+  color: #e34c55;
+  font-size: 28rpx;
+  font-weight: bold;
+  margin-right: 24rpx;
 }
 
 .price-now::first-letter {
@@ -977,3 +997,4 @@ page {
   width: 100%;
   margin-top:20rpx;
 } 
+
