@@ -33,8 +33,8 @@
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
         
         <view class="right-tag">
-        市场价 <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
-        送心价 <text class="price-real">￥{{goodsprice>0?goodsprice:'0'}}</text>
+        {{marketprice>0?'市场价':''}} <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
+        {{marketprice>0?'送心价':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:'0'}}</text>
         </view>
       </view>
       <view class="fitfor">

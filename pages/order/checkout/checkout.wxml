@@ -55,7 +55,7 @@
             <!-- 
 		    <text style="margin-left:10rpx;">选中</text>-->
           </view>
-          <view style="background-image:url('{{mapping.image}}');" class="counpons-item">
+          <view style="background-image:url('{{mapping.image}}');background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;" class="counpons-item">
             <!-- 
         <image class="gifts-image" src="{{mapping.image}}" mode="aspectFit"> </image>
         -->
