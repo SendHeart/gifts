@@ -235,34 +235,10 @@ Page({
     var nickname = that.data.nickname
     var note = that.data.note
     var shop_type = that.data.shop_type
+    app.globalData.is_receive = receive
+    app.globalData.order_no = order_no
+    app.globalData.goods_flag = goods_flag
     
-    if (!username) {
-      /*
-      wx.switchTab({
-        url: '/pages/my/index'
-      })
-      */
-      wx.navigateTo({
-        url: '../../login/login'
-      })
-    }else{
-      
-    }
-    if (receive != 1){
-      console.log('礼品信息 order_no:',order_no + ' receive:' + receive)
-      wx.switchTab({
-        url: '/pages/hall/hall'
-      })
-      return
-    }
-    that.setData({
-      order_no: order_no,
-      receive: receive,
-      openid: openid,
-      username:username,
-      goods_flag: goods_flag,
-    })
-    that.reloadData()
     /*
     that.setNavigation()
     wx.getSystemInfo({
@@ -274,27 +250,58 @@ Page({
       }
     })  
      */
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
+   
    
 
   },
 
   onShow: function () {
     var that = this
-    
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var order_no = app.globalData.order_no
+    var goods_flag = app.globalData.goods_flag
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../../images/back.png'
       })
     }  
-   
+    if (!username) {
+      /*
+      wx.switchTab({
+        url: '/pages/my/index'
+      })
+      */
+      wx.navigateTo({
+        url: '../../login/login'
+      })
+    } else {
+      if (app.globalData.is_receive != 1) {
+        console.log('礼品信息 order_no:', order_no + ' receive:' + app.globalData.is_receive)
+        wx.switchTab({
+          url: '/pages/hall/hall'
+        })
+        return
+      }
+      app.globalData.is_receive = 0
+      that.setData({
+        order_no: order_no,
+        receive: app.globalData.is_receive,
+        openid: openid,
+        username: username,
+        goods_flag: goods_flag,
+      })
+      that.reloadData()
+      //调用应用实例的方法获取全局数据
+      app.getUserInfo(function (userInfo) {
+        //更新数据
+        that.setData({
+          userInfo: userInfo
+        })
+      })
+    }
   },
 
   overtimeData: function () {
@@ -413,6 +420,7 @@ Page({
             receive_status: receive_status,
           })
           console.log('order sku list:', orderskus)
+          app.globalData.is_receive = 0 
         }
       }
     })

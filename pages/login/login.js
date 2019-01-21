@@ -230,13 +230,18 @@ Page({
         wx.setStorageSync('m_id', res.data.result['m_id'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.showToast({
-          title: '授权成功',
+          title: '授权登录成功',
           duration: 500
-        });
+        })
         // 等待半秒，toast消失后返回上一页
         setTimeout(function () {
-          wx.navigateBack();
-        }, 500);
+          wx.navigateBack()
+          /*
+          wx.switchTab({
+            url: '/pages/hall/hall'
+          })
+          */
+        }, 500)
       },
       
     })

@@ -209,6 +209,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var middle_title = options.middle_title ? options.middle_title : '特色礼物'
     var navlist_toView = options.navlist ? options.navlist : 0
     var goods_type_value = options.goods_type_value ? options.goods_type_value:0
     var goods_type = 'goods_middle_search'
@@ -218,6 +219,10 @@ Page({
       navlist_toView: navlist_toView,
       goods_type: goods_type,
       goods_type_value: goods_type_value,
+    })
+
+    wx.setNavigationBarTitle({
+      title: middle_title
     })
     
     //调用应用实例的方法获取全局数据

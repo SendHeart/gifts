@@ -476,6 +476,8 @@ Page({
   },
   onLoad: function (options) {
     var that = this
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var username = wx.getStorageSync('username');
     var page_type = options.page_type ? options.page_type : ''
     var order_no = options.order_no ? options.order_no : ''
     var act_id = options.act_id ? options.act_id : ''
@@ -484,7 +486,7 @@ Page({
     var task = options.task ? options.task : 0
     var msg_id = options.msg_id ? options.msg_id : 0
     var task_image = options.image ? options.image : ''
-
+    that.get_project_gift_para()
     that.setData({
       act_id: act_id,
       page_type: page_type,
@@ -497,14 +499,46 @@ Page({
     })
     //that.setNavigation()
     console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id)
-    if (page_type == 2) { //收到礼物
-      if (receive == 1) {
-        wx.navigateTo({
-          url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
-        })
+    if (!username) {
+      /*
+      wx.switchTab({
+        url: '/pages/my/index'
+      })
+      */
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+    } else {
+      if (page_type == 2) { //收到礼物
+        if (receive == 1) {
+          wx.navigateTo({
+            url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
+          })
+        }
       }
+      that.get_member_messages()
+      app.getUserInfo(function (userInfo) {
+        //更新数据
+        that.setData({
+          userInfo: userInfo
+        })
+      })
+      wx.getSystemInfo({
+        success: function (res) {
+          let winHeight = res.windowHeight;
+          console.log('getSystemInfo:', winHeight);
+          that.setData({
+            dkheight: winHeight,
+          })
+        }
+      })
+
+      this.setData({
+        username: username
+      })
+      //this.reloadData(username, token);
     }
-    that.get_member_messages()
+    
   },
   //事件处理函数
 
@@ -544,33 +578,7 @@ Page({
       })
     }
 
-    if (!username) {
-      wx.switchTab({
-        url: '../my/index'
-      })
-    }
-    that.get_project_gift_para()
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        userInfo: userInfo
-      })
-    })
-    wx.getSystemInfo({
-      success: function (res) {
-        let winHeight = res.windowHeight;
-        console.log('getSystemInfo:', winHeight);
-        that.setData({
-          dkheight: winHeight,
-        })
-      }
-    })
     
-    this.setData({
-      username: username
-    })
-    //this.reloadData(username, token);
-
   },
   onShareAppMessage: function (options) {
     var that = this

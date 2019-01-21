@@ -116,7 +116,7 @@ Page({
             title: '网络故障',
             icon: 'loading',
             duration: 2000
-          });
+          })
         }
       })
     }
@@ -229,9 +229,10 @@ Page({
   bindMiddleGoods: function (e) {
     var that = this
     var goods_type = e.currentTarget.dataset.goodsType
+    var middle_title = e.currentTarget.dataset.middleTitle
     wx.navigateTo({
-      url: '/pages/goods/list/list?goods_type_value=' + goods_type
-    });
+      url: '/pages/goods/list/list?goods_type_value=' + goods_type + '&middle_title=' + middle_title
+    })
   },
   goBack: function () {
     var pages = getCurrentPages();
@@ -909,7 +910,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log('get_project_gift_para:', res.data.result)
+          console.log('get_project_gift_para:', res.data)
           navList_new = res.data.result;
           if (!navList_new) {
             /*
@@ -983,7 +984,9 @@ Page({
     var messages_num = that.data.messages_num
     var myDate = util.formatTime(new Date)
     var scene = decodeURIComponent(options.scene)
-    console.log('hall onload scene:', scene,' task:',task)
+    app.globalData.is_task = task
+    console.log('hall onload scene:', scene, ' task:', app.globalData.is_task)
+    
     that.get_project_gift_para()
     var message_info = {
       addtime: myDate,
@@ -993,63 +996,13 @@ Page({
       message_type: 1,
     }
     that.setData({
-      message: JSON.stringify(message_info)
+      message: JSON.stringify(message_info),
+      refername: refername,
+      scene: scene,
+      msg_id: msg_id,
+      page_type: page_type,
     })
-    if (!username) {
-      wx.switchTab({
-        url: '/pages/my/index'
-      })
-    }else{
-      if (page_type == 2) { //收到礼物
-        console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
-        if (receive == 1) {
-          wx.navigateTo({
-            url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
-          })
-        }
-      }
-      if (page_type == 3) { //收到优惠券
-        console.log('收到优惠券 Hall page_type:', page_type, ' coupons_flag:', coupons_flag, ' coupons_id:', coupons_id, ' receive:', receive)
-        if (receive == 1) {
-          wx.navigateTo({
-            url: '../member/couponrcv/couponrcv?coupons_flag=' + coupons_flag + '&coupons_id' + coupons_id + '&receive=1'
-          })
-        }
-      }
-      if (task > 0) { //收到任务分享人信息
-        console.log('收到任务分享 Hall task:', task, ' refername:', refername, ' msg_id:', msg_id)
-        if (username != refername) { //保留分享人信息
-          wx.setStorageSync('taskrefername', refername);
-        }
-        wx.request({
-          url: weburl + '/api/client/get_task_refer',
-          method: 'POST',
-          data: {
-            username: username,
-            access_token: token,
-            shop_type: shop_type,
-            refername: refername,
-            msg_id: msg_id,
-            task: task,
-          },
-          header: {
-            'Content-Type': 'application/x-www-form-urlencoded',
-            'Accept': 'application/json'
-          },
-          success: function (res) {
-            console.log('hall get_task_refer:', res.data)
-          }
-        })
-        that.setData({
-          messageHidden: !that.data.messageHidden,
-          main_prom_image: that.data.navList2[10]['img'],
-          main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title'] : '送心礼物',
-          main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '送心礼物欢迎您！',
-          notehidden: !that.data.notehidden,
-        })
-      }
-    } 
-   
+
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()
@@ -1102,24 +1055,80 @@ Page({
     var that = this;
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var username = wx.getStorageSync('username')
+    var refername = that.data.refername
+    var msg_id = that.data.msg_id
+    var page_type = that.data.page_type
     var pages = getCurrentPages()
+    that.get_project_gift_para()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../images/back.png'
       })
     }  
-    
     if(!username){
+      /*
       wx.switchTab({
         url: '../my/index'
       })
+      */
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
     }else{
-      
+      if (page_type == 2) { //收到礼物
+        console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)
+        if (receive == 1) {
+          wx.navigateTo({
+            url: '../order/receive/receive?order_no=' + order_no + '&receive=1'
+          })
+        }
+      }
+      if (page_type == 3) { //收到优惠券
+        console.log('收到优惠券 Hall page_type:', page_type, ' coupons_flag:', coupons_flag, ' coupons_id:', coupons_id, ' receive:', receive)
+        if (receive == 1) {
+          wx.navigateTo({
+            url: '../member/couponrcv/couponrcv?coupons_flag=' + coupons_flag + '&coupons_id' + coupons_id + '&receive=1'
+          })
+        }
+      }
+      if (app.globalData.is_task > 0) { //收到任务分享人信息
+        console.log('收到任务分享 Hall task:', app.globalData.is_task, ' refername:', refername, ' msg_id:', msg_id)
+        if (username != refername) { //保留分享人信息
+          wx.setStorageSync('taskrefername', refername);
+        }
+        wx.request({
+          url: weburl + '/api/client/get_task_refer',
+          method: 'POST',
+          data: {
+            username: username,
+            access_token: token,
+            shop_type: shop_type,
+            refername: refername,
+            msg_id: msg_id,
+            task: app.globalData.is_task,
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            app.globalData.is_task = 0
+            console.log('hall get_task_refer:', res.data)
+          }
+        })
+        that.setData({
+          messageHidden: !that.data.messageHidden,
+          main_prom_image: that.data.navList2[10]['img'],
+          main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title'] : '送心礼物',
+          main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '送心礼物欢迎您！',
+          notehidden: !that.data.notehidden,
+        })
+      }
     }
     if(app.globalData.hall_gotop == 1){
       that.goTop()
     }
-    that.get_project_gift_para()
+ 
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
@@ -1129,11 +1138,10 @@ Page({
     this.setData({
       username: username
     })
-    this.reloadData(username, token);
+    this.reloadData(username, token)
     // sum
-    this.sum();
-    console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}])
-    
+    this.sum()
+    console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]) 
     //app.globalData.messageflag = 0
   },
   onShareAppMessage: function () {

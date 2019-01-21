@@ -151,9 +151,11 @@ page {
 }
 
 .goods-info .right-tag {
+  width: 450rpx;
   font-size: 24rpx;
   color: #999;
   padding-right: 20rpx;
+  text-align: right;
 }
 .goods-info .price-real {
 font-size: 32rpx;

@@ -474,6 +474,84 @@ Page({
       modalHiddenPlaysx: !this.data.modalHiddenPlaysx
     })
   },  
+  
+  get_project_gift_para: function () {
+    var that = this
+    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+    var shop_type = that.data.shop_type
+    var hall_banner = that.data.hall_banner
+    console.log('hall get_project_gift_para navList2:', navList_new)
+    if (navList2.length == 0) {
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定 1首页单图片 2首页轮播  
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return
+          } else {
+            wx.setStorageSync('navList2', navList_new)
+            that.setData({
+              navList2: navList_new,
+              hall_banner: navList_new[3] ? navList_new[3] : hall_banner, //首页banner图
+              middle1_img: navList_new[11]['img'],
+              middle2_img: navList_new[12]['img'],
+              middle3_img: navList_new[13]['img'],
+              middle4_img: navList_new[14]['img'],
+              middle1_title: navList_new[11]['title'],
+              middle2_title: navList_new[12]['title'],
+              middle3_title: navList_new[13]['title'],
+              middle4_title: navList_new[14]['title'],
+              middle1_note: navList_new[11]['note'],
+              middle2_note: navList_new[12]['note'],
+              middle3_note: navList_new[13]['note'],
+              middle4_note: navList_new[14]['note'],
+            })
+          }
+        }
+      })
+    } else {
+      that.setData({
+        navList2: navList_new,
+        hall_banner: navList_new[3] ? navList_new[3] : hall_banner, //首页banner图
+        middle1_img: navList_new[11]['img'],
+        middle2_img: navList_new[12]['img'],
+        middle3_img: navList_new[13]['img'],
+        middle4_img: navList_new[14]['img'],
+        middle1_title: navList_new[11]['title'],
+        middle2_title: navList_new[12]['title'],
+        middle3_title: navList_new[13]['title'],
+        middle4_title: navList_new[14]['title'],
+        middle1_note: navList_new[11]['note'],
+        middle2_note: navList_new[12]['note'],
+        middle3_note: navList_new[13]['note'],
+        middle4_note: navList_new[14]['note'],
+      })
+    }
+
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
+  },
   onLoad: function () {
     var that = this
     var gifts_rcv = that.data.gifts_rcv
@@ -481,7 +559,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-   
+    that.get_project_gift_para()
     console.log("openid:" + openid + ' username:' + username)
     if (!username) { // 登录
       wx.navigateTo({

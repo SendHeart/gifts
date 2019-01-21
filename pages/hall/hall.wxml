@@ -174,7 +174,7 @@
   </view>
   
   <view class="middle-goods">
-    <view class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1'>
+    <view class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">
       <view>
         <image class="middle-goods-image" src="{{middle1_img}}"></image>
       </view>
@@ -183,7 +183,7 @@
         <text class="middle-goods-btntips">{{middle1_note}}</text>
       </view>
     </view>
-    <view class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods"  data-goods-type='2'>
+    <view class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods"  data-goods-type='2' data-middle-title="{{middle2_title}}">
       <view>
         <image class="middle-goods-image" src="{{middle2_img}}"></image>
       </view>
@@ -193,7 +193,7 @@
       </view>
     </view>
   
-    <view class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='3'>
+    <view class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='3' data-middle-title="{{middle3_title}}" >
       <view>
         <image class="middle-goods-image" src="{{middle3_img}}"></image>
       </view>
@@ -202,7 +202,7 @@
         <text class="middle-goods-btntips">{{middle3_note}}</text>
       </view>
     </view>
-    <view class="image-btn" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='4'>
+    <view class="image-btn" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='4' data-middle-title="{{middle4_title}}" >
       <view>
         <image class="middle-goods-image" src="{{middle4_img}}"></image>
       </view>
