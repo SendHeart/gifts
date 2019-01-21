@@ -12,6 +12,7 @@ Page({
   data: {
     title_name: '礼物送出',
     title_logo: '../../../images/footer-icon-05.png',
+    gift_logo: weburl + "/uploads/gift_logo1.png", //默认
     shop_type:shop_type,
     orders: [],
     orderskus:[],
@@ -143,13 +144,19 @@ Page({
              });
              */
             return;
+          }else{
+            that.setData({
+              navList2: navList_new
+            })
           }
         }
       })
+    }else{
+      that.setData({
+        navList2: navList_new
+      })
     }
-    that.setData({
-      navList2: navList_new
-    })
+    
 
     setTimeout(function () {
       that.setData({
@@ -377,8 +384,8 @@ Page({
     var goods_flag = that.data.goods_flag
     var token = that.data.token;
     var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
-    var imageUrl = that.data.navList2[0]['img']
-    console.log('开始送礼 options:',options,'order_no:',order_no,'goods_flag:',goods_flag); 
+    var imageUrl = that.data.navList2[0]['img'] ? that.data.navList2[0]['img'] : that.data.gift_logo
+    console.log('开始送礼 options:', options, 'order_no:', order_no, 'goods_flag:', goods_flag, ' navList2:', that.data.navList2); 
     //console.log(options);  
     if (!order_no){
       console.log('礼品订单号为空 send')

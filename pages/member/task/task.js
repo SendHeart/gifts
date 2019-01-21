@@ -264,8 +264,8 @@ Page({
       },
       success: function (res) {
         var messages_all = res.data
-        var messages = messages_all['result'].reverse()
-        console.log('task get_member_messages:', messages_all)
+        var messages = messages_all['result']
+        console.log('task get_member_messages:', messages_all, 'messages:', messages)
         if (messages_all['status'] == 'y') {
           /*
           if (messages.length == 0) {//为空时虚拟一条送礼任务
@@ -314,16 +314,19 @@ Page({
            
           }  
           */
+          /*
           for (var i = 0; i < messages.length;i++){
             if(i>0){
-              messages[i]['task_info']['last_status'] = messages[i-1]['task_info']['task_status'] 
+            messages[i]['task_info']['last_status'] = messages[i-1]['task_info']['task_status'] 
             }else{
               messages[i]['task_info']['last_status'] = 9
               messages[i]['message_info']['message_type'] = messages[i]['task_info']['task_status'] != 9 ? 0 : messages[i]['message_info']['message_type']
             }
-            if (i == 0) messages[i]['title'] = '任务一'
-            if (i == 1) messages[i]['title'] = '任务二'
           }
+         
+          messages[0]['title'] = '任务一'
+          messages[1]['title'] = '任务二'
+          */
           that.setData({
             task_list: messages,
           })
@@ -586,7 +589,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var nickname = that.data.nickname
-    var task = that.data.task
+    var task = 1
     var msg_id = that.data.msg_id
     var currenttime = that.data.currenttime
     var desc = '新手任务免费得大礼'

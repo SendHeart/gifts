@@ -277,7 +277,7 @@ Page({
             wx.setStorageSync('navList2', navList_new)
             that.setData({
               navList2: navList_new,
-              buyin_rate: navList2[7]['value'] ? navList2[7]['value'] : buyin_rate,
+              buyin_rate: navList_new[7]['value'] ? navList_new[7]['value'] : buyin_rate,
             })
           }
         }
@@ -285,7 +285,7 @@ Page({
     }else{
       that.setData({
         navList2: navList_new,
-        buyin_rate: navList2? navList2[7]['value'] : buyin_rate,
+        buyin_rate: navList_new ? navList_new[7]['value'] : buyin_rate,
       })
     }
    

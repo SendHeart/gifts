@@ -9,7 +9,7 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-
+var navList2 = wx .getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 Page({
   data:{
     title_name: '我的',

@@ -985,7 +985,7 @@ Page({
     var myDate = util.formatTime(new Date)
     var scene = decodeURIComponent(options.scene)
     app.globalData.is_task = task
-    console.log('hall onload scene:', scene, ' task:', app.globalData.is_task)
+    console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
     
     that.get_project_gift_para()
     var message_info = {
