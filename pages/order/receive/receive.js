@@ -285,7 +285,7 @@ Page({
         })
         return
       }
-      app.globalData.is_receive = 0
+  
       that.setData({
         order_no: order_no,
         receive: app.globalData.is_receive,
