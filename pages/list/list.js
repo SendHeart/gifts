@@ -9,7 +9,7 @@ var navList = [
   { id: "is_recommend", title: "推荐"  ,value:"1"},
   { id: "act_id", title: "节" , value: "hz" }, 
   { id: "cat_id", title: "美食", value: "1" },
-  { id: "cat_id", title: "酒和茶", value: "1"},
+  { id: "cat_id", title: "茶", value: "1"},
   { id: "cat_id", title: "美妆", value: "美妆"},
   { id: "cat_id", title: "文创", value: "文创"},
   { id: "cat_id", title: "数码", value: "数码" },
