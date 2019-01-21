@@ -37,7 +37,7 @@
     <text style='color:#E34C55' bindtap='refer_detail' data-refer-list="{{item.task_info.refer_list}}">{{item.task_info.task_status!=9?item.task_info.step_info:''}}</text>
     <button wx:if="{{item.message_info.message_type==0 && item.task_info.task_status!=9}}" open-type="button" bindtap="task_action">去送礼</button>
     <button wx:if="{{item.task_info.task_status==9 && item.message_info.message_type!=10}}" open-type="button" bindtap="" style='background:#CCC'>已完成</button>
-    <button wx:if="{{item.task_info.last_status!=9 && item.task_info.last_status!=9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}" open-type="button" bindtap="">立即开始</button>
+    <button wx:if="{{item.task_info.task_status!=9 && item.task_info.last_status!=9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}"  style='background:#CCC' open-type="button" bindtap="">未开始</button>
     <button wx:if="{{item.task_info.task_status!=9 && item.task_info.last_status==9 && item.message_info.message_type!=0 && item.message_info.message_type!=10}}"  open-type="share" bindtap="onShareAppMessage" data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >继续完成</button>
      <button wx:if="{{item.task_info.task_status!=9 && item.message_info.message_type==10}}"  open-type="button" bindtap="query_pubcoupon" data-coupon-id="{{item.message_info.coupon_id}}" data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >领取奖励</button>
        <button wx:if="{{item.task_info.task_status==9 && item.message_info.message_type==10}}"  open-type="button" style='background:#CCC' data-msg-id="{{item.msg_id}}" data-task-status="{{item.task_info.task_status}}" >已领取</button>
