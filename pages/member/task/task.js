@@ -20,7 +20,7 @@ var now = new Date().getTime()
 Page({
   data: {
     currenttime: now ? parseInt(now) : 0,
-    new_task_image: weburl + "/uploads/gift_logo.png", //默认的新人送礼图片
+    new_task_image: weburl + "/uploads/new_task_share.png", //默认的新人送礼图片
     hidden: true,
     windowWidth: 0,
     windowHeight: 0,
@@ -479,7 +479,7 @@ Page({
   onLoad: function (options) {
     var that = this
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var username = wx.getStorageSync('username');
+    var username = wx.getStorageSync('username')
     var page_type = options.page_type ? options.page_type : ''
     var order_no = options.order_no ? options.order_no : ''
     var act_id = options.act_id ? options.act_id : ''
@@ -488,6 +488,8 @@ Page({
     var task = options.task ? options.task : 0
     var msg_id = options.msg_id ? options.msg_id : 0
     var task_image = options.image ? options.image : ''
+    var scene = decodeURIComponent(options.scene)
+    
     that.get_project_gift_para()
     that.setData({
       act_id: act_id,
@@ -497,10 +499,10 @@ Page({
       receive: receive,
       task:task,
       msg_id:msg_id,
-      task_iimage:task_image,
+      task_image: task_image ? task_image:that.data.new_task_image,
     })
     //that.setNavigation()
-    console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id)
+    console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id, 'scene:', scene)
     if (!username) {
       /*
       wx.switchTab({
@@ -579,8 +581,6 @@ Page({
         title_logo: '../../images/back.png'
       })
     }
-
-    
   },
   onShareAppMessage: function (options) {
     var that = this
@@ -593,7 +593,7 @@ Page({
     var msg_id = that.data.msg_id
     var currenttime = that.data.currenttime
     var desc = '新手任务免费得大礼'
-    var imageUrl = that.data.task_image ? that.data.task_image : that.data.navList2[9]['img']
+    var imageUrl = that.data.navList2.length == 0 ? that.data.new_task_image:that.data.navList2[9]['img']
     var title = '好友' + nickname + '邀请你一起参与送心礼物任务~'
    
     console.log('开始分享送礼任务', options,' task:',task)
