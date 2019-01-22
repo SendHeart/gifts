@@ -418,7 +418,7 @@ Page({
             console.log('details insertCart wishflag:', wishflag)
             app.globalData.hall_gotop = 1
             wx.switchTab({
-              url: '/pages/hall/hall?'
+              url: '/pages/hall/hall'
             })
           }
 

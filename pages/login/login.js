@@ -60,7 +60,7 @@ Page({
               var user = res.data//返回openid
               wx.setStorageSync('openid', user.openid);
               wx.setStorageSync('session_key', user.session_key)
-              wx.setStorageSync('username', user.openid) //用openid代替用户手机号登录
+             // wx.setStorageSync('username', user.openid) //用openid代替用户手机号登录
               
               that.setData({
                 username: user.openid

@@ -5,7 +5,6 @@ var shop_type = app.globalData.shop_type;
 var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
-
 ]
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 Page({
@@ -112,14 +111,13 @@ Page({
 
   get_project_gift_para: function () {
     var that = this
-    var navList_new = that.data.navList2
+    var navList_new = navList2
     var shop_type = that.data.shop_type
     var page = that.data.page
     var pagesize = that.data.pagesize
 
- 
-    console.log('send get_project_gift_para navList2:', navList2)
-    if (!navList_new) {
+    console.log('send get_project_gift_para navList2:', navList2,'length:',navList2.length)
+    if (navList2.length==0) {
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
@@ -148,16 +146,12 @@ Page({
             that.setData({
               navList2: navList_new
             })
+            console.log('send get_project_gift_para navList_new:', navList_new)
           }
         }
       })
-    }else{
-      that.setData({
-        navList2: navList_new
-      })
-    }
+    } 
     
-
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
@@ -175,7 +169,7 @@ Page({
     var shop_type = that.data.shop_type
     //that.setNavigation()
     console.log('礼品信息 order_no:', order_no)
-   
+    that.get_project_gift_para()
     if (receive == 1){
       console.log('礼品接受处理:', options)
       wx.navigateBack()
@@ -294,7 +288,7 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-    that.get_project_gift_para()
+   
   },
 
   reloadData: function () {
@@ -383,9 +377,10 @@ Page({
     var username = that.data.username;
     var goods_flag = that.data.goods_flag
     var token = that.data.token;
+    var navList2 = that.data.navList2
     var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
-    var imageUrl = that.data.navList2[0]['img'] ? that.data.navList2[0]['img'] : that.data.gift_logo
-    console.log('开始送礼 options:', options, 'order_no:', order_no, 'goods_flag:', goods_flag, ' navList2:', that.data.navList2); 
+    var imageUrl = navList2.length>0?navList2[0]['img'] : that.data.gift_logo
+    console.log('开始送礼 options:', options, 'order_no:', order_no, 'goods_flag:', goods_flag, ' navList2:', navList2); 
     //console.log(options);  
     if (!order_no){
       console.log('礼品订单号为空 send')

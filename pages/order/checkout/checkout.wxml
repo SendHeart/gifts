@@ -23,7 +23,7 @@
   </view>
 </view>
 <view class="order-num">
-  <text>件数:</text>
+  <text>份数:</text> <!--份数，不是件数，用于群发礼物订单 -->
   <input type="number" bindinput="order_num" value="{{order_num}}" />
 </view>
 <view class="cell" style=''>

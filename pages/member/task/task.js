@@ -25,7 +25,6 @@ Page({
     windowWidth: 0,
     windowHeight: 0,
     winHeight:300,
-  
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     shop_type: shop_type,
@@ -587,15 +586,16 @@ Page({
     var that = this
     var res
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var nickname = that.data.nickname
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+    var nickname = userInfo.nickName
     var task = 1
     var msg_id = that.data.msg_id
     var currenttime = that.data.currenttime
     var desc = '新手任务免费得大礼'
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.navList2[9]['img']
     var title = '好友' + nickname + '邀请你一起参与送心礼物任务~'
-
+   
     console.log('开始分享送礼任务', options,' task:',task)
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)

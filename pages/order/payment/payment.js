@@ -2,7 +2,7 @@ var util = require('../../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl; 
 var shop_type = app.globalData.shop_type; 
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : null
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 Page({
 	data: {
     title_name: '送出礼物',
@@ -46,7 +46,55 @@ Page({
     }
 
   },
-  
+  get_project_gift_para: function () {
+    var that = this
+    var navList_new = that.data.navList2
+    var shop_type = that.data.shop_type
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+    var navList2 = that.data.navList2
+
+    console.log('payment get_project_gift_para navList2:', navList2, 'length:', navList2.length)
+    if (navList2.length == 0) {
+      //项目列表
+      wx.request({
+        url: weburl + '/api/client/get_project_gift_para',
+        method: 'POST',
+        data: {
+          type: 2,  //暂定
+          shop_type: shop_type
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('get_project_gift_para:', res.data.result)
+          navList_new = res.data.result;
+          if (!navList_new) {
+            /*
+             wx.showToast({
+               title: '没有菜单项2',
+               icon: 'loading',
+               duration: 1500
+             });
+             */
+            return;
+          } else {
+            that.setData({
+              navList2: navList_new
+            })
+            console.log('payment get_project_gift_para navList_new:', navList_new)
+          }
+        }
+      })
+    }
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
+  },
 	onLoad: function (options) {
     var that = this
     var orderNo = options.orderNo;
@@ -56,7 +104,7 @@ Page({
     var shop_type = that.data.shop_type
     var navList2 = that.data.navList2
     //that.setNavigation()
-
+    that.get_project_gift_para()
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',
