@@ -332,41 +332,21 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var wish_id = options.wish_id ? options.wish_id:''
     var from_page = options.from_page
-    /*
-    if (!username) {//登录
-      wx.navigateTo({
-        url: '../login/login'
-      })
-    }
-    */
-    //that.setNavigation()
+    app.globalData.wish_id = wish_id
     that.setData({
-      wish_id:wish_id,
+      wish_id: wish_id,
     })
+    //that.setNavigation()
+    /*
     if (from_page){
       that.setData({
         from_page: from_page,
         title_logo: '../../../images/back.png'
       })
     }
-    
+    */
     console.log('onLoad', that.data.wish_id,' from_page:',from_page)
-    
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success() {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              //wx.startRecord()
-            }
-          })
-        }
-      }
-    })
     that.get_project_gift_para()
-   
     
   },
 
@@ -387,7 +367,7 @@ Page({
     var pagesize = that.data.pagesize
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var wish_id = that.data.wish_id
+    var wish_id = app.globalData.wish_id
     console.log('query_wish_cart:', wish_id)
     wx.request({
       url: weburl + '/api/client/query_cart',
@@ -458,8 +438,9 @@ Page({
               that.setData({
                 wish_nickname: user_info['wx_nickname'],
                 wish_headimg: user_info['wx_headimg'],
-                wish_id: null,
+                wish_id: '',
               })
+              app.globalData.wish_id = ''
               that.shareTapTag()
             },
 
@@ -475,15 +456,26 @@ Page({
   onShow:function(){
     //调用应用实例的方法获取全局数据
     var that=this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var wish_id = app.globalData.wish_id
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../../images/back.png'
       })
     }  
-    console.log('onShow', that.data.wish_id)
-    that.query_wish_cart()
-    
+    that.setData({
+      wish_id: wish_id,
+    })
+    if (!username) {//登录
+      wx.navigateTo({
+        url: '/pages/login/login'
+      })
+    } else{
+      that.query_wish_cart()
+    }
+    console.log('onShow', app.globalData.wish_id)
+   
   },
   ShareWechat: function() {
     var that = this
