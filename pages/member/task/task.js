@@ -328,6 +328,7 @@ Page({
           */
           that.setData({
             task_list: messages,
+            msg_id:messages?messages[1]['msg_id']:0,
           })
           console.log('获取消息:',that.data.task_list)
         } else {
@@ -596,7 +597,7 @@ Page({
     var imageUrl = that.data.navList2.length == 0 ? that.data.new_task_image:that.data.navList2[9]['img']
     var title = '好友' + nickname + '邀请你一起参与送心礼物任务~'
    
-    console.log('开始分享送礼任务', options,' task:',task)
+    console.log('开始分享送礼任务', options, ' task:', task, ' msg_id', msg_id)
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: desc,
