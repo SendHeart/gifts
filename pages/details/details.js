@@ -671,7 +671,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var goodsid = that.data.goodsid
     return {
-      title: '送心',
+      title: '这个礼物真不错，来看看吧，要是你能送我就更好了~',
       desc: '送礼就是送心!',
       path: '/pages/details/details?id='+goodsid+'&refername='+username
     }

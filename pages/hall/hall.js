@@ -24,7 +24,7 @@ var navList2_init = [
   { id: "wish_banner", title: "心愿单banner", value: "", img: "/uploads/wish_banner.png" },
   { id: "wechat_gb", title: "背景", value: "", img: "/uploads/wechat_share.png" },
 ]
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 
 Page({
   data: {
@@ -892,11 +892,11 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+    var navList_new = that.data.navList2
     var shop_type = that.data.shop_type
     var hall_banner = that.data.hall_banner
     console.log('hall get_project_gift_para navList2:', navList_new)
-    if (navList2.length == 0){
+    if (navList_new.length == 0){
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
@@ -922,42 +922,42 @@ Page({
              */
             return
           }else{
-            wx.setStorageSync('navList2', navList_new)
             that.setData({
               navList2: navList_new,
               hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
-              middle1_img: navList_new[11]['img'],
-              middle2_img: navList_new[12]['img'],
-              middle3_img: navList_new[13]['img'],
-              middle4_img: navList_new[14]['img'],
-              middle1_title: navList_new[11]['title'],
-              middle2_title: navList_new[12]['title'],
-              middle3_title: navList_new[13]['title'],
-              middle4_title: navList_new[14]['title'],
-              middle1_note: navList_new[11]['note'],
-              middle2_note: navList_new[12]['note'],
-              middle3_note: navList_new[13]['note'],
-              middle4_note: navList_new[14]['note'],
+              middle1_img: navList_new[11] ? navList_new[11]['img'] : '',
+              middle2_img: navList_new[12] ? navList_new[12]['img'] : '',
+              middle3_img: navList_new[13] ? navList_new[13]['img'] : '',
+              middle4_img: navList_new[14] ? navList_new[14]['img'] : '',
+              middle1_title: navList_new[11] ? navList_new[11]['title'] : '',
+              middle2_title: navList_new[12] ? navList_new[12]['title'] : '',
+              middle3_title: navList_new[13] ? navList_new[13]['title'] : '',
+              middle4_title: navList_new[14] ? navList_new[14]['title'] : '',
+              middle1_note: navList_new[11] ? navList_new[11]['note'] : '',
+              middle2_note: navList_new[12] ? navList_new[12]['note'] : '',
+              middle3_note: navList_new[13] ? navList_new[13]['note'] : '',
+              middle4_note: navList_new[14] ? navList_new[14]['note'] : '',
             })
+            wx.setStorageSync('navList2', navList_new)
           }
         } 
       })
     } else{
       that.setData({
-        navList2: navList_new,
+        //navList2: navList_new,
         hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
-        middle1_img: navList_new[11]['img'],
-        middle2_img: navList_new[12]['img'],
-        middle3_img: navList_new[13]['img'],
-        middle4_img: navList_new[14]['img'],
-        middle1_title: navList_new[11]['title'],
-        middle2_title: navList_new[12]['title'],
-        middle3_title: navList_new[13]['title'],
-        middle4_title: navList_new[14]['title'],
-        middle1_note: navList_new[11]['note'],
-        middle2_note: navList_new[12]['note'],
-        middle3_note: navList_new[13]['note'],
-        middle4_note: navList_new[14]['note'],
+        middle1_img: navList_new[11]?navList_new[11]['img']:'',
+        middle2_img: navList_new[12]?navList_new[12]['img']:'',
+        middle3_img: navList_new[13]?navList_new[13]['img']:'',
+        middle4_img: navList_new[14]?navList_new[14]['img']:'',
+        middle1_title: navList_new[11]?navList_new[11]['title']:'',
+        middle2_title: navList_new[12]?navList_new[12]['title']:'',
+        middle3_title: navList_new[13]?navList_new[13]['title']:'',
+        middle4_title: navList_new[14]?navList_new[14]['title']:'',
+        middle1_note: navList_new[11]?navList_new[11]['note']:'',
+        middle2_note: navList_new[12]?navList_new[12]['note']:'',
+        middle3_note: navList_new[13]?navList_new[13]['note']:'',
+        middle4_note: navList_new[14]?navList_new[14]['note']:'',
       })
     }
    
