@@ -6,7 +6,6 @@ var navList_order = [
   { id: "receive", title: "我收到的" },
 ];
 var now = new Date().getTime()
- 
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 
 Page({

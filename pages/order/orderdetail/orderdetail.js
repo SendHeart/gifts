@@ -10,6 +10,8 @@ Page({
     title_name: '记录详情',
     title_logo: '../../../images/footer-icon-05.png',
     delivery_background: weburl+'/uploads/line.png',
+    share_title: '我的礼物详情单',
+    share_desc: '送礼就是送心',
     orders: [],
     order_no:'',
     sendtime:'',
@@ -156,54 +158,70 @@ Page({
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that =  this;
-  
     var orders = that.data.orders;
-    var order_id = options.order_id;
-    var giftflag = options.giftflag;
-    var send_rcv = options.send_rcv;
-    var order_object = JSON.parse(options.order_object);
-    var sku_num = 0;
-    var status = order_object['status'];
-    var gift_status = order_object['gift_status'];
-    var order_no = order_object['order_no'];
-    var sendtime =  order_object['paytime'];
-    var rcvtime = order_object['rcvtime'];
-    var orderprice = order_object['order_price'];
-    var orderaddress = order_object['address'];
-    var fullname = order_object['full_name'];
-    var from_nickname = order_object['from_nickname'];
-    var from_headimg = order_object['from_headimg'];
- 
-    var tel = order_object['tel'];
-    var deliverycode = order_object['deliverycode'];
-    var deliveryname = order_object['deliveryname'];
-    var deliverystepinfo = order_object['deliverystepinfo'];
-    that.setNavigation()
-    console.log('订单详情',order_object)
-    if (order_object) sku_num = order_object['order_sku'].length ;
-    orders.push(order_object);
-    console.log(orders)
-    that.setData({
-        order_id: order_id?order_id:0,
+    var order_id = options.order_id ? options.order_id:0
+    var order_no = options.order_no ? options.order_no : 0
+    var giftflag = options.giftflag ? options.giftflag:0
+    var send_rcv = options.send_rcv ? options.send_rcv:0
+    
+    //that.setNavigation()
+    console.log('订单 order_no:', order_no)
+    if (options.order_object) {
+      var order_object = options.order_object ? JSON.parse(options.order_object) : []
+      console.log('订单详情', order_object)
+      var sku_num = 0
+      var status = order_object['status']
+      var gift_status = order_object['gift_status']
+      var order_no = order_object['order_no']
+      var sendtime = order_object['paytime']
+      var rcvtime = order_object['rcvtime']
+      var orderprice = order_object['order_price']
+      var orderaddress = order_object['address']
+      var fullname = order_object['full_name']
+      var from_nickname = order_object['from_nickname']
+      var from_headimg = order_object['from_headimg']
+      var tel = order_object['tel']
+      var deliverycode = order_object['deliverycode']
+      var deliveryname = order_object['deliveryname']
+      var deliverystepinfo = order_object['deliverystepinfo']
+      var order_status = order_object['status']
+      var buy_num = order_object['buy_num']
+      sku_num = order_object['order_sku'].length
+      orders.push(order_object)
+      that.setData({
+        order_id: order_id ? order_id : 0,
         orders: orders,
-        status:status,
-        giftflag: giftflag ? giftflag:0,
+        status: status,
+        giftflag: giftflag ? giftflag : 0,
         gift_status: gift_status,
         send_rcv: send_rcv ? send_rcv : 0,
-        sku_num:sku_num,
-        order_no:order_no,
-        sendtime:sendtime,
-        rcvtime:rcvtime,
+        order_status: order_status,
+        sku_num: sku_num,
+        buy_num: buy_num,
+        order_no: order_no,
+        sendtime: sendtime,
+        rcvtime: rcvtime,
         orderprice: orderprice,
         orderaddress: orderaddress,
-        tel:tel,
-        fullname:fullname,
+        tel: tel,
+        fullname: fullname,
         from_nickname: from_nickname,
         from_headimg: from_headimg,
-        deliverycode: deliverycode ? deliverycode:'',
-        deliveryname: deliveryname ? deliveryname:'',
-        deliverystepinfo: deliverystepinfo ? deliverystepinfo:''
+        deliverycode: deliverycode ? deliverycode : '',
+        deliveryname: deliveryname ? deliveryname : '',
+        deliverystepinfo: deliverystepinfo ? deliverystepinfo : ''
       })
+    } else if (order_no){
+      that.setData({
+        order_no: order_no,
+      })
+      that.reloadData()
+    }else{
+      wx.navigateBack()
+    }
+  
+    
+   
   },
   onShow: function () {
     //this.reloadData();
@@ -228,59 +246,70 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var status = that.data.status
     var shop_type = that.data.shop_type
-    var order_id = that.data.order_id;
+    var order_no = that.data.order_no;
     //从服务器获取订单列表
-    wx.request({
-      url: weburl + '/api/client/query_order_list',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        status: status,
-        shop_type:shop_type,
-        order_id: order_id,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data.result);
-        var orderObjects = res.data.result;
-        var all_rows = res.data.all_rows;
-        if (!res.data.result) {
-          wx.showToast({
-            title: '暂无',
-            icon: 'loading',
-            duration: 1500
-          });
-          setTimeout(function () {
-            wx.navigateBack();
-          }, 500);
-        } else {
-          // 存储地址字段
-          for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
-              if (orderObjects[i]['order_sku'][j]['sku_value']){
-                for (var k = 0; k < orderObjects[i]['order_sku'][j]['sku_value'].length; k++){
-                  orderObjects[i]['order_sku'][j]['sku_value'][k]['value'] = weburl + orderObjects[i]['order_sku'][j]['sku_value'][k]['value']
+    console.log('orderdetail reloadData() 从服务器获取订单 order_no: ', order_no)
+    if (order_no){
+      wx.request({
+        url: weburl + '/api/client/query_order',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          status: status,
+          shop_type: shop_type,
+          order_no: order_no,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log(res.data.result);
+          var orderObjects = res.data.result;
+          var all_rows = res.data.all_rows;
+          if (!res.data.result) {
+            wx.showToast({
+              title: '暂无',
+              icon: 'loading',
+              duration: 1500
+            });
+            setTimeout(function () {
+              wx.navigateBack();
+            }, 500);
+          } else {
+            // 存储地址字段
+            for (var i = 0; i < orderObjects.length; i++) {
+              orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
+              for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
+                if (orderObjects[i]['order_sku'][j]['sku_value']) {
+                  for (var k = 0; k < orderObjects[i]['order_sku'][j]['sku_value'].length; k++) {
+                    orderObjects[i]['order_sku'][j]['sku_value'][k]['value'] = weburl + orderObjects[i]['order_sku'][j]['sku_value'][k]['value']
+                  }
                 }
               }
             }
+            console.log(orderObjects);
+            that.setData({
+              orders: orderObjects,
+              buy_num: orderObjects[0]['buy_num'],
+              order_status: orderObjects[0]['status'],
+              all_rows: all_rows ? all_rows:0
+            })
           }
-          console.log(orderObjects);
-          that.setData({
-            orders: orderObjects,
-            all_rows: all_rows
-          });
         }
-
-
-      }
-    })
-
+      })
+    }else{
+      wx.showToast({
+        title: '订单不存在',
+        icon: 'loading',
+        duration: 1500
+      });
+      setTimeout(function () {
+        wx.navigateBack();
+      }, 1500);
+    }
   },
   pay: function (e) {
     var objectId = e.currentTarget.dataset.objectId;
@@ -348,5 +377,16 @@ Page({
     wx.navigateTo({
       url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
     });
+  },
+
+  onShareAppMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var order_no = that.data.order_no
+    return {
+      title: that.data.share_title,
+      desc: that.data.share_desc,
+      path: '/pages/order/orderdetail/orderdetail?order_no=' + order_no + '&refername=' + username
+    }
   }
-});
+})

@@ -8,7 +8,8 @@ Page({
     data: {
         title_name: '详情',
         title_logo: '../../images/footer-icon-05.png',
-        this_page:'/pages/details/details',
+        share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
+        share_desc:'送礼就是送心',
         user:null,
         userInfo:{},
         username:null,
@@ -30,7 +31,6 @@ Page({
         sku_id:0,
         commodityAttr:[],
         attrValueList:[],
-        includeGroup:[],
         firstIndex:0,
         image:'',
         image_pic:[],
@@ -107,7 +107,7 @@ Page({
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
         var page = that.data.page
         var goodsname = options.name
-        var goodsshortname = goodsname?goodsname.substring(0,13)+'...':''
+        //var goodsshortname = goodsname?goodsname.substring(0,13)+'...':''
         var goodsid = options.id
         var goodsinfo = options.goods_info ? options.goods_info:''
         var goodsprice = options.goods_price
@@ -127,7 +127,7 @@ Page({
         that.setData({
           goodsname: goodsname ? goodsname:'',
           goodsinfo: goodsinfo ? goodsinfo:'',
-          goodsshortname: goodsshortname ? goodsshortname:'',
+         // goodsshortname: goodsshortname ? goodsshortname:'',
           image_pic: image_pic,
           goodsid: goodsid ? goodsid:0,
           goodsprice: goodsprice ? goodsprice:0,
@@ -163,8 +163,9 @@ Page({
                   goodsprice: goods_info[0]['sell_price'],
                   marketprice: goods_info[0]['market_price'],
                   goodssale: goods_info[0]['sale'],
-                  goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
+                  //goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
                   goodscoverimg: goods_info[0]['activity_image'],
+                  share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
                 })
               }else{
                 wx.showToast({
@@ -554,7 +555,7 @@ Page({
       var status = e.currentTarget.dataset.status
       var selectedvalue = e.currentTarget.dataset.selectedvalue
       this.setData({
-        //includeGroup: commodityAttr,
+        
         firstIndex: index,
         secondIndex: valueindex,
       });
@@ -608,7 +609,7 @@ Page({
     
       that.setData({
         attrValueList: attrValueList,
-        //includeGroup: includeGroup
+      
       })
      // console.log('selectValueInfo 选中信息:', attrValueList,' index:',index); 
     },
@@ -619,7 +620,7 @@ Page({
       var attrValueList = that.data.attrValueList
       attrValueList[index].selectedValue = '';
       this.setData({
-        //includeGroup: commodityAttr,
+      
         sku_id: '',
         sku_gov_price: '',
         sku_earnest_price: '',
@@ -671,8 +672,8 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var goodsid = that.data.goodsid
     return {
-      title: '这个礼物真不错，来看看吧，要是你能送我就更好了~',
-      desc: '送礼就是送心!',
+      title: that.data.share_title,
+      desc: that.data.share_desc,
       path: '/pages/details/details?id='+goodsid+'&refername='+username
     }
   }

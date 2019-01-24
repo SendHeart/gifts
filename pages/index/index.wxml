@@ -43,7 +43,7 @@
     </view>
     <view class="order-footer">
       <view style="width:70%">
-        <text style="width:20%">共:{{item.order_sku_num}}件</text>
+        <text style="width:20%">共:{{item.order_sku_num}}件{{item.buy_num>1?' (份数:'+item.buy_num+')':''}}</text>
         <text style="color:#e34c55;">￥{{item.order_price}}</text>
         <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">去支付</text>
          <text bindtap="cancel_order" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">取消</text>
