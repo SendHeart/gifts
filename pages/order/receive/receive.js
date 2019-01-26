@@ -82,7 +82,7 @@ Page({
   receiveTapTag: function (e) {
    var that = this 
    var shop_type = that.data.shop_type
-   var order_no = that.data.orderNo
+   var order_no = that.data.order_no
    var goods_flag = that.data.goods_flag
    var openid = that.data.openid
    var nickname = that.data.userInfo.nickName
@@ -226,6 +226,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = options.order_no
+    var order_id = options.order_id
     var receive = options.receive
     var goods_flag = options.goods_flag
     var orders = that.data.orders
@@ -237,6 +238,7 @@ Page({
     var shop_type = that.data.shop_type
     app.globalData.is_receive = receive
     app.globalData.order_no = order_no
+    app.globalData.order_id = order_id
     app.globalData.goods_flag = goods_flag
     
     /*
@@ -261,6 +263,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = app.globalData.order_no
+    var order_id = app.globalData.order_id
     var goods_flag = app.globalData.goods_flag
     var pages = getCurrentPages()
     if (pages.length > 1) {
@@ -288,6 +291,7 @@ Page({
   
       that.setData({
         order_no: order_no,
+        order_id:order_id,
         receive: app.globalData.is_receive,
         openid: openid,
         username: username,
@@ -325,6 +329,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = that.data.order_no
+    var order_id = that.data.order_id
     var goods_flag = that.data.goods_flag
     var orders = that.data.orders
     var orderskus = that.data.orderskus
@@ -345,6 +350,7 @@ Page({
         username: username,
         access_token: token,
         order_no: order_no,
+        order_id: order_id,
         order_type: 'receive',
         shop_type: shop_type,
       },
@@ -443,6 +449,7 @@ Page({
       var that = this 
       var res
       var order_no = that.data.order_no
+      var order_id = that.data.order_id
       var username = that.data.username
       var token = that.data.token;
       console.log('开始收礼')
