@@ -375,6 +375,11 @@ Page({
       url: '../member/account/account?'
     })
   },
+  navigateToShopowner: function (e) {
+    wx.navigateTo({
+      url: '../member/shopowner/shopowner?'
+    })
+  },
   navigateToMessage: function (e) {
     wx.navigateTo({
       url: '../member/message/message?'

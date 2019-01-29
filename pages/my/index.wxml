@@ -14,7 +14,11 @@
 	  <image src="../../images/iconfont-card.png" />
 	  <text>发优惠券/红包/积分奖励</text>
   </view>
-   <view bindtap="navigateToMyCoupon" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+  <view wx:if="{{user_type==2}}" bindtap="navigateToShopowner" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/my_s.png" />
+	  <text>我是店长</text>
+  </view>
+  <view bindtap="navigateToMyCoupon" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/iconfont-card.png" />
 	  <text>我的优惠券</text>
   </view>

@@ -1,0 +1,48 @@
+<import src="/pages/common/nav_order.wxml" />
+<template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
+<scroll-view class="container" scroll-y bindscrolltolower="getMoreOrdersTapTag" bindscroll="scrolltoupper" scroll-top="{{scrollTop}}">
+  <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+    <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
+  <view class='' style="margin-top:-25rpx;">{{page}}/{{page_num}}</view>
+</view>
+  <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}" wx:for-index="order_idx">
+    <!-- 厂家logo缩略图 -->
+    <view class="shop-text" style='width:{{windowWidth}}'>
+      <text>礼物号: {{item.order_no}}</text>
+      <text wx:if="{{item.gift_status==2 && giftflag ==0}}" class="status2">对方已接受</text>
+      <text wx:if="{{item.gift_status==1 && giftflag ==0}}" class="status">对方未接受</text>
+      <text wx:if="{{giftflag==0 && item.status == 8}}" class="status2">已取消</text>
+      <text wx:if="{{item.status==10 && giftflag ==0}}" class="status">退款中</text>
+      <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" class="status2">已发货</text>
+      <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2  && mapping.status==0}}" class="status2">未发货</text>
+      
+    </view>
+
+    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:for-index="sku_idx" wx:key="" class="carts-item" bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}" >
+      <view>
+        <!-- 缩略图 -->
+        <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill" />
+      </view>
+      <view class="carts-text">
+        <!-- 商品标题 -->
+        <text class="carts-title">{{mapping.goods_name}}</text>
+        <view  class="carts-sku"> 
+            <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value"  wx:key="" >
+              <text  >{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+              </text>
+            </view>
+          </view>
+        <view class="carts-subtitle">
+          <text>x{{mapping.sku_num}}</text>
+            <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="recyclestatus">已回收</text>
+        </view>
+      </view>
+    </view>
+    <view class="order-footer">
+      <view style="width:70%">
+        <text style="width:20%">共:{{item.order_sku_num}}件{{item.buy_num>1?' (份数:'+item.buy_num+')':''}}</text>
+        <text style="color:#e34c55;">￥{{item.order_price}}</text>
+      </view>
+    </view>
+  </view>
+</scroll-view>
