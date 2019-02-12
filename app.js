@@ -11,6 +11,12 @@ App({
     uploadurl: weburl+'/api/upload/index4',
     openid: null,
     username: null,
+    is_task:0,
+    is_receive:0,
+    wish_id:0,
+    order_no: '',
+    order_id: '',
+    goods_flag:0,
     code: null,
     shop_type:2 , //礼物类应用
     messageflag:0, //0任务 1系统消息 gotop
