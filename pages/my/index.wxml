@@ -26,7 +26,6 @@
 	  <image src="../../images/iconfont-card.png" />
 	  <text>我的优惠券</text>
   </view>
-  
   <view bindtap="navigateToMyRedpackage" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/red_package.png" />
 	  <text>我的红包</text>
