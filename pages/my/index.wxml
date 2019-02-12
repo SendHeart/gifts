@@ -18,7 +18,7 @@
 	  <image src="../../images/my_s.png" />
 	  <text>我是店长</text>
   </view>
-   <view wx:if="{{user_type==2}}" bindtap="navigateToCelebration" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+   <view bindtap="navigateToCelebration" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/wish.png" />
 	  <text>我的祝福</text>
   </view>
