@@ -380,6 +380,11 @@ Page({
       url: '../member/shopowner/shopowner?'
     })
   },
+  navigateToCelebration: function (e) {
+    wx.navigateTo({
+      url: '../member/aboutus/aboutus?'
+    });
+  },
   navigateToMessage: function (e) {
     wx.navigateTo({
       url: '../member/message/message?'
