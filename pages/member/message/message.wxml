@@ -68,6 +68,9 @@
         </view>
       </view>
     </view>
+    <view class="sentbtn">
+      <text bindtap="goBack">以上推荐都不合适,我要自己选择</text>
+    </view>
   </view>
   <view wx:if="{{messageflag==0}}" wx:for="{{task_list}}" wx:for-item="blist" wx:key="" class="msg-list">
     <view class="msg-title">

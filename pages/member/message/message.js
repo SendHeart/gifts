@@ -618,7 +618,7 @@ Page({
       wx.navigateBack({ changed: true })  /返回上一页
     } else {
       wx.switchTab({
-        url: '../../my/index'
+        url: '../../hall/hall'
       })
     }
   },
