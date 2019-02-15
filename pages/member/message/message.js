@@ -8,6 +8,7 @@ var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var navList_order = [
+  { id: "AI", title: "智能选礼" },
   { id: "task", title: "任务" },
   { id: "message", title: "消息" },
 ];
@@ -18,6 +19,8 @@ Page({
     shop_type: shop_type,
     user: null,
     userInfo: {},
+    nickname: userInfo.nickName,
+    avatarUrl: userInfo.avatarUrl,
     username: null,
     indicatorDots: false,
     vertical: false,
@@ -44,6 +47,23 @@ Page({
     activeIndex2: 0,
     currenttime: now ? parseInt(now) : 0,
   },
+  showGoods: function (e) {
+    // 点击购物车某件商品跳转到商品详情
+    var objectId = e.currentTarget.dataset.objectId;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var goods_id = e.currentTarget.dataset.goodsId;
+    var goods_name = e.currentTarget.dataset.goodsName;
+    var goods_price = e.currentTarget.dataset.goodsPrice;
+    var goods_info = e.currentTarget.dataset.goodsInfo;
+    var goods_sale = e.currentTarget.dataset.sale;
+    var image = e.currentTarget.dataset.image
+    //var carts = this.data.carts;
+    var sku_id = objectId;
+    wx.navigateTo({
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name + '&image=' + image + '&token=' + token + '&username=' + username
+    });
+  },
   onOrderTapTag: function (e) {
     var that = this;
     var tab = e.currentTarget.dataset.id;
@@ -52,7 +72,10 @@ Page({
     if (tab == 'task') { //task
       messageflag = 0;
       app.globalData.messageflag = messageflag
-    } else {
+    } else if (tab == 'AI') {
+      messageflag = 2; //message
+      app.globalData.messageflag = messageflag
+    }else{
       messageflag = 1; //message
       app.globalData.messageflag = messageflag
     }
@@ -62,8 +85,13 @@ Page({
       page: 1,
       messageflag: messageflag,
     });
-    console.log('tab:' + tab, ' messageflag:', messageflag)
+    console.log('tab:' + tab, ' messageflag:', messageflag,'activeIndex2:',that.data.activeIndex2)
     //that.reloadData()
+    if (that.data.activeIndex2 == 0) {
+      that.get_ai_rules()
+    } else {
+      that.get_member_messages()
+    }
   },
   bindChangeNum: function (e) {
     var that = this;
@@ -166,7 +194,6 @@ Page({
       } else {
         coupons_type = 1
       }
-
       wx.navigateTo({
         url: '/pages/member/couponrcv/couponrcv?receive=1&coupons_flag=9&coupons_type=' + coupons_type + '&coupons_id=' + coupon_id + '&msg_id=' + msg_id
       })
@@ -191,6 +218,24 @@ Page({
       url: '/pages/member/task/task?task=1&image=' + image + '&msg_id=' + msg_id
     })
   },
+
+  //选规则 
+  rule_select: function (e) {
+    var that = this
+    var rule_list = that.data.rule_list
+    var goods_item_id = e.currentTarget.dataset.goodsItemId
+    var goods_item_index = e.currentTarget.dataset.goodsItemIndex
+    for (var i = 0; i < rule_list.length; i++) {
+      if (rule_list[i]['id'] == goods_item_id){
+        rule_list[i]['selected'] = goods_item_index
+        break
+      }
+    }
+    that.setData({
+      rule_list:rule_list,
+    })
+  },
+
   //确定按钮点击事件 
   messageConfirm: function () {
     var that = this
@@ -248,14 +293,18 @@ Page({
   },
   onShow: function(){
     var that = this
-    var activeIndex2 = app.globalData.messageflag == 0 ? 0 : 1
+    var activeIndex2 = app.globalData.messageflag == 2 ? 0 : 2
     console.log('message onShow messageflag:', app.globalData.messageflag, 'activeIndex2:', activeIndex2)
     that.setData({
       activeIndex2: activeIndex2,
       messageflag: app.globalData.messageflag,
     })
- 
-    that.get_member_messages()
+    if (activeIndex2==0){
+      that.get_ai_rules()
+    } else  {
+      that.get_member_messages()
+    }
+
   },
   //获取消息
   get_member_messages: function () {
@@ -333,6 +382,217 @@ Page({
         }
       }
     })
+  },
+  //获取AI规则
+  get_ai_rules: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
+    console.log('get_ai_rules')
+    wx.request({
+      url: weburl + '/api/client/get_ai_rules',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        type:2
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        var rule_info = res.data
+        console.log('get_ai_rules info:',rule_info)
+        if (rule_info['status'] == 'y') {
+          var rule_list = rule_info['result']
+          for (var i = 0; i < rule_list.length; i++) {
+            if (rule_list[i]['item_name'].length>0){
+              rule_list[i]['selected'] = 0
+            }
+          }
+          that.setData({
+            rule_list: rule_list,
+          })
+          console.log('获取智能选品规则:', that.data.rule_list)
+        } else {
+          wx.showToast({
+            title: '暂无消息',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
+  },
+  //获取AI 商品列表
+  selectBtnTap: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
+    var rule_list = that.data.rule_list
+    var rule_select =[]
+    for (var i = 0; i < rule_list.length; i++) {
+      var selected={}
+      selected['id'] = rule_list[i]['id']
+      selected['selected'] = rule_list[i]['selected']
+      rule_select.push(selected)
+       
+    }
+    console.log('selectBtnTap selected rule:', rule_select)
+    wx.request({
+      url: weburl + '/api/client/get_ai_goods_list',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        rule_select: JSON.stringify(rule_select),
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        var rule_goods_info = res.data
+        //console.log('get_ai_rules 智能选品列表 goods info:', rule_goods_info)
+        if (rule_goods_info['status'] == 'y') {
+          var rule_goods_list = rule_goods_info['result']
+          that.setData({
+            rule_goods_list: rule_goods_list,
+            select_goods_list: rule_goods_list[0],
+            select_goods_1: rule_goods_list[1] ? rule_goods_list[1]:'',
+            select_goods_2: rule_goods_list[2] ? rule_goods_list[2] : '',
+            messageflag:3,
+          })
+          app.globalData.messageflag = that.data.messageflag
+          console.log('get_ai_rules 智能选品列表:', that.data.rule_goods_list)
+        } else {
+          wx.showToast({
+            title: '暂无推荐的商品',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
+  },
+  addCart: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var page = that.data.page
+    if (!username) {//登录
+      wx.navigateTo({
+        url: '../login/login?goods_id=' + that.data.goodsid
+      })
+    } else {
+      // 获取商品SKU
+      wx.request({
+        url: weburl + '/api/client/get_goodssku_list',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          goods_id: goods_id,
+          shop_type: shop_type,
+          page: page
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('goods_sku:', res.data.result);
+          var attrValueList = res.data.result.spec_select_list ? res.data.result.spec_select_list : '';
+          var commodityAttr = res.data.result.sku_list ? res.data.result.sku_list : '{}';
+          if (!commodityAttr) {
+            wx.showToast({
+              title: '该产品已下架',
+              icon: 'loading',
+              duration: 1500
+            })
+            return
+          }
+          for (var i = 0; i < commodityAttr.length; i++) {
+            if (commodityAttr[i].attrValueStatus) {
+              commodityAttr[i].attrValueStatus = true;
+            } else {
+              commodityAttr[i].attrValueStatus = false;
+            }
+          }
+          that.setData({
+            commodityAttr: commodityAttr,
+            sku_id: commodityAttr[0]['id'],
+          })
+          console.log('goods sku id:', that.data.sku_id)
+          that.insertCart(that.data.sku_id, username, 0)
+          if (!attrValueList) return
+          for (var i = 0; i < attrValueList.length; i++) {
+            if (!attrValueList[i].attrValueStatus) {
+              attrValueList[i].attrValueStatus = true
+            }
+          }
+          that.setData({
+            attrValueList: attrValueList,
+           
+          })
+         
+        }
+      })
+    }
+  },
+  insertCart: function (sku_id, username, wishflag) {
+    var that = this
+    var shop_type = that.data.shop_type
+    wx.request({
+      url: weburl + '/api/client/add_cart',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: "1",
+        sku_id: sku_id,
+        wishflag: wishflag,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
+        var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物袋'
+        wx.showToast({
+          title: title,
+          duration: 2000
+        })
+        app.globalData.from_page = '/pages/details/details'
+        if (wishflag == 1) {
+          /*
+          wx.navigateTo({
+            url: '/pages/details/details'
+          })
+          */
+          wx.navigateTo({
+            url: '/pages/wish/wish'
+          })
+        }
+        else {
+          console.log('details insertCart wishflag:', wishflag)
+          app.globalData.hall_gotop = 1
+          wx.switchTab({
+            url: '/pages/hall/hall'
+          })
+        }
+
+      }
+
+    })
+   
   },
   getMoreAccountTapTag: function (e) {
     var that = this;

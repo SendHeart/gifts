@@ -248,7 +248,6 @@ margin-left: 20rpx;
   margin: 0 auto;
 }
 
-
 .container {
   background: #fff;
   width: 100%;

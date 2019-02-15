@@ -87,7 +87,6 @@
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
       <view class="price-now"><text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text></view>
     </modal>
-  
 </view>
 
 <view class="footer">

@@ -429,7 +429,14 @@ Page({
   bindPickGoods: function () {
     wx.navigateTo({
       url: '/pages/list/list?username=' + username + '&token=' + token
-    });
+    })
+  },
+  bindAIPickGoods: function () {
+    var that = this
+    app.globalData.messageflag = 2
+    wx.switchTab({
+      url: '/pages/member/message/message',
+    })
   },
   bindShowMore: function () {
    var that = this;

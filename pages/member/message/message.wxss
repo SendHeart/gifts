@@ -375,3 +375,129 @@ page {
   width: 100%;
   margin-top:20rpx;
 } 
+
+.ai-goods {
+  width: 96%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content:center;  
+  text-align: center;
+  padding-bottom: 3rpx;
+  z-index: 1;
+}
+
+.goods-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  text-align: left;
+  border: 1rpx solid #eee;
+  border-radius: 18rpx;
+  background: #fff;
+  padding: 10rpx;
+  margin: 10rpx 1% 0 0;
+  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
+}
+
+.goods-item-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items:center;
+  text-align: center;
+  margin: 10rpx;
+}
+.ai-goods-title {
+  color: #444;
+  font-size: 28rpx;
+  line-height: 1.4;
+}
+.goods-item-content {
+  color: #444;
+  font-size: 28rpx;
+  line-height: 1.4;
+  align-content: center;
+  border: 1rpx solid #eee;
+  border-radius: 18rpx;
+  background: #eee;
+  margin:10rpx;
+  width: 130rpx;
+}
+.opt-buttons {
+  width: 96%;
+  margin: 0 auto;
+}
+
+
+.select-goods-list {
+  width: 96%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content:center;  
+  text-align: center;
+  padding-bottom: 3rpx;
+  z-index: 1;
+}
+
+.select-goods {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  border: 1rpx solid #eee;
+  border-radius: 18rpx;
+  background: #fff;
+  padding: 10rpx;
+  margin: 10rpx 1% 0 0;
+  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
+}
+.select-goods-image {
+	width:320rpx;
+  height:320rpx;
+  text-align: center;
+  align-items: center;
+}
+.select-goods-content {
+  color: #444;
+  font-size: 28rpx;
+  line-height: 1.4;
+  align-content: center;
+  border: 0rpx solid #eee;
+}
+
+
+.price-list {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  padding: 10rpx;
+  font-size: 24rpx;
+}
+
+.price-market {
+  text-indent: 0;
+  color: #999;
+  font-size: 24rpx;
+  line-height: 1.8;
+  padding-right: 4rpx;
+  text-decoration:line-through;
+  margin-right:20rpx;
+}
+.price-market::first-letter {
+  font-size: 20rpx;
+}
+.price-now {
+  text-indent: 0;
+  color: #e34c55;
+  font-size: 28rpx;
+  font-weight: bold;
+   margin-left:10rpx;
+}
+.price-now::first-letter {
+  font-size: 20rpx;
+}
