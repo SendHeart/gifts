@@ -294,6 +294,13 @@ Page({
   onShow: function(){
     var that = this
     var activeIndex2 = app.globalData.messageflag == 2 ? 0 : 2
+    if (app.globalData.messageflag == 0){
+      activeIndex2 = 1
+    } else if (app.globalData.messageflag == 1){
+      activeIndex2 = 2
+    }else{
+      activeIndex2 = 0
+    }
     console.log('message onShow messageflag:', app.globalData.messageflag, 'activeIndex2:', activeIndex2)
     that.setData({
       activeIndex2: activeIndex2,
