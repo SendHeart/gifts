@@ -11,6 +11,7 @@
       -->
       <text class="coupon-name">{{item.name}}{{giftflag==0?'[未使用]':''}}{{giftflag==1?'[已使用]':''}}{{giftflag==2?'[已过期]':''}}</text>
       <text class="coupon-content">{{item.content}}</text>
+      <text class="coupon-content">{{item.amount>0?'￥'+item.amount:''}}</text>
       <text class="coupon-footer">{{item.footer}}</text>
       <text class="coupon-dueday">{{item.start_time?'(有效期:'+item.start_time+'至':''}}{{item.end_time?item.end_time+')':''}}</text>
     </view>

@@ -293,7 +293,7 @@ Page({
   },
   onShow: function(){
     var that = this
-    var activeIndex2 = app.globalData.messageflag == 2 ? 0 : 2
+    var activeIndex2 = 0
     if (app.globalData.messageflag == 0){
       activeIndex2 = 1
     } else if (app.globalData.messageflag == 1){
