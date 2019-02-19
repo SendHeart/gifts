@@ -11,14 +11,15 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 Page({
   data: {
-    url: 'https://sendheart.dreamer-inc.com/new_year_card/',
+    url: 'https://sendheart.dreamer-inc.com/new_year_card?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName,
     nickname: userInfo.nickName,
+    avatarUrl: userInfo.avatarUrl,
   },
   onLoad: function (options) {
     var that = this
     var url = options.url ? options.url:that.data.url
     that.setData({ 
-      url: options.url 
+      url: url 
       }) 
   },
   onShareAppMessage: function (options) {

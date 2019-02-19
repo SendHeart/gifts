@@ -581,6 +581,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : 0
+    user_type = parseInt(user_type)
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement'):0
     var pages = getCurrentPages()
     if (pages.length > 1) {
@@ -601,6 +602,7 @@ Page({
         userInfo: userInfo
       })
     })
+    console.log('my index user_type:',that.data.user_type)
   },
   chooseImage: function () {
     var that = this
