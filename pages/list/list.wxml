@@ -24,7 +24,7 @@
 <scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
 <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
   <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-  <view class='' style="margin-top:-25rpx;">{{page}}/{{all_rows}}</view>
+  <view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>
 </view>
 
   <view class="venues_box" >
