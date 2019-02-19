@@ -469,6 +469,14 @@ page {
   align-content: center;
   border: 0rpx solid #eee;
 }
+.noselect-goods-info {
+  color: #444;
+  font-size: 28rpx;
+  line-height: 1.4;
+  align-content: center;
+  border: 0rpx solid #eee;
+  margin-top:100rpx;
+}
 
 
 .price-list {

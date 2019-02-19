@@ -40,6 +40,7 @@ Page({
     dkheight: 300,
     message:{},
     messageflag: messageflag,
+    noselected:0,
     task_num: 0,
     message_num: 0,
     navList_order: navList_order,
@@ -279,6 +280,15 @@ Page({
     })
     console.log('message_detail message:', that.data.message)
   },
+  //确定按钮点击事件 
+  tryagain: function () {
+    var that = this
+   
+    that.setData({
+      messageflag: app.globalData.messageflag,
+    })
+
+  },
   onLoad: function (options) {
     var that = this
     wx.getSystemInfo({
@@ -480,13 +490,13 @@ Page({
             messageflag:3,
           })
           app.globalData.messageflag = that.data.messageflag
+          
           console.log('get_ai_rules 智能选品列表:', that.data.rule_goods_list)
         } else {
-          wx.showToast({
-            title: '暂无推荐的商品',
-            icon: 'none',
-            duration: 1000
-          })
+          that.setData({
+            messageflag: 9,
+          })  
+          console.log('get_ai_rules 暂无推荐的商品:', that.data.noselected)
         }
       }
     })

@@ -28,7 +28,7 @@
           {{select_goods_list.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_list.sell_price}}</view>
         </view>
       </view>
-      <view  wx:if="{{messageflag==3}}" class="opt-buttons">
+      <view class="opt-buttons">
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
           <button type="warn" size="mini" hover-class="button-hover" class="button" bindtap="addCart" data-goods-id="{{select_goods_list.id}}">立即送出</button>
         </view>
@@ -45,7 +45,7 @@
           {{select_goods_1.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_1.sell_price}}</view>
         </view>
       </view>
-       <view  wx:if="{{messageflag==3}}" class="opt-buttons">
+       <view class="opt-buttons">
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
           <button type="warn" size="mini" hover-class="button-hover" class="button" bindtap="addCart" data-goods-id="{{select_goods_1.id}}">立即送出</button>
         </view>
@@ -62,7 +62,7 @@
           {{select_goods_2.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_2.sell_price}}</view>
         </view> 
       </view>
-       <view  wx:if="{{messageflag==3}}" class="opt-buttons">
+       <view class="opt-buttons">
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
           <button type="warn" size="mini" hover-class="button-hover" class="button" bindtap="addCart" data-goods-id="{{select_goods_2.id}}">立即送出</button>
         </view>
@@ -70,6 +70,19 @@
     </view>
     <view class="sentbtn">
       <text bindtap="goBack">以上推荐都不合适,我要自己选择</text>
+    </view>
+  </view>
+  <view wx:if="{{messageflag==9}}" class="select-goods-list">
+    <view class="select-goods">
+      <view class="noselect-goods-info">暂无推荐的礼品</view> 
+      <view class="opt-buttons">
+        <view style='margin-top:50rpx;margin-bottom:20rpx;'>
+          <button type="warn" size="mini" hover-class="button-hover" class="button" bindtap="tryagain">再试一次</button>
+        </view>
+      </view>
+      <view class="sentbtn">
+        <text bindtap="goBack">我要自己手动挑选</text>
+      </view>
     </view>
   </view>
   <view wx:if="{{messageflag==0}}" wx:for="{{task_list}}" wx:for-item="blist" wx:key="" class="msg-list">
