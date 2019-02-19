@@ -468,6 +468,10 @@ Page({
         //console.log('get_ai_rules 智能选品列表 goods info:', rule_goods_info)
         if (rule_goods_info['status'] == 'y') {
           var rule_goods_list = rule_goods_info['result']
+          for(var i=0;i<3;i++){
+            rule_goods_list[i]['image'] = rule_goods_list[i]['activity_image'] == "" ? rule_goods_list[i]['image'] : rule_goods_list[i]['activity_image']
+          }
+        
           that.setData({
             rule_goods_list: rule_goods_list,
             select_goods_list: rule_goods_list[0],

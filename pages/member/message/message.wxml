@@ -20,7 +20,7 @@
     <view class="select-goods">
       <view class="select-goods-title">最佳推荐</view>
       <view class=""  bindtap="showGoods"  data-goods-id="{{select_goods_list.id}}" data-image="{{select_goods_list.image}}" >
-        <image class="select-goods-image" src="{{select_goods_list.image}}" mode='aspectFill'></image>
+        <image class="select-goods-image" src="{{select_goods_list.activity_image?select_goods_list.activity_image:select_goods_list.image}}" mode='aspectFill'></image>
         <view class="select-goods-content">{{select_goods_list.name}}</view>
         <view class="select-goods-content" style='color:gray'>{{select_goods_list.act_info}}</view>
         <view class="price-list"> 
