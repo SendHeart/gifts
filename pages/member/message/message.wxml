@@ -36,7 +36,7 @@
     </view>
     <view  wx:if="{{select_goods_1}}" class="select-goods">
       <view class="select-goods-title">备选一</view>
-      <view class="" bindtap="showGoods"  data-goods-id="{{select_goods_1.id}}" data-image="{{select_goods_1.image}}"   >
+      <view class="" bindtap="showGoods"  data-goods-id="{{select_goods_1.id}}" data-image="{{select_goods_1.image}}" data-goods-name="{{select_goods_1.name}}" data-goods-price="{{select_goods_1.sell_price}}"  >
         <image class="select-goods-image" src="{{select_goods_1.image}}" mode='aspectFill'></image>
         <view class="select-goods-content">{{select_goods_1.name}}</view>
         <view class="select-goods-content" style='color:gray'>{{select_goods_1.act_info}}</view>
