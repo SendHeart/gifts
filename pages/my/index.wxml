@@ -48,7 +48,16 @@
   </view>
   -->
 </view>
- 
+ <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindaconfirmCele">
+ <view class="picker_box">
+    <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
+      <view class="picker">
+         {{webviewurl[index]['title']}}
+      </view>
+    </picker>
+  </view>
+   
+</modal> 
 <view class="menu-area">
   <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u628.png" />

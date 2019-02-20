@@ -21,12 +21,14 @@ Page({
     playsxinfoshowflag: 0,
     scrollTop: 0,
     scrollTop_init: 10,
+    modalHiddenCele:true,
     modalHiddenAgreement:true,
     modalHiddenBankcard: true,
     modalHiddenPlaysx: true,
     shop_type:shop_type,
     index: 0,
-     
+    web_url:'',
+    web_id: '',
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -381,10 +383,64 @@ Page({
     })
   },
   navigateToCelebration: function (e) {
-    wx.navigateTo({
-      url: '../member/aboutus/aboutus?'
-    });
+    var that = this
+    var shop_type = that.data.shop_type
+    wx.request({
+      url: weburl + '/api/client/get_project_gift_para',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        type: 1,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data.result)
+        var webviewurl = res.data.result
+
+        that.setData({
+          webviewurl: webviewurl,
+          modalHiddenCele: !that.data.modalHiddenCele
+        })
+      }
+
+    })
+    
   },
+  bindCelePickerChange: function (e) {
+    var that = this
+    var selected_index = e.detail.value
+    var web_url = that.data.webviewurl[selected_index]['url']
+    var web_id = that.data.webviewurl[selected_index]['id']
+    console.log('celebration picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      web_url: web_url,
+      web_id: web_id,
+      index: selected_index,
+    })
+   
+  },
+  //确定按钮点击事件  祝福贺卡
+  modalBindaconfirmCele: function () {
+    var that = this
+    that.setData({
+      modalHiddenCele: !that.data.modalHiddenCele,
+    })
+    wx.navigateTo({
+      url: '../member/aboutus/aboutus?url='+that.data.web_url
+    })
+  },
+  //取消按钮点击事件  祝福贺卡
+  modalBindcancelCele: function () {
+    var that = this
+    that.setData({
+      modalHiddenCele: !that.data.modalHiddenCele
+    })
+  },  
   navigateToMessage: function (e) {
     wx.navigateTo({
       url: '../member/message/message?'

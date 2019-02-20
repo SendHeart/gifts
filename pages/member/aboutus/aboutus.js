@@ -11,15 +11,20 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 Page({
   data: {
-    url: 'https://sendheart.dreamer-inc.com/new_year_card?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName,
+    url: 'https://sendheart.dreamer-inc.com/new_year_card',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
   },
   onLoad: function (options) {
     var that = this
     var url = options.url ? options.url:that.data.url
+    var type = options.type ? options.type:0
+    var celebration = 1
+    if (type == 'celebration') celebration = 1
+    if (type == 'blessing') celebration = 2
     that.setData({ 
-      url: url 
+      url: url +'?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName ,
+      celebration: celebration
       }) 
   },
   onShareAppMessage: function (options) {
@@ -29,7 +34,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var nickname = that.data.nickname
     var msg_id = that.data.msg_id
-    var celebration = 1
+    var celebration = that.data.celebration
     var start_time = that.data.start_time
     var title = '收到' + nickname + '的祝福~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
