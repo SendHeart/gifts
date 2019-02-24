@@ -104,10 +104,11 @@ Page({
     } else {
       giftflag = 1; //receive
     }
+    
     that.setData({
       activeIndex2: index,
       tab2: tab,
-      page: 1,
+      orders: [],
       giftflag: giftflag,
       all_rows:0,
       page:1,
@@ -347,10 +348,7 @@ Page({
     var page = that.data.page;
     var pagesize = that.data.pagesize;
     console.log('reloadData shop_type:' + shop_type+' pagesize:'+pagesize);
-    that.setData({
-      orders: [],
-      all_rows: 0
-    })
+   
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_list',
@@ -382,7 +380,10 @@ Page({
           setTimeout(function () {
             wx.navigateBack();
           }, 500)
-          
+          that.setData({
+            orders: [],
+            all_rows: 0
+          })
         } else {
           // 存储地址字段
           if (orderObjects){
