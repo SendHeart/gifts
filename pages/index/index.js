@@ -196,6 +196,7 @@ Page({
     var index = e.currentTarget.dataset.index
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var shop_type = that.data.shop_type
 
     //提交退款申请
     wx.request({
@@ -205,6 +206,7 @@ Page({
         username: username,
         access_token: token,
         order_no: order_no,
+        shop_type:shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -345,6 +347,10 @@ Page({
     var page = that.data.page;
     var pagesize = that.data.pagesize;
     console.log('reloadData shop_type:' + shop_type+' pagesize:'+pagesize);
+    that.setData({
+      orders: [],
+      all_rows: 0
+    })
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_list',
@@ -376,11 +382,6 @@ Page({
           setTimeout(function () {
             wx.navigateBack();
           }, 500)
-          
-          that.setData({
-            orders: [],
-            all_rows: 0
-          })
           
         } else {
           // 存储地址字段
