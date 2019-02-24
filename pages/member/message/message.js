@@ -91,6 +91,7 @@ Page({
       page: 1,
       messageflag: messageflag,
       message_type: message_type,
+      message_list:[],
     });
     console.log('tab:' + tab, ' messageflag:', messageflag,'activeIndex2:',that.data.activeIndex2)
     //that.reloadData()
