@@ -111,7 +111,7 @@
       </view>
     </view>
   </view>
-   <view wx:if="{{page_num>1 & messageflag==1}}" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">展开更多 ({{page}}/{{page_num}})</view>
+   <view wx:if="{{page_num>1}}" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">展开更多 ({{page}}/{{page_num}})</view>
 </view> 
 
  <view class="message" hidden="{{messageHidden}}"  bindtap="messageConfirm" style="height:{{dkheight}}px;">
