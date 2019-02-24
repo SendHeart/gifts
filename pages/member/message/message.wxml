@@ -98,7 +98,7 @@
       </view>
     </view>
   </view>
-   <view wx:if="{{messageflag==1}}" wx:for="{{message_list}}" wx:for-item="blist" wx:key="" class="msg-list" >
+  <view wx:if="{{messageflag==1}}" wx:for="{{message_list}}" wx:for-item="blist" wx:key="" class="msg-list" >
     <view class="msg-title">
     <text class="msg-item-text3">{{blist.title}}</text>
 		  <text bindtap="message_action" data-msg-id="{{blist.msg_id}}" data-msg-type="{{blist.type}}"  data-coupon-id="{{blist.message_info.coupon_id}}" data-amount-type="{{blist.message_info.amount_type}}" style="color:#fff;background:#e34c55;" >{{(blist.type==4)?'领取奖励':''}}</text>  
@@ -111,7 +111,7 @@
       </view>
     </view>
   </view>
-  <view wx:if="{{page_num>1}}" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">展开更多 ({{page}}/{{page_num}})</view>
+   <view wx:if="{{page_num>1 & messageflag==1}}" hover-class="none" class="morebtn" bindtap="getMoreAccountTapTag">展开更多 ({{page}}/{{page_num}})</view>
 </view> 
 
  <view class="message" hidden="{{messageHidden}}"  bindtap="messageConfirm" style="height:{{dkheight}}px;">

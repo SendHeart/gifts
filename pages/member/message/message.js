@@ -329,7 +329,8 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
-
+    var page = that.data.page
+    var pagesize = that.data.pagesize
     wx.request({
       url: weburl + '/api/client/get_member_messages',
       method: 'POST',
@@ -338,6 +339,8 @@ Page({
         access_token: token,
         shop_type: shop_type,
         message_type:0, //所有消息
+        page: page,
+        pagesize: pagesize,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -345,7 +348,8 @@ Page({
       },
       success: function (res) {
         var messages_all = res.data
-       
+        var all_rows = res.data.all_rows
+        
         if (messages_all['status']=='y') {
           var messages = messages_all['result']
           var task_list =[]
@@ -385,9 +389,16 @@ Page({
             }]
           }
           */
+          var page_num = that.data.page_num
+          page_num = (all_rows / pagesize + 0.5)
+          if (page_num > 1 && message_list) {
+            //向后合拼
+            message_list = that.data.message_list.concat(message_list);
+          }
           that.setData({
             message_list: message_list,
             task_list: task_list,
+            page_num: page_num.toFixed(0),
           })
           console.log('获取消息:', that.data.message_list, that.data.task_list)
         } else {
@@ -631,7 +642,7 @@ Page({
     that.setData({
       page: page,
     })
-    that.get_member_message()
+    that.get_member_messages()
   },
   goBack: function () {
     var pages = getCurrentPages()
