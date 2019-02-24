@@ -75,7 +75,7 @@ Page({
     if (tab == 'task') { //task
       messageflag = 0;
       app.globalData.messageflag = messageflag
-      message_type = 6
+      message_type = 0
     } else if (tab == 'AI') {
       messageflag = 2; //message
       app.globalData.messageflag = messageflag
