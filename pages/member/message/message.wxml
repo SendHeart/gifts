@@ -1,4 +1,4 @@
-refundTapTagrefundT<import src="../../common/nav_new.wxml" />
+<import src="../../common/nav_new.wxml" />
 <template is="nav_new" data="{{navList_order, activeIndex2,navgationHeight,startBarHeight}}" />
 <view class='container'> 
   <view wx:if="{{messageflag==2}}" wx:for="{{rule_list}}" wx:for-item="rlist" wx:key="rindex" class="ai-goods">
