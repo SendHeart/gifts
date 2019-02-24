@@ -47,6 +47,7 @@ Page({
     tab2: 'task',
     activeIndex2: 0,
     currenttime: now ? parseInt(now) : 0,
+    message_type:0,
   },
   showGoods: function (e) {
     // 点击购物车某件商品跳转到商品详情
@@ -69,22 +70,27 @@ Page({
     var that = this;
     var tab = e.currentTarget.dataset.id;
     var index = e.currentTarget.dataset.index;
-    var messageflag = that.data.messageflag;
+    var messageflag = that.data.messageflag
+    var message_type = that.data.message_type
     if (tab == 'task') { //task
       messageflag = 0;
       app.globalData.messageflag = messageflag
+      message_type = 6
     } else if (tab == 'AI') {
       messageflag = 2; //message
       app.globalData.messageflag = messageflag
+     
     }else{
       messageflag = 1; //message
       app.globalData.messageflag = messageflag
+      message_type = 5
     }
     that.setData({
       activeIndex2: index,
       tab2: tab,
       page: 1,
       messageflag: messageflag,
+      message_type: message_type,
     });
     console.log('tab:' + tab, ' messageflag:', messageflag,'activeIndex2:',that.data.activeIndex2)
     //that.reloadData()
@@ -331,6 +337,7 @@ Page({
     var shop_type = that.data.shop_type
     var page = that.data.page
     var pagesize = that.data.pagesize
+    var message_type = that.data.message_type
     wx.request({
       url: weburl + '/api/client/get_member_messages',
       method: 'POST',
@@ -338,7 +345,7 @@ Page({
         username: username,
         access_token: token,
         shop_type: shop_type,
-        message_type:0, //所有消息
+        message_type: message_type, //所有消息
         page: page,
         pagesize: pagesize,
       },
