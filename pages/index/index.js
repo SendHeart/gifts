@@ -347,7 +347,9 @@ Page({
     var shop_type = that.data.shop_type
     var page = that.data.page;
     var pagesize = that.data.pagesize;
-    console.log('reloadData shop_type:' + shop_type+' pagesize:'+pagesize);
+    var now = new Date().getTime()
+    var currenttime = now ? parseInt(now / 1000) : 0
+    console.log('reloadData shop_type:' + shop_type+' pagesize:'+pagesize,' current time:',currenttime);
    
     //从服务器获取订单列表
     wx.request({
@@ -393,6 +395,10 @@ Page({
                 orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
                 orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
               }
+              var duetime = orderObjects[i]['duetime'] - currenttime
+              orderObjects[i]['hour'] = parseInt(duetime / 3600)
+              orderObjects[i]['minus'] = parseInt((duetime - orderObjects[i]['hour'] * 3600) / 60)
+              orderObjects[i]['sec'] = duetime - orderObjects[i]['hour'] * 3600 - orderObjects[i]['minus'] * 60
             }
             if (page > 1 && orderObjects) {
               //向后合拼
