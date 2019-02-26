@@ -422,11 +422,33 @@ Page({
             });
             console.log('gift_send:' + gift_send + ' gift_rcv:' + gift_rcv);
           }
+          setTimeout(function () {
+            that.duetime_update()
+          }, 500);
         }
       }
     })
 
   },
+  duetime_update: function () {
+    var that = this
+    var now = new Date().getTime()
+    var currenttime = now ? parseInt(now / 1000) : 0
+    var orderObjects = that.data.orders
+    for (var i = 0; i < orderObjects.length; i++) {
+      var duetime = orderObjects[i]['duetime'] - currenttime
+      orderObjects[i]['hour'] = parseInt(duetime / 3600)
+      orderObjects[i]['minus'] = parseInt((duetime - orderObjects[i]['hour'] * 3600) / 60)
+      orderObjects[i]['sec'] = duetime - orderObjects[i]['hour'] * 3600 - orderObjects[i]['minus'] * 60
+    }
+    that.setData({
+      orders: orderObjects,
+    })
+    setTimeout(function () {
+      that.duetime_update()
+    }, 500);
+  },
+
   buyin: function (e) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
