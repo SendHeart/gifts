@@ -422,9 +422,12 @@ Page({
             });
             console.log('gift_send:' + gift_send + ' gift_rcv:' + gift_rcv);
           }
-          setTimeout(function () {
-            that.duetime_update()
-          }, 500);
+          if (order_type=='send'){
+            setTimeout(function () {
+              that.duetime_update()
+            }, 500)
+          }
+         
         }
       }
     })
