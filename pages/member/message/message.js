@@ -494,10 +494,12 @@ Page({
       },
       success: function (res) {
         var rule_goods_info = res.data
-        //console.log('get_ai_rules 智能选品列表 goods info:', rule_goods_info)
+        console.log('get_ai_rules 智能选品列表 goods info:', rule_goods_info)
         if (rule_goods_info['status'] == 'y') {
           var rule_goods_list = rule_goods_info['result']
-          for(var i=0;i<3;i++){
+          var rule_goods_len = rule_goods_list.length
+          rule_goods_len > 2 ? 3 : rule_goods_len
+          for (var i = 0; i < rule_goods_len;i++){
             rule_goods_list[i]['image'] = rule_goods_list[i]['activity_image'] == "" ? rule_goods_list[i]['image'] : rule_goods_list[i]['activity_image']
           }
         
