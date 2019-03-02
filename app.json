@@ -36,7 +36,7 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarTextStyle": "#fefefe",
+    "navigationBarTextStyle": "white",
     "navigationBarTitleText": "送心礼物",
     "navigationBarBackgroundColor": "#1D1D1D",
     "backgroundColor": "#F3F3F3",
@@ -46,7 +46,7 @@
   "tabBar": {
     "color": "#999999",
     "selectedColor": "#E34C55",
-    "borderStyle": "#EEEEEE",
+    "borderStyle": "white",
     "backgroundColor": "#fefefe",
     "list": [
       {
