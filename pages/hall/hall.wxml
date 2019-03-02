@@ -4,7 +4,7 @@
  <!--  
  <image src="{{main_title_Bg}}" background-size="cover" mode="widthFix"></image>
  -->
-   <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+   <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" >
       <block wx:for="{{hall_banner}}" wx:key="" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
@@ -31,11 +31,15 @@
     </view>
     </view>
     
-    <view class="usergifts" bindtap='usergiftTapTag'>
+    <!--<view class="usergifts" bindtap='usergiftTapTag'>
       <text>收到</text>
       <text class='snum'>{{gifts_rcv}}</text>
       <text>送出</text>
       <text class='snum'>{{gifts_send}}</text>
+    </view>
+    -->
+    <view class="usergifts">
+      <image class="icon-promslogan" src="../../images/24hrpayback.png"></image>
     </view>
     
   </view>
@@ -45,17 +49,17 @@
         <image class="pick-goods-image" src="../../images/1.png"></image>
       </view>
       <view class="image-btntext">
-        <text class="pick-goods-action">挑选礼物</text>
+        <text class="pick-goods-action">自选礼物</text>
         <text class="pick-goods-btntips">全场正品,全国包邮</text>
       </view>
     </view>
-    <view class="image-btnbuy" bindtap="bindAIPickGoods">
+    <view class="image-btnbuy2" bindtap="bindAIPickGoods">
       <view>
-        <image class="pick-goods-image" src="../../images/1.png"></image>
+        <image class="pick-goods-image" src="../../images/2.png"></image>
       </view>
       <view class="image-btntext">
-        <text class="pick-goods-action">智能选礼</text>
-        <text class="pick-goods-btntips">帮您挑选满意的礼品</text>
+        <text class="pick-goods-action">智能选礼<text style='font-size:20rpx;'>(Beta)</text></text>
+        <text class="pick-goods-btntips">无需动脑,智能推荐</text>
       </view>
     </view>
   </view>

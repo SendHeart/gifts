@@ -4,7 +4,6 @@
     <view class="top-bar2" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
       <block wx:for="{{navList_order}}" wx:key="">
         <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" class="top-bar-item2 {{index == activeIndex2 ? 'top-bar-active2' : ''}}" catchtap="onOrderTapTag">
-        <image src="../../../images/u72.png"></image>
         {{item.title}}
         
         </view>

@@ -471,6 +471,26 @@ Page({
     var shop_type = that.data.shop_type
     var rule_list = that.data.rule_list
     var rule_select =[]
+
+    that.setData({
+      isLoadingTrue: true
+    })
+    setTimeout(function () {
+      that.setData({
+        isLoadingTrue: false
+      })
+    }, 5000)
+
+    if (wx.pageScrollTo) {
+      wx.pageScrollTo({
+        scrollTop: 0
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
     for (var i = 0; i < rule_list.length; i++) {
       var selected={}
       selected['id'] = rule_list[i]['id']
@@ -669,5 +689,5 @@ Page({
     //wx.startPullDownRefresh()
     //wx.stopPullDownRefresh()
   },
-
+  move: function () {},
 })

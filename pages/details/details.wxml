@@ -93,6 +93,6 @@
   <view class="opt-buttons">
   <button class="sec-btn" bindtap="mycommTapTag">我要评论</button>
   <button class="sec-btn" bindtap="wishCart">加入心愿单</button>
-  <button class="add-cart" bindtap="goodsmodel">购买送出</button>
+  <button class="add-cart" bindtap="goodsmodel"><text>发起购买送礼</text><text style='font-size:20rpx;'>24小时对方未接收，全额返还原账户</text></button>
   </view>
 </view>
