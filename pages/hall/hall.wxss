@@ -167,7 +167,8 @@ modal {
   align-items: center;
   text-align: center;
   position: relative;
-  left: 20rpx;
+  width: 70rpx;
+  left: 10rpx;
 }
 .messages .message-num {
   position: absolute;
