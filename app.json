@@ -39,15 +39,15 @@
     "navigationBarTextStyle": "#fefefe",
     "navigationBarTitleText": "送心礼物",
     "navigationBarBackgroundColor": "#1D1D1D",
-    "backgroundColor": "#F3F3F3",
+    "backgroundColor": "#F5F5F5",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#999999",
+    "color": "#616161",
     "selectedColor": "#E34C55",
     "borderStyle": "#EEEEEE",
-    "backgroundColor": "#fefefe",
+    "backgroundColor": "#f2f2f2",
     "list": [
       {
         "pagePath": "pages/hall/hall",

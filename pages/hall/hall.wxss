@@ -578,7 +578,7 @@ modal {
   border: 0rpx solid #aaa;
   box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
   border-radius: 14rpx;
-  background: #1D1D1D;
+  background: #292929;
   padding: 10rpx;
 }
 
