@@ -38,7 +38,7 @@
       <text class='snum'>{{gifts_send}}</text>
     </view>
     -->
-    <view class="usergifts">
+    <view class="usergifts" bindtap='usergiftTapTag'>
       <image class="icon-promslogan" src="../../images/24hrpayback.png"></image>
     </view>
     
