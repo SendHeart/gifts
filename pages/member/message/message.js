@@ -233,15 +233,21 @@ Page({
     var rule_list = that.data.rule_list
     var goods_item_id = e.currentTarget.dataset.goodsItemId
     var goods_item_index = e.currentTarget.dataset.goodsItemIndex
+    var rule_selected_info = ''
     for (var i = 0; i < rule_list.length; i++) {
       if (rule_list[i]['id'] == goods_item_id){
         rule_list[i]['selected'] = goods_item_index
-        break
+        //break
       }
+      var selected = rule_list[i]['selected']
+      rule_selected_info = rule_selected_info + '"' + rule_list[i]['id'] + '":"' + rule_list[i]['item_name'][selected]+'"'
     }
+    rule_selected_info = '{' + rule_selected_info+'}'
     that.setData({
       rule_list:rule_list,
+      rule_selected_info: rule_selected_info,
     })
+    console.log('rule_selected_info:', rule_selected_info)
   },
 
   //确定按钮点击事件 
@@ -548,6 +554,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_id = e.currentTarget.dataset.goodsId
     var page = that.data.page
+    
     if (!username) {//登录
       wx.navigateTo({
         url: '../login/login?goods_id=' + that.data.goodsid
@@ -611,6 +618,7 @@ Page({
   insertCart: function (sku_id, username, wishflag) {
     var that = this
     var shop_type = that.data.shop_type
+    var rule_selected_info = that.data.rule_selected_info
     wx.request({
       url: weburl + '/api/client/add_cart',
       method: 'POST',
@@ -620,6 +628,7 @@ Page({
         sku_id: sku_id,
         wishflag: wishflag,
         shop_type: shop_type,
+        rule_selected_info: rule_selected_info,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
