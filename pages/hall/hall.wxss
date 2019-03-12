@@ -97,7 +97,7 @@ modal {
 .wrap {
   width: 100%;
   position: absolute;
-  top: 230rpx;
+  top: 240rpx;
   margin-bottom: 160rpx;
 }
 
@@ -141,7 +141,7 @@ modal {
   width: 45%;
   text-align: right;
   font-size: 22rpx;
-  padding-right: 15rpx;
+  padding:8rpx 15rpx 0 0;
 }
 
 .usergifts text {
@@ -566,6 +566,7 @@ modal {
   border-radius: 14rpx;
   background: #e34c55;
   padding: 10rpx;
+  overflow: hidden;
 }
 .pick-goods .image-btnbuy2 {
   display: flex;
@@ -580,8 +581,27 @@ modal {
   border-radius: 14rpx;
   background: #292929;
   padding: 10rpx;
+  position: relative;
+  overflow: hidden;
+  z-index: 999;
 }
-
+.subscript{
+        color: #fff;
+        font-size: 16rpx;
+        height: 20rpx;
+        width: 90rpx;
+        position: absolute;
+        right: -28rpx;
+        top:10rpx;
+        text-align: center;
+        line-height: 20rpx;
+        background-color: #e34c55;
+        -moz-transform:rotate(45deg);
+        -webkit-transform:rotate(45deg);
+        -o-transform:rotate(45deg);
+        -ms-transform:rotate(45deg);
+        transform:rotate(45deg);
+      }
 .pick-goods .image-btntext {
   display: flex;
   flex-direction: column;

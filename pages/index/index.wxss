@@ -98,15 +98,16 @@ page {
 }
 .recyclebtn {
   position: absolute;
-  top:20rpx;
+  top:0rpx;
   right: 20rpx;
   display: flex;
   flex-direction: row;
   align-items: center;
   background: #e34c55;
   color: #fff;
-  padding: 8rpx 12rpx;
-  border-radius: 8rpx;
+  padding: 10rpx 12rpx;
+  border-bottom-left-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
   text-align:center;
   font-size: 24rpx;
   line-height: 24rpx;
@@ -125,8 +126,7 @@ page {
   line-height: 24rpx;
 }
 .commbtn {
-  
-  display: -webkit-box;
+  font-size: 24rpx;
   border: 3rpx solid #e34c55;
   color: #e34c55;
   padding: 4rpx 10rpx;
@@ -134,6 +134,9 @@ page {
   margin-left:10rpx;
   text-align:center;
   z-index: 99;
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
 }
 /*接受方微信头像*/
 
@@ -148,9 +151,9 @@ page {
 .carts-item {
   display: flex;
   flex-direction: row;
-  height: 150rpx;
-  /*width属性解决标题文字太短而缩略图偏移
-  border-bottom: 1px solid #eee;*/
+  height: 130rpx;
+  /*width属性解决标题文字太短而缩略图偏移*/
+  border-bottom: 1rpx solid #f2f2f2;
   padding: 10rpx;
 }
 
@@ -196,7 +199,7 @@ page {
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content:flex-start;
 }
 
 /*右上部分标题*/
@@ -350,11 +353,11 @@ page {
   justify-content: left;
   margin: 30rpx auto;
   font-size: 24rpx;
-  height:230rpx;
+  height:280rpx;
 }
 .buyin_content .buyin_text {
   display: block;
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #999;
   height: 46rpx;
 }

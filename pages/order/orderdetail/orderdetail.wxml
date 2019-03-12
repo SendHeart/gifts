@@ -58,8 +58,8 @@
   </view>
   <view class="order-detail">
     <view class="order-detail-text">
-      <text class="labeltext">总共:{{sku_num}}件</text>
-      <text>{{buy_num>1?' (份数:'+buy_num+')':''}}</text>
+      <text class="labeltext">总共:</text>
+      <text>{{sku_num}}件 {{buy_num>1?' (份数:'+buy_num+')':''}}</text>
       <!-- <text>合计金额:￥{{orderprice}}元</text> -->
     </view>
     <view class="order-detail-text">
@@ -73,13 +73,17 @@
     </view>
     <view class="order-detail-text">
       <text class="labeltext">接受时间:</text>
-      <text>{{rcvtime?rcvtime:'未接受'}}{{gift_status=='1'?'(3日礼物未被接收，您可以转送其他朋友或申请退款)':''}}</text>
+      <text>{{rcvtime?rcvtime:'未接受'}}{{gift_status=='1'?'(24小时礼物未被接收，自动退款到原账户)':''}}</text>
     </view>
   </view>
   <view class="delivery-detail">
     <view class="delivery-detail-text">
       <text class="labeltext">收货人:</text>
-      <text>{{fullname?fullname:''}}{{tel?tel:''}}</text>
+      <text>{{fullname?fullname:''}}</text>
+    </view>
+    <view class="delivery-detail-text">
+      <text class="labeltext">手机:</text>
+      <text>{{tel?tel:''}}</text>
     </view>
     <view class="delivery-detail-text">
       <text class="labeltext">收货地址:</text>
@@ -93,41 +97,40 @@
       <text class="labeltext">运单号:</text>
       <text>{{deliverycode?deliverycode:''}}</text>
     </view>
-    <view class="delivery-detail-text" style='margin-bottom:15rpx;'>
+    <!--<view class="delivery-detail-text" style='margin-bottom:15rpx;'>
       <text class="labeltext">当前状态:</text>
       <text>{{deliverystepinfo?deliverystepinfo:''}}</text>
-      <!--
+      
    <text wx:if="{{deliverycode}}" bindtap="expressTapTag" style="width:20%;color:gray;text-align:center;border:1px solid; border-radius: 5px">物流详情</text>
-   -->
-    </view>
+   
+    </view>-->
   </view>
-  <view class="delivery-detail-info" style='background: url({{delivery_background}}) repeat-y 9px 0;'>
+  <view class="delivery-detail-info">
+  <text style='text-indent:20rpx;font-weight:bold;'>物流跟踪：</text>
     <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key=""  >
-      <view class="timeline-date" style='margin-top:-3px;'>
-        <image style="width:5%;height:40rpx;" src='../../../images/icon24.png' />
-      </view>
       <view class="delivery-detail-info-text" >
-        <view class="timeline-date" style='margin-left:10px;'>
+      <view class="timeline-date" style='margin-left:20rpx;'>
+           <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
+          <text style="width:80%;margin-left:20rpx;color:#999;">{{itme.AcceptTime}}</text>
+        </view>
+        <view class="timeline-date" style='margin-left:20rpx;'>
           <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
-          <text style="width:80%;overflow:hidden;position:relative;margin-left:10px;">{{itme.AcceptStation}}</text>
+          <text style="width:80%;overflow:hidden;position:relative;margin-left:20rpx;">{{itme.AcceptStation}}</text>
         </view>
-        <view class="timeline-date" style='margin-left:10px;'>
+        <view class="timeline-date" style='margin-left:20rpx;'>
            <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
-          <text style="width:80%;margin-left:10px;">{{itme.operator}}</text>
+          <text style="width:80%;margin-left:20rpx;">{{itme.operator}}</text>
         </view>
-        <view class="timeline-date" style='margin-left:10px;'>
-           <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
-          <text style="width:80%;margin-left:10px;">{{itme.AcceptTime}}</text>
-        </view>
+        
       </view>
     </block>
   </view>
 </view>
 <view class="footer">
   <view class="opt-buttons">
-    <button class="button-group" bindtap="expressTapTag">物流详情</button>
+    <button class="button-group" bindtap="expressTapTag">物流跟踪</button>
 
-    <button open-type='contact' class="button-group">联系客服</button>
+    <button open-type='contact' class="button-group">咨询客服</button>
     <!-- <contact-button type='default-light' size="22" /> 
             <text class="button-text"></text>-->
     

@@ -22,7 +22,7 @@
     <view class="select-goods-list">
     <view class="select-goods" style="height:{{dkheight-80}}px;">
       <image class="img-loading" src="../../../images/loading.gif"></image>
-      <text class="loadingtext">智能助手正在为您挑选中...</text>
+      <text class="loadingtext">正在为您挑选中...</text>
     </view>
   </view>
     

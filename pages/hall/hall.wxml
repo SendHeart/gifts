@@ -58,9 +58,10 @@
         <image class="pick-goods-image" src="../../images/2.png"></image>
       </view>
       <view class="image-btntext">
-        <text class="pick-goods-action">智能选礼<text style='font-size:20rpx;'>(Beta)</text></text>
+        <text class="pick-goods-action">智能选礼</text>
         <text class="pick-goods-btntips">无需动脑,智能推荐</text>
       </view>
+      <view class="subscript">Beta</view>
     </view>
   </view>
   <view class="container carts-list">
@@ -111,7 +112,7 @@
   <view class="buybutton">
   <view class="btnconfirm" bindtap="bindCheckout">
   <image src="../../images/share.png"></image>
-  <text>送出礼物</text>
+  <text>打包送出</text>
   </view>
   </view>
 

@@ -649,5 +649,5 @@ Page({
     wx.navigateTo({
       url: '../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
     });
-  }
+  },
 });

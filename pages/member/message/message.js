@@ -485,7 +485,7 @@ Page({
       that.setData({
         isLoadingTrue: false
       })
-    }, 5000)
+    }, 3000)
 
     if (wx.pageScrollTo) {
       wx.pageScrollTo({

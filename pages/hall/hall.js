@@ -517,9 +517,9 @@ Page({
     }
     if (cartselected.length==0){
       wx.showToast({
-        title: '请先挑选礼物~', /* 文案修改 */
+        title: '礼物包是空的，先挑选礼物吧~', /* 文案修改 */
         icon: 'none',
-        duration: 1000
+        duration: 1500
       })
       return
     }

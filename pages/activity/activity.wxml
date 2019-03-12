@@ -1,4 +1,4 @@
-<view class="banner" style='' bindtap='bannerTapTag' data-bannerlink="{{banner_link}}">
+<view class="banner" bindtap='bannerTapTag' data-bannerlink="{{banner_link}}">
   <image src="{{main_title_Bg}}" background-size="cover" mode="widthFix"></image>
 </view>
 <view class="wrap" style=''>

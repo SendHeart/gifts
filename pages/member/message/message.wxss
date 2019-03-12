@@ -595,8 +595,8 @@ page {
     display: none;
 }
 .img-loading {
-  width: 600rpx;
-  height: 150rpx;
+  width: 170rpx;
+  height: 170rpx;
   margin: -30rpx auto 0 auto;
 }
 .loadingtext {
