@@ -157,18 +157,19 @@ Page({
 
   showGoods: function (e) {
     // 点击购物车某件商品跳转到商品详情
-    var objectId = e.currentTarget.dataset.objectId;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var goods_id = e.currentTarget.dataset.goodsId;
-    var goods_name = e.currentTarget.dataset.goodsName;
-    var goods_price = e.currentTarget.dataset.goodsPrice;
-    var goods_info = e.currentTarget.dataset.goodsInfo;
-    var goods_sale = e.currentTarget.dataset.sale;
+    var objectId = e.currentTarget.dataset.objectId
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_name = e.currentTarget.dataset.goodsName
+    var goods_price = e.currentTarget.dataset.goodsPrice
+    var goods_info = e.currentTarget.dataset.goodsInfo
+    var goods_sale = e.currentTarget.dataset.sale
+    var image = e.currentTarget.dataset.image
     //var carts = this.data.carts;
     var sku_id = objectId;
     wx.navigateTo({
-      url: '../details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&token=' + token + '&username=' + username
+      url: '../details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&image=' + image+ '&token=' + token + '&username=' + username
     });
   },
   touchStart: function (e) {

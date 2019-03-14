@@ -5,7 +5,6 @@ var qqmapsdk;
 Page({
 	isDefault: false,
 	formSubmit: function(e) {
-
     var that = this;
 		// user 
     var username = this.data.username;
@@ -13,9 +12,11 @@ Page({
 		// detail
 		var detail = e.detail.value.detail;
 		// realname
-		var realname = e.detail.value.realname;
+    var activity_name = e.detail.value.activity_name;
 		// mobile
 		var mobile = e.detail.value.mobile;
+    // activity_image
+    var activity_image = e.detail.value.activity_image;
 		// 表单验证
 		if (this.data.areaSelectedStr == '请选择省市区') {
 			wx.showToast({
@@ -29,9 +30,9 @@ Page({
 			});
 			return;
 		}
-		if (realname == '') {
+    if (activity_name == '') {
 			wx.showToast({
-				title: '请填写收件人'
+				title: '请填写活动名称'
 			});
 			return;
 		}
@@ -49,24 +50,25 @@ Page({
     var username = that.data.username;
 
     //保存地址到服务器
-    console.log(province);
-    console.log(city);
-    console.log(region);
-    console.log(town);
+    console.log(province)
+    console.log(city)
+    console.log(region)
+    console.log(town)
     wx.request({
-      url: weburl + '/api/client/update_member_address',
+      url: weburl + '/api/client/update_activity_address',
       method: 'POST',
       data: { 
         'username': username,
         'access_token': token,
         'id': addressId,
-        'full_name': realname,
+        'activity_name': activity_name,
         'prov': province ? province.area_id:'',
         'city': city?  city.area_id:'',
         'area': region ? region.area_id:'',
         'town': town ? town.area_id:'',
         'address': detail,
         'tel': mobile,
+        'image':image,
         },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -158,6 +160,64 @@ Page({
 		// TODO:load default city...
    
 	},
+  upimg: function () {
+    var that = this
+    var new_img_arr = that.data.new_img_arr
+    var img_arr = that.data.img_arr
+    if ((img_arr.length + new_img_arr.length) < 3) {
+      wx.chooseImage({
+        sizeType: ['original', 'compressed'],
+        success: function (res) {
+          that.setData({
+            //img_arr: all_img_arr.concat(res.tempFilePaths),
+            new_img_arr: new_img_arr.concat(res.tempFilePaths)
+          })
+          console.log('本次上传图片:', that.data.new_img_arr)
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '最多上传一张图片',
+        icon: 'loading',
+        duration: 3000
+      });
+    }
+  }, cancel_upimg: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id
+    var img_tmp = []
+    var old_img_arr = that.data.img_arr
+    var j = 0
+    console.log('cancel_upimg:', old_img_arr.length, 'id:', id)
+    for (var i = 0; i < old_img_arr.length; i++) {
+      if (i != id) {
+        img_tmp[j++] = old_img_arr[i]
+      }
+    }
+    that.setData({
+      img_arr: img_tmp
+    })
+
+  },
+
+  cancel_new_upimg: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id
+    var img_tmp = []
+    var all_img_arr = that.data.img_arr
+    var new_img_arr = that.data.new_img_arr
+    var j = 0
+    console.log('cancel_upimg:', new_img_arr.length, 'id:', id)
+    for (var i = 0; i < new_img_arr.length; i++) {
+      if (i != id) {
+        img_tmp[j++] = new_img_arr[i]
+      }
+    }
+    that.setData({
+      new_img_arr: img_tmp
+    })
+
+  },
   loadAddress: function (options) {
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -169,7 +229,7 @@ Page({
         addressId: addressId
       });
       wx.request({
-        url: weburl + '/api/client/get_member_address',
+        url: weburl + '/api/client/get_activity_address',
         method: 'POST',
         data: { 
           username: options.username ? options.username : username,

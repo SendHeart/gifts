@@ -217,7 +217,7 @@ Page({
               image_video: image_video,
               image_pic: image_pic,
             })
-            //console.log('get_goodsdesc_list image_video:', that.data.image_video)
+            console.log('get_goodsdesc_list image_pic:', that.data.image_pic)
           that.showGoodsinfo()
           }
          

@@ -139,3 +139,24 @@ page {
 .save {
 	margin: 8px;
 }
+
+.upimg {
+  display: flex;
+  flex-direction: column;
+}
+.upimage {
+  display:flex;
+  flex-direction:row;
+  padding: 0 20rpx;
+}
+
+.upimage image {
+ /*被图片设置宽高*/ 
+  width: 80rpx; 
+  height: 80rpx; 
+}
+.btnjia {
+  margin: 20rpx;
+  width: 96rpx;
+  height: 97rpx;
+}

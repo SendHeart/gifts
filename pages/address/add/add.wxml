@@ -7,13 +7,25 @@
 		<text>地址</text><input name="detail" placeholder="请输入详情地址" value="{{address.address}}" />
 	</view>
 	<view class="cell">
-		<text>姓名</text>
-		<input name="realname" placeholder="请输入收件人姓名" value="{{address.full_name}}" />
+		<text>活动名</text>
+		<input name="activity_name" placeholder="请输入活动名称" value="{{address.name}}" />
 	</view>
 	<view class="cell">
-		<text>手机</text>
+		<text>联系人</text>
 		<input name="mobile" placeholder="请输入手机号码" value="{{address.tel}}" type="number"/>
 	</view>
+   <view class="upimage" >
+      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="" >      
+         <image data-id="{{index}}" bindtap="cancel_upimg"  src="{{upimg}}" mode='aspectFit'></image>       
+      </block>
+      
+      <block wx:for="{{new_img_arr}}" wx:for-item="upimg_new" wx:key="" >      
+         <image data-id="{{index}}" bindtap="cancel_new_upimg"  src="{{upimg_new}}" mode='aspectFit'></image>       
+      </block>
+    </view>
+  <view bindtap="upimg" class='upimg'>
+    <image class='btnjia' src='../../../images/jia.png'></image>
+  </view>
 	<button class="save" formType="submit" type="primary">保存</button>
 </form>
 <view class="modal">

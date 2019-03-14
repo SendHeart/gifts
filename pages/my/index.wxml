@@ -22,6 +22,10 @@
 	  <image src="../../images/wish.png" />
 	  <text>我的祝福</text>
   </view>
+  <view bindtap="navigateToMyLocation" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/iconfont-shouhuodizhi.png" />
+	  <text>我的位置</text>
+  </view>
   <view bindtap="navigateToMyCoupon" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/iconfont-card.png" />
 	  <text>我的优惠券</text>

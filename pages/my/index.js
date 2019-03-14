@@ -365,7 +365,11 @@ Page({
     }
 
   },
-
+  navigateToMyLocation: function (e) {
+    wx.navigateTo({
+      url: '../member/mylocation/mylocation?'
+    })
+  },
   navigateToOrder: function (e) {
     var status = e.currentTarget.dataset.status
     wx.navigateTo({

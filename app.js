@@ -9,6 +9,7 @@ App({
     weburl:'https://sendheart.dreamer-inc.com', //https://xcx.itoldfarmer.com
     wssurl:'wss://sendheart.dreamer-inc.com' ,
     uploadurl: weburl+'/api/upload/index4',
+    mapkey: 'SSPBZ-ALR32-4BWUC-CLUXY-HAFM3-3ABQF',
     openid: null,
     username: null,
     is_task:0,
@@ -136,7 +137,66 @@ App({
       }
 
   },
-    
+  location: function () {
+    var that = this
+    //获取当前位置
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userLocation']) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success() {
+              console.log('位置授权成功' + res.errMsg)
+            },
+            fail() {
+              return
+            }
+          })
+        }
+      }
+    })
+
+    // 实例化腾讯地图API核心类
+    var QQMapWX = require('./utils/qqmap-wx-jssdk.js')
+    var qqmapsdk
+    qqmapsdk = new QQMapWX({
+      key: that.globalData.mapkey // 必填
+    })
+    wx.getLocation({
+      type: 'wgs84',
+      success: function (res) {
+        var latitude = res.latitude
+        var longitude = res.longitude
+        var speed = res.speed
+        var accuracy = res.accuracy
+        wx.setStorageSync('latitude', latitude);
+        wx.setStorageSync('longitude', longitude);
+        wx.setStorageSync('speed', speed);
+        wx.setStorageSync('accuracy', accuracy)
+        qqmapsdk.reverseGeocoder({
+          poi_options: 'policy=2',
+          get_poi: 1,
+          success: function (res) {
+            console.log('qqmapsdk:', res);
+            wx.setStorageSync('mylocation', res.result.address)
+            wx.setStorageSync('city', res.result.address_component.city)
+            wx.setStorageSync('district', res.result.address_component.district)
+            wx.setStorageSync('province', res.result.address_component.province)
+            wx.setStorageSync('street', res.result.address_component.street)
+            wx.setStorageSync('street_number', res.result.address_component.street_number)
+            console.log('位置获取成功:' + res.result.address)
+          },
+          fail: function (res) {
+            console.log('位置获取失败')
+            console.log(res)
+          },
+          complete: function (res) {
+            console.log(res)
+          }
+        })
+      }
+    })
+  },
 
   onShow: function() {
         console.log('App Show')
