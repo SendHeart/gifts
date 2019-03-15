@@ -1,18 +1,24 @@
 <form bindsubmit="formSubmit">
 	<view class="cell">
 	    <text>区域</text><text bindtap="cascadePopup" class="area_select">{{areaSelectedStr}}</text>
+      <!-- 
 	    <text bindtap="fetchPOI" class="poi">自动获取</text>
+      -->
 	</view>
 	<view class="cell">
 		<text>地址</text><input name="detail" placeholder="请输入详情地址" value="{{address.address}}" />
 	</view>
 	<view class="cell">
-		<text>活动名</text>
-		<input name="activity_name" placeholder="请输入活动名称" value="{{address.name}}" />
+		<text>备注</text>
+		<input name="activity_name" placeholder="请输入备注" value="{{address.name}}" />
 	</view>
 	<view class="cell">
 		<text>联系人</text>
 		<input name="mobile" placeholder="请输入手机号码" value="{{address.tel}}" type="number"/>
+	</view>
+  <view class="cell">
+		<text>侯时</text>
+		<input name="waitting" placeholder="请输入等候时长(小时)" value="{{address.waitting}}" type="digit"/>
 	</view>
    <view class="upimage" >
       <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="" >      

@@ -1,0 +1,36 @@
+<view class="currentlocation">
+		<image  src="../../../images/iconfont-shouhuodizhi.png"></image>
+    <text class="address-text" style="width:{{windowWidth-20}}px color:gray;font-size:34rpx;">{{city[curIndex]}}</text>
+</view>
+ 
+<view class="address-list">
+	<view class="item" wx:for="{{addressObjects}}" wx:key="">
+    <view class="select-and-amount" bindtap="bindSelectShop" data-activityindex="{{index}}" activityid="{{item.shop_id}}" data-activitycity="{{item.city}}" data-activityprov="{{item.prov}}" data-activityarea="{{item.area}}" data-activitytown="{{item.town}}">
+		  <icon style="margin-top:1rpx;margin-left:10rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18"/>
+		  <text style="margin-left:10rpx;">选中</text> 
+    </view>
+		<!-- first row -->
+		<view class="header">
+			<text class="realname">{{item.name}}</text>
+			<text class="mobile">{{item.tel}}</text>
+		</view>
+		<!-- second row -->
+		<view class="summary">
+      <text>{{item.prov_str}}{{item.city_str}}{{item.area_str}}{{item.town_str}}{{item.address}}</text>
+      <image style='width:60rpx;height:60rpx;' src='../../../images/map.jpg' bindtap='gotoMap' data-address="{{item.prov_str}}{{item.city_str}}{{item.area_str}}{{item.town_str}}{{item.address}}" data-addrname="{{item.name}}" />
+    </view>
+   
+    <text class="" style="color:{{item.is_delivery==1?'gray':'red'}}"></text>
+		<!-- third row -->
+		<view class="footer">
+			<view class="operation">
+			</view>
+		</view>
+	</view>
+</view>
+<button  wx:if="{{page_num>1}}" class="address-add" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMore">更多记录 {{page}}/{{page_num}}</button>
+
+<view class="sentbtn">
+  <button open-type="share" bindtap="onShareAppMessage" >分享给朋友</button>
+  <button bindtap="addActivity">添加信息</button>
+</view>

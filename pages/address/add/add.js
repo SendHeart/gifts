@@ -2,8 +2,12 @@ var app = getApp();
 var weburl = app.globalData.weburl; 
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 var qqmapsdk;
+var util = require('../../../utils/util.js')
+var now = new Date().getTime()
+var shop_type = app.globalData.shop_type;
+var uploadurl = app.globalData.uploadurl;
 Page({
-	isDefault: false,
+  isDefault: false,
 	formSubmit: function(e) {
     var that = this;
 		// user 
@@ -11,12 +15,14 @@ Page({
     var token = this.data.token;
 		// detail
 		var detail = e.detail.value.detail;
-		// realname
+		// activity_name
     var activity_name = e.detail.value.activity_name;
 		// mobile
 		var mobile = e.detail.value.mobile;
-    // activity_image
-    var activity_image = e.detail.value.activity_image;
+   
+    // endtime
+    var waitting = e.detail.value.waitting
+    var endtime = that.data.currenttime +  waitting*60*60   //秒
 		// 表单验证
 		if (this.data.areaSelectedStr == '请选择省市区') {
 			wx.showToast({
@@ -36,59 +42,23 @@ Page({
 			});
 			return;
 		}
+    
 		if(!(/^1[34578]\d{9}$/.test(mobile))){ 
 			wx.showToast({
 				title: '请填写正确手机号码'
 			});
 			return;
 		}
-    var province = that.data.provinceObjects[that.data.provinceIndex];
-    var city = that.data.cityObjects[that.data.cityIndex];
-    var region = that.data.regionObjects[that.data.regionIndex];
-    var town = that.data.townObjects[that.data.townIndex];
-    var addressId = that.data.addressId;
-    var username = that.data.username;
-
-    //保存地址到服务器
-    console.log(province)
-    console.log(city)
-    console.log(region)
-    console.log(town)
-    wx.request({
-      url: weburl + '/api/client/update_activity_address',
-      method: 'POST',
-      data: { 
-        'username': username,
-        'access_token': token,
-        'id': addressId,
-        'activity_name': activity_name,
-        'prov': province ? province.area_id:'',
-        'city': city?  city.area_id:'',
-        'area': region ? region.area_id:'',
-        'town': town ? town.area_id:'',
-        'address': detail,
-        'tel': mobile,
-        'image':image,
-        },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data.result);
-        console.log(res.data.info);
-        wx.showToast({
-          title: '保存成功',
-          duration: 500
-        });
-        // 等待半秒，toast消失后返回上一页
-        setTimeout(function () {
-          wx.navigateBack();
-        }, 500);
-      }, function(error) {
-        console.log(error);
-      }
-    })
+    that.setData({
+      username: username,
+      token: token,
+      endtime:endtime,
+      //activity_image: activity_image,
+      activity_name: activity_name,
+      detail: detail,
+      mobile: mobile,
+    });
+    that.upload()
 	},
 	data: {
 		current: 0,
@@ -110,14 +80,21 @@ Page({
 		areaSelectedStr: '请选择省市区',
 		maskVisual: 'hidden',
 		provinceName: '请选择',
+    shop_type: shop_type,
+    uploadurl: uploadurl,
+    img_arr: [],
+    new_img_arr: [],
+    upimg_url: [],
+    formdata: '',
+    currenttime: now ? parseInt(now / 1000) : 0, 
 	},
 
 	onLoad: function (options) {
     qqmapsdk = new QQMapWX({
       key: 'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
-    });
+    })
 
-    var that = this;
+    var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     if (!username) {//登录
@@ -155,15 +132,109 @@ Page({
 		// if isDefault, address is empty
 		// this.setDefault();
 	
-		this.loadAddress(options);
-    	this.cascadePopup();
+		that.loadAddress(options)
+    	that.cascadePopup();
 		// TODO:load default city...
    
 	},
+  upload: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var goods_id = that.data.goods_id;
+    var new_img_addr = that.data.new_img_arr //本次上传图片的手机端文件地址
+    var new_img_url = [] //本次上传图片的服务端url
+    var province = that.data.provinceObjects[that.data.provinceIndex];
+    var city = that.data.cityObjects[that.data.cityIndex];
+    var region = that.data.regionObjects[that.data.regionIndex];
+    var town = that.data.townObjects[that.data.townIndex];
+    var addressId = that.data.addressId;
+    var endtime = that.data.endtime
+    var activity_image = that.data.activity_image
+    var activity_name  = that.data.activity_name
+    var detail = that.data.detail
+    var mobile = that.data.mobile
+
+    //保存地址到服务器
+    console.log(province)
+    console.log(city)
+    console.log(region)
+    console.log(town)
+
+    for (var i = 0; i < new_img_addr.length; i++) {
+      var count = new_img_addr.length
+      wx.uploadFile({
+        url: uploadurl,
+        filePath: new_img_addr[i],
+        name: 'wechat_upimg',
+        //formData: adds,
+        formData: {
+          latitude: encodeURI(0.0),
+          longitude: encodeURI(0.0),
+          restaurant_id: encodeURI(0),
+          city: encodeURI('杭州'),
+          prov: encodeURI('浙江'),
+          name: encodeURI(goods_id), // 名称
+        }, // HTTP 请求中其他额外的 form data
+        success: function (res) {
+          var retinfo = JSON.parse(res.data.trim());
+          if (retinfo['status'] == "y") {
+            new_img_url.push(retinfo['result']['img_url'])
+            that.setData({
+              new_img_url: new_img_url,
+            })
+            count--
+            console.log('图片上传完成:', that.data.new_img_url, ' count:', count)
+            if (count == 0) {
+              wx.request({
+                url: weburl + '/api/client/update_activity_address',
+                method: 'POST',
+                data: {
+                  'username': username,
+                  'access_token': token,
+                  'id': addressId,
+                  'activity_name': activity_name,
+                  'prov': province ? province.area_id : '',
+                  'city': city ? city.area_id : '',
+                  'area': region ? region.area_id : '',
+                  'town': town ? town.area_id : '',
+                  'address': detail,
+                  'tel': mobile,
+                  'image': new_img_url[0] ? new_img_url[0]:'',
+                  'image2': new_img_url[1] ? new_img_url[1] : '',
+                  'image3': new_img_url[2] ? new_img_url[2] : '',
+                  'endtime': endtime,
+                },
+                header: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  'Accept': 'application/json'
+                },
+                success: function (res) {
+                  console.log(res.data.result);
+                  console.log(res.data.info);
+                  wx.showToast({
+                    title: '保存成功',
+                    duration: 500
+                  });
+                  // 等待半秒，toast消失后返回上一页
+                  setTimeout(function () {
+                    wx.navigateBack();
+                  }, 500);
+                }, function(error) {
+                  console.log(error);
+                }
+              })
+            }
+          }
+        },
+      })
+    }
+  },
   upimg: function () {
     var that = this
     var new_img_arr = that.data.new_img_arr
     var img_arr = that.data.img_arr
+    console.log('upimg img_arr:', img_arr)
     if ((img_arr.length + new_img_arr.length) < 3) {
       wx.chooseImage({
         sizeType: ['original', 'compressed'],
@@ -177,12 +248,14 @@ Page({
       })
     } else {
       wx.showToast({
-        title: '最多上传一张图片',
+        title: '最多上传三张图片',
         icon: 'loading',
         duration: 3000
       });
     }
-  }, cancel_upimg: function (e) {
+  }, 
+  
+  cancel_upimg: function (e) {
     var that = this;
     var id = e.currentTarget.dataset.id
     var img_tmp = []
@@ -224,10 +297,12 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
     var addressId = options.objectId;
+    var img_arr = that.data.img_arr
+    console.log('loadAddress addressId:', addressId)
     if (addressId != undefined) {
       that.setData({
         addressId: addressId
-      });
+      })
       wx.request({
         url: weburl + '/api/client/get_activity_address',
         method: 'POST',
@@ -242,16 +317,21 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          //console.log(res.data.result);
+          console.log('loadAddress:',res.data.result);
           var address = res.data.result;
           var array = [];
           for (var i = 0; i < address.length; i++) {
-            array[i] = address[i]['address'];
+            array[i] = address[i]['address']
+            if (address['img'] != 'undefined' && address['img'] != '') img_arr[0] = address['img']
+            if (address['img2'] != 'undefined' && address['img2'] != '') img_arr[1] = address['img2']
+            if (address['img3'] != 'undefined' && address['img3'] != '') img_arr[2] = address['img3']
           }
           that.setData({
             address: address[0],
+            img_arr:img_arr,
             areaSelectedStr: address[0]['prov_str'] + address[0]['city_str'] + address[0]['area_str'] + address[0]['town_str']
-          });
+          })
+          console.log(that.data.img_arr)
         }
       })
     }
