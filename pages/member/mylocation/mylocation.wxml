@@ -47,6 +47,6 @@
 <!-- 
   <button open-type="share" bindtap="onShareAppMessage" >分享给朋友</button>
   -->
-  <button wx:if="{{is_myself==1}}" bindtap="addActivity">添加信息</button>
+  <button wx:if="{{is_myself==1}}" bindtap="addActivity">添加位置</button>
   <button wx:if="{{is_myself==0}}" bindtap="goBack">返回</button>
 </view>
