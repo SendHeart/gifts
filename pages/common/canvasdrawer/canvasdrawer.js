@@ -26,8 +26,8 @@ Component({
   },
   data: {
     showCanvas: false,
-    width: 200,
-    height: 200,
+    width: 100,
+    height: 100,
 
     index: 0,
     imageList: [],
@@ -155,26 +155,21 @@ Component({
       this.ctx.setTextAlign(textAlign)
       this.ctx.setFillStyle(color)
       this.ctx.setFontSize(fontSize)
-      this.ctx.setFontSize(content.font)
+      //this.ctx.setFontSize(content.font)
 
       if (!breakWord) {
         if (textAlign=='center'){
           //let canvasWidthPx = 700 / this.data.ratio;
           //let text_content = this.getContent(content,50,2)
-        
-          let text_left = parseInt((width - this.ctx.measureText(content+'').width)/2 )
-          this.ctx.fillText(content+'~~', text_left, top)
-          this.drawTextLine(text_left, top, textDecoration, color, fontSize, content+'~~')
-          console.log('drawText() !breakWord content:', content, 'windowWidth:', this.data.windowWidth, 'content len:', this.ctx.measureText(content).width, 'textAlign:', textAlign, 'text_left:', left, 'textDecoration:', textDecoration)
+          let text_left = parseInt((this.data.width - this.ctx.measureText(content).width)/2 )
+          this.ctx.fillText(content, text_left, top)
+          this.drawTextLine(text_left, top, textDecoration, color, fontSize, content)
+         
         }else{
           this.ctx.fillText(content, left, top)
           this.drawTextLine(left, top, textDecoration, color, fontSize, content)
         }
-       
-       
-        
-       
-        
+        console.log('drawText() !breakWord content:', content, 'windowWidth:', this.data.width, 'content len:', this.ctx.measureText(content).width, 'textAlign:', textAlign, 'text_left:', left, 'textDecoration:', textDecoration)
       } else {
         let fillText = ''
         let fillTop = top

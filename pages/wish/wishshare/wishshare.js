@@ -185,7 +185,7 @@ Page({
     if (activity_id>0){
       that.setData({
         painting: {
-          width: 375,
+          width: 700,
           height: 667,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
@@ -196,16 +196,15 @@ Page({
               url: activity_image,
               top: 0,
               left: 0,
-              width: 375,
+              width: 700,
               height: 400
             },
           
             {
              type: 'text',
              content: activity_name,
-             width: 375,
              fontSize: 28,
-             color: '#402D16',
+             color: '#f2f2f2',
              textAlign: 'left',
              top: 33,
              left: 20,
@@ -216,24 +215,24 @@ Page({
               type: 'image',
               url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type +  '&activity_id=' + activity_id,
               top: 230,
-              left: 130,
-              width: 110,
+              left: 283,
+              width: 125,
               height: 125,
 
             },
             
             {
               type: 'text',
-              content: '长按识别二维码，进入送心小程序',
+              content: '长按识别二维码，查看具体地图位置',
               fontSize: 12,
               color: '#fff',
               textAlign: 'left',
-              top: 360,
-              left: 95,
+              top: 365,
+              left: 250,
               lineHeight: 30,
               MaxLineNumber: 2,
               breakWord: true,
-              //width: 150
+              //width: 700
             }
           ]
         }
