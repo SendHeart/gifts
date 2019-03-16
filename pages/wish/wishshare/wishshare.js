@@ -187,6 +187,8 @@ Page({
         painting: {
           width: 375,
           height: 667,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
           clear: true,
           views: [
             {
@@ -201,18 +203,19 @@ Page({
             {
              type: 'text',
              content: activity_name,
+             width: 375,
              fontSize: 28,
              color: '#402D16',
              textAlign: 'left',
              top: 33,
-             left: 96,
+             left: 20,
              bolder: true
             },
            
             {
               type: 'image',
               url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type +  '&activity_id=' + activity_id,
-              top: 260,
+              top: 230,
               left: 130,
               width: 110,
               height: 125,
@@ -223,9 +226,9 @@ Page({
               type: 'text',
               content: '长按识别二维码，进入送心小程序',
               fontSize: 12,
-              color: '#FFF',
+              color: '#fff',
               textAlign: 'left',
-              top: 620,
+              top: 360,
               left: 95,
               lineHeight: 30,
               MaxLineNumber: 2,

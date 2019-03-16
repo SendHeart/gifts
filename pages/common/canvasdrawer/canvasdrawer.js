@@ -26,9 +26,8 @@ Component({
   },
   data: {
     showCanvas: false,
-
-    width: 100,
-    height: 100,
+    width: 200,
+    height: 200,
 
     index: 0,
     imageList: [],
@@ -45,10 +44,16 @@ Component({
   },
   methods: {
     readyPigment () {
-      const { width, height, views } = this.data.painting
+      const { width, height, windowHeight,windowWidth,views } = this.data.painting
+      // 屏幕宽度 375px = 750rpx，1px=2rpx
+      // 1px = （750 / 屏幕宽度）rpx；
+      // 1rpx = （屏幕宽度 / 750）px;
       this.setData({
         width,
-        height
+        height,
+        windowHeight,
+        windowWidth,
+        ratio: 750/windowWidth,
       })
 
       const inter = setInterval(() => {
@@ -145,20 +150,36 @@ Component({
         bolder = false,
         textDecoration = 'none'
       } = params
-      
       this.ctx.beginPath()
       this.ctx.setTextBaseline('top')
       this.ctx.setTextAlign(textAlign)
       this.ctx.setFillStyle(color)
       this.ctx.setFontSize(fontSize)
+      this.ctx.setFontSize(content.font)
 
       if (!breakWord) {
-        this.ctx.fillText(content, left, top)
-        this.drawTextLine(left, top, textDecoration, color, fontSize, content)
+        if (textAlign=='center'){
+          //let canvasWidthPx = 700 / this.data.ratio;
+          //let text_content = this.getContent(content,50,2)
+        
+          let text_left = parseInt((width - this.ctx.measureText(content+'').width)/2 )
+          this.ctx.fillText(content+'~~', text_left, top)
+          this.drawTextLine(text_left, top, textDecoration, color, fontSize, content+'~~')
+          console.log('drawText() !breakWord content:', content, 'windowWidth:', this.data.windowWidth, 'content len:', this.ctx.measureText(content).width, 'textAlign:', textAlign, 'text_left:', left, 'textDecoration:', textDecoration)
+        }else{
+          this.ctx.fillText(content, left, top)
+          this.drawTextLine(left, top, textDecoration, color, fontSize, content)
+        }
+       
+       
+        
+       
+        
       } else {
         let fillText = ''
         let fillTop = top
         let lineNum = 1
+        console.log('drawText() breakWord content:', content)
         for (let i = 0; i < content.length; i++) {
           fillText += [content[i]]
           if (this.ctx.measureText(fillText).width > width) {
@@ -193,6 +214,29 @@ Component({
           textDecoration: 'none' 
         })
       }
+    },
+
+    getContent(detail, length = 24, row = 2) {
+      let len = 0
+      let index = 0
+      let content = []
+      for (let i = 0; len < detail.length; i++) {
+        // 若未定义则致为 ''
+        if (!content[index]) content[index] = ''
+        content[index] += detail[i]
+        // 中文或者数字占两个长度
+        if (detail.charCodeAt(i) > 127 || (detail.charCodeAt(i) >= 48 && detail.charCodeAt(i) <= 57)) {
+          len += 2;
+        } else {
+          len++;
+        }
+        if (len >= length || (row - index == 1 && len >= length - 2)) {
+          len = 0
+          index++
+        }
+        if (index === row) break
+      }
+      return content
     },
     drawTextLine (left, top, textDecoration, color, fontSize, content) {
       if (textDecoration === 'underline') {
