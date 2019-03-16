@@ -23,6 +23,7 @@
     "pages/member/shopowner/shopowner",
     "pages/member/aboutus/aboutus",
     "pages/member/mylocation/mylocation",
+    "pages/member/map/map",
     "pages/order/send/send",
     "pages/order/receive/receive",
     "pages/order/transfer/transfer",

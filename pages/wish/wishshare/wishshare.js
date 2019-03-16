@@ -26,6 +26,8 @@ Page({
     title_name: '分享',
     title_logo: '../../../images/footer-icon-05.png',
     activity_share_image: weburl+'/uploads/activity_share.jpg',
+    nickname: userInfo.nickName,
+    avatarUrl: userInfo.avatarUrl,
     painting: {},
     shareImage: '',
     shop_type:shop_type,
@@ -116,6 +118,7 @@ Page({
 
   onLoad (options) {
     var that = this
+    
     var task = options.task ? options.task:0
     var task_image = options.image ?options.image: ''
     var msg_id = options.msg_id ? options.msg_id : ''
@@ -131,6 +134,21 @@ Page({
       activity_image: activity_image,
       activity_name: activity_name,
     })
+    if (activity_name){
+      var title_len = activity_name.length
+      if (title_len>13){
+        wx.setNavigationBarTitle({
+          title: activity_name.substring(0, 10) + '...'
+        })
+      }else{
+        wx.setNavigationBarTitle({
+          title: activity_name
+        })
+      }
+      
+    }
+   
+
     //that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
@@ -199,7 +217,7 @@ Page({
               width: 700,
               height: 400
             },
-          
+          /*
             {
              type: 'text',
              content: activity_name,
@@ -210,25 +228,32 @@ Page({
              left: 20,
              bolder: true
             },
-           
+           */
             {
               type: 'image',
               url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type +  '&activity_id=' + activity_id,
               top: 230,
-              left: 283,
+              left: 220,
               width: 125,
               height: 125,
-
             },
-            
+            {
+              type: 'image',
+              url: that.data.avatarUrl,
+              top: 230,
+              left: 370,
+              width: 125,
+              height: 125,
+              borderRadius:62,
+            },
             {
               type: 'text',
               content: '长按识别二维码，查看具体地图位置',
-              fontSize: 12,
+              fontSize: 18,
               color: '#fff',
               textAlign: 'left',
               top: 365,
-              left: 250,
+              left: 215,
               lineHeight: 30,
               MaxLineNumber: 2,
               breakWord: true,
@@ -344,7 +369,7 @@ Page({
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: desc,
       path: '/pages/hall/hall?task=' + task + '&msg_id=' + msg_id + '&refername=' + username + '&sharetime=' + start_time,   // 默认是当前页面，必须是以‘/’开头的完整路径
-      imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      imageUrl: activity_id > 0 ?activity_image:imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         console.log(res)
         if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
@@ -367,7 +392,7 @@ Page({
     if (options.from === 'button') {
       if (activity_id > 0) {
         shareObj['desc'] = '我的位置'
-        shareObj['title'] = activity_name + '~'
+        shareObj['title'] = nickname+':'+ activity_name + '~'
         shareObj['imageUrl'] = activity_image
         shareObj['path'] = '/pages/member/mylocation/mylocation?username=' + username + '&activity_id=' + activity_id 
       } 

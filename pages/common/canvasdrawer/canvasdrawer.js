@@ -124,14 +124,14 @@ Component({
     drawImage (params) {
       this.ctx.save()
       const { url, top = 0, left = 0, width = 0, height = 0, borderRadius = 0 } = params
-      // if (borderRadius) {
-      //   this.ctx.beginPath()
-      //   this.ctx.arc(left + borderRadius, top + borderRadius, borderRadius, 0, 2 * Math.PI)
-      //   this.ctx.clip()
-      //   this.ctx.drawImage(url, left, top, width, height)
-      // } else {
-      this.ctx.drawImage(url, left, top, width, height)
-      // }
+       if (borderRadius) {
+         this.ctx.beginPath()
+         this.ctx.arc(left + borderRadius, top + borderRadius, borderRadius, 0, 2 * Math.PI)
+         this.ctx.clip()
+         this.ctx.drawImage(url, left, top, width, height)
+      } else {
+        this.ctx.drawImage(url, left, top, width, height)
+      }
       this.ctx.restore()
     },
     drawText (params) {

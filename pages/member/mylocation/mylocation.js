@@ -42,6 +42,8 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var address = e.currentTarget.dataset.address
     var addrname = e.currentTarget.dataset.addrname
+    var selected_activity_index = e.currentTarget.dataset.activityindex ? e.currentTarget.dataset.activityindex : 0;
+    var activity_name = that.data.addressObjects[selected_activity_index]['name']
     var qqmapkey = that.data.qqmapkey
     qqmapsdk = new QQMapWX({
       key: qqmapkey, //'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
@@ -53,11 +55,16 @@ Page({
           lat: res.result.location.lat,
           lng: res.result.location.lng,
         })
+        wx.navigateTo({
+          url: '/pages/member/map/map?lat=' + that.data.lat + '&lng=' + that.data.lng + '&title=' + activity_name,
+        })
+        /*
         wx.openLocation({
           latitude: res.result.location.lat,
           longitude: res.result.location.lng,
           scale: 14
         })
+        */
       },
       fail: function (res) {
         console.log(res);
@@ -129,7 +136,7 @@ Page({
         that.setData({
           activity_name: current_activity_info['name'],
           activity_image: current_activity_info['img'],
-          activity_id: selected_activity_id
+          activity_id: selected_activity_id,
         })
       } else {
         activity_list[i]['selected'] = false
