@@ -23,8 +23,9 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 
 Page({
   data: {
-    title_name: '分享心愿单',
+    title_name: '分享',
     title_logo: '../../../images/footer-icon-05.png',
+    activity_share_image: weburl+'/uploads/activity_share.jpg',
     painting: {},
     shareImage: '',
     shop_type:shop_type,
@@ -63,7 +64,6 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
     console.log('wishshare get_project_gift_para navList2:', navList2)
@@ -119,10 +119,17 @@ Page({
     var task = options.task ? options.task:0
     var task_image = options.image ?options.image: ''
     var msg_id = options.msg_id ? options.msg_id : ''
+    var activity_id = options.activity_id ? options.activity_id : 0
+    var activity_name = options.activity_name ? options.activity_name : 0
+    var activity_image = options.activity_image ? options.activity_image : 0
+    console.log('onload wishshare options:',options)
     that.setData({
       task: task,
       task_image: task_image,
       msg_id: msg_id,
+      activity_id: activity_id,
+      activity_image: activity_image,
+      activity_name: activity_name,
     })
     //that.setNavigation()
     wx.getSystemInfo({
@@ -148,7 +155,6 @@ Page({
       }
     })
     that.get_project_gift_para()
-    
   },
   onShow:function(){
     var that = this
@@ -168,71 +174,129 @@ Page({
     var qr_type = 'wishshare'  //
     var task = that.data.task
     var msg_id = that.data.msg_id
+    var activity_id = that.data.activity_id?that.data.activity_id:0
+    var activity_image = that.data.activity_image ? that.data.activity_image : that.data.activity_share_image
+    var activity_name = that.data.activity_name ? that.data.activity_name:'我的位置'
+    //console.log('wishshare eventDraw activity_image:', activity_image, 'activity_name:', activity_name)
     wx.showLoading({
       title: '生成图片',
       mask: true
     })
-    
-    that.setData({
-      painting: {
-        width: 375,
-        height: 667,
-        clear: true,
-        views: [
-          {
-            type: 'image',
-            url:  wechat_share,
-            top: 0,
-            left: 0,
-            width: 375,
-            height: 667
-          },
-          /*
-         {
-           type: 'image',
-           url: weburl+'/uploads/gift_logo.png',
-           top: 27.5,
-           left: 29,
-           width: 55,
-           height: 55
-         },
-        
-         {
-           type: 'text',
-           content: '您的好友【kuckboy】',
-           fontSize: 16,
-           color: '#402D16',
-           textAlign: 'left',
-           top: 33,
-           left: 96,
-           bolder: true
-         },
-         */
-          {
-            type: 'image',
-            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&task=' + task + '&msg_id=' + msg_id,
-            top: 480,
-            left: 130,
-            width: 110,
-            height: 125,
+    if (activity_id>0){
+      that.setData({
+        painting: {
+          width: 375,
+          height: 667,
+          clear: true,
+          views: [
+            {
+              type: 'image',
+              url: activity_image,
+              top: 0,
+              left: 0,
+              width: 375,
+              height: 400
+            },
+          
+            {
+             type: 'text',
+             content: activity_name,
+             fontSize: 28,
+             color: '#402D16',
+             textAlign: 'left',
+             top: 33,
+             left: 96,
+             bolder: true
+            },
+           
+            {
+              type: 'image',
+              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type +  '&activity_id=' + activity_id,
+              top: 260,
+              left: 130,
+              width: 110,
+              height: 125,
+
+            },
             
-          },
-          {
-            type: 'text',
-            content: '长按识别二维码，进入送心小程序',
-            fontSize: 12,
-            color: '#FFF',
-            textAlign: 'left',
-            top: 620,
-            left: 95,
-            lineHeight: 30,
-            MaxLineNumber: 2,
-            breakWord: true,
-            //width: 150
-          }
-        ]
-      }
-    })
+            {
+              type: 'text',
+              content: '长按识别二维码，进入送心小程序',
+              fontSize: 12,
+              color: '#FFF',
+              textAlign: 'left',
+              top: 620,
+              left: 95,
+              lineHeight: 30,
+              MaxLineNumber: 2,
+              breakWord: true,
+              //width: 150
+            }
+          ]
+        }
+      })
+    }else{
+      that.setData({
+        painting: {
+          width: 375,
+          height: 667,
+          clear: true,
+          views: [
+            {
+              type: 'image',
+              url: wechat_share,
+              top: 0,
+              left: 0,
+              width: 375,
+              height: 667
+            },
+            /*
+           {
+             type: 'image',
+             url: weburl+'/uploads/gift_logo.png',
+             top: 27.5,
+             left: 29,
+             width: 55,
+             height: 55
+           },
+          
+           {
+             type: 'text',
+             content: '您的好友【kuckboy】',
+             fontSize: 16,
+             color: '#402D16',
+             textAlign: 'left',
+             top: 33,
+             left: 96,
+             bolder: true
+           },
+           */
+            {
+              type: 'image',
+              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&task=' + task + '&msg_id=' + msg_id,
+              top: 480,
+              left: 130,
+              width: 110,
+              height: 125,
+
+            },
+            {
+              type: 'text',
+              content: '长按识别二维码，进入送心小程序',
+              fontSize: 12,
+              color: '#FFF',
+              textAlign: 'left',
+              top: 620,
+              left: 95,
+              lineHeight: 30,
+              MaxLineNumber: 2,
+              breakWord: true,
+              //width: 150
+            }
+          ]
+        }
+      })
+    }
   },
   eventSave: function () {
     wx.saveImageToPhotosAlbum({
@@ -266,11 +330,12 @@ Page({
     var msg_id = that.data.msg_id
     var task = that.data.task
     var start_time = that.data.start_time
+    var activity_id = that.data.activity_id ? that.data.activity_id : 0
+    var activity_image = that.data.activity_image ? that.data.activity_image : that.data.activity_share_image
+    var activity_name = that.data.activity_name ? that.data.activity_name : '我的位置'
     var title = '收到' + nickname + '的送礼分享~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
-    
     var desc = '送心礼物分享'
-     
     console.log('开始分享送礼任务', options)
 
     var shareObj = {
@@ -298,6 +363,12 @@ Page({
       },
     }
     if (options.from === 'button') {
+      if (activity_id > 0) {
+        shareObj['desc'] = '我的位置'
+        shareObj['title'] = activity_name + '~'
+        shareObj['imageUrl'] = activity_image
+        shareObj['path'] = '/pages/member/mylocation/mylocation?username=' + username + '&activity_id=' + activity_id 
+      } 
       console.log('任务分享', shareObj)
     }
     // 返回shareObj

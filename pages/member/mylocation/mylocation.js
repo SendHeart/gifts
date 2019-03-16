@@ -1,5 +1,5 @@
 var util = require('../../../utils/util.js')
-var QQMapWX = require('../../../utils/qqmap-wx-jssdk.js')
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js')
 var qqmapsdk
 var app = getApp();
 var weburl = app.globalData.weburl;
@@ -12,8 +12,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var now = new Date().getTime()
 Page({
   data: {
-    username:null,
-    token:null,
+    is_myself:1,
     qqmapkey: qqmapkey,
     addressIndex:[],
     prov:[],
@@ -30,6 +29,7 @@ Page({
     shop_type: shop_type,
     navList2: navList2,
     currenttime: now ? parseInt(now / 1000) : 0,
+    modalHidden: true,//是否隐藏对话框  
   },
   addActivity: function () {
 		wx.navigateTo({
@@ -42,6 +42,32 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var address = e.currentTarget.dataset.address
     var addrname = e.currentTarget.dataset.addrname
+    var qqmapkey = that.data.qqmapkey
+    qqmapsdk = new QQMapWX({
+      key: qqmapkey, //'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
+    })
+    qqmapsdk.geocoder({
+      address: address,
+      success: res => {
+        that.setData({
+          lat: res.result.location.lat,
+          lng: res.result.location.lng,
+        })
+        wx.openLocation({
+          latitude: res.result.location.lat,
+          longitude: res.result.location.lng,
+          scale: 14
+        })
+      },
+      fail: function (res) {
+        console.log(res);
+      },
+      complete: function (res) {
+        console.log(res);
+      }
+    })
+
+    /*
     wx.request({
       url: weburl + '/api/client/get_chineseaddr_area',
       method: 'POST',
@@ -65,7 +91,7 @@ Page({
           latitude: Number(that.data.lat),
           longitude: Number(that.data.lng),
           scale: 14,
-          name: addrname,
+          name: address,
           address: address,
           success: function (res) {
             console.log(res)
@@ -83,8 +109,9 @@ Page({
         console.log('complete')
       }
     })
+    */
   },
-  bindSelectShop: function (e) {
+  bindSelectAct: function (e) {
     var that = this
     var selected_activity_index = e.currentTarget.dataset.activityindex ? e.currentTarget.dataset.activityindex : 0;
     var selected_activity_id = e.currentTarget.dataset.activityid ? e.currentTarget.dataset.activityid : 0
@@ -102,19 +129,77 @@ Page({
         that.setData({
           activity_name: current_activity_info['name'],
           activity_image: current_activity_info['img'],
-          activity_id: current_activity_info['id']
+          activity_id: selected_activity_id
         })
       } else {
         activity_list[i]['selected'] = false
       }
     }
-  
     that.setData({
       addressObjects: activity_list,
     })
-   
+    console.log('bindSelectAct activity_id:', selected_activity_id)
+    wx.navigateTo({
+      url: '/pages/wish/wishshare/wishshare?activity_id=' + that.data.activity_id + '&activity_image=' + that.data.activity_image + '&activity_name=' + that.data.activity_name
+    })
   },
-  
+  bindDeleteAct: function (e) {
+    var that = this
+    var selected_activity_id = e.currentTarget.dataset.activityid ? e.currentTarget.dataset.activityid : 0
+    that.setData({
+      modalHidden: !that.data.modalHidden, 
+      selected_activity_id: selected_activity_id,
+    })
+  },
+
+  //确定按钮点击事件  
+  modalBindaconfirm: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var selected_activity_id = that.data.selected_activity_id
+    //保存地址到服务器
+    wx.request({
+      url: weburl + '/api/client/delete_activity_address',
+      method: 'POST',
+      data: {
+        'username': username,
+        'address_id': selected_activity_id,
+        'access_token': token,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        //console.log(res.data.result)
+        that.loadData()
+        that.setData({
+          modalHidden: !that.data.modalHidden,
+        })
+      }
+    })
+  },
+  //取消按钮点击事件  
+  modalBindcancel: function () {
+    var that = this
+    that.setData({
+      modalHidden: !that.data.modalHidden
+    })
+  },  
+  goBack: function () {
+    var pages = getCurrentPages();
+    console.log('details goBack pages:', pages)
+    if (pages.length > 1) {
+      wx.navigateBack({ changed: true });//返回上一页
+    } else {
+      app.globalData.from_page = '/pages/member/mylocation/mylocation'
+      app.globalData.hall_gotop = 1
+      wx.switchTab({  
+        url: '/pages/my/index'
+      })
+    }
+  },
   getMore: function (e) {
     var that = this;
     var page = that.data.page + 1;
@@ -135,15 +220,14 @@ Page({
   },
   onLoad: function (options) {
     var that = this
-    var address = options.address ? options.address:''
+    var username = options.username ? options.username:''
     var activity_id = options.activity_id ? options.activity_id : ''
+
     that.setData({
-      address: address,
       activity_id: activity_id,
+      is_myself: activity_id?0:1,
     })
-    console.log('onload address:',that.data.address)
-    that.location()
-   
+    console.log('onload mylocation address id:', options.activity_id, 'username:', options.username)
   },
 	onShow: function () {
     var that = this
@@ -164,9 +248,6 @@ Page({
       wx.navigateTo({
         url: '../../login/login'
       })
-    }
-    if (!cur_city){
-     
     }
     that.location()
 	},
@@ -194,7 +275,7 @@ Page({
 		// 提交网络更新该用户所有的地址
     //保存地址到服务器
     wx.request({
-      url: weburl + '/api/client/update_member_address',
+      url: weburl + '/api/client/update_activity_address',
       method: 'POST',
       data: {
         'username': username,
@@ -225,78 +306,15 @@ Page({
       }
     })
 	},
-	edit: function (e) {
-		var that = this;
-		// 取得下标
-		var index = parseInt(e.currentTarget.dataset.index);
-		// 取出id值
-		var objectId = this.data.addressObjects[index]['id'];
-
-		wx.navigateTo({
-			url: '../add/add?objectId='+objectId
-		});
-	},
-	delete: function (e) {
-		var that = this;
-    var username = that.data.username;
-    var token = that.data.token;
-		// 取得下标
-		var index = parseInt(e.currentTarget.dataset.index);
-		// 找到当前地址AVObject对象
-		var address = that.data.addressObjects[index];
-		// 给出确认提示框
-		wx.showModal({
-			title: '确认',
-			content: '要删除这个地址吗？',
-			success: function(res) {
-				if (res.confirm) {
-					// 真正删除对象
-          wx.request({
-            url: weburl + '/api/client/delete_activity_address',
-            method: 'POST',
-            data: {
-              'username': username,
-              'address_id': address['id'],
-              'access_token': token,
-            },
-            header: {
-              'Content-Type': 'application/x-www-form-urlencoded',
-              'Accept': 'application/json'
-            },
-            success: function (res) {
-              console.log(res.data.result);
-              var address = that.data.addressObjects;
-              var new_address=[];
-              var j=0;
-              for (var i = 0; i < address.length; i++) {
-                // find the default address
-                if (i != index) {
-                  new_address[j++] = address[i];
-                }
-              }
-              that.setData({
-                addressObjects: new_address,
-              });
-              // 成功同时更新本地数据源
-              // 设置成功提示
-              wx.showToast({
-                title: '删除成功',
-                icon: 'success',
-                duration: 2000
-              });
-            }
-          })
-
-				}
-			}
-		})
-	},
+	
 	loadData: function () {
 		//获取地址列表
 		var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var addressObjects = that.data.addressObjects
+    var activity_id = that.data.activity_id
+    var is_myself = that.data.is_myself
     var page = that.data.page
     var pagesize = that.data.pagesize
     var page_num = that.data.page_num
@@ -310,6 +328,7 @@ Page({
         page:page,
         pagesize:pagesize,
         shop_type:shop_type,
+        address_id: is_myself==1?0:activity_id,
         },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -453,7 +472,7 @@ Page({
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: "活动位置",
-      path: '/pages/member/mylocation/mylocation?username=' + username + '&activity_id =' + activity_id,   // 默认是当前页面，必须是以‘/’开头的完整路径
+      path: '/pages/member/mylocation/mylocation?username=' + username + '&activity_id=' + activity_id,   // 默认是当前页面，必须是以‘/’开头的完整路径
       imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         console.log(res)

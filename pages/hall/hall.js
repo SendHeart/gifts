@@ -995,6 +995,7 @@ Page({
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
     
     that.get_project_gift_para()
+   
     var message_info = {
       addtime: myDate,
       username: username,
@@ -1009,7 +1010,11 @@ Page({
       msg_id: msg_id,
       page_type: page_type,
     })
-
+    if (scene.indexOf("activity=") >= 0) {
+      wx.navigateTo({
+        url: '/pages/member/mylocation/mylocation?' + scene
+      })
+    }
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()

@@ -1,7 +1,8 @@
 var app = getApp();
 var weburl = app.globalData.weburl; 
-var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
-var qqmapsdk;
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js')
+var qqmapsdk
+var qqmapkey = app.globalData.mapkey
 var util = require('../../../utils/util.js')
 var now = new Date().getTime()
 var shop_type = app.globalData.shop_type;
@@ -12,7 +13,8 @@ Page({
     var that = this;
 		// user 
     var username = this.data.username;
-    var token = this.data.token;
+    var token = this.data.token
+    var areaSelectedStr = that.data.areaSelectedStr
 		// detail
 		var detail = e.detail.value.detail;
 		// activity_name
@@ -24,30 +26,31 @@ Page({
     var waitting = e.detail.value.waitting
     var endtime = that.data.currenttime +  waitting*60*60   //秒
 		// 表单验证
-		if (this.data.areaSelectedStr == '请选择省市区') {
+    if (areaSelectedStr == '请选择省市区' || areaSelectedStr =='') {
 			wx.showToast({
 				title: '请输入区域'
 			});
-			return;
+			return
 		}
+    
 		if (detail == '') {
 			wx.showToast({
 				title: '请填写详情地址'
-			});
-			return;
+			})
+			return
 		}
     if (activity_name == '') {
 			wx.showToast({
 				title: '请填写活动名称'
-			});
-			return;
+			})
+			return
 		}
     
 		if(!(/^1[34578]\d{9}$/.test(mobile))){ 
 			wx.showToast({
 				title: '请填写正确手机号码'
-			});
-			return;
+			})
+			return
 		}
     that.setData({
       username: username,
@@ -57,7 +60,7 @@ Page({
       activity_name: activity_name,
       detail: detail,
       mobile: mobile,
-    });
+    })
     that.upload()
 	},
 	data: {
@@ -86,12 +89,15 @@ Page({
     new_img_arr: [],
     upimg_url: [],
     formdata: '',
-    currenttime: now ? parseInt(now / 1000) : 0, 
+    currenttime: now ? parseInt(now / 1000) : 0,
+    qqmapkey:qqmapkey, 
 	},
 
 	onLoad: function (options) {
+    var that = this
+    var qqmapkey = that.data.qqmapkey
     qqmapsdk = new QQMapWX({
-      key: 'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
+      key: qqmapkey, //'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
     })
 
     var that = this
@@ -125,7 +131,7 @@ Page({
         that.setData({
           province: array,
           provinceObjects: area
-        });
+        })
       }
     })
 
@@ -152,7 +158,8 @@ Page({
     var endtime = that.data.endtime
     var activity_image = that.data.activity_image
     var activity_name  = that.data.activity_name
-    var detail = that.data.detail
+    var address_name = that.data.detail
+    var detail = that.data.areaSelectedStr + that.data.detail
     var mobile = that.data.mobile
 
     //保存地址到服务器
@@ -199,6 +206,7 @@ Page({
                   'area': region ? region.area_id : '',
                   'town': town ? town.area_id : '',
                   'address': detail,
+                  'address_name': address_name,
                   'tel': mobile,
                   'image': new_img_url[0] ? new_img_url[0]:'',
                   'image2': new_img_url[1] ? new_img_url[1] : '',
@@ -523,7 +531,7 @@ Page({
     	var areaSelectedStr = this.data.provinceName + this.data.cityName + this.data.regionName + this.data.townName;
     	this.setData({
     		areaSelectedStr: areaSelectedStr
-    	});
+    	})
     	this.cascadeDismiss();
     },
     currentChanged: function (e) {
@@ -547,9 +555,9 @@ Page({
     		poi_options: 'policy=2',
     		get_poi: 1,
 		    success: function(res) {
-				console.log(res);
+          console.log('获取当前位置 fetchPOI:',res);
 				that.setData({
-					areaSelectedStr: res.result.address
+					areaSelectedStr: res.result.address+res.result.formatted_addresses.recommend
 				});
 		    },
 		    fail: function(res) {

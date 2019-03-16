@@ -187,3 +187,20 @@ page {
   font-size: 24rpx;
   color: #999;
 }
+
+.modalbox {
+  background-color: #fff;
+}
+
+.btnshare {
+  font-size: 24rpx;
+  position: relative;
+  z-index: 99;
+  margin-left:10rpx; 
+  background:#ccc;
+}
+.shareto {
+  width: 32rpx;
+  height: 32rpx;
+  margin: 4rpx 6rpx 0 0;
+}

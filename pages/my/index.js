@@ -622,20 +622,22 @@ Page({
       })
     }, 1500)
   },
-  onLoad: function () {
+  onLoad: function (options) {
     var that = this
     var gifts_rcv = that.data.gifts_rcv
     var gifts_send = that.data.gifts_send
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var scene = decodeURIComponent(options.scene)
     that.get_project_gift_para()
-    console.log("openid:" + openid + ' username:' + username)
+    console.log("openid:" + openid + ' username:' + username, 'scene:', scene)
     if (!username) { // 登录
       wx.navigateTo({
         url: '../login/login?'
       })
     }
+   
   },
   onShow: function () {
     var that = this

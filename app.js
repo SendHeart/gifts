@@ -10,6 +10,7 @@ App({
     wssurl:'wss://sendheart.dreamer-inc.com' ,
     uploadurl: weburl+'/api/upload/index4',
     mapkey: 'SSPBZ-ALR32-4BWUC-CLUXY-HAFM3-3ABQF',
+    mapkey2: 'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U',
     openid: null,
     username: null,
     is_task:0,
@@ -178,7 +179,7 @@ App({
           get_poi: 1,
           success: function (res) {
             console.log('qqmapsdk:', res);
-            wx.setStorageSync('mylocation', res.result.address)
+            wx.setStorageSync('mylocation', res.result.address + res.result.formatted_addresses.recommend)
             wx.setStorageSync('city', res.result.address_component.city)
             wx.setStorageSync('district', res.result.address_component.district)
             wx.setStorageSync('province', res.result.address_component.province)
