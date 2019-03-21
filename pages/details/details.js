@@ -508,7 +508,9 @@ Page({
             })
           }
         })
-      wxparse.wxParse('dkcontent2', 'html', winPage.data.goodsPicsInfo.desc['desc2'], winPage, 1)
+        if (winPage.data.goodsPicsInfo.desc){
+          wxparse.wxParse('dkcontent2', 'html', winPage.data.goodsPicsInfo.desc['desc2'], winPage, 1)
+        }
       }
       winPage.setData({
         hideviewgoodsparaflag: false
@@ -516,20 +518,20 @@ Page({
     },
 
     upper: function (e) {
-      console.log(e)
+      //console.log(e)
     },
     lower: function (e) {
-      console.log(e)
+      //console.log(e)
     },
     scroll: function (e) {
-      console.log(e)
+      //console.log(e)
     },
 
     getAttrIndex: function (attrName, attrValueList) {
       // 判断数组中的attrKey是否有该属性值 
       for (var i = 0; i < attrValueList.length; i++) {
         if (attrName == attrValueList[i].name) {
-          break;
+          break
         }
       }
       return i < attrValueList.length ? i : -1;
@@ -538,7 +540,7 @@ Page({
       // 判断是否已有属性值 
       for (var i = 0; i < valueArr.length; i++) {
         if (valueArr[i] == value) {
-          break;
+          break
         }
       }
       return i < valueArr.length;
@@ -681,10 +683,12 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var goodsid = that.data.goodsid
+    var image_goods_share = that.data.image_pic[0]['url']
     return {
       title: that.data.share_title,
       desc: that.data.share_desc,
-      path: '/pages/details/details?id='+goodsid+'&refername='+username
+      imageUrl: image_goods_share,  
+      path: '/pages/details/details?id=' + goodsid + '&image=' + image_goods_share+'&refername='+username
     }
   }
 })
