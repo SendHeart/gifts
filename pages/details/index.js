@@ -1,6 +1,6 @@
 var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js");
-var weburl = "https://czw.saleii.com";
+var weburl = "https://sendheart.dreamer-inc.com";
 
 Page({
     data: {

@@ -100,6 +100,13 @@ Page({
     })
 
   },
+  returnTapTag: function () {
+    var that = this
+    wx.switchTab({
+      url: '/pages/hall/hall'
+    })
+
+  },
   onLoad: function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -122,6 +129,7 @@ Page({
           goods_id:goodsid,
           url:image,
         }
+        that.showGoodspara()
         if (image) image_pic.push(image_init)
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
@@ -463,7 +471,6 @@ Page({
     showGoodsinfo: function () {
       // 获得高度  
       let winPage = this;
-     
       winPage.setData({
         //hideviewgoodsinfo: (!winPage.data.hideviewgoodsinfo),
         hideviewgoodsinfo:false,
@@ -491,9 +498,12 @@ Page({
         wx.getSystemInfo({
           success: function (res) {
             let winHeight = res.windowHeight;
+            let winWidth = res.windowWidth;
             console.log(winHeight);
             winPage.setData({
               dkheight: winHeight - winHeight * 0.05 - 100,
+              winHeight: winHeight,
+              winWidth: winWidth,
               scrollTop: winPage.data.scrollTop_init
             })
           }

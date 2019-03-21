@@ -26,6 +26,7 @@ Page({
     title_name: '分享',
     title_logo: '../../../images/footer-icon-05.png',
     activity_share_image: weburl+'/uploads/activity_share.jpg',
+    activity_avatarUrl: weburl + '/uploads/avatar.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     painting: {},
@@ -124,7 +125,8 @@ Page({
     var msg_id = options.msg_id ? options.msg_id : ''
     var activity_id = options.activity_id ? options.activity_id : 0
     var activity_name = options.activity_name ? options.activity_name : 0
-    var activity_image = options.activity_image ? options.activity_image : 0
+    var activity_image = options.activity_image ? options.activity_image : ''
+    var activity_headimg = options.activity_headimg ? options.activity_headimg : that.data.activity_avatarUrl
     console.log('onload wishshare options:',options)
     that.setData({
       task: task,
@@ -133,6 +135,7 @@ Page({
       activity_id: activity_id,
       activity_image: activity_image,
       activity_name: activity_name,
+      activity_headimg: activity_headimg,
     })
     if (activity_name){
       var title_len = activity_name.length
@@ -237,15 +240,17 @@ Page({
               width: 125,
               height: 125,
             },
+             
             {
               type: 'image',
-              url: that.data.avatarUrl,
+              url: that.data.activity_headimg,
               top: 230,
               left: 370,
               width: 125,
               height: 125,
               borderRadius:62,
             },
+             
             {
               type: 'text',
               content: '长按识别二维码，查看具体地图位置',

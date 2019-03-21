@@ -4,6 +4,12 @@
 <!-- <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" /> -->
 <!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
 <view  class="pagewrap" >
+  <view class="share-goods"  >
+    <view class="share-buttons" style='margin-left:{{winWidth?winWidth/2+20:180}}px;'>
+      <button class="" style='font-size:25rpx;' bindtap="returnTapTag">返回</button>
+      <button class="" open-type="share" style='font-size:25rpx;' bindtap="onShareAppMessage">分享</button>
+    </view>
+  </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}">
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">

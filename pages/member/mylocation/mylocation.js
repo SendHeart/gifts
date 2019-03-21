@@ -55,6 +55,7 @@ Page({
           lat: res.result.location.lat,
           lng: res.result.location.lng,
         })
+        console.log('mylocation gotoMap:',res);
         wx.navigateTo({
           url: '/pages/member/map/map?lat=' + that.data.lat + '&lng=' + that.data.lng + '&title=' + activity_name,
         })
@@ -136,6 +137,7 @@ Page({
         that.setData({
           activity_name: current_activity_info['name'],
           activity_image: current_activity_info['img'],
+          activity_headimg: current_activity_info['activity_headimg'],
           activity_id: selected_activity_id,
         })
       } else {
@@ -147,7 +149,7 @@ Page({
     })
     console.log('bindSelectAct activity_id:', selected_activity_id)
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?activity_id=' + that.data.activity_id + '&activity_image=' + that.data.activity_image + '&activity_name=' + that.data.activity_name
+      url: '/pages/wish/wishshare/wishshare?activity_id=' + that.data.activity_id + '&activity_image=' + that.data.activity_image + '&activity_name=' + that.data.activity_name + '&activity_headimg=' + that.data.activity_headimg
     })
   },
   bindDeleteAct: function (e) {

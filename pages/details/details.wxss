@@ -208,6 +208,26 @@ font-size: 32rpx;
   font-size: 28rpx;
 }
 
+.share-goods {
+  width: 100%;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+  position: fixed;
+  top: 0;
+  z-index: 9; 
+}
+.share-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 40%;
+  padding: 20rpx;
+  border-radius: 10rpx 10rpx 10rpx 10rpx;
+}
+.share-buttons button::after {
+  border: none;
+}
+ 
 /*购物车按钮、收藏等*/
 .footer {
   background: #fff;
@@ -373,8 +393,6 @@ border: none;
   margin: 10rpx 0 0 20rpx;
   display: none;
 }
-
-
 
 .comm-item {
  	display: flex;
