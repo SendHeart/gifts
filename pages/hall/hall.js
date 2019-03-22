@@ -1015,6 +1015,11 @@ Page({
         url: '/pages/member/mylocation/mylocation?' + scene
       })
     }
+    if (scene.indexOf("share_goods_id=") >= 0) {
+      wx.navigateTo({
+        url: '/pages/details/details?' + scene
+      })
+    }
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()

@@ -27,6 +27,7 @@ Page({
     title_logo: '../../../images/footer-icon-05.png',
     activity_share_image: weburl+'/uploads/activity_share.jpg',
     activity_avatarUrl: weburl + '/uploads/avatar.png',
+    share_goods_avatarUrl: weburl + '/uploads/avatar.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     painting: {},
@@ -119,7 +120,6 @@ Page({
 
   onLoad (options) {
     var that = this
-    
     var task = options.task ? options.task:0
     var task_image = options.image ?options.image: ''
     var msg_id = options.msg_id ? options.msg_id : ''
@@ -127,6 +127,11 @@ Page({
     var activity_name = options.activity_name ? options.activity_name : 0
     var activity_image = options.activity_image ? options.activity_image : ''
     var activity_headimg = options.activity_headimg ? options.activity_headimg : that.data.activity_avatarUrl
+    var share_goods_id = options.share_goods_id ? options.share_goods_id : 0
+    var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
+    var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
+    var share_goods_title = options.share_goods_title ? options.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
+    var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
     console.log('onload wishshare options:',options)
     that.setData({
       task: task,
@@ -136,6 +141,11 @@ Page({
       activity_image: activity_image,
       activity_name: activity_name,
       activity_headimg: activity_headimg,
+      share_goods_id: share_goods_id,
+      share_goods_image: share_goods_image,
+      share_goods_wx_headimg: share_goods_wx_headimg,
+      share_goods_title: share_goods_title,
+      share_goods_desc: share_goods_desc,
     })
     if (activity_name){
       var title_len = activity_name.length
@@ -151,8 +161,6 @@ Page({
       
     }
    
-
-    //that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -187,18 +195,22 @@ Page({
     }  
   },
 
-  
   eventDraw: function () {
     var that = this
-    var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image ;
+    var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image 
     var shop_type = that.data.shop_type
-    var qr_type = 'wishshare'  //
+    var qr_type = 'wishshare' 
     var task = that.data.task
     var msg_id = that.data.msg_id
     var activity_id = that.data.activity_id?that.data.activity_id:0
     var activity_image = that.data.activity_image ? that.data.activity_image : that.data.activity_share_image
     var activity_name = that.data.activity_name ? that.data.activity_name:'我的位置'
     //console.log('wishshare eventDraw activity_image:', activity_image, 'activity_name:', activity_name)
+    var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
+    var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
+    var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : share_goods_avatarUrl
+    var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
+    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
     wx.showLoading({
       title: '生成图片',
       mask: true
@@ -234,7 +246,7 @@ Page({
            */
             {
               type: 'image',
-              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type +  '&activity_id=' + activity_id,
+              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id,
               top: 230,
               left: 220,
               width: 125,
@@ -259,6 +271,70 @@ Page({
               textAlign: 'left',
               top: 365,
               left: 215,
+              lineHeight: 30,
+              MaxLineNumber: 2,
+              breakWord: true,
+              //width: 700
+            }
+          ]
+        }
+      })
+    } else if (share_goods_id > 0) {
+      that.setData({
+        painting: {
+          width: 400,
+          height: 400,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
+          clear: true,
+          views: [
+            {
+              type: 'image',
+              url: share_goods_image,
+              top: 0,
+              left: 0,
+              width: 400,
+              height: 400
+            },
+            /*
+              {
+               type: 'text',
+               content: activity_name,
+               fontSize: 28,
+               color: '#f2f2f2',
+               textAlign: 'left',
+               top: 33,
+               left: 20,
+               bolder: true
+              },
+             */
+            {
+              type: 'image',
+              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + activity_id,
+              top: 260,
+              left:100,
+              width: 90,
+              height: 90,
+            },
+
+            {
+              type: 'image',
+              url: that.data.share_goods_wx_headimg,
+              top: 260,
+              left: 215,
+              width: 90,
+              height: 90,
+              borderRadius: 45,
+            },
+
+            {
+              type: 'text',
+              content: '长按识别二维码，查看商品详情信息',
+              fontSize: 18,
+              color: '#e34c55',
+              textAlign: 'left',
+              top: 360,
+              left: 55,
               lineHeight: 30,
               MaxLineNumber: 2,
               breakWord: true,
@@ -368,6 +444,11 @@ Page({
     var title = '收到' + nickname + '的送礼分享~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
     var desc = '送心礼物分享'
+    var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
+    var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
+    var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_goods_avatarUrl
+    var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
+    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
     console.log('开始分享送礼任务', options)
 
     var shareObj = {
@@ -401,7 +482,13 @@ Page({
         shareObj['imageUrl'] = activity_image
         shareObj['path'] = '/pages/member/mylocation/mylocation?username=' + username + '&activity_id=' + activity_id 
       } 
-      console.log('任务分享', shareObj)
+      if (share_goods_id > 0) {
+        shareObj['desc'] = share_goods_desc
+        shareObj['title'] = share_goods_title
+        shareObj['imageUrl'] = share_goods_image
+        shareObj['path'] = '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image + '&refername=' + username
+      } 
+      console.log('送心分享', shareObj)
     }
     // 返回shareObj
     return shareObj;

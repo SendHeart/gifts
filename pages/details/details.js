@@ -10,6 +10,7 @@ Page({
         title_logo: '../../images/footer-icon-05.png',
         share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
         share_desc:'送礼就是送心',
+        share_avatarUrl: weburl + '/uploads/avatar.png',
         user:null,
         userInfo:{},
         username:null,
@@ -107,15 +108,32 @@ Page({
     })
 
   },
+  sharegoodsTapTag: function () {
+    var that = this
+    var share_goods_id = that.data.goodsid
+    var share_goods_image = that.data.image_pic[0]['url']
+    var share_goods_wx_headimg = that.data.share_goods_wx_headimg
+    var share_goods_title = that.data.share_title
+    var share_goods_desc = that.data.share_desc
+    var share_avatarUrl = that.data.share_avatarUrl
+    share_goods_wx_headimg = share_goods_wx_headimg ? share_goods_wx_headimg : share_avatarUrl
+    wx.navigateTo({
+      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc
+    })
+
+  },
   onLoad: function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         username = options.username ? options.username : username
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
         var page = that.data.page
+        var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
         //var goodsshortname = goodsname?goodsname.substring(0,13)+'...':''
         var goodsid = options.id
+        var share_goods_id = options.share_goods_id
+        goodsid = goodsid ? goodsid : share_goods_id
         var goodsinfo = options.goods_info ? options.goods_info:''
         var goodsprice = options.goods_price
         var marketprice = options.goods_marketprice 
@@ -142,7 +160,7 @@ Page({
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
         })
-    console.log('detail onLoad goodsid:', goodsid, ' image:', image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo);
+    console.log('detail onLoad goodsid:', goodsid, ' image:', image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){
           wx.request({
@@ -174,6 +192,7 @@ Page({
                   //goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
                   goodscoverimg: goods_info[0]['activity_image'],
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
+                  share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
                 })
               }else{
                 wx.showToast({
@@ -682,13 +701,15 @@ Page({
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var goodsid = that.data.goodsid
-    var image_goods_share = that.data.image_pic[0]['url']
+    var share_goods_id = that.data.goodsid
+    var share_goods_image = that.data.image_pic[0]['url']
+    var share_goods_title = that.data.share_title
+    var share_goods_desc = that.data.share_desc
     return {
-      title: that.data.share_title,
-      desc: that.data.share_desc,
-      imageUrl: image_goods_share,  
-      path: '/pages/details/details?id=' + goodsid + '&image=' + image_goods_share+'&refername='+username
+      title: share_goods_title,
+      desc: share_goods_desc,
+      imageUrl: share_goods_image,  
+      path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username
     }
   }
 })
