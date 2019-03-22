@@ -1015,7 +1015,7 @@ Page({
         url: '/pages/member/mylocation/mylocation?' + scene
       })
     }
-    if (scene.indexOf("share_goods_id=") >= 0) {
+    if (scene.indexOf("goodsid=") >= 0) {
       wx.navigateTo({
         url: '/pages/details/details?' + scene
       })

@@ -132,8 +132,9 @@ Page({
         var goodsname = options.name
         //var goodsshortname = goodsname?goodsname.substring(0,13)+'...':''
         var goodsid = options.id
-        var share_goods_id = options.share_goods_id
+        var share_goods_id = options.goodsid
         goodsid = goodsid ? goodsid : share_goods_id
+        var refer_mid = options.mid ? options.mid:0
         var goodsinfo = options.goods_info ? options.goods_info:''
         var goodsprice = options.goods_price
         var marketprice = options.goods_marketprice 
@@ -156,6 +157,7 @@ Page({
          // goodsshortname: goodsshortname ? goodsshortname:'',
           image_pic: image_pic,
           goodsid: goodsid ? goodsid:0,
+          refer_mid: refer_mid,
           goodsprice: goodsprice ? goodsprice:0,
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
@@ -169,7 +171,8 @@ Page({
             data: { 
               username: options.username ? options.username : username, 
               access_token: token, 
-              goods_id: options.id, 
+              goods_id: options.id,
+              refer_mid: refer_mid,
               shop_type:shop_type
             },
             header: {
