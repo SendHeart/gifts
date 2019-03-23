@@ -129,6 +129,7 @@ Page({
     var activity_headimg = options.activity_headimg ? options.activity_headimg : that.data.activity_avatarUrl
     var share_goods_id = options.share_goods_id ? options.share_goods_id : 0
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
+    var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
     var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
     var share_goods_title = options.share_goods_title ? options.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
@@ -143,6 +144,7 @@ Page({
       activity_headimg: activity_headimg,
       share_goods_id: share_goods_id,
       share_goods_image: share_goods_image,
+      share_goods_image2: share_goods_image2,
       share_goods_wx_headimg: share_goods_wx_headimg,
       share_goods_title: share_goods_title,
       share_goods_desc: share_goods_desc,
@@ -445,7 +447,7 @@ Page({
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
     var desc = '送心礼物分享'
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
-    var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
+    var share_goods_image = that.data.share_goods_image2 ? that.data.share_goods_image2 : ''
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
