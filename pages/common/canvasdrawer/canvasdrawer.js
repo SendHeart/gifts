@@ -28,11 +28,9 @@ Component({
     showCanvas: false,
     width: 100,
     height: 100,
-
     index: 0,
     imageList: [],
     tempFileList: [],
-
     isPainting: false
   },
   ctx: null,

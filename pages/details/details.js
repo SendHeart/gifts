@@ -3,7 +3,7 @@ var wxparse = require("../../wxParse/wxParse.js");
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var from_page = app.globalData.from_page;
-
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 Page({
     data: {
         title_name: '详情',
@@ -11,6 +11,8 @@ Page({
         share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
         share_desc:'送礼就是送心',
         share_avatarUrl: weburl + '/uploads/avatar.png',
+        nickname: userInfo.nickName,
+        avatarUrl: userInfo.avatarUrl,
         user:null,
         userInfo:{},
         username:null,
@@ -112,17 +114,43 @@ Page({
     var that = this
     var share_goods_id = that.data.goodsid
     var share_goods_image = that.data.image_pic[0]['url']
-    var share_goods_wx_headimg = that.data.share_goods_wx_headimg
+    var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
     var share_goods_title = that.data.share_title
     var share_goods_desc = that.data.share_desc
     var share_avatarUrl = that.data.share_avatarUrl
-    share_goods_wx_headimg = share_goods_wx_headimg ? share_goods_wx_headimg : share_avatarUrl
+    var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+    var goods_image_cache = wx.getStorageSync('goods_image_cache')
+    share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
+    share_goods_image = goods_image_cache ? goods_image_cache : share_goods_image
     wx.navigateTo({
       url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc
     })
-
+    
   },
-  onLoad: function(options) {
+
+  image_save:function(image_url,image_cache_name){
+    var that = this
+    wx.downloadFile({
+      url: image_url,
+      success: function (res) {
+        if (res.statusCode === 200) {
+          console.log('图片下载成功' + res.tempFilePath)
+          const fs = wx.getFileSystemManager()
+          fs.saveFile({
+            tempFilePath: res.tempFilePath, // 传入一个临时文件路径
+            success(res) {
+              console.log('image_save 图片缓存成功', res.savedFilePath) // res.savedFilePath 为一个本地缓存文件路径  
+              wx.setStorageSync(image_cache_name, res.savedFilePath)
+            }
+          })
+        } else {
+          console.log('image_save 响应失败', res.statusCode)
+        }
+      }
+    })
+  },
+
+  onLoad:function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         username = options.username ? options.username : username
@@ -197,6 +225,11 @@ Page({
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
                 })
+                that.image_save(image, 'goods_image_cache')
+                console.log('商品详情图片下载缓存 goods_image_cache')
+                var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+                that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
+                console.log('头像图片下载缓存 wx_headimg_cache')
               }else{
                 wx.showToast({
                   title: '商品已下架',
