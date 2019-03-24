@@ -130,6 +130,8 @@ Page({
     var share_goods_id = options.share_goods_id ? options.share_goods_id : 0
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
     var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
+    var share_goods_qrcode_cache = options.share_goods_qrcode_cache ? options.share_goods_qrcode_cache : ''
+   
     var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
     var share_goods_title = options.share_goods_title ? options.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
@@ -148,6 +150,7 @@ Page({
       share_goods_wx_headimg: share_goods_wx_headimg,
       share_goods_title: share_goods_title,
       share_goods_desc: share_goods_desc,
+      share_goods_qrcode_cache: share_goods_qrcode_cache,
     })
     if (activity_name){
       var title_len = activity_name.length
@@ -210,6 +213,7 @@ Page({
     //console.log('wishshare eventDraw activity_image:', activity_image, 'activity_name:', activity_name)
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
     var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
+    var share_goods_qrcode = that.data.share_goods_qrcode_cache ? that.data.share_goods_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
@@ -248,7 +252,7 @@ Page({
            */
             {
               type: 'image',
-              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id,
+              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&activity_id=' + activity_id,
               top: 230,
               left: 220,
               width: 125,
@@ -312,7 +316,7 @@ Page({
              */
             {
               type: 'image',
-              url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id,
+              url: share_goods_qrcode,
               top: 260,
               left:100,
               width: 90,
