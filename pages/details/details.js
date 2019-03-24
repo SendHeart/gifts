@@ -208,9 +208,7 @@ Page({
           goods_id:goodsid,
           url:image,
         }
-      var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid
-    that.image_save(share_goods_qrcode, 'goods_qrcode_cache')
-    console.log('商品分享二维码下载缓存 goods_qrcode_cache' )
+     
         that.showGoodspara()
         if (image) image_pic.push(image_init)
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
@@ -225,6 +223,9 @@ Page({
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
         })
+    var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid
+    that.image_save(share_goods_qrcode, 'goods_qrcode_cache')
+    console.log('商品分享二维码下载缓存 goods_qrcode_cache', 'image:', image)
   
     console.log('detail onLoad goodsid:', goodsid, ' image:', image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
