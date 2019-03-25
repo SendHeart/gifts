@@ -78,7 +78,7 @@ Component({
     downLoadImages (index) {
       const { imageList, tempFileList } = this.data
       if (index < imageList.length) {
-        //console.log('downLoadImages:',imageList[index])
+        console.log('downLoadImages:',imageList[index])
         this.getImageInfo(imageList[index]).then(file => {
           tempFileList.push(file)
           this.setData({
@@ -90,7 +90,12 @@ Component({
         this.startPainting()
       }
     },
-    startPainting () {
+    startPainting:function() {
+      wx.showToast({
+        title: "图片生成",
+        icon: 'loading',
+        duration: 3000,
+      })
       const { tempFileList, painting: { views } } = this.data
       for (let i = 0, imageIndex = 0; i < views.length; i++) {
         if (views[i].type === 'image') {
@@ -279,6 +284,7 @@ Component({
               }
             })
           } else {
+            console.log('getImageInfo cache url:', url)
             this.cache[url] = url
             resolve(url)
           }

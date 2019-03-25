@@ -200,12 +200,12 @@ Page({
   },
   eventGetImage: function (event) {
     console.log('eventGetImage:', event)
-    wx.hideLoading()
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
       this.setData({
         shareImage: tempFilePath
       })
+      wx.hideLoading()
     }
   },
   

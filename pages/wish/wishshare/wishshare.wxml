@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container" style='height:{{dkheight}}px;'> <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+<view class="container" style='height:{{dkheight}}px;'>
   <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="eventDraw" ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
    <view class="sentbtn">

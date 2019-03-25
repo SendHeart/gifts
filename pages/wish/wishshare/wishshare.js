@@ -425,13 +425,14 @@ Page({
     })
   },
   eventGetImage: function (event) {
-    console.log(event)
-    wx.hideLoading()
+    //console.log(event)
+    console.log('wishshare eventGetImage:', event)
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
       this.setData({
         shareImage: tempFilePath
       })
+      wx.hideLoading()
     }
   },
  
