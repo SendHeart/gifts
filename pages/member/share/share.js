@@ -117,8 +117,9 @@ Page({
       that.setData({
         loadingHidden: true,
       })
+      that.eventDraw()
     }, 1500)
-    that.eventDraw()
+   
   },
 
   eventDraw: function () {

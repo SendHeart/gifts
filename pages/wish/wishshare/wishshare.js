@@ -110,12 +110,18 @@ Page({
         wechat_share: navList_new[5]['img']
       })
     }
+    wx.showToast({
+      title: "图片生成",
+      icon: 'loading',
+      duration: 1500,
+    })
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
       })
-    }, 1500)
-    that.eventDraw()
+      that.eventDraw()
+    }, 1000)
+    
   },
 
   onLoad (options) {
@@ -217,10 +223,12 @@ Page({
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
+  
     wx.showLoading({
       title: '生成图片',
       mask: true
     })
+    
     if (activity_id>0){
       that.setData({
         painting: {
@@ -288,8 +296,8 @@ Page({
     } else if (share_goods_id > 0) {
       that.setData({
         painting: {
-          width: 400,
-          height: 400,
+          width: 375,
+          height: 600,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
@@ -299,7 +307,7 @@ Page({
               url: share_goods_image,
               top: 0,
               left: 0,
-              width: 400,
+              width: 375,
               height: 400
             },
             /*
@@ -317,7 +325,7 @@ Page({
             {
               type: 'image',
               url: share_goods_qrcode,
-              top: 260,
+              top: 410,
               left:100,
               width: 90,
               height: 90,
@@ -326,7 +334,7 @@ Page({
             {
               type: 'image',
               url: that.data.share_goods_wx_headimg,
-              top: 260,
+              top: 410,
               left: 215,
               width: 90,
               height: 90,
@@ -339,7 +347,7 @@ Page({
               fontSize: 18,
               color: '#e34c55',
               textAlign: 'left',
-              top: 360,
+              top: 510,
               left: 55,
               lineHeight: 30,
               MaxLineNumber: 2,
@@ -419,8 +427,9 @@ Page({
         wx.showToast({
           title: '保存图片成功',
           icon: 'success',
-          duration: 2000
+          duration: 1500
         })
+        
       }
     })
   },
@@ -429,6 +438,7 @@ Page({
     console.log('wishshare eventGetImage:', event)
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
+
       this.setData({
         shareImage: tempFilePath
       })

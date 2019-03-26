@@ -91,11 +91,6 @@ Component({
       }
     },
     startPainting:function() {
-      wx.showToast({
-        title: "图片生成",
-        icon: 'loading',
-        duration: 3000,
-      })
       const { tempFileList, painting: { views } } = this.data
       for (let i = 0, imageIndex = 0; i < views.length; i++) {
         if (views[i].type === 'image') {
