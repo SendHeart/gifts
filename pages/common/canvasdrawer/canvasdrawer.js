@@ -36,6 +36,7 @@ Component({
   ctx: null,
   cache: {},
   ready () {
+    
     wx.removeStorageSync('canvasdrawer_pic_cache')
     this.cache = wx.getStorageSync('canvasdrawer_pic_cache') || {}
     this.ctx = wx.createCanvasContext('canvasdrawer', this)
@@ -263,7 +264,9 @@ Component({
           resolve(this.cache[url])
         } else {
           const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          if (objExp.test(url)) {
+          const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          if (objExp.test(url) || objExp2.test(url) || objExp3.test(url) ) {
             wx.getImageInfo({
               src: url,
               complete: res => {
@@ -271,15 +274,36 @@ Component({
                   this.cache[url] = res.path
                   resolve(res.path)
                 } else {
-                  console.log('getImageInfo url:',url)
+                  console.log('getImageInfo complete error url:',url)
                   console.log('res:', res)
+                  const fs = wx.getFileSystemManager()
+                  fs.getSavedFileList({
+                    success(res) {
+                      console.log('canvasdrawer getSavedFileList 缓存文件列表', res)
+                      for (var i = 0; i < res.fileList.length; i++) {
+                        fs.removeSavedFile({
+                          filePath: res.fileList[i]['filePath'],
+                          success(res) {
+                            console.log('canvasdrawer getImageInfo 缓存清除成功', res)
+                          },
+                          fail(res) {
+                            console.log(' canvasdrawergetImageInfo 缓存清除失败', res)
+                          },
+                        })
+                      }
+
+                    },
+                    fail(res) {
+                      console.log(' canvasdrawer getSavedFileList 缓存文件列表查询失败', res)
+                    }
+                  })
                   this.triggerEvent('getImage', {errMsg: 'canvasdrawer:download fail'})
-                  reject(new Error('getImageInfo fail'))
+                  reject(new Error(' canvasdrawer getImageInfo fail'))
                 }
               }
             })
           } else {
-            console.log('getImageInfo cache url:', url)
+            console.log('canvasdrawer getImageInfo cache url error:', url)
             this.cache[url] = url
             resolve(url)
           }
