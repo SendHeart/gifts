@@ -5,7 +5,7 @@
 <!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
 <view  class="pagewrap" >
   <view class="share-goods"  >
-    <view class="share-buttons" style='margin-left:{{winWidth?winWidth/2+20:180}}px;'>
+    <view class="share-buttons" style='margin-left:{{winWidth?winWidth/2+20:180}}px;opacity:0.5;'>
       <button class="" style='font-size:25rpx;' bindtap="returnTapTag">返回</button>
       <button class="" style='font-size:25rpx;' bindtap="sharegoodsTapTag">分享</button>
       <!-- 
