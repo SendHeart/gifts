@@ -87,7 +87,6 @@ Page({
         url: '/pages/hall/hall'
       })
     }
-
   },
   commTapTag: function () {
     var that = this
@@ -131,7 +130,7 @@ Page({
     })
     wx.getStorageInfo({
       success: function (res) {
-        console.log('缓存列表 keys::', res.keys, 'currentSize:', res.currentSize, 'limitSize:', res.limitSize)
+        console.log('detail 缓存列表 keys::', res.keys, 'currentSize:', res.currentSize, 'limitSize:', res.limitSize)
       }
     })
   },
@@ -143,33 +142,46 @@ Page({
       url: image_url,
       success: function (res) {
         if (res.statusCode === 200) {
+          var img_tempFilePath = res.tempFilePath
           console.log('图片下载成功' + res.tempFilePath)
           const fs = wx.getFileSystemManager()
           fs.saveFile({
             tempFilePath: res.tempFilePath, // 传入一个临时文件路径
             success(res) {
-              console.log('image_save 图片缓存成功', res.savedFilePath) // res.savedFilePath 为一个本地缓存文件路径  
+              console.log('detail image_save 图片缓存成功', res.savedFilePath)  
               wx.setStorageSync(image_cache_name, res.savedFilePath)
             },
             fail(res) {
-              console.log('image_save 图片缓存失败', res) 
+              console.log(' detail image_save 图片缓存失败', res) 
+              var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+              var goods_image_cache = wx.getStorageSync('goods_image_cache')
+              var goods_qrcode_cache = wx.getStorageSync('goods_qrcode_cache')
               fs.getSavedFileList({
                 success(res) {
-                  console.log('getSavedFileList 缓存文件列表', res)
+                  console.log('detail getSavedFileList 缓存文件列表', res)
                   for (var i = 0; i < res.fileList.length;i++){
-                    fs.removeSavedFile({
-                      filePath: res.fileList[i]['filePath'],
-                      success(res) {
-                        console.log('image_save 缓存清除成功', res)  
-                      },
-                      fail(res) {
-                        console.log('image_save 缓存清除失败', res)
-                      },
-                    })
+                    if (res.fileList[i]['filePath'] != wx_headimg_cache && res.fileList[i]['filePath'] != goods_image_cache && res.fileList[i]['filePath'] != goods_qrcode_cache){
+                      fs.removeSavedFile({
+                        filePath: res.fileList[i]['filePath'],
+                        success(res) {
+                          console.log('detail image_save 缓存清除成功', res)
+                        },
+                        fail(res) {
+                          console.log('detail image_save 缓存清除失败', res)
+                        }
+                      })
+                    }
                   }
+                  fs.saveFile({
+                    tempFilePath: img_tempFilePath, // 传入一个临时文件路径
+                    success(res) {
+                      console.log('image_save 图片缓存成功', res.savedFilePath)
+                      wx.setStorageSync(image_cache_name, res.savedFilePath)
+                    },
+                  })
                 },
                 fail(res) {
-                  console.log('getSavedFileList 缓存文件列表查询失败', res)
+                  console.log('detail getSavedFileList 缓存文件列表查询失败', res)
                 }
               })
             },

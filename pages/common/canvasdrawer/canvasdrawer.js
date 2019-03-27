@@ -79,7 +79,7 @@ Component({
     downLoadImages (index) {
       const { imageList, tempFileList } = this.data
       if (index < imageList.length) {
-        console.log('downLoadImages:',imageList[index])
+        console.log('canvasdrawer downLoadImages:',imageList[index])
         this.getImageInfo(imageList[index]).then(file => {
           tempFileList.push(file)
           this.setData({
@@ -116,6 +116,7 @@ Component({
         }
       }
       this.ctx.draw(false, () => {
+        console.log('canvasdrawer this.ctx.draw canvasdrawer_pic_cache:', this.cache)
         wx.setStorageSync('canvasdrawer_pic_cache', this.cache)
         this.saveImageToLocal()
       })
@@ -263,10 +264,11 @@ Component({
         if (this.cache[url]) {
           resolve(this.cache[url])
         } else {
-          const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          if (objExp.test(url) || objExp2.test(url) || objExp3.test(url) ) {
+          const objExp = new RegExp(/^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          //const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          //const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          //const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          if (objExp.test(url)) {
             wx.getImageInfo({
               src: url,
               complete: res => {
@@ -274,8 +276,8 @@ Component({
                   this.cache[url] = res.path
                   resolve(res.path)
                 } else {
-                  console.log('getImageInfo complete error url:',url)
-                  console.log('res:', res)
+                  console.log('getImageInfo complete error url:',url,'res:',res)
+                  //console.log('res:', res)
                   const fs = wx.getFileSystemManager()
                   fs.getSavedFileList({
                     success(res) {
@@ -303,7 +305,7 @@ Component({
               }
             })
           } else {
-            console.log('canvasdrawer getImageInfo cache url error:', url)
+            console.log('canvasdrawer getImageInfo cache url already:', url)
             this.cache[url] = url
             resolve(url)
           }
