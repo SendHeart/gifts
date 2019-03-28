@@ -967,7 +967,26 @@ Page({
         middle4_note: navList_new[14]?navList_new[14]['note']:'',
       })
     }
-   
+    const fs = wx.getFileSystemManager()
+    fs.getSavedFileList({
+      success(res) {
+        console.log('hall getSavedFileList 缓存文件列表', res)
+        for (var i = 0; i < res.fileList.length; i++) {
+          fs.removeSavedFile({
+            filePath: res.fileList[i]['filePath'],
+            success(res) {
+              console.log('hall image_save 缓存清除成功', res)
+            },
+            fail(res) {
+              console.log('hall image_save 缓存清除失败', res)
+            }
+          })
+        }
+      },
+      fail(res) {
+        console.log('hall getSavedFileList 缓存文件列表查询失败', res)
+      }
+    })
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
