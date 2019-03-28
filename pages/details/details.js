@@ -213,7 +213,8 @@ Page({
       this.videoContext.play()
   },
   onLoad:function(options) {
-        var that = this;
+        var that = this
+        var phonemodel = wx.getStorageSync('phonemodel') ? wx.getStorageSync('phonemodel') : 'Andriod'
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         username = options.username ? options.username : username
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -238,6 +239,10 @@ Page({
         var image_pic = []
       
         console.log('detail options:', options)
+        that.setData({
+          is_apple: phonemodel.indexOf("iPhone")>= 0?1:0
+        })
+        
         if (image.indexOf(".mp4") >= 0) {
           var video_init = {
             id: 0,
@@ -261,7 +266,6 @@ Page({
         }
      
         that.showGoodspara()
-        
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
           goodsname: goodsname ? goodsname:'',
@@ -272,7 +276,6 @@ Page({
           goodsprice: goodsprice ? goodsprice:0,
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
-         
         })
     var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid
     that.image_save(share_goods_qrcode, 'goods_qrcode_cache')
@@ -642,13 +645,14 @@ Page({
           success: function (res) {
             let winHeight = res.windowHeight;
             let winWidth = res.windowWidth;
-            console.log(winHeight);
+            console.log('detail getSystemInfo:',res);
             winPage.setData({
               dkheight: winHeight - winHeight * 0.05 - 100,
               winHeight: winHeight,
               winWidth: winWidth,
-              scrollTop: winPage.data.scrollTop_init
             })
+            wx.setStorageSync('systeminfo', res.system)
+            wx.setStorageSync('phonemodel', res.model)
           }
         })
         if (winPage.data.goodsPicsInfo.desc){
