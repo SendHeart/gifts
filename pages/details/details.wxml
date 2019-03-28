@@ -18,9 +18,9 @@
       <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
-            <video id="myVideo" class="slide-image" src="{{video.url}}"  controls autoplay="" objectFit="cover">
+            <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{video.activity_image}}"  autoplay="" objectFit="fill">
               <cover-view class="controls" mode="aspecFit" style="display:{{tab_image}};z-index:2">
-              <cover-image class="img" src="{{video.activity_image}}" />
+              <cover-image class="" style="height:90%;" src="{{video.activity_image}}" />
               </cover-view>
               <cover-view class="play" style="display:{{tab_image}};z-index:2;">
               <cover-image bindtap="bindplay" src="../../images/play.png" style="width:160rpx;" />
