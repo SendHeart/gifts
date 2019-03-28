@@ -138,7 +138,7 @@ Page({
    
     console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id)
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[0]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode 
+      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[that.data.cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode 
     })
     wx.getStorageInfo({
       success: function (res) {
