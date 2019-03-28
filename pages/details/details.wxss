@@ -456,5 +456,11 @@ border: none;
   height:60rpx;
   border-radius: 50%;
 }
-
+.play{ 
+    position:absolute;
+    left:50%;
+    margin-top:-400rpx;
+    margin-left:-80rpx;   
+    opacity: 0.5; 
+}
  

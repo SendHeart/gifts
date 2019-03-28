@@ -192,7 +192,14 @@ Page({
       }
     })
   },
-
+  //点击播放按钮，封面图片隐藏,播放视频
+  bindplay: function (e) {
+    console.log('detail bindplay 响应失败', e)
+    this.setData({
+      tab_image: "none"
+    }),
+      this.videoContext.play()
+  },
   onLoad:function(options) {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -211,39 +218,59 @@ Page({
         var marketprice = options.goods_marketprice 
         var goodssale = options.sale
         var image = options.image
+        var activity_image = options.activity_image
+        var share_goods_image = activity_image ? activity_image : image
         var shop_type =  that.data.shop_type
         var qr_type = 'wishshare' 
         var image_video = []
         var image_pic = []
-        var image_init = {
-          id:0,
-          goods_id:goodsid,
-          url:image,
+      
+        console.log('detail options:', options)
+        if (image.indexOf(".mp4") >= 0) {
+          var video_init = {
+            id: 0,
+            url: image,
+            activity_image: activity_image,
+          }
+          image_video.push(video_init)
+          that.setData({
+            image_video: image_video,
+          })
+        }else{
+          var image_init = {
+            id: 0,
+            goods_id: goodsid,
+            url: activity_image ? activity_image : image,
+          }
+          image_pic.push(image_init)
+          that.setData({
+            image_pic: image_pic,
+          })
         }
      
         that.showGoodspara()
-        if (image) image_pic.push(image_init)
+        
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
           goodsname: goodsname ? goodsname:'',
           goodsinfo: goodsinfo ? goodsinfo:'',
          // goodsshortname: goodsshortname ? goodsshortname:'',
-          image_pic: image_pic,
           goodsid: goodsid ? goodsid:0,
           refer_mid: refer_mid,
           goodsprice: goodsprice ? goodsprice:0,
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
+         
         })
     var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid
     that.image_save(share_goods_qrcode, 'goods_qrcode_cache')
-    console.log('商品分享二维码下载缓存 goods_qrcode_cache', 'image:', image)
+    console.log('商品分享二维码下载缓存 goods_qrcode_cache', 'share_goods_image:', share_goods_image)
   
-    console.log('detail onLoad goodsid:', goodsid, ' image:', image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
+    console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){
-          that.image_save(image_pic[0]['url'], 'goods_image_cache')
-          console.log('商品详情图片下载缓存 goods_image_cache', image)
+          that.image_save(share_goods_image, 'goods_image_cache')
+          console.log('商品详情图片下载缓存 goods_image_cache', share_goods_image)
           wx.request({
             url: weburl + '/api/client/get_goods_list',
             method: 'POST',
@@ -781,6 +808,9 @@ Page({
   onReady: function () {
     this.videoContext = wx.createVideoContext('myVideo')
     this.videoContext.seek(1)
+    this.setData({
+      tab_image: "block"
+    })
   },
 
   onShareAppMessage: function () {
