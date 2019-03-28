@@ -37,6 +37,7 @@ Page({
         commodityAttr:[],
         attrValueList:[],
         firstIndex:0,
+        cur_img_id:0,
         image:'',
         image_pic:[],
         hideviewgoodsinfo:true,
@@ -111,10 +112,18 @@ Page({
     })
 
   },
+  swiperchange: function (e) {
+    var that = this
+    //console.log(e)
+    console.log('detail swiperchange:', e.detail.current)
+    that.setData({
+      cur_img_id: e.detail.current,
+    })
+  },
   sharegoodsTapTag: function () {
     var that = this
     var share_goods_id = that.data.goodsid
-    var share_goods_image = that.data.image_pic[0]['url']
+    var share_goods_image = that.data.image_pic[that.data.cur_img_id]['url']
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
     var share_goods_title = that.data.share_title
     var share_goods_desc = that.data.share_desc
@@ -123,7 +132,10 @@ Page({
     var goods_image_cache = wx.getStorageSync('goods_image_cache')
     var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache')
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
-    share_goods_image = goods_image_cache ? goods_image_cache : share_goods_image
+    if (that.data.cur_img_id==0){ 
+      share_goods_image = goods_image_cache ? goods_image_cache : share_goods_image
+    }
+   
     console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id)
     wx.navigateTo({
       url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[0]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode 
@@ -807,7 +819,7 @@ Page({
 
   onReady: function () {
     this.videoContext = wx.createVideoContext('myVideo')
-    this.videoContext.seek(1)
+   // this.videoContext.seek(1)
     this.setData({
       tab_image: "block"
     })
