@@ -264,50 +264,50 @@ Component({
         if (this.cache[url]) {
           resolve(this.cache[url])
         } else {
-          const objExp = new RegExp(/^https?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          //const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
           //const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
           //const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          if (objExp.test(url)) {
-            wx.getImageInfo({
-              src: url,
-              complete: res => {
-                if (res.errMsg === 'getImageInfo:ok') {
-                  this.cache[url] = res.path
-                  resolve(res.path)
-                } else {
-                  console.log('getImageInfo complete error url:',url,'res:',res)
-                  //console.log('res:', res)
-                  const fs = wx.getFileSystemManager()
-                  fs.getSavedFileList({
-                    success(res) {
-                      console.log('canvasdrawer getSavedFileList 缓存文件列表', res)
-                      for (var i = 0; i < res.fileList.length; i++) {
-                        fs.removeSavedFile({
-                          filePath: res.fileList[i]['filePath'],
-                          success(res) {
-                            console.log('canvasdrawer getImageInfo 缓存清除成功', res)
-                          },
-                          fail(res) {
-                            console.log(' canvasdrawergetImageInfo 缓存清除失败', res)
-                          },
-                        })
-                      }
-
-                    },
-                    fail(res) {
-                      console.log(' canvasdrawer getSavedFileList 缓存文件列表查询失败', res)
+          wx.getImageInfo({
+            src: url,
+            complete: res => {
+              if (res.errMsg === 'getImageInfo:ok') {
+                this.cache[url] = res.path
+                resolve(res.path)
+              } else {
+                console.log('getImageInfo complete error url:', url, 'res:', res)
+                //console.log('res:', res)
+                const fs = wx.getFileSystemManager()
+                fs.getSavedFileList({
+                  success(res) {
+                    console.log('canvasdrawer getSavedFileList 缓存文件列表', res)
+                    for (var i = 0; i < res.fileList.length; i++) {
+                      fs.removeSavedFile({
+                        filePath: res.fileList[i]['filePath'],
+                        success(res) {
+                          console.log('canvasdrawer getImageInfo 缓存清除成功', res)
+                        },
+                        fail(res) {
+                          console.log(' canvasdrawergetImageInfo 缓存清除失败', res)
+                        },
+                      })
                     }
-                  })
-                  this.triggerEvent('getImage', {errMsg: 'canvasdrawer:download fail'})
-                  reject(new Error(' canvasdrawer getImageInfo fail'))
-                }
+
+                  },
+                  fail(res) {
+                    console.log(' canvasdrawer getSavedFileList 缓存文件列表查询失败', res)
+                  }
+                })
+                this.triggerEvent('getImage', { errMsg: 'canvasdrawer:download fail' })
+                reject(new Error(' canvasdrawer getImageInfo fail'))
               }
-            })
+            }
+          })
+          if (objExp.test(url)) {
+            
           } else {
             console.log('canvasdrawer getImageInfo cache url already:', url)
-            this.cache[url] = url
-            resolve(url)
+            //this.cache[url] = url
+            //resolve(url)
           }
         }
       })

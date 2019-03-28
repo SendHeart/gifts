@@ -52,9 +52,9 @@
   flex-direction: row;
   justify-content: space-around;
   align-content: center;
-  margin: 50rpx auto 20rpx auto;
+  margin: 20rpx auto 20rpx auto;
   width: 100%;
-  height: 110rpx;
+  height: 150rpx;
 }
 
 .sentbtn button {
@@ -75,4 +75,124 @@
 .sentbtn text {
   font-size: 24rpx;
   color: #999;
+}
+
+.main_message{
+  position:fixed;
+  width:100%;
+  top:0px;
+  background:rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 999;
+}
+.main_message .t_w{
+  position:relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  width: 100%;
+  height: 100%;
+}
+.main_message .tanchu_view{
+  width: 80%;
+  margin:10% auto;
+  overflow: hidden;
+  background-color: #fff1e6;
+  border-radius: 10rpx;
+  padding: 4rpx;
+}
+
+main_message .main_red{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main_message .bg_view{
+  margin:0rpx auto 30rpx auto;
+  color:#fcb712;
+  font-size:50rpx;
+  background-color: #fff1e6;
+  padding:0rpx 30rpx;
+  text-align: center;
+}
+
+.main_message .txtys{
+    font-size: 50rpx;
+    text-align: center;
+    margin-bottom: 200rpx;
+}
+ 
+.main_message .txtsure{
+ width: 100%;
+ height: 100%;
+ display: flex;
+ justify-content: center;
+ margin: 20rpx;
+}
+ 
+/*确定背景*/
+.main_message .txtsurebg{
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 150rpx;
+  background-color: burlywood;
+  flex-direction: column;
+}
+ 
+/*确定图标*/
+.main_message .txtsureimg{
+  display:block;
+  width:60rpx;
+  height:60rpx;
+}
+ 
+/*确定文本*/
+.main_message .txtsurename{
+   margin-bottom: 10rpx;
+   color: white;
+   font-size: 30rpx;
+}
+ 
+/*右上角图标*/
+.main_message .t_image{
+  position: absolute;
+  top: 15%;
+  right:30rpx;
+}
+ 
+/*右上角图标*/
+.main_message .t_image1{
+  display:block;
+  width:60rpx;
+  height: 60rpx;
+  opacity:0.8;
+}
+
+.main-prom {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+} 
+
+.note {
+  width: 96%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+}
+
+.note textarea {
+  width: 100%;
+  height: 80rpx;
+  margin: 0 0 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #F3F3F3;
+  border-radius: 14rpx;
 }

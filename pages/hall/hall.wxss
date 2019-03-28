@@ -852,6 +852,7 @@ modal {
 .price-now::first-letter {
   font-size: 20rpx;
 }
+
 .main-prom {
   display: flex;
   justify-content: center;

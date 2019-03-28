@@ -36,7 +36,9 @@ Page({
     wechat_share: '',
     nickname: userInfo.nickName,
     start_time: util.getDateStr(new Date, 0),
-    overtime_status: 0,
+    overtime_status: 0, 
+    notehidden:true,
+    hidden_share:true,
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -46,11 +48,12 @@ Page({
       success: function (res) {
         console.log(res.model)
         if (res.model == 'iPhone X') {
-          startBarHeight = 44
+          //startBarHeight = 44
         }
         that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
+          //startBarHeight: startBarHeight,
+          //navgationHeight: navgationHeight,
+          //dkheight: winHeight,
         })
       }
     })
@@ -99,7 +102,7 @@ Page({
           }else{
             that.setData({
               navList2: navList_new,
-              wechat_share: navList_new[5]['img']
+              wechat_share: navList_new[5]['img'],
             })
           }
         }
@@ -171,13 +174,13 @@ Page({
       }
       
     }
-   
+  
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
-          dkheight: res.windowHeight - 30,
+          dkheight: res.windowHeight-10,
         })
       }
     })
@@ -205,7 +208,36 @@ Page({
       })
     }  
   },
+  bindTextAreaBlur: function (e) {
+    var that = this;
+    that.setData({
+      share_goods_title: e.detail.value
+    })
 
+  }, 
+  sharegoods: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+    })
+  },
+
+  //确定按钮点击事件 
+  shareConfirm: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+      hidden_share: !that.data.hidden_share
+    })
+  },
+  //取消按钮点击事件  
+  shareCandel: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+    })
+
+  },  
   eventDraw: function () {
     var that = this
     var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image 
@@ -223,7 +255,6 @@ Page({
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
-  
     wx.showLoading({
       title: '生成图片',
       mask: true

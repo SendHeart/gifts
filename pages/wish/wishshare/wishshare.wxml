@@ -1,9 +1,19 @@
 <!--index.wxml-->
 <view class="container" style='height:{{dkheight}}px;'>
-  <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="eventDraw" ></image>
+  <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="" ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
-   <view class="sentbtn">
-  <button class=""  hidden ='{{overtime_status==1?true:false}}' bindtap="eventSave" type='warn'>保存图片</button>
-  <button class=""  hidden ='{{overtime_status==1?true:false}}' open-type="share" bindtap="onShareAppMessage">分享</button>
+  <view  hidden="{{!notehidden}}" style='margin:10rpx;font-size:26rpx;color:#999;height:120rpx;' >{{share_goods_title?'分享语: '+share_goods_title:'分享语为空'}}</view>
+  <view class="sentbtn">
+  <button class=""  hidden ='' bindtap="eventSave" type='warn'>保存图片</button>
+  <button class=""  hidden ='{{!hidden_share}}' bindtap="sharegoods">分享</button>
+  <button class=""  hidden ='{{hidden_share}}' open-type='share' bindtap="onShareAppMessage">去分享</button>
   </view>
-</view> 
+</view>
+<modal title="编辑分享语" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-430}}px;">
+     <view class="note">
+      <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindTextAreaBlur" placeholder="{{share_goods_title}}" maxlength="100" />
+      </view>
+    </view>
+</modal>
+
