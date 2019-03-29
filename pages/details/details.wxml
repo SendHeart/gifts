@@ -70,15 +70,15 @@
         {{comm.desc}}
       </view>
   </view>
+  <view wx:if="{{goodsdiscount<100}}" class="prd-prom">{{goodsdiscount<100?'支持促销：9折优惠券':''}}</view>
   <view>
-  <view class="prd-title">商品详情</view>
-    <view class="prd-detail">
-      <view class="wxParse" hidden="{{hideviewgoodsinfo}}">
-        <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
+    <view class="prd-title">商品详情</view>
+      <view class="prd-detail">
+        <view class="wxParse" hidden="{{hideviewgoodsinfo}}">
+          <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
+        </view>
       </view>
     </view>
-  </view>
-<!-- </scroll-view> -->
 </view>
 
 <view hidden="{{modalHidden}}" style='z-index:999;'>

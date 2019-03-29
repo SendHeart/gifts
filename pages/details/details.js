@@ -30,6 +30,7 @@ Page({
         goodsprice: 0,
         goodssale: 0,
         goodsid: 0,
+        goodsdiscount:100,
         sku_gov_price:0,
         sku_earnest_price:0,
         sku_sell_price: 0,
@@ -324,6 +325,7 @@ Page({
                   goodscoverimg: goods_info[0]['activity_image'],
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
+                  goodsdiscount: goods_info[0]['discount'],
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')

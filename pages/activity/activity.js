@@ -28,6 +28,7 @@ Page({
   data: {
     title_name:'送心活动',
     title_logo: '../../images/footer-icon-05.png',
+    img_discount: '../../images/discount.png',
     hidden: true,
     scrollTop: 0,
     scrollHeight: 0,

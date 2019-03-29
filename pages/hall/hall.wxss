@@ -791,6 +791,13 @@ modal {
   height: 356rpx;
 }
 
+.venues_item .img-discount {
+  display: block;
+  width: 30rpx;
+  height: 30rpx;
+  margin-left:10rpx;
+}
+
 .venues_item .goods_name {
   display: block;
   color: #444;

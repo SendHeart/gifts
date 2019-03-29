@@ -14,7 +14,8 @@ var navList2 = [
 Page({
   data: {
     title_name: '商城首页',
-    title_logo: '../../images/footer-icon-05.png',
+    title_logo: '../../../images/footer-icon-05.png',
+    img_discount: '../../../images/discount.png',
     activeIndex: 0,
     activeIndex2: 0,
     navList2: navList2,

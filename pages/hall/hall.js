@@ -30,6 +30,7 @@ Page({
   data: {
     title_name:'送心',
     title_logo: '../../images/footer-icon-05.png',
+    img_discount: '../../images/discount.png',
     hidden: true,
     resp_message:{},
     messageHidden : true,
