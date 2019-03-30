@@ -72,7 +72,6 @@ Page({
     avatarUrl: userInfo.avatarUrl,
     shop_type:shop_type,
     navList2: navList2,
-
     socktBtnTitle: '连接socket',
     message: '',
     text: text,

@@ -70,7 +70,7 @@
         {{comm.desc}}
       </view>
   </view>
-  <view wx:if="{{goodsdiscount<100}}" class="prd-prom">{{goodsdiscount<100?'支持促销：9折优惠券':''}}</view>
+  <view wx:if="{{goodsdiscount<100}}" class="prd-prom">{{goodsdiscount<100?discountinfo:''}}</view>
   <view>
     <view class="prd-title">商品详情</view>
       <view class="prd-detail">

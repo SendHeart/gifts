@@ -2,8 +2,10 @@
 <view class="container-layout">
   <!--地图-->
   <view class='map-wrapper' style='height:{{mapHeight}}'>
-    <map class='map' id='myMap' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" show-location="true" markers="{{markers}}" bindmarkertap="bindMakertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{controls}}' bindtap='bindMapTap'>
-      <!--顶部提示
+    <map class='map' id='myMap' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" show-location="true" markers="{{markers}}" bindmarkertap="bindMakertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{controls}}'
+      bindtap='bindMapTap'>
+      <!--顶部提示-->
+      <!-- 
       <cover-view class='cover-tip-wrapper' wx:if='{{showTopTip}}' bindtap='showNewMarkerClick'>
         <cover-image class='tip-bg' src='../../../images/tip-bg.png'>
         </cover-image>
@@ -20,9 +22,10 @@
     <cover-view class='cover-layout' bindtap='selfLocationClick'>
       <cover-image class='self-location' src='../../../images/self-location.png'></cover-image>
     </cover-view>
-    <!--上传信息按钮
+    <!--上传信息按钮-->
+    <!-- 
     <cover-view wx:if='{{showUpload}}' class='home-btn-layout' style='left:{{homeActionLeftDistance}}' id='home-action-wrapper'>
-      <cover-image class='home-action-btn' src='../../../images/home-btn.png' bindtap='uploadInfoClick'>
+      <cover-image class='home-action-btn' src='../../img/home-btn.png' bindtap='uploadInfoClick'>
       </cover-image>
     </cover-view>
     -->
@@ -32,7 +35,7 @@
   <view class='bottom-layout' id='bottom-layout'>
     <view class='bottom-wrapper'>
       <view upload-wrapper wx:if='{{showConfirm}}'>
-        <!--点击上传信息
+        <!--点击上传信息-->
         <form bindsubmit='confirmClick'>
           <view class='cancel-publish-layout'>
             <view class='cancel-btn flex-center' bindtap='cancelClick'>取消</view>
@@ -47,20 +50,18 @@
             </view>
           </view>
           <view class='info-wrapper'>
-            <textarea class='info-text' placeholder='您想对其他人说些什么？' name='message' placeholder-style='color:#CCCCCC'></textarea>
+            <textarea class='info-text' placeholder='' name='message' placeholder-style='color:#CCCCCC'></textarea>
           </view>
           <view class='upload-image-root'>
             <view class='upload-image-wrapper'>
               <image class='default-image' src='../../../images/default-camera-image.png' bindtap='takePhoto' wx:if='{{!uploadImagePath}}'></image>
               <image class='default-image' src='{{uploadImagePath}}' bindtap='previewSelectImage' wx:if='{{uploadImagePath}}' mode='aspectFill'></image>
-              //删除图片的图标
-              <image class='delete-image-icon' src='../../../images/delete-icon.png' wx:if='{{uploadImagePath}}' bindtap='deleteSelectImage'></image>
+              <!--删除图片的图标-->
+              <image class='delete-image-icon' src='../../images/delete-icon.png' wx:if='{{uploadImagePath}}' bindtap='deleteSelectImage'></image>
             </view>
           </view>
         </form>
-        -->
       </view>
-
     </view>
   </view>
 </view>

@@ -83,7 +83,7 @@ Page({
           wx.authorize({
             scope: 'scope.address',
             success() {
-              // 
+              console.log('通讯录权限' + res.errMsg)
             }
           })
         }
@@ -92,8 +92,16 @@ Page({
           wx.authorize({
             scope: 'scope.writePhotosAlbum',
             success() {
-              //  
-             
+              console.log('保存到相册权限' + res.errMsg)
+            }
+          })
+        }
+        //位置权限
+        if (!res.authSetting['scope.userLocation']) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success() {
+              console.log('位置授权成功' + res.errMsg)
             }
           })
         }

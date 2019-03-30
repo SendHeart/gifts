@@ -129,6 +129,7 @@ Page({
 
   onLoad (options) {
     var that = this
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var task = options.task ? options.task:0
     var task_image = options.image ?options.image: ''
     var msg_id = options.msg_id ? options.msg_id : ''
@@ -136,16 +137,18 @@ Page({
     var activity_name = options.activity_name ? options.activity_name : 0
     var activity_image = options.activity_image ? options.activity_image : ''
     var activity_headimg = options.activity_headimg ? options.activity_headimg : that.data.activity_avatarUrl
+    var share_activity_title = options.share_activity_title ? options.share_activity_title : '这个地方真不错~'
     var share_goods_id = options.share_goods_id ? options.share_goods_id : 0
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
     var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
     var share_goods_qrcode_cache = options.share_goods_qrcode_cache ? options.share_goods_qrcode_cache : ''
-   
     var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
     var share_goods_title = options.share_goods_title ? options.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
+    share_goods_title = activity_id > 0 ? share_activity_title : share_goods_title
     console.log('onload wishshare options:',options)
     that.setData({
+      m_id:m_id,
       task: task,
       task_image: task_image,
       msg_id: msg_id,
@@ -172,7 +175,6 @@ Page({
           title: activity_name
         })
       }
-      
     }
   
     wx.getSystemInfo({
@@ -240,6 +242,7 @@ Page({
   },  
   eventDraw: function () {
     var that = this
+    var m_id = that.data.m_id
     var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image 
     var shop_type = that.data.shop_type
     var qr_type = 'wishshare' 
@@ -247,14 +250,16 @@ Page({
     var msg_id = that.data.msg_id
     var activity_id = that.data.activity_id?that.data.activity_id:0
     var activity_image = that.data.activity_image ? that.data.activity_image : that.data.activity_share_image
-    var activity_name = that.data.activity_name ? that.data.activity_name:'我的位置'
+    var activity_name = that.data.activity_name
+    var share_activity_title = that.data.share_activity_title
     //console.log('wishshare eventDraw activity_image:', activity_image, 'activity_name:', activity_name)
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
     var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
-    var share_goods_qrcode = that.data.share_goods_qrcode_cache ? that.data.share_goods_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id
+    var share_goods_qrcode = that.data.share_goods_qrcode_cache ? that.data.share_goods_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id+'&m_id='+m_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : share_goods_avatarUrl
-    var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
-    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
+    var share_goods_title = that.data.share_goods_title
+    var share_goods_desc = that.data.share_goods_desc
+   
     wx.showLoading({
       title: '生成图片',
       mask: true
@@ -264,7 +269,7 @@ Page({
       that.setData({
         painting: {
           width: 700,
-          height: 667,
+          height: 600,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
@@ -292,8 +297,8 @@ Page({
             {
               type: 'image',
               url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&activity_id=' + activity_id,
-              top: 230,
-              left: 220,
+              top: 410,
+              left: 215,
               width: 125,
               height: 125,
             },
@@ -301,11 +306,11 @@ Page({
             {
               type: 'image',
               url: that.data.activity_headimg,
-              top: 230,
-              left: 370,
+              top: 410,
+              left: 375,
               width: 125,
               height: 125,
-              borderRadius:62,
+              borderRadius: 62,
             },
              
             {
@@ -378,8 +383,8 @@ Page({
               fontSize: 18,
               color: '#e34c55',
               textAlign: 'left',
-              top: 510,
-              left: 55,
+              top: 620,
+              left: 95,
               lineHeight: 30,
               MaxLineNumber: 2,
               breakWord: true,
@@ -480,6 +485,7 @@ Page({
   onShareAppMessage: function (options) {
     var that = this
     var res
+    var m_id = that.data.m_id
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var nickname = that.data.nickname
@@ -526,7 +532,7 @@ Page({
     if (options.from === 'button') {
       if (activity_id > 0) {
         shareObj['desc'] = '我的位置'
-        shareObj['title'] = nickname+':'+ activity_name + '~'
+        shareObj['title'] = nickname + ':' + share_goods_title ?share_goods_title:activity_name + '~'
         shareObj['imageUrl'] = activity_image
         shareObj['path'] = '/pages/member/mylocation/mylocation?username=' + username + '&activity_id=' + activity_id 
       } 
@@ -534,7 +540,7 @@ Page({
         shareObj['desc'] = share_goods_desc
         shareObj['title'] = share_goods_title
         shareObj['imageUrl'] = share_goods_image
-        shareObj['path'] = '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image + '&refername=' + username
+        shareObj['path'] = '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image + '&mid=' + m_id
       } 
       console.log('送心分享', shareObj)
     }

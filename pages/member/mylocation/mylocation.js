@@ -257,13 +257,17 @@ Page({
   },
   onLoad: function (options) {
     var that = this
-    var username = options.username ? options.username:''
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var refer_username = options.username ? options.username:''
     var activity_id = options.activity_id ? options.activity_id : ''
     that.setData({
       activity_id: activity_id,
       is_myself: activity_id?0:1,
     })
-    console.log('onload mylocation address id:', options.activity_id, 'username:', options.username)
+    that.loadData()
+    console.log('onload mylocation shared address id:', options.activity_id, 'refer username:', options.username)
+    
   },
 	onShow: function () {
     var that = this
@@ -400,14 +404,6 @@ Page({
 
   location: function () {
     var that = this
-    var cur_city = wx.getStorageSync('city')  //默认杭州市 1213
-    var cur_area = wx.getStorageSync('district') //默认老余杭 50142
-    var cur_prov = wx.getStorageSync('province')  //默认浙江省15
-    var prov = that.data.prov
-    var city = that.data.city
-    var area = that.data.area
-    var qqmapkey = that.data.qqmapkey
-    console.log('location cur_city:', cur_city)
     //获取当前位置
     wx.getSetting({
       success(res) {
@@ -416,22 +412,39 @@ Page({
             scope: 'scope.userLocation',
             success() {
               console.log('位置授权成功' + res.errMsg)
-            },
-            fail() {
-              return
+              that.get_mylocation()
             }
           })
+        }else{
+          that.get_mylocation()
         }
       }
     })
+  },
 
+  get_mylocation:function(){
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var refer_username =that.data.refer_username
+    var activity_id = that.data.activity_id
+    var shop_type = that.data.shop_type
+    var cur_city = wx.getStorageSync('city')  //默认杭州市 1213
+    var cur_area = wx.getStorageSync('district') //默认老余杭 50142
+    var cur_prov = wx.getStorageSync('province')  //默认浙江省15
+    var prov = that.data.prov
+    var city = that.data.city
+    var area = that.data.area
+    var qqmapkey = that.data.qqmapkey
+    console.log('location cur_city:', cur_city)
     // 实例化腾讯地图API核心类
     qqmapsdk = new QQMapWX({
       key: qqmapkey // 必填
     })
     wx.getLocation({
-      type: 'wgs84',
+      type: 'gcj02', //gcj02  wgs84
       success: function (res) {
+        console.log('mylocation wx.getLocation:',res)
         var latitude = res.latitude
         var longitude = res.longitude
         var speed = res.speed
@@ -462,35 +475,42 @@ Page({
               prov: prov,
               city: city,
               area: area,
+              latitude: latitude, 
+              longitude: longitude,
             })
-            that.loadData()
+            //上传参与信息
+            if (!that.data.is_myself){
+              wx.request({
+                url: weburl + '/api/client/update_activity_addr_member',
+                method: 'POST',
+                data: {
+                  'username': username,
+                  'access_token': token,
+                  'activity_id': activity_id,
+                  'shop_type': shop_type,
+                  'latitude': latitude ? latitude : that.data.latitude,
+                  'longitude': longitude ? longitude : that.data.longitude
+                },
+                header: {
+                  'Content-Type': 'application/x-www-form-urlencoded',
+                  'Accept': 'application/json'
+                },
+                success: function (res) {
+                  console.log('mlocation onload update_activity_addr_member:', res)
+                }
+              })
+            }
           },
           fail: function (res) {
-            console.log('位置获取失败')
-            console.log(res)
+            console.log('mylocation get_mylocation()位置获取失败',res)
           },
           complete: function (res) {
-            console.log(res)
+            console.log('mylocation get_mylocation()位置获取完成', res)
+            
           }
         })
       }
     })
-    /*
-    if (!cur_city){
-     
-   } else {
-     prov.push(cur_prov)
-     city.push(cur_city)
-     area.push(cur_area)
-     that.setData({
-       prov: prov,
-       city: city,
-       area: area,
-     })
-    that.loadData()
-   }
-   */
-  
   },
 
   onShareAppMessage: function (options) {

@@ -31,6 +31,7 @@ Page({
         goodssale: 0,
         goodsid: 0,
         goodsdiscount:100,
+        discountinfo:'支持促销:9折优惠券',
         sku_gov_price:0,
         sku_earnest_price:0,
         sku_sell_price: 0,
@@ -222,6 +223,7 @@ Page({
   },
   onLoad:function(options) {
         var that = this
+        var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
         var phonemodel = wx.getStorageSync('phonemodel') ? wx.getStorageSync('phonemodel') : 'Andriod'
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         username = options.username ? options.username : username
@@ -233,7 +235,7 @@ Page({
         var goodsid = options.id
         var share_goods_id = options.goodsid
         goodsid = goodsid ? goodsid : share_goods_id
-        var refer_mid = options.mid ? options.mid:0
+        var refer_mid = options.mid ? options.mid:0 //分享人id
         var goodsinfo = options.goods_info ? options.goods_info:''
         var goodsprice = options.goods_price
         var marketprice = options.goods_marketprice 
@@ -286,7 +288,7 @@ Page({
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
         })
-    var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid
+    var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid + '&m_id=' + m_id
     that.image_save(share_goods_qrcode, 'goods_qrcode_cache')
     console.log('商品分享二维码下载缓存 goods_qrcode_cache', 'share_goods_image:', share_goods_image)
   
@@ -301,8 +303,7 @@ Page({
             data: { 
               username: options.username ? options.username : username, 
               access_token: token, 
-              goods_id: options.id,
-              refer_mid: refer_mid,
+              goods_id: goodsid,
               shop_type:shop_type
             },
             header: {
@@ -326,6 +327,7 @@ Page({
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
                   goodsdiscount: goods_info[0]['discount'],
+                  discountinfo: goods_info[0]['discount_info'],
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
@@ -350,14 +352,14 @@ Page({
 
         // 商品详情图片
         console.log('商品详情图片', image_pic)
-      
         wx.request({
           url: weburl+'/api/client/get_goodsdesc_list',
           method: 'POST',
           data: { 
             username: username, 
             access_token: token, 
-            goods_id: options.id, 
+            goods_id: goodsid, 
+            refer_mid: refer_mid, //分享人id
             page: page,
             shop_type: shop_type 
           },
@@ -393,7 +395,7 @@ Page({
           data: { 
             username: username,
             access_token: token, 
-            goods_id: options.id, 
+            goods_id: goodsid, 
             shop_type:shop_type,
             page: page 
           },

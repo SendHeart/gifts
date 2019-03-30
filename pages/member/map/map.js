@@ -1,58 +1,126 @@
-var util = require('../../../utils/util.js')
-var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js')
-const defaultScale = 14;
-var consoleUtil = require('../../../utils/consoleUtil.js');
-var constant = require('../../../utils/constant.js');
-var qqmapsdk
-var app = getApp();
+//index.js
+//获取应用实例
+const app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var qqmapkey = app.globalData.mapkey;
-var current_activity_info = wx.getStorageSync('current_activity_info') ? wx.getStorageSync('current_activity_info') : ''
-var shop_id = app.globalData.shop_id;
-var shop_type = app.globalData.shop_type;
-var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
-var now = new Date().getTime()
-var mapId = 'myMap'
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+const defaultScale = 14;
+var consoleUtil = require('../../../utils/consoleUtil.js');
+var constant = require('../../../utils/constant.js');
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.js');
+//定义全局变量
 var wxMarkerData = [];
 var bottomHeight = 0;
 var windowHeight = 0;
 var windowWidth = 0;
+var mapId = 'myMap';
+var qqmapsdk;
+var sourceType = [
+  ['camera'],
+  ['album'],
+  ['camera', 'album']
+]
+var sizeType = [
+  ['compressed'],
+  ['original'],
+  ['compressed', 'original']
+]
+
 Page({
   data: {
-    //可能我标识的地点和你所在区域比较远，缩放比例建议5;
-    markers: [],
+    userInfo: userInfo,
+    hasUserInfo: false,
+    longitude: '',
+    latitude: '',
+    //地图缩放级别
     scale: defaultScale,
+    markers: [],
     showTopTip: true,
     warningText: '顶部提示',
     showUpload: true,
     showConfirm: false,
-    controls: [{
-      id: 1,
-      iconPath: '../../../images/center-location.png',
-      position: {
-        left: 0,
-        top: 10,
-        width: 40,
-        height: 40
-      },
-      clickable: true
-    }],
-    location_list:[{
-      "id": 1,
-      "name": "永州市中心医院",
-      "longitude": "118.51116",
-      "latitude": "28.90141"
-    },
-    {
-      "id": 2,
-      "name": "永州市中医院",
-      "longitude": "118.51118",
-      "latitude": "28.90142"
-    }]
+    showComment: false,
+    //地图高度
+    mapHeight: 0,
+    infoAddress: '',
+    commentCount: 0,
+    praiseCount: 0,
+    commentList: [],
+    selectAddress: '',
+    centerLongitude: '',
+    centerLatitude: '',
+    uploadImagePath: '',
+    currentMarkerId: 0,
+    praiseSrc: '../../../images/bottom-unpraise.png',
+    warningIconUrl: '',
+    infoMessage: '',
+    isUp: false,
+    //中心指针，不随着地图拖动而移动
+    controls: [],
+    //搜索到的中心区域地址信息,用于携带到选择地址页面
+    centerAddressBean: null,
+    //选择地址后回调的实体类
+    callbackAddressInfo: null,
+    //将回调地址保存
+    callbackLocation: null,
+    //当前省份
+    currentProvince: '',
+    //当前城市
+    currentCity: '',
+    //当前区县
+    currentDistrict: '',
+    showHomeActionIcon: true,
+    homeActionLeftDistance: '0rpx',
+    //单个 marker 情报
+    currentTipInfo: '',
+    //显示评论输入框
+    showCommentInput: false,
+    //评论文字
+    commentMessage: '',
+    //分享携带经度
+    shareLongitude: '',
+    //分享携带纬度
+    shareLatitude: '',
+    //是否是分享点击进入小程序
+    showShare: false,
+    //上传者用户信息
+    userAvatar: userInfo.avatarUrl,
+    userNickname: userInfo.nickName,
+    uploadTime: '',
   },
-  onReady: function (e) {
-  
+
+  onLoad: function (options) {
+    var that = this
+    var activity_lat = options.lat
+    var activity_lng = options.lng
+    var activity_title = options.title
+    this.setData({
+      activity_lat: activity_lat,
+      activity_lng: activity_lng,
+      activity_title: activity_title,
+    })
+    console.log('map onlod activity_lat:', activity_lat, 'activity_lng:', activity_lng, 'activity_title:', activity_title);
+    //检测更新
+    that.checkUpdate();
+    if (that.data.userInfo) {
+      consoleUtil.log(1);
+      this.setData({
+        hasUserInfo: true
+      })
+    } else {
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      consoleUtil.log(2);
+      app.getUserInfo(function (userInfo) {
+        //更新数据
+        that.setData({
+          userInfo: userInfo,
+          hasUserInfo: true
+        })
+      })
+    }
+    that.scopeSetting();
   },
 
   onShow: function () {
@@ -80,58 +148,52 @@ Page({
     }
   },
 
-  onLoad: function (options) {
-    console.log('地图定位！')
-    let that = this
-    var title = options.title ? options.title : ''
-    var lat = options.lat
-    var lng = options.lng
-    var center_location = {
-      'latitude':lat,
-      'longitude':lng,
+  /**
+   * 页面不可见时
+   */
+  onHide: function () {
 
-    }
-    if (title) {
-      var title_len = title.length
-      if (title_len > 13) {
-        wx.setNavigationBarTitle({
-          title: title.substring(0, 10) + '...'
-        })
-      } else {
-        wx.setNavigationBarTitle({
-          title: title
-        })
-      }
+  },
 
-    }
-    this.setData({
-      mylat: lat,
-      mylng:lng,
+  /**
+   * 点击顶部横幅提示
+   */
+  showNewMarkerClick: function () {
+    var that = this;
+    wx.showModal({
+      title: '提示',
+      content: '你点击了顶部提示框',
+      showCancel: false
     })
-    console.log('map onLoad center location:',center_location)
-    that.checkUpdate();
-    that.scopeSetting();
-    
-    // 使用 wx.createMapContext 获取 map 上下文 
-    //this.mapCtx = wx.createMapContext('myMap')
+  },
 
-  
-    /*
-    wx.getLocation({
-      type: 'gcj02', //返回可以用于wx.openLocation的经纬度
-      success: (res) => {
-        var latitude = res.latitude;
-        var longitude = res.longitude;
-        var marker = this.createMarker(res);
-        this.setData({
-          centerX: longitude,
-          centerY: latitude,
-          markers: this.getHospitalMarkers()
+  /**
+   * 设置上传情报按钮的左边距
+   */
+  setHomeActionLeftDistance: function () {
+    var that = this;
+    if (!that.data.showUpload) {
+      return;
+    }
+    wx.getSystemInfo({
+      success: function (res) {
+        windowHeight = res.windowHeight;
+        windowWidth = res.windowWidth;
+        //创建节点选择器
+        var query = wx.createSelectorQuery();
+        //选择id
+        query.select('#home-action-wrapper').boundingClientRect()
+        query.exec(function (res) {
+          //res就是 所有标签为mjltest的元素的信息 的数组
+          consoleUtil.log(res);
+          /*
+          that.setData({
+            homeActionLeftDistance: ((windowWidth - res[0].width) / 2) + 'px'
+          })
+          */
         })
-        console.log('map onload getLocation res:', res, 'markers:', that.data.markers)
       }
-    })  
-     */
+    })
   },
 
   changeMapHeight: function () {
@@ -140,8 +202,8 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         consoleUtil.log(res);
-         windowHeight = res.windowHeight;
-         windowWidth = res.windowWidth;
+        windowHeight = res.windowHeight;
+        windowWidth = res.windowWidth;
         //创建节点选择器
         var query = wx.createSelectorQuery();
 
@@ -217,80 +279,32 @@ Page({
     })
   },
 
-  /**
-     * 拖动地图回调
-     */
-  regionChange: function (res) {
-    var that = this;
-    // 改变中心点位置  
-    if (res.type == "end") {
-      that.getCenterLocation();
-    }
-  },
-
-  /**
-     * 版本更新
-     */
-  checkUpdate: function () {
-    if (wx.canIUse('getUpdateManager')) {
-      const updateManager = wx.getUpdateManager();
-      updateManager.onCheckForUpdate(function (res) {
-        // 请求完新版本信息的回调
-        consoleUtil.log('onCheckForUpdate----------------->');
-        consoleUtil.log(res.hasUpdate);
-      })
-
-      updateManager.onUpdateReady(function () {
-        wx.showModal({
-          title: '更新提示',
-          content: '新版本已经准备好，即刻体验？',
-          success: function (res) {
-            if (res.confirm) {
-              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
-              updateManager.applyUpdate();
-            }
-          }
-        })
-      })
-
-      updateManager.onUpdateFailed(function () {
-        // 新的版本下载失败
-      })
-    }
-  },
   /** 
-     * 初始化地图
-     */
+   * 初始化地图
+   */
   initMap: function () {
     var that = this;
     qqmapsdk = new QQMapWX({
       key: constant.tencentAk
-    })
+    });
     that.getCenterLocation();
   },
-  /**
-  * 移动到自己位置
-  */
-  mymoveToLocation:function() {
-    let mpCtx = wx.createMapContext("mapId")
-    mpCtx.moveToLocation();
-  },
+
   //请求地理位置
   requestLocation: function () {
-    var that = this
+    var that = this;
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
         that.setData({
-          //latitude: res.latitude,
-          //longitude: res.longitude,
-          latitude: that.data.mylat,
-          longitude: that.data.mylng
+          latitude: res.latitude,
+          longitude: res.longitude,
         })
-        that.mymoveToLocation();
+        that.moveTolocation();
       },
     })
   },
+
   /**
    * 点击marker
    */
@@ -300,6 +314,7 @@ Page({
     that.setData({
       currentMarkerId: e.markerId
     })
+    console.log('currentMarkerId:', that.data.currentMarkerId)
     //重新设置点击marker为中心点
     for (var key in that.data.markers) {
       var marker = that.data.markers[key];
@@ -307,42 +322,190 @@ Page({
         that.setData({
           longitude: marker.longitude,
           latitude: marker.latitude,
+          loc_name:marker.name,
         })
       }
     }
     wx.showModal({
       title: '提示',
-      content: '你点击了marker',
+      content: that.data.loc_name ? that.data.loc_name:'查看位置',
       showCancel: false,
     })
+  },
+
+  /**
+   * 上传情报
+   */
+  uploadInfoClick: function () {
+    var that = this;
+    that.adjustViewStatus(false, true, false);
+    that.updateCenterLocation(that.data.latitude, that.data.longitude);
+    that.regeocodingAddress();
+  },
+
+  /**
+   * 更新上传坐标点
+   */
+  updateCenterLocation: function (latitude, longitude) {
+    var that = this;
+    that.setData({
+      centerLatitude: latitude,
+      centerLongitude: longitude
+    })
+  },
+
+  /**
+   * 回到定位点
+   */
+  selfLocationClick: function () {
+    var that = this;
+    //还原默认缩放级别
+    that.setData({
+      scale: defaultScale
+    })
+    //必须请求定位，改变中心点坐标
+    that.requestLocation();
+  },
+
+  /**
+   * 移动到中心点
+   */
+  moveTolocation: function () {
+    var mapCtx = wx.createMapContext(mapId);
+    mapCtx.moveToLocation();
+  },
+
+  cancelClick: function () {
+    var that = this;
+    that.resetPhoto();
+    that.adjustViewStatus(true, false, false);
+  },
+
+  /**
+   * 确认上传情报，忽略此处逻辑
+   */
+  confirmClick: function (res) {
+    var that = this;
+    consoleUtil.log(res);
+    var message = res.detail.value.message.trim();
+    if (!that.data.centerLatitude || !that.data.centerLongitude) {
+      that.showModal('请选择上传地点~');
+      return;
+    }
+    if (!message) {
+      that.showModal('请说点什么吧~');
+      return;
+    }
+  },
+
+  /**
+   * 点击控件时触发
+   */
+  controlTap: function () {
+
+  },
+
+  /**
+   * 点击地图时触发
+   */
+  bindMapTap: function () {
+    //恢复到原始页
+    this.adjustViewStatus(true, false, false);
+  },
+
+  adjustViewStatus: function (uploadStatus, confirmStatus, commentStatus) {
+    var that = this;
+    that.setData({
+      //显示上传情报按钮
+      showUpload: uploadStatus,
+      //开始上传情报
+      showConfirm: confirmStatus,
+      //显示情报详情
+      showComment: commentStatus,
+    })
+    that.changeMapHeight();
+  },
+
+  onShareAppMessage: function (res) {
+
+  },
+
+  /**
+   * 预览图片
+   */
+  previewImage: function () {
+    var that = this;
+    wx.previewImage({
+      urls: [that.data.warningIconUrl],
+    })
+  },
+
+  /**
+   * 选择照片
+   */
+  takePhoto: function () {
+    var that = this;
+    wx.chooseImage({
+      sizeType: sizeType[1],
+      count: 1,
+      success: function (res) {
+        that.setData({
+          uploadImagePath: res.tempFilePaths[0],
+        })
+        that.adjustViewStatus(false, true, false);
+      },
+    })
+  },
+
+  /**
+   * 删除已选照片
+   */
+  deleteSelectImage: function () {
+    this.resetPhoto();
+  },
+
+  /**
+   * 重置照片
+   */
+  resetPhoto: function () {
+    var that = this;
+    that.setData({
+      uploadImagePath: '',
+    })
+  },
+
+  previewSelectImage: function () {
+    var that = this;
+    wx.previewImage({
+      urls: [that.data.uploadImagePath],
+    })
+  },
+
+  /**
+   * 拖动地图回调
+   */
+  regionChange: function (res) {
+    var that = this;
+    // 改变中心点位置  
+    if (res.type == "end") {
+      that.getCenterLocation();
+    }
   },
 
   /**
    * 得到中心点坐标
    */
   getCenterLocation: function () {
-    var that = this
+    var that = this;
     var mapCtx = wx.createMapContext(mapId);
-    console.log('getCenterLocation mapId:', mapId, 'mapCtx:', mapCtx);
     mapCtx.getCenterLocation({
       success: function (res) {
-        console.log('mapCtx.getCenterLocation return:',res);
-        //that.updateCenterLocation(res.latitude, res.longitude);
-        that.updateCenterLocation(that.data.mylat, that.data.mylng);
+        console.log('getCenterLocation----------------------->');
+        console.log(res);
+        that.updateCenterLocation(res.latitude, res.longitude);
         that.regeocodingAddress();
         that.queryMarkerInfo();
       }
-    })
-    //this.createMarker(that.data.location_list);
-  },
-  /**
-    * 更新上传坐标点
-    */
-  updateCenterLocation: function (latitude, longitude) {
-    var that = this;
-    that.setData({
-      centerLatitude: latitude,
-      centerLongitude: longitude
     })
   },
 
@@ -382,14 +545,44 @@ Page({
    */
   queryMarkerInfo: function () {
     var that = this;
-    console.log('查询当前坐标 marker 点信息')
     //调用请求 marker 点的接口就好了
+    var currentMarker = [
+      {
+        "id":1,
+        "name":that.data.activity_title,
+        "latitude": parseFloat(that.data.activity_lat),
+        "longitude": parseFloat(that.data.activity_lng),
+        "width":40,
+        "height":40,
+        "iconPath":'../../../images/dog-select.png'
+      },
+      {
+        "id": 2,
+        "name": '我的位置',
+        "latitude": that.data.latitude,
+        "longitude": that.data.longitude,
+        "width": 25,
+        "height": 25,
+        "iconPath": that.data.userAvatar, //'../../../images/dog-yellow.png'
+      }
+    ]
+    that.setData({
+      markers: currentMarker
+    })
+    console.log('queryMarkerInfo currentMarker:',currentMarker)
+    /*
+    var mapCtx = wx.createMapContext(mapId);
+    mapCtx.includePoints({
+      padding: [20],
+      points: currentMarker
+    })
+    */
   },
 
   /**
    * 创建marker
    */
-  createMarker: function (dataList) {
+  createMarker: function () {
     var that = this;
     var currentMarker = [];
     var markerList = dataList.data;
@@ -401,43 +594,66 @@ Page({
       marker.width = 40;
       marker.height = 40;
       if (marker.image) {
-        marker.iconPath = '../../img/dog-select.png';
+        marker.iconPath = '../../../images/dog-select.png';
       } else {
-        marker.iconPath = '../../img/dog-yellow.png';
+        marker.iconPath = '../../../images/dog-yellow.png';
       }
     }
     currentMarker = currentMarker.concat(markerList);
-    console.log('-----------------------');
-    console.log(currentMarker);
+    consoleUtil.log('-----------------------');
+    consoleUtil.log(currentMarker);
     that.setData({
       markers: currentMarker
     })
   },
 
- 
   /**
-    * 点击地图时触发
-    */
-  bindMapTap: function () {
-    //恢复到原始页
-    this.adjustViewStatus(true, false, false);
-  },
-
-  adjustViewStatus: function (uploadStatus, confirmStatus, commentStatus) {
+   * 选择地址
+   */
+  chooseAddress: function () {
     var that = this;
-    that.setData({
-      //显示上传情报按钮
-      showUpload: uploadStatus,
-      //开始上传情报
-      showConfirm: confirmStatus,
-      //显示情报详情
-      showComment: commentStatus,
+    wx.navigateTo({
+      url: '../chooseAddress/chooseAddress?city=' + that.data.centerAddressBean.address_component.city + '&street=' + that.data.centerAddressBean.address_component.street,
     })
-    that.changeMapHeight();
   },
 
-  onShareAppMessage: function (res) {
+  /**
+   * 版本更新
+   */
+  checkUpdate: function () {
+    if (wx.canIUse('getUpdateManager')) {
+      const updateManager = wx.getUpdateManager();
+      updateManager.onCheckForUpdate(function (res) {
+        // 请求完新版本信息的回调
+        consoleUtil.log('onCheckForUpdate----------------->');
+        consoleUtil.log(res.hasUpdate);
+      })
 
+      updateManager.onUpdateReady(function () {
+        wx.showModal({
+          title: '更新提示',
+          content: '新版本已经准备好，即刻体验？',
+          success: function (res) {
+            if (res.confirm) {
+              // 新的版本已经下载好，调用 applyUpdate 应用新版本并重启
+              updateManager.applyUpdate();
+            }
+          }
+        })
+      })
+
+      updateManager.onUpdateFailed(function () {
+        // 新的版本下载失败
+      })
+    }
   },
 
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
+  }
 })
