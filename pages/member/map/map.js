@@ -131,7 +131,7 @@ Page({
         })
       })
     }
-    that.scopeSetting();
+    that.scopeSetting()
   },
 
   onShow: function () {
@@ -300,7 +300,7 @@ Page({
     var that = this;
     qqmapsdk = new QQMapWX({
       key: constant.tencentAk
-    });
+    })
     that.getCenterLocation();
   },
 
@@ -316,7 +316,7 @@ Page({
         })
         that.moveTolocation()
         that.reportLocation()
-        if(that.data.activity_omid==that.data.m_id){
+        if(that.data.activity_omid==that.data.m_id && that.data.markersMy){
           that.getMemberLocation()
         }
       },
@@ -351,6 +351,7 @@ Page({
   //获取成员地理位置
   getMemberLocation: function () {
     var that = this
+    var markersMy = that.data.markersMy
     //console.log('map getMemberLocation activity_id:',that.data.activity_id)
     wx.request({
       url: weburl + '/api/client/get_member_loc',
@@ -367,10 +368,9 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('map getMemberLocation success:', res)
         var loc_list = res.data.result ? res.data.result:''
+        console.log('map getMemberLocation success:', res, 'markersMy:', markersMy)
         if (loc_list){
-          var currentMarker = that.data.markers
           for (var i = 0; i < loc_list.length;i++){
             var member_loc={
               id: i+2,
@@ -390,10 +390,10 @@ Page({
                 boxShadow: "5px 5px 10px #aaa"
               }
             }
-            currentMarker = currentMarker.push(member_loc)
+            markersMy = markersMy.push(member_loc)
           }
           that.setData({
-            markers: currentMarker,
+            markers: markersMy,
           })
         }
       }
@@ -708,9 +708,10 @@ Page({
     }]
     that.setData({
       markers: currentMarker,
+      markersMy: currentMarker,
       polyline: polyline,
     })
-    console.log('queryMarkerInfo currentMarker:',currentMarker)
+    console.log('queryMarkerInfo markersMy:', that.data.markersMy)
     /*
     var mapCtx = wx.createMapContext(mapId);
     mapCtx.includePoints({
