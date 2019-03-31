@@ -657,7 +657,7 @@ Page({
           color: "#2c8df6",
           fontSize: 13,
           borderRadius: 10,
-          bgColor: "#e2",
+          bgColor: "#fff",
           display: "ALWAYS",
           boxShadow: "5px 5px 10px #aaa"
         },
