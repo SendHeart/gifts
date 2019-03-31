@@ -10,6 +10,9 @@ var consoleUtil = require('../../../utils/consoleUtil.js');
 var constant = require('../../../utils/constant.js');
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk.js');
 //定义全局变量
+var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var wxMarkerData = [];
 var bottomHeight = 0;
 var windowHeight = 0;
@@ -30,6 +33,9 @@ var sizeType = [
 Page({
   data: {
     userInfo: userInfo,
+    m_id: m_id,
+    username: username,
+    token:token,
     hasUserInfo: false,
     longitude: '',
     latitude: '',
@@ -72,11 +78,11 @@ Page({
     currentDistrict: '',
     showHomeActionIcon: true,
     homeActionLeftDistance: '0rpx',
-    //单个 marker 情报
+    //单个 marker
     currentTipInfo: '',
-    //显示评论输入框
+    //显示位置评论输入框
     showCommentInput: false,
-    //评论文字
+    //位置评论文字
     commentMessage: '',
     //分享携带经度
     shareLongitude: '',
@@ -92,15 +98,21 @@ Page({
 
   onLoad: function (options) {
     var that = this
-    var activity_lat = options.lat
-    var activity_lng = options.lng
-    var activity_title = options.title
+    var activity_lat = options.lat ? options.lat:0
+    var activity_lng = options.lng ? options.lng:0
+    var activity_title = options.title ? options.title:''
+    var activity_id = options.activity_id ? options.activity_id:0
+    var activity_address = options.activity_address ? options.activity_address:''
+    var activity_omid = options.activity_omid ? options.activity_omid:0
     this.setData({
       activity_lat: activity_lat,
       activity_lng: activity_lng,
       activity_title: activity_title,
+      activity_address: activity_address,
+      activity_id: activity_id,
+      activity_omid: activity_omid,
     })
-    console.log('map onlod activity_lat:', activity_lat, 'activity_lng:', activity_lng, 'activity_title:', activity_title);
+    console.log('map onlod activity_lat:', activity_lat, ' activity_lng:', activity_lng, ' activity_title:', activity_title, ' activity_id:', activity_id);
     //检测更新
     that.checkUpdate();
     if (that.data.userInfo) {
@@ -110,7 +122,6 @@ Page({
       })
     } else {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      // 所以此处加入 callback 以防止这种情况
       consoleUtil.log(2);
       app.getUserInfo(function (userInfo) {
         //更新数据
@@ -134,7 +145,7 @@ Page({
       that.getCenterLocation();
       //正在上传的话，不去请求地理位置信息
       if (that.data.showUpload) {
-        that.requestLocation();
+        that.requestLocation()
       }
     } else {
       that.setData({
@@ -146,6 +157,9 @@ Page({
         callbackAddressInfo: null
       })
     }
+    setInterval(function () {
+      that.requestLocation()
+    }, 20000)
   },
 
   /**
@@ -292,7 +306,7 @@ Page({
 
   //请求地理位置
   requestLocation: function () {
-    var that = this;
+    var that = this
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
@@ -300,10 +314,93 @@ Page({
           latitude: res.latitude,
           longitude: res.longitude,
         })
-        that.moveTolocation();
+        that.moveTolocation()
+        that.reportLocation()
+        if(that.data.activity_omid==that.data.m_id){
+          that.getMemberLocation()
+        }
       },
     })
   },
+
+  //上报地理位置
+  reportLocation: function () {
+    var that = this
+    wx.request({
+      url: weburl + '/api/client/update_member_loc',
+      method: 'POST',
+      data: {
+        'username': that.data.username ? that.data.username : wx.getStorageSync('username') ,
+        'access_token': that.data.token ? that.data.token : wx.getStorageSync('token') ,
+        'm_id': that.data.m_id ? that.data.m_id:0,
+        'latitude': that.data.latitude,
+        'longitude': that.data.longitude,
+        'shop_type': that.data.shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data.result)
+      }
+    })
+
+  },
+
+  //获取成员地理位置
+  getMemberLocation: function () {
+    var that = this
+    //console.log('map getMemberLocation activity_id:',that.data.activity_id)
+    wx.request({
+      url: weburl + '/api/client/get_member_loc',
+      method: 'POST',
+      data: {
+        'username': that.data.username ? that.data.username : wx.getStorageSync('username'),
+        'access_token': that.data.token ? that.data.token : wx.getStorageSync('token'),
+        'm_id': that.data.m_id ? that.data.m_id : 0,
+        'activity_id':that.data.activity_id,
+        'shop_type': that.data.shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('map getMemberLocation success:', res)
+        var loc_list = res.data.result ? res.data.result:''
+        if (loc_list){
+          var currentMarker = that.data.markers
+          for (var i = 0; i < loc_list.length;i++){
+            var member_loc={
+              id: i+2,
+              name: loc_list[i]['wx_nickname'],
+              latitude: loc_list[i]['latitude'],
+              longitude: loc_list[i]['longitude'],
+              width: 25,
+              height: 25,
+              iconPath: loc_list[i]['wx_headimg'] ? loc_list[i]['wx_headimg'] : '../../../images/ai.png',
+              callout: {
+                content: loc_list[i]['wx_nickname'],
+                color: "#2c8df6",
+                fontSize: 12,
+                borderRadius: 10,
+                bgColor: "#fff",
+                display: "ALWAYS",
+                boxShadow: "5px 5px 10px #aaa"
+              }
+            }
+            currentMarker = currentMarker.push(member_loc)
+          }
+          that.setData({
+            markers: currentMarker,
+          })
+        }
+      }
+    })
+
+  },
+
 
   /**
    * 点击marker
@@ -320,15 +417,15 @@ Page({
       var marker = that.data.markers[key];
       if (e.markerId == marker.id) {
         that.setData({
-          longitude: marker.longitude,
-          latitude: marker.latitude,
-          loc_name:marker.name,
+          //longitude: marker.longitude,
+          //latitude: marker.latitude,
+          loc_name: e.markerId==1?that.data.activity_address:marker.name,
         })
       }
     }
     wx.showModal({
-      title: '提示',
-      content: that.data.loc_name ? that.data.loc_name:'查看位置',
+      title: '这里是',
+      content: that.data.loc_name ? that.data.loc_name:'位置',
       showCancel: false,
     })
   },
@@ -548,26 +645,70 @@ Page({
     //调用请求 marker 点的接口就好了
     var currentMarker = [
       {
-        "id":1,
-        "name":that.data.activity_title,
-        "latitude": parseFloat(that.data.activity_lat),
-        "longitude": parseFloat(that.data.activity_lng),
-        "width":40,
-        "height":40,
-        "iconPath":'../../../images/dog-select.png'
+        id:1,
+        name:that.data.activity_title,
+        latitude: parseFloat(that.data.activity_lat),
+        longitude: parseFloat(that.data.activity_lng),
+        width:50,
+        height:50,
+        iconPath: '../../../images/ai_s.png', //dog-select.png
+        callout: {
+          content: that.data.activity_title,
+          color: "#2c8df6",
+          fontSize: 13,
+          borderRadius: 10,
+          bgColor: "#e2",
+          display: "ALWAYS",
+          boxShadow: "5px 5px 10px #aaa"
+        },
+        /*
+        label: {
+          color: "#ff6600",
+          fontSize: 12,
+          content: "目的地",
+          x: parseFloat(that.data.activity_lat),
+          y: parseFloat(that.data.activity_lng),
+        } 
+        */
       },
       {
-        "id": 2,
-        "name": '我的位置',
-        "latitude": that.data.latitude,
-        "longitude": that.data.longitude,
-        "width": 25,
-        "height": 25,
-        "iconPath": that.data.userAvatar, //'../../../images/dog-yellow.png'
+        id: 2,
+        name: '我的位置',
+        latitude: that.data.latitude,
+        longitude: that.data.longitude,
+        width: 35,
+        height: 35,
+        iconPath: that.data.userAvatar ? that.data.userAvatar :'../../../images/ai.png',
+        callout: {
+          content: that.data.userNickname,
+          color: "#2c8df6",
+          fontSize: 12,
+          borderRadius: 10,
+          bgColor: "#fff",
+          display: "ALWAYS",
+          boxShadow: "5px 5px 10px #aaa"
+        }, 
       }
     ]
+    var polyline = [{
+      points: [{
+        latitude: parseFloat(that.data.activity_lat),
+        longitude: parseFloat(that.data.activity_lng),
+      },
+      {
+        longitude: that.data.longitude,
+        latitude: that.data.latitude,
+      }],
+      color: "#ff6600",
+      width: 2,
+      dottedLine: false,
+      arrowLine: true,
+      borderColor: "#000",
+      borderWidth: 2
+    }]
     that.setData({
-      markers: currentMarker
+      markers: currentMarker,
+      polyline: polyline,
     })
     console.log('queryMarkerInfo currentMarker:',currentMarker)
     /*
@@ -648,6 +789,7 @@ Page({
     }
   },
 
+/*
   getUserInfo: function (e) {
     console.log(e)
     app.globalData.userInfo = e.detail.userInfo
@@ -656,4 +798,5 @@ Page({
       hasUserInfo: true
     })
   }
+  */
 })

@@ -2,7 +2,7 @@
 <view class="container-layout">
   <!--地图-->
   <view class='map-wrapper' style='height:{{mapHeight}}'>
-    <map class='map' id='myMap' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" show-location="true" markers="{{markers}}" bindmarkertap="bindMakertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{controls}}'
+    <map class='map' id='myMap' longitude="{{longitude}}" latitude="{{latitude}}" scale="{{scale}}" show-location="true" markers="{{markers}}" polyline="{{polyline}}" bindmarkertap="bindMakertap" bindcontroltap='controlTap' bindregionchange='regionChange' controls='{{controls}}'
       bindtap='bindMapTap'>
       <!--顶部提示-->
       <!-- 

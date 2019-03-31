@@ -44,6 +44,8 @@ Page({
     var addrname = e.currentTarget.dataset.addrname
     var selected_activity_index = e.currentTarget.dataset.activityindex ? e.currentTarget.dataset.activityindex : 0;
     var activity_name = that.data.addressObjects[selected_activity_index]['name']
+    var activity_id = that.data.addressObjects[selected_activity_index]['id']
+    var activity_omid = that.data.addressObjects[selected_activity_index]['m_id']
     var qqmapkey = that.data.qqmapkey
     qqmapsdk = new QQMapWX({
       key: qqmapkey, //'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
@@ -57,7 +59,7 @@ Page({
         })
         console.log('mylocation gotoMap:',res);
         wx.navigateTo({
-          url: '/pages/member/map/map?lat=' + that.data.lat + '&lng=' + that.data.lng + '&title=' + activity_name,
+          url: '/pages/member/map/map?lat=' + that.data.lat + '&lng=' + that.data.lng + '&title=' + activity_name + '&activity_address=' + address + '&activity_id=' + activity_id + '&activity_omid=' + activity_omid,
         })
         /*
         wx.openLocation({

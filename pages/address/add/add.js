@@ -10,7 +10,7 @@ var uploadurl = app.globalData.uploadurl;
 Page({
   isDefault: false,
 	formSubmit: function(e) {
-    var that = this;
+    var that = this
 		// user 
     var username = this.data.username;
     var token = this.data.token
@@ -41,7 +41,7 @@ Page({
 		}
     if (activity_name == '') {
 			wx.showToast({
-				title: '请填写活动名称'
+				title: '请填写备注'
 			})
 			return
 		}
@@ -60,6 +60,7 @@ Page({
       activity_name: activity_name,
       detail: detail,
       mobile: mobile,
+
     })
     that.upload()
 	},
@@ -161,13 +162,11 @@ Page({
     var address_name = that.data.detail
     var detail = that.data.areaSelectedStr + that.data.detail
     var mobile = that.data.mobile
+    var latitude = that.data.latitude
+    var longitude = that.data.longitude
 
     //保存地址到服务器
-    console.log(province)
-    console.log(city)
-    console.log(region)
-    console.log(town)
-
+    
     for (var i = 0; i < new_img_addr.length; i++) {
       var count = new_img_addr.length
       wx.uploadFile({
@@ -212,6 +211,8 @@ Page({
                   'image2': new_img_url[1] ? new_img_url[1] : '',
                   'image3': new_img_url[2] ? new_img_url[2] : '',
                   'endtime': endtime,
+                  'latitude': that.data.latitude,
+                  'longitude' : that.data.longitude,
                 },
                 header: {
                   'Content-Type': 'application/x-www-form-urlencoded',
@@ -557,7 +558,9 @@ Page({
 		    success: function(res) {
           console.log('获取当前位置 fetchPOI:',res);
 				that.setData({
-					areaSelectedStr: res.result.address+res.result.formatted_addresses.recommend
+					areaSelectedStr: res.result.address+res.result.formatted_addresses.recommend,
+          latitude: res.result.location.lat,
+          longitude: res.result.location.lng,
 				});
 		    },
 		    fail: function(res) {
