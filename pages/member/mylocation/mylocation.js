@@ -12,7 +12,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var now = new Date().getTime()
 Page({
   data: {
-    is_myself:1,
+    is_myself:9,
     qqmapkey: qqmapkey,
     addressIndex:[],
     prov:[],
@@ -269,7 +269,6 @@ Page({
     var activity_id = options.activity_id ? options.activity_id : ''
     that.setData({
       activity_id: activity_id,
-      is_myself: activity_id ? 0 : 1,
     })
     that.location()
     if (activity_id>0){
@@ -278,16 +277,22 @@ Page({
         content: '我要去？',
         success: function (res) {
           if (res.confirm) {
+            that.setData({
+              is_myself: activity_id ? 0 : 1,
+            })
             that.loadData()
-           
           }else{
             that.goBack()
           }
         }
       })
     }else{
+      that.setData({
+        is_myself: activity_id ? 0 : 1,
+      })
       that.loadData()
     } 
+   
     console.log('onload mylocation shared address id:', options.activity_id, 'refer username:', options.username)
   },
 	onShow: function () {

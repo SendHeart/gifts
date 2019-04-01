@@ -43,7 +43,7 @@
 <modal hidden="{{modalHidden}}"  class="modalbox" title="是否删除"  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
 </modal>
 
-<view class="sentbtn">
+<view class="sentbtn" wx:if="{{is_myself<9}}">
 <!-- 
   <button open-type="share" bindtap="onShareAppMessage" >分享给朋友</button>
   -->
