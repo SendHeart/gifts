@@ -271,6 +271,7 @@ Page({
       activity_id: activity_id,
     })
     that.location()
+    that.loadData()
     if (activity_id>0){
       wx.showModal({
         title: '',
@@ -280,7 +281,6 @@ Page({
             that.setData({
               is_myself: activity_id ? 0 : 1,
             })
-            that.loadData()
           }else{
             that.goBack()
           }
@@ -290,7 +290,6 @@ Page({
       that.setData({
         is_myself: activity_id ? 0 : 1,
       })
-      that.loadData()
     } 
    
     console.log('onload mylocation shared address id:', options.activity_id, 'refer username:', options.username)

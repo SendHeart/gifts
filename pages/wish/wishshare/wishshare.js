@@ -474,7 +474,6 @@ Page({
     console.log('wishshare eventGetImage:', event)
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
-
       this.setData({
         shareImage: tempFilePath
       })

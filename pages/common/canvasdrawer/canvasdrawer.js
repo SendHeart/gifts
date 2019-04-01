@@ -262,6 +262,7 @@ Component({
     getImageInfo (url) {
       return new Promise((resolve, reject) => {
         if (this.cache[url]) {
+          console.log(' canvasdrawer getImageInfo() cache[url]:', this.cache[url],'url:',url)
           resolve(this.cache[url])
         } else {
           const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)

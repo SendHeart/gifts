@@ -134,8 +134,8 @@ Page({
     var share_goods_desc = that.data.share_desc
     var share_avatarUrl = that.data.share_avatarUrl
     var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
-    var goods_image_cache = wx.getStorageSync('goods_image_cache')
-    var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache')
+    var goods_image_cache = wx.getStorageSync('goods_image_cache_' + share_goods_id)
+    var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache_' + share_goods_id)
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -169,14 +169,14 @@ Page({
           fs.saveFile({
             tempFilePath: res.tempFilePath, // 传入一个临时文件路径
             success(res) {
-              console.log('detail image_save 图片缓存成功', res.savedFilePath)  
+              console.log('detail image_save 图片缓存成功', image_cache_name,res.savedFilePath)  
               wx.setStorageSync(image_cache_name, res.savedFilePath)
             },
             fail(res) {
-              console.log(' detail image_save 图片缓存失败', res) 
+              console.log(' detail image_save 图片缓存失败', image_cache_name,res) 
               var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
-              var goods_image_cache = wx.getStorageSync('goods_image_cache')
-              var goods_qrcode_cache = wx.getStorageSync('goods_qrcode_cache')
+              var goods_image_cache = wx.getStorageSync('goods_image_cache_' + that.data.goodsid)
+              var goods_qrcode_cache = wx.getStorageSync('goods_qrcode_cache_'+that.data.goodsid)
               fs.getSavedFileList({
                 success(res) {
                   console.log('detail getSavedFileList 缓存文件列表', res)
@@ -196,7 +196,7 @@ Page({
                   fs.saveFile({
                     tempFilePath: img_tempFilePath, // 传入一个临时文件路径
                     success(res) {
-                      console.log('image_save 图片缓存成功', res.savedFilePath)
+                      console.log('image_save 图片缓存成功', image_cache_name,res.savedFilePath)
                       wx.setStorageSync(image_cache_name, res.savedFilePath)
                     },
                   })
@@ -289,14 +289,14 @@ Page({
           goodssale: goodssale ? goodssale:0,
         })
     var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid + '&m_id=' + m_id
-    that.image_save(share_goods_qrcode, 'goods_qrcode_cache')
-    console.log('商品分享二维码下载缓存 goods_qrcode_cache', 'share_goods_image:', share_goods_image)
+    that.image_save(share_goods_qrcode, 'goods_qrcode_cache_'+goodsid)
+    console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
   
     console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){
-          that.image_save(share_goods_image, 'goods_image_cache')
-          console.log('商品详情图片下载缓存 goods_image_cache', share_goods_image)
+          that.image_save(share_goods_image, 'goods_image_cache_'+goodsid)
+          console.log('商品详情图片下载缓存 goods_image_cache_'+goodsid, share_goods_image)
           wx.request({
             url: weburl + '/api/client/get_goods_list',
             method: 'POST',
