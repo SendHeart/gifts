@@ -6,6 +6,7 @@ var shop_type = app.globalData.shop_type;
 var qqmapkey = app.globalData.mapkey;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 const defaultScale = 14;
+var mapInterval = app.globalData.mapInterval;
 var consoleUtil = require('../../../utils/consoleUtil.js');
 var constant = require('../../../utils/constant.js');
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk.js');
@@ -39,7 +40,7 @@ Page({
     hasUserInfo: false,
     longitude: '',
     latitude: '',
-    interval:20000,
+    interval: mapInterval,
     //地图缩放级别
     scale: defaultScale,
     markers: [],
@@ -344,10 +345,16 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result)
+        console.log('reportLocation:',res.data.result)
+        var mapDisplayInfo = res.data.result
+        if (mapDisplayInfo){
+          that.setData({
+            interval: mapDisplayInfo['interval'],
+          })
+          app.globalData.mapInterval = mapDisplayInfo['interval']
+        }
       }
     })
-
   },
 
   //获取成员地理位置
