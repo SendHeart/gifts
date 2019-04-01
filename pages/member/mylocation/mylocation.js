@@ -30,6 +30,7 @@ Page({
     navList2: navList2,
     currenttime: now ? parseInt(now / 1000) : 0,
     modalHidden: true,//是否隐藏对话框  
+    gotoHidden:false,
   },
   addActivity: function () {
 		wx.navigateTo({
@@ -47,6 +48,7 @@ Page({
     var activity_id = that.data.addressObjects[selected_activity_index]['id']
     var activity_omid = that.data.addressObjects[selected_activity_index]['m_id']
     var qqmapkey = that.data.qqmapkey
+
     qqmapsdk = new QQMapWX({
       key: qqmapkey, //'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U'
     })
@@ -57,7 +59,7 @@ Page({
           lat: res.result.location.lat,
           lng: res.result.location.lng,
         })
-        console.log('mylocation gotoMap:',res);
+        console.log('mylocation gotoMap:', res);
         wx.navigateTo({
           url: '/pages/member/map/map?lat=' + that.data.lat + '&lng=' + that.data.lng + '&title=' + activity_name + '&activity_address=' + address + '&activity_id=' + activity_id + '&activity_omid=' + activity_omid,
         })
@@ -235,7 +237,7 @@ Page({
       app.globalData.from_page = '/pages/member/mylocation/mylocation'
       app.globalData.hall_gotop = 1
       wx.switchTab({  
-        url: '/pages/my/index'
+        url: '/pages/hall/hall'
       })
     }
   },
@@ -261,21 +263,37 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
+    var cur_city = wx.getStorageSync('city') 
     var refer_username = options.username ? options.username:''
     var activity_id = options.activity_id ? options.activity_id : ''
     that.setData({
       activity_id: activity_id,
-      is_myself: activity_id?0:1,
+      is_myself: activity_id ? 0 : 1,
     })
-    that.loadData()
+    that.location()
+    if (activity_id>0){
+      wx.showModal({
+        title: '',
+        content: '我要去？',
+        success: function (res) {
+          if (res.confirm) {
+            that.loadData()
+           
+          }else{
+            that.goBack()
+          }
+        }
+      })
+    }else{
+      that.loadData()
+    } 
     console.log('onload mylocation shared address id:', options.activity_id, 'refer username:', options.username)
-    
   },
 	onShow: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var cur_city = wx.getStorageSync('city') 
     wx.getSystemInfo({
       success: function (res) {
         that.setData({

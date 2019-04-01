@@ -39,6 +39,7 @@ Page({
     hasUserInfo: false,
     longitude: '',
     latitude: '',
+    interval:20000,
     //地图缩放级别
     scale: defaultScale,
     markers: [],
@@ -98,8 +99,8 @@ Page({
 
   onLoad: function (options) {
     var that = this
-    var activity_lat = options.lat ? options.lat:0
-    var activity_lng = options.lng ? options.lng:0
+    var activity_lat = options.lat 
+    var activity_lng = options.lng
     var activity_title = options.title ? options.title:''
     var activity_id = options.activity_id ? options.activity_id:0
     var activity_address = options.activity_address ? options.activity_address:''
@@ -159,7 +160,7 @@ Page({
     }
     setInterval(function () {
       that.requestLocation()
-    }, 20000)
+    }, that.data.interval)
   },
 
   /**
@@ -301,7 +302,10 @@ Page({
     qqmapsdk = new QQMapWX({
       key: constant.tencentAk
     })
-    that.getCenterLocation();
+    that.getCenterLocation()
+    if (that.data.activity_omid == that.data.m_id && that.data.markersMy) {
+      that.getMemberLocation()
+    }
   },
 
   //请求地理位置
@@ -316,9 +320,7 @@ Page({
         })
         that.moveTolocation()
         that.reportLocation()
-        if(that.data.activity_omid==that.data.m_id && that.data.markersMy){
-          that.getMemberLocation()
-        }
+        that.queryMarkerInfo()
       },
     })
   },
@@ -351,7 +353,7 @@ Page({
   //获取成员地理位置
   getMemberLocation: function () {
     var that = this
-    var markersMy = that.data.markersMy
+    
     //console.log('map getMemberLocation activity_id:',that.data.activity_id)
     wx.request({
       url: weburl + '/api/client/get_member_loc',
@@ -369,10 +371,11 @@ Page({
       },
       success: function (res) {
         var loc_list = res.data.result ? res.data.result:''
-        console.log('map getMemberLocation success:', res, 'markersMy:', markersMy)
+        var member_loc=[]
+        console.log('map getMemberLocation success:', res, 'markersMy:', that.data.markersMy)
         if (loc_list){
           for (var i = 0; i < loc_list.length;i++){
-            var member_loc={
+            var new_loc={
               id: i+2,
               name: loc_list[i]['wx_nickname'],
               latitude: loc_list[i]['latitude'],
@@ -390,15 +393,17 @@ Page({
                 boxShadow: "5px 5px 10px #aaa"
               }
             }
-            markersMy = markersMy.push(member_loc)
+            member_loc.push(new_loc)
           }
           that.setData({
-            markers: markersMy,
+            markers: that.data.markersMy.concat(member_loc),
           })
         }
       }
     })
-
+    setTimeout(function () {
+      that.getMemberLocation()
+    }, that.data.interval)
   },
 
 
@@ -641,9 +646,11 @@ Page({
    * 查询 marker 信息
    */
   queryMarkerInfo: function () {
-    var that = this;
+    var that = this
+    var markersMy = []
+    
     //调用请求 marker 点的接口就好了
-    var currentMarker = [
+    var destLocation = 
       {
         id:1,
         name:that.data.activity_title,
@@ -670,15 +677,19 @@ Page({
           y: parseFloat(that.data.activity_lng),
         } 
         */
-      },
+    }
+    if (destLocation) markersMy.push(destLocation)
+    var myLocation={}
+    if (that.data.longitude && that.data.longitude){
+      myLocation =
       {
         id: 2,
         name: '我的位置',
-        latitude: that.data.latitude,
+        latitude: that.data.latitude ,
         longitude: that.data.longitude,
         width: 35,
         height: 35,
-        iconPath: that.data.userAvatar ? that.data.userAvatar :'../../../images/ai.png',
+        iconPath: that.data.userAvatar ? that.data.userAvatar : '../../../images/ai.png',
         callout: {
           content: that.data.userNickname,
           color: "#2c8df6",
@@ -687,17 +698,18 @@ Page({
           bgColor: "#fff",
           display: "ALWAYS",
           boxShadow: "5px 5px 10px #aaa"
-        }, 
+        },
       }
-    ]
+    }
+    if (myLocation) markersMy.push(myLocation)
     var polyline = [{
       points: [{
         latitude: parseFloat(that.data.activity_lat),
         longitude: parseFloat(that.data.activity_lng),
       },
       {
-        longitude: that.data.longitude,
-        latitude: that.data.latitude,
+        latitude: that.data.latitude ? that.data.latitude : parseFloat(that.data.activity_lat),
+        longitude: that.data.longitude ? that.data.longitude : parseFloat(that.data.activity_lng),
       }],
       color: "#ff6600",
       width: 2,
@@ -706,11 +718,16 @@ Page({
       borderColor: "#000",
       borderWidth: 2
     }]
+    if(!that.data.markersMy){
+      that.setData({
+        markers: markersMy,
+        markersMy: markersMy,
+      })
+    }
     that.setData({
-      markers: currentMarker,
-      markersMy: currentMarker,
       polyline: polyline,
     })
+    
     console.log('queryMarkerInfo markersMy:', that.data.markersMy)
     /*
     var mapCtx = wx.createMapContext(mapId);
