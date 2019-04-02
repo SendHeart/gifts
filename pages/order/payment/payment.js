@@ -184,6 +184,7 @@ Page({
     var openId = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var totalFee = that.data.totalFee;
     var orderNo = that.data.orderNo;
+    var shop_type = that.data.shop_type
     console.log('payment openId');
     console.log('openid:'+openId);
     console.log('totalFee:' + totalFee);
@@ -202,6 +203,7 @@ Page({
 				body: '商城',
         tradeNo: that.data.orderNo,
         totalFee: that.data.totalFee,
+        shop_type:shop_type
 			},
 			method: 'POST',
 			header: {
