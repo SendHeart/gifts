@@ -148,9 +148,9 @@ Page({
     if (that.data.image_save_count<3){
       setTimeout(function () {
         wx.showToast({
-          title: "图片生成",
+          title: "开始分享",
           icon: 'loading',
-          duration: 3000,
+          duration: 2000,
         })
         that.sharegoodsTapTag()
       }, 1500)
