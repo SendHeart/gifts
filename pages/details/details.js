@@ -58,6 +58,7 @@ Page({
         goodsinfoshowflag:0,
         shop_type:shop_type,
         comm_list: [],
+        image_save_count:0,
     },
     /*
   setNavigation: function () {
@@ -128,7 +129,6 @@ Page({
     var that = this
     var share_goods_id = that.data.goodsid
     var cur_img_id = that.data.cur_img_id
-    //
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
     var share_goods_title = that.data.share_title
     var share_goods_desc = that.data.share_desc
@@ -144,14 +144,24 @@ Page({
       cur_img_id = cur_img_id - that.data.image_video.length
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
     }
-   
-    console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id)
+    console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
+    if (that.data.image_save_count<3){
+      setTimeout(function () {
+        wx.showToast({
+          title: "图片生成",
+          icon: 'loading',
+          duration: 3000,
+        })
+        that.sharegoodsTapTag()
+      }, 1500)
+      return
+    } 
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode 
+      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
     })
     wx.getStorageInfo({
       success: function (res) {
-        console.log('detail 缓存列表 keys::', res.keys, 'currentSize:', res.currentSize, 'limitSize:', res.limitSize)
+        console.log('detail 缓存列表 keys:', res.keys, 'currentSize:', res.currentSize, 'limitSize:', res.limitSize)
       }
     })
   },
@@ -171,6 +181,12 @@ Page({
             success(res) {
               console.log('detail image_save 图片缓存成功', image_cache_name,res.savedFilePath)  
               wx.setStorageSync(image_cache_name, res.savedFilePath)
+              if (image_cache_name == 'goods_image_cache_' + that.data.goodsid || image_cache_name == 'goods_qrcode_cache_' + that.data.goodsid || image_cache_name == 'wx_headimg_cache') {
+                console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count', that.data.image_save_count++)
+                that.setData({
+                  image_save_count: that.data.image_save_count++,
+                })
+              }
             },
             fail(res) {
               console.log(' detail image_save 图片缓存失败', image_cache_name,res) 
@@ -196,8 +212,14 @@ Page({
                   fs.saveFile({
                     tempFilePath: img_tempFilePath, // 传入一个临时文件路径
                     success(res) {
-                      console.log('image_save 图片缓存成功', image_cache_name,res.savedFilePath)
                       wx.setStorageSync(image_cache_name, res.savedFilePath)
+                      console.log('image_save 图片缓存成功', image_cache_name, wx.getStorageSync(image_cache_name), 'goods id:', that.data.goodsid )
+                      if (image_cache_name == 'goods_image_cache_' + that.data.goodsid || image_cache_name == 'goods_qrcode_cache_' + that.data.goodsid || image_cache_name == 'wx_headimg_cache'){
+                        console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count',that.data.image_save_count)
+                        that.setData({
+                          image_save_count: that.data.image_save_count++,
+                        })
+                      }
                     },
                   })
                 },
@@ -250,7 +272,8 @@ Page({
       
         console.log('detail options:', options)
         that.setData({
-          is_apple: phonemodel.indexOf("iPhone")>= 0?1:0
+          is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
+          image_save_count:0,
         })
         
         if (image.indexOf(".mp4") >= 0) {
