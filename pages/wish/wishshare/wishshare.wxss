@@ -47,6 +47,7 @@
 .canvasdrawer {
   position: absolute;
 }
+
 .sentbtn {
   display: flex;
   flex-direction: row;
@@ -58,9 +59,9 @@
 }
 
 .sentbtn button {
-  line-height: 75rpx;
+  line-height: 70rpx;
   width: 60%;
-  height: 75rpx;
+  height: 70rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
   background: #e34c55;
   color: white;
@@ -77,6 +78,36 @@
   color: #999;
 }
 
+
+.sentbtn2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  margin: 20rpx auto 20rpx auto;
+  width: 100%;
+  height: 150rpx;
+}
+
+.sentbtn2 button {
+  line-height: 70rpx;
+  width: 60%;
+  height: 70rpx;
+  /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
+  background: #f2f2f2;
+  color: #999;
+  font-size: 26rpx;
+  border-radius: 20rpx;
+  -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
+  -moz-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
+  box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
+  margin:20rpx;
+}
+
+.sentbtn2 text {
+  font-size: 24rpx;
+  color: #999;
+}
 .main_message{
   position:fixed;
   width:100%;

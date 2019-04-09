@@ -128,6 +128,8 @@ Page({
   sharegoodsTapTag: function () {
     var that = this
     var share_goods_id = that.data.goodsid
+    var share_goods_price = that.data.goodsprice
+    var share_goods_name = that.data.goodsname
     var cur_img_id = that.data.cur_img_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
     var share_goods_title = that.data.share_title
@@ -157,7 +159,7 @@ Page({
       return
     } 
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
+      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
     })
     wx.getStorageInfo({
       success: function (res) {

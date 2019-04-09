@@ -36,14 +36,14 @@ Component({
   ctx: null,
   cache: {},
   ready () {
-    
     wx.removeStorageSync('canvasdrawer_pic_cache')
     this.cache = wx.getStorageSync('canvasdrawer_pic_cache') || {}
     this.ctx = wx.createCanvasContext('canvasdrawer', this)
+   
   },
   methods: {
     readyPigment () {
-      const { width, height, windowHeight,windowWidth,views } = this.data.painting
+      const { width, height, windowHeight, windowWidth,views } = this.data.painting
       // 屏幕宽度 375px = 750rpx，1px=2rpx
       // 1px = （750 / 屏幕宽度）rpx；
       // 1rpx = （屏幕宽度 / 750）px;
@@ -53,8 +53,9 @@ Component({
         windowHeight,
         windowWidth,
         ratio: 750/windowWidth,
+       
       })
-
+   
       const inter = setInterval(() => {
         if (this.ctx) {
           clearInterval(inter)
@@ -65,6 +66,7 @@ Component({
         }
       }, 100)
     },
+  
     getImageList (views) {
       const imageList = []
       for (let i = 0; i < views.length; i++) {
@@ -131,8 +133,10 @@ Component({
        if (borderRadius) {
          this.ctx.beginPath()
          this.ctx.arc(left + borderRadius, top + borderRadius, borderRadius, 0, 2 * Math.PI)
+         this.ctx.fill()
          this.ctx.clip()
          this.ctx.drawImage(url, left, top, width, height)
+         console.log('canvasdrawer drwImge borderRadius:', borderRadius)
       } else {
         this.ctx.drawImage(url, left, top, width, height)
       }
@@ -163,8 +167,6 @@ Component({
 
       if (!breakWord) {
         if (textAlign=='center'){
-          //let canvasWidthPx = 700 / this.data.ratio;
-          //let text_content = this.getContent(content,50,2)
           let text_left = parseInt((this.data.width - this.ctx.measureText(content).width)/2 )
           this.ctx.fillText(content, text_left, top)
           this.drawTextLine(text_left, top, textDecoration, color, fontSize, content)
@@ -178,13 +180,14 @@ Component({
         let fillText = ''
         let fillTop = top
         let lineNum = 1
-        console.log('drawText() breakWord content:', content)
+        //console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width,width)
         for (let i = 0; i < content.length; i++) {
           fillText += [content[i]]
+          console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width, width)
           if (this.ctx.measureText(fillText).width > width) {
             if (lineNum === MaxLineNumber) {
               if (i !== content.length) {
-                fillText = fillText.substring(0, fillText.length - 1) + '...'
+                fillText = fillText.substring(0, 13) + '...' //fillText.length - 1
                 this.ctx.fillText(fillText, left, fillTop)
                 this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
                 fillText = ''

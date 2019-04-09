@@ -2,11 +2,15 @@
 <view class="container" style='height:{{dkheight}}px;'>
   <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="" ></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
+  <!-- 
   <view  hidden="{{!notehidden}}" style='margin:10rpx;font-size:26rpx;color:#999;height:120rpx;' >{{share_goods_title?'分享语: '+share_goods_title:'分享语为空'}}</view>
+  -->
+  <view class="sentbtn2">
+  <button class=""  hidden ='{{!hidden_share}}' bindtap="sharegoods">修改留言</button>
+  </view>
   <view class="sentbtn">
   <button class=""  hidden ='' bindtap="eventSave" type='warn'>保存图片</button>
-  <button class=""  hidden ='{{!hidden_share}}' bindtap="sharegoods">分享</button>
-  <button class=""  hidden ='{{hidden_share}}' open-type='share' bindtap="onShareAppMessage">去分享</button>
+  <button class=""  hidden ='' open-type='share' bindtap="onShareAppMessage">分享</button>
   </view>
 </view>
 <modal title="编辑分享语" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">

@@ -34,7 +34,7 @@ Page({
     shareImage: '',
     shop_type:shop_type,
     wechat_share: '',
-    nickname: userInfo.nickName,
+
     start_time: util.getDateStr(new Date, 0),
     overtime_status: 0, 
     notehidden:true,
@@ -139,6 +139,8 @@ Page({
     var activity_headimg = options.activity_headimg ? options.activity_headimg : that.data.activity_avatarUrl
     var share_activity_title = options.share_activity_title ? options.share_activity_title : '这个地方真不错~'
     var share_goods_id = options.share_goods_id ? options.share_goods_id : 0
+    var share_goods_name = options.share_goods_name ? options.share_goods_name : ''
+    var share_goods_price = options.share_goods_price ? options.share_goods_price : 0
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
     var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
     var share_goods_qrcode_cache = options.share_goods_qrcode_cache ? options.share_goods_qrcode_cache : ''
@@ -157,6 +159,8 @@ Page({
       activity_name: activity_name,
       activity_headimg: activity_headimg,
       share_goods_id: share_goods_id,
+      share_goods_price: share_goods_price,
+      share_goods_name: share_goods_name,
       share_goods_image: share_goods_image,
       share_goods_image2: share_goods_image2,
       share_goods_wx_headimg: share_goods_wx_headimg,
@@ -254,11 +258,14 @@ Page({
     var share_activity_title = that.data.share_activity_title
     //console.log('wishshare eventDraw activity_image:', activity_image, 'activity_name:', activity_name)
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
+    var share_goods_name = that.data.share_goods_name ? that.data.share_goods_name : ''
+    var share_goods_price = that.data.share_goods_price ? that.data.share_goods_price : 0
     var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
     var share_goods_qrcode = that.data.share_goods_qrcode_cache ? that.data.share_goods_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id+'&m_id='+m_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title
     var share_goods_desc = that.data.share_goods_desc
+    var nickname = that.data.nickname
    
     wx.showLoading({
       title: '生成完成',
@@ -333,62 +340,122 @@ Page({
       that.setData({
         painting: {
           width: 375,
-          height: 600,
+          height: 850,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
           views: [
             {
+              type: 'rect',
+              top: 0,
+              left: 0,
+              width: 375,
+              height: 850,
+              background: 'white',
+            },
+            {
+              type: 'image',
+              url: that.data.share_goods_wx_headimg,
+              top: 10,
+              left: 10,
+              width: 80,
+              height: 80,
+              borderRadius: 40,
+            },
+            {
+              type: 'text',
+              content: '来自'+nickname+'的分享',
+              fontSize: 13,
+              color: '#333',
+              textAlign: 'left',
+              top: 35,
+              left: 110,
+              bolder: false
+            },
+            {
               type: 'image',
               url: share_goods_image,
-              top: 0,
+              top: 100,
               left: 0,
               width: 375,
               height: 400
             },
-            /*
-              {
-               type: 'text',
-               content: activity_name,
-               fontSize: 28,
-               color: '#f2f2f2',
-               textAlign: 'left',
-               top: 33,
-               left: 20,
-               bolder: true
-              },
-             */
+            {
+              type: 'text',
+              content: share_goods_name,
+              fontSize: 20,
+              color: '#333',
+              textAlign: 'left',
+              top: 510,
+              left: 10,
+              bolder: true,
+              lineHeight: 25,
+              MaxLineNumber: 2,
+              breakWord: true,
+              width: 350,
+            },
+            {
+              type: 'text',
+              content: '￥' + share_goods_price,
+              fontSize: 20,
+              color: '#e34c55',
+              textAlign: 'left',
+              top: 565,
+              left: 10,
+              bolder: true,
+           
+            },
+            {
+              type: 'text',
+              content: 'Ta说:',
+              fontSize: 20,
+              color: '#333',
+              textAlign: 'left',
+              top: 620,
+              left: 10,
+              bolder: true,
+            },
+            {
+              type: 'text',
+              content: share_goods_title,
+              fontSize: 18,
+              color: '#333',
+              textAlign: 'left',
+              top: 650,
+              left: 10,
+              lineHeight: 25,
+              MaxLineNumber: 2,
+              breakWord: true,
+              width:350,
+            },
+            {
+              type: 'text',
+              content: '长按识别二维码查看详情',
+              fontSize: 18,
+              color: '#333',
+              textAlign: 'left',
+              top: 720,
+              left: 10,
+              breakWord: false,
+              bolder: true,
+            },
+            {
+              type: 'text',
+              content: '送心礼物，开启礼物社交时代!',
+              fontSize: 18,
+              color: '#999',
+              textAlign: 'left',
+              top: 750,
+              left: 10,
+              breakWord: false,
+            },
             {
               type: 'image',
               url: share_goods_qrcode,
-              top: 410,
-              left:100,
+              top: 700,
+              left: 260,
               width: 90,
               height: 90,
-            },
-
-            {
-              type: 'image',
-              url: that.data.share_goods_wx_headimg,
-              top: 410,
-              left: 215,
-              width: 90,
-              height: 90,
-              borderRadius: 45,
-            },
-
-            {
-              type: 'text',
-              content: '长按识别二维码，查看商品详情信息',
-              fontSize: 18,
-              color: '#e34c55',
-              textAlign: 'left',
-              top: 620,
-              left: 95,
-              lineHeight: 30,
-              MaxLineNumber: 2,
-              breakWord: true,
-              //width: 700
             }
           ]
         }
