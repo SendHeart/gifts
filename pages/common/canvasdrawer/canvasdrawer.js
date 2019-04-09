@@ -175,7 +175,7 @@ Component({
           this.ctx.fillText(content, left, top)
           this.drawTextLine(left, top, textDecoration, color, fontSize, content)
         }
-        console.log('drawText() !breakWord content:', content, 'windowWidth:', this.data.width, 'content len:', this.ctx.measureText(content).width, 'textAlign:', textAlign, 'text_left:', left, 'textDecoration:', textDecoration)
+        //console.log('drawText() !breakWord content:', content, 'windowWidth:', this.data.width, 'content len:', this.ctx.measureText(content).width, 'textAlign:', textAlign, 'text_left:', left, 'textDecoration:', textDecoration)
       } else {
         let fillText = ''
         let fillTop = top
@@ -183,7 +183,7 @@ Component({
         //console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width,width)
         for (let i = 0; i < content.length; i++) {
           fillText += [content[i]]
-          console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width, width)
+          //console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width, width)
           if (this.ctx.measureText(fillText).width > width) {
             if (lineNum === MaxLineNumber) {
               if (i !== content.length) {
