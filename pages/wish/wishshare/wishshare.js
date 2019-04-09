@@ -114,7 +114,7 @@ Page({
       })
     }
     wx.showToast({
-      title: "图片生成",
+      title: "分享图生成中",
       icon: 'loading',
       duration: 1500,
     })
@@ -261,7 +261,7 @@ Page({
     var share_goods_desc = that.data.share_goods_desc
    
     wx.showLoading({
-      title: '生成图片',
+      title: '生成完成',
       mask: true
     })
     

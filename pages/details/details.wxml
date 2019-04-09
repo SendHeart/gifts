@@ -5,9 +5,9 @@
 <!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
 <view  class="pagewrap" >
   <view class="share-goods"  >
-    <view class="share-buttons" style='margin-left:{{winWidth?winWidth/2+20:180}}px;opacity:0.5;'>
-      <button class="" style='font-size:25rpx;' bindtap="returnTapTag">返回</button>
-      <button class="" style='font-size:25rpx;' bindtap="sharegoodsTapTag">分享</button>
+    <view class="share-buttons">
+      <view class="btnshare leftround" bindtap="returnTapTag">返回</view> 
+      <view class="btnshare rightround" bindtap="sharegoodsTapTag">分享</view>
       <!-- 
       <button class="" open-type="share" style='font-size:25rpx;' bindtap="onShareAppMessage">分享</button>
       -->
@@ -55,6 +55,7 @@
         <text class="goods_tag">{{goodstag?goodstag:''}}</text>
       </view>
     </view>
+    <view wx:if="{{goodsdiscount<100}}" class="prd-prom"><image src='../../images/discount.png' style='width:75rpx;height:32rpx;'></image>{{goodsdiscount<100?discountinfo:''}}</view>
   <view class="comm-text">
     <text class="comm-name">礼物评论</text>
     <text  bindtap="commTapTag" class="comm-status">查看全部{{all_rows>0?'('+all_rows+')':''}}</text>
@@ -70,7 +71,7 @@
         {{comm.desc}}
       </view>
   </view>
-  <view wx:if="{{goodsdiscount<100}}" class="prd-prom">{{goodsdiscount<100?discountinfo:''}}</view>
+  
   <view>
     <view class="prd-title">商品详情</view>
       <view class="prd-detail">
@@ -105,8 +106,8 @@
 
 <view class="footer">
   <view class="opt-buttons">
-  <button class="sec-btn" bindtap="mycommTapTag">我要评论</button>
-  <button class="sec-btn" bindtap="wishCart">加入心愿单</button>
+  <button class="sec-btn" bindtap="mycommTapTag">写评论</button>
+  <button class="sec-btn" bindtap="wishCart">+心愿单</button>
   <button class="add-cart" bindtap="goodsmodel"><text>发起购买送礼</text><text style='font-size:20rpx;'>24小时对方未接收，全额返还原账户</text></button>
   </view>
 </view>

@@ -194,12 +194,11 @@ font-size: 32rpx;
 .prd-prom {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  font-size: 28rpx;
+  justify-content: left;
+  font-size: 26rpx;
   color: #E34C55;
   background: #ffffff;
-  padding: 10rpx 0;
-  margin-top: 10rpx;
+  padding: 10rpx 20rpx;
 }
 .prd-title {
   display: flex;
@@ -229,15 +228,28 @@ font-size: 32rpx;
 .share-buttons {
   display: flex;
   flex-direction: row;
-  justify-content: flex-end;
-  width: 40%;
+  justify-content:flex-end;
+  align-items: right;
   padding: 20rpx;
-  border-radius: 10rpx 10rpx 10rpx 10rpx;
 }
-.share-buttons button::after {
-  border: none;
+.share-buttons .btnshare {
+  background-color: #444;
+  font-size: 26rpx;
+  color: #fff;
+  padding: 0 28rpx;
+  line-height: 2.5;
+  opacity: 0.7;
 }
- 
+
+.leftround {
+  border-top-left-radius: 20rpx;
+  border-bottom-left-radius: 20rpx;
+  border-right: 1rpx solid #777;
+} 
+.rightround {
+  border-top-right-radius: 20rpx;
+  border-bottom-right-radius: 20rpx;
+} 
 /*购物车按钮、收藏等*/
 .footer {
   background: #fff;
