@@ -73,7 +73,7 @@ Page({
     var that = this
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
-    console.log('wishshare get_project_gift_para navList2:', navList2)
+    //console.log('wishshare get_project_gift_para navList2:', navList2)
     if (navList2.length == 0) {
       //项目列表
       wx.request({
@@ -123,7 +123,7 @@ Page({
         loadingHidden: true,
       })
       that.eventDraw()
-    }, 1000)
+    }, 1300)
     
   },
 
@@ -235,6 +235,7 @@ Page({
       notehidden: !that.data.notehidden,
       hidden_share: !that.data.hidden_share
     })
+    that.get_project_gift_para()
   },
   //取消按钮点击事件  
   shareCandel: function () {
@@ -268,7 +269,7 @@ Page({
     var nickname = that.data.nickname
    
     wx.showLoading({
-      title: '生成完成',
+      title: '生成图片',
       mask: true
     })
     
