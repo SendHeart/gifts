@@ -89,6 +89,7 @@ page {
 /*导航 nav*/
 .top-bar {
   height: 162rpx;
+  width: 100%;
   background: #1d1d1d; 
   position: fixed;
   top:0;
