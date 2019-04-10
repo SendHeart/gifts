@@ -324,8 +324,10 @@ Page({
     console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){
-          that.image_save(share_goods_image, 'goods_image_cache_'+goodsid)
-          console.log('商品详情图片下载缓存 goods_image_cache_'+goodsid, share_goods_image)
+          if (share_goods_image){
+            that.image_save(share_goods_image, 'goods_image_cache_' + goodsid)
+            console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, share_goods_image)
+          } 
           wx.request({
             url: weburl + '/api/client/get_goods_list',
             method: 'POST',
@@ -412,6 +414,10 @@ Page({
               image_video: image_video,
               image_pic: image_pic,
             })
+            if (!share_goods_image) {
+              that.image_save(image_pic[0]['url'], 'goods_image_cache_' + goodsid)
+              console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
+            } 
             console.log('get_goodsdesc_list image_pic:', that.data.image_pic)
           that.showGoodsinfo()
           }
