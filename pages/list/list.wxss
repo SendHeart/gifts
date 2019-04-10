@@ -88,6 +88,10 @@ page {
 
 /*导航 nav*/
 .top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-start;
+  flex-wrap: wrap;
   height: 162rpx;
   background: #1d1d1d; 
   position: fixed;
@@ -95,7 +99,6 @@ page {
   z-index:99;
 }
 .top-bar-item {
-  display:inline-block;
   color: #fff;
   text-align: center;
   font-size: 24rpx;

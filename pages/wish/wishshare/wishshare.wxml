@@ -9,8 +9,8 @@
   <button class=""  hidden ='' bindtap="sharegoods">修改留言</button>
   </view>
   <view class="sentbtn">
-  <button class=""  hidden ='' bindtap="eventSave" type='warn'>保存图片</button>
-  <button class=""  hidden ='' open-type='share' bindtap="onShareAppMessage">分享</button>
+  <button class=""  hidden ='' bindtap="eventSave" type='warn'>保存到相册</button>
+  <button class=""  hidden ='' open-type='share' bindtap="onShareAppMessage">立即分享</button>
   </view>
 </view>
 <modal title="编辑分享语" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">

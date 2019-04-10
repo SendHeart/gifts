@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "分享",
+  "navigationBarTitleText": "礼物分享",
   "usingComponents": {
     "canvasdrawer": "../../common/canvasdrawer/canvasdrawer"
   }

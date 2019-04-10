@@ -114,7 +114,7 @@ Page({
       })
     }
     wx.showToast({
-      title: "分享图生成中",
+      title: "开始生成海报",
       icon: 'loading',
       duration: 1500,
     })
@@ -269,7 +269,7 @@ Page({
     var nickname = that.data.nickname
    
     wx.showLoading({
-      title: '生成图片',
+      title: '生成中',
       mask: true
     })
     
@@ -340,46 +340,46 @@ Page({
     } else if (share_goods_id > 0) {
       that.setData({
         painting: {
-          width: 375,
-          height: 850,
+          width: 520,
+          height: 900,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
           views: [
             {
-              type: 'rect',
-              top: 0,
+              type: 'image',
+              url: weburl + '/uploads/2019/04/10/146899dd897785e3457f847ed3aef42a.png',
+              top: 10,
               left: 0,
-              width: 375,
-              height: 850,
-              background: 'white',
+              width: 520,
+              height: 900,
             },
             {
               type: 'image',
               url: that.data.share_goods_wx_headimg,
-              top: 10,
-              left: 10,
-              width: 80,
-              height: 80,
-              borderRadius: 40,
+              top: 45,
+              left: 30,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
             },
             {
               type: 'text',
               content: '来自'+nickname+'的分享',
-              fontSize: 13,
+              fontSize: 18,
               color: '#333',
               textAlign: 'left',
-              top: 35,
-              left: 110,
+              top: 60,
+              left: 90,
               bolder: false
             },
             {
               type: 'image',
               url: share_goods_image,
-              top: 100,
-              left: 0,
-              width: 375,
-              height: 400
+              top: 120,
+              left: 85,
+              width: 350,
+              height: 350
             },
             {
               type: 'text',
@@ -387,8 +387,8 @@ Page({
               fontSize: 20,
               color: '#333',
               textAlign: 'left',
-              top: 510,
-              left: 10,
+              top: 490,
+              left: 85,
               bolder: true,
               lineHeight: 25,
               MaxLineNumber: 2,
@@ -399,35 +399,42 @@ Page({
               type: 'text',
               content: '￥' + share_goods_price,
               fontSize: 20,
-              color: '#e34c55',
+              color: '#444444',
               textAlign: 'left',
-              top: 565,
-              left: 10,
-              bolder: true,
+              top: 550,
+              left: 85,
            
             },
             {
               type: 'text',
               content: 'Ta说:',
               fontSize: 20,
-              color: '#333',
+              color: '#444',
               textAlign: 'left',
-              top: 620,
-              left: 10,
+              top: 630,
+              left: 85,
               bolder: true,
             },
             {
               type: 'text',
               content: share_goods_title,
               fontSize: 18,
-              color: '#333',
+              color: '#666',
               textAlign: 'left',
-              top: 650,
-              left: 10,
+              top: 660,
+              left: 85,
               lineHeight: 25,
-              MaxLineNumber: 2,
+              MaxLineNumber: 4,
               breakWord: true,
               width:350,
+            },
+            {
+              type: 'rect',
+              top: 770,
+              left: 85,
+              background: '#eeeeee',
+              width: 350,
+              height: 1,
             },
             {
               type: 'text',
@@ -435,8 +442,8 @@ Page({
               fontSize: 18,
               color: '#333',
               textAlign: 'left',
-              top: 720,
-              left: 10,
+              top: 790,
+              left: 85,
               breakWord: false,
               bolder: true,
             },
@@ -446,15 +453,15 @@ Page({
               fontSize: 18,
               color: '#999',
               textAlign: 'left',
-              top: 750,
-              left: 10,
+              top: 820,
+              left: 85,
               breakWord: false,
             },
             {
               type: 'image',
               url: share_goods_qrcode,
-              top: 700,
-              left: 260,
+              top: 780,
+              left: 360,
               width: 90,
               height: 90,
             }
@@ -529,7 +536,7 @@ Page({
       filePath: this.data.shareImage,
       success(res) {
         wx.showToast({
-          title: '保存图片成功',
+          title: '图片已保存到相册，赶紧晒一下吧~',
           icon: 'success',
           duration: 1500
         })

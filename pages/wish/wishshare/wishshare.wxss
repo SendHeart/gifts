@@ -1,4 +1,6 @@
-
+page {
+  background-color: #fff;
+}
 .startBar {
   height: 75rpx;
   background: #333;
@@ -51,28 +53,26 @@
 .sentbtn {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content:space-between;
   align-content: center;
-  margin: 20rpx auto 20rpx auto;
-  width: 100%;
-  height: 150rpx;
+  width: 81%;
+  height: 90rpx;
+  margin-bottom: 30rpx;
 }
 
 .sentbtn button {
   line-height: 70rpx;
-  width: 60%;
+  width: 48%;
   height: 70rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
   background: #e34c55;
   color: white;
   font-size: 26rpx;
-  border-radius: 20rpx;
-  -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  -moz-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
-  margin:20rpx;
+  border-radius: 15rpx;
 }
-
+.sentbtn button::after {
+  border: 0;
+}
 .sentbtn text {
   font-size: 24rpx;
   color: #999;
@@ -84,26 +84,24 @@
   flex-direction: row;
   justify-content: space-around;
   align-content: center;
-  margin: 20rpx auto 20rpx auto;
+  margin: 30rpx auto 10rpx auto;
   width: 100%;
-  height: 150rpx;
+  height: 90rpx;
 }
 
 .sentbtn2 button {
   line-height: 70rpx;
-  width: 60%;
+  width: 80%;
   height: 70rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
-  background: #f2f2f2;
-  color: #999;
+  background: #EEE;
+  color: #666;
   font-size: 26rpx;
-  border-radius: 20rpx;
-  -webkit-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  -moz-box-shadow: 0px 6rpx 0px rgba(219, 31, 5, 1);
-  box-shadow: 0px 6rpx 0px rgb(179, 22, 2);
-  margin:20rpx;
+  border-radius: 15rpx;
 }
-
+.sentbtn2 button::after {
+  border: 0;
+}
 .sentbtn2 text {
   font-size: 24rpx;
   color: #999;
