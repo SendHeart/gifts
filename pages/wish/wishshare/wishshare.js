@@ -423,7 +423,7 @@ Page({
               type: 'text',
               content: share_goods_title,
               fontSize: 18,
-              color: '#333',
+              color: '#999',
               textAlign: 'left',
               top: 650,
               left: 10,
