@@ -137,6 +137,7 @@ Component({
       }
       this.ctx.draw(false, () => {
         console.log('canvasdrawer this.ctx.draw canvasdrawer_pic_cache:', this.cache)
+        wx.removeStorageSync('canvasdrawer_pic_cache')
         wx.setStorageSync('canvasdrawer_pic_cache', this.cache)
         this.saveImageToLocal()
       })
@@ -184,7 +185,6 @@ Component({
           let text_left = parseInt((this.data.width - this.ctx.measureText(content).width)/2 )
           this.ctx.fillText(content, text_left, top)
           this.drawTextLine(text_left, top, textDecoration, color, fontSize, content)
-         
         }else{
           this.ctx.fillText(content, left, top)
           this.drawTextLine(left, top, textDecoration, color, fontSize, content)
@@ -218,7 +218,6 @@ Component({
         this.ctx.fillText(fillText, left, fillTop)
         this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
       }
-      
       this.ctx.restore()
 
       if (bolder) {
