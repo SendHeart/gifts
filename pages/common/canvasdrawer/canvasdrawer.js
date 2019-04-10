@@ -77,7 +77,7 @@ Component({
           this.getImageList(views)
           this.downLoadImages(0)
         }
-      }, 100)
+      }, 200)
     },
   
     getImageList (views) {
