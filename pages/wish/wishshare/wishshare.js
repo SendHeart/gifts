@@ -370,7 +370,7 @@ Page({
               type: 'text',
               content: '来自'+nickname+'的分享',
               fontSize: 13,
-              color: '#333',
+              color: '#999',
               textAlign: 'left',
               top: 35,
               left: 110,
