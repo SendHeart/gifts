@@ -25,6 +25,7 @@ Page({
   data: {
     title_name: '分享',
     title_logo: '../../../images/footer-icon-05.png',
+    share_goods_bg: weburl+'/uploads/share_goods_bg.png',
     activity_share_image: weburl+'/uploads/activity_share.jpg',
     activity_avatarUrl: weburl + '/uploads/avatar.png',
     share_goods_avatarUrl: weburl + '/uploads/avatar.png',
@@ -267,6 +268,7 @@ Page({
     var share_goods_title = that.data.share_goods_title
     var share_goods_desc = that.data.share_goods_desc
     var nickname = that.data.nickname
+    var share_goods_bg = that.data.share_goods_bg
    
     wx.showLoading({
       title: '生成中',
@@ -347,10 +349,9 @@ Page({
           clear: true,
           background: 'white',
           views: [
-            
             {
               type: 'image',
-              url: weburl + '/uploads/2019/04/10/146899dd897785e3457f847ed3aef42a.png',
+              url: share_goods_bg, // weburl + '/uploads/share_goods_bg.png'
               top: 10,
               left: 0,
               width: 520,
