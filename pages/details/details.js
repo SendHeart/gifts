@@ -265,7 +265,7 @@ Page({
         var goodsprice = options.goods_price
         var marketprice = options.goods_marketprice 
         var goodssale = options.sale
-        var image = options.image ? options.image : that.data.share_avatarUrl
+        var image = options.image
         var activity_image = options.activity_image
         var share_goods_image = activity_image ? activity_image : image
         var shop_type =  that.data.shop_type
@@ -279,29 +279,32 @@ Page({
           image_save_count:0,
         })
         
-        if (image.indexOf(".mp4") >= 0) {
-          var video_init = {
-            id: 0,
-            url: image,
-            activity_image: activity_image,
+        if (image){
+          if (image.indexOf("%3A%2F%2F") >= 0){
+            image = decodeURIComponent(image)
           }
-          image_video.push(video_init)
+          if (image.indexOf(".mp4") >= 0) {
+            var video_init = {
+              id: 0,
+              url: image,
+              activity_image: activity_image,
+            }
+            image_video.push(video_init)
+            that.setData({
+              image_video: image_video,
+            })
+          }
+          var image_init = {
+            id: 0,
+            goods_id: goodsid,
+            url: activity_image ? activity_image : image,
+          }
+          image_pic.push(image_init)
           that.setData({
-            image_video: image_video,
+            image_pic: image_pic,
           })
-        }else{
-          
         }
-        var image_init = {
-          id: 0,
-          goods_id: goodsid,
-          url: activity_image ? activity_image : image,
-        }
-        image_pic.push(image_init)
-        that.setData({
-          image_pic: image_pic,
-        })
-
+      
         that.showGoodspara()
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
@@ -387,7 +390,7 @@ Page({
             goods_id: goodsid, 
             refer_mid: refer_mid, //分享人id
             page: page,
-            shop_type: shop_type 
+            shop_type: shop_type,
           },
           header: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -396,8 +399,8 @@ Page({
           success: function (res) {
             console.log('get_goodsdesc_list:', res.data.result)
             var goodsPicsInfo = res.data.result
-           
-            for (var i = 1; i < goodsPicsInfo.image.length;i++){
+            var k = image?1:0
+            for (var i = k; i < goodsPicsInfo.image.length;i++){
               if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
                 image_video.push(goodsPicsInfo.image[i])
               }else{
