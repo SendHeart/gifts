@@ -93,6 +93,7 @@ page {
   justify-content:flex-start;
   flex-wrap: wrap;
   height: 162rpx;
+  width: 100%;
   background: #1d1d1d; 
   position: fixed;
   top:0;

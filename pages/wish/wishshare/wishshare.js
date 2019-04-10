@@ -345,7 +345,9 @@ Page({
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
+          background: 'white',
           views: [
+            
             {
               type: 'image',
               url: weburl + '/uploads/2019/04/10/146899dd897785e3457f847ed3aef42a.png',
@@ -354,6 +356,7 @@ Page({
               width: 520,
               height: 900,
             },
+            
             {
               type: 'image',
               url: that.data.share_goods_wx_headimg,
