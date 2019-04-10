@@ -345,7 +345,9 @@ Page({
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
+          background: 'white',
           views: [
+            /*
             {
               type: 'rect',
               top: 0,
@@ -354,6 +356,7 @@ Page({
               height: 850,
               background: 'white',
             },
+            */
             {
               type: 'image',
               url: that.data.share_goods_wx_headimg,

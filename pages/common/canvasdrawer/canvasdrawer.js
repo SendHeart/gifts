@@ -43,7 +43,7 @@ Component({
   },
   methods: {
     readyPigment () {
-      const { width, height, windowHeight, windowWidth,views } = this.data.painting
+      const { width, height, windowHeight, windowWidth,background,views } = this.data.painting
       // 屏幕宽度 375px = 750rpx，1px=2rpx
       // 1px = （750 / 屏幕宽度）rpx；
       // 1rpx = （屏幕宽度 / 750）px;
@@ -53,14 +53,22 @@ Component({
         windowHeight,
         windowWidth,
         ratio: 750/windowWidth,
-       
+        background: background,
       })
-   
+      console.log('canvasdrawer readyPigment background:',background,width,height)
+     
       const inter = setInterval(() => {
         if (this.ctx) {
           clearInterval(inter)
           this.ctx.clearActions()
           this.ctx.save()
+          this.drawRect({
+            background: background,
+            top: 0,
+            left: 0,
+            width: width,
+            height: height,
+          })
           this.getImageList(views)
           this.downLoadImages(0)
         }
@@ -187,7 +195,7 @@ Component({
           if (this.ctx.measureText(fillText).width > width) {
             if (lineNum === MaxLineNumber) {
               if (i !== content.length) {
-                fillText = fillText.substring(0, 13) + '...' //fillText.length - 1
+                fillText = fillText.substring(0, fillText.length - 1) + '...' 
                 this.ctx.fillText(fillText, left, fillTop)
                 this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
                 fillText = ''
