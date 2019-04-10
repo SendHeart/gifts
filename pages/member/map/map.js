@@ -133,6 +133,12 @@ Page({
         })
       })
     }
+    /*
+    setTimeout(function () {
+      that.requestLocation()
+    }, that.data.interval)
+    */
+    that.requestLocation()
     that.scopeSetting()
   },
 
@@ -147,7 +153,7 @@ Page({
       that.getCenterLocation();
       //正在上传的话，不去请求地理位置信息
       if (that.data.showUpload) {
-        that.requestLocation()
+        //that.requestLocation()
       }
     } else {
       that.setData({
@@ -159,9 +165,12 @@ Page({
         callbackAddressInfo: null
       })
     }
+  
+    /*
     setInterval(function () {
       that.requestLocation()
     }, that.data.interval)
+    */
   },
 
   /**
@@ -324,6 +333,11 @@ Page({
         that.queryMarkerInfo()
       },
     })
+/*
+    setTimeout(function () {
+      that.requestLocation()
+    }, that.data.interval)
+    */
   },
 
   //上报地理位置
@@ -408,9 +422,11 @@ Page({
         }
       }
     })
+    /*
     setTimeout(function () {
       that.getMemberLocation()
     }, that.data.interval)
+    */
   },
 
 
