@@ -75,7 +75,7 @@ Component({
             height: height,
           })
           this.getImageList(views)
-          this.downLoadImages(0)
+          //this.downLoadImages(0)
         }
       }, 200)
     },
@@ -90,6 +90,7 @@ Component({
       this.setData({
         imageList
       })
+      this.downLoadImages(0)
     },
     downLoadImages (index) {
       const { imageList, tempFileList } = this.data
