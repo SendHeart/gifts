@@ -265,7 +265,7 @@ Page({
         var goodsprice = options.goods_price
         var marketprice = options.goods_marketprice 
         var goodssale = options.sale
-        var image = options.image
+        var image = options.image ? options.image : that.data.share_avatarUrl
         var activity_image = options.activity_image
         var share_goods_image = activity_image ? activity_image : image
         var shop_type =  that.data.shop_type
