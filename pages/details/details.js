@@ -902,8 +902,8 @@ Page({
       title: share_goods_title,
       desc: share_goods_desc,
       imageUrl: share_goods_image,  
-      //path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username,
-      path: '/pages/details/details?scene=' + encodeURIComponent(scene)
+      path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username,
+     // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
 })
