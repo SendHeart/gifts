@@ -282,7 +282,7 @@ Page({
           if (scene.indexOf("goodsid=") >= 0) {
             var goodsidReg = new RegExp(/(?=goodsid=).*?(?=\&)/)
             var midReg = new RegExp(/\&mid=(.*)/)
-          
+        
             var scene_goodsid = scene.match(goodsidReg)[0]
             goodsid = scene_goodsid ? scene_goodsid.substring(8,scene_goodsid.length):goodsid
             //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
@@ -294,6 +294,10 @@ Page({
         if (image){
           if (image.indexOf("%3A%2F%2F") >= 0){
             image = decodeURIComponent(image)
+            share_goods_image = activity_image ? activity_image : image
+            goodsname = decodeURIComponent(goodsname)
+            goodsinfo = decodeURIComponent(goodsinfo)
+
           }
           if (image.indexOf(".mp4") >= 0) {
             var video_init = {
@@ -322,7 +326,6 @@ Page({
         that.setData({
           goodsname: goodsname ? goodsname:'',
           goodsinfo: goodsinfo ? goodsinfo:'',
-         // goodsshortname: goodsshortname ? goodsshortname:'',
           goodsid: goodsid ? goodsid:0,
           refer_mid: refer_mid,
           goodsprice: goodsprice ? goodsprice:0,
