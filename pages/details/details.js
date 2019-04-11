@@ -273,12 +273,24 @@ Page({
         var image_video = []
         var image_pic = []
       
-        console.log('detail options:', options)
+        console.log('detail options:', options,'scene:',scene)
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
         })
-        
+        if(scene){
+          if (scene.indexOf("goodsid=") >= 0) {
+            var goodsidReg = new RegExp(/(?=goodsid=).*?(?=\&)/)
+            var midReg = new RegExp(/\&mid=(.*)/)
+          
+            var scene_goodsid = scene.match(goodsidReg)[0]
+            goodsid = scene_goodsid ? scene_goodsid.substring(8,scene_goodsid.length):goodsid
+            //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
+            var scene_mid = scene.match(midReg) ? scene.match(midReg)[0]: 0
+            refer_mid = scene_mid?scene_mid.substring(5, scene_mid.length):refer_mid
+            console.log('scene_goodsid:', scene_goodsid, 'mid:', scene_mid, ' goodsid:', goodsid, 'refer_id:', refer_mid)//输出  
+          }
+        }
         if (image){
           if (image.indexOf("%3A%2F%2F") >= 0){
             image = decodeURIComponent(image)
@@ -316,6 +328,7 @@ Page({
           goodsprice: goodsprice ? goodsprice:0,
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
+          m_id:m_id,
         })
     var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid + '&m_id=' + m_id
     that.image_save(share_goods_qrcode, 'goods_qrcode_cache_'+goodsid)
@@ -883,11 +896,14 @@ Page({
     var share_goods_image = that.data.image_pic[0]['url']
     var share_goods_title = that.data.share_title
     var share_goods_desc = that.data.share_desc
+    var m_id = that.data.m_id > 0 ? that.data.m_id:0
+    var scene = 'goodsid='+that.data.goodsid +'&mid='+m_id
     return {
       title: share_goods_title,
       desc: share_goods_desc,
       imageUrl: share_goods_image,  
-      path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username
+      //path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username,
+      path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
 })
