@@ -489,7 +489,18 @@ Page({
       scale: defaultScale
     })
     //必须请求定位，改变中心点坐标
-    that.requestLocation();
+    //that.requestLocation();
+
+    wx.getLocation({
+      type: 'gcj02',
+      success: function (res) {
+        that.setData({
+          latitude: res.latitude,
+          longitude: res.longitude,
+        })
+        console.log('selfLocationClick:', res)
+      },
+    })
   },
 
   /**
