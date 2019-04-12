@@ -40,7 +40,7 @@ Page({
     hasUserInfo: false,
     longitude: '',
     latitude: '',
-    interval: mapInterval,
+    interval: mapInterval ? mapInterval:20000,
     //地图缩放级别
     scale: defaultScale,
     markers: [],
@@ -133,9 +133,14 @@ Page({
         })
       })
     }
-    /*
+   
     setTimeout(function () {
-      that.requestLocation()
+      that.reportLocation()
+    }, that.data.interval)
+   
+     /*
+    setInterval(function () {
+      that.reportLocation()
     }, that.data.interval)
     */
     that.requestLocation()
@@ -153,7 +158,7 @@ Page({
       that.getCenterLocation();
       //正在上传的话，不去请求地理位置信息
       if (that.data.showUpload) {
-        //that.requestLocation()
+        that.requestLocation()
       }
     } else {
       that.setData({
@@ -166,11 +171,7 @@ Page({
       })
     }
   
-    /*
-    setInterval(function () {
-      that.requestLocation()
-    }, that.data.interval)
-    */
+   
   },
 
   /**
@@ -329,15 +330,10 @@ Page({
           longitude: res.longitude,
         })
         that.moveTolocation()
-        that.reportLocation()
+        //that.reportLocation()
         that.queryMarkerInfo()
       },
     })
-/*
-    setTimeout(function () {
-      that.requestLocation()
-    }, that.data.interval)
-    */
   },
 
   //上报地理位置
@@ -359,7 +355,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('reportLocation:',res.data.result)
+        console.log('reportLocation:',res)
         var mapDisplayInfo = res.data.result
         if (mapDisplayInfo){
           that.setData({
@@ -369,6 +365,9 @@ Page({
         }
       }
     })
+    setTimeout(function () {
+      that.reportLocation()
+    }, that.data.interval)
   },
 
   //获取成员地理位置
