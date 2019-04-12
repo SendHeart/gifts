@@ -133,17 +133,13 @@ Page({
         })
       })
     }
-   
-    setTimeout(function () {
-      that.reportLocation()
-    }, that.data.interval)
-   
      /*
     setInterval(function () {
       that.reportLocation()
     }, that.data.interval)
     */
     that.requestLocation()
+    that.reportLocation()
     that.scopeSetting()
   },
 
@@ -314,9 +310,12 @@ Page({
       key: constant.tencentAk
     })
     that.getCenterLocation()
+    that.getMemberLocation()
+    /*
     if (that.data.activity_omid == that.data.m_id && that.data.markersMy) {
       that.getMemberLocation()
     }
+    */
   },
 
   //请求地理位置
@@ -421,11 +420,11 @@ Page({
         }
       }
     })
-    /*
+    
     setTimeout(function () {
       that.getMemberLocation()
     }, that.data.interval)
-    */
+    
   },
 
 
