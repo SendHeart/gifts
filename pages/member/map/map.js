@@ -139,7 +139,7 @@ Page({
     }, that.data.interval)
     */
     that.requestLocation()
-    that.reportLocation()
+    //that.reportLocation()
     that.scopeSetting()
   },
 
@@ -154,7 +154,7 @@ Page({
       that.getCenterLocation();
       //正在上传的话，不去请求地理位置信息
       if (that.data.showUpload) {
-        that.requestLocation()
+        //that.requestLocation()
       }
     } else {
       that.setData({
@@ -328,11 +328,16 @@ Page({
           latitude: res.latitude,
           longitude: res.longitude,
         })
+        console.log('requestLocation:', res)
         that.moveTolocation()
-        //that.reportLocation()
+        that.reportLocation()
         that.queryMarkerInfo()
+        
       },
     })
+    setTimeout(function () {
+      that.requestLocation()
+    }, that.data.interval)
   },
 
   //上报地理位置
@@ -364,9 +369,7 @@ Page({
         }
       }
     })
-    setTimeout(function () {
-      that.reportLocation()
-    }, that.data.interval)
+ 
   },
 
   //获取成员地理位置
