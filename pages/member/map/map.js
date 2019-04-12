@@ -372,7 +372,6 @@ Page({
   //获取成员地理位置
   getMemberLocation: function () {
     var that = this
-    
     //console.log('map getMemberLocation activity_id:',that.data.activity_id)
     wx.request({
       url: weburl + '/api/client/get_member_loc',

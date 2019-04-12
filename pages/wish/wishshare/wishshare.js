@@ -278,64 +278,61 @@ Page({
     if (activity_id>0){
       that.setData({
         painting: {
-          width: 700,
-          height: 600,
+          width: 500,
+          height: 660,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
-          clear: true,
+          clear: true, 
+          background: 'white',
           views: [
             {
               type: 'image',
+              url: that.data.activity_headimg,
+              top: 8,
+              left: 10,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+            },
+            {
+             type: 'text',
+             content: nickname+'在'+activity_name,
+             fontSize: 16,
+             color: '#999',
+             textAlign: 'left',
+             top: 20,
+             left: 70,
+             bolder: true
+            },
+            {
+              type: 'image',
               url: activity_image,
-              top: 0,
+              top: 70,
               left: 0,
               width: 700,
               height: 400
             },
-          /*
             {
-             type: 'text',
-             content: activity_name,
-             fontSize: 28,
-             color: '#f2f2f2',
-             textAlign: 'left',
-             top: 33,
-             left: 20,
-             bolder: true
+              type: 'text',
+              content: '长按识别二维码查看具体位置',
+              fontSize: 18,
+              color: '#333',
+              textAlign: 'left',
+              top: 480,
+              left: 125,
+              //lineHeight: 20,
+              //MaxLineNumber: 2,
+              //breakWord: true,
+              //width: 700
             },
-           */
             {
               type: 'image',
               url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&activity_id=' + activity_id,
-              top: 410,
-              left: 215,
+              top: 520,
+              left: 180,
               width: 125,
               height: 125,
             },
-             
-            {
-              type: 'image',
-              url: that.data.activity_headimg,
-              top: 410,
-              left: 375,
-              width: 125,
-              height: 125,
-              borderRadius: 62,
-            },
-             
-            {
-              type: 'text',
-              content: '长按识别二维码，查看具体地图位置',
-              fontSize: 18,
-              color: '#fff',
-              textAlign: 'left',
-              top: 365,
-              left: 215,
-              lineHeight: 30,
-              MaxLineNumber: 2,
-              breakWord: true,
-              //width: 700
-            }
           ]
         }
       })

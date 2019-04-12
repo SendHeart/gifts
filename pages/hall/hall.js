@@ -1029,7 +1029,7 @@ Page({
       msg_id: msg_id,
       page_type: page_type,
     })
-    if (scene.indexOf("activity=") >= 0) {
+    if (scene.indexOf("activity=") >= 0 || scene.indexOf("activity_id=") >= 0 ) {
       wx.navigateTo({
         url: '/pages/member/mylocation/mylocation?' + scene
       })

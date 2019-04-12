@@ -267,12 +267,14 @@ Page({
     var cur_city = wx.getStorageSync('city') 
     var refer_username = options.username ? options.username:''
     var activity_id = options.activity_id ? options.activity_id : ''
+    var activity = options.activity ? options.activity : ''
+    activity_id = activity_id ? activity_id : activity
     that.setData({
       activity_id: activity_id,
     })
     that.location()
     that.loadData()
-    if (activity_id>0){
+    if (activity_id > 0 ){
       wx.showModal({
         title: '',
         content: '我要去？',
