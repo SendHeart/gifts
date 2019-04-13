@@ -57,12 +57,7 @@
         "selectedIconPath": "images/logo_s.png",
         "text": "送礼"
       },
-      {
-        "pagePath": "pages/wish/wish",
-        "iconPath": "images/wish.png",
-        "selectedIconPath": "images/wish_s.png",
-        "text": "心愿单"
-      },
+      
       {
         "pagePath": "pages/member/message/message",
         "iconPath": "images/ai.png",

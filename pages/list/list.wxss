@@ -157,7 +157,6 @@ swiper-item image {
   margin-bottom:15rpx;
   background: #ffffff;
   border-radius: 10rpx;
-  text-indent: 20rpx;
   padding-bottom: 10rpx;
 }
 
@@ -173,18 +172,21 @@ swiper-item image {
   margin-left:20rpx;
 }
 .venues_item .goods_name {
-  display: block;
   color: #444;
-  font-size:28rpx;
-  overflow:hidden;  
-  text-overflow:ellipsis;  
-  white-space:nowrap;  
+  font-size: 26rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  padding-left: 20rpx;
 }
 
 .venues_item .goods_tag {
   color: #999;
   font-size: 20rpx;
-  padding: 2rpx 6rpx;
+  padding: 2rpx 4rpx;
   border: 1px solid #f2f2f2;
   border-radius: 6rpx;
   text-align: center;
@@ -196,10 +198,11 @@ swiper-item image {
 .venues_item .goods_prom {
   display: block;
   color: #999;
-  font-size:28rpx;
-  overflow:hidden;  
-  text-overflow:ellipsis;  
-  white-space:nowrap;  
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-left: 20rpx;
 }
 
 .price-list {
@@ -213,7 +216,7 @@ swiper-item image {
   color: #999;
   font-size: 24rpx;
   line-height: 1.8;
-  padding-right: 4rpx;
+  padding-right: 3rpx;
   text-decoration:line-through;
 }
 .price-market::first-letter {
@@ -222,7 +225,7 @@ swiper-item image {
 .price-now {
   text-indent: 0;
   color: #e34c55;
-  font-size: 28rpx;
+  font-size: 26rpx;
   font-weight: bold;
 }
 .price-now::first-letter {

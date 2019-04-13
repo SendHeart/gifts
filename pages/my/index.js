@@ -381,6 +381,11 @@ Page({
       url: '../member/account/account?'
     })
   },
+  navigateToWishlist: function (e) {
+    wx.navigateTo({
+      url: '../wish/wish'
+    })
+  },
   navigateToShopowner: function (e) {
     wx.navigateTo({
       url: '../member/shopowner/shopowner?'
