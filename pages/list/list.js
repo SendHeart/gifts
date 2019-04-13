@@ -193,17 +193,13 @@ Page({
     var all_rows = that.data.all_rows;
     if (page > all_rows){
       wx.showToast({
-        title: '没有更多了~',
+        title: '已经到底了~',
         icon: 'none',
         duration: 1000
       });
       return
     }
-    wx.showToast({
-      title: '加载中...',
-      icon: 'none',
-      duration: 500
-    });
+
     that.setData({
       page: page,
     });
