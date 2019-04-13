@@ -34,6 +34,7 @@ var sizeType = [
 Page({
   data: {
     userInfo: userInfo,
+    openSetting:0,
     m_id: m_id,
     username: username,
     token:token,
@@ -96,6 +97,7 @@ Page({
     userAvatar: userInfo.avatarUrl,
     userNickname: userInfo.nickName,
     uploadTime: '',
+    hasMarkers:true
   },
 
   onLoad: function (options) {
@@ -115,6 +117,10 @@ Page({
       activity_omid: activity_omid,
     })
     console.log('map onlod activity_lat:', activity_lat, ' activity_lng:', activity_lng, ' activity_title:', activity_title, ' activity_id:', activity_id);
+    var openSetting = wx.getStorageSync('userLocation') ? wx.getStorageSync('userLocation') : 1
+    this.setData({
+      openSetting: openSetting
+    })
     //检测更新
     that.checkUpdate();
     if (that.data.userInfo) {
@@ -170,6 +176,24 @@ Page({
    
   },
 
+  getSetting: function (e) {
+    if (e.detail.authSetting["scope.userLocation"]) {//如果打开了地理位置，就会为true
+      this.setData({
+        openSetting: 1
+      })
+    }else{
+      wx.authorize({
+        scope: 'scope.userLocation',
+        success() {
+          console.log('位置授权成功' + res.errMsg)
+          wx.setStorageSync('userLocation', '1')
+        }
+      })
+      this.setData({
+        openSetting: 1
+      })
+    }
+  },
   /**
    * 页面不可见时
    */
@@ -264,41 +288,9 @@ Page({
   },
 
   scopeSetting: function () {
-    var that = this;
-    wx.getSetting({
-      success(res) {
-        //地理位置
-        if (!res.authSetting['scope.userLocation']) {
-          wx.authorize({
-            scope: 'scope.userLocation',
-            success(res) {
-              that.initMap();
-            },
-            fail() {
-              wx.showModal({
-                title: '提示',
-                content: '定位失败，你未开启定位权限，点击开启定位权限',
-                success: function (res) {
-                  if (res.confirm) {
-                    wx.openSetting({
-                      success: function (res) {
-                        if (res.authSetting['scope.userLocation']) {
-                          that.initMap();
-                        } else {
-                          consoleUtil.log('用户未同意地理位置权限')
-                        }
-                      }
-                    })
-                  }
-                }
-              })
-            }
-          })
-        } else {
-          that.initMap();
-        }
-      }
-    })
+    var that = this
+    consoleUtil.log('scopeSetting')
+    that.initMap()
   },
 
   /** 
@@ -309,6 +301,7 @@ Page({
     qqmapsdk = new QQMapWX({
       key: constant.tencentAk
     })
+    consoleUtil.log('初始化地图')
     that.getCenterLocation()
     that.getMemberLocation()
     /*
@@ -393,14 +386,13 @@ Page({
       success: function (res) {
         var loc_list = res.data.result ? res.data.result:''
         var member_loc=[]
-        console.log('map getMemberLocation success:', res, 'markersMy:', that.data.markersMy)
         if (loc_list){
           for (var i = 0; i < loc_list.length;i++){
             var new_loc={
-              id: i+2,
+              id: i+3,
               name: loc_list[i]['wx_nickname'],
-              latitude: loc_list[i]['latitude'],
-              longitude: loc_list[i]['longitude'],
+              latitude: parseFloat(loc_list[i]['latitude']),
+              longitude: parseFloat(loc_list[i]['longitude']),
               width: 25,
               height: 25,
               iconPath: loc_list[i]['wx_headimg'] ? loc_list[i]['wx_headimg'] : '../../../images/ai.png',
@@ -417,8 +409,12 @@ Page({
             member_loc.push(new_loc)
           }
           that.setData({
-            markers: that.data.markersMy.concat(member_loc),
+            member_loc: member_loc,
+            hasMarkers: true
           })
+          //that.getCenterLocation()
+          that.queryMarkerInfo()
+          console.log('map getMemberLocation success:', res, 'member_loc:', that.data.member_loc)
         }
       }
     })
@@ -753,9 +749,14 @@ Page({
       borderColor: "#000",
       borderWidth: 2
     }]
-    if(!that.data.markersMy){
+    if (!that.data.member_loc){
       that.setData({
         markers: markersMy,
+        markersMy: markersMy,
+      })
+    }else{
+      that.setData({
+        markers: markersMy.concat(that.data.member_loc),
         markersMy: markersMy,
       })
     }
@@ -763,7 +764,7 @@ Page({
       polyline: polyline,
     })
     
-    console.log('queryMarkerInfo markersMy:', that.data.markersMy)
+    console.log('queryMarkerInfo markers:', that.data.markers, 'polyline:', polyline)
    
     /*
     var mapCtx = wx.createMapContext(mapId);
@@ -842,15 +843,4 @@ Page({
       })
     }
   },
-
-/*
-  getUserInfo: function (e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
-  }
-  */
 })

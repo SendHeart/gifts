@@ -22,6 +22,7 @@
   margin-top: 20rpx;
   border-radius: 5rpx;
   position: relative;
+  font-size: 20rpx;
 }
 
 .tip-bg{

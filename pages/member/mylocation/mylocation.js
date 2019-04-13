@@ -430,22 +430,7 @@ Page({
 
   location: function () {
     var that = this
-    //获取当前位置
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.userLocation']) {
-          wx.authorize({
-            scope: 'scope.userLocation',
-            success() {
-              console.log('位置授权成功' + res.errMsg)
-              that.get_mylocation()
-            }
-          })
-        }else{
-          that.get_mylocation()
-        }
-      }
-    })
+    that.get_mylocation()
   },
 
   get_mylocation:function(){

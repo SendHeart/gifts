@@ -1,4 +1,4 @@
-<view class="currentlocation">
+<view class="currentlocation" bindtap="location">
 		<image  src="../../../images/iconfont-shouhuodizhi.png"></image>
     <text class="address-text" style="width:{{windowWidth-20}}px color:gray;font-size:34rpx;">{{city[curIndex]}}</text>
 </view>
