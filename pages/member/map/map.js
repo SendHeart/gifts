@@ -325,8 +325,8 @@ Page({
       type: 'gcj02',
       success: function (res) {
         that.setData({
-          latitude: res.latitude,
-          longitude: res.longitude,
+          latitude: res.latitude ? res.latitude : that.data.latitude,
+          longitude: res.longitude ? res.longitude : that.data.longitude,
         })
         console.log('requestLocation:', res)
         that.moveTolocation()
@@ -465,18 +465,20 @@ Page({
     var that = this;
     that.adjustViewStatus(false, true, false);
     that.updateCenterLocation(that.data.latitude, that.data.longitude);
-    that.regeocodingAddress();
+    //that.regeocodingAddress();
   },
 
   /**
    * 更新上传坐标点
    */
   updateCenterLocation: function (latitude, longitude) {
-    var that = this;
+    var that = this
     that.setData({
       centerLatitude: latitude,
       centerLongitude: longitude
     })
+    //that.queryMarkerInfo()
+    that.regeocodingAddress()
   },
 
   /**
@@ -639,8 +641,6 @@ Page({
         console.log('getCenterLocation----------------------->');
         console.log(res);
         that.updateCenterLocation(res.latitude, res.longitude);
-        that.regeocodingAddress();
-        that.queryMarkerInfo();
       }
     })
   },
@@ -713,9 +713,9 @@ Page({
         */
     }
     if (destLocation) markersMy.push(destLocation)
-    var myLocation={}
-    if (that.data.longitude && that.data.longitude){
-      myLocation =
+    if (that.data.longitude && that.data.latitude){
+      var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+      var myLocation =
       {
         id: 2,
         name: '我的位置',
@@ -723,10 +723,10 @@ Page({
         longitude: that.data.longitude,
         width: 35,
         height: 35,
-        iconPath: that.data.userAvatar ? that.data.userAvatar : '../../../images/ai.png',
+        iconPath: userInfo.userAvatar ? userInfo.userAvatar : '../../../images/ai.png',
         callout: {
-          content: that.data.userNickname,
-          color: "#2c8df6",
+          content:'我',
+          color: "#e34c55",
           fontSize: 12,
           borderRadius: 10,
           bgColor: "#fff",
@@ -734,8 +734,9 @@ Page({
           boxShadow: "5px 5px 10px #aaa"
         },
       }
+      if (myLocation) markersMy.push(myLocation)
     }
-    if (myLocation) markersMy.push(myLocation)
+   
     var polyline = [{
       points: [{
         latitude: parseFloat(that.data.activity_lat),
@@ -763,6 +764,7 @@ Page({
     })
     
     console.log('queryMarkerInfo markersMy:', that.data.markersMy)
+   
     /*
     var mapCtx = wx.createMapContext(mapId);
     mapCtx.includePoints({
