@@ -18,9 +18,13 @@
 	  <image src="../../images/my_s.png" />
 	  <text>我是店长</text>
   </view>
-   <view wx:if="{{user_type>1}}" bindtap="navigateToCelebration" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+  <view wx:if="{{user_type>1}}" bindtap="navigateToCelebration" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/wish.png" />
 	  <text>我的祝福</text>
+  </view>
+  <view wx:if="{{user_type>1}}" bindtap="navigateToArticle" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/u621.png" />
+	  <text>送心文章</text>
   </view>
   <view bindtap="navigateToMyLocation" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/iconfont-shouhuodizhi.png" />
@@ -56,7 +60,7 @@
   </view>
   -->
 </view>
- <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindaconfirmCele">
+ <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
  <view class="picker_box">
     <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
       <view class="picker">
@@ -64,7 +68,6 @@
       </view>
     </picker>
   </view>
-   
 </modal> 
 <view class="menu-area">
   <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
@@ -88,22 +91,38 @@
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
  <view>
-<modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindaconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
+<modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
     <view class="prd-detail">
       <view class='wxParse'>
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
       </view> 
     </view>
 </modal>
-<modal class="modalbox" title="如何玩转送心" hidden="{{modalHiddenPlaysx}}" confirm-text="返回" cancel-text="取消" bindconfirm="modalBindaconfirmPlaysx" bindcancel="modalBindcancelPlaysx" no-cancel >
+<modal class="modalbox" title="{{artTitle}}" hidden="{{modalHiddenPlaysx}}" confirm-text="返回" cancel-text="取消" bindconfirm="modalBindconfirmPlaysx" bindcancel="modalBindcancelPlaysx" no-cancel >
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
       </view> 
     </view>
 </modal>
+<modal class="modalbox" title="{{artTitle}}" hidden="{{modalHiddenArtInfo}}" confirm-text="返回" cancel-text="分享" bindconfirm="modalBindconfirmArtInfo" bindcancel="modalBindShareArtInfo" >
+    <view class="prd-detail">
+      <view class='wxParse'  style="height:{{dkheight}}px">
+        <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
+      </view> 
+    </view>
+</modal>
+<modal hidden="{{modalHiddenArt}}" title="请选择文章" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelArt" bindconfirm="modalBindconfirmArt">
+ <view class="picker_box">
+    <picker bindchange="bindArtPickerChange" value="{{article[art_index].id}}" data-selecthx="{{article[art_index].title}}" range="{{article}}" range-key="{{'title'}}">
+      <view class="picker">
+         {{article[art_index]['title']}}
+      </view>
+    </picker>
+  </view>
+</modal> 
 <!--  
-<modal class="modalbox" title="银行卡" hidden="{{modalHiddenBankcard}}" confirm-text="确认" cancel-text="返回" bindconfirm="modalBindaconfirmBankcard" bindcancel="modalBindcancelBankcard">
+<modal class="modalbox" title="银行卡" hidden="{{modalHiddenBankcard}}" confirm-text="确认" cancel-text="返回" bindconfirm="modalBindconfirmBankcard" bindcancel="modalBindcancelBankcard">
   <view class="picker_box">
     <picker bindchange="bindPickerChange" value="{{bank_info[index].id}}" data-selecthx="{{bank_info[index].bank_name}}" range="{{bank_info}}" range-key="{{'bank_name'}}">
       <view class="picker">

@@ -14,21 +14,27 @@ Page({
   data:{
     title_name: '我的',
     title_logo: '../../images/footer-icon-05.png',
+    share_art_image: weburl+'/uploads/share_art_image.jpg',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     hideviewagreementinfo: true,
     agreementinfoshowflag: 0,
     playsxinfoshowflag: 0,
+    artinfoshowflag: 0,
     scrollTop: 0,
     scrollTop_init: 10,
     modalHiddenCele:true,
     modalHiddenAgreement:true,
     modalHiddenBankcard: true,
     modalHiddenPlaysx: true,
+    modalHiddenArt: true,
+    modalHiddenArtInfo:true,
     shop_type:shop_type,
     index: 0,
+    art_index:0,
     web_url:'',
     web_id: '',
+    image_save_count:0,
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -167,10 +173,7 @@ Page({
         }
        
       }
-
     })
-   
-
   },
 
   //绑定银行卡
@@ -228,8 +231,6 @@ Page({
         duration: 1500
       });
     }
-     
-     
   },
 
   navigateToAgreement:function(){
@@ -274,8 +275,9 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var art_id = '22'  //玩转送心
-    var art_cat_id = '9'  //送心协议类
+    var art_id = that.data.art_id ? that.data.art_id:'22'  //玩转送心
+    var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //送心协议类
+    var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转送心'
     var playsxinfoshowflag = that.data.playsxinfoshowflag
 
     if (playsxinfoshowflag == 0) {
@@ -304,8 +306,43 @@ Page({
     } else {
       that.showPlaysxinfo()
     }
+  },
 
-
+  navigateToArticle: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
+    wx.request({
+      url: weburl + '/api/client/query_art',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        art_type: 1,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('文章信息：',res.data.result)
+        if (!res.data.result.info){
+          var article = res.data.result
+          that.setData({
+            article: article,
+            modalHiddenArt: !that.data.modalHiddenArt
+          })
+        }else{
+          wx.showToast({
+            title: '暂时没有文章',
+            icon: 'loading',
+            duration: 1500
+          })
+        }
+      }
+    })
   },
   showAgreementinfo: function () {
     let winPage = this
@@ -332,8 +369,7 @@ Page({
       winPage.setData({
         agreementinfoshowflag: 1,
       })
-      wxparse.wxParse('dkcontent1', 'html', winPage.data.agreementInfo[0]['desc'], winPage, 1)
-     
+      wxparse.wxParse('dkcontent1', 'html', winPage.data.agreementInfo[0]['desc'], winPage, 5)
     }
     
   },
@@ -361,9 +397,41 @@ Page({
       winPage.setData({
         playsxinfoshowflag: 1,
       })
-      wxparse.wxParse('dkcontent2', 'html', winPage.data.playsxInfo[0]['desc'], winPage, 1)
+      var dkcontent2 = winPage.data.playsxInfo[0]['desc'].replace('<img', '<img style="max-width:100%;height:auto;margin:0 auto;" ')
+      wxparse.wxParse('dkcontent2', 'html', dkcontent2, winPage, 5)
     }
+  },
 
+  showArt: function () {
+    let winPage = this
+    var modalHiddenArt = winPage.data.modalHiddenArt
+    var modalHiddenArtInfo = winPage.data.modalHiddenArtInfo
+    var artinfoshowflag = winPage.data.artinfoshowflag
+    var art_index = winPage.data.art_index ? winPage.data.art_index:0
+    winPage.setData({
+      modalHiddenArt: !modalHiddenArt,
+      modalHiddenArtInfo: !modalHiddenArtInfo,
+    })
+    console.log('my index showArt() modalHiddenArtInfo:', modalHiddenArtInfo, 'artinfoshowflag:',artinfoshowflag, 'art_index:', art_index);
+    if (!winPage.data.modalHiddenArtInfo && artinfoshowflag == 0) {
+      wx.getSystemInfo({
+        success: function (res) {
+          let winHeight = res.windowHeight;
+          console.log('my index showArt():', winHeight, 'art_index:', art_index);
+          winPage.setData({
+            dkheight: winHeight - winHeight * 0.05 - 120,
+          })
+        }
+      })
+      winPage.setData({
+        artinfoshowflag: 1,
+        art_index: art_index,
+      })
+      var dkcontent2 = winPage.data.article[art_index]['desc'].replace('<img ', '<img style="max-width:100%;height:auto;margin:0 auto;" ')
+      //console.log('my index showArt() dkcontent2:', dkcontent2);
+      wxparse.wxParse('dkcontent2', 'html', dkcontent2, winPage, 5)
+     // wxparse.wxParse('dkcontent2', 'html', winPage.data.article[art_index]['desc'], winPage, 5)
+    }
   },
   navigateToMyLocation: function (e) {
     wx.navigateTo({
@@ -416,7 +484,6 @@ Page({
           modalHiddenCele: !that.data.modalHiddenCele
         })
       }
-
     })
     
   },
@@ -434,7 +501,7 @@ Page({
    
   },
   //确定按钮点击事件  祝福贺卡
-  modalBindaconfirmCele: function () {
+  modalBindconfirmCele: function () {
     var that = this
     that.setData({
       modalHiddenCele: !that.data.modalHiddenCele,
@@ -450,12 +517,81 @@ Page({
       modalHiddenCele: !that.data.modalHiddenCele
     })
   },  
+
+  bindArtPickerChange: function (e) {
+    var that = this
+    var selected_index = e.detail.value
+    var art_title = that.data.article[selected_index]['title']
+    var art_image = that.data.article[selected_index]['image']
+    var art_id = that.data.article[selected_index]['id']
+    var art_cat_id = that.data.article[selected_index]['cat_id']
+    console.log('article picker发送选择改变，携带值为', e.detail.value)
+    that.setData({
+      art_title: art_title,
+      art_id: art_id,
+      art_cat_id: art_cat_id,
+      art_index: selected_index,
+      art_image: art_image ? art_image:that.data.share_art_image
+    })
+
+  },
+  //确定按钮点击事件  文章
+  modalBindconfirmArt: function () {
+    var that = this
+    that.showArt()
+    
+  },
+  //取消按钮点击事件 文章
+  modalBindcancelArt: function () {
+    var that = this
+    that.setData({
+      modalHiddenArtInfo: true,
+      modalHiddenArt: true,
+      artinfoshowflag:0,
+    })
+  },  
+  //确定按钮点击事件  文章内容
+  modalBindconfirmArtInfo: function () {
+    var that = this
+    that.setData({
+      modalHiddenArtInfo: true,
+      modalHiddenArt: true,
+      artinfoshowflag: 0,
+    })
+    that.setData({
+      art_id: 0,
+      art_cat_id: 0,
+    })
+  },
+  //确定按钮点击事件  文章分享
+  modalBindShareArtInfo: function () {
+    var that = this
+    that.setData({
+      modalHiddenArtInfo: true,
+      modalHiddenArt: true,
+      artinfoshowflag: 0,
+    })
+    var selected_index = that.data.art_index
+    var art_title = that.data.article[selected_index]['title']
+    var art_image = that.data.article[selected_index]['image'] ? that.data.article[selected_index]['image']:that.data.share_art_image
+    var art_id = that.data.article[selected_index]['id']
+    var art_cat_id = that.data.article[selected_index]['cat_id']
+    var art_wx_headimg = that.data.article[selected_index]['wx_headimg']
+    wx.navigateTo({
+      url: '/pages/wish/wishshare/wishshare?share_art_id=' + art_id + '&share_art_cat_id=' + art_cat_id + '&share_art_image=' + art_image + '&share_art_wx_headimg=' + art_wx_headimg + '&share_art_title=' + art_title
+    })
+    that.setData({
+      art_id: 0,
+      art_cat_id: 0,
+    })
+  },
   navigateToMessage: function (e) {
     wx.navigateTo({
       url: '../member/message/message?'
     })
   },
 
+  
   onGotUserInfo: function (e) {
     var that = this
     console.log(e.detail.errMsg)
@@ -505,7 +641,7 @@ Page({
     });
   },
   //确定按钮点击事件  银行卡
-  modalBindaconfirmBankcard: function () {
+  modalBindconfirmBankcard: function () {
     var that = this
     that.setData({
       modalHiddenBankcard: !that.data.modalHiddenBankcard,
@@ -521,7 +657,7 @@ Page({
   },  
 
   //确定按钮点击事件  用户协议
-  modalBindaconfirmAgreement: function () {
+  modalBindconfirmAgreement: function () {
     var that = this
     that.setData({
       modalHiddenAgreement: !that.data.modalHiddenAgreement,
@@ -537,17 +673,24 @@ Page({
     })
   },  
   //确定按钮点击事件  玩转送心
-  modalBindaconfirmPlaysx: function () {
+  modalBindconfirmPlaysx: function () {
     this.setData({
       modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
-
+      art_id: 0,
+      art_cat_id: 0,
+      playsxinfoshowflag: 0,
     })
+    
   },
   //取消按钮点击事件  玩转送心
   modalBindcancelPlaysx: function () {
     this.setData({
-      modalHiddenPlaysx: !this.data.modalHiddenPlaysx
+      modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
+      art_id: 0,
+      art_cat_id: 0,
+      playsxinfoshowflag: 0,
     })
+    
   },  
   
   get_project_gift_para: function () {
@@ -635,12 +778,25 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var scene = decodeURIComponent(options.scene)
+    var art_id = options.art_id ? options.art_id:0
+    var art_cat_id = options.art_cat_id ? options.art_cat_id:0
+    var art_title = options.art_title ? options.art_title:''
+    var refer_id = options.mid ? options.mid : 0
+    that.setData({
+      art_id: art_id,
+      art_cat_id: art_cat_id,
+      art_title: art_title,
+      refer_id: refer_id,
+    })
     that.get_project_gift_para()
-    console.log("openid:" + openid + ' username:' + username, 'scene:', scene)
+    console.log("my index onload:", options , 'scene:', scene)
     if (!username) { // 登录
       wx.navigateTo({
         url: '../login/login?'
       })
+    }
+    if (art_id>0){
+      that.navigateToPlaysx()
     }
    
   },
@@ -712,5 +868,23 @@ Page({
     wx.navigateTo({
       url: '/pages/member/couponmy/couponmy?red=1'
     })
+  },
+
+  onShareAppMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var share_art_id = that.data.art_id
+    var share_art_cat_id = that.data.art_cat_id
+    var share_art_image = that.data.art_image ? that.data.art_image: that.data.share_art_image
+    var share_art_title = that.data.art_title
+    var m_id = that.data.m_id > 0 ? that.data.m_id : 0
+    var scene = 'art_id=' + that.data.art_id + '&art_cat_id=' + that.data.art_cat_id + '&mid=' + m_id
+    return {
+      title: share_art_title,
+      desc: share_art_title,
+      imageUrl: share_art_image,
+      path: '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&image=' + share_art_image + '&refer_id=' + m_id,
+      // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
+    }
   }
 })

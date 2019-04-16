@@ -59,6 +59,7 @@ Page({
         shop_type:shop_type,
         comm_list: [],
         image_save_count:0,
+        image_save_times:0,
     },
     /*
   setNavigation: function () {
@@ -148,25 +149,33 @@ Page({
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
     }
     console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
-    if (that.data.image_save_count<3){
+    if (that.data.image_save_count < 3 ){
       setTimeout(function () {
         wx.showToast({
           title: "开始分享",
           icon: 'loading',
           duration: 2000,
         })
+        if (that.data.image_save_times>8){ //8次不成功返回上一级
+          that.goBack()
+        }
+         that.setData({
+          image_save_times: that.data.image_save_times++,
+        })
         that.sharegoodsTapTag()
       }, 1500)
       return
-    } 
+    }
     wx.navigateTo({
       url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
     })
+    /*
     wx.getStorageInfo({
       success: function (res) {
         console.log('detail 缓存列表 keys:', res.keys, 'currentSize:', res.currentSize, 'limitSize:', res.limitSize)
       }
     })
+    */
   },
 
   image_save:function(image_url,image_cache_name){

@@ -148,6 +148,11 @@ Page({
     var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
     var share_goods_title = options.share_goods_title ? options.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
+    var share_art_id = options.share_art_id ? options.share_art_id : 0
+    var share_art_cat_id = options.share_art_cat_id ? options.share_art_cat_id : 0
+    var share_art_title = options.share_art_title ? options.share_art_title : ''
+    var share_art_image = options.share_art_image ? options.share_art_image : ''
+    var share_art_wx_headimg = options.share_art_wx_headimg
     share_goods_title = activity_id > 0 ? share_activity_title : share_goods_title
     console.log('onload wishshare options:',options)
     that.setData({
@@ -168,6 +173,11 @@ Page({
       share_goods_title: share_goods_title,
       share_goods_desc: share_goods_desc,
       share_goods_qrcode_cache: share_goods_qrcode_cache,
+      share_art_id: share_art_id,
+      share_art_cat_id: share_art_cat_id,
+      share_art_title: share_art_title,
+      share_art_image: share_art_image,
+      share_art_wx_headimg: share_art_wx_headimg,
     })
     if (activity_name){
       var title_len = activity_name.length
@@ -269,7 +279,12 @@ Page({
     var share_goods_desc = that.data.share_goods_desc
     var nickname = that.data.nickname
     var share_goods_bg = that.data.share_goods_bg
-   
+    var share_art_id = that.data.share_art_id ? that.data.share_art_id : 0
+    var share_art_cat_id = that.data.share_art_cat_id ? that.data.share_art_cat_id : 0
+    var share_art_title = that.data.share_art_title ? that.data.share_art_title : ''
+    var share_art_image = that.data.share_art_image ? that.data.share_art_image : ''
+    var share_art_wx_headimg = that.data.share_art_wx_headimg ? that.data.share_art_wx_headimg : that.data.avatarUrl
+    var share_art_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_art_id=' + share_art_id + '&share_art_cat_id=' + share_art_cat_id + '&m_id=' + m_id
     wx.showLoading({
       title: '生成中',
       mask: true
@@ -279,7 +294,7 @@ Page({
       that.setData({
         painting: {
           width: 500,
-          height: 660,
+          height: 700,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true, 
@@ -469,6 +484,87 @@ Page({
           ]
         }
       })
+    } else if (share_art_id > 0) {
+      that.setData({
+        painting: {
+          width: 520,
+          height: 680,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
+          clear: true,
+          background: 'white',
+          views: [
+            {
+              type: 'image',
+              url: share_art_wx_headimg,
+              top: 45,
+              left: 30,
+              width: 50,
+              height: 50,
+              borderRadius: 25,
+            },
+            {
+              type: 'text',
+              content: '来自' + nickname + '的分享',
+              fontSize: 18,
+              color: '#333',
+              textAlign: 'left',
+              top: 60,
+              left: 90,
+              bolder: false
+            },
+            {
+              type: 'image',
+              url: share_art_image,
+              top: 120,
+              left: 85,
+              width: 350,
+              height: 350
+            },
+            {
+              type: 'text',
+              content: share_art_title,
+              fontSize: 20,
+              color: '#999',
+              textAlign: 'left',
+              top: 500,
+              left: 85,
+              bolder: true,
+              lineHeight: 25,
+              MaxLineNumber: 2,
+              breakWord: true,
+              width: 350,
+            },
+            {
+              type: 'rect',
+              top: 540,
+              left: 85,
+              background: '#eeeeee',
+              width: 350,
+              height: 1,
+            },
+            {
+              type: 'text',
+              content: '长按识别二维码查看详情',
+              fontSize: 18,
+              color: '#333',
+              textAlign: 'left',
+              top: 590,
+              left: 85,
+              breakWord: false,
+              bolder: true,
+            },
+            {
+              type: 'image',
+              url: share_art_qrcode,
+              top: 550,
+              left: 330,
+              width: 90,
+              height: 90,
+            }
+          ]
+        }
+      })  
     }else{
       that.setData({
         painting: {
@@ -578,6 +674,10 @@ Page({
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
+    var share_art_id = that.data.share_art_id
+    var share_art_cat_id = that.data.share_art_cat_id
+    var share_art_image = that.data.share_art_image
+    var share_art_title = that.data.share_art_title
     console.log('开始分享送礼任务', options)
 
     var shareObj = {
@@ -616,6 +716,11 @@ Page({
         shareObj['title'] = share_goods_title
         shareObj['imageUrl'] = share_goods_image
         shareObj['path'] = '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image + '&mid=' + m_id
+      } 
+      if (share_art_id > 0) {
+        shareObj['title'] = share_art_title
+        shareObj['imageUrl'] = share_art_image
+        shareObj['path'] = '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&mid=' + m_id
       } 
       console.log('送心分享', shareObj)
     }

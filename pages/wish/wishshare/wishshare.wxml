@@ -6,7 +6,7 @@
   <view  hidden="{{!notehidden}}" style='margin:10rpx;font-size:26rpx;color:#999;height:120rpx;' >{{share_goods_title?'分享语: '+share_goods_title:'分享语为空'}}</view>
   -->
   <view class="sentbtn2">
-  <button class=""  hidden ='' bindtap="sharegoods">修改留言</button>
+  <button class=""  wx:if ='{{share_art_id==0}}' bindtap="sharegoods">修改留言</button>
   </view>
   <view class="sentbtn">
   <button class=""  hidden ='' bindtap="eventSave" type='warn'>保存到相册</button>
