@@ -15,7 +15,7 @@
   </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}">
-      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{false}}" interval="{{interval}}" duration="200">
+      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
             <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="" objectFit="contain">

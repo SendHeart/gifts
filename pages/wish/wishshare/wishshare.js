@@ -152,7 +152,7 @@ Page({
     var share_art_cat_id = options.share_art_cat_id ? options.share_art_cat_id : 0
     var share_art_title = options.share_art_title ? options.share_art_title : ''
     var share_art_image = options.share_art_image ? options.share_art_image : ''
-    var share_art_wx_headimg = options.share_art_wx_headimg
+    var share_art_wx_headimg = options.share_art_wx_headimg ? share_art_wx_headimg:''
     share_goods_title = activity_id > 0 ? share_activity_title : share_goods_title
     console.log('onload wishshare options:',options)
     that.setData({

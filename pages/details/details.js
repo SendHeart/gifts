@@ -24,6 +24,7 @@ Page({
         page:1,
         interval: 3000,
         duration: 1200,
+        circular: true,
         goodsname:'',
         goodsshortname: '',
         goodsinfo:[],
@@ -124,7 +125,7 @@ Page({
     that.setData({
       cur_img_id: cur_img_id,
     })
-    console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
+    //console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
   },
   sharegoodsTapTag: function () {
     var that = this
@@ -265,7 +266,6 @@ Page({
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
-        //var goodsshortname = goodsname?goodsname.substring(0,13)+'...':''
         var goodsid = options.id
         var share_goods_id = options.goodsid
         goodsid = goodsid ? goodsid : share_goods_id
@@ -306,7 +306,6 @@ Page({
             share_goods_image = activity_image ? activity_image : image
             goodsname = decodeURIComponent(goodsname)
             goodsinfo = decodeURIComponent(goodsinfo)
-
           }
           if (image.indexOf(".mp4") >= 0) {
             var video_init = {

@@ -1040,15 +1040,15 @@ Page({
         url: '/pages/member/mylocation/mylocation?' + scene
       })
     }
-    if (scene.indexOf("artid=") >= 0 || scene.indexOf("catid=") >= 0) {
+    if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
       var midReg = new RegExp(/\&mid=(.*)/)
 
       var scene_artid = scene.match(artidReg)[0]
-      art_id = scene_artid ? scene_artid.substring(8, scene_artid.length) : art_id
+      art_id = scene_artid ? scene_artid.substring(6, scene_artid.length) : art_id
       var scene_artcatid = scene.match(artcatidReg)[0]
-      art_cat_id = scene_artcatid ? scene_artcatid.substring(8, scene_artcatid.length) : art_cat_id
+      art_cat_id = scene_artcatid ? scene_artcatid.substring(6, scene_artcatid.length) : art_cat_id
       var scene_mid = scene.match(midReg) ? scene.match(midReg)[0] : 0
       refer_mid = scene_mid ? scene_mid.substring(5, scene_mid.length) : refer_mid
       console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出  
