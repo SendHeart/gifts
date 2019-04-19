@@ -230,17 +230,24 @@ font-size: 32rpx;
   flex-direction: row;
   justify-content:flex-end;
   align-items: right;
-  padding: 20rpx;
+  padding: 10rpx 20rpx 0 0;
 }
 .share-buttons .btnshare {
-  background-color: #444;
-  font-size: 26rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background:rgba(0, 0, 0, 0.5);
+  font-size: 24rpx;
   color: #fff;
-  padding: 0 28rpx;
-  line-height: 2.5;
-  opacity: 0.7;
+  padding: 6rpx 20rpx;
+  line-height: 2;
+  border-radius: 10rpx;
 }
-
+.share-buttons .shareto {
+  width: 32rpx;
+  height: 32rpx;
+  margin:8rpx 6rpx 0 0;
+}
 .leftround {
   border-top-left-radius: 20rpx;
   border-bottom-left-radius: 20rpx;

@@ -6,8 +6,10 @@
 <view  class="pagewrap" >
   <view class="share-goods"  >
     <view class="share-buttons">
-      <view class="btnshare leftround" bindtap="returnTapTag">返回</view> 
-      <view class="btnshare rightround" bindtap="sharegoodsTapTag">分享</view>
+      <!--<view class="btnshare leftround" bindtap="returnTapTag">返回</view> -->
+      <view class="btnshare" bindtap="sharegoodsTapTag">
+      <image class="shareto" src="../../images/shareto.png"></image>
+      分享</view>
       <!-- 
       <button class="" open-type="share" style='font-size:25rpx;' bindtap="onShareAppMessage">分享</button>
       -->

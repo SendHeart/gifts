@@ -49,11 +49,11 @@
 	  <image src="../../images/account.png" />
 	  <text>我的钱包</text>
   </view>
-  <view bindtap="navigateToWishlist" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+  <!-- <view bindtap="navigateToWishlist" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/wish_s.png" />
 	  <text>我的心愿单</text>
   </view>
-  <!-- 
+  
    <view bindtap="get_bank_info" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/mycards.png" />
 	  <text>我的银行卡</text>

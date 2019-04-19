@@ -158,7 +158,7 @@ page {
 	margin: 30rpx;
   border: 0;
   background: transparent;
-  color: #999;
+  color: #E34C55;
   font-size: 24rpx;
 }
 .logout::after {
