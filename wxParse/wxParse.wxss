@@ -97,6 +97,7 @@ view{
     /*background-color: #efefef;*/
     overflow: hidden;
     display: flex;
+    justify-content: center;
 }
 
 .wxParse-blockquote {
@@ -121,7 +122,6 @@ view{
     margin: 10rpx 0;
 }
 .wxParse-li-text{
-    
     align-items: center;
     line-height: 20px;
 }
