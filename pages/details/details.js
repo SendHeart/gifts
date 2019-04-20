@@ -150,18 +150,21 @@ Page({
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
     }
     console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
-    if (that.data.image_save_count < 3 ){
+   
+    if (that.data.image_save_count < 3){
+      if (that.data.image_save_times > 8) { //8次不成功返回上一级
+        return
+      }
       setTimeout(function () {
         wx.showToast({
-          title: "开始分享",
+          title: "开始分享" ,
           icon: 'loading',
           duration: 2000,
         })
-        if (that.data.image_save_times>8){ //8次不成功返回上一级
-          that.goBack()
-        }
+      
+        var image_save_times = that.data.image_save_times+1
          that.setData({
-          image_save_times: that.data.image_save_times++,
+           image_save_times: image_save_times,
         })
         that.sharegoodsTapTag()
       }, 1500)
