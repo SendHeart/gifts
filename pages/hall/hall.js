@@ -740,7 +740,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data);
+        console.log('hall reloadData:',res.data);
         var carts = [];
         if (!res.data.result){
           
@@ -752,7 +752,10 @@ Page({
         var index = 0;
         for (var key in cartlist) {
           for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
-            cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
+            if (cartlist[key]['sku_list'][i]['image'].indexOf("http")  < 0 ) {
+              cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
+            } 
+            
             //cartlist[key]['sku_list'][i]['name'] = cartlist[key]['sku_list'][i]['name'].substr(0, 13) + '...';
             cartlist[key]['sku_list'][i]['selected'] = true;
             cartlist[key]['sku_list'][i]['shop_id'] = key;
