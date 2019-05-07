@@ -65,8 +65,7 @@
     </view>
   </view>
   <view class="container carts-list">
-    <view wx:for="{{carts}}" class="carts-container" wx:for-index="cart_idx" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" 
-      hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
+    <view wx:for="{{carts}}" class="carts-container" wx:for-index="cart_idx" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}"  hidden="{{item.hidden==1?false:false}}" bindtap="showGoods"> <!--京东图片不好看 data-image="{{item.activity_image?item.activity_image:item.image}}" -->
       <view class="carts-item" data-index="{{cart_idx}}">
         <!-- 复选框图标 -->
         <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{cart_idx}}" hidden="true" />
