@@ -377,8 +377,8 @@ Page({
     var content = that.data.content ? that.data.content : ''
     if (content=='') {
       wx.showToast({
-        title: '评论内容为空',
-        icon: 'loading',
+        title: '评论内容不能为空',
+        icon: 'none',
         duration: 1500
       })
     } else{
@@ -387,6 +387,7 @@ Page({
       } else {
         //console.log('本次没有需上传图片:', upimage) 
         that.send_comment()
+        
       }
     }
    
@@ -440,6 +441,7 @@ Page({
           duration: 1000
         });
         console.log('点评完成', res) 
+        wx.navigateBack();
       }
     })
   },

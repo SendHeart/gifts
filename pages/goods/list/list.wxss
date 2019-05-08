@@ -144,9 +144,9 @@ swiper-item image {
 }
 .venues_item .img-discount {
   display: block;
-  width: 30rpx;
-  height: 30rpx;
-  margin-left:10rpx;
+  width: 75rpx;
+  height: 32rpx;
+  margin-left:20rpx;
 }
 .venues_item .goods_name {
   color: #444;
@@ -174,7 +174,7 @@ swiper-item image {
 }
 .venues_item .goods_prom {
   display: block;
-  color: #999;
+  color: #E52445;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;

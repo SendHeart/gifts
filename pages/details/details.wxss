@@ -34,6 +34,8 @@ page {
 .wxParse {
   background: #fff;
 }
+.wxParse br { display: none;}
+.wxParse text { display: none;}
 .wxParse scroll-view {
   height: 100%;
 }
@@ -125,7 +127,7 @@ page {
 
 .shopping_container .goods_prom {
   display: block;
-  color: #999;
+  color: #EC4844;
   font-size: 28rpx;
   font-weight: normal;
   white-space: nowrap;
@@ -165,7 +167,7 @@ font-size: 32rpx;
   text-align: right;
 } 
 .goods-info .price-market {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #999;
   text-align: right;
   padding-right: 10rpx;
@@ -195,7 +197,8 @@ font-size: 32rpx;
   display: flex;
   flex-direction: row;
   justify-content: left;
-  font-size: 26rpx;
+  font-size: 24rpx;
+  font-weight: bold;
   color: #E34C55;
   background: #ffffff;
   padding: 10rpx 20rpx;
@@ -446,15 +449,27 @@ border: none;
   flex-direction: row;
   font-size: 24rpx;
   color: #999;
-  justify-content: space-between;
+  justify-content: flex-start;
   background-color: #fff;
   padding: 10rpx 20rpx;
+  margin-top: 1rpx;
+}
+.comm-text2 {
+  display: flex;
+  flex-direction: row;
+  font-size: 24rpx;
+  color: #999;
+  justify-content: space-between;
+  background-color: #fff;
+  padding: 0 20rpx;
   margin-top: 1rpx;
 }
 .comm-name {
   font-size: 28rpx;
   font-weight: bold;
   color: #444;
+  line-height: 64rpx;
+  margin-right: 30rpx;
 }
 .comm-content{
   display: -webkit-box;
@@ -471,12 +486,27 @@ border: none;
 .comm-status {
   color: #e34c55;
   font-size: 24rpx;
+  line-height: 64rpx;
 }
 .comm-status2 {
   color: #e34c55;
   border: 3rpx solid #e34c55;
 }
-
+.comm-listitem {
+  color: #e34c55;
+  font-size: 24rpx;
+  font-weight: bold;
+  line-height: 64rpx;
+  margin-right: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.icon-item {
+  width:32rpx;
+  height:32rpx;
+  margin:16rpx 6rpx 0 0;
+}
 /*左部图片*/
 
 .comm-image {

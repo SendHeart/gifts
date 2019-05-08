@@ -265,7 +265,6 @@ view.text text {
   margin-bottom:15rpx;
   background: #ffffff;
   border-radius: 10rpx;
-  text-indent: 20rpx;
   padding-bottom: 10rpx;
 }
 
@@ -276,41 +275,50 @@ view.text text {
 }
 
  .venues_item .goods_name {
-  display: block;
   color: #444;
-  font-size:28rpx;
-  overflow:hidden;  
-  text-overflow:ellipsis;  
-  white-space:nowrap; 
+  font-size: 26rpx;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  padding-left: 20rpx;
 }
 .venues_item .goods_sku {
   display: block;
+  width: 98%;
   color: #999;
-  font-size:24rpx;
+  font-size:22rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
-  white-space:nowrap; 
+  white-space:nowrap;
+  text-indent: 20rpx;
   min-height: 36rpx;
 }
 
  .venues_item .goods_tag {
-   color: gray; 
-   font-size: 8pt;
-   margin-top:0px;
-   border: 2px solid #F2f2f2;
-   border-style: solid;  
+  color: #999;
+  font-size: 20rpx;
+  padding: 2rpx 4rpx;
+  border: 1px solid #f2f2f2;
+  border-radius: 6rpx;
+  text-align: center;
 }
 .venues_item .goods_tag image{
   width: 10%;
   height: 30rpx;
 }
- .venues_item .goods_prom {
-  display: block;
-  color: #999;
-  font-size:24rpx;
+ .venues_item .goods_bottom {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  color: #E52445;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
   white-space: nowrap;
-  overflow-x: hidden;
-  margin-top: 10rpx;
+  padding:0 20rpx;
 }
 
 
@@ -318,23 +326,25 @@ view.text text {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 100%;
-  padding: 10rpx;
+  padding: 0 20rpx;
 }
 
 .price-market {
+  text-indent: 0;
   color: #999;
   font-size: 24rpx;
-  text-align: right;
-  padding-right: 10rpx;
+  line-height: 1.8;
+  padding-right: 3rpx;
   text-decoration:line-through;
 }
-
+.price-market::first-letter {
+  font-size: 20rpx;
+}
 .price-now {
-  color: #444444;
-  font-size: 24rpx;
-  text-align: right;
-  padding-right: 20rpx;
+  text-indent: 0;
+  color: #e34c55;
+  font-size: 26rpx;
+  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 20rpx;

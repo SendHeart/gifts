@@ -197,7 +197,7 @@ swiper-item image {
 }
 .venues_item .goods_prom {
   display: block;
-  color: #999;
+  color: #E52445;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;

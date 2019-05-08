@@ -12,7 +12,7 @@
 }
 */
 page {
-  background: #F3F3F3;
+  background: #F2F2F2;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -72,9 +72,9 @@ modal {
 
 .banner {
   width: 100%;
-  height: 315rpx;
+  height: 200rpx;
   /*margin-left: 15rpx;*/
-  background-color: #f2f2f2;
+  background-color: #1d1d1d;
   background-repeat: norepeat;
   align-content: center;
   opacity: 1;
@@ -83,7 +83,7 @@ modal {
 
 .banner image {
   width: 100%;
-  height: 300rpx;
+  height: 250rpx;
 }
 
 .banner .slogan {
@@ -93,11 +93,27 @@ modal {
   justify-content: center;
   margin: 5px;
 }
+.swiper_box {
+  height: 250rpx;
+  width: 96%;
+  margin: 0 auto;
+  position: absolute;
+  left: 2%;
+  top: 0;
+}
+.slide-image {
+  border-radius: 15rpx;
+}
 
+.serviceimg {
+  width: 369rpx;
+  height: 40rpx;
+  margin: 10rpx 0 0 0;
+}
 .wrap {
   width: 100%;
   position: absolute;
-  top: 240rpx;
+  top: 260rpx;
   margin-bottom: 160rpx;
 }
 
@@ -107,7 +123,7 @@ modal {
   background: #fff;
   display: flex;
   /*flex-flow: column nowrap;*/
-  justify-content: left; /*子项横轴上居中对齐*/
+  justify-content: space-between; /*子项横轴上居中对齐*/
   align-items: center; /*子项纵轴上居中对齐*//*align-content: center;*/
   opacity: 1;
   border-radius: 30rpx 30rpx 0 0;
@@ -117,7 +133,6 @@ modal {
   display: flex;
   flex-direction: row;
   position: relative;
-  width: 55%;
   height: 100%;
   color: #444;
 }
@@ -125,7 +140,7 @@ modal {
 .user .userinfo .userinfo-avatar {
   width: 70rpx;
   height: 70rpx;
-  margin: 15rpx 10rpx 10rpx 20rpx;
+  margin: 15rpx 10rpx 0 20rpx;
   border-radius: 50%;
 }
 
@@ -137,7 +152,7 @@ modal {
 }
 
 .usergifts {
-  color: #e34c55;
+  color: #EC4844;
   width: 45%;
   text-align: right;
   font-size: 22rpx;
@@ -165,10 +180,10 @@ modal {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
+  text-align: right;
   position: relative;
-  width: 70rpx;
-  left: 10rpx;
+  width: 100rpx;
+  
 }
 .messages .message-num {
   position: absolute;
@@ -496,6 +511,7 @@ modal {
   border-bottom: 1rpx solid #eee;
   z-index: 1;
 }
+
 .jcleft {
   flex-direction: column;
   justify-content: left;
@@ -547,40 +563,36 @@ modal {
   margin-top: 7rpx;
   margin-left: 8rpx;
 }
-.pick-goods .pick-goods-image {
-  width: 60rpx;
-  height: 60rpx;
-  margin:4rpx 8rpx 0 4rpx;
+.pick-goods-image {
+  width: 352rpx;
+  height: 120rpx;
 }
 
-.pick-goods .image-btnbuy {
+.image-btnbuy {
   display: flex;
   flex-direction: row;
   justify-content: left;
   text-align: center;
-  width: 43%;
-  height: 78rpx;
-  margin: 12rpx;
+  width: 49%;
+  height: 120rpx;
+  margin: 5rpx 1% 0rpx 0;
   border: 0rpx solid #ffc9d5;
   box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
   border-radius: 14rpx;
-  background: #e34c55;
-  padding: 10rpx;
   overflow: hidden;
 }
-.pick-goods .image-btnbuy2 {
+.image-btnbuy2 {
   display: flex;
   flex-direction: row;
   justify-content: left;
   text-align: center;
-  width: 43%;
-  height: 78rpx;
-  margin: 12rpx;
+  width: 49%;
+  height: 120rpx;
+  margin: 5rpx 0 0rpx 0;
   border: 0rpx solid #aaa;
   box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
   border-radius: 14rpx;
   background: #292929;
-  padding: 10rpx;
   position: relative;
   overflow: hidden;
   z-index: 999;
@@ -595,25 +607,25 @@ modal {
         top:10rpx;
         text-align: center;
         line-height: 20rpx;
-        background-color: #e34c55;
+        background-color: #EC4844;
         -moz-transform:rotate(45deg);
         -webkit-transform:rotate(45deg);
         -o-transform:rotate(45deg);
         -ms-transform:rotate(45deg);
         transform:rotate(45deg);
       }
-.pick-goods .image-btntext {
+.image-btntext {
   display: flex;
   flex-direction: column;
   justify-content: left;
   text-align: left;
 }
-.pick-goods .pick-goods-action {
+.pick-goods-action {
   color: #fff;
   font-size: 28rpx;
   line-height: 1.4;
 }
-.pick-goods .pick-goods-btntips {
+.pick-goods-btntips {
   color: #eee;
   font-size: 22rpx;
   line-height: 1.4;
@@ -624,12 +636,11 @@ modal {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  line-height: 94rpx;
   width: 96%;
-  height: 94rpx;
+  height: 76rpx;
+  margin: 0 auto 20rpx auto;
   background: #fff;
   border-radius: 0 0 30rpx 30rpx;
-  margin: 0 auto 20rpx auto;
   
 }
 .btnconfirm {
@@ -637,20 +648,21 @@ modal {
   flex-direction: row;
   justify-content: center;
   width: 100%;
-  height: 90rpx;
-  background: #e34c55;
-  box-shadow: 0rpx 4rpx 0rpx rgba(179, 22, 2, 1);
-  border-radius: 0 0 30rpx 30rpx;
+  height: 60rpx;
+  background: #EC4844;
+  box-shadow: 0rpx 2rpx 0rpx rgba(179, 22, 1, 0.8);
+  border-radius: 30rpx;
   color: #fff;
-  font-size: 34rpx;
+  font-size: 30rpx;
   font-weight: bold;
-  line-height: 90rpx;
+  line-height: 60rpx;
+  padding: 8rpx;
 }
 
 .btnconfirm image {
   width: 48rpx;
   height: 48rpx;
-  margin: 21rpx 6rpx;
+  margin: 6rpx;
 }
 
 /*首页中部类目*/
@@ -792,9 +804,9 @@ modal {
 
 .venues_item .img-discount {
   display: block;
-  width: 30rpx;
-  height: 30rpx;
-  margin-left:10rpx;
+  width: 75rpx;
+  height: 32rpx;
+  margin-left:20rpx;
 }
 
 .venues_item .goods_name {
@@ -824,7 +836,7 @@ modal {
 
 .venues_item .goods_prom {
   display: block;
-  color: #999;
+  color: #E52445;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -853,7 +865,7 @@ modal {
 }
 .price-now {
   text-indent: 0;
-  color: #e34c55;
+  color: #EC4844;
   font-size: 26rpx;
   font-weight: bold;
   margin-right: 24rpx;

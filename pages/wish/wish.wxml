@@ -40,7 +40,7 @@
                         <text class="goods_name">{{item.name}}</text>
                         <view class="goods_sku">
         <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">
-           <text class="goods_name" style='font-size:22rpx;color:gray'><!--{{sku_value?sku_value['name']+':':''}}-->{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+           <text><!--{{sku_value?sku_value['name']+':':''}}-->{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
         </view>
       </view>
@@ -49,12 +49,12 @@
         <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
       	<view class="price-now">￥{{item.sell_price}}</view>
       </view>
-      <view class="goods_prom">
-        <text>已收到:{{item.sale?item.sale:0}}件</text>
-      </view>
-      <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{!shareflag}}">
-        <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:15%;height:50rpx;' src="../../images/icon_delete.png"/>
+      <view class="goods_bottom">
+        <view>已收到:{{item.sale?item.sale:0}}件</view>
+        <view hidden="{{!shareflag}}">
+        <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:50rpx;height:50rpx;' src="../../images/icon_delete.png"/>
         </view>
+      </view>
          <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag}}">
         <button data-index="{{index}}" data-object-id="{{item.objectId}}" type="warn" size="mini" hover-class="button-hover" class="button" bindtap="sendGoodsTapTag" style="margin-top:10px;">送Ta</button>
         </view>

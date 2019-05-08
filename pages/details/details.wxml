@@ -57,8 +57,23 @@
         <text class="goods_tag">{{goodstag?goodstag:''}}</text>
       </view>
     </view>
-    <view wx:if="{{goodsdiscount<100}}" class="prd-prom"><image src='../../images/discount.png' style='width:75rpx;height:32rpx;'></image>{{goodsdiscount<100?discountinfo:''}}</view>
-  <view class="comm-text">
+    <view wx:if="{{goodsdiscount<100}}" class="prd-prom"><image src='../../images/discount.png' style='width:75rpx;height:32rpx;'></image> {{goodsdiscount<100?discountinfo:''}}</view>
+    <view class="comm-text">
+    <text class="comm-name">服务</text>
+    <view class="comm-listitem">
+    <image class='icon-item' src='../../images/icon-zp.png'></image>
+    <text>假一赔十</text>
+    </view>
+    <view class="comm-listitem">
+    <image class='icon-item' src='../../images/icon-by.png'></image>
+    <text>全国包邮</text>
+    </view>
+    <view class="comm-listitem">
+    <image class='icon-item' src='../../images/icon-tk.png'></image>
+    <text>未送出24小时自动退款</text>
+    </view>
+  </view>
+  <view class="comm-text2">
     <text class="comm-name">礼物评论</text>
     <text  bindtap="commTapTag" class="comm-status">查看全部{{all_rows>0?'('+all_rows+')':''}}</text>
   </view>

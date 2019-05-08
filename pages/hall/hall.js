@@ -35,7 +35,7 @@ Page({
     resp_message:{},
     messageHidden : true,
     notehidden : false,
-    dkheight: 300,
+    dkheight: 250,
     scrollTop: 0,
     scrollHeight: 0,
     indicatorDots: true,
