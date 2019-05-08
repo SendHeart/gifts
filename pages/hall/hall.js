@@ -655,7 +655,7 @@ Page({
     var goods_price = e.currentTarget.dataset.goodsPrice
     var goods_info = e.currentTarget.dataset.goodsInfo
     var goods_sale = e.currentTarget.dataset.sale
-    var image = e.currentTarget.dataset.image
+    var image = e.currentTarget.dataset.image ? e.currentTarget.dataset.image:''
     //var carts = this.data.carts
     var sku_id = objectId
     wx.navigateTo({

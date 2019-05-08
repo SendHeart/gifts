@@ -229,7 +229,8 @@ modal {
 .carts-container {
   position: relative;
   width: 100%;
-  min-height: 160rpx;
+  min-height: 175rpx;
+  height: 175rpx;
   z-index:1;
 }
 
@@ -253,8 +254,8 @@ modal {
 /*左部图片*/
 
 .carts-image {
-  width: 120rpx;
-  height: 120rpx;
+  width: 90rpx;
+  height: 90rpx;
   margin: 0 20rpx;
 }
 
@@ -272,7 +273,7 @@ modal {
 .carts-title {
   font-size: 24rpx;
   color: #444;
-  line-height: 1.4;
+  line-height: 1.5;
   padding-right: 10rpx;
   text-overflow: ellipsis;
   overflow-x: hidden;
@@ -283,6 +284,7 @@ modal {
   font-size: 24rpx;
   color: #999;
   line-height: 1;
+  height:50rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
