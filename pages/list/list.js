@@ -47,8 +47,24 @@ Page({
     shop_type:shop_type,  //商家类型 1普通
     scrollLeft: 0,
     toView:0,
+    hiddenallclassify: true,
     shop_type:shop_type,
     
+  },
+  //定位数据  
+  getleft: function (e) {
+    var that = this
+    that.setData({
+      scrollLeft: that.data.scrollLeft + 10
+    })
+  },
+  // 打开全部子分类
+  openAllTapTag: function (e) {
+    var that = this
+    var hiddenallclassify = that.data.hiddenallclassify
+    that.setData({
+      hiddenallclassify: !hiddenallclassify,
+    })
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -128,7 +144,6 @@ Page({
     } else {
       toView = 0
     }
-
     if (tab!='search_goodsname'){
       search_goodsname = '';
     }

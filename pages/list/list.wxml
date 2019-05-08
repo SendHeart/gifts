@@ -1,17 +1,26 @@
 <!--index.wxml-->
 <import src="../common/nav.wxml" />
 <import src="../common/nav2.wxml" />
-
-<!-- 
-<import src="../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
--->
-<view class="banner">
-  <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,startBarHeight}}" />
+<view class="all-classify" hidden="{{hiddenallclassify}}">
+    <view style="display:flex;flex-direction:row;width:100%;" catchtap="openAllTapTag">
+      <view style='font-size:32rpx;width:95%;align-items:right;'>全部分类</view>
+      <view style='width:5%;align-items:right;'>
+       <image style="width:20rpx;height:20rpx;padding:20rpx;margin-left:-20rpx;" src='../../images/bottom-close.png'></image>
+      </view>
+    </view>
+    <view class="all-classify-list" >
+    <block wx:for="{{navList}}" wx:for-item="item" wx:key="{{item.id}}">
+      <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="all-classify-item {{index == activeIndex ? 'all-classify-item-active' : ''}}" catchtap="onTapTag">
+        {{item.title}}
+      </view>
+    </block>
+    </view>
 </view>
-
 <view class="banner">
-  <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
+    <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,is_all_category}}" />
+</view>
+<view class="banner">
+    <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>
 
 <view class="search" style='height:30rpx;'>
