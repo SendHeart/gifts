@@ -1,13 +1,13 @@
 <import src="../../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
-<view class="subject" style=''>
+<view wx:if="{{is_buymyself==0}}" class="subject" style=''>
   <text class='toptitle' wx:if='{{receive_status==0}}'>恭喜，您收到一份礼物</text>
   <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>礼物已领取</text>
   <text wx:if='{{receive_status==0}}'>点击拆开，收取礼物</text>
   <text wx:if='{{receive_status==1}}'>点击回赠，也给Ta送一个礼物吧</text>
 </view>
 
-<view class="order-item">
+<view  wx:if="{{is_buymyself==0}}" class="order-item">
   <view class="order-item-banner">
     <view>
       <image src="../../../images/gift.gif" style='width:378rpx;height:202rpx;' mode='aspectFill'></image>
@@ -54,6 +54,5 @@
         <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
       </view>
     </view>
-
   </view>
 </view>

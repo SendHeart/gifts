@@ -33,6 +33,7 @@ Page({
     receive:0,
     order_no:'',
     currenttime: now ? parseInt(now / 1000) : 0,
+    is_buymyself:0,
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -80,25 +81,27 @@ Page({
   },
 
   receiveTapTag: function (e) {
-   var that = this 
-   var shop_type = that.data.shop_type
-   var order_no = that.data.order_no
-   var goods_flag = that.data.goods_flag
-   var openid = that.data.openid
-   var nickname = that.data.userInfo.nickName
-   var headimg = that.data.userInfo.avatarUrl
-   var address_userName = that.data.address_userName
-   var address_postalCode = that.data.address_postalCode
-   var address_provinceName = that.data.address_provinceName
-   var address_cityName = that.data.address_cityName
-   var address_countyName = that.data.address_countyName
-   var address_detailInfo = that.data.address_detailInfo
-   var address_nationalCode = that.data.address_nationalCode
-   var address_telNumber = that.data.address_telNumber
-
+    var that = this 
+    var shop_type = that.data.shop_type
+    var order_no = that.data.order_no
+    var goods_flag = that.data.goods_flag
+    var openid = that.data.openid
+    var nickname = that.data.userInfo.nickName
+    var headimg = that.data.userInfo.avatarUrl
+    var address_userName = that.data.address_userName
+    var address_postalCode = that.data.address_postalCode
+    var address_provinceName = that.data.address_provinceName
+    var address_cityName = that.data.address_cityName
+    var address_countyName = that.data.address_countyName
+    var address_detailInfo = that.data.address_detailInfo
+    var address_nationalCode = that.data.address_nationalCode
+    var address_telNumber = that.data.address_telNumber
+    var is_buymyself = that.data.is_buymyself
+    var title = is_buymyself == 1 ? '收货地址' :'请确认'
+    var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
     wx.showModal({
-      title: '请确认',
-      content: '确认接受吗?',
+      title: title,
+      content: content,
       success: function (res) {
         if (res.confirm) {
           //通讯录权限
@@ -228,6 +231,7 @@ Page({
     var order_no = options.order_no
     var order_id = options.order_id
     var receive = options.receive
+    var is_buymyself = options.is_buymyself ? options.is_buymyself : 0
     var goods_flag = options.goods_flag
     var orders = that.data.orders
     var orderskus = that.data.orderskus
@@ -240,6 +244,9 @@ Page({
     app.globalData.order_no = order_no
     app.globalData.order_id = order_id
     app.globalData.goods_flag = goods_flag
+    that.setData({
+      is_buymyself: is_buymyself,
+    })
     
     /*
     that.setNavigation()
@@ -265,6 +272,7 @@ Page({
     var order_no = app.globalData.order_no
     var order_id = app.globalData.order_id
     var goods_flag = app.globalData.goods_flag
+    //var is_buymyself = that.data.is_buymyself
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
@@ -338,6 +346,7 @@ Page({
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     var note = that.data.note
+    var is_buymyself = that.data.is_buymyself
     //从服务器获取订单列表
     setTimeout(function () { //3秒超时
       that.overtimeData()
@@ -427,6 +436,9 @@ Page({
           })
           console.log('order sku list:', orderskus)
           app.globalData.is_receive = 0 
+          if(is_buymyself==1){ //自购礼品 直接接收
+            that.receiveTapTag()
+          }
         }
       }
     })
