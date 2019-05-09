@@ -289,7 +289,7 @@ Page({
           main_footer_Bg: activityList_new['activity_footer_url'], //活动页banner图
           footer_link: activityList_new['activity_footer_link'], //活动页banner图跳转链接
         })
-        //console.log('get_activity_info:', activityList_new, 'banner_link', that.data.banner_link)
+        console.log('get_activity_info:', activityList_new, 'banner_link', that.data.banner_link)
         setTimeout(function () {
           that.setData({
             loadingHidden: true,

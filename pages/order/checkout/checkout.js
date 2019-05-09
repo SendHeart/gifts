@@ -75,7 +75,7 @@ Page({
 	onLoad: function (options) {
     var that = this  
    // this.setNavigation()
-   // console.log('from hall:', options.carts)
+    //console.log('from hall:', options.carts)
     that.readCarts(options)
     wx.getSystemInfo({
       success: function (res) {
@@ -110,10 +110,10 @@ Page({
     var cartIdArray = cartIds.split(',')
     var order_type = options.order_type
     var order_note = options.order_note
-
+    var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     payamount = (amount - discountpay).toFixed(2)
 
-    console.log('from hall:',carts)
+    console.log('order checkout from hall  readCarts options:', options)
     
     that.setData({
 			amount: amount,
@@ -124,6 +124,7 @@ Page({
       order_note: order_note,
       username: options.username,
       token: options.token,
+      is_buymyself: is_buymyself,
 		});
 	},
 
@@ -138,7 +139,7 @@ Page({
       })
       return
     }
-
+    var is_buymyself = that.data.is_buymyself //自购
     var carts = that.data.carts
     var cartIds = that.data.cartIds
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -180,7 +181,8 @@ Page({
         coupon_red_id: selectedRedAllStatus ? selected_coupon_red_id : 0,
         coupon_red_type: selectedRedAllStatus ? selected_coupon_red_type : 0,
         coupon_red_amount: selectedRedAllStatus ? selected_coupon_red_amount : 0,
-        order_num:order_num?order_num:1
+        order_num:order_num?order_num:1,
+        is_buymyself: is_buymyself ? is_buymyself : 0  //1自购礼品
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -197,7 +199,7 @@ Page({
           })
           */
           wx.navigateTo({
-            url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay']
+            url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself
           })
         } else {
           wx.showToast({

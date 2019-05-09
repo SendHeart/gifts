@@ -495,8 +495,9 @@ Page({
     });
   },
 
-  bindCheckout: function () {
+  bindCheckout: function (e) {
     var that = this
+    var is_buymyself = e.currentTarget.dataset.type ? e.currentTarget.dataset.type : 0
     var order_type = 'gift'
     var order_note = that.data.note
     var amount = that.data.total
@@ -505,7 +506,7 @@ Page({
     var cartselected = []
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-
+    console.log('hall bindCheckout is_buymyself:', is_buymyself, 'cartIds:',cartIds, 'carts:',carts)
     cartIds = cartIds.join(',')
     if (!order_note) order_note = '送你一份礼物，希望你喜欢!'; //默认祝福
     // 遍历selected 
@@ -530,11 +531,12 @@ Page({
       cartIds: cartIds,
       username:username,
       token:token,
+      is_buymyself: is_buymyself,
      
     });
     //that.confirmOrder()
     wx.navigateTo({
-      url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
+      url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&is_buymyself='+is_buymyself +'&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
     });
      
   },

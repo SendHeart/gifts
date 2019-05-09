@@ -85,9 +85,10 @@
   </view>
   
   <view class="buybutton">
-  <view class="btnconfirm" bindtap="bindCheckout">
-  <image src="../../images/share.png"></image>
-  <text>打包送出</text>
+  <view class="btnconfirm">
+    <image src="../../images/share.png"></image>
+    <button class="send-button" bindtap="bindCheckout" data-type="0">送礼</button> 
+    <button class="send-button" bindtap="bindCheckout" data-type="1">自购</button> 
   </view>
   </view>
 

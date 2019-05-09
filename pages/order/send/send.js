@@ -34,6 +34,7 @@ Page({
     goods_flag:1,
     send_status:1,
     navList2: navList2,
+    is_buymyself:0, //1自购礼品
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -69,6 +70,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_flag= that.data.goods_flag
     var order_no = that.data.order_no
+    var is_buymyself = that.data.is_buymyself
     wx.request({ //更新发送状态
       url: weburl + '/api/client/update_order_status',
       method: 'POST',
@@ -79,6 +81,7 @@ Page({
         status_info: 'send',
         order_no: order_no,
         goods_flag:goods_flag,
+        is_buymyself: is_buymyself,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -161,14 +164,15 @@ Page({
 
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
-    var that = this;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var order_no = options.order_no; 
-    var receive = options.receive;
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var order_no = options.order_no;
+    var receive = options.receive
+    var is_buymyself = options.is_buymyself ? options.is_buymyself:0
     var shop_type = that.data.shop_type
     //that.setNavigation()
-    console.log('礼品信息 order_no:', order_no)
+    console.log('礼品信息 order_no:', order_no, 'is_buymyself:', is_buymyself)
     that.get_project_gift_para()
     if (receive == 1){
       console.log('礼品接受处理:', options)
@@ -268,8 +272,12 @@ Page({
       nickname:nickname,
       username:username,
       token:token,
+      is_buymyself: is_buymyself,
     });
-
+   
+    if (is_buymyself == 1) { //自购礼品 无需分享到微信
+      that.returnTapTag()
+    } 
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -288,7 +296,6 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-   
   },
 
   reloadData: function () {
@@ -437,8 +444,6 @@ Page({
     }
         // 返回shareObj
     return shareObj
-     
-    
   } ,
    
 });

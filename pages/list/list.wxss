@@ -139,7 +139,7 @@ page {
   background: #1d1d1d; 
   position: fixed;
   top:0;
-  z-index:9;
+  z-index:99;
 }
 .top-bar-item {
   display:inline-block;

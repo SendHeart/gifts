@@ -17,6 +17,7 @@ Page({
     page_num: 0,
     all_rows: 0,
     shop_type: shop_type,
+    is_buymyself:0,
 	},
   setNavigation: function () {
     let startBarHeight = 20
@@ -99,6 +100,7 @@ Page({
     var that = this
     var orderNo = options.orderNo;
     var totalFee = options.totalFee ? options.totalFee:0
+    var is_buymyself = options.is_buymyself ? options.is_buymyself:0 //自购礼品
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
@@ -147,8 +149,9 @@ Page({
             token: token,
             totalFee: totalFee ? totalFee:order_price,
             sku_id:sku_id,
+            is_buymyself:is_buymyself,
           })
-          //that.pay()
+          if(is_buymyself==0) that.pay()
         } else {
           wx.showToast({
             title: res.data.info,
@@ -185,67 +188,73 @@ Page({
     var totalFee = that.data.totalFee;
     var orderNo = that.data.orderNo;
     var shop_type = that.data.shop_type
-    console.log('payment openId');
-    console.log('openid:'+openId);
-    console.log('totalFee:' + totalFee);
+    var is_buymyself = that.data.is_buymyself
+    console.log('payment openId', openId, 'totalFee:', totalFee, 'is_buymyself:', is_buymyself);
+
 		//统一下单接口对接
     if (totalFee<=0){
       that.delete_cart()
       wx.navigateTo({
-        url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders)
+        url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders) + '&is_buymyself=' + is_buymyself
       })
         return
     }
-		wx.request({
-      url: weburl+'/api/WXPay',
-			data: {
-				openid: openId,
-				body: '商城',
-        tradeNo: that.data.orderNo,
-        totalFee: that.data.totalFee,
-        shop_type:shop_type
-			},
-			method: 'POST',
-			header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-			},
-			success: function (response) {
-				// 发起支付
-        if (response.data.timeStamp){
-          wx.requestPayment({
-            'timeStamp': response.data.timeStamp,
-            'nonceStr': response.data.nonceStr,
-            'package': response.data.package,
-            'signType': 'MD5',
-            'paySign': response.data.paySign,
-            'success': function (res) {
-              console.log('支付成功:' + res);
-              wx.showToast({
-                title: '支付成功'
-              })
-              that.delete_cart()
-              // update order
-              wx.navigateTo({
-                url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders)
-              })
-            }
-          })
-        }else{
-          wx.showToast({
-            title: response.data,
-            icon: 'loading',
-            duration: 2000,
-          })
+    if (is_buymyself==1){ //自购礼品 需要先支付
+      wx.request({
+        url: weburl + '/api/WXPay',
+        data: {
+          openid: openId,
+          body: '商城',
+          tradeNo: that.data.orderNo,
+          totalFee: that.data.totalFee,
+          shop_type: shop_type
+        },
+        method: 'POST',
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (response) {
+          // 发起支付
+          if (response.data.timeStamp) {
+            wx.requestPayment({
+              'timeStamp': response.data.timeStamp,
+              'nonceStr': response.data.nonceStr,
+              'package': response.data.package,
+              'signType': 'MD5',
+              'paySign': response.data.paySign,
+              'success': function (res) {
+                console.log('支付成功:' + res);
+                wx.showToast({
+                  title: '支付成功'
+                })
+                that.delete_cart()
+                // update order
+                wx.navigateTo({
+                  url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders) + '&is_buymyself=' + is_buymyself
+                })
+              }
+            })
+          } else {
+            wx.showToast({
+              title: response.data,
+              icon: 'loading',
+              duration: 2000,
+            })
+          }
+        },
+        fail: function (response) {
+          console.log('发起支付失败', response);
+          //console.log(response);
         }
-        
-			},
-      fail: function (response) {
-        console.log('发起支付失败');
-        console.log(response);
-      }
-
-		})
+      })
+    }else{ //未支付 送礼
+      console.log('未支付送礼', 'orderNo:', that.data.orderNo,' orders:',that.data.orders);
+      that.delete_cart()
+      wx.navigateTo({
+        url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders) + '&is_buymyself=' + is_buymyself
+      })
+    }
 	},
   delete_cart: function () {
     var that = this
@@ -270,12 +279,8 @@ Page({
       },
       success: function (res) {
         console.log('payment delete_cart:',res.data.result);
-        
       }
     })
-     
   },
-
-  
 
 })

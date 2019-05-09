@@ -655,7 +655,7 @@ modal {
   box-shadow: 0rpx 2rpx 0rpx rgba(179, 22, 1, 0.8);
   border-radius: 30rpx;
   color: #fff;
-  font-size: 30rpx;
+  font-size: 20rpx;
   font-weight: bold;
   line-height: 60rpx;
   padding: 8rpx;
@@ -665,6 +665,22 @@ modal {
   width: 48rpx;
   height: 48rpx;
   margin: 6rpx;
+}
+.btnconfirm .send-button {
+  line-height: 45rpx;
+  text-align: center;
+  width: 220rpx;
+  height: 45rpx;
+  background: #EC4844;
+  color: white;
+  font-size: 30rpx;
+  border-radius: 0;
+  border: 0;
+  padding: 10rpx;
+}
+
+.send-button::after {
+  border: none;
 }
 
 /*首页中部类目*/
@@ -1070,4 +1086,5 @@ main_message .main_red{
   width: 100%;
   margin-top:20rpx;
 } 
+ 
 

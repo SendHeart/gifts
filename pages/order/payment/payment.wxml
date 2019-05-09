@@ -4,7 +4,7 @@
  margin-top:{{navgationHeight+startBarHeight}}px
 -->
 
-<view class="order-item" style='' wx:for="{{orders}}" wx:key="">
+<view wx:if="{{is_buymyself==1}}" class="order-item" style='' wx:for="{{orders}}" wx:key="">
 	<!-- 厂家logo缩略图 -->
  	<!--  <view class="shop-text">
 			<image class="logo-image" src="{{item.logo}}" mode="aspectFill"/>
@@ -40,7 +40,7 @@
 
 </view>
 
-<button data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay" class='btnpay'>微信支付</button>
-<view class="pay_recomment" style='margin-top:10rpx;'>
+<button wx:if="{{is_buymyself==1}}" data-total-fee="{{item.order_price*100}}" type="primary" bindtap="pay" class='btnpay'>微信支付</button>
+<view  wx:if="{{is_buymyself==1}}" class="pay_recomment" style='margin-top:10rpx;'>
    <image src="{{navList2[6].img}}" background-size="cover" mode="widthFix"></image>
 </view>
