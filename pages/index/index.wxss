@@ -151,7 +151,7 @@ page {
 .carts-item {
   display: flex;
   flex-direction: row;
-  height: 130rpx;
+  height: 140rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
   border-bottom: 1rpx solid #f2f2f2;
   padding: 10rpx;
@@ -162,8 +162,8 @@ page {
 .carts-image {
   margin-left: 10rpx;
   margin-bottom: 10rpx;
-  width: 110rpx;
-  height: 110rpx;
+  width: 100rpx;
+  height: 100rpx;
 }
 
 /**/

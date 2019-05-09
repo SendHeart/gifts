@@ -391,10 +391,13 @@ Page({
           if (orderObjects){
             for (var i = 0; i < orderObjects.length; i++) {
               orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-              for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
-                orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
+              if (orderObjects[i]['order_sku']){
+                for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+                  orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+                  orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
+                }
               }
+              
               var duetime = orderObjects[i]['duetime'] - currenttime
               orderObjects[i]['hour'] = parseInt(duetime / 3600)
               orderObjects[i]['minus'] = parseInt((duetime - orderObjects[i]['hour'] * 3600) / 60)

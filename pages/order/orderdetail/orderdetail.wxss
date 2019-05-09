@@ -90,18 +90,20 @@ page {
 .carts-item {
 	display: flex;
 	flex-direction: row;
-	height:130rpx;
+	height:140rpx;
 	/*width属性解决标题文字太短而缩略图偏移*/
 	width:100%;
 	border-bottom: 1rpx solid #F2f2f2;
 	padding: 10rpx;
+ 
 }
 
 /*左部图片*/
 .carts-image {
   margin: 10rpx 20rpx;
-	width:110rpx;
-	height:110rpx;
+	width:100rpx;
+	height:100rpx;
+   overflow-y: hidden;
 }
 
 
