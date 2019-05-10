@@ -34,6 +34,7 @@ Page({
     order_no:'',
     currenttime: now ? parseInt(now / 1000) : 0,
     is_buymyself:0,
+    messageHidden: true,
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -116,6 +117,7 @@ Page({
     var address_detailInfo = that.data.address_detailInfo
     var address_nationalCode = that.data.address_nationalCode
     var address_telNumber = that.data.address_telNumber
+    var is_buymyself = that.data.is_buymyself
     //通讯录权限
     wx.getSetting({
       success(res) {
@@ -198,6 +200,11 @@ Page({
                   })
                 }, 200)
               }
+              if(is_buymyself == 1){ //礼物订单抽奖
+                wx.navigateTo({
+                  url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + order_no,
+                })
+              }
             } else {
               wx.showToast({
                 title: '礼物接收失败',
@@ -213,6 +220,7 @@ Page({
       }
     })
   },
+  
   scroll: function (event) {
     //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
     this.setData({
@@ -255,19 +263,16 @@ Page({
     that.setData({
       is_buymyself: is_buymyself,
     })
-    
-    /*
-    that.setNavigation()
     wx.getSystemInfo({
       success: function (res) {
+        let winHeight = res.windowHeight;
+        console.log('getSystemInfo:', winHeight);
         that.setData({
-          windowWidth: res.windowWidth,
-          windowHeight: res.windowHeight,
+          dkheight: winHeight,
         })
       }
-    })  
-     */
-   
+    })
+  
   },
 
   onShow: function () {

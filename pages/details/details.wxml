@@ -134,6 +134,6 @@
   <button class="sec-btn" bindtap="mycommTapTag">写评论</button>
   <button class="sec-btn" bindtap="wishCart">+心愿单</button>
    <button class="sec-btn" bindtap="buyMyself">自购</button>
-  <button class="add-cart" bindtap="goodsmodel"><text>发起购买送礼</text><text style='font-size:20rpx;'>24小时对方未接收，全额返还原账户</text></button>
+  <button class="add-cart" bindtap="buyGift"><text>发起购买送礼</text><text style='font-size:20rpx;'>24小时对方未接收，全额返还原账户</text></button>
   </view>
 </view>

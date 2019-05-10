@@ -1,0 +1,17 @@
+<view class="main_message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
+    <view class="t_w">
+      <!--右上角图标开始-->
+      <view class="t_image"  bindtap="messageCandel">
+        <image class="t_image1" src="/images/icon-no.png"></image>
+      </view>
+      <!--右上角图标结束-->
+      <!--弹出框开始-->
+       <!-- 消息通知 -->
+      <view wx:if="{{main_prom_image}}" class="main_bg" style="width:600rpx;height:750rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;" bindtap="messageConfirm" >
+      <view class="{{lottery_money?'lottery-title':'lottery-title2'}}" >{{lottery_note}}</view>
+      <view wx:if="{{lottery_money>0}}" class="lottery-text" >{{lottery_money?'现金￥'+lottery_money:''}}</view>
+      </view>
+    </view>
+     <!--弹出框结束-->
+  </view>
+ 

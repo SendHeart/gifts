@@ -599,13 +599,19 @@ Page({
     },
     buyMyself: function () {
       var that = this
-      var is_buymyself = that.data.is_buymyself
-     
       that.setData({
         is_buymyself: 1,
       })
       that.goodsmodel()
     },
+  buyGift: function () {
+    var that = this
+
+    that.setData({
+      is_buymyself: 0,
+    })
+    that.goodsmodel()
+  },
     //确定按钮点击事件  
     modalBindaconfirm: function () {
       var that = this
@@ -742,7 +748,8 @@ Page({
 
           that.setData({
             carts: carts,
-            all_rows: carts.length
+            all_rows: carts.length,
+            is_buymyself:0,
           })
           var amount = parseFloat(that.data.sku_sell_price) * buynum
           wx.navigateTo({

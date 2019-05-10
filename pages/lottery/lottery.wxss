@@ -1,0 +1,334 @@
+/*没有用到iconfont注释降低消耗*/
+
+/*@import "../../lib/style/font.wxss";
+ 
+.Hui-iconfont {
+  font-family: "Hui-iconfont";
+  font-size: 30rpx;
+}
+
+.iconv-uparrow:after {
+  content: '\e6d6';
+}
+
+.iconv-downarrow:after {
+  content: '\e6d5';
+}
+*/
+
+page {
+  background: #f2f2f2;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.banner {
+  width: 100%;
+  /*margin-left: 15rpx;*/
+  background-color: #f2f2f2;
+  background-repeat: norepeat;
+  align-content: center;
+  opacity: 1;
+}
+
+.banner image {
+  width: 100%;
+}
+
+.footer {
+  width: 100%;
+  background-color: #f2f2f2;
+  background-repeat: norepeat;
+  align-content: center;
+  opacity: 1;
+  background-size: 100% 100%;
+}
+
+.footer image {
+  width: 100%;
+}
+
+.wrap {
+  width: 100%;
+  position: relative;
+  top: -15rpx;
+}
+
+/*推荐商品列表*/
+
+/*推荐商品列表头*/
+
+.recomment-title {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between; /*子项横轴上对齐*/
+  padding:0;
+  color: #444;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+.recomment-title image{
+  width: 100%;
+}
+.recomment-title .more {
+  font-size: 24rpx;
+  color: #999;
+  font-weight: normal;
+  text-align: right;
+}
+
+/*推荐商品列表头*/
+
+.item {
+  height: 180rpx;
+  margin-left: 0rpx;
+  margin-top: 0rpx;
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding: 25rpx;
+  overflow: hidden;
+}
+
+.item .img {
+  width: 180rpx;
+  height: 170rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
+  margin-left: 10rpx;
+  float: left;
+}
+
+.item .img_tag {
+  width: 5%;
+  height: 30rpx;
+}
+
+.venues_box {
+  display: block;
+  width: 100%;
+  padding-bottom: 40rpx;
+  
+  overflow: hidden;
+}
+
+.venues_item {
+  display: inline-block;
+  width: 355rpx;
+  margin: 0 10rpx;
+  background: #fff;
+  text-indent: 20rpx;
+  padding-bottom: 10rpx;
+}
+
+.venues_item .mainpic {
+  display: block;
+  width: 310rpx;
+  height: 310rpx;
+  margin: 20rpx auto;
+}
+.venues_item .img-discount {
+  display: block;
+  width: 30rpx;
+  height: 30rpx;
+  margin-left:10rpx;
+}
+.venues_item .goods_name {
+  display: block;
+  color: #444;
+  font-size: 28rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.venues_item .goods_tag {
+  color: #999;
+  font-size: 20rpx;
+  padding: 2rpx 6rpx;
+  border: 1px solid #f2f2f2;
+  border-radius: 6rpx;
+}
+
+.venues_item .goods_tag image {
+  width: 10%;
+  height: 30rpx;
+}
+
+.venues_item .goods_prom {
+  display: block;
+  color: #999;
+  font-size: 24rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.price-now {
+  color: #444;
+  font-size: 24rpx;
+  text-align: right;
+  padding-right: 20rpx;
+}
+
+.price-now::first-letter {
+  font-size: 20rpx;
+}
+
+
+.sentbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  margin: 40rpx auto 20rpx auto;
+  width: 100%;
+  height: 200rpx;
+}
+
+.sentbtn button {
+  line-height: 100rpx;
+  width: 60%;
+  height: 100rpx;
+  /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
+  background: #e34c55;
+  color: white;
+  font-size: 34rpx;
+  border-radius: 20rpx;
+  -webkit-box-shadow: 0px 4rpx 0px rgba(219, 31, 5, 1);
+  -moz-box-shadow: 0px 4rpx 0px rgba(219, 31, 5, 1);
+  box-shadow: 0px 4rpx 0px rgb(179, 22, 2);
+  margin:20rpx;
+}
+
+.sentbtn text {
+  font-size: 24rpx;
+  color: #999;
+}
+.savebtn {
+  font-size: 28rpx;
+  padding-top:1rpx;
+  height: 80rpx;
+  margin-top:10px;
+}
+
+
+.main_message{
+  position:fixed;
+  width:100%;
+  top:0px;
+  background:rgba(0,0,0,0.4);
+  overflow: hidden;
+  z-index: 999;
+}
+.main_message .t_w{
+  position:relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;  
+  width: 100%;
+  height: 100%;
+}
+.main_message .tanchu_view{
+  width: 80%;
+  margin:10% auto;
+  overflow: hidden;
+  background-color: #fff1e6;
+  border-radius: 10rpx;
+  padding: 4rpx;
+}
+
+main_message .main_bg{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.main_message .bg_view{
+  margin:0rpx auto 30rpx auto;
+  color:#fcb712;
+  font-size:50rpx;
+  background-color: #fff1e6;
+  padding:0rpx 30rpx;
+  text-align: center;
+}
+
+.main_message .txtys{
+    font-size: 50rpx;
+    text-align: center;
+    margin-bottom: 200rpx;
+}
+ 
+.main_message .txtsure{
+ width: 100%;
+ height: 100%;
+ display: flex;
+ justify-content: center;
+ margin: 20rpx;
+}
+ 
+/*确定背景*/
+.main_message .txtsurebg{
+  width: 100rpx;
+  height: 100rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  margin: 150rpx;
+  background-color: burlywood;
+  flex-direction: column;
+}
+ 
+/*确定图标*/
+.main_message .txtsureimg{
+  display:block;
+  width:60rpx;
+  height:60rpx;
+}
+ 
+/*确定文本*/
+.main_message .txtsurename{
+   margin-bottom: 10rpx;
+   color: white;
+   font-size: 30rpx;
+}
+ 
+/*右上角图标*/
+.main_message .t_image{
+  position: absolute;
+  top: 15%;
+  right:30rpx;
+}
+ 
+/*右上角图标*/
+.main_message .t_image1{
+  display:block;
+  width:60rpx;
+  height: 60rpx;
+  opacity:0.8;
+}
+
+/*Title文本*/
+.main_message .lottery-title{
+   margin-top: 50rpx;
+   color:#e34c55;
+   font-size: 80rpx;
+}
+
+.main_message .lottery-title2{
+   margin-top: 150rpx;
+   color:#f2f2f2;
+   font-size: 80rpx;
+}
+
+.main_message .lottery-text{
+   margin-top: 50rpx;
+   color:#f2f2f2;
+   font-size: 100rpx;
+}
