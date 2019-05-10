@@ -62,7 +62,7 @@
         <text bindtap="cancel_order" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">取消</text>
         <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status<=2 && item.status>0 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1 && item.rcv_openid == username) ? '': 'hidden'}} smallbtn">确认收货</text>
-        <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
+        <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}"   data-order-id="{{item.id}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
 
       </view>
       <view style="width:30%; text-align:right;">

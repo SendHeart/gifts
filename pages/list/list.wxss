@@ -70,15 +70,6 @@ page {
     padding: 0;
 }
 
-.banner {
-	width: 100%;
-  height: 60rpx;
-	padding-top: 0rpx;
-  background: #1d1d1d; 
-	/*margin-left: 15rpx;*/
-}
-
-
 
 .all-classify{ 
  width: 100%;
@@ -100,7 +91,7 @@ page {
   color: gray;
   text-align: left;
    margin-bottom: 30rpx;
-  
+   padding: 10rpx ;
 } 
 .all-classify-item {
   color: gray;
@@ -108,10 +99,12 @@ page {
   text-align: center;
   /* line-height: 72rpx; */
   font-size: 30rpx;
+ 
 }
 .all-classify-item-active{
   color: red;
   font-size: 30rpx;
+  border: 4rpx solid #E34C55;
 }
 
 .top-bar-list{  
@@ -120,6 +113,15 @@ page {
   align-items: left;
   text-align: left;
 } 
+
+.banner {
+	width: 100%;
+  height: 65rpx;
+	padding-top: 0rpx;
+  background: #1d1d1d; 
+	/*margin-left: 15rpx;*/
+  z-index: 99;
+}
 
 /*导航 nav*/
 .top-bar {
@@ -145,18 +147,20 @@ page {
   display:inline-block;
   color: #fff;
   text-align: center;
-  line-height: 50rpx;
+  line-height: 51rpx;
   font-size: 24rpx;
   padding: 1rpx 30rpx;
 }
 .top-bar-active {
   color: #fff;
   border-bottom: 4rpx solid #E34C55;
+  background: #1d1d1d; 
 }
 .top-bar-image {
-  position: absolute; 
+  position: fixed; 
   top: 0;   
   right: 0; 
+  background: #1d1d1d; 
   width:40rpx;
   height:40rpx;
   padding: 10rpx 30rpx;
@@ -164,11 +168,11 @@ page {
 }
 /*辅助导航 nav2*/
 .top-bar2 {
-  height: 60rpx;
+  height: 70rpx;
   background: #FFF; 
   width:100%;
   position: fixed;
-  margin-top: 90rpx;
+  margin-top: 60rpx;
   top:0;
   border-top: 1rpx solid #F2f2f2;
   border-bottom: 1rpx solid #F2f2f2;
@@ -190,6 +194,7 @@ swiper-item image {
     width: 100%;
     display: inline-block;
     overflow: hidden;
+    z-index:99;
 }
 
 .venues_box {

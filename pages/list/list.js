@@ -178,6 +178,7 @@ Page({
 
 // 获取滚动条当前位置
   scrolltoupper:function(e){
+    //console.log('scrollTop:', e.detail.scrollTop)
     if (e.detail.scrollTop > 100) {
       this.setData({
         floorstatus: true

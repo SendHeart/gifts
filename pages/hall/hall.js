@@ -535,6 +535,7 @@ Page({
      
     });
     //that.confirmOrder()
+    console.log('hall bindCheckout cartIds:', cartIds, 'cartselected:', cartselected)
     wx.navigateTo({
       url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&is_buymyself='+is_buymyself +'&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
     });
@@ -758,7 +759,6 @@ Page({
               cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
             } 
             
-            //cartlist[key]['sku_list'][i]['name'] = cartlist[key]['sku_list'][i]['name'].substr(0, 13) + '...';
             cartlist[key]['sku_list'][i]['selected'] = true;
             cartlist[key]['sku_list'][i]['shop_id'] = key;
             cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id'];

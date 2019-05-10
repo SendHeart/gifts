@@ -61,6 +61,8 @@ Page({
         comm_list: [],
         image_save_count:0,
         image_save_times:0,
+        is_buymyself:0,
+        buynum:1,
     },
     /*
   setNavigation: function () {
@@ -521,13 +523,31 @@ Page({
               comm_list: that.data.comm_list.concat(comm_list),
               all_rows: all_rows,
             })
-            //console.log('获取订单评论信息 :' + comm_list, 'goods_id:', goodsid );
             console.log('获取订单评论信息:', comm_list, ' all rows:',all_rows)
           }
         }
       })
     },
   
+    bindMinus: function (e) {
+      var that = this
+      var num = that.data.buynum
+      num--
+      that.setData({
+        buynum: num>0?num:1
+      })
+    },
+    bindPlus: function (e) {
+      var that = this
+      var num = that.data.buynum
+    // 自增
+      num++;
+    // 只有大于一件的时候，才能normal状态，否则disable状态
+      var minusStatus = num <= 1 ? 'disabled' : 'normal';
+      this.setData({
+        buynum: num <= 1?1:num,
+      })
+    },
     //事件处理函数 选择型号规格  
     goodsmodel: function () {
       var that = this
@@ -535,8 +555,9 @@ Page({
       var sku_id = that.data.commodityAttr[0].id
       var attrValueList = that.data.attrValueList
       var sku_sell_price = that.data.commodityAttr[0].sell_price
+      var is_buymyself = that.data.is_buymyself
+      console.log('detail goodsmodel is_buymyself:',is_buymyself)
       if(attrValueList.length>0){
-        
         that.setData({
           modalHidden: !modalHidden,
           sku_id: sku_id,
@@ -544,16 +565,18 @@ Page({
           add_cart_title: '商品名称',
           wishflag: 0,
         })
-        console.log('购买送出 挑选 sku_id:' + that.data.commodityAttr[0].id, 'modalHidden:', that.data.modalHidden);
+        console.log('挑选 sku_id:' + that.data.commodityAttr[0].id, 'modalHidden:', that.data.modalHidden)
       }else{
-        console.log('购买送出 sku_id:' + that.data.commodityAttr[0].id, 'attrValueList:', attrValueList);
+        console.log('送礼 sku_id:' + that.data.commodityAttr[0].id, 'attrValueList:', attrValueList)
         that.setData({
+          modalHidden: !modalHidden,
+          sku_sell_price: sku_sell_price,
+          add_cart_title: that.data.goodsname,
           sku_id: sku_id,
           wishflag: 0,
         })
-        that.addCart()
+        //that.addCart()
       }
-      
     },
     wishCart: function () {
       var that = this
@@ -574,13 +597,22 @@ Page({
       }
       
     },
+    buyMyself: function () {
+      var that = this
+      var is_buymyself = that.data.is_buymyself
+     
+      that.setData({
+        is_buymyself: 1,
+      })
+      that.goodsmodel()
+    },
     //确定按钮点击事件  
     modalBindaconfirm: function () {
+      var that = this
       this.setData({
         modalHidden: !this.data.modalHidden,
-       
-      }),
-      this.addCart();
+      })
+      this.addCart()
     },
     //取消按钮点击事件  
     modalBindcancel: function () {
@@ -590,14 +622,16 @@ Page({
     },  
     addCart: function () {
       var that = this
-      var username = wx.getStorageSync('username');
+      var is_buymyself = that.data.is_buymyself
+      var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
       if (!username) {//登录
         wx.navigateTo({
           url: '../login/login?goods_id=' + that.data.goodsid
         })
       }else{
         if (that.data.sku_id){
-          that.insertCart(that.data.sku_id, username,that.data.wishflag);
+          that.insertCart(that.data.sku_id, that.data.buynum, username, token,that.data.shop_type, that.data.wishflag, is_buymyself);
         }else{
           wx.showToast({
             title: '该产品无货',
@@ -606,18 +640,18 @@ Page({
           });
         }
       }
-      
     },
-    insertCart: function (sku_id,username,wishflag) {
+  insertCart: function (sku_id, buynum, username, token, shop_type, wishflag, is_buymyself) {
       var that = this
-      var shop_type = that.data.shop_type
+      //var shop_type = that.data.shop_type
       wx.request({
         url: weburl + '/api/client/add_cart',
         method: 'POST',
         data: {
           username: username,
-          access_token: "1",
+          access_token: token,
           sku_id: sku_id,
+          num: buynum,
           wishflag: wishflag,
           shop_type:shop_type,
         },
@@ -628,64 +662,94 @@ Page({
         success: function (res) {
           console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
           var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物袋'
+          title = is_buymyself==1?'生成订单':title
           wx.showToast({
             title: title,
             duration: 2000
           })
           app.globalData.from_page = '/pages/details/details'
           if (wishflag == 1) {
-            /*
-            wx.navigateTo({
-              url: '/pages/details/details'
-            })
-            */
             wx.navigateTo({
               url: '/pages/wish/wish'
             })
           } 
           else {
-            console.log('details insertCart wishflag:', wishflag)
-            app.globalData.hall_gotop = 1
-            wx.switchTab({
-              url: '/pages/hall/hall'
-            })
+            if (is_buymyself==1){
+              that.queryCart()
+            }else{
+              console.log('details insertCart wishflag:', wishflag)
+              app.globalData.hall_gotop = 1
+              wx.switchTab({
+                url: '/pages/hall/hall'
+              })
+            }
           }
-
         }
-
       })
-      /*
-      // 加入购物车
-      var title = wishflag == 1 ? '确认要加入心愿单吗' :'确认要购买送出吗'
-      wx.showModal({
-        title: '提示',
-        content: title,
+      
+    },
+
+    queryCart: function () {
+      var that = this
+      var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+      var order_type = 'gift'
+      var order_note = '送你一份礼物，希望你喜欢!'; //默认祝福
+      var buynum = that.data.buynum
+      var sku_sell_price = that.data.sku_sell_price
+      var amount = parseFloat(sku_sell_price) * buynum
+      var sku_id = that.data.sku_id
+      var is_buymyself = that.data.is_buymyself
+      wx.request({
+        url: weburl + '/api/client/query_cart',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          shop_type: shop_type,
+          sku_id: sku_id,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
         success: function (res) {
-          if (res.confirm) {
-            // 加入购物车
-            var that=this;
-            
-
+          console.log('hall reloadData:', res.data);
+          var carts = [];
+          if (!res.data.result) {
+            wx.showToast({
+              title: '未挑选商品' + res.data.info,
+              icon: 'none',
+              duration: 1500
+            })
+            return
           }
+          var cartlist = res.data.result.list;
+          var index = 0;
+          for (var key in cartlist) {
+            for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
+              if (cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
+                cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
+              } 
+              cartlist[key]['sku_list'][i]['selected'] = true;
+              cartlist[key]['sku_list'][i]['shop_id'] = key;
+              cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id'];
+             
+              carts[index] = cartlist[key]['sku_list'][i];
+              index++;
+            }
+          }
+
+          that.setData({
+            carts: carts,
+            all_rows: carts.length
+          })
+          var amount = parseFloat(that.data.sku_sell_price) * buynum
+          wx.navigateTo({
+            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_note=' + order_note + '&username=' + username + '&token=' + token
+          })
         }
       })
-      */
-    },
-    showCartToast: function (message) {
-      wx.showToast({
-        title: message ? message:'添加成功',
-        icon: 'success',
-        duration: 1000
-      });
-    },
-
- 
-    showCart: function () {
-      app.globalData.from_page = '/pages/details/details'
-      console.log('details insertCart showCart:', app.globalData.from_page )
-      wx.switchTab({
-        url: '../hall/hall'
-      });
     },
 
     showGoodsinfo: function () {
@@ -788,10 +852,9 @@ Page({
       var status = e.currentTarget.dataset.status
       var selectedvalue = e.currentTarget.dataset.selectedvalue
       this.setData({
-        
         firstIndex: index,
         secondIndex: valueindex,
-      });
+      })
       if (status || valueindex == that.data.secondIndex) {
         if (attrValueList[index].type==2){
           value = attrValueList[index].note[valueindex]
@@ -830,8 +893,6 @@ Page({
         }
         
       }
-
-      
      
     },
     /* 选中 */

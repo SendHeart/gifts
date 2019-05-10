@@ -92,7 +92,7 @@ Page({
         //自购礼品 接收处理
         if (is_buymyself == 1){
           wx.navigateTo({
-            url: '../order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
+            url: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
           })
         }
       }

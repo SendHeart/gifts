@@ -28,7 +28,7 @@ Page({
     note:'',
     headimg:'',
     nickname:'',
-    receive_status:1,
+    receive_status:9,
     overtime_status:0,
     receive:0,
     order_no:'',
@@ -82,6 +82,26 @@ Page({
 
   receiveTapTag: function (e) {
     var that = this 
+    var is_buymyself = that.data.is_buymyself
+    var title = is_buymyself == 1 ? '收货地址' :'请确认'
+    var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
+    if (is_buymyself == 1){
+      that.set_address()
+    }else{
+      wx.showModal({
+        title: title,
+        content: content,
+        success: function (res) {
+          if (res.confirm) {
+            that.set_address()
+          }
+        }
+      })
+    }
+  },
+
+  set_address: function () {
+    var that = this
     var shop_type = that.data.shop_type
     var order_no = that.data.order_no
     var goods_flag = that.data.goods_flag
@@ -96,115 +116,103 @@ Page({
     var address_detailInfo = that.data.address_detailInfo
     var address_nationalCode = that.data.address_nationalCode
     var address_telNumber = that.data.address_telNumber
-    var is_buymyself = that.data.is_buymyself
-    var title = is_buymyself == 1 ? '收货地址' :'请确认'
-    var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
-    wx.showModal({
-      title: title,
-      content: content,
-      success: function (res) {
-        if (res.confirm) {
-          //通讯录权限
-          wx.getSetting({
-            success(res) {
-              if (!res.authSetting['scope.address']) {
-                wx.authorize({
-                  scope: 'scope.address',
-                  success() {
-                    // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-                    //wx.startRecord()
-                  }
-                })
-              }
-            }
-          })
-          //收货地址选择
-          wx.chooseAddress({
-            success: function (res) {
-              console.log('微信收货地址:')
-              console.log(res)
-              address_userName = res.userName
-              address_postalCode = res.postalCode
-              address_provinceName = res.provinceName
-              address_cityName = res.cityName
-              address_countyName = res.countyName
-              address_detailInfo = res.detailInfo
-              address_nationalCode = res.nationalCode
-              address_telNumber = res.telNumber
-
-              that.setData({
-                address_userName: address_userName,
-                address_postalCode: address_postalCode,
-                address_provinceName: address_provinceName,
-                address_cityName: address_cityName,
-                address_countyName: address_countyName,
-                address_detailInfo: address_detailInfo,
-                address_nationalCode: address_nationalCode,
-                address_telNumber: address_telNumber,
-              });
-              console.log('订单号:' + that.data.order_no + ' openid:' + that.data.openid)
-              wx.request({ //更新收礼物状态
-                url: weburl + '/api/client/update_order_status',
-                method: 'POST',
-                data: {
-                  username: that.data.username,
-                  shop_type:shop_type,
-                  openid: that.data.openid,
-                  nickname: that.data.nickname,
-                  headimg: that.data.headimg,
-                  order_no: that.data.order_no,
-                  status_info: 'receive',
-                  goods_flag:goods_flag,
-                  address_userName: address_userName,
-                  address_postalCode: address_postalCode,
-                  address_provinceName: address_provinceName,
-                  address_cityName: address_cityName,
-                  address_countyName: address_countyName,
-                  address_detailInfo: address_detailInfo,
-                  address_nationalCode: address_nationalCode,
-                  address_telNumber: address_telNumber,
-                },
-                header: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                  'Accept': 'application/json'
-                },
-                success: function (res) {
-                  console.log('礼物已接收:',res.data);
-                  if (res.data.status='y'){
-                    wx.showToast({
-                      title: '礼物已接收',
-                      icon: 'success',
-                      duration: 1500
-                    })
-                    that.setData({
-                      receive_status: 1,
-                    })
-                    if (goods_flag == 3) { //虚拟商品订单
-                      setTimeout(function () {
-                        wx.navigateTo({
-                          url: '/pages/member/task/task',
-                        })
-                      }, 200)
-                    } 
-                  }else{
-                    wx.showToast({
-                      title: '礼物接收失败',
-                      icon: 'success',
-                      duration: 1500
-                    })
-                    that.setData({
-                      receive_status: 0,
-                    });
-                  }
-                }
-              })
+    //通讯录权限
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.address']) {
+          wx.authorize({
+            scope: 'scope.address',
+            success() {
+              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+              //wx.startRecord()
             }
           })
         }
       }
     })
-  },
+    //收货地址选择
+    wx.chooseAddress({
+      success: function (res) {
+        console.log('微信收货地址:')
+        console.log(res)
+        address_userName = res.userName
+        address_postalCode = res.postalCode
+        address_provinceName = res.provinceName
+        address_cityName = res.cityName
+        address_countyName = res.countyName
+        address_detailInfo = res.detailInfo
+        address_nationalCode = res.nationalCode
+        address_telNumber = res.telNumber
 
+        that.setData({
+          address_userName: address_userName,
+          address_postalCode: address_postalCode,
+          address_provinceName: address_provinceName,
+          address_cityName: address_cityName,
+          address_countyName: address_countyName,
+          address_detailInfo: address_detailInfo,
+          address_nationalCode: address_nationalCode,
+          address_telNumber: address_telNumber,
+        });
+        console.log('订单号:' + that.data.order_no + ' openid:' + that.data.openid)
+        wx.request({ //更新收礼物状态
+          url: weburl + '/api/client/update_order_status',
+          method: 'POST',
+          data: {
+            username: that.data.username,
+            shop_type: shop_type,
+            openid: that.data.openid,
+            nickname: that.data.nickname,
+            headimg: that.data.headimg,
+            order_no: that.data.order_no,
+            status_info: 'receive',
+            goods_flag: goods_flag,
+            address_userName: address_userName,
+            address_postalCode: address_postalCode,
+            address_provinceName: address_provinceName,
+            address_cityName: address_cityName,
+            address_countyName: address_countyName,
+            address_detailInfo: address_detailInfo,
+            address_nationalCode: address_nationalCode,
+            address_telNumber: address_telNumber,
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            console.log('礼物已接收:', res.data);
+            if (res.data.status = 'y') {
+              wx.showToast({
+                title: '礼物已接收',
+                icon: 'success',
+                duration: 1500
+              })
+              that.setData({
+                receive_status: 1,
+              })
+              if (goods_flag == 3) { //虚拟商品订单
+                setTimeout(function () {
+                  wx.navigateTo({
+                    url: '/pages/member/task/task',
+                  })
+                }, 200)
+              }
+            } else {
+              wx.showToast({
+                title: '礼物接收失败',
+                icon: 'success',
+                duration: 1500
+              })
+              that.setData({
+                receive_status: 0,
+              });
+            }
+          }
+        })
+      }
+    })
+  },
   scroll: function (event) {
     //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
     this.setData({
@@ -228,11 +236,11 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-    var order_no = options.order_no
-    var order_id = options.order_id
+    var order_no = options.order_no ? options.order_no:''
+    var order_id = options.order_id ? options.order_id:0
     var receive = options.receive
     var is_buymyself = options.is_buymyself ? options.is_buymyself : 0
-    var goods_flag = options.goods_flag
+    var goods_flag = options.goods_flag ? options.goods_flag:0
     var orders = that.data.orders
     var orderskus = that.data.orderskus
     var note_title = that.data.note_title
@@ -260,8 +268,6 @@ Page({
     })  
      */
    
-   
-
   },
 
   onShow: function () {
@@ -331,6 +337,14 @@ Page({
     }
   },
 
+  refresh: function (e) {
+    var that = this
+    var isreload = e.currentTarget.dataset.isreload ? e.currentTarget.dataset.isreload : 0
+    that.setData({
+      isreload: isreload,
+      all_rows: 0
+    });
+  },
   reloadData: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -347,6 +361,7 @@ Page({
     var nickname = that.data.nickname
     var note = that.data.note
     var is_buymyself = that.data.is_buymyself
+    var isreload = that.data.isreload
     //从服务器获取订单列表
     setTimeout(function () { //3秒超时
       that.overtimeData()
@@ -392,8 +407,14 @@ Page({
           that.setData({
             orders: [],
             all_rows: 0
-          });
+          })
         } else {
+          if(isreload==1){ //超时刷新
+            that.setData({
+              orders: [],
+              all_rows: 0
+            })
+          }
           // 存储地址字段
           for (var i = 0; i < orderObjects.length; i++) {
             orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']

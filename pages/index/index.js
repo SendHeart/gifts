@@ -430,7 +430,6 @@ Page({
               that.duetime_update()
             }, 500)
           }
-         
         }
       }
     })
@@ -518,22 +517,23 @@ Page({
     });
   },
   accept: function (e) {
-    var objectId = e.currentTarget.dataset.objectId;
-    var totalFee = e.currentTarget.dataset.totalFee;
-    console.log('接受礼物order_no:');
-    console.log(objectId);
+    var order_no = e.currentTarget.dataset.objectId
+    var totalFee = e.currentTarget.dataset.totalFee
+    var order_id = e.currentTarget.dataset.orderId
+    console.log('接受礼物order_no:', order_no);
+   
     wx.navigateTo({
-      url: '../order/receive/receive?order_no=' + objectId + '&receive=1'
+      url: '../order/receive/receive?order_no=' + order_no + '&order_id=' + order_id + '&receive=1' + '&goods_flag=0'
     });
   },
   pay: function (e) {
-    var objectId = e.currentTarget.dataset.objectId;
+    var order_no = e.currentTarget.dataset.objectId;
     var totalFee = e.currentTarget.dataset.totalFee;
-    console.log('order_no');
-    console.log(objectId);
+    console.log('pay order_no:',order_no);
+  
     wx.navigateTo({
-      url: '../order/payment/payment?orderNo=' + objectId + '&totalFee=' + totalFee
-    });
+      url: '../order/payment/payment?orderNo=' + order_no + '&totalFee=' + totalFee
+    })
   },
   cancel_order: function (e) {
     var that = this;
