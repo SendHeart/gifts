@@ -302,7 +302,7 @@ main_message .main_bg{
 /*右上角图标*/
 .main_message .t_image{
   position: absolute;
-  top: 15%;
+  top: 12%;
   right:30rpx;
 }
  
@@ -330,5 +330,5 @@ main_message .main_bg{
 .main_message .lottery-text{
    margin-top: 50rpx;
    color:#f2f2f2;
-   font-size: 100rpx;
+   font-size: 60rpx;
 }

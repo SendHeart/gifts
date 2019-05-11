@@ -1,5 +1,7 @@
 <import src="../../common/hall_title.wxml" />
+<!-- 
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
+-->
 <view wx:if="{{is_buymyself==0}}" class="subject" style=''>
   <text class='toptitle' wx:if='{{receive_status==0}}'>恭喜，您收到一份礼物</text>
   <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>礼物已领取</text>

@@ -369,7 +369,7 @@ Page({
           var task_list =[]
           var message_list = []
           for (var i = 0; i < messages.length;i++){
-            if(messages[i].type==6) {
+            if(messages[i].type==6) { //task info
               console.log('message get_member_messages messages[i]:',i, messages[i])
               if (messages[i]['task_info']['task_status']!=9){
                // if (task_list.length==0) task_list.push(messages[i])

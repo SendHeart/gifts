@@ -184,7 +184,7 @@ Page({
           },
           success: function (res) {
             console.log('礼物已接收:', res.data);
-            if (res.data.status = 'y') {
+            if (res.data.status == 'y') {
               wx.showToast({
                 title: '礼物已接收',
                 icon: 'success',
@@ -207,8 +207,8 @@ Page({
               }
             } else {
               wx.showToast({
-                title: '礼物接收失败',
-                icon: 'success',
+                title: res.data.info ? res.data.info:'礼物接收失败',
+                icon: 'loading',
                 duration: 1500
               })
               that.setData({

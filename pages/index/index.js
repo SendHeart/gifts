@@ -532,7 +532,7 @@ Page({
     console.log('pay order_no:',order_no);
   
     wx.navigateTo({
-      url: '../order/payment/payment?orderNo=' + order_no + '&totalFee=' + totalFee
+      url: '../order/payment/payment?orderNo=' + order_no + '&totalFee=' + totalFee + '&received=1'
     })
   },
   cancel_order: function (e) {

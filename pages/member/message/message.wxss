@@ -115,12 +115,12 @@ page {
  
 .msg-item-text{
   margin:20rpx 20rpx 0 20rpx;
-  font-size:32rpx;
+  font-size:30rpx;
   font-weight: bold;
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #444;
+  color: #e34c55;
 }
 .msg-item-text2{
   margin-left:20rpx;

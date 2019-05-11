@@ -101,6 +101,7 @@ Page({
     var orderNo = options.orderNo;
     var totalFee = options.totalFee ? options.totalFee:0
     var is_buymyself = options.is_buymyself ? options.is_buymyself:0 //自购礼品
+    var received = options.received ? options.received : 0 //未支付礼物订单支付
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
@@ -150,8 +151,9 @@ Page({
             totalFee: totalFee ? totalFee:order_price,
             sku_id:sku_id,
             is_buymyself:is_buymyself,
+            received:received,
           })
-          if(is_buymyself==0) that.pay()
+         if(is_buymyself==0 && received==0) that.pay()
         } else {
           wx.showToast({
             title: res.data.info,
@@ -189,7 +191,8 @@ Page({
     var orderNo = that.data.orderNo;
     var shop_type = that.data.shop_type
     var is_buymyself = that.data.is_buymyself
-    console.log('payment openId', openId, 'totalFee:', totalFee, 'is_buymyself:', is_buymyself);
+    var received = that.data.received
+    console.log('payment openId', openId, ' totalFee:', totalFee, ' is_buymyself:', is_buymyself, ' received:', received);
 
 		//统一下单接口对接
     if (totalFee<=0){
@@ -199,7 +202,7 @@ Page({
       })
         return
     }
-    if (is_buymyself==1){ //自购礼品 需要先支付
+    if (is_buymyself==1 || received==1){ //自购礼品 未支付礼物被接收 支付
       wx.request({
         url: weburl + '/api/WXPay',
         data: {
@@ -228,11 +231,16 @@ Page({
                 wx.showToast({
                   title: '支付成功'
                 })
-                that.delete_cart()
-                // update order
-                wx.navigateTo({
-                  url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders) + '&is_buymyself=' + is_buymyself
-                })
+                if(received==1){
+                  wx.navigateTo({
+                    url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + orderNo,
+                  })
+                } else {
+                  that.delete_cart()
+                  wx.navigateTo({
+                    url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders) + '&is_buymyself=' + is_buymyself
+                  })
+                }
               }
             })
           } else {

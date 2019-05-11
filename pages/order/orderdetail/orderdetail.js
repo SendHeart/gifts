@@ -312,12 +312,13 @@ Page({
     }
   },
   pay: function (e) {
-    var objectId = e.currentTarget.dataset.objectId;
-    var totalFee = e.currentTarget.dataset.totalFee;
-    console.log('order_no');
-    console.log(objectId);
+    var objectId = e.currentTarget.dataset.objectId
+    var totalFee = e.currentTarget.dataset.totalFee
+    var received = e.currentTarget.dataset.received ? e.currentTarget.dataset.received:0
+    console.log('orderdetail pay() order_no:',objectId,'received:',received);
+    //console.log(objectId);
     wx.navigateTo({
-      url: '../payment/payment?orderNo=' + objectId + '&totalFee=' + totalFee
+      url: '../payment/payment?orderNo=' + objectId + '&totalFee=' + totalFee + '&received=' + received
     });
   },
   receive: function (e) {
