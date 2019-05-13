@@ -87,8 +87,12 @@
   <view class="buybutton">
   <view class="btnconfirm">
     <image src="../../images/share.png"></image>
-    <button class="send-button" bindtap="bindCheckout" data-type="0">送礼</button> 
-    <button class="send-button" bindtap="bindCheckout" data-type="1">自购</button> 
+    <form bindsubmit="formSubmit" data-name='sendgift' data-type="0" report-submit="true" >
+      <button class="send-button" formType="submit" >送礼</button>  <!--  bindtap="bindCheckout" -->
+    </form>
+    <form bindsubmit="formSubmit"  data-name='buymyself'  data-type="1" report-submit="true" >
+      <button class="send-button" formType="submit" >自购</button>  <!--  bindtap="bindCheckout" -->
+     </form> 
   </view>
   </view>
 

@@ -64,25 +64,49 @@ Page({
         is_buymyself:0,
         buynum:1,
     },
-    /*
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
+
+  formSubmit: function (e) {
+    var that = this
+    var formId = e.detail.formId;
+    var form_name = e.currentTarget.dataset.name  
+    console.log('formSubmit() formID：', formId, ' form name:', form_name)
+    if (form_name == 'buyGift') {
+      that.buyGift()
+    } else if (form_name == 'buyMyself') {
+      that.buyMyself()
+    } else if (form_name == 'wishcart') {
+      that.wishCart()
+    } else if (form_name == 'mycommTapTag') {
+      that.mycommTapTag()
+    }
+    if (formId) that.submintFromId(formId)
+  },
+
+  //提交formId，让服务器保存到数据库里
+  submintFromId: function (formId) {
+    var that = this
+    var formId = formId
+    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    wx.request({
+      url: weburl + '/api/client/save_member_formid',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        formId: formId,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
       success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
+        console.log('submintFromId() update success: ', res.data)
       }
     })
   },
-  */
   goBack: function () {
     var pages = getCurrentPages();
     console.log('details goBack pages:', pages)
@@ -606,7 +630,6 @@ Page({
     },
   buyGift: function () {
     var that = this
-
     that.setData({
       is_buymyself: 0,
     })

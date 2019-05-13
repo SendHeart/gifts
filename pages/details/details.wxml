@@ -131,9 +131,19 @@
 
 <view class="footer">
   <view class="opt-buttons">
-  <button class="sec-btn" bindtap="mycommTapTag">写评论</button>
-  <button class="sec-btn" bindtap="wishCart">+心愿单</button>
-   <button class="sec-btn" bindtap="buyMyself">自购</button>
-  <button class="add-cart" bindtap="buyGift"><text>发起购买送礼</text><text style='font-size:20rpx;'>24小时对方未接收，全额返还原账户</text></button>
+  <form bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" >
+    <button class="sec-btn" formType="submit" >写评论+' '</button>  
+  </form>
+  <form bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" >
+    <button class="sec-btn" formType="submit">+心愿单+' '</button>  
+  </form>
+  <form bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" >
+    <button class="sec-btn" formType="submit">自购+' '</button>  
+  </form>
+  <form bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" >
+    <button class="add-cart" formType="submit" >
+      <text>发起购买送礼</text><text style='font-size:20rpx;'>24小时对方未接收，全额返还原账户</text>
+    </button>  
+  </form>
   </view>
 </view>

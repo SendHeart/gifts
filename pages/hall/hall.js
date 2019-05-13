@@ -449,7 +449,6 @@ Page({
    that.setData({
      carts: carts,
      showmorehidden:true
-      
    });
   },
   bindShowLess: function () {
@@ -463,8 +462,7 @@ Page({
     that.setData({
       carts: carts,
       showmorehidden: true //false 不需要收起功能了
-
-    });
+    })
   },
   bindShowMoreR: function () {
     var that = this;
@@ -477,15 +475,14 @@ Page({
     that.setData({
       recommentList: recommentList,
       rshowmorehidden: true
-
-    });
+    })
   },
   bindShowLessR: function () {
     var that = this;
     var recommentList = that.data.recommentList
     // 遍历 设置 hidden
     for (var i = 0; i < recommentList.length; i++) {
-      if (i > 1) recommentList[i]['hidden'] = 1;
+      if (i > 1) recommentList[i]['hidden'] = 1
     }
 
     that.setData({
@@ -494,10 +491,9 @@ Page({
 
     });
   },
-
-  bindCheckout: function (e) {
+  bindCheckout: function () {
     var that = this
-    var is_buymyself = e.currentTarget.dataset.type ? e.currentTarget.dataset.type : 0
+    var is_buymyself = that.data.is_buymyself ? that.data.is_buymyself: 0
     var order_type = 'gift'
     var order_note = that.data.note
     var amount = that.data.total
@@ -532,9 +528,8 @@ Page({
       username:username,
       token:token,
       is_buymyself: is_buymyself,
-     
-    });
-    //that.confirmOrder()
+    })
+   
     console.log('hall bindCheckout cartIds:', cartIds, 'cartselected:', cartselected)
     wx.navigateTo({
       url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&is_buymyself='+is_buymyself +'&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
@@ -542,7 +537,48 @@ Page({
      
   },
 
-  confirmOrder: function () {
+  formSubmit: function (e) {
+    var that = this
+    var formId = e.detail.formId;
+    var form_name = e.detail.target.dataset.name //记录用户的操作
+    console.log('formSubmit() formID：', formId,' form name:',form_name)
+    if (form_name=='sendgift'){
+      that.setData({
+        is_buymyself: 0,
+      })
+    }else if(form_name=='buymyself'){
+      that.setData({
+        is_buymyself: 1,
+      })
+    }
+    that.bindCheckout()
+    that.submintFromId(formId)
+  },
+ 
+  //提交formId，让服务器保存到数据库里
+  submintFromId: function (formId) {
+    var that = this
+    var shop_type=that.data.shop_type
+    var formid = that.data.formid
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1' 
+    wx.request({
+      url: weburl + '/api/client/save_member_formid',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        formid: formid,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('submintFromId() update success: ',res.data.result)
+      }
+    })
   },
 
   delete: function (e) {

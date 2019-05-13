@@ -594,9 +594,9 @@ Page({
   
   onGotUserInfo: function (e) {
     var that = this
-    console.log(e.detail.errMsg)
-    console.log(e.detail.userInfo)
-    console.log(e.detail.rawData)
+    console.log('onGotUserInfo errMsg:', e.detail.errMsg, 'userInfo:', e.detail.userInfo, 'rawData:', e.detail.rawData)
+    //console.log(e.detail.userInfo)
+    //console.log(e.detail.rawData)
     wx.login({
       success: function (res) {
         if (res.code) {

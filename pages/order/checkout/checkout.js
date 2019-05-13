@@ -100,8 +100,7 @@ Page({
 	},
 	readCarts: function (options) {
 		var that = this
-		// from carts
-		// amount
+    console.log('order checkout from hall  readCarts options:', options)
 		var amount = parseFloat(options.amount)
     var payamount = that.data.payamount
     var discountpay = that.data.discountpay
@@ -113,7 +112,7 @@ Page({
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     payamount = (amount - discountpay).toFixed(2)
 
-    console.log('order checkout from hall  readCarts options:', options)
+  
     
     that.setData({
 			amount: amount,

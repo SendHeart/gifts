@@ -46,8 +46,12 @@
     </swiper>
     -->
     <view class="sentbtn">
-      <button open-type="share" data-order_no="{{order_no}}" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>选择微信好友</button>
-      <button bindtap="returnTapTag" hidden='{{send_status==0?true:false}}'>完成</button>
+      <button open-type="share" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>选择微信好友</button>
+      <view hidden='{{send_status==0?true:false}}'>
+      <form bindsubmit="returnForm" report-submit="true" >
+        <button style="width:300rpx;" formType="submit">完成</button> <!--  bindtap="returnTapTag"  -->
+      </form>
+      </view>
     </view>
   </view>
 </view>

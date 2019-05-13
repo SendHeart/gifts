@@ -1,7 +1,9 @@
-var app = getApp();
-var weburl = app.globalData.weburl;
-var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-var shop_type = app.globalData.shop_type; 
+var app = getApp()
+var appid = app.globalData.appid
+var secret = app.globalData.secret
+var weburl = app.globalData.weburl
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var shop_type = app.globalData.shop_type
 var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -64,7 +66,18 @@ Page({
     }
 
   },
-  returnTapTag: function (e) {
+  returnForm:function(e){
+    var that = this
+    var formID = e.detail.formId
+    that.setData({
+      formID: formID,
+    })
+    console.log('send returnTapTag() fromID:', formID)
+     //微信消息通知
+    that.remindMessage()
+    that.returnTapTag()
+  },
+  returnTapTag: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -101,6 +114,48 @@ Page({
       url: '../../index/index'
     });
   },
+
+  /**
+* 触发微信提醒
+*/
+  remindMessage: function () {
+    var that = this
+    var formID = that.data.formID
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
+    var order_no = that.data.order_no
+    var shop_type = that.data.shop_type
+    var msg_type = 1 //礼物接收通知
+    wx.request({
+      url: weburl+'/api/WXPay/sendMessage2Openid',
+      method: 'POST',
+      header: {
+        'content-type': 'application/x-www-form-urlencoded',  
+        'Accept': 'application/json'
+      },
+      data: {
+        m_id: m_id,
+        openid: openid,
+        from_username: username,
+        access_token: token,
+        formid: formID,
+        order_no: order_no,
+        appid: app.globalData.appid,
+        appsecret: app.globalData.secret,
+        shop_type: shop_type,
+        msg_type: msg_type,
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded'
+      },
+      success: function (res) {
+        console.log('send remindMessage() 微信通知礼物接收:',res.data)
+      },
+    })
+  },
+
   scroll: function (event) {
     //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
     this.setData({
@@ -371,13 +426,13 @@ Page({
   },
   
   showGoods: function (e) {
-    var skuId = e.currentTarget.dataset.skuId;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var goods_id = e.currentTarget.dataset.goodsId;
-    var goods_name = e.currentTarget.dataset.goodsName;
+    var skuId = e.currentTarget.dataset.skuId
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_name = e.currentTarget.dataset.goodsName
     console.log('showGoods')
-    console.log(goods_name + ' ' + goods_id);
+    console.log(goods_name + ' ' + goods_id)
     wx.navigateTo({
       url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
     });
