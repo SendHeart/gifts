@@ -34,6 +34,7 @@ Page({
     giftflag:0,
     shop_type:shop_type,
     scrollTop:1000,
+    currentPages_length:2,
      
   },
   pageScrollToBottom: function () {
@@ -44,26 +45,48 @@ Page({
       })
     }).exec()
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
+ 
+  formSubmit: function (e) {
+    var that = this
+    var formId = e.detail.formId;
+    var form_name = e.currentTarget.dataset.name
+    console.log('formSubmit() formID：', formId, ' form name:', form_name)
+    if (form_name == 'express') {
+      that.expressTapTag()
+    } else if (form_name == 'goBack') {
+      that.goBack()
+    }
+    if(formId) that.submintFromId(formId)
+  },
+
+  //提交formId，让服务器保存到数据库里
+  submintFromId: function (formId) {
+    var that = this
+    var formId = formId
+    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    wx.request({
+      url: weburl + '/api/client/save_member_formid',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        formId: formId,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
       success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
+        console.log('submintFromId() update success: ', res.data)
       }
     })
   },
   goBack: function () {
-    var pages = getCurrentPages();
-    if (pages.length > 1) {
+    var CurrentPages = getCurrentPages()
+    if (CurrentPages.length > 1) {
       wx.navigateBack({ changed: true });//返回上一页
     } else {
       wx.switchTab({
@@ -85,7 +108,7 @@ Page({
     //that.reloadData()
   },
   
-  expressTapTag: function (e) {
+  expressTapTag: function () {
     var that = this
     var shop_type = that.data.shop_type
     var order_no = that.data.order_no
@@ -163,7 +186,25 @@ Page({
     var order_no = options.order_no ? options.order_no : 0
     var giftflag = options.giftflag ? options.giftflag:0
     var send_rcv = options.send_rcv ? options.send_rcv:0
-    
+    var wx_notes = options.wx_notes ? options.wx_notes:0 //微信通知直接进入
+
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        let winWidth = res.windowWidth;
+       
+        that.setData({
+          winHeight: winHeight,
+          winWidth: winWidth,
+        })
+      }
+    })
+
+    var currentPages = getCurrentPages()
+    that.setData({
+      currentPages_length: currentPages.length, 
+      wx_notes:wx_notes,
+    })
     //that.setNavigation()
     console.log('订单 order_no:', order_no)
     if (options.order_object) {
@@ -219,15 +260,12 @@ Page({
     }else{
       wx.navigateBack()
     }
-  
-    
-   
   },
   onShow: function () {
     //this.reloadData();
     var that = this
-    var pages = getCurrentPages()
-    if (pages.length > 1) {
+    var CurrentPages = getCurrentPages()
+    if (CurrentPages.length > 1) {
       that.setData({
         title_logo: '../../../images/back.png'
       })
@@ -244,6 +282,7 @@ Page({
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '0';
     var status = that.data.status
     var shop_type = that.data.shop_type
     var order_no = that.data.order_no;
@@ -290,12 +329,50 @@ Page({
                 }
               }
             }
-            console.log(orderObjects);
+            console.log('orderdetail reloadData() orderObjects:',orderObjects)
+            var status = orderObjects[0]['status']
+            var gift_status = orderObjects[0]['gift_status']
+            var order_id = orderObjects[0]['id']
+            var order_no = orderObjects[0]['order_no']
+            var sendtime = orderObjects[0]['paytime']
+            var rcvtime = orderObjects[0]['rcvtime']
+            var orderprice = orderObjects[0]['order_price']
+            var orderaddress = orderObjects[0]['address']
+            var fullname = orderObjects[0]['full_name']
+            var from_nickname = orderObjects[0]['from_nickname']
+            var from_headimg = orderObjects[0]['from_headimg']
+            var tel = orderObjects[0]['tel']
+            var deliverycode = orderObjects[0]['deliverycode']
+            var deliveryname = orderObjects[0]['deliveryname']
+            var deliverystepinfo = orderObjects[0]['deliverystepinfo']
+            var order_status = orderObjects[0]['status']
+            var buy_num = orderObjects[0]['buy_num']
+            var sku_num = orderObjects[0]['order_sku'][0]['sku_num']
+            var giftflag = orderObjects[0]['m_id'] == m_id?0:1
+            var send_rcv = giftflag==0?'send':'receive'
+
             that.setData({
               orders: orderObjects,
-              buy_num: orderObjects[0]['buy_num'],
-              order_status: orderObjects[0]['status'],
-              all_rows: all_rows ? all_rows:0
+              buy_num: buy_num,
+              sku_num: sku_num,
+              order_id: order_id ? order_id : 0,
+              status: status,
+              giftflag: giftflag ? giftflag : 0,
+              gift_status: gift_status,
+              send_rcv: send_rcv,
+              order_status: status,
+              order_no: order_no,
+              sendtime: sendtime,
+              rcvtime: rcvtime,
+              orderprice: orderprice,
+              orderaddress: orderaddress,
+              tel: tel,
+              fullname: fullname,
+              from_nickname: from_nickname,
+              from_headimg: from_headimg,
+              deliverycode: deliverycode ? deliverycode : '',
+              deliveryname: deliveryname ? deliveryname : '',
+              deliverystepinfo: deliverystepinfo ? deliverystepinfo : ''
             })
           }
         }
