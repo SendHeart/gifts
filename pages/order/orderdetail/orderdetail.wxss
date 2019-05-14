@@ -346,11 +346,14 @@ background-color: #E34C55;
 /*购物车按钮、收藏等*/
 .opt-buttons {
   width: 100%;
+  /*
   padding-top: 20rpx;
   text-align: center;
+  justify-content: space-between;
+  */
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
 }
 

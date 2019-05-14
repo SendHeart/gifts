@@ -103,7 +103,7 @@
     </view>-->
   </view>
   <view class="delivery-detail-info">
-  <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">【物流跟踪】：</text>
+  <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">【物流跟踪】</text>
     <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key=""  >
       <view class="delivery-detail-info-text" >
       <view class="timeline-date" style='margin-left:20rpx;'>
@@ -124,14 +124,16 @@
   </view>
 </view>
 <view class="footer">
-  <view class="opt-buttons" style='margin-left:80rpx;'>
+  <view class="opt-buttons" >
     <form bindsubmit="formSubmit"  data-name='express' report-submit="true" hidden="{{currentPages_length>1?false:true}}" >
       <button class="button-group" style="width:200rpx;" formType="submit" >物流跟踪</button>
     </form>
     <form bindsubmit="formSubmit"  data-name='goBack' report-submit="true" hidden="{{currentPages_length>1?true:false}}" >
       <button class="button-group" style="width:200rpx;" formType="submit" >返回</button>
     </form>
-    <button open-type='contact' class="button-group" style="width:200rpx;" >咨询客服</button>
+    <form bindsubmit="formSubmit"  data-name='express' report-submit="true" >
+      <button open-type='contact' class="button-group" style="width:200rpx;margin-left:50rpx;" >咨询客服</button>
+    </form>
   </view>
 
 </view>
