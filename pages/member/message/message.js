@@ -41,6 +41,9 @@ Page({
     message:{},
     messageflag: messageflag,
     noselected:0,
+    selected_num:0,
+    selected_all: false,
+    rules_length:5, //默认规则种类数 
     task_num: 0,
     message_num: 0,
     navList_order: navList_order,
@@ -49,6 +52,64 @@ Page({
     currenttime: now ? parseInt(now) : 0,
     message_type:0,
   },
+
+  formSubmit: function (e) {
+    var that = this
+    var formId = e.detail.formId;
+    var form_name = e.currentTarget.dataset.name
+    console.log('formSubmit() formID：', formId, ' form name:', form_name)
+    if (form_name == 'selectBtn') {
+      that.selectBtnTap()
+    } else if (form_name == 'addCart'){
+      var goods_id = e.currentTarget.dataset.goodsId
+      that.setData({
+        goods_id: goods_id,
+      })
+      that.addCart()
+    } else if (form_name =='selectBtn_next'){
+      var selected_num = that.data.selected_num +1
+      var rules_length = that.data.rules_length-1
+      that.setData({
+        selected_num: selected_num <= rules_length ? selected_num : rules_length,
+        selected_all: selected_num == rules_length?true:false
+      })
+    } else if (form_name =='selectBtn_last'){
+      var selected_num = that.data.selected_num - 1
+      var rules_length = that.data.rules_length - 1
+      that.setData({
+        selected_num: selected_num <= 0 ?  0: selected_num,
+        selected_all: selected_num == rules_length ? true : false
+      })
+    }
+    if (formId) that.submintFromId(formId)
+  },
+
+  //提交formId，让服务器保存到数据库里
+  submintFromId: function (formId) {
+    var that = this
+    var formId = formId
+    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    wx.request({
+      url: weburl + '/api/client/save_member_formid',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        formId: formId,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('submintFromId() update success: ', res.data)
+      }
+    })
+  },
+
   showGoods: function (e) {
     // 点击购物车某件商品跳转到商品详情
     var objectId = e.currentTarget.dataset.objectId;
@@ -457,6 +518,9 @@ Page({
           }
           that.setData({
             rule_list: rule_list,
+            rules_length: rule_list.length,
+            selected_num: 0,
+            selected_all: false,
           })
           console.log('获取智能选品规则:', that.data.rule_list)
         } else {
@@ -548,11 +612,11 @@ Page({
       }
     })
   },
-  addCart: function (e) {
+  addCart: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_id = that.data.goods_id
     var page = that.data.page
     
     if (!username) {//登录

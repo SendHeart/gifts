@@ -75,8 +75,14 @@ Page({
     } else if (form_name == 'buyMyself') {
       that.buyMyself()
     } else if (form_name == 'wishcart') {
+      that.setData({
+        is_buymyself: 0,
+      })
       that.wishCart()
     } else if (form_name == 'mycommTapTag') {
+      that.setData({
+        is_buymyself: 0,
+      })
       that.mycommTapTag()
     }
     if (formId) that.submintFromId(formId)

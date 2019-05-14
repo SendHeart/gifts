@@ -68,11 +68,17 @@
           </view>
         </view>
       </view>
-      <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" bindtap="getMoreOrdersTapTag">更多</button>
+      <form bindsubmit="formSubmit"  data-name='getMoreOrders' report-submit="true" >
+      <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" style="width:200rpx;" formType="submit"  >更多</button><!--bindtap="getMoreOrdersTapTag" -->
+      </form>
     </view>
   </modal>
 </view>
-<button class="submit" type="warn" bindtap="confirmOrder">确认订单</button>
+<view style='display:flex;	flex-direction: row;justify-content: center;'>
+<form bindsubmit="formSubmit"  data-name='confirmOrder' report-submit="true" >
+  <button class="submit" style="width:300rpx;" type="warn" formType="submit" >确认订单</button> <!-- bindtap="confirmOrder" -->
+</form>
+</view>
 <!--
 <view wx:if="{{HiddenSelectedCoupon>0}}" class="counpon-item-banner" style='display:flex;flex-direction:column;text-align:center;align-items:center;'  data-couponid="{{selected_coupon_id}}" data-starttime="{{selected_coupon_starttime}}" data-endtime="{{selected_coupon_endtime}}" data-couponname="{{selected_coupon_name}}" data-coupontype="{{selected_coupon_type}}" data-couponimage="{{selected_couponimage}}">
 <!--

@@ -394,8 +394,8 @@ page {
 .goods-item {
   display: flex;
   flex-direction: column;
-  justify-content: left;
-  text-align: left;
+  justify-content: center;
+  text-align: center;
   border-radius: 18rpx;
   background: #fff;
   padding: 20rpx;
@@ -413,8 +413,8 @@ page {
 }
 .ai-goods-title {
   color: #444;
-  font-size: 28rpx;
-  line-height: 1.8;
+  font-size: 35rpx;
+  line-height: 2.8;
   font-weight: bold;
   text-indent: 10rpx;
 }

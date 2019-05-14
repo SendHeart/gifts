@@ -53,6 +53,50 @@ Page({
       }
     })
   },
+  formSubmit: function (e) {
+    var that = this
+    var formId = e.detail.formId;
+    var form_name = e.currentTarget.dataset.name
+    console.log('formSubmit() formID：', formId, ' form name:', form_name)
+    if (form_name == 'receivegift') {
+      that.receiveTapTag()
+    } else if (form_name == 'refresh') {
+      var isreload = e.currentTarget.dataset.isreload ? e.currentTarget.dataset.isreload : 0
+      that.setData({
+        isreload: isreload,
+        all_rows: 0,
+      })
+    } else if (form_name == 'resendgift') {
+      that.returnTapTag()
+    }
+    if (formId) that.submintFromId(formId)
+  },
+
+  //提交formId，让服务器保存到数据库里
+  submintFromId: function (formId) {
+    var that = this
+    var formId = formId
+    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    wx.request({
+      url: weburl + '/api/client/save_member_formid',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        formId: formId,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('submintFromId() update success: ', res.data)
+      }
+    })
+  },
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -81,7 +125,7 @@ Page({
 
   },
 
-  receiveTapTag: function (e) {
+  receiveTapTag: function () {
     var that = this 
     var is_buymyself = that.data.is_buymyself
     var title = is_buymyself == 1 ? '收货地址' :'请确认'
@@ -342,14 +386,16 @@ Page({
     }
   },
 
-  refresh: function (e) {
+/*
+  refresh: function () {
     var that = this
-    var isreload = e.currentTarget.dataset.isreload ? e.currentTarget.dataset.isreload : 0
+    var isreload = that.data.isreload
     that.setData({
       isreload: isreload,
       all_rows: 0
     });
   },
+  */
   reloadData: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

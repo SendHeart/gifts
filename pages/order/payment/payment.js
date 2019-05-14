@@ -36,6 +36,42 @@ Page({
       }
     })
   },
+  formSubmit: function (e) {
+    var that = this
+    var formId = e.detail.formId;
+    var form_name = e.currentTarget.dataset.name
+    console.log('formSubmit() formID：', formId, ' form name:', form_name)
+    if (form_name == 'pay') {
+      that.pay()
+    }
+    if (formId) that.submintFromId(formId)
+  },
+
+  //提交formId，让服务器保存到数据库里
+  submintFromId: function (formId) {
+    var that = this
+    var formId = formId
+    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    wx.request({
+      url: weburl + '/api/client/save_member_formid',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        formId: formId,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('submintFromId() update success: ', res.data)
+      }
+    })
+  },
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -184,7 +220,7 @@ Page({
     }  
   },
 
-  pay: function (e) {
+  pay: function () {
 		var that = this;
     var openId = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var totalFee = that.data.totalFee;
