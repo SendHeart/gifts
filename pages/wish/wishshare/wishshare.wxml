@@ -9,8 +9,12 @@
   <button class=""  wx:if ='{{share_art_id==0}}' bindtap="sharegoods">修改留言</button>
   </view>
   <view class="sentbtn">
-  <button class=""  hidden ='' bindtap="eventSave" type='warn'>保存到相册</button>
-  <button class=""  hidden ='' open-type='share' bindtap="onShareAppMessage">立即分享</button>
+    <form bindsubmit="formSubmit" data-name='eventSave' report-submit="true" >
+      <button formType="submit"  style="width:200rpx;" type='warn'>保存到相册</button>  <!-- bindtap="eventSave"  -->
+    </form>
+    <form bindsubmit="formSubmit" data-name='onShare' report-submit="true" >
+      <button open-type='share' style="width:200rpx;" formType="submit" bindtap="onShareAppMessage">立即分享</button>
+    </form>
   </view>
 </view>
 <modal title="编辑分享语" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">

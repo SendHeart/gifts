@@ -269,7 +269,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('再次确认订单状态:',res.data.result);
+        console.log('再次确认订单状态:',res.data)
         var orderObjects = res.data.result;
         if (!orderObjects) {
           wx.showToast({
@@ -295,9 +295,38 @@ Page({
             return
           }else{
             that.setData({
-              send_status: 0, 
-              orders :orderObjects,
+              send_status: 0,
+              orders: orderObjects,
               goods_flag: orderObjects[0]['order_sku'][0]['goods_flag'],
+              order_price: orderObjects[0]['order_price'],
+            })
+           //获取带价格的分享图片  
+            var navList2 = that.data.navList2
+            var imageUrl = navList2.length > 0 ? navList2[0]['img'] : that.data.gift_logo 
+            wx.request({
+              url: weburl + '/api/client/get_text_watermark',
+              method: 'POST',
+              data: {
+                username: username,
+                access_token: token,
+                order_no: order_no,
+                text:that.data.order_price,
+                image: imageUrl,
+                shop_type: shop_type,
+              },
+              header: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+              },
+              success: function (res) {
+                console.log('order send onload() image with watermark:',res.data)
+                var watermark_info = res.data.result
+                if (watermark_info){
+                  that.setData({
+                    'shareimage_url': watermark_info.image,
+                  })
+                }
+              }
             })
           }
         }
@@ -447,7 +476,9 @@ Page({
     var token = that.data.token;
     var navList2 = that.data.navList2
     var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
+    var shareimage_url = that.data.shareimage_url //带价格水印的图片
     var imageUrl = navList2.length>0?navList2[0]['img'] : that.data.gift_logo
+    imageUrl = shareimage_url ? shareimage_url : imageUrl
     console.log('开始送礼 options:', options, 'order_no:', order_no, 'goods_flag:', goods_flag, ' navList2:', navList2); 
     //console.log(options);  
     if (!order_no){
@@ -462,7 +493,7 @@ Page({
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: "礼物代表我的心意",
       //path: '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
-      path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&goods_flag=' + goods_flag,   // 默认是当前页面，必须是以‘/’开头的完整路径
+      path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&goods_flag=' + goods_flag,  
       imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
       success: function (res) {
         console.log('更新发送状态:', res)
