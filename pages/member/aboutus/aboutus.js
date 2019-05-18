@@ -1,3 +1,5 @@
+var app = getApp();
+var weburl = app.globalData.weburl;
 var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -11,7 +13,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 Page({
   data: {
-    url: 'https://sendheart.dreamer-inc.com/new_year_card',
+    url: weburl+'/new_year_card',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
   },
@@ -19,12 +21,19 @@ Page({
     var that = this
     var url = options.url ? options.url:that.data.url
     var type = options.type ? options.type:0
+    var promid = options.promid?options.promid:0
     var celebration = 1
     if (type == 'celebration') celebration = 1
     if (type == 'blessing') celebration = 2
+    if(promid>0){
+      url = weburl + '/prom?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName + '&promid=' + promid
+    }else{
+      url = url + '?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName
+    }
     that.setData({ 
-      url: url +'?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName ,
-      celebration: celebration
+      url: url ,
+      celebration: celebration,
+      promid: promid,
       }) 
   },
   onShareAppMessage: function (options) {

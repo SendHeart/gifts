@@ -1104,6 +1104,11 @@ Page({
         url: '/pages/details/details?' + scene
       })
     }
+    if (scene.indexOf("promid=") >= 0) {
+      wx.navigateTo({
+        url: '/pages/details/details?' + scene
+      })
+    }
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()
