@@ -735,6 +735,27 @@ modal {
   line-height: 1.4;
 } 
 
+.middle-goods .image-btn2 {
+  display: flex;
+  flex-direction: row;
+  justify-content: left;
+  text-align: center;
+  width: 46%;
+  height: 300rpx;
+  border: 1rpx solid #eee;
+  border-radius: 14rpx;
+  background: #fff;
+  padding: 10rpx;
+  margin: 10rpx 1% 0 0;
+  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
+}
+.middle-goods .middle-goods-image2 {
+  width: 280rpx;
+  height: 260rpx;
+  margin:10rpx;
+}
+
+
 /*推荐商品列表*/
 
 /*推荐商品列表头*/

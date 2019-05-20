@@ -159,18 +159,14 @@
   </view>
   
   <view class="middle-goods">
-  <view class="image-btnbuy" bindtap="bindPickGoods">
-      
+    <view class="image-btnbuy" bindtap="bindPickGoods">
         <image class="pick-goods-image" src="../../images/menu1.png" mode="aspectFill"></image>
-      
     </view>
     <view class="image-btnbuy2" bindtap="bindAIPickGoods">
-      
         <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
-      
       <view class="subscript">Beta</view>
     </view>
-    <view class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">
+    <view  wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">
       <view>
         <image class="middle-goods-image" src="{{middle1_img}}"></image>
       </view>
@@ -179,7 +175,7 @@
         <text class="middle-goods-btntips">{{middle1_note}}</text>
       </view>
     </view>
-    <view class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods"  data-goods-type='2' data-middle-title="{{middle2_title}}">
+    <view  wx:if="{{middle2_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods"  data-goods-type='2' data-middle-title="{{middle2_title}}">
       <view>
         <image class="middle-goods-image" src="{{middle2_img}}"></image>
       </view>
@@ -189,7 +185,7 @@
       </view>
     </view>
   
-    <view class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='3' data-middle-title="{{middle3_title}}" >
+    <view  wx:if="{{middle3_img}}" class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='3' data-middle-title="{{middle3_title}}" >
       <view>
         <image class="middle-goods-image" src="{{middle3_img}}"></image>
       </view>
@@ -198,7 +194,7 @@
         <text class="middle-goods-btntips">{{middle3_note}}</text>
       </view>
     </view>
-    <view class="image-btn" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='4' data-middle-title="{{middle4_title}}" >
+    <view  wx:if="{{middle4_img}}" class="image-btn" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='4' data-middle-title="{{middle4_title}}" >
       <view>
         <image class="middle-goods-image" src="{{middle4_img}}"></image>
       </view>
@@ -207,6 +203,51 @@
         <text class="middle-goods-btntips">{{middle4_note}}</text>
       </view>
     </view>
+    
+    <view wx:if="{{middle5_img}}" class="image-btn2"  bindtap="bindMiddleGoods"  data-goods-type='5' data-middle-title="{{middle5_title}}" >
+      <view>
+        <image class="middle-goods-image2" src="{{middle5_img}}"  mode="aspectFill"></image>
+      </view>
+      <!-- 
+      <view class="image-btntext">
+        <text class="middle-goods-action">{{middle5_title}}</text>
+        <text class="middle-goods-btntips">{{middle5_note}}</text>
+      </view>
+      -->
+    </view>
+    <view wx:if="{{middle6_img}}" class="image-btn2" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='6' data-middle-title="{{middle6_title}}" >
+      <view>
+        <image class="middle-goods-image2" src="{{middle6_img}}"  mode="aspectFill"></image>
+      </view>
+       <!-- 
+      <view class="image-btntext">
+        <text class="middle-goods-action">{{middle6_title}}</text>
+        <text class="middle-goods-btntips">{{middle6_note}}</text>
+      </view>
+      -->
+    </view>  
+    <view wx:if="{{middle7_img}}" class="image-btn2"   bindtap="bindMiddleGoods"  data-goods-type='7' data-middle-title="{{middle7_title}}" >
+      <view>
+        <image class="middle-goods-image2" src="{{middle7_img}}"  mode="aspectFill"></image>
+      </view>
+      <!-- 
+      <view class="image-btntext">
+        <text class="middle-goods-action">{{middle7_title}}</text>
+        <text class="middle-goods-btntips">{{middle7_note}}</text>
+      </view>
+      -->
+    </view> 
+    <view wx:if="{{middle8_img}}" class="image-btn2" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='8' data-middle-title="{{middle8_title}}" >
+      <view>
+        <image class="middle-goods-image2" src="{{middle8_img}}"  mode="aspectFill"></image>
+      </view>
+      <!-- 
+      <view class="image-btntext">
+        <text class="middle-goods-action">{{middle8_title}}</text>
+        <text class="middle-goods-btntips">{{middle8_note}}</text>
+      </view>
+      --> 
+    </view> 
   </view>  
   <view wx:if="{{recommentList.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
     <text>近期热门<text class='title_ex'>大家都在送</text></text>

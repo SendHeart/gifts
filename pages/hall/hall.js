@@ -958,8 +958,9 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log('get_project_gift_para:', res.data)
+          //console.log('get_project_gift_para:', res.data)
           navList_new = res.data.result;
+          console.log('get_project_gift_para:', navList_new)
           if (!navList_new) {
             /*
              wx.showToast({
@@ -977,14 +978,28 @@ Page({
               middle2_img: navList_new[12] ? navList_new[12]['img'] : '',
               middle3_img: navList_new[13] ? navList_new[13]['img'] : '',
               middle4_img: navList_new[14] ? navList_new[14]['img'] : '',
+              middle5_img: navList_new[15] ? navList_new[15]['img'] : '',
+              middle6_img: navList_new[16] ? navList_new[16]['img'] : '',
+              middle7_img: navList_new[17] ? navList_new[17]['img'] : '',
+              middle8_img: navList_new[18] ? navList_new[18]['img'] : '',
+
               middle1_title: navList_new[11] ? navList_new[11]['title'] : '',
               middle2_title: navList_new[12] ? navList_new[12]['title'] : '',
               middle3_title: navList_new[13] ? navList_new[13]['title'] : '',
               middle4_title: navList_new[14] ? navList_new[14]['title'] : '',
+              middle5_title: navList_new[15] ? navList_new[15]['title'] : '',
+              middle6_title: navList_new[16] ? navList_new[16]['title'] : '',
+              middle7_title: navList_new[17] ? navList_new[17]['title'] : '',
+              middle8_title: navList_new[18] ? navList_new[18]['title'] : '',
+
               middle1_note: navList_new[11] ? navList_new[11]['note'] : '',
               middle2_note: navList_new[12] ? navList_new[12]['note'] : '',
               middle3_note: navList_new[13] ? navList_new[13]['note'] : '',
               middle4_note: navList_new[14] ? navList_new[14]['note'] : '',
+              middle5_note: navList_new[15] ? navList_new[15]['note'] : '',
+              middle6_note: navList_new[16] ? navList_new[16]['note'] : '',
+              middle7_note: navList_new[17] ? navList_new[17]['note'] : '',
+              middle8_note: navList_new[18] ? navList_new[18]['note'] : '',
             })
             wx.setStorageSync('navList2', navList_new)
           }
@@ -998,14 +1013,29 @@ Page({
         middle2_img: navList_new[12]?navList_new[12]['img']:'',
         middle3_img: navList_new[13]?navList_new[13]['img']:'',
         middle4_img: navList_new[14]?navList_new[14]['img']:'',
+        middle5_img: navList_new[15] ? navList_new[15]['img'] : '',
+        middle6_img: navList_new[16] ? navList_new[16]['img'] : '',
+        middle7_img: navList_new[17] ? navList_new[17]['img'] : '',
+        middle8_img: navList_new[18] ? navList_new[18]['img'] : '',
+
         middle1_title: navList_new[11]?navList_new[11]['title']:'',
         middle2_title: navList_new[12]?navList_new[12]['title']:'',
         middle3_title: navList_new[13]?navList_new[13]['title']:'',
         middle4_title: navList_new[14]?navList_new[14]['title']:'',
+        middle5_title: navList_new[15] ? navList_new[15]['title'] : '',
+        middle6_title: navList_new[16] ? navList_new[16]['title'] : '',
+        middle7_title: navList_new[17] ? navList_new[17]['title'] : '',
+        middle8_title: navList_new[18] ? navList_new[18]['title'] : '',
+
+
         middle1_note: navList_new[11]?navList_new[11]['note']:'',
         middle2_note: navList_new[12]?navList_new[12]['note']:'',
         middle3_note: navList_new[13]?navList_new[13]['note']:'',
         middle4_note: navList_new[14]?navList_new[14]['note']:'',
+        middle5_note: navList_new[15] ? navList_new[15]['note'] : '',
+        middle6_note: navList_new[16] ? navList_new[16]['note'] : '',
+        middle7_note: navList_new[17] ? navList_new[17]['note'] : '',
+        middle8_note: navList_new[18] ? navList_new[18]['note'] : '',
       })
     }
     const fs = wx.getFileSystemManager()
