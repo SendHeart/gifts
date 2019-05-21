@@ -540,18 +540,20 @@ Page({
   formSubmit: function (e) {
     var that = this
     var formId = e.detail.formId;
-    var form_name = e.detail.target.dataset.name //记录用户的操作
+    var form_name = e.currentTarget.dataset.name //记录用户的操作
     console.log('formSubmit() formID：', formId,' form name:',form_name)
     if (form_name=='sendgift'){
       that.setData({
         is_buymyself: 0,
       })
+      that.bindCheckout()
     }else if(form_name=='buymyself'){
       that.setData({
         is_buymyself: 1,
       })
+      that.bindCheckout()
     }
-    that.bindCheckout()
+    
     that.submintFromId(formId)
   },
  
