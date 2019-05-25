@@ -2,10 +2,10 @@
 <import src="../common/nav.wxml" />
 <import src="../common/nav2.wxml" />
 <view class="all-classify" hidden="{{hiddenallclassify}}">
-    <view style="display:flex;flex-direction:row;width:100%;" catchtap="openAllTapTag">
-      <view style='font-size:32rpx;width:95%;align-items:right;'>全部分类</view>
-      <view style='width:5%;align-items:right;'>
-       <image style="width:20rpx;height:20rpx;padding:20rpx;margin-left:-20rpx;" src='../../images/bottom-close.png'></image>
+    <view class='catg-title' catchtap="openAllTapTag">
+      <view class='catg-titletext'>全部分类</view>
+      <view class='catg-claps'>
+       <image style="" src='../../images/bottom-close.png'></image>
       </view>
     </view>
     <view class="all-classify-list" >
@@ -18,8 +18,6 @@
 </view>
 <view class="banner">
     <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,is_all_category}}" />
-</view>
-<view class="banner">
     <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>
   <!-- 

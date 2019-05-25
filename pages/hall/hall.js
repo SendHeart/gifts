@@ -76,6 +76,8 @@ Page({
     message: '',
     text: text,
     content: '',
+    buyhidden1: false,
+    buyhidden2: true
   }, 
   
   //回到顶部，内部调用系统API
@@ -1287,5 +1289,15 @@ Page({
       desc: '送礼就是送心',
       path: '/pages/hall/hall?refername='+username+'&mainpage=1'
     }
-  } 
+  },
+  BuyModeChange:function(e) {
+    console.log(e.detail.value)
+    var obj={}
+    obj['buyhidden2'] = e.detail.value
+    this.setData(obj)
+    obj = {}
+    obj['buyhidden1'] = e.detail.value ? '' : 'true'
+    this.setData(obj)
+  }
+  
 })

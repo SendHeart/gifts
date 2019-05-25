@@ -697,7 +697,7 @@ Page({
         success: function (res) {
           console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
           var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物袋'
-          title = is_buymyself==1?'生成订单':title
+          title = is_buymyself==1?' ':title
           wx.showToast({
             title: title,
             duration: 2000

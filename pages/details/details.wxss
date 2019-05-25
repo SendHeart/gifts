@@ -273,33 +273,43 @@ font-size: 32rpx;
   width: 100%;
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content:space-between;
   align-items: center;
   border-bottom: 1rpx solid #eee;
 }
 .opt-buttons button::after {
 border: none;
 }
-.add-cart {
-  line-height: 1.4;
+.opt-buttons form {
+  width: auto;
+}
+.add-cart2 {
+  
   text-align: center;
   width: 100%;
   height: 100rpx;
-  background-color: #e34c55;
+  background-color: #F15540;
   color: #fff;
-  font-size: 20rpx;
+  font-size: 28rpx;
   border-radius: 0;
-  display: flex;
-  flex-direction: column;
-  padding-top: 15rpx;
+  line-height: 100rpx;
 }
-
+.add-cart {
+  text-align: center;
+  width: 100%;
+  height: 100rpx;
+  background-color: #e61f44;
+  color: #fff;
+  border-radius: 0;
+  font-size: 28rpx;
+  line-height: 100rpx;
+}
 .sec-btn {
   outline: none;  
   background: #fff;
   line-height: 90rpx;
   text-align: center;
-  width: 100%;
+  width:100%;
   height: 90rpx;
   color: #444444;
   font-size: 24rpx;
@@ -332,6 +342,11 @@ border: none;
 /*全部属性的主盒子*/
 .modalbox {
   background-color: #fff;
+}
+.modaltitletext {
+  font-size: 28rpx;
+  color: #444;
+  margin-bottom: 40rpx;
 }
 .sku_title {
  font-size: 28rpx;
@@ -422,6 +437,7 @@ border: none;
 }
 .buy-num-minus{
   position: relative;
+  margin-top: 6rpx;
 }
 .buy-num-count{
   position: relative;
@@ -430,6 +446,7 @@ border: none;
 }
 .buy-num-plus{
   position: relative;
+  margin-top: 6rpx;
 }
 
 .price-now {

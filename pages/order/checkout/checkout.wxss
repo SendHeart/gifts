@@ -8,6 +8,7 @@ page {
   height: 0;
   color: transparent;
 }
+
 .startBar {
   height: 75rpx;
   background: #333;
@@ -68,7 +69,7 @@ font-size:24rpx;
 	line-height: 1.5;
   width:100%;
   background: #fff;
-  font-size: 28rpx;
+  font-size: 26rpx;
   padding: 15rpx 30rpx;
 }
 
@@ -200,9 +201,9 @@ picker {
 /*右上部分标题*/
 
 .carts-title {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #444;
-  line-height: 30rpx;
+  line-height: 32rpx;
 }
 
 /*右下部分价格与数量*/
@@ -348,4 +349,14 @@ line-height: 1.5;
   background: #fff;
   font-size: 28rpx;
   padding: 15rpx 30rpx;
+}
+.confirmbtn {
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+.confirmbtn form {
+  width: 100%;
+  text-align: center;
 }

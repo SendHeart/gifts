@@ -49,7 +49,7 @@ Page({
     toView:0,
     hiddenallclassify: true,
     shop_type:shop_type,
-    
+    animationData: "",
   },
   //定位数据  
   getleft: function (e) {
@@ -65,6 +65,8 @@ Page({
     that.setData({
       hiddenallclassify: !hiddenallclassify,
     })
+    
+    
   },
   setNavigation: function () {
     let startBarHeight = 20

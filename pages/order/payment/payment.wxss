@@ -47,31 +47,41 @@ page {
   margin-left: 20rpx;
 }
 .order-item {
-	background: #fff;
   width: 100%;
   margin: 10rpx auto;
 }
-
+.order-item form {
+  width: 100%;
+}
 .order-item:last-child {
 	margin-bottom: 0;
 }
 .order-footer {
+  display: flex;
+  flex-direction: column;
   text-align: center;
-	padding: 20rpx 20rpx;
-  color: #999;
-  font-size: 32rpx;
-}
-
-.order-footer .font-red {
-  color: #E34C55;
+	padding: 30rpx 20rpx;
+  color: #444;
   font-size: 48rpx;
   font-weight: bold;
 }
+.paytips {
+  display: block;
+  font-size: 28rpx;
+  font-weight: normal;
+  width: auto;
+  padding: 15rpx 30rpx;
+  color: #666;
+  background: #dddddd;
+  border-radius: 25rpx;
+  margin-bottom: 30rpx;
+}
 .btnpay {
   width: 96%;
-  height: 110rpx;
+  height: 100rpx;
   font-size: 36rpx;
-  line-height: 110rpx;
+  line-height: 100rpx;
+  margin: 40rpx auto;
 }
 
 

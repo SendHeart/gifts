@@ -66,15 +66,16 @@ page {
     width: 100%;
     height: 100%;
     overflow-x: hidden;
-    margin: 0;
+    margin: 45rpx 0 0 0;
     padding: 0;
 }
 
 
 .all-classify{ 
  width: 100%;
-  background: white; 
+  background: #1d1d1d; 
   display: flex;
+  color: #fff;
   flex-direction: column;
   align-items: center;
   text-align: center;
@@ -82,29 +83,52 @@ page {
   top:0;
   position: fixed;
   z-index: 999;
-
 } 
+.catg-title {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+
+}
+.catg-titletext {
+  font-size:32rpx;
+  width:95%;
+  align-items:right;
+}
+.catg-claps {
+  width:5%;
+  align-items:right;
+}
+.catg-claps image {
+  width:20rpx;
+  height:20rpx;
+  padding:20rpx;
+  margin-left:-20rpx;
+}
 .all-classify-list{ 
   display:flex;
   flex-direction: row;
   flex-wrap:wrap;
-  color: gray;
+  color: #eeeeee;
   text-align: left;
    margin-bottom: 30rpx;
    padding: 10rpx ;
 } 
 .all-classify-item {
-  color: gray;
+  color: #eeeeee;
   width: 180rpx;
+  height: 60rpx;
   text-align: center;
   /* line-height: 72rpx; */
-  font-size: 30rpx;
- 
+  font-size: 26rpx;
+  border-radius: 10rpx;
+  margin-bottom: 20rpx;
+  line-height: 60rpx;
 }
 .all-classify-item-active{
-  color: red;
-  font-size: 30rpx;
-  border: 4rpx solid #E34C55;
+  color: #fff;
+  font-size: 26rpx;
+  border:2rpx solid #E34C55;
 }
 
 .top-bar-list{  
@@ -116,7 +140,7 @@ page {
 
 .banner {
 	width: 100%;
-  height: 65rpx;
+  height: 100rpx;
 	padding-top: 0rpx;
   background: #1d1d1d; 
 	/*margin-left: 15rpx;*/
@@ -136,25 +160,26 @@ page {
   white-space: nowrap;
   text-align: center;
   width: 90%;
-  height: 60rpx;
+  height: 70rpx;
   overflow-y: hidden;
   background: #1d1d1d; 
   position: fixed;
   top:0;
   z-index:99;
+  margin-bottom: 20rpx;
 }
 .top-bar-item {
   display:inline-block;
   color: #fff;
   text-align: center;
-  line-height: 51rpx;
-  font-size: 24rpx;
+  line-height: 50rpx;
+  font-size: 26rpx;
   padding: 1rpx 30rpx;
+  border-radius: 10rpx;
 }
 .top-bar-active {
   color: #fff;
-  border-bottom: 4rpx solid #E34C55;
-  background: #1d1d1d; 
+  border:2rpx solid #E34C55; 
 }
 .top-bar-image {
   position: fixed; 
@@ -163,7 +188,7 @@ page {
   background: #1d1d1d; 
   width:40rpx;
   height:40rpx;
-  padding: 10rpx 30rpx;
+  padding: 15rpx 30rpx;
   z-index:99;
 }
 /*辅助导航 nav2*/
@@ -172,7 +197,7 @@ page {
   background: #FFF; 
   width:100%;
   position: fixed;
-  margin-top: 60rpx;
+  margin-top: 70rpx;
   top:0;
   border-top: 1rpx solid #F2f2f2;
   border-bottom: 1rpx solid #F2f2f2;

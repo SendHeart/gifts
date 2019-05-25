@@ -108,7 +108,7 @@ modal {
 .serviceimg {
   width: 369rpx;
   height: 40rpx;
-  margin: 10rpx 0 0 0;
+  margin: 0 0 0 15rpx;
 }
 .wrap {
   width: 100%;
@@ -183,19 +183,17 @@ modal {
   text-align: right;
   position: relative;
   width: 100rpx;
-  
 }
 .messages .message-num {
   position: absolute;
-  top: 12rpx;
+  top: 0rpx;
   right: 12rpx;
+  text-align: center;
   color: #fff;
   background: rgb(227, 76, 85);
-  font-size: 20rpx;
-  font-weight: bold;
-  width:32rpx;
-  height:32rpx;
-  border: 1rpx solid #fff;
+  font-size: 18rpx;
+  width:28rpx;
+  height:28rpx;
   border-radius: 50%;
 }
 
@@ -544,8 +542,25 @@ modal {
   background: #F3F3F3;
   border-radius: 14rpx;
 }
+
+.modeswitch {
+  width: 36%;
+  margin: 8rpx auto 15rpx auto;
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-end;
+  font-size: 24rpx;
+  color: #999;
+}
+.modeswitch label { 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 176rpx;
+  line-height: 30rpx;
+  }
 .pick-goods-slogan {
-  font-size: 28rpx;
+  font-size: 24rpx;
   color: #444;
   margin-left: 20rpx;
   /*line-height: 10rpx;*/
@@ -577,7 +592,7 @@ modal {
   text-align: center;
   width: 49%;
   height: 120rpx;
-  margin: 5rpx 1% 0rpx 0;
+  margin: 15rpx 1% 0rpx 0;
   border: 0rpx solid #ffc9d5;
   box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
   border-radius: 14rpx;
@@ -590,7 +605,7 @@ modal {
   text-align: center;
   width: 49%;
   height: 120rpx;
-  margin: 5rpx 0 0rpx 0;
+  margin: 15rpx 0 0rpx 0;
   border: 0rpx solid #aaa;
   box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
   border-radius: 14rpx;
@@ -639,7 +654,7 @@ modal {
   flex-direction: row;
   justify-content: center;
   width: 96%;
-  height: 76rpx;
+  height: 80rpx;
   margin: 0 auto 20rpx auto;
   background: #fff;
   border-radius: 0 0 30rpx 30rpx;
@@ -666,17 +681,22 @@ modal {
   height: 48rpx;
   margin: 6rpx;
 }
+.btnconfirm form {
+  width: 100%;
+}
 .btnconfirm .send-button {
-  line-height: 45rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   text-align: center;
-  width: 220rpx;
-  height: 45rpx;
-  background: #EC4844;
-  color: white;
+  width: 100%;
+  height: 60rpx;
+  line-height: 60rpx;
+  color: #fff;
   font-size: 30rpx;
   border-radius: 0;
   border: 0;
-  padding: 10rpx;
+  background: #EC4844;
 }
 
 .send-button::after {
@@ -703,13 +723,11 @@ modal {
   justify-content: left;
   text-align: center;
   width: 46%;
-  height: 90rpx;
-  border: 1rpx solid #eee;
-  border-radius: 14rpx;
+  height: 100rpx;
+  border: 1rpx solid #F2F2F2;
   background: #fff;
   padding: 10rpx;
-  margin: 10rpx 1% 0 0;
-  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
+  margin: 0;
 }
 .middle-goods .middle-goods-image {
   width: 70rpx;
@@ -741,18 +759,14 @@ modal {
   justify-content: left;
   text-align: center;
   width: 46%;
-  height: 300rpx;
-  border: 1rpx solid #eee;
-  border-radius: 14rpx;
+  height: 220rpx;
+  border: 1rpx solid #f2f2f2;
   background: #fff;
-  padding: 10rpx;
-  margin: 10rpx 1% 0 0;
-  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.1);
+  margin: 0;
 }
 .middle-goods .middle-goods-image2 {
-  width: 280rpx;
-  height: 260rpx;
-  margin:10rpx;
+  width: 334rpx;
+  height: 220rpx;
 }
 
 
@@ -764,7 +778,7 @@ modal {
   display: flex;
   flex-direction: row;
   justify-content: space-between; /*子项横轴上对齐*/
-  padding:20rpx 4%;
+  padding:10rpx 4%;
   margin-top: 10rpx;
   
 }
@@ -821,7 +835,7 @@ modal {
   align-content:center;
   justify-content:space-around;
   width: 98%;
-  margin: 0 auto;
+  margin:0 auto;
   padding-bottom: 40rpx;
   overflow: hidden;
 }
