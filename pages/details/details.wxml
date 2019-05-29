@@ -124,7 +124,7 @@
         <view wx:if="{{is_buymyself==1}}" class='buy-num'>数量:</view>
         <view wx:if="{{is_buymyself==1}}" class='buy-num-minus' catchtap="bindMinus"><image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image></view>
         <view wx:if="{{is_buymyself==1}}" class='buy-num-count'>{{buynum}}</view>
-         <view wx:if="{{is_buymyself==1}}" class='buy-num-plus' catchtap="bindPlus" ><image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-plus.png"></image>
+         <view wx:if="{{is_buymyself==1}}" class='buy-num-plus' catchtap="bindPlus" ><image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image>
          </view>
       </view>
     </modal>

@@ -7,7 +7,7 @@
 .iconv-uparrow:after {
   content:'\e6d6';
 }
-
+imag
 .iconv-downarrow:after {
   content:'\e6d5';
 }
@@ -73,7 +73,7 @@ page {
 
 .all-classify{ 
  width: 100%;
-  background: #1d1d1d; 
+  background: rgba(1, 1, 1, 0.9); 
   display: flex;
   color: #fff;
   flex-direction: column;
@@ -88,6 +88,7 @@ page {
   display: flex;
   flex-direction: row;
   width: 100%;
+  background: #1d1d1d;
 
 }
 .catg-titletext {
@@ -116,14 +117,14 @@ page {
 } 
 .all-classify-item {
   color: #eeeeee;
-  width: 180rpx;
-  height: 60rpx;
+  width: 150rpx;
+  height: 50rpx;
   text-align: center;
   /* line-height: 72rpx; */
   font-size: 26rpx;
   border-radius: 10rpx;
-  margin-bottom: 20rpx;
-  line-height: 60rpx;
+  margin:10rpx 15rpx;
+  line-height: 50rpx;
 }
 .all-classify-item-active{
   color: #fff;
@@ -173,8 +174,9 @@ page {
   color: #fff;
   text-align: center;
   line-height: 50rpx;
-  font-size: 26rpx;
-  padding: 1rpx 30rpx;
+  font-size: 28rpx;
+  padding: 0 20rpx;
+  margin: 0 10rpx;
   border-radius: 10rpx;
 }
 .top-bar-active {

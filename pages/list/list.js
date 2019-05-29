@@ -64,8 +64,8 @@ Page({
     var hiddenallclassify = that.data.hiddenallclassify
     that.setData({
       hiddenallclassify: !hiddenallclassify,
+      
     })
-    
     
   },
   setNavigation: function () {
@@ -140,7 +140,8 @@ Page({
     var index = e.currentTarget.dataset.index;
     var search_goodsname = e.currentTarget.dataset.title;
     var navList = that.data.navList ;
-    var toView = index
+    var toView = index;
+    var hiddenallclassify = that.data.hiddenallclassify;
     if (index > 2 && index < navList.length) {
       toView = index - 2
     } else {
@@ -161,6 +162,11 @@ Page({
     })
     console.log('toView:' + that.data.toView)
     that.get_goods_list()
+    if (hiddenallclassify==false) {
+      that.openAllTapTag()
+    }
+    console.log(hiddenallclassify)
+    
   },
   onTapTag2: function (e) {
     var that = this;
