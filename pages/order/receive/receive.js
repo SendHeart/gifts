@@ -307,6 +307,12 @@ Page({
     app.globalData.order_id = order_id
     app.globalData.goods_flag = goods_flag
     that.setData({
+      order_no: order_no,
+      order_id: order_id,
+      receive: app.globalData.is_receive,
+      openid: openid,
+      username: username,
+      goods_flag: goods_flag,
       is_buymyself: is_buymyself,
     })
     wx.getSystemInfo({
@@ -318,23 +324,16 @@ Page({
         })
       }
     })
-    
+
     if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1) {
-      console.log('礼品信息 order receive onshow() order_no:', order_no + ' is_receive:' + app.globalData.is_receive)
+      console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive)
       wx.switchTab({
         url: '/pages/hall/hall'
       })
       return
     }
 
-    that.setData({
-      order_no: order_no,
-      order_id: order_id,
-      receive: app.globalData.is_receive,
-      openid: openid,
-      username: username,
-      goods_flag: goods_flag,
-    })
+    
     that.reloadData()
   },
 
@@ -363,7 +362,6 @@ Page({
         url: '../../login/login'
       })
     } else {
-     
       //调用应用实例的方法获取全局数据
       app.getUserInfo(function (userInfo) {
         //更新数据
