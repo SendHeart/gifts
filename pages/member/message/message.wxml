@@ -13,7 +13,7 @@
   </view>
  
   <view wx:if="{{messageflag==2}}" class="opt-buttons">
-    <form bindsubmit="formSubmit"  data-name='selectBtn_last' report-submit="true" >
+    <form bindsubmit="formSubmit"  data-name='selectBtn_last' report-submit="true" hidden="{{selected_start}}">
       <button class="opt-button"  style="width:300rpx;background:#fff;color:#333" formType="submit"  >返回上一项</button> <!-- bindtap="selectBtnTap" -->
     </form>
     <form bindsubmit="formSubmit"  data-name='selectBtn_next' report-submit="true" hidden="{{selected_all}}">

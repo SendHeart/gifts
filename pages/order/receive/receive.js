@@ -292,7 +292,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = options.order_no ? options.order_no:''
     var order_id = options.order_id ? options.order_id:0
-    var receive = options.receive
+    var receive = options.receive ? options.receive:0
     var is_buymyself = options.is_buymyself ? options.is_buymyself : 0
     var goods_flag = options.goods_flag ? options.goods_flag:0
     var orders = that.data.orders
@@ -332,8 +332,6 @@ Page({
       })
       return
     }
-
-    
     that.reloadData()
   },
 

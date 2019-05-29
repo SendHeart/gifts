@@ -43,6 +43,7 @@ Page({
     noselected:0,
     selected_num:0,
     selected_all: false,
+    selected_start: true,
     rules_length:5, //默认规则种类数 
     task_num: 0,
     message_num: 0,
@@ -71,14 +72,16 @@ Page({
       var rules_length = that.data.rules_length-1
       that.setData({
         selected_num: selected_num <= rules_length ? selected_num : rules_length,
-        selected_all: selected_num == rules_length?true:false
+        selected_all: selected_num == rules_length?true:false,
+        selected_start: selected_num == 0 ? true : false
       })
     } else if (form_name =='selectBtn_last'){
       var selected_num = that.data.selected_num - 1
       var rules_length = that.data.rules_length - 1
       that.setData({
         selected_num: selected_num <= 0 ?  0: selected_num,
-        selected_all: selected_num == rules_length ? true : false
+        selected_all: selected_num == rules_length ? true : false,
+        selected_start: selected_num == 0 ? true : false
       })
     }
     if (formId) that.submintFromId(formId)
@@ -521,6 +524,7 @@ Page({
             rules_length: rule_list.length,
             selected_num: 0,
             selected_all: false,
+            selected_start:true,
           })
           console.log('获取智能选品规则:', that.data.rule_list)
         } else {

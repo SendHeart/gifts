@@ -220,6 +220,13 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
+    //调用应用实例的方法获取全局数据
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        userInfo: userInfo
+      })
+    })
   },
 
   pay: function () {
@@ -277,9 +284,12 @@ Page({
                   })
                 } else {
                   that.delete_cart()
+                  that.returnTapTag()
+                  /*
                   wx.navigateTo({
                     url: '../send/send?order_no=' + that.data.orderNo + '&orders=' + JSON.stringify(that.data.orders) + '&is_buymyself=' + is_buymyself
                   })
+                  */
                 }
               }
             })
@@ -305,6 +315,237 @@ Page({
       })
     }
 	},
+  returnTapTag: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_flag = that.data.goods_flag
+    var order_no = that.data.orderNo
+    var is_buymyself = that.data.is_buymyself
+    //再次确认订单状态
+    wx.request({
+      url: weburl + '/api/client/query_order',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        order_no: order_no,
+        order_type: 'send',
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('order payment returnTapTag()再次确认订单状态:', res.data)
+        var orderObjects = res.data.result;
+        if (!orderObjects) {
+          console.log('order payment returnTapTag() 没有该订单 orderObjects:', orderObjects)
+          wx.showToast({
+            title: '没有该订单',
+            icon: 'none',
+            duration: 1500
+          })
+          setTimeout(function () {
+            wx.navigateBack()
+          }, 1500);
+
+          return
+        } else {
+          if (orderObjects[0]['gift_status'] > 0) {
+            console.log('order payment returnTapTag() 该订单已送出 orderObjects:', orderObjects)
+            wx.showToast({
+              title: '该订单已送出',
+              icon: 'none',
+              duration: 1500
+            })
+            setTimeout(function () {
+              wx.navigateBack();
+            }, 1500)
+            return
+          } else {
+            that.setData({
+              send_status: 0,
+              orders: orderObjects,
+              goods_flag: orderObjects[0]['order_sku'][0]['goods_flag'],
+              order_price: orderObjects[0]['order_price'],
+            })
+            wx.request({ //更新发送状态
+              url: weburl + '/api/client/update_order_status',
+              method: 'POST',
+              data: {
+                username: username,
+                shop_type, shop_type,
+                access_token: token,
+                status_info: 'send',
+                order_no: order_no,
+                goods_flag: that.data.goods_flag,
+                is_buymyself: is_buymyself,
+              },
+              header: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Accept': 'application/json'
+              },
+              success: function (res) {
+                console.log('order payment returnTapTag() 礼物发送状态更新完成:', res.data, ' is_buymyself:', is_buymyself)
+                //自购礼品 接收处理
+                console.log('order payment returnTapTag() 自购礼品 自动接收处理')
+                that.receiveTapTag()
+                /*
+                wx.navigateTo({
+                  url: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
+                })
+                */
+              }
+            })
+          }
+        }
+      }
+    })
+  },
+
+  receiveTapTag: function () {
+    var that = this
+    var is_buymyself = that.data.is_buymyself
+    var title = is_buymyself == 1 ? '收货地址' : '请确认'
+    var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
+    if (is_buymyself == 1) {
+      that.set_address()
+    } else {
+      wx.showModal({
+        title: title,
+        content: content,
+        success: function (res) {
+          if (res.confirm) {
+            that.set_address()
+          }
+        }
+      })
+    }
+  },
+
+  set_address: function () {
+    var that = this
+    var shop_type = that.data.shop_type
+    var order_no = that.data.orderNo
+    var goods_flag = that.data.goods_flag
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var nickname = that.data.userInfo.nickName
+    var headimg = that.data.userInfo.avatarUrl
+    var address_userName = that.data.address_userName
+    var address_postalCode = that.data.address_postalCode
+    var address_provinceName = that.data.address_provinceName
+    var address_cityName = that.data.address_cityName
+    var address_countyName = that.data.address_countyName
+    var address_detailInfo = that.data.address_detailInfo
+    var address_nationalCode = that.data.address_nationalCode
+    var address_telNumber = that.data.address_telNumber
+    var is_buymyself = that.data.is_buymyself
+    //通讯录权限
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.address']) {
+          wx.authorize({
+            scope: 'scope.address',
+            success() {
+              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
+              //wx.startRecord()
+            }
+          })
+        }
+      }
+    })
+    //收货地址选择
+    wx.chooseAddress({
+      success: function (res) {
+        console.log('微信收货地址:')
+        console.log(res)
+        address_userName = res.userName
+        address_postalCode = res.postalCode
+        address_provinceName = res.provinceName
+        address_cityName = res.cityName
+        address_countyName = res.countyName
+        address_detailInfo = res.detailInfo
+        address_nationalCode = res.nationalCode
+        address_telNumber = res.telNumber
+
+        that.setData({
+          address_userName: address_userName,
+          address_postalCode: address_postalCode,
+          address_provinceName: address_provinceName,
+          address_cityName: address_cityName,
+          address_countyName: address_countyName,
+          address_detailInfo: address_detailInfo,
+          address_nationalCode: address_nationalCode,
+          address_telNumber: address_telNumber,
+        })
+        console.log('收货地址选择 订单号 order receive chooseAddress:' + order_no + ' openid:' + openid)
+        wx.request({ //更新收礼物状态
+          url: weburl + '/api/client/update_order_status',
+          method: 'POST',
+          data: {
+            username: that.data.username,
+            shop_type: shop_type,
+            openid: openid,
+            nickname: that.data.nickname,
+            headimg: that.data.headimg,
+            order_no: order_no,
+            status_info: 'receive',
+            goods_flag: goods_flag,
+            address_userName: address_userName,
+            address_postalCode: address_postalCode,
+            address_provinceName: address_provinceName,
+            address_cityName: address_cityName,
+            address_countyName: address_countyName,
+            address_detailInfo: address_detailInfo,
+            address_nationalCode: address_nationalCode,
+            address_telNumber: address_telNumber,
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            console.log('order receive set_address()礼物已接收:', res.data);
+            if (res.data.status == 'y') {
+              wx.showToast({
+                title: '礼物已接收',
+                icon: 'success',
+                duration: 1500
+              })
+              that.setData({
+                receive_status: 1,
+              })
+              if (goods_flag == 3) { //虚拟商品订单
+                setTimeout(function () {
+                  wx.navigateTo({
+                    url: '/pages/member/task/task',
+                  })
+                }, 200)
+              }
+              if (is_buymyself == 1) { //自购礼物订单抽奖
+                console.log('自购礼物订单抽奖 to lottery order_no:', order_no)
+                wx.navigateTo({
+                  url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + order_no,
+                })
+              }
+            } else {
+              console.log('礼物接收失败 order_no:', order_no)
+              wx.showToast({
+                title: res.data.info ? res.data.info : '礼物接收失败',
+                icon: 'loading',
+                duration: 1500
+              })
+              that.setData({
+                receive_status: 0,
+              })
+            }
+          }
+        })
+      }
+    })
+  },
   delete_cart: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
