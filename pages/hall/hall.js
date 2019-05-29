@@ -867,7 +867,10 @@ Page({
         var rshowmorehidden;
         if (!recommentslist) return
         for (var i = 0; i < recommentslist.length; i++) {
-          recommentslist[i]['image'] = weburl + '/' + recommentslist[i]['image'];
+          if (res.data.result[i]['activity_image'].indexOf("http") < 0) {
+            recommentslist[i]['image'] = weburl + '/' + recommentslist[i]['image'];
+          }
+          
           //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
           if (i > 1) {
             recommentslist[i]['hidden'] = 0;  //1

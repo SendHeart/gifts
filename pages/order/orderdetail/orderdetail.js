@@ -319,9 +319,15 @@ Page({
           } else {
             // 存储地址字段
             for (var i = 0; i < orderObjects.length; i++) {
-              orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
+              if (orderObjects[i]['logo'].indexOf("http") < 0) {
+                orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
+              }
+              
               for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
+                if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+                  orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+                }
+               
                 if (orderObjects[i]['order_sku'][j]['sku_value']) {
                   for (var k = 0; k < orderObjects[i]['order_sku'][j]['sku_value'].length; k++) {
                     orderObjects[i]['order_sku'][j]['sku_value'][k]['value'] = weburl + orderObjects[i]['order_sku'][j]['sku_value'][k]['value']

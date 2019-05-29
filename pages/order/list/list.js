@@ -157,11 +157,15 @@ Page({
         } else {
           // 存储地址字段
           for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
+            if (orderObjects[i]['logo'].indexOf("http") < 0) {
+              orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
             }
-
+           
+            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+              if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+              }
+            }
           }
           if (page > 1 && orderObjects) {
             //向后合拼

@@ -55,7 +55,14 @@ Page({
         var list = that.data.lists;
         for (var i = 0; i < res.data.result.length; i++) {
           res.data.result[i]['short_name'] = res.data.result[i]['name'].substring(0, 15) + '...';
-          if (res.data.result[i]['activity_image']) res.data.result[i]['image'] = weburl + res.data.result[i]['activity_image'];
+          if (res.data.result[i]['activity_image']) {
+            if (res.data.result[i]['activity_image'].indexOf("http") < 0) {
+              res.data.result[i]['image'] = weburl + res.data.result[i]['activity_image'];
+            }else{
+              res.data.result[i]['image'] =  res.data.result[i]['activity_image'];
+            }
+            
+          }
           list.push(res.data.result[i]);
         }
         that.setData({
