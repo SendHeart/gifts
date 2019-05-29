@@ -101,9 +101,10 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('礼物发送状态更新完成:', res.data)
+        console.log('礼物发送状态更新完成:', res.data, ' is_buymyself:', is_buymyself)
         //自购礼品 接收处理
         if (is_buymyself == 1){
+          console.log('order send returnTapTag() 自购礼品 自动接收处理')
           wx.navigateTo({
             url: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
           })
@@ -232,6 +233,10 @@ Page({
     var receive = options.receive
     var is_buymyself = options.is_buymyself ? options.is_buymyself:0
     var shop_type = that.data.shop_type
+    that.setData({
+      order_no: order_no,
+      is_buymyself: is_buymyself,
+    })
     //that.setNavigation()
     console.log('礼品信息 order_no:', order_no, 'is_buymyself:', is_buymyself)
     that.get_project_gift_para()
@@ -272,6 +277,7 @@ Page({
         console.log('再次确认订单状态:',res.data)
         var orderObjects = res.data.result;
         if (!orderObjects) {
+          console.log('没有该订单 orderObjects:', orderObjects)
           wx.showToast({
             title: '没有该订单',
             icon: 'none',
@@ -284,6 +290,7 @@ Page({
           return
         } else {
           if (orderObjects[0]['gift_status']>0) {
+            console.log('该订单已送出 orderObjects:', orderObjects)
             wx.showToast({
               title: '该订单已送出',
               icon: 'none',
@@ -303,6 +310,7 @@ Page({
            //获取带价格的分享图片  
             var navList2 = that.data.navList2
             var imageUrl = navList2.length > 0 ? navList2[0]['img'] : that.data.gift_logo 
+            console.log('获取带价格的分享图片 ' )
             wx.request({
               url: weburl + '/api/client/get_text_watermark',
               method: 'POST',
@@ -350,7 +358,7 @@ Page({
         orderskus.push(orders[i]['order_sku'][j])
       }
     }
-    console.log('order sku list:', orderskus);
+    console.log('order send onload() order sku list:', orderskus);
     //console.log(orderskus);
     that.setData({
       order_no: order_no,
@@ -362,10 +370,10 @@ Page({
       nickname:nickname,
       username:username,
       token:token,
-      is_buymyself: is_buymyself,
-    });
+    })
    
     if (is_buymyself == 1) { //自购礼品 无需分享到微信
+      console.log('自购礼品无需分享到微信 ' )
       that.returnTapTag()
     } 
     wx.getSystemInfo({

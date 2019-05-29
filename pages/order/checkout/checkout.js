@@ -133,8 +133,6 @@ Page({
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     payamount = (amount - discountpay).toFixed(2)
 
-  
-    
     that.setData({
 			amount: amount,
       payamount: payamount,

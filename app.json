@@ -8,6 +8,7 @@
     "pages/list/list",
     "pages/activity/activity",
     "pages/login/login",
+    "pages/lottery/lottery",
     "pages/cart/cart",
     "pages/wish/wishshare/wishshare",
     "pages/order/list/list",

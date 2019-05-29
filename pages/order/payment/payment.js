@@ -267,7 +267,9 @@ Page({
               'success': function (res) {
                 console.log('支付成功:' + res);
                 wx.showToast({
-                  title: '支付成功'
+                  title: '支付成功',
+                  icon: 'success',
+                  duration: 2000,
                 })
                 if(received==1){
                   wx.navigateTo({
@@ -282,8 +284,9 @@ Page({
               }
             })
           } else {
+            console.log('支付返回:' + res);
             wx.showToast({
-              title: response.data,
+              title: res.data ? res.data:'支付返回',
               icon: 'loading',
               duration: 2000,
             })

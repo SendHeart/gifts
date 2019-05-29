@@ -199,8 +199,8 @@ Page({
           address_detailInfo: address_detailInfo,
           address_nationalCode: address_nationalCode,
           address_telNumber: address_telNumber,
-        });
-        console.log('订单号:' + that.data.order_no + ' openid:' + that.data.openid)
+        })
+        console.log('收货地址选择 订单号 order receive chooseAddress:' + that.data.order_no + ' openid:' + that.data.openid)
         wx.request({ //更新收礼物状态
           url: weburl + '/api/client/update_order_status',
           method: 'POST',
@@ -227,7 +227,7 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-            console.log('礼物已接收:', res.data);
+            console.log('order receive set_address()礼物已接收:', res.data);
             if (res.data.status == 'y') {
               wx.showToast({
                 title: '礼物已接收',
@@ -244,12 +244,14 @@ Page({
                   })
                 }, 200)
               }
-              if(is_buymyself == 1){ //礼物订单抽奖
+              if(is_buymyself == 1){ //自购礼物订单抽奖
+                console.log('自购礼物订单抽奖 to lottery order_no:', order_no)
                 wx.navigateTo({
-                  url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + order_no,
+                  url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + that.data.order_no,
                 })
               }
             } else {
+              console.log('礼物接收失败 order_no:', that.data.order_no)
               wx.showToast({
                 title: res.data.info ? res.data.info:'礼物接收失败',
                 icon: 'loading',
@@ -257,7 +259,7 @@ Page({
               })
               that.setData({
                 receive_status: 0,
-              });
+              })
             }
           }
         })
@@ -316,7 +318,24 @@ Page({
         })
       }
     })
-  
+    
+    if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1) {
+      console.log('礼品信息 order receive onshow() order_no:', order_no + ' is_receive:' + app.globalData.is_receive)
+      wx.switchTab({
+        url: '/pages/hall/hall'
+      })
+      return
+    }
+
+    that.setData({
+      order_no: order_no,
+      order_id: order_id,
+      receive: app.globalData.is_receive,
+      openid: openid,
+      username: username,
+      goods_flag: goods_flag,
+    })
+    that.reloadData()
   },
 
   onShow: function () {
@@ -344,23 +363,7 @@ Page({
         url: '../../login/login'
       })
     } else {
-      if (app.globalData.is_receive != 1) {
-        console.log('礼品信息 order_no:', order_no + ' receive:' + app.globalData.is_receive)
-        wx.switchTab({
-          url: '/pages/hall/hall'
-        })
-        return
-      }
-  
-      that.setData({
-        order_no: order_no,
-        order_id:order_id,
-        receive: app.globalData.is_receive,
-        openid: openid,
-        username: username,
-        goods_flag: goods_flag,
-      })
-      that.reloadData()
+     
       //调用应用实例的方法获取全局数据
       app.getUserInfo(function (userInfo) {
         //更新数据
@@ -376,7 +379,7 @@ Page({
     var headimg = that.data.headimg
     var nickname = that.data.nickname
   
-    console.log(' 超时处理 headimg:', headimg, ' nickname:',nickname)
+    console.log(' receive overtimeData() 超时处理 headimg:', headimg, ' nickname:',nickname)
     if (!headimg){
       that.setData({
         overtime_status: 1 ,//超时标志
@@ -414,10 +417,12 @@ Page({
     var is_buymyself = that.data.is_buymyself
     var isreload = that.data.isreload
     //从服务器获取订单列表
-    setTimeout(function () { //3秒超时
-      that.overtimeData()
-    }, 3000)
-    
+    if (is_buymyself!=1){
+      setTimeout(function () { //3秒超时
+        that.overtimeData()
+      }, 3000)
+    }
+
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',
@@ -434,7 +439,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(' 礼物订单查询:', res.data.result)
+        console.log(' order receive reloadData() 礼物订单查询:', res.data.result)
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows ? res.data.all_rows : 0
         var receive_status = that.data.receive_status
