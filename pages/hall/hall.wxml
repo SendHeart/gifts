@@ -1,7 +1,9 @@
 <import src="../common/hall_title.wxml" />
+<!-- 
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
+-->
 <view class="banner">
- <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" easing-function="easeInOutCubic" >
+  <swiper class="swiper_box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" easing-function="easeInOutCubic" >
       <block wx:for="{{hall_banner}}" wx:key="" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
@@ -14,7 +16,7 @@
           </swiper-item>
         </view>
       </block>
-    </swiper>
+  </swiper>
 </view>
 
 <view class="wrap">

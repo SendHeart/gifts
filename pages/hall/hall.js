@@ -1288,8 +1288,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '送心',
-      desc: '送礼就是送心',
+      title: '开启礼物电商时代,200万人都在用的礼物小程序',
+      desc: '送心礼物欢迎您',
       path: '/pages/hall/hall?refername='+username+'&mainpage=1'
     }
   },
