@@ -545,7 +545,7 @@ modal {
 
 .modeswitch {
   width: 36%;
-  margin: 8rpx auto 15rpx auto;
+  margin: 8rpx 8rpx 15rpx 8rpx;
   display: flex;
   flex-direction: row;
   justify-content:flex-end;
@@ -556,7 +556,7 @@ modal {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  width: 176rpx;
+  width: 186rpx;
   line-height: 30rpx;
   }
 .pick-goods-slogan {

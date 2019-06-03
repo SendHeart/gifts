@@ -31,6 +31,8 @@ Page({
     title_name:'送心',
     title_logo: '../../images/footer-icon-05.png',
     img_discount: '../../images/discount.png',
+    img_service: weburl+'/uploads/service.png',
+    img_service2: weburl + '/uploads/service2.png',
     hidden: true,
     resp_message:{},
     messageHidden : true,

@@ -86,10 +86,13 @@
     </view>
   </view>
 <view class="pick-goods">
-<view style='width:60%;'><image class='serviceimg' hidden='{{buyhidden1}}' src="../../images/service.png" mode="aspectFill"></image><image class='serviceimg'  hidden='{{buyhidden2}}' src="../../images/service2.png" mode="aspectFill"></image></view>
-  <view class="modeswitch">
+<view style='width:60%;'>
+  <image class='serviceimg' hidden='{{buyhidden1}}' src="{{img_service?img_service:'../../images/service.png'}}" mode="aspectFill"></image>
+  <image class='serviceimg'  hidden='{{buyhidden2}}' src="{{img_service?img_service2:'../../images/service.png'}}" mode="aspectFill"></image>
+</view>
+<view class="modeswitch">
   <label>
-  <text>模式切换</text>
+  <text style='padding:6rpx;'>模式切换</text>
   <switch bindchange="BuyModeChange" checked='true' color='#E34C55' style='zoom:0.6' />
   </label>
 </view>
@@ -182,13 +185,10 @@
         <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
       <view class="subscript">Beta</view>
     </view>
-<view class="recomment-title" bindtap='bindPickGoods'>
-    <text>精选清单<text class='title_ex' style='color:#E34C55'>达人推荐</text></text>
-    <text class='more'>更多...</text>
-  </view>
-
-
-
+    <view class="recomment-title" bindtap='bindPickGoods'>
+      <text>精选清单<text class='title_ex' style='color:#E34C55'>达人推荐</text></text>
+      <text class='more'>更多...</text>
+    </view>
     <view  wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>
       <view>
         <image class="middle-goods-image" src="{{middle1_img}}"></image>
