@@ -38,7 +38,7 @@
     <view class="order-footer">
       <view style="width:80%">
         <text class="order_price">金额:￥{{item.order_price}}{{item.amountpay<item.order_price?'(实付￥'+item.amountpay+')':''}}</text>
-        <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" data-received="1" class="{{(item.status==1 && item.gift_status<=2 && item.gift_status>0  && giftflag==0) ? '': 'hidden'}} smallbtn">去支付</text>
+        <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" data-received="1" class="{{(item.status==1 && item.gift_status==2  && item.rcv_openid && giftflag==0) ? '': 'hidden'}} smallbtn">去支付</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
       </view>
     </view>

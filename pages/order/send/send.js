@@ -289,7 +289,7 @@ Page({
           
           return
         } else {
-          if (orderObjects[0]['gift_status']>0) {
+          if (orderObjects[0]['rcv_openid']) { //已经有接收人
             console.log('该订单已送出 orderObjects:', orderObjects)
             wx.showToast({
               title: '该订单已送出',
