@@ -451,10 +451,10 @@ border: none;
 
 .price-now {
   color: #E34C55;
-  width: 40%;
+  width: 45%;
   height: 40rpx;
   line-height: 40rpx;
-  margin-left: 20rpx;
+  margin-left: 10rpx;
 }
 .price-now::first-letter {
   font-size: 24rpx;

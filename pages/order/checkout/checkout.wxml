@@ -29,9 +29,10 @@
 <view class="cell" style=''>
   <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
   <view style='width:15%'>商品金额:</view>
-  <view class="amount" style='width:40%'>{{(payamount)}}</view>
+  <view class="amount" style='width:25%'>{{(payamount)}}</view>
+  <view wx:if="{{delivery_price>0}}" class="amount" style='width:15%'>{{(delivery_price)}}(运费)</view>
   <view style='width:15%'>优惠金额:</view>
-  <view class="amount" style='width:30%;color:#999'>{{discountpay}}</view>
+  <view class="amount" style='width:20%;color:#999'>{{discountpay}}</view>
 </view>
 <view class="carts-more" hidden="{{showmorehidden}}">
 

@@ -123,10 +123,12 @@ Page({
 		var that = this
     console.log('order checkout from hall  readCarts options:', options)
 		var amount = parseFloat(options.amount)
+    var delivery_price = parseFloat(options.delivery_price)
     var payamount = that.data.payamount
     var discountpay = that.data.discountpay
     var carts = JSON.parse(options.carts)
     var cartIds = options.cartIds
+    var delivery_price = parseFloat(carts[0].delivery_price)
     var cartIdArray = cartIds.split(',')
     var order_type = options.order_type
     var order_note = options.order_note
@@ -136,6 +138,7 @@ Page({
     that.setData({
 			amount: amount,
       payamount: payamount,
+      delivery_price: delivery_price,
       carts: carts,
       cartIds: cartIdArray,
       order_type: order_type,

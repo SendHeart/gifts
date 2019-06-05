@@ -498,7 +498,7 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-            console.log('goods_sku:',res.data.result);
+            console.log('商品goods_sku:',res.data.result);
             var attrValueList = res.data.result.spec_select_list ? res.data.result.spec_select_list:'';
             var commodityAttr = res.data.result.sku_list ? res.data.result.sku_list:'{}';
             if (!commodityAttr) return; 
@@ -517,7 +517,15 @@ Page({
             for (var i = 0; i < attrValueList.length; i++) {
               if (!attrValueList[i].attrValueStatus) {
                 attrValueList[i].attrValueStatus = true
-              } 
+              }
+              if (attrValueList[i].type==2){
+                for (var k = 0; k < attrValueList[i].value.length; k++) {
+                  if (attrValueList[i].value[k].indexOf("http") < 0) {
+                    attrValueList[i].value[k] = weburl + '/' + attrValueList[i].value[k]
+                  }
+                }
+              }
+            
             }
            
             that.setData({
@@ -585,6 +593,7 @@ Page({
       var sku_id = that.data.commodityAttr[0].id
       var attrValueList = that.data.attrValueList
       var sku_sell_price = that.data.commodityAttr[0].sell_price
+      var sku_delivery_price = that.data.commodityAttr[0].delivery_price
       var is_buymyself = that.data.is_buymyself
       console.log('detail goodsmodel is_buymyself:',is_buymyself)
       if(attrValueList.length>0){
@@ -592,6 +601,7 @@ Page({
           modalHidden: !modalHidden,
           sku_id: sku_id,
           sku_sell_price: sku_sell_price,
+          sku_delivery_price: sku_delivery_price,
           add_cart_title: '商品名称',
           wishflag: 0,
         })
