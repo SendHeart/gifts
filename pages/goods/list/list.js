@@ -22,8 +22,10 @@ Page({
     images: [],
     all_rows: 0,
     venuesItems: [],
+    hidddensearch:true,
     search_goodsname: null,
     keyword: '',
+    satisfy:true,
     page: 1,
     pagesize: 10,
     indicatorDots: true,
@@ -46,23 +48,16 @@ Page({
     shop_type: shop_type,
 
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
+
+  satisfyTagTap: function (e) {
+    var that = this
+    var satisfy = e.currentTarget.dataset.satisfy
+    that.setData({
+      satisfy: satisfy,
     })
+
   },
+ 
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -210,12 +205,15 @@ Page({
     var navlist_toView = options.navlist ? options.navlist : 0
     var goods_type_value = options.goods_type_value ? options.goods_type_value:0
     var goods_type = 'goods_middle_search'
+    var hidddensearch = options.search==1?false:true
+    middle_title = options.search == 1 ? '搜索礼物' : middle_title
     that.setData({
       username: username,
       token: token,
       navlist_toView: navlist_toView,
       goods_type: goods_type,
       goods_type_value: goods_type_value,
+      hidddensearch: hidddensearch,
     })
 
     wx.setNavigationBarTitle({
@@ -240,7 +238,7 @@ Page({
         })
       }
     })
-    that.get_goods_list()
+    if(hidddensearch) that.get_goods_list()
   },
   onShow: function () {
     var that = this
@@ -259,6 +257,19 @@ Page({
       keyword: keyword
     })
 
+  },
+  gotoAITagTap: function (e) {
+    var that = this
+    app.globalData.messageflag =2
+    wx.switchTab({
+      url: '/pages/member/message/message'
+    })
+
+  },
+  searchTapTag: function (e) {
+    var that = this;
+    console.log('搜索关键字:', that.data.keyword,that.data.search_goodsname)
+    that.get_goods_list()
   },
 
   get_goods_list: function (event) {

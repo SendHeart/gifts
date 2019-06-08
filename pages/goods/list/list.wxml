@@ -1,23 +1,29 @@
-<!--index.wxml-->
 <import src="../../common/nav2.wxml" />
-<view class="banner">
+<view wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="search">
+		<input value="{{keyword}}" class="wx-input" placeholder=" 请输入商品名称..."  bindinput='search_goodsnameTapTag'/>
+    <image bindtap='searchTapTag' src="../../../images/search-btn.png"></image>
+</view>
+<view  wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="serach-comm">
+  <view class="search-comm-vote linegray" style='width:{{windowWidth-35}}px'>
+    <text style='font-size:24rpx;'>对搜索结果是否满意?</text>
+    <view class="search-comm-confirm" style=''>
+      <view bindtap="satisfyTagTap" data-satisfy="1" class='lable' style="{{satisfy==1?'background-color:green;color:white':'background-color:white;color:gray'}}">是</view>
+      <view bindtap="satisfyTagTap" data-satisfy="2" class='lable'style="{{satisfy==2?'background-color:green;color:white':'background-color:white;color:gray'}}">否</view>
+    </view>
+    <view class="inlinetips" bindtap="gotoAITagTap"  style='font-size:24rpx;'>不知道送什么?点这里</view>
+  </view>
+</view>
+
+<view class="banner" style="{{hidddensearch?'top:0;':'top:170rpx;'}}">
   <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>
-
-<view class="search" style='height:30rpx;'>
-  <!-- 
-		<input value="{{keyword}}" class="wx-input" placeholder="寻找..."  bindinput='search_goodsnameTapTag'/>
-    <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
-  -->
-</view>
-
 <scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
 <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
   <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
   <view class='' style="margin-top:-25rpx;">{{page}}/{{all_rows}}</view>
 </view>
 
-  <view class="venues_box" >
+  <view class="venues_box" style="{{hidddensearch?'margin-top:100rpx;':'margin-top:260rpx;'}}">
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class="none">

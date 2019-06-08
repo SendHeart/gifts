@@ -34,33 +34,6 @@ page {
   border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
-.top-title {
-  height: 75rpx;
-  background: #333;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
-  z-index: 99;
-}
-.top-title-item {
-  display: flex;
-  flex-direction: row;
-  width: 100%;
-  color: #fff;
-  text-align: center;
-  line-height: 75rpx;
-  font-size: 48rpx;
-  padding: 10rpx;
-}
-.top-title-item .title-image {
-  width: 70rpx;
-  height: 70rpx;
-  margin-right: 1rpx;
-  margin-top: 0rpx;
-  margin-left: 20rpx;
-}
 .container {
     background-color: #F2f2f2;
     width: 100%;
@@ -70,10 +43,106 @@ page {
     padding: 0;
 }
 
+.search {
+	width: 100%;
+	height: 80rpx;
+  display: flex;
+  background: white;
+	flex-direction: row;
+	justify-content: center;/*子项横轴上居中对齐*/
+	align-items: center;/*子项纵轴上居中对齐*/
+  padding: 5rpx;
+  top:0rpx;
+  position: fixed;
+  z-index:99;
+}
+
+.search .wx-input {
+	width: 70%;
+	height: 30rpx;
+	border: 1px solid #bfbfbf;
+	border-radius: 120rpx;
+  padding-left: 5rpx;
+  font-size:25rpx;
+  z-index: 99;
+	/*margin: 30rpx 0 0 38rpx;*/
+}
+
+.search image {
+	width: 5%;
+	height: 40rpx;
+	border: 0px solid #bfbfbf;  
+  margin-left:10rpx;
+}
+
+.serach-comm {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+  background: white;
+  padding:0 20rpx;
+  margin-bottom: 0rpx;
+  margin-top: 0rpx;
+  top:80rpx;
+  position: fixed;
+  z-index: 99;
+}
+
+.search-comm-vote {
+	width:100%;
+  height: 100%;
+  padding: 20rpx;
+	color: #444;
+	background: white;
+	display: flex;
+  flex-direction: row;
+	align-items: center;
+ 
+}
+.linegray {
+	border-bottom: 1rpx solid #eee;
+}
+
+/*text*/
+.search-comm-vote text {
+	font-size: 26rpx;
+	margin-left: 20rpx;
+  font-weight: bold;
+}
+.inlinetips {
+  color: #999;
+  font-size: 28rpx;
+  margin-left:20rpx;
+}
+
+.search-comm-confirm {
+ display:flex;
+ flex-direction:row;
+ font-weight:normal;
+}
+.search-comm-confirm .lable{
+  text-align: center;
+  margin-left:20rpx; 
+  border-style:solid;
+  border-width:1px; 
+  border-radius: 38rpx; 
+  width: 60rpx; 
+  height: 40rpx;
+  line-height:40rpx;
+  padding: 5rpx;  
+  background-color: green;
+  color:white;
+  font-size:22rpx;
+}
+
 .banner {
 	width: 100%;
-	/*height: 70rpx;*/
+	height: 120rpx;
 	padding-top: 0rpx;
+  top:170rpx;
+  position: fixed;
+  z-index:99;
 	/*margin-left: 15rpx;*/
 }
 
@@ -86,18 +155,18 @@ page {
     width: 100%;
 }
 
-
 /*辅助导航 nav2*/
 .top-bar2 {
-  height: 60rpx;
+  height: 80rpx;
+  line-height: 50rpx;
   background: #FFF; 
   width:100%;
-  position: fixed;
+
   margin-top: 0rpx;
-  top:0;
+
   border-top: 1rpx solid #F2f2f2;
   border-bottom: 1rpx solid #F2f2f2;
-  z-index:99;
+
 }
 .top-bar-item2 {
   display:inline-block;
@@ -125,7 +194,7 @@ swiper-item image {
   align-content:center;
   justify-content:space-around;
   width: 98%;
-  margin: 20rpx auto;
+  margin: 140rpx auto;
   overflow: hidden;
 }
 
@@ -216,31 +285,7 @@ swiper-item image {
   margin: 0 20rpx;
   text-indent: 0;
 }
-.search {
-	width: 100%;
-	height: 80rpx;
-  display: flex;
-	flex-direction: row;
-	justify-content: center;/*子项横轴上居中对齐*/
-	align-items: center;/*子项纵轴上居中对齐*/
-  padding: 5rpx;
-}
 
-.search .wx-input {
-	width: 70%;
-	height: 30rpx;
-	border: 1px solid #bfbfbf;
-	border-radius: 120rpx;
-  padding-left: 5rpx;
-	/*margin: 30rpx 0 0 38rpx;*/
-}
-
-.search image {
-	width: 5%;
-	height: 40rpx;
-	border: 0px solid #bfbfbf;
-  margin-left:10rpx;
-}
 /* 返回顶部 */
 .goTop{
   display: flex;
