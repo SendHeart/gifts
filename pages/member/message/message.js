@@ -114,6 +114,7 @@ Page({
   },
 
   showGoods: function (e) {
+    var that=this
     // 点击购物车某件商品跳转到商品详情
     var objectId = e.currentTarget.dataset.objectId;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -124,10 +125,20 @@ Page({
     var goods_info = e.currentTarget.dataset.goodsInfo;
     var goods_sale = e.currentTarget.dataset.sale;
     var image = e.currentTarget.dataset.image
+    var rule_selected_info = that.data.rule_selected_info
     //var carts = this.data.carts;
     var sku_id = objectId;
+    if (!rule_selected_info) {
+      var rule_list = that.data.rule_list
+      rule_selected_info = ''
+      for (var i = 0; i < rule_list.length; i++) {
+        var selected = rule_list[i]['selected']
+        rule_selected_info = rule_selected_info + '"' + rule_list[i]['id'] + '":"' + rule_list[i]['item_name'][selected] + '"'
+      }
+      rule_selected_info = '{' + rule_selected_info + '}'
+    }
     wx.navigateTo({
-      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name + '&image=' + image + '&token=' + token + '&username=' + username
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name + '&image=' + image + '&rule_selected_info=' + rule_selected_info+ '&token=' + token + '&username=' + username
     });
   },
   onOrderTapTag: function (e) {
@@ -692,6 +703,16 @@ Page({
     var that = this
     var shop_type = that.data.shop_type
     var rule_selected_info = that.data.rule_selected_info
+    if (!rule_selected_info){
+      var rule_list = that.data.rule_list
+      rule_selected_info=''
+      for (var i = 0; i < rule_list.length; i++) {
+        var selected = rule_list[i]['selected']
+        rule_selected_info = rule_selected_info + '"' + rule_list[i]['id'] + '":"' + rule_list[i]['item_name'][selected] + '"'
+      }
+      rule_selected_info = '{' + rule_selected_info + '}'
+    }
+    
     wx.request({
       url: weburl + '/api/client/add_cart',
       method: 'POST',

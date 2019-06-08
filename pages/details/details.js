@@ -298,6 +298,9 @@ Page({
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         username = options.username ? options.username : username
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+        var keyword = options.keyword ? options.keyword:''
+        var is_satisfy = options.is_satisfy ? options.is_satisfy:0
+        var rule_selected_info = options.rule_selected_info ? options.rule_selected_info:''
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -321,6 +324,9 @@ Page({
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
+          keyword: keyword,
+          is_satisfy:is_satisfy,
+          rule_selected_info:rule_selected_info,
         })
         if(scene){
           if (scene.indexOf("goodsid=") >= 0) {
@@ -394,7 +400,7 @@ Page({
               username: options.username ? options.username : username, 
               access_token: token, 
               goods_id: goodsid,
-              shop_type:shop_type
+              shop_type:shop_type,
             },
             header: {
               'Content-Type': 'application/x-www-form-urlencoded',
@@ -452,6 +458,9 @@ Page({
             refer_mid: refer_mid, //分享人id
             page: page,
             shop_type: shop_type,
+            keyword: keyword,
+            is_satisfy: is_satisfy,
+            rule_selected_info: rule_selected_info,
           },
           header: {
             'Content-Type': 'application/x-www-form-urlencoded',
@@ -478,7 +487,7 @@ Page({
               console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
             } 
             console.log('get_goodsdesc_list image_pic:', that.data.image_pic)
-          that.showGoodsinfo()
+            that.showGoodsinfo()
           }
          
         })
@@ -670,13 +679,16 @@ Page({
       var is_buymyself = that.data.is_buymyself
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+      var keyword = that.data.keyword
+      var is_satisfy = that.data.is_satisfy
+      var rule_selected_info = that.data.rule_selected_info
       if (!username) {//登录
         wx.navigateTo({
           url: '../login/login?goods_id=' + that.data.goodsid
         })
       }else{
         if (that.data.sku_id){
-          that.insertCart(that.data.sku_id, that.data.buynum, username, token,that.data.shop_type, that.data.wishflag, is_buymyself);
+          that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info);
         }else{
           wx.showToast({
             title: '该产品无货',
@@ -686,7 +698,7 @@ Page({
         }
       }
     },
-  insertCart: function (sku_id, buynum, username, token, shop_type, wishflag, is_buymyself) {
+  insertCart: function (sku_id, buynum, username, token, shop_type, wishflag, is_buymyself,keyword,is_satisfy,rule_selected_info) {
       var that = this
       //var shop_type = that.data.shop_type
       wx.request({
@@ -699,6 +711,9 @@ Page({
           num: buynum,
           wishflag: wishflag,
           shop_type:shop_type,
+          keyword: keyword,
+          is_satisfy: is_satisfy,
+          rule_selected_info: rule_selected_info,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',

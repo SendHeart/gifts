@@ -26,6 +26,7 @@ Page({
     search_goodsname: null,
     keyword: '',
     satisfy:true,
+    is_satiify:0,
     page: 1,
     pagesize: 10,
     indicatorDots: true,
@@ -54,6 +55,7 @@ Page({
     var satisfy = e.currentTarget.dataset.satisfy
     that.setData({
       satisfy: satisfy,
+      is_satisfy: satisfy?1:2,
     })
 
   },
@@ -287,7 +289,9 @@ Page({
     var keyword = that.data.keyword;
     var shop_type = that.data.shop_type
     var shape = 1
-
+    that.setData({
+      loadingHidden: false,
+    })
     wx.request({
       url: weburl + '/api/client/get_goods_list',
       method: 'POST',
@@ -320,7 +324,10 @@ Page({
             title: '没有搜到记录',
             icon: 'loading',
             duration: 1000
-          });
+          })
+          that.setData({
+            loadingHidden: true,
+          })
           that.setData({
             venuesItems: [],
             all_rows: 0,
@@ -328,6 +335,7 @@ Page({
           })
           return;
         }
+      
         for (var i = 0; i < venuesItems.length; i++) {
           venuesItems[i]['short_name'] = venuesItems[i]['name'].substring(0, 10) + '...'
           if (!venuesItems[i]['act_info']) {
@@ -348,13 +356,11 @@ Page({
         that.setData({
           venuesItems: venuesItems,
           all_rows: all_rows,
-          keyword: ''
+          //keyword: ''
         })
-        setTimeout(function () {
-          that.setData({
-            loadingHidden: true,
-          })
-        }, 1500)
+        that.setData({
+          loadingHidden: true,
+        })
       }
     })
   },
