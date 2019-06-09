@@ -40,7 +40,7 @@ page {
 
 .search .wx-input {
 	width: 50%;
-	height: 55rpx;
+	height: 50rpx;
 	border: 1px solid #bfbfbf;
   background: #f2f2f2;
 	border-radius: 120rpx;
@@ -53,7 +53,7 @@ page {
 	width: 10%;
 	height: 35rpx;
 	border: 0px solid #bfbfbf;
-  margin-left:10rpx;
+  margin:10rpx auto;
   z-index: 99;
 }
 
