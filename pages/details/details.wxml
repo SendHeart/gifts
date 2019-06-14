@@ -10,9 +10,6 @@
       <view class="btnshare" bindtap="sharegoodsTapTag">
       <image class="shareto" src="../../images/shareto.png"></image>
       分享</view>
-      <!-- 
-      <button class="" open-type="share" style='font-size:25rpx;' bindtap="onShareAppMessage">分享</button>
-      -->
     </view>
   </view>
   <view class="banner">
@@ -59,14 +56,14 @@
     </view>
     <view wx:if="{{goodsdiscount<100}}" class="prd-prom"><image src='../../images/discount.png' style='width:75rpx;height:32rpx;'></image> {{goodsdiscount<100?discountinfo:''}}</view>
     <view class="comm-text">
-    <text class="comm-name">服务</text>
-    <view class="comm-listitem">
-    <image class='icon-item' src='../../images/icon-zp.png'></image>
-    <text>假一赔十</text>
+      <text class="comm-name">服务</text>
+      <view class="comm-listitem">
+      <image class='icon-item' src='../../images/icon-zp.png'></image>
+      <text>假一赔十</text>
     </view>
     <view class="comm-listitem">
-    <image class='icon-item' src='../../images/icon-by.png'></image>
-    <text>全国包邮</text>
+      <image class='icon-item' src='../../images/icon-by.png'></image>
+      <text>全国包邮</text>
     </view>
     <view class="comm-listitem">
     <image class='icon-item' src='../../images/icon-tk.png'></image>
@@ -101,7 +98,7 @@
 
 <view hidden="{{modalHidden}}" style='z-index:999;'>
     <modal class="modalbox" title=" "  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
-    <view class='modaltitletext'>{{attrValueList.length>0?'':add_cart_title}}</view>
+      <view class='modaltitletext'>{{attrValueList.length>0?'':add_cart_title}}</view>
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
        <view style="max-height:{{dkheight-30}}px">
         <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >

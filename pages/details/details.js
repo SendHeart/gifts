@@ -109,13 +109,13 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('submintFromId() update success: ', res.data)
+       // console.log('submintFromId() update success: ', res.data)
       }
     })
   },
   goBack: function () {
     var pages = getCurrentPages();
-    console.log('details goBack pages:', pages)
+   // console.log('details goBack pages:', pages)
     if (pages.length > 1) {
       wx.navigateBack({ changed: true });//返回上一页
     } else {
@@ -181,7 +181,7 @@ Page({
       cur_img_id = cur_img_id - that.data.image_video.length
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
     }
-    console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
+    //console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
    
     if (that.data.image_save_count < 3){
       if (that.data.image_save_times > 8) { //8次不成功返回上一级
@@ -222,7 +222,7 @@ Page({
       success: function (res) {
         if (res.statusCode === 200) {
           var img_tempFilePath = res.tempFilePath
-          console.log('图片下载成功' + res.tempFilePath)
+         // console.log('图片下载成功' + res.tempFilePath)
           const fs = wx.getFileSystemManager()
           fs.saveFile({
             tempFilePath: res.tempFilePath, // 传入一个临时文件路径
@@ -261,9 +261,9 @@ Page({
                     tempFilePath: img_tempFilePath, // 传入一个临时文件路径
                     success(res) {
                       wx.setStorageSync(image_cache_name, res.savedFilePath)
-                      console.log('image_save 图片缓存成功', image_cache_name, wx.getStorageSync(image_cache_name), 'goods id:', that.data.goodsid )
+                     // console.log('image_save 图片缓存成功', image_cache_name, wx.getStorageSync(image_cache_name), 'goods id:', that.data.goodsid )
                       if (image_cache_name == 'goods_image_cache_' + that.data.goodsid || image_cache_name == 'goods_qrcode_cache_' + that.data.goodsid || image_cache_name == 'wx_headimg_cache'){
-                        console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count',that.data.image_save_count)
+                       // console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count',that.data.image_save_count)
                         that.setData({
                           image_save_count: that.data.image_save_count++,
                         })
@@ -338,7 +338,7 @@ Page({
             //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
             var scene_mid = scene.match(midReg) ? scene.match(midReg)[0]: 0
             refer_mid = scene_mid?scene_mid.substring(5, scene_mid.length):refer_mid
-            console.log('scene_goodsid:', scene_goodsid, 'mid:', scene_mid, ' goodsid:', goodsid, 'refer_id:', refer_mid)//输出  
+            //console.log('scene_goodsid:', scene_goodsid, 'mid:', scene_mid, ' goodsid:', goodsid, 'refer_id:', refer_mid)//输出  
           }
         }
         if (image){
@@ -384,14 +384,14 @@ Page({
         })
     var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid + '&m_id=' + m_id
     that.image_save(share_goods_qrcode, 'goods_qrcode_cache_'+goodsid)
-    console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
+   // console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
   
-    console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
+    //console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){
           if (share_goods_image){
             that.image_save(share_goods_image, 'goods_image_cache_' + goodsid)
-            console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, share_goods_image)
+           // console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, share_goods_image)
           } 
           wx.request({
             url: weburl + '/api/client/get_goods_list',
@@ -427,7 +427,7 @@ Page({
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
-                console.log('头像图片下载缓存 wx_headimg_cache')
+               // console.log('头像图片下载缓存 wx_headimg_cache')
                 
               }else{
                 wx.showToast({
@@ -447,7 +447,7 @@ Page({
         }
 
         // 商品详情图片
-        console.log('商品详情图片', image_pic)
+       // console.log('商品详情图片', image_pic)
         wx.request({
           url: weburl+'/api/client/get_goodsdesc_list',
           method: 'POST',
@@ -467,7 +467,7 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-            console.log('get_goodsdesc_list:', res.data.result)
+           // console.log('get_goodsdesc_list:', res.data.result)
             var goodsPicsInfo = res.data.result
             var k = image?1:0
             for (var i = k; i < goodsPicsInfo.image.length;i++){
@@ -484,9 +484,9 @@ Page({
             })
             if (!share_goods_image) {
               that.image_save(image_pic[0]['url'], 'goods_image_cache_' + goodsid)
-              console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
+             // console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
             } 
-            console.log('get_goodsdesc_list image_pic:', that.data.image_pic)
+           // console.log('get_goodsdesc_list image_pic:', that.data.image_pic)
             that.showGoodsinfo()
           }
          
@@ -620,6 +620,7 @@ Page({
         that.setData({
           modalHidden: !modalHidden,
           sku_sell_price: sku_sell_price,
+          sku_delivery_price: sku_delivery_price,
           add_cart_title: that.data.goodsname,
           sku_id: sku_id,
           wishflag: 0,
@@ -935,6 +936,7 @@ Page({
         sku_gov_price: '',
         sku_earnest_price: '',
         sku_sell_price: '',
+        sku_delivery_price: '',
       })
       var selectValueInfo='';
       for (var i = 0; i < attrValueList.length; i++) {
@@ -950,6 +952,7 @@ Page({
             sku_gov_price: that.data.commodityAttr[i].gov_price,
             sku_earnest_price: that.data.commodityAttr[i].earnest_price,
             sku_sell_price: that.data.commodityAttr[i].sell_price,
+            sku_delivery_price: that.data.commodityAttr[i].delivery_price,
           })
           //break
         }
@@ -976,7 +979,6 @@ Page({
       var attrValueList = that.data.attrValueList
       attrValueList[index].selectedValue = '';
       this.setData({
-      
         sku_id: '',
         sku_gov_price: '',
         sku_earnest_price: '',

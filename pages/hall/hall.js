@@ -745,7 +745,8 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result);
+        console.log(res.data.result)
+        that.query_cart()
         /*
         wx.showToast({
           title: '已更新',
@@ -779,44 +780,40 @@ Page({
     })
 
   },  
-  reloadData: function (username, token) {
-    // auto login
-    var that = this;
+  query_cart:function(){
+    var that = this
     var minusStatuses = []
-    var page=that.data.page
-    var pagesize=that.data.pagesize
     var shop_type = that.data.shop_type
-
     // cart info
     wx.request({
       url: weburl + '/api/client/query_cart',
       method: 'POST',
-      data: { 
-        username: username, 
+      data: {
+        username: username,
         access_token: token,
-        shop_type:shop_type,
+        shop_type: shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('hall reloadData:',res.data);
+        console.log('hall reloadData:', res.data);
         var carts = [];
-        if (!res.data.result){
-          
+        if (!res.data.result) {
+
           return
-        } 
+        }
         var cartlist = res.data.result.list;
         var showmorehidden;
-        
+
         var index = 0;
         for (var key in cartlist) {
           for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
-            if (cartlist[key]['sku_list'][i]['image'].indexOf("http")  < 0 ) {
+            if (cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
               cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
-            } 
-            
+            }
+
             cartlist[key]['sku_list'][i]['selected'] = true;
             cartlist[key]['sku_list'][i]['shop_id'] = key;
             cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id'];
@@ -830,9 +827,9 @@ Page({
           }
         }
 
-        if(index>1) {
+        if (index > 1) {
           showmorehidden = true // false
-        }else{
+        } else {
           showmorehidden = true
         }
         //倒序
@@ -862,7 +859,15 @@ Page({
         that.sum()
       }
     })
-
+  },
+  reloadData: function (username, token) {
+    // auto login
+    var that = this;
+    var minusStatuses = []
+    var page=that.data.page
+    var pagesize=that.data.pagesize
+    var shop_type = that.data.shop_type
+    that.query_cart()
     // recommend goods info
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
