@@ -175,7 +175,7 @@ Page({
   },
   searchTapTag: function (e) {
     var that = this;
-    console.log('搜索关键字：' + that.data.search_goodsname)
+    console.log('搜索关键字：' + that.data.keyword,' search goodsname:',that.data.search_goodsname)
     that.get_goods_list()
   },
 
@@ -258,7 +258,7 @@ Page({
     that.setData({
       keyword: keyword
     })
-
+    console.log('key word:',keyword)
   },
   gotoAITagTap: function (e) {
     var that = this
@@ -268,12 +268,7 @@ Page({
     })
 
   },
-  searchTapTag: function (e) {
-    var that = this;
-    console.log('搜索关键字:', that.data.keyword,that.data.search_goodsname)
-    that.get_goods_list()
-  },
-
+ 
   get_goods_list: function (event) {
     //venuesList
     var that = this;
