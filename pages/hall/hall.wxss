@@ -24,6 +24,7 @@ page {
   color: transparent;
   display: none;
 }
+
 .search {
 	width: 100%;
 	height: 65rpx;
