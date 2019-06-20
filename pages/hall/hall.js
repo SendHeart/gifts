@@ -102,15 +102,13 @@ Page({
       })
     }
   },
-
   searchTapTag: function (e) {
     var that = this;
     //console.log('搜索关键字：' + that.data.search_goodsname)
     wx.navigateTo({
       url: '/pages/goods/list/list?search=1'
     })
-
-  },
+  }, 
   reSend: function () { //失败后重新发送
     var that = this;
     //失败重发

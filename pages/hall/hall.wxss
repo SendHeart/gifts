@@ -38,8 +38,8 @@ page {
   background: #1d1d1d;
   z-index: 999;
   margin-bottom: 10rpx;
-
 }
+
 .userinfo {
   display: flex;
   flex-direction: row;
