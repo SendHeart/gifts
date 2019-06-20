@@ -102,14 +102,7 @@ Page({
       })
     }
   },
-  searchTapTag: function (e) {
-    var that = this;
-    //console.log('搜索关键字：' + that.data.search_goodsname)
-    wx.navigateTo({
-      url: '/pages/goods/list/list?search=1'
-    })
 
-  },
   searchTapTag: function (e) {
     var that = this;
     //console.log('搜索关键字：' + that.data.search_goodsname)

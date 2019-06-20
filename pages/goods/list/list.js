@@ -258,9 +258,7 @@ Page({
     var keyword = e.detail.value;
     that.setData({
       keyword: keyword
-    })
-
-  },
+    })},
   gotoAITagTap: function (e) {
     var that = this
     app.globalData.messageflag =2
