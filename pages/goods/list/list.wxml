@@ -14,13 +14,13 @@
       <view bindtap="satisfyTagTap" data-satisfy="2" class='lable'style="{{satisfy==2?'background-color:green;color:white':'background-color:white;color:gray'}}">否</view>
     </view> 
 </view>-->
-<movable-area class='inlinetips' style="height:{{dkheight}}px">
+<movable-area class='inlinetips' style="margin-left:{{windowWidth-45}}px;margin-top:{{hidddensearch?70:120}}rpx;"><!-- style="height:{{dkheight}}px"  这个组件撑满页面时部分手机无法点击进入详情页-->
 <movable-view class='floatlayer' x="330" y="10" direction="all">
 <image bindtap='searchTapTag' src="../../../images/floatbanner.png" bindtap="gotoAITagTap"></image>
 </movable-view>
 </movable-area>
 
-<view class="banner" style="{{hidddensearch?'top:0;':'top:84rpx;'}}">
+<view class="banner" style="{{hidddensearch?'top:0;':'top:80rpx;'}}">
   <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>
 <scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
@@ -29,7 +29,7 @@
   <view class='' style="margin-top:-25rpx;">{{page}}/{{all_rows}}</view>
 </view>
 
-  <view class="venues_box" style="{{hidddensearch?'margin-top:150rpx;':'margin-top:150rpx;'}}">
+  <view class="venues_box" style="{{hidddensearch?'margin-top:80rpx;':'margin-top:150rpx;'}}">
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}&keyword={{keyword}}&is_satisfy={{is_satisfy}}" hover-class="none">

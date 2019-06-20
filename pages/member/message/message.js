@@ -782,8 +782,12 @@ Page({
     if (pages.length > 1) {
       wx.navigateBack({ changed: true })  /返回上一页
     } else {
+      /*
       wx.switchTab({
         url: '../../hall/hall'
+      })*/
+      wx.navigateTo({
+        url: '/pages/list/list',
       })
     }
   },

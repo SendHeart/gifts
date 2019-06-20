@@ -50,9 +50,6 @@
   
   <view class="user">
     <view class='usertitle'>我的礼物包</view>
-    
-    
-    
     <view class="usergifts" bindtap='usergiftTapTag'>
       <text>收到</text>
       <text class='snum'>{{gifts_rcv}}</text>
@@ -78,17 +75,17 @@
               {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
               </view>
-              <view class="carts-en-price">￥{{item.sell_price}}</view>
+              <view class="carts-en-price">￥{{item.sell_price}} x{{item.num}}</view>
             </view>
             <!-- 数量加减 -->
             <view class="stepper">
               <!-- 减号 -->
-              <text class="normal" data-index="{{cart_idx}}" catchtap="bindMinus">-</text>
+              <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindMinus">-</text>
               <!-- 数值 -->
-              <input type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
+              <input wx:if="{{cart_idx=='99999'}}" type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
               <!-- 加号 -->
-              <text class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
-              <view data-index="{{cart_idx}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
+              <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
+              <view  wx:if="{{cart_idx=='99999'}}" data-index="{{cart_idx}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
             </view>
           </view>
         </view>
