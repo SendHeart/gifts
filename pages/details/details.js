@@ -722,7 +722,7 @@ Page({
         },
         success: function (res) {
           console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
-          var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物袋'
+          var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物包'
           title = is_buymyself==1?'自购礼品':title
           wx.showToast({
             title: title,

@@ -483,14 +483,14 @@ Page({
     var goods_flag = that.data.goods_flag
     var token = that.data.token;
     var navList2 = that.data.navList2
-    var title = '收到一份来自' + that.data.nickname +'的大礼,快打开看看吧~';
+    var title = '您收到一份来自' + that.data.nickname +'的礼物,点击立即打开。';
     var shareimage_url = that.data.shareimage_url //带价格水印的图片
     var imageUrl = navList2.length>0?navList2[0]['img'] : that.data.gift_logo
     imageUrl = shareimage_url ? shareimage_url : imageUrl
     console.log('开始送礼 options:', options, 'order_no:', order_no, 'goods_flag:', goods_flag, ' navList2:', navList2); 
     //console.log(options);  
     if (!order_no){
-      console.log('礼品订单号为空 send')
+      console.log('礼品单号为空 send')
       return
     }
     that.setData({
@@ -499,7 +499,7 @@ Page({
 
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
-      desc: "礼物代表我的心意",
+      desc: "开启礼物电商时代，200万人都在用的礼物小程序！",
       //path: '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
       path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&goods_flag=' + goods_flag,  
       imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4

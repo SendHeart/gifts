@@ -14,12 +14,13 @@
   width: 0;
   height: 0;
   margin-right: 120rpx;
+  margin-top: -10rpx;
   border-width: 16rpx;
   border-style: solid;
   border-color:  transparent transparent #111111 transparent;
 }
 .body {
-  background-color: rgba(1, 1, 1, 0.7);
+  background-color: rgba(1, 1, 1, 0.9);
   box-shadow: 0 10rpx 20rpx -10rpx #333333;
   border-radius: 12rpx;
   display: flex;
@@ -42,7 +43,7 @@
   right: 0;
   bottom: 0;
   z-index: 999;
-  background-color: rgba(1, 1, 1, 0.9);
+  background-color: #111111;
   padding: 20px;
 }
 .modal > view {

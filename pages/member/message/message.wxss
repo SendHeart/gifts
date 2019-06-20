@@ -10,17 +10,16 @@ page {
   display: flex;
   flex-direction:row;
   justify-content: space-between;
-  height: 90rpx;
+  height: 70rpx;
   background: #fff;
   width: 96%;
   position: fixed;
   top: 0;
   left: 2%;
   z-index: 99;
-  border-bottom-left-radius: 20rpx;
-  border-bottom-right-radius: 20rpx;
+  border-radius: 20rpx;
   box-shadow: 0rpx 3rpx 6rpx rgba(100, 100, 100, 0.3);
-  margin: 0 auto;
+  margin: 10rpx auto;
 }
 
 .top-bar-item2 {
@@ -28,10 +27,10 @@ page {
   flex-direction: row;
   justify-content: center;
   width: 350rpx;
-  height: 90rpx;
+  height: 70rpx;
   color: #444;
   text-align: center;
-  line-height: 90rpx;
+  line-height: 70rpx;
   font-size: 28rpx;
 }
 .top-bar-item2 image {
@@ -399,7 +398,6 @@ page {
   border-radius: 18rpx;
   background: #fff;
   padding: 20rpx;
-  margin: 20rpx 0 0 0;
 }
 
 .goods-item-list {

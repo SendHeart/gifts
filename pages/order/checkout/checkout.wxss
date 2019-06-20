@@ -63,7 +63,7 @@ font-size:24rpx;
 	display: flex;
 	flex-direction: row;
 	justify-content: flex-start;
-	align-items:center;
+	align-items:left;
 	border-top: 1rpx solid #eee;
 	border-bottom: 1rpx solid #eee;
 	line-height: 1.5;

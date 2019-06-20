@@ -66,7 +66,7 @@ Page({
       })
     }else{
       wx.showToast({
-        title: '您已抽过奖了',
+        title: '您已获得过奖励了',
         icon: 'loading',
         duration: 1500
       })
@@ -106,7 +106,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(' 查询抽奖活动:', res.data.result)
+        console.log(' 查询奖励活动:', res.data.result)
         var lottery_info = res.data.result
         if (res.data.status!='y') {
           wx.showToast({
@@ -155,8 +155,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '送心',
-      desc: '送礼就是送心',
+      title: '送心礼物',
+      desc: '开启礼物电商时代，200万人都在用的礼物小程序！',
       path: '/pages/hall/hall?refername='+username
     }
   } 

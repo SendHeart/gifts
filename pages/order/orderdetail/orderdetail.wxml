@@ -70,7 +70,7 @@
     </view>
     <view class="order-detail-text">
       <text class="labeltext">接受时间:</text>
-      <text>{{rcvtime?rcvtime:'未接受'}}{{gift_status=='1'?'(24小时礼物未被接收，自动退款到原账户)':''}}</text>
+      <text>{{rcvtime?rcvtime:'对方未接受'}}{{gift_status=='1'?'':''}}</text>
     </view>
   </view>
   <view class="delivery-detail">
@@ -103,7 +103,7 @@
     </view>-->
   </view>
   <view class="delivery-detail-info">
-  <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">【物流跟踪】</text>
+  <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">物流跟踪</text>
     <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key=""  >
       <view class="delivery-detail-info-text" >
       <view class="timeline-date" style='margin-left:20rpx;'>

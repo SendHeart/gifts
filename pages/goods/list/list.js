@@ -13,7 +13,7 @@ var navList2 = [
 
 Page({
   data: {
-    title_name: '商城首页',
+    title_name: '搜索礼物',
     title_logo: '../../../images/footer-icon-05.png',
     img_discount: '../../../images/discount.png',
     activeIndex: 0,
@@ -22,7 +22,7 @@ Page({
     images: [],
     all_rows: 0,
     venuesItems: [],
-    hidddensearch:true,
+    hidddensearch: true,
     search_goodsname: null,
     keyword: '',
     satisfy:true,
@@ -47,6 +47,7 @@ Page({
     scrollLeft: 0,
     toView: 0,
     shop_type: shop_type,
+    inputShowed: true,  // 搜索框值
 
   },
 
@@ -270,7 +271,7 @@ Page({
   },
   searchTapTag: function (e) {
     var that = this;
-    console.log('搜索关键字:', that.data.keyword,that.data.search_goodsname)
+    console.log('搜索关键字:', that.data.keyword, that.data.search_goodsname, that.data.defaultkeyword)
     that.get_goods_list()
   },
 
@@ -407,8 +408,8 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '送心',
-      desc: '送礼就是送心!',
+      title: '送心礼物',
+      desc: '开启礼物电商时代，200万人都在用的礼物小程序！',
       path: '/pages/list/list?refername=' + username
     }
   }

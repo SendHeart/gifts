@@ -43,7 +43,7 @@ Page({
     indicatorDots: true,
     vertical: false,
     autoplay: true,
-    interval: 8000,
+    interval: 7000,
     duration: 300,
     circular:true,
     hall_banner: weburl+"/uploads/songxin_banner.png", //默认的banner图

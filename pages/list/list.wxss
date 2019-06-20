@@ -129,7 +129,7 @@ page {
 .all-classify-item-active{
   color: #fff;
   font-size: 26rpx;
-  border:2rpx solid #E34C55;
+  background: #E52445;
 }
 
 .top-bar-list{  
@@ -181,7 +181,7 @@ page {
 }
 .top-bar-active {
   color: #fff;
-  border:2rpx solid #E34C55; 
+  background: #E52445;
 }
 .top-bar-image {
   position: fixed; 
@@ -253,7 +253,7 @@ swiper-item image {
   display: block;
   width: 75rpx;
   height: 32rpx;
-  margin-left:20rpx;
+  margin:6rpx 0 0 20rpx;
 }
 .venues_item .goods_name {
   color: #444;

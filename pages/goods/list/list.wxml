@@ -1,20 +1,26 @@
 <import src="../../common/nav2.wxml" />
 <view wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="search">
-		<input value="{{keyword}}" class="wx-input" placeholder=" 请输入商品名称..."  bindinput='search_goodsnameTapTag'/>
+		<view class="wx-input">
+    <input name="search" value="{{keyword}}" placeholder="鲜花"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="searchTapTag"/>
     <image bindtap='searchTapTag' src="../../../images/search-btn.png"></image>
+    </view>
+    <text class='searchcancel' bindtap='goBack'>取消</text>
 </view>
-<view  wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="serach-comm">
-  <view class="search-comm-vote linegray" style='width:{{windowWidth-35}}px'>
-    <text style='font-size:24rpx;'>对搜索结果是否满意?</text>
+<!--<view  wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="serach-comm">
+  <view class="search-comm-vote linegray">
+    <text>对结果是否满意?</text>
     <view class="search-comm-confirm" style=''>
       <view bindtap="satisfyTagTap" data-satisfy="1" class='lable' style="{{satisfy==1?'background-color:green;color:white':'background-color:white;color:gray'}}">是</view>
       <view bindtap="satisfyTagTap" data-satisfy="2" class='lable'style="{{satisfy==2?'background-color:green;color:white':'background-color:white;color:gray'}}">否</view>
-    </view>
-    <view class="inlinetips" bindtap="gotoAITagTap"  style='font-size:24rpx;'>不知道送什么?点这里</view>
-  </view>
-</view>
+    </view> 
+</view>-->
+<movable-area class='inlinetips' style="height:{{dkheight}}px">
+<movable-view class='floatlayer' x="330" y="10" direction="all">
+<image bindtap='searchTapTag' src="../../../images/floatbanner.png" bindtap="gotoAITagTap"></image>
+</movable-view>
+</movable-area>
 
-<view class="banner" style="{{hidddensearch?'top:0;':'top:170rpx;'}}">
+<view class="banner" style="{{hidddensearch?'top:0;':'top:84rpx;'}}">
   <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>
 <scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
@@ -23,7 +29,7 @@
   <view class='' style="margin-top:-25rpx;">{{page}}/{{all_rows}}</view>
 </view>
 
-  <view class="venues_box" style="{{hidddensearch?'margin-top:100rpx;':'margin-top:260rpx;'}}">
+  <view class="venues_box" style="{{hidddensearch?'margin-top:150rpx;':'margin-top:150rpx;'}}">
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}&keyword={{keyword}}&is_satisfy={{is_satisfy}}" hover-class="none">

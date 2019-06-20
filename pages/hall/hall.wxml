@@ -3,8 +3,17 @@
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 -->
 <view class="search">
+    <view class="userinfo" bindtap='userTapTag'>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <!--<text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
+    </view>
     <view class="wx-input"  bindtap='searchTapTag' >
     <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
+    <text>鲜花</text>
+    </view>
+    <view class="messages" catchtap="messagesTapTag" >
+      <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
+      <image class="icon-message" src="../../images/u72.png"></image>
     </view>
 </view>
 
@@ -25,27 +34,31 @@
   </swiper>
 </view>
 
+
+
 <view class="wrap">
+<view class="middle-goods">
+<view class="image-btnbuy" bindtap="bindPickGoods">
+        <image class="pick-goods-image" src="../../images/menu1.png" mode="aspectFill"></image>
+    </view>
+    <view class="image-btnbuy2" bindtap="bindAIPickGoods">
+        <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
+      <view class="subscript">Beta</view>
+    </view>
+    </view>
   <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
   
   <view class="user">
-    <view class="userinfo" bindtap='userTapTag'>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </view>
+    <view class='usertitle'>我的礼物包</view>
     
-    <view class="messages" catchtap="messagesTapTag" >
-      <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
-      <image class="icon-message" src="../../images/u72.png"></image>
-    </view>
     
-    <!--<view class="usergifts" bindtap='usergiftTapTag'>
+    
+    <view class="usergifts" bindtap='usergiftTapTag'>
       <text>收到</text>
       <text class='snum'>{{gifts_rcv}}</text>
       <text>送出</text>
       <text class='snum'>{{gifts_send}}</text>
     </view>
-    -->
   </view>
   
   <view class="container carts-list">
@@ -98,7 +111,7 @@
 </view>
 <view class="modeswitch">
   <label>
-  <text style='padding:6rpx;'>模式切换</text>
+  <text style='padding:4rpx;'>模式切换</text>
   <switch bindchange="BuyModeChange" checked='true' color='#E34C55' style='zoom:0.6' />
   </label>
 </view>
@@ -184,15 +197,9 @@
   </view>
   
   <view class="middle-goods">
-    <view class="image-btnbuy" bindtap="bindPickGoods">
-        <image class="pick-goods-image" src="../../images/menu1.png" mode="aspectFill"></image>
-    </view>
-    <view class="image-btnbuy2" bindtap="bindAIPickGoods">
-        <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
-      <view class="subscript">Beta</view>
-    </view>
+    
     <view class="recomment-title" bindtap='bindPickGoods'>
-      <text>精选清单<text class='title_ex' style='color:#E34C55'>达人推荐</text></text>
+      <text>精选清单<text class='title_ex'>达人推荐</text></text>
       <text class='more'>更多...</text>
     </view>
     <view  wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>

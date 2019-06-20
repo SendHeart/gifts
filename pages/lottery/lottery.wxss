@@ -316,19 +316,19 @@ main_message .main_bg{
 
 /*Title文本*/
 .main_message .lottery-title{
-   margin-top: 50rpx;
+   margin-top: 120rpx;
    color:#e34c55;
-   font-size: 80rpx;
+   font-size: 48rpx;
 }
 
 .main_message .lottery-title2{
    margin-top: 150rpx;
-   color:#f2f2f2;
-   font-size: 80rpx;
+   color:#444;
+   font-size: 48rpx;
 }
 
 .main_message .lottery-text{
    margin-top: 50rpx;
-   color:#f2f2f2;
-   font-size: 60rpx;
+   color:#fff;
+   font-size: 40rpx;
 }
