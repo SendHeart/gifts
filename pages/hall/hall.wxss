@@ -224,10 +224,6 @@ modal {
 .container {
   width: 96%;
   margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: space-between;
   box-sizing: border-box;
   z-index: 1;
 }
@@ -243,10 +239,10 @@ modal {
 /*item与button的容器*/
 
 .carts-container {
-  position: relative;
   width: 100%;
-  min-height: 175rpx;
-  height: 175rpx;
+  height: 120rpx;
+  padding: 20rpx 0 0 0;
+  background: #fff;
   z-index:1;
 }
 
@@ -258,12 +254,6 @@ modal {
   flex-direction: row;
   justify-content: flex-start;
   /*width属性解决标题文字太短而缩略图偏移*/
-  padding: 20rpx 0;
-  margin-right: 20rpx;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background: #fff;
   z-index: 1;
 }
 
@@ -289,7 +279,7 @@ modal {
 .carts-title {
   font-size: 24rpx;
   color: #444;
-  line-height: 1.5;
+  line-height: 150%;
   padding-right: 10rpx;
   text-overflow: ellipsis;
   overflow-x: hidden;
@@ -299,20 +289,13 @@ modal {
 .carts-sku {
   font-size: 24rpx;
   color: #999;
-  line-height: 1;
-  height:50rpx;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  line-height: normal;
 }
 
 /*右下部分价格与数量*/
 
 .carts-subtitle {
   font-size: 24rpx;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
 }
 
 /*价格*/
@@ -361,7 +344,7 @@ modal {
   position: absolute;
   right: 28rpx;
   bottom: 10rpx;
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: flex-start;
 }
@@ -504,9 +487,11 @@ modal {
 .delete-button {
   display: flex;
   flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
   font-size: 28rpx;
   color: #444;
-  margin-left: 20rpx;
+  margin-right: 20rpx;
 }
 .delete-button image {
   width: 48rpx;

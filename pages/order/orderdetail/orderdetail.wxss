@@ -318,6 +318,7 @@ background-color: #E34C55;
   border-radius: 10rpx;
   overflow-x: hidden;
   padding: 30rpx 0;
+  font-size: 30rpx;
  
 }
 .delivery-detail-info-text {
@@ -362,15 +363,14 @@ background-color: #E34C55;
 
 /*cart*/
 .button-group {
-  border: 0;
   line-height: 60rpx;
   text-align: center;
   width: 250rpx;
   height: 60rpx;
-  color: #fff;
   font-size: 28rpx;
   border-radius: 14rpx;
-  background: #e34c55;
+  border: 2rpx solid #E34C55;
+  color: #e34c55;
 }
 
 .button-image {

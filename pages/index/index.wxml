@@ -8,7 +8,7 @@
   <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
-      <text>礼物号: {{item.order_no}}</text>
+      <text>礼物单号: {{item.order_no}}</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==0}}" class="status2">对方已接受</text>
       <text wx:if="{{item.status==2 && item.gift_status==0 && giftflag ==0}}" class="status">已支付未送出</text>
       <text wx:if="{{item.gift_status==1 && giftflag ==0}}" class="status">对方未接受</text>
@@ -53,7 +53,7 @@
       <view style="width:70%">
         <text style="width:20%">共:{{item.order_sku_num}}件{{item.buy_num>1?' (份数:'+item.buy_num+')':''}}</text>
         <text style="color:#e34c55;">￥{{item.order_price}}</text>
-        <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(((item.status==1 && item.gift_status==2) ||(item.status==2 && item.payment_status==2)) && item.rcv_openid && giftflag==0) ? '': 'hidden'}} smallbtn">去支付</text>
+        <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(((item.status==1 && item.gift_status==2) ||(item.status==2 && item.payment_status==2)) && item.rcv_openid && giftflag==0) ? '': 'hidden'}} smallbtn"  style="background:#e34c55;color:#fff;">去支付</text>
         <text bindtap="cancel_order" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">取消</text>
         <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status<=2 && item.status>0 && item.gift_status>=0 && item.gift_status<=2 && !item.rcv_openid && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1 && item.rcv_openid == username) ? '': 'hidden'}} smallbtn">确认收货</text>
