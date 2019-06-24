@@ -2,7 +2,7 @@
  
 .Hui-iconfont {
  font-family: "Hui-iconfont";
- font-size:30rpx;
+ font-size:24rpx;
 }
 .iconv-uparrow:after {
   content:'\e6d6';
@@ -159,7 +159,7 @@ page {
 
 .banner {
 	width: 100%;
-	height: 70rpx;
+	height: 80rpx;
   top:84rpx;
   position: fixed;
   z-index:99;
@@ -177,22 +177,24 @@ page {
 
 /*辅助导航 nav2*/
 .top-bar2 {
-  height: 80rpx;
-  line-height: 50rpx;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 70rpx;
   background: #FFF; 
   width:100%;
-
   margin-top: 0rpx;
-
   border-top: 1rpx solid #F2f2f2;
   border-bottom: 1rpx solid #F2f2f2;
-
 }
 .top-bar-item2 {
-  display:inline-block;
-  width: 248rpx;
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 33.3%;
   color: #999;
   text-align: center;
+  height: 60rpx;
   line-height: 60rpx;
   font-size: 24rpx;
 }

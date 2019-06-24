@@ -29,6 +29,7 @@ Page({
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
     buyin_rate:90,  //礼物折现率
+    loadingHidden: true, // loading
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -325,7 +326,7 @@ Page({
         that.setData({
           windowWidth: res.windowWidth,
           windowHeight: res.windowHeight,
-          dkheight: winHeight - 200,
+          dkheight: winHeight - 2,
           scrollTop: that.data.scrollTop + 10
         })
       }
@@ -350,7 +351,9 @@ Page({
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
     console.log('reloadData shop_type:' + shop_type+' pagesize:'+pagesize,' current time:',currenttime);
-   
+    that.setData({
+      loadingHidden: false,
+    })
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_list',
@@ -372,7 +375,11 @@ Page({
       success: function (res) {
         console.log(res.data);
         var orderObjects = res.data.result;
-        var all_rows = res.data.all_rows;
+        var all_rows = res.data.all_rows
+        that.setData({
+          loadingHidden: true,
+        })
+       
         if (!res.data.result && page==1) {
           wx.showToast({
             title:"空空如也,快去送礼吧！",
@@ -384,7 +391,7 @@ Page({
           }, 500)
           that.setData({
             orders: [],
-            all_rows: 0
+            all_rows: 0,
           })
         } else {
           // 存储地址字段
@@ -579,7 +586,6 @@ Page({
                 orders[order_index]['status'] = 8  // 8 订单取消
                 that.setData({
                   orders: orders,
-            
                 })
 
               } else {
@@ -658,4 +664,21 @@ Page({
       url: '../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
     });
   },
+
+  onPullDownRefresh() {
+    var that = this 
+    console.log('onPullDownRefresh:下拉刷新')
+    that.setData({
+      page: 1,
+      orders: [],
+      loadingHidden: false,
+    })
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+    }, 1500)
+    that.reloadData()
+  },
+
 });

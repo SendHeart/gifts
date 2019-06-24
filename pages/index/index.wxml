@@ -1,6 +1,6 @@
 <import src="../common/nav_order.wxml" />
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
-<scroll-view class="container" scroll-y bindscrolltolower="getMoreOrdersTapTag" bindscroll="scrolltoupper" scroll-top="{{scrollTop}}">
+<scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscrolltolower="getMoreOrdersTapTag" bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" ><!-- bindscrolltoupper="onPullDownRefresh" -->
   <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
     <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
     <view class='' style="margin-top:-25rpx;font-size:25rpx;">{{page}}/{{page_num}}</view>
@@ -73,6 +73,9 @@
 
     </view>
   </view>
+  <loading hidden="{{loadingHidden}}">
+    加载中...
+  </loading>
 </scroll-view>
 <modal class="modalbox" height="90%" hidden="{{hiddenmodalput}}" title="确定要把礼物折现回收?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
 
