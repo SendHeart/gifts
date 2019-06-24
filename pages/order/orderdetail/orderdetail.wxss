@@ -363,7 +363,7 @@ background-color: #E34C55;
 
 /*cart*/
 .button-group {
-  line-height: 60rpx;
+  line-height: 55rpx;
   text-align: center;
   width: 250rpx;
   height: 60rpx;
