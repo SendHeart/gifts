@@ -881,10 +881,12 @@ Page({
         var rshowmorehidden;
         if (!recommentslist) return
         for (var i = 0; i < recommentslist.length; i++) {
-          if (res.data.result[i]['activity_image'].indexOf("http") < 0) {
+          if (recommentslist[i]['activity_image'].indexOf("http") < 0 && recommentslist[i]['activity_image'] ) {
+            recommentslist[i]['activity_image'] = weburl + '/' + recommentslist[i]['activity_image'];
+          }
+          if (recommentslist[i]['image'].indexOf("http") < 0 && recommentslist[i]['image']) {
             recommentslist[i]['image'] = weburl + '/' + recommentslist[i]['image'];
           }
-          
           //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
           if (i > 1) {
             recommentslist[i]['hidden'] = 0;  //1
