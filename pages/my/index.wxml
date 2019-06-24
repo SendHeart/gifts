@@ -26,7 +26,7 @@
 	  <image src="../../images/u621.png" />
 	  <text>送心文章</text>
   </view>
-  <view bindtap="navigateToMyLocation" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+  <view wx:if="{{user_type>1}}" bindtap="navigateToMyLocation" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/iconfont-shouhuodizhi.png" />
 	  <text>我的位置</text>
   </view>

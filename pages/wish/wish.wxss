@@ -1,5 +1,8 @@
 @import "../../lib/style/font.wxss";
 
+page {
+  background: #1d1d1d;
+}
 .startBar {
   height: 75rpx;
   background: #333;
@@ -149,7 +152,7 @@
 }
 .banner .btnshare {
   font-size: 24rpx;
-  position: absolute;
+  position: fixed;
   top: 0rpx;
   right: 20rpx;
   z-index: 99;

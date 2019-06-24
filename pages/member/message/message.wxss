@@ -114,8 +114,7 @@ page {
  
 .msg-item-text{
   margin:20rpx 20rpx 0 20rpx;
-  font-size:30rpx;
-  font-weight: bold;
+  font-size:28rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
@@ -128,7 +127,7 @@ page {
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #999;
+  color: #444;
 }
 .msg-item-text3{
   margin-right:20rpx;
@@ -396,8 +395,8 @@ page {
   justify-content: center;
   text-align: center;
   border-radius: 18rpx;
-  background: #fff;
-  padding: 20rpx;
+  background: #e34c55;
+  padding: 60rpx 20rpx;
 }
 
 .goods-item-list {
@@ -410,7 +409,7 @@ page {
   margin: 10rpx;
 }
 .ai-goods-title {
-  color: #444;
+  color: #fff;
   font-size: 35rpx;
   line-height: 2.8;
   font-weight: bold;
@@ -419,24 +418,25 @@ page {
 .goods-item-content {
   color: #444;
   font-size: 24rpx;
-  line-height: 2.2;
+  line-height: 110rpx;
   align-content: center;
   border: 1rpx solid #eee;
-  border-radius: 18rpx;
+  border-radius: 50%;
   background: #eee;
   margin:10rpx;
-  width: 136rpx;
+  width: 110rpx;
+  height: 110rpx;
 }
 .goods-item-content2 {
-  color: #e34c55;
+  color: #fff;
   font-size: 24rpx;
-  line-height: 2.2;
+  line-height: 110rpx;
   align-content: center;
-  border: 2rpx solid #e34c55;
-  border-radius: 18rpx;
-  background: #fff;
+  border-radius: 50%;
+  background: #94191F;
   margin:10rpx;
-  width: 130rpx;
+  width: 110rpx;
+  height: 110rpx;
 }
 .opt-buttons {
   width: 96%;
@@ -451,6 +451,17 @@ page {
   font-size: 36rpx;
   font-weight: bold;
   line-height: 100rpx;
+  margin: 30rpx auto;
+  border-radius: 50rpx;
+}
+.opt-button2 {
+  background: #fff;
+  width: 200rpx;
+  height: 80rpx;
+  text-align: center;
+  color: #444;
+  font-size: 28rpx;
+  line-height: 80rpx;
   margin: 30rpx auto;
   border-radius: 50rpx;
 }

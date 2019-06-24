@@ -14,7 +14,7 @@
  
   <view wx:if="{{messageflag==2}}" class="opt-buttons">
     <form bindsubmit="formSubmit"  data-name='selectBtn_last' report-submit="true" hidden="{{selected_start}}">
-      <button class="opt-button"  style="width:300rpx;background:#fff;color:#333" formType="submit"  >返回上一项</button> <!-- bindtap="selectBtnTap" -->
+      <button class="opt-button2" formType="submit"  >返回上一项</button> <!-- bindtap="selectBtnTap" -->
     </form>
     <form bindsubmit="formSubmit"  data-name='selectBtn_next' report-submit="true" hidden="{{selected_all}}">
       <button class="opt-button" style="width:300rpx;margin-left:50rpx;" formType="submit"  >继续</button>
@@ -79,7 +79,7 @@
         <image class="select-goods-image" src="{{select_goods_2.image}}" mode='aspectFill'></image>
         <view class="select-goods-content">{{select_goods_2.name}}</view>
         <view class="select-goods-content" style='color:gray'>{{select_goods_2.act_info}}</view>
-        <view class="price-list"> 
+        <view class="price-list">   
            {{select_goods_2.market_price>0?'市场价':''}} <view class="price-market">{{select_goods_2.market_price>0?'￥'+select_goods_2.market_price+' ':''}}</view>
           {{select_goods_2.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_2.sell_price}}</view>
         </view> 

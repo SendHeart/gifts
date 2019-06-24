@@ -52,6 +52,7 @@ page {
 	text-align: center;
 	display: block;
 	padding: 0 20px;
+  font-size: 28rpx;
 }
 
 image {
@@ -90,8 +91,9 @@ image {
 
 .gifts-image {
   margin: 20rpx;
-  width: 450rpx;
-  height: 350rpx;
+  width: 350rpx;
+  height: 250rpx;
+  border: 4rpx solid #DDD;
 }
 
 .sentbtn {
@@ -101,7 +103,7 @@ image {
   align-content: center;
   margin: 60rpx auto 20rpx auto;
   width: 100%;
-  height: 120rpx;
+  height: 140rpx;
 }
 
 .sentbtn button {

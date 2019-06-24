@@ -28,7 +28,7 @@
  <text style="width:30%;font-size:30rpx;">只送Ta心仪的礼物</text>
 </view>
 -->
-<scroll-view scroll-y="true" style="height:{{dkheight}};margin-bottom:60px;" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+<scroll-view scroll-y="true" style="height:{{dkheight}};" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
 <view class="container">  
     <view class="venues_box">
             <block wx:for="{{carts}}" wx:key="">
