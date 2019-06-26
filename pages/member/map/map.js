@@ -117,10 +117,38 @@ Page({
       activity_omid: activity_omid,
     })
     console.log('map onlod activity_lat:', activity_lat, ' activity_lng:', activity_lng, ' activity_title:', activity_title, ' activity_id:', activity_id);
+    wx.getSetting({
+      success(res) {
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap info 长度:" + length, authMap)
+        if (authMap.hasOwnProperty('scope.userLocation')) {
+          if (!res.authSetting['scope.userLocation']) {
+            wx.showModal({
+              title: '用户未授权',
+              content: '请授权地理位置权限',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定授权地理位置权限')
+                  wx.openSetting({
+                    success: function success(res) {
+                      console.log('openSetting success', res.authSetting)
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      }
+    })
+    /*
     var openSetting = wx.getStorageSync('userLocation') ? wx.getStorageSync('userLocation') : 1
     this.setData({
       openSetting: openSetting
     })
+    */
     //检测更新
     that.checkUpdate();
     if (that.data.userInfo) {
@@ -172,8 +200,6 @@ Page({
         callbackAddressInfo: null
       })
     }
-  
-   
   },
 
   getSetting: function (e) {

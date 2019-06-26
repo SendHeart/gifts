@@ -130,6 +130,7 @@ Page({
     var is_buymyself = that.data.is_buymyself
     var title = is_buymyself == 1 ? '收货地址' :'请确认'
     var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
+   
     if (is_buymyself == 1){
       that.set_address()
     }else{
@@ -162,17 +163,30 @@ Page({
     var address_nationalCode = that.data.address_nationalCode
     var address_telNumber = that.data.address_telNumber
     var is_buymyself = that.data.is_buymyself
-    //通讯录权限
+    //通讯录权限检查
     wx.getSetting({
       success(res) {
-        if (!res.authSetting['scope.address']) {
-          wx.authorize({
-            scope: 'scope.address',
-            success() {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              //wx.startRecord()
-            }
-          })
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap info 长度:" + length, authMap)
+        if (authMap.hasOwnProperty('scope.address')) {
+          if (!authMap['scope.address']) { //授权拒绝
+            wx.showModal({
+              title: '用户未授权',
+              content: '请授权通讯地址权限',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定授权通讯地址权限')
+                  wx.openSetting({
+                    success: function success(res) {
+                      console.log('openSetting success', res.authSetting);
+                    }
+                  })
+                }
+              }
+            })
+          }
         }
       }
     })
@@ -189,7 +203,6 @@ Page({
         address_detailInfo = res.detailInfo
         address_nationalCode = res.nationalCode
         address_telNumber = res.telNumber
-
         that.setData({
           address_userName: address_userName,
           address_postalCode: address_postalCode,
@@ -315,6 +328,7 @@ Page({
       goods_flag: goods_flag,
       is_buymyself: is_buymyself,
     })
+   
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -324,7 +338,7 @@ Page({
         })
       }
     })
-
+   
     if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1) {
       console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive)
       wx.switchTab({

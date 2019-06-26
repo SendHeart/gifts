@@ -67,43 +67,55 @@ Page({
               })
               console.log('获取用户OpenId:')
               console.log(user.openid)
+              //权限
+              wx.getSetting({
+                success(res) {
+                  var authMap = res.authSetting;
+                  var length = Object.keys(authMap).length;
+                  console.log("authMap 长度:", length, authMap)
+                  //通讯录权限
+                  if (!res.authSetting['scope.address']) {
+                    wx.authorize({
+                      scope: 'scope.address',
+                      success(e) {
+                        console.log('通讯录权限' + e.errMsg)
+                      },
+                      fail(e) {
+                        console.log('通讯录权限授权失败' + e.errMsg)
+                      }
+                    })
+                  }
+                  //保存到相册权限
+                  if (!res.authSetting['scope.writePhotosAlbum']) {
+                    wx.authorize({
+                      scope: 'scope.writePhotosAlbum',
+                      success(e) {
+                        console.log('保存到相册权限' + e.errMsg)
+                      },
+                      fail(e) {
+                        console.log('保存到相册权限授权失败' + e.errMsg)
+                      }
+                    })
+                  }
+                  //位置权限
+                  if (!res.authSetting['scope.userLocation']) {
+                    wx.authorize({
+                      scope: 'scope.userLocation',
+                      success(e) {
+                        console.log('位置授权成功' + e.errMsg)
+                      },
+                      fail(e) {
+                        console.log('位置授权失败' + e.errMsg)
+                      }
+                    })
+                  }
+                }
+              })
               that.login()
             }
           })
         } else {
           console.log('获取用户登录态失败！' + res.errMsg)
-        }
-      }
-    })
-    //权限
-    wx.getSetting({
-      success(res) {
-        //通讯录权限
-        if (!res.authSetting['scope.address']) {
-          wx.authorize({
-            scope: 'scope.address',
-            success() {
-              console.log('通讯录权限' + res.errMsg)
-            }
-          })
-        }
-        //保存到相册权限
-        if(!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success() {
-              console.log('保存到相册权限' + res.errMsg)
-            }
-          })
-        }
-        //位置权限
-        if (!res.authSetting['scope.userLocation']) {
-          wx.authorize({
-            scope: 'scope.userLocation',
-            success() {
-              console.log('位置授权成功' + res.errMsg)
-            }
-          })
         }
       }
     })
@@ -187,7 +199,7 @@ Page({
     })
   },
   login() {
-    console.log(this.data.scode);
+    console.log(this.data.scode)
     let that = this
     var shop_type = that.data.shop_type
     /*
@@ -226,7 +238,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('用户基本信息:',res.data.result);
+        console.log('用户基本信息:',res.data.result)
         that.setData({
           username: res.data.result['username'],
           token: res.data.result['token']

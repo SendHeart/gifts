@@ -220,19 +220,6 @@ Page({
         })
       }
     })
-    wx.getSetting({
-      success(res) {
-        if (!res.authSetting['scope.writePhotosAlbum']) {
-          wx.authorize({
-            scope: 'scope.writePhotosAlbum',
-            success() {
-              // 用户已经同意小程序使用录音功能，后续调用 wx.startRecord 接口不会弹窗询问
-              //wx.startRecord()
-            }
-          })
-        }
-      }
-    })
     that.get_project_gift_para()
   },
   onShow:function(){
@@ -648,15 +635,40 @@ Page({
     }
   },
   eventSave: function () {
+    wx.getSetting({
+      success(res) {
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap info 长度:" + length, authMap)
+        if (authMap.hasOwnProperty('scope.writePhotosAlbum')) {
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.showModal({
+              title: '用户未授权',
+              content: '请授权保存相册权限',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定授权保存相册权限')
+                  wx.openSetting({
+                    success: function success(res) {
+                      console.log('openSetting success', res.authSetting);
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      }
+    })
     wx.saveImageToPhotosAlbum({
       filePath: this.data.shareImage,
       success(res) {
         wx.showToast({
           title: '图片已保存到相册，赶紧晒一下吧~',
-          icon: 'success',
+          icon: 'none',
           duration: 1500
         })
-        
       }
     })
   },
