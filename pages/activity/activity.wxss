@@ -85,40 +85,7 @@ page {
 }
 
 /*推荐商品列表头*/
-
-.item {
-  height: 180rpx;
-  margin-left: 0rpx;
-  margin-top: 0rpx;
-  background: white;
-  border-bottom: 1px solid #eee;
-  padding: 25rpx;
-  overflow: hidden;
-}
-
-.item .img {
-  width: 180rpx;
-  height: 170rpx;
-  margin-right: 10rpx;
-  margin-top: 10rpx;
-  margin-left: 10rpx;
-  float: left;
-}
-
-.item .img_tag {
-  width: 5%;
-  height: 30rpx;
-}
-
-.venues_box {
-  display: block;
-  width: 100%;
-  padding-bottom: 40rpx;
-  
-  overflow: hidden;
-}
-
-.venues_item {
+.venues-item {
   display: inline-block;
   width: 355rpx;
   margin: 0 10rpx;
@@ -127,19 +94,19 @@ page {
   padding-bottom: 10rpx;
 }
 
-.venues_item .mainpic {
+.venues-item .mainpic {
   display: block;
   width: 310rpx;
   height: 310rpx;
   margin: 20rpx auto;
 }
-.venues_item .img-discount {
+.venues-item .img-discount {
   display: block;
   width: 30rpx;
   height: 30rpx;
   margin-left:10rpx;
 }
-.venues_item .goods_name {
+.venues-item .goods_name {
   display: block;
   color: #444;
   font-size: 28rpx;
@@ -148,7 +115,7 @@ page {
   white-space: nowrap;
 }
 
-.venues_item .goods_tag {
+.venues-item .goods_tag {
   color: #999;
   font-size: 20rpx;
   padding: 2rpx 6rpx;
@@ -156,12 +123,12 @@ page {
   border-radius: 6rpx;
 }
 
-.venues_item .goods_tag image {
+.venues-item .goods_tag image {
   width: 10%;
   height: 30rpx;
 }
 
-.venues_item .goods_prom {
+.venues-item .goods_prom {
   display: block;
   color: #999;
   font-size: 24rpx;

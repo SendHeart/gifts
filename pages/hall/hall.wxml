@@ -82,7 +82,6 @@
               <input wx:if="{{cart_idx=='99999'}}" type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
               <!-- 加号 -->
               <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
-              
             </view>
             
           </view>
