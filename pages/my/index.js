@@ -8,6 +8,7 @@ var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var navList2 = wx .getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 Page({
@@ -776,6 +777,7 @@ Page({
     var gifts_send = that.data.gifts_send
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
@@ -811,7 +813,10 @@ Page({
     if (art_id>0){
       that.navigateToPlaysx()
     }
-   
+    var qr_type='membershare'
+    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
+
   },
   onShow: function () {
     var that = this
@@ -862,9 +867,67 @@ Page({
       url: '/pages/member/donate/donate'
     })
   },
+  image_save: function (image_url, image_cache_name) {
+    var that = this
+    console.log('membershare imge save image url:', image_url, 'image_cache_name:', image_cache_name)
+    wx.downloadFile({
+      url: image_url,
+      success: function (res) {
+        if (res.statusCode === 200) {
+          var img_tempFilePath = res.tempFilePath
+          // console.log('图片下载成功' + res.tempFilePath)
+          const fs = wx.getFileSystemManager()
+          fs.saveFile({
+            tempFilePath: res.tempFilePath, // 传入一个临时文件路径
+            success(res) {
+              console.log('membershare image_save 用户分享图片缓存成功', image_cache_name, res.savedFilePath)
+              wx.setStorageSync(image_cache_name, res.savedFilePath)
+            },
+            fail(res) {
+              console.log(' membershare image_save 用户图片缓存失败', image_cache_name, res)
+              var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+              var membershare_qrcode_cache = wx.getStorageSync('membershare_qrcode_cache_' + that.data.act_id)
+              fs.getSavedFileList({
+                success(res) {
+                  console.log('membershare getSavedFileList 缓存文件列表', res)
+                  for (var i = 0; i < res.fileList.length; i++) {
+                    if (res.fileList[i]['filePath'] != wx_headimg_cache && res.fileList[i]['filePath'] != membershare_qrcode_cache) {
+                      fs.removeSavedFile({
+                        filePath: res.fileList[i]['filePath'],
+                        success(res) {
+                          console.log('membershare image_save 缓存清除成功', res)
+                        },
+                        fail(res) {
+                          console.log('membershare image_save 缓存清除失败', res)
+                        }
+                      })
+                    }
+                  }
+                  fs.saveFile({
+                    tempFilePath: img_tempFilePath, // 传入一个临时文件路径
+                    success(res) {
+                      wx.setStorageSync(image_cache_name, res.savedFilePath)
+                    },
+                  })
+                },
+                fail(res) {
+                  console.log('membershare getSavedFileList 缓存文件列表查询失败', res)
+                }
+              })
+            },
+          })
+        } else {
+          console.log('membershare image_save 响应失败', res.statusCode)
+        }
+      }
+    })
+  },
   navigateToShare: function () {
+    var that = this
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
+    var share_member_qrcode = wx.getStorageSync('member_qrcode_cache_' + m_id)
     wx.navigateTo({
-      url: '/pages/member/share/share?qr_type=membershare'
+      url: '/pages/member/share/share?qr_type=membershare' + '&share_member_qrcode_cache=' + share_member_qrcode
     })
   },
   navigateToCoupon: function () {

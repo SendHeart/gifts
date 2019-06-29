@@ -37,18 +37,7 @@ Page({
     let startBarHeight = 20
     let navgationHeight = 44
     let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
+  
   },
   goBack: function () {
     var pages = getCurrentPages();
@@ -112,31 +101,53 @@ Page({
       //wechat_share: navList_new[6]['img2'],
       //coupon_img: navList_new[7]['img'],
     })
-
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true,
-      })
-      that.eventDraw()
-    }, 1500)
    
   },
 
   eventDraw: function () {
     var that = this
+    var qrcode_width= 200
+    var qrcode_height = 230
+    var qrcode_left = 100
+    var qrtitle_left = 120
+   
+    var qrcode_top = 50
     var wechat_share = that.data.wechat_share
     var shop_type = that.data.shop_type
     var qr_type = that.data.qr_type ? that.data.qr_type:'couponshare'  //
     var act_id = that.data.act_id ? that.data.act_id : ''  //
-    var act_title = that.data.act_title ? that.data.act_title : ''  //
+    var act_title = that.data.act_title ? that.data.act_title : '开启礼物电商时代，200万人都在用的礼物小程序'  //
     var coupons = that.data.coupons
     var coupons_json = that.data.coupons_json
     var coupons_id = that.data.coupons_id
     var coupons_type = that.data.coupons_type
     var coupons_flag = that.data.coupons_flag
     var coupons_name = that.data.coupons_name
+    var share_activity_qrcode = that.data.share_activity_qrcode_cache ? that.data.share_activity_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json + '&act_id=' + act_id
+    var share_coupon_qrcode = that.data.share_coupon_qrcode_cache ? that.data.share_coupon_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json
+    var share_member_qrcode_cache = that.data.share_member_qrcode_cache ? that.data.share_member_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    var share_qrcode = ''
+    var qrtitle_len = act_title.length //计算文字居中
+    if (qrtitle_len<11){
+      var qrtitle_width = qrtitle_len*20  //每个默认字体的汉字宽度大约20px
+      qrtitle_left = (400 - qrtitle_width)/2   //画布宽度默认400
+    }
+
+    if (act_id) {
+      share_qrcode = share_activity_qrcode
+    } else if (coupons_id){
+      share_qrcode = share_coupon_qrcode
+    } else if (qr_type=='membershare') {
+      share_qrcode = share_member_qrcode_cache
+      qrtitle_left = 60
+      qrcode_width = 230
+      qrcode_left = 85
+      qrcode_top = 80
+    }
+    console.log('member share eventDraw() title len:',act_title.length)
     that.setData({
       qr_type: qr_type,
+      share_qrcode: share_qrcode,
     })
     /*
     wx.showLoading({
@@ -144,57 +155,76 @@ Page({
       mask: true
     })
     */
-    console.log('优惠券扫码图片信息:', coupons,'qr_type:',qr_type)
+    console.log('扫码图片信息:', coupons, 'qr_type:', qr_type, 'windowWidth:', that.data.windowWidth, ' windowHeight',that.data.windowHeight)
     that.setData({
       painting: {
-        width: 375,
-        height: 667,
+        width: 400,
+        height: 350,
+        windowHeight: that.data.windowHeight ? that.data.windowHeight:400,
+        windowWidth: that.data.windowWidth ? that.data.windowWidth:200,
         clear: true,
+        background: 'white',
         views: [
           {
-            type: 'image',
-            url: wechat_share,
-            top: 0,
-            left: 0,
-            width: 375,
-            height: 667
-          },
-          
-          {
-            type: 'image',
-            url: weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type +'&coupons_id=' + coupons_id + '&coupons=' + coupons_json + '&act_id=' + act_id ,
-            top: 450,
-            left: 130,
-            width: 110,
-            height: 125,
-
-          },
-          {
             type: 'text',
-            content: '长按识别二维码，领取优惠券',
+            content: act_title,
             fontSize: 18,
-            color: '#dc344d',
+            color: '#333',
             textAlign: 'left',
-            top: 580,
-            left: 70,
+            top: 20,
+            left: qrtitle_left,
             lineHeight: 30,
             MaxLineNumber: 2,
             breakWord: true,
-            //width: 150
-          }
+            width: qrcode_width
+          },
+          {
+            type: 'image',
+            url: share_qrcode,
+            top: qrcode_top,
+            left: qrcode_left,
+            width: qrcode_width,
+            height: qrcode_height,
+          },
         ]
       }
     })
     console.log('二维码 paint:', that.data.painting)
   },
   eventSave: function () {
+    wx.getSetting({
+      success(res) {
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap info 长度:" + length, authMap)
+        if (authMap.hasOwnProperty('scope.writePhotosAlbum')) {
+          if (!res.authSetting['scope.writePhotosAlbum']) {
+            wx.showModal({
+              title: '用户未授权',
+              content: '请授权保存相册权限',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定授权保存相册权限')
+                  wx.openSetting({
+                    success: function success(res) {
+                      console.log('openSetting success', res.authSetting);
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      }
+    })
     wx.saveImageToPhotosAlbum({
-      filePath: this.data.shareImage,
+      filePath: this.data.share_qrcode_image,
       success(res) {
         wx.showToast({
-          title: '保存图片成功',
-          icon: 'success',
-          duration: 2000
+          title: '图片已保存到相册，赶紧晒一下吧~',
+          icon: 'none',
+          duration: 1500
         })
       }
     })
@@ -204,12 +234,35 @@ Page({
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
       this.setData({
-        shareImage: tempFilePath
+        share_qrcode_image: tempFilePath
       })
       wx.hideLoading()
     }
   },
-  
+  //点击开始的时间  
+  timestart: function (e) {
+    var that = this
+    that.setData({ timestart: e.timeStamp });
+  },
+  //点击结束的时间
+  timeend: function (e) {
+    var that = this
+    that.setData({ timeend: e.timeStamp });
+  },
+  //保存图片
+  saveImg: function (e) {
+    var that = this;
+    console.log("长按")
+    wx.showModal({
+      title: '请确认',
+      content: '保存相册',
+      success: function (res) {
+        if (res.confirm) {
+          that.eventSave()
+        }
+      }
+    })
+  },
 	onLoad: function (options) {
     var that = this
     console.log('share options:', options)
@@ -226,8 +279,10 @@ Page({
     var coupons_id = coupons_json?coupons['id']:0
     var coupons_type = coupons_json ? coupons['type'] : 1
     var coupons_flag = coupons_json?coupons['flag']:0
-    
-    //that.setNavigation()
+    var share_activity_qrcode_cache = options.share_activity_qrcode_cache ? options.share_activity_qrcode_cache : ''
+    var share_coupon_qrcode_cache = options.share_coupon_qrcode_cache ? options.share_coupon_qrcode_cache : ''
+    var share_member_qrcode_cache = options.share_member_qrcode_cache ? options.share_member_qrcode_cache : ''
+   
     that.setData({
       username:username,
       appid: appid,
@@ -242,8 +297,25 @@ Page({
       coupons_id: coupons_id,
       coupons_type: coupons_type,
       coupons_flag: coupons_flag,
+      share_activity_qrcode_cache: share_activity_qrcode_cache,
+      share_coupon_qrcode_cache: share_coupon_qrcode_cache,
+      share_member_qrcode_cache: share_member_qrcode_cache,
 		})
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log(res.model)
+        if (res.model == 'iPhone X') {
+          startBarHeight = 44
+        }
+        that.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth,
+          dkheight: res.windowHeight - 10,
+        })
+      }
+    })
     that.get_project_gift_para()
+    that.eventDraw()
 	},
   onShow:function(){
     var that = this

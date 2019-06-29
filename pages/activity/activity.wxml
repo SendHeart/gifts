@@ -18,9 +18,12 @@
 <view class="footer" style='' bindtap='bannerTapTag' data-bannerlink="{{footer_link}}">
   <image src="{{main_footer_Bg}}" mode="widthFix"></image>
 </view>
-<view class="sentbtn">
+<view class="sentbtn" hidden='{{buttonhidden}}'>
   <button bindtap="qrcodeTapTag">分享给朋友</button>
   <button bindtap="goBack">返回</button>
 </view>
+ <loading hidden="{{loadingHidden}}">
+    加载中...
+  </loading>
 
  

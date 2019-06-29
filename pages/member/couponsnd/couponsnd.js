@@ -54,6 +54,61 @@ Page({
     index:0,
  
   },
+  image_save: function (image_url, image_cache_name) {
+    var that = this
+    console.log('couponsnd imge save image url:', image_url, 'image_cache_name:', image_cache_name)
+    wx.downloadFile({
+      url: image_url,
+      success: function (res) {
+        if (res.statusCode === 200) {
+          var img_tempFilePath = res.tempFilePath
+          // console.log('图片下载成功' + res.tempFilePath)
+          const fs = wx.getFileSystemManager()
+          fs.saveFile({
+            tempFilePath: res.tempFilePath, // 传入一个临时文件路径
+            success(res) {
+              console.log('couponsnd image_save 优惠券分享图片缓存成功', image_cache_name, res.savedFilePath)
+              wx.setStorageSync(image_cache_name, res.savedFilePath)
+            },
+            fail(res) {
+              console.log(' couponsnd image_save 优惠券图片缓存失败', image_cache_name, res)
+              var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+              var coupon_qrcode_cache = wx.getStorageSync('coupon_qrcode_cache_' + that.data.coupon_id)
+              fs.getSavedFileList({
+                success(res) {
+                  console.log('couponsnd getSavedFileList 缓存文件列表', res)
+                  for (var i = 0; i < res.fileList.length; i++) {
+                    if (res.fileList[i]['filePath'] != wx_headimg_cache && res.fileList[i]['filePath'] != activity_qrcode_cache) {
+                      fs.removeSavedFile({
+                        filePath: res.fileList[i]['filePath'],
+                        success(res) {
+                          console.log('couponsnd image_save 缓存清除成功', res)
+                        },
+                        fail(res) {
+                          console.log('couponsnd image_save 缓存清除失败', res)
+                        }
+                      })
+                    }
+                  }
+                  fs.saveFile({
+                    tempFilePath: img_tempFilePath, // 传入一个临时文件路径
+                    success(res) {
+                      wx.setStorageSync(image_cache_name, res.savedFilePath)
+                    },
+                  })
+                },
+                fail(res) {
+                  console.log('couponsnd getSavedFileList 缓存文件列表查询失败', res)
+                }
+              })
+            },
+          })
+        } else {
+          console.log('couponsnd image_save 响应失败', res.statusCode)
+        }
+      }
+    })
+  },
   setNavigation: function () {
     let startBarHeight = 20
     let navgationHeight = 44
@@ -112,6 +167,10 @@ Page({
     var end_time = that.data.coupons_info[that.data.index]['end_time']
     var coupon_share_img = that.data.coupons_info[that.data.index]['share_image']
     var coupons = that.data.coupons_info[that.data.index]
+    var qr_type = that.data.qr_type
+    var coupons_json = JSON.stringify(coupons)
+    var share_coupon_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupon_flag + '&coupons_type=' + coupon_type + '&coupons_id=' + coupon_id + '&coupons=' + coupons_json
+    that.image_save(share_coupon_qrcode, 'coupon_qrcode_cache_' + coupon_id)
     console.log('confirm name:', name,'coupon_id:',coupon_id)
     that.setData({
       hiddenmodalput: true,
@@ -127,7 +186,9 @@ Page({
       end_time: end_time,
       coupon_share_img: coupon_share_img,
       coupons: coupons,
+      share_coupon_qrcode: share_coupon_qrcode,
     })
+   
     //that.get_project_gift_para()
     //that.get_coupon()
   },
@@ -172,6 +233,7 @@ Page({
     var hiddenqrcode = that.data.hiddenqrcode
     var hiddenmodalput = that.data.hiddenmodalput
     var coupons_json = JSON.stringify(that.data.coupons)
+    var share_coupon_qrcode = that.data.share_coupon_qrcode
     console.log('qrcodeTapTag coupons_json:', coupons_json)
     that.setData({
       hiddenqrcode: !hiddenqrcode,
@@ -181,7 +243,7 @@ Page({
     })
     //that.eventDraw()
     wx.navigateTo({
-      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name
+      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name + '&share_coupon_qrcode_cache=' + share_coupon_qrcode
     })
 
   },
@@ -446,7 +508,6 @@ Page({
           that.setData({
             coupons: coupons
           })
-         
         }
       }
     })

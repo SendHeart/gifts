@@ -4,7 +4,8 @@ var util = require('../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
-
+var appid = app.globalData.appid;
+var secret = app.globalData.secret;
 var page = 1;
 var pagesize = 10;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -65,7 +66,7 @@ Page({
     avatarUrl: userInfo.avatarUrl,
     shop_type:shop_type,
     navList2: navList2,
-
+    buttonhidden:true,
   }, 
   /*
   setNavigation:function() {
@@ -97,7 +98,61 @@ Page({
     }
 
   },
-  
+  image_save: function (image_url, image_cache_name) {
+    var that = this
+    console.log('activity imge save image url:', image_url, 'image_cache_name:', image_cache_name)
+    wx.downloadFile({
+      url: image_url,
+      success: function (res) {
+        if (res.statusCode === 200) {
+          var img_tempFilePath = res.tempFilePath
+          // console.log('图片下载成功' + res.tempFilePath)
+          const fs = wx.getFileSystemManager()
+          fs.saveFile({
+            tempFilePath: res.tempFilePath, // 传入一个临时文件路径
+            success(res) {
+              console.log('activity image_save 活动分享图片缓存成功', image_cache_name, res.savedFilePath)
+              wx.setStorageSync(image_cache_name, res.savedFilePath)
+            },
+            fail(res) {
+              console.log(' activity image_save 活动图片缓存失败', image_cache_name, res)
+              var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+              var activity_qrcode_cache = wx.getStorageSync('activity_qrcode_cache_' + that.data.act_id)
+              fs.getSavedFileList({
+                success(res) {
+                  console.log('activity getSavedFileList 缓存文件列表', res)
+                  for (var i = 0; i < res.fileList.length; i++) {
+                    if (res.fileList[i]['filePath'] != wx_headimg_cache && res.fileList[i]['filePath'] != activity_qrcode_cache) {
+                      fs.removeSavedFile({
+                        filePath: res.fileList[i]['filePath'],
+                        success(res) {
+                          console.log('detail image_save 缓存清除成功', res)
+                        },
+                        fail(res) {
+                          console.log('detail image_save 缓存清除失败', res)
+                        }
+                      })
+                    }
+                  }
+                  fs.saveFile({
+                    tempFilePath: img_tempFilePath, // 传入一个临时文件路径
+                    success(res) {
+                      wx.setStorageSync(image_cache_name, res.savedFilePath)
+                    },
+                  })
+                },
+                fail(res) {
+                  console.log('activity getSavedFileList 缓存文件列表查询失败', res)
+                }
+              })
+            },
+          })
+        } else {
+          console.log('activity image_save 响应失败', res.statusCode)
+        }
+      }
+    })
+  },
   bannerTapTag: function (e) {
     var that = this
     var banner_link = e.currentTarget.dataset.bannerlink
@@ -127,17 +182,12 @@ Page({
         wx.switchTab({
           url: '/pages/hall/hall'
         })
-
       }
-      
-    
-      
     }else{
       wx.navigateTo({
         url: banner_link + '&username=' + username + '&token=' + token
       })
     }
-    
   },
   
   qrcodeTapTag: function (e) {
@@ -146,14 +196,15 @@ Page({
     var act_id = that.data.act_id
     var act_title = that.data.act_title ? that.data.act_title:'送心活动'
     var page_type = '4'  //
+    var share_activity_qrcode = wx.getStorageSync('activity_qrcode_cache_' + act_id)
     that.setData({
       qr_type: qr_type,
+      share_activity_qrcode: share_activity_qrcode,
     })
     //that.eventDraw()
     wx.navigateTo({
-      url: '../member/share/share?qr_type=' + qr_type + '&act_id=' + act_id + '&act_title=' + act_title
+      url: '../member/share/share?qr_type=' + qr_type + '&act_id=' + act_id + '&act_title=' + act_title + '&share_activity_qrcode_cache=' + share_activity_qrcode
     })
-
   },
 
   showGoods: function (e) {
@@ -241,8 +292,6 @@ Page({
 
   },
   
- 
-  
   onGotUserInfo: function (e) {
     console.log(e.detail.errMsg)
     console.log(e.detail.userInfo)
@@ -253,7 +302,10 @@ Page({
     var activityList = that.data.activityList
     var shop_type = that.data.shop_type
     var act_id = that.data.act_id
-
+    var qr_type = 'activityshare'
+    that.setData({
+      loadingHidden: false,
+    })
     //活动列表
     wx.request({
       url: weburl + '/api/client/get_activity_info',
@@ -288,13 +340,14 @@ Page({
           banner_link: activityList_new['activity_banner_link'], //活动页banner图跳转链接
           main_footer_Bg: activityList_new['activity_footer_url'], //活动页banner图
           footer_link: activityList_new['activity_footer_link'], //活动页banner图跳转链接
+          buttonhidden:false,
+        })
+        that.setData({
+          loadingHidden: true,
         })
         console.log('get_activity_info:', activityList_new, 'banner_link', that.data.banner_link)
-        setTimeout(function () {
-          that.setData({
-            loadingHidden: true,
-          })
-        }, 1500)
+        var share_activity_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&act_id=' + activityList_new['act_id']
+        that.image_save(share_activity_qrcode, 'activity_qrcode_cache_' + act_id)
       }
     })
   },
