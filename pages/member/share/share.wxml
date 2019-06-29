@@ -1,5 +1,4 @@
 <import src="../../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <view hidden="{{!hiddenqrcode}}"  class="gifts-item" >
   <!--
   <text class="desc" style=''>  
@@ -8,8 +7,8 @@
    <text>长按点击保存</text>
    -->
  
-   <image class="share-image"  src="{{share_qrcode_image}}" mode="widthFix" bindlongtap="saveImg"/>
-    <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
+  <image class="share-image"  src="{{share_qrcode_image}}" mode="widthFix" bindlongtap="saveImg"/>
+  <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
 </view>
 <view class="sentbtn">
     <button bindtap="goBack">返回</button>

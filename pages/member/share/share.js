@@ -13,7 +13,6 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
-
 ]
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 
@@ -33,12 +32,6 @@ Page({
     navList2:navList2 ,
     
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-  
-  },
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -48,7 +41,6 @@ Page({
         url: '../../hall/hall'
       })
     }
-
   },
   returnTapTag: function (e) {
     /*
@@ -129,8 +121,8 @@ Page({
     var share_qrcode = ''
     var qrtitle_len = act_title.length //计算文字居中
     if (qrtitle_len<11){
-      var qrtitle_width = qrtitle_len*20  //每个默认字体的汉字宽度大约20px
-      qrtitle_left = (400 - qrtitle_width)/2   //画布宽度默认400
+      var qrtitle_width = qrtitle_len*20  /*每个默认字体的汉字宽度大约20px*/
+      qrtitle_left = (400 - qrtitle_width)/2   /*画布宽度默认400*/
     }
 
     if (act_id) {
@@ -239,20 +231,10 @@ Page({
       wx.hideLoading()
     }
   },
-  //点击开始的时间  
-  timestart: function (e) {
-    var that = this
-    that.setData({ timestart: e.timeStamp });
-  },
-  //点击结束的时间
-  timeend: function (e) {
-    var that = this
-    that.setData({ timeend: e.timeStamp });
-  },
+
   //保存图片
   saveImg: function (e) {
     var that = this;
-    console.log("长按")
     wx.showModal({
       title: '请确认',
       content: '保存相册',
@@ -315,7 +297,18 @@ Page({
       }
     })
     that.get_project_gift_para()
-    that.eventDraw()
+    wx.showToast({
+      title: "开始生成分享码",
+      icon: 'loading',
+      duration: 2000,
+    })
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+      that.eventDraw()
+    }, 2000)
+   // that.eventDraw()
 	},
   onShow:function(){
     var that = this

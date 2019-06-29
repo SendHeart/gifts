@@ -813,9 +813,6 @@ Page({
     if (art_id>0){
       that.navigateToPlaysx()
     }
-    var qr_type='membershare'
-    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
-    that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
 
   },
   onShow: function () {
@@ -843,6 +840,9 @@ Page({
         userInfo: userInfo
       })
     })
+    var qr_type = 'membershare'
+    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
     console.log('my index user_type:',that.data.user_type)
   },
   chooseImage: function () {

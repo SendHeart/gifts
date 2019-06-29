@@ -287,7 +287,7 @@ Component({
         } else {
           const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
           //const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          //const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
           wx.getImageInfo({
             src: url,
             complete: res => {
@@ -323,10 +323,10 @@ Component({
               }
             },
             fail:res=>{
-              console.log(' canvasdrawer wx.getImageInfo 接口调用失败', res)
+              console.log(' canvasdrawer wx.getImageInfo 接口调用失败', res,url)
             }
           })
-          if (objExp.test(url)) {
+          if (objExp.test(url) || objExp3.test(url)) {
             
           } else {
             console.log('canvasdrawer getImageInfo cache url already:', url)
