@@ -38,7 +38,7 @@ Page({
 
     start_time: util.getDateStr(new Date, 0),
     overtime_status: 0, 
-    notehidden:true,
+    notehidden:false,
     hidden_share:true,
   },
 
@@ -132,19 +132,7 @@ Page({
         navList2: navList_new,
         wechat_share: navList_new[5]['img']
       })
-    }
-    wx.showToast({
-      title: "开始生成海报",
-      icon: 'loading',
-      duration: 1500,
-    })
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true,
-      })
-      that.eventDraw()
-    }, 1300)
-    
+    }  
   },
 
   onLoad (options) {
@@ -220,6 +208,7 @@ Page({
         })
       }
     })
+    that.eventDraw()
     that.get_project_gift_para()
   },
   onShow:function(){
@@ -244,6 +233,20 @@ Page({
       notehidden: !that.data.notehidden,
     })
   },
+  share_image_creat:function(){
+    var that = this
+    wx.showToast({
+      title: "开始生成海报",
+      icon: 'loading',
+      duration: 1500,
+    })
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+      that.eventDraw()
+    }, 1300)
+  },
 
   //确定按钮点击事件 
   shareConfirm: function () {
@@ -252,7 +255,9 @@ Page({
       notehidden: !that.data.notehidden,
       hidden_share: !that.data.hidden_share
     })
+    that.share_image_creat()
     that.get_project_gift_para()
+
   },
   //取消按钮点击事件  
   shareCandel: function () {
@@ -260,7 +265,7 @@ Page({
     that.setData({
       notehidden: !that.data.notehidden,
     })
-
+    that.share_image_creat()
   },  
   eventDraw: function () {
     var that = this
@@ -291,11 +296,14 @@ Page({
     var share_art_image = that.data.share_art_image ? that.data.share_art_image : ''
     var share_art_wx_headimg = that.data.share_art_wx_headimg ? that.data.share_art_wx_headimg : that.data.avatarUrl
     var share_art_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_art_id=' + share_art_id + '&share_art_cat_id=' + share_art_cat_id + '&m_id=' + m_id
-    wx.showLoading({
-      title: '生成中',
-      mask: true
-    })
-    
+   
+    if (that.data.notehidden){
+      wx.showLoading({
+        title: '生成中',
+        mask: true
+      })
+    }
+  
     if (activity_id>0){
       that.setData({
         painting: {
