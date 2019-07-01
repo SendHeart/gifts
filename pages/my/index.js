@@ -840,9 +840,6 @@ Page({
         userInfo: userInfo
       })
     })
-    var qr_type = 'membershare'
-    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
-    that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
     console.log('my index user_type:',that.data.user_type)
   },
   chooseImage: function () {
@@ -880,8 +877,8 @@ Page({
           fs.saveFile({
             tempFilePath: res.tempFilePath, // 传入一个临时文件路径
             success(res) {
-              console.log('membershare image_save 用户分享图片缓存成功', image_cache_name, res.savedFilePath)
               wx.setStorageSync(image_cache_name, res.savedFilePath)
+              console.log('membershare image_save 用户分享图片缓存成功', image_cache_name, res.savedFilePath)
             },
             fail(res) {
               console.log(' membershare image_save 用户图片缓存失败', image_cache_name, res)
@@ -925,10 +922,24 @@ Page({
   navigateToShare: function () {
     var that = this
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
-    var share_member_qrcode = wx.getStorageSync('member_qrcode_cache_' + m_id)
-    wx.navigateTo({
-      url: '/pages/member/share/share?qr_type=membershare' + '&share_member_qrcode_cache=' + share_member_qrcode
+    //var share_member_qrcode = wx.getStorageSync('member_qrcode_cache_' + m_id)
+    var qr_type = 'membershare'
+    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
+    wx.showToast({
+      title: "加载中...",
+      icon: 'loading',
+      duration: 1500,
     })
+    setTimeout(function () {
+      that.setData({
+        loadingHidden: true,
+      })
+      var share_member_qrcode_cache = wx.getStorageSync('member_qrcode_cache_' + m_id)
+      wx.navigateTo({
+        url: '/pages/member/share/share?qr_type=membershare' + '&share_member_qrcode_cache=' + share_member_qrcode_cache
+      })
+    }, 1300)
   },
   navigateToCoupon: function () {
     wx.navigateTo({

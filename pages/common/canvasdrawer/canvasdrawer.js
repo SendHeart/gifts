@@ -44,7 +44,6 @@ Component({
     wx.removeStorageSync('canvasdrawer_pic_cache')
     this.cache = wx.getStorageSync('canvasdrawer_pic_cache') || {}
     this.ctx = wx.createCanvasContext('canvasdrawer', this)
-   
   },
   methods: {
     readyPigment () {
@@ -286,7 +285,7 @@ Component({
           resolve(this.cache[url])
         } else {
           const objExp = new RegExp(/^http(s)?:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
-          //const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
+          const objExp2 = new RegExp(/^http:\/\/store\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
           const objExp3 = new RegExp(/^wxfile:\/\/([\w-]+\.)+[\w-]+(\/[\w- .\/?%&=]*)?/)
           wx.getImageInfo({
             src: url,
@@ -326,7 +325,7 @@ Component({
               console.log(' canvasdrawer wx.getImageInfo 接口调用失败', res,url)
             }
           })
-          if (objExp.test(url) || objExp3.test(url)) {
+          if (objExp.test(url) || objExp2.test(url)|| objExp3.test(url)) {
             
           } else {
             console.log('canvasdrawer getImageInfo cache url already:', url)

@@ -133,6 +133,7 @@ Page({
       share_qrcode = share_member_qrcode_cache
       qrtitle_left = 60
       qrcode_width = 230
+      qrcode_height = 260
       qrcode_left = 85
       qrcode_top = 80
     }
@@ -300,7 +301,7 @@ Page({
     wx.showToast({
       title: "开始生成分享码",
       icon: 'loading',
-      duration: 2000,
+      duration: 3000,
     })
     setTimeout(function () {
       that.setData({

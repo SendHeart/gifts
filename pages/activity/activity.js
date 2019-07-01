@@ -196,14 +196,14 @@ Page({
     var act_id = that.data.act_id
     var act_title = that.data.act_title ? that.data.act_title:'送心活动'
     var page_type = '4'  //
-    var share_activity_qrcode = wx.getStorageSync('activity_qrcode_cache_' + act_id)
+    var share_activity_qrcode_cache = wx.getStorageSync('activity_qrcode_cache_' + act_id)
     that.setData({
       qr_type: qr_type,
-      share_activity_qrcode: share_activity_qrcode,
+      share_activity_qrcode_cache: share_activity_qrcode_cache,
     })
     //that.eventDraw()
     wx.navigateTo({
-      url: '../member/share/share?qr_type=' + qr_type + '&act_id=' + act_id + '&act_title=' + act_title + '&share_activity_qrcode_cache=' + share_activity_qrcode
+      url: '../member/share/share?qr_type=' + qr_type + '&act_id=' + act_id + '&act_title=' + act_title + '&share_activity_qrcode_cache=' + share_activity_qrcode_cache
     })
   },
 

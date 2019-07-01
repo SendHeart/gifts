@@ -718,7 +718,7 @@ Page({
   updateCart: function (username, sku_id, buy_num, token) {
     var that = this
     var shop_type = that.data.shop_type
-    var token = that.data.token;
+    var token = that.data.token;  
 
     // 加入购物车
     wx.request({
@@ -1066,6 +1066,7 @@ Page({
       success(res) {
         console.log('hall getSavedFileList 缓存文件列表', res)
         for (var i = 0; i < res.fileList.length; i++) {
+          
           fs.removeSavedFile({
             filePath: res.fileList[i]['filePath'],
             success(res) {

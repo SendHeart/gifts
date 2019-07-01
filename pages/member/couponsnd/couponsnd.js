@@ -109,23 +109,6 @@ Page({
       }
     })
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
-  },
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -242,8 +225,9 @@ Page({
       qr_type: qr_type,
     })
     //that.eventDraw()
+    var share_coupon_qrcode_cache = wx.getStorageSync('coupon_qrcode_cache_' + that.data.coupon_id)
     wx.navigateTo({
-      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name + '&share_coupon_qrcode_cache=' + share_coupon_qrcode
+      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name + '&share_coupon_qrcode_cache=' + share_coupon_qrcode_cache
     })
 
   },
