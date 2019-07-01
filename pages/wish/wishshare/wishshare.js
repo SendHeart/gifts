@@ -38,7 +38,7 @@ Page({
 
     start_time: util.getDateStr(new Date, 0),
     overtime_status: 0, 
-    notehidden:false,
+    notehidden:true,
     hidden_share:true,
   },
 
@@ -208,8 +208,8 @@ Page({
         })
       }
     })
-    that.eventDraw()
     that.get_project_gift_para()
+    that.share_image_creat()
   },
   onShow:function(){
     var that = this
@@ -257,7 +257,6 @@ Page({
     })
     that.share_image_creat()
     that.get_project_gift_para()
-
   },
   //取消按钮点击事件  
   shareCandel: function () {
@@ -265,7 +264,7 @@ Page({
     that.setData({
       notehidden: !that.data.notehidden,
     })
-    that.share_image_creat()
+
   },  
   eventDraw: function () {
     var that = this
@@ -296,14 +295,11 @@ Page({
     var share_art_image = that.data.share_art_image ? that.data.share_art_image : ''
     var share_art_wx_headimg = that.data.share_art_wx_headimg ? that.data.share_art_wx_headimg : that.data.avatarUrl
     var share_art_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_art_id=' + share_art_id + '&share_art_cat_id=' + share_art_cat_id + '&m_id=' + m_id
-   
-    if (that.data.notehidden){
-      wx.showLoading({
-        title: '生成中',
-        mask: true
-      })
-    }
-  
+    wx.showLoading({
+      title: '生成中',
+      mask: true
+    })
+    
     if (activity_id>0){
       that.setData({
         painting: {

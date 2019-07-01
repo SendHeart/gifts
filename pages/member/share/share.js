@@ -52,6 +52,61 @@ Page({
       url: '../../my/index'
     });
   },
+  image_save: function (image_url, image_cache_name) {
+    var that = this
+    console.log('membershare imge save image url:', image_url, 'image_cache_name:', image_cache_name)
+    wx.downloadFile({
+      url: image_url,
+      success: function (res) {
+        if (res.statusCode === 200) {
+          var img_tempFilePath = res.tempFilePath
+          // console.log('图片下载成功' + res.tempFilePath)
+          const fs = wx.getFileSystemManager()
+          fs.saveFile({
+            tempFilePath: res.tempFilePath, // 传入一个临时文件路径
+            success(res) {
+              wx.setStorageSync(image_cache_name, res.savedFilePath)
+              console.log('membershare image_save 用户分享图片缓存成功', image_cache_name, res.savedFilePath)
+            },
+            fail(res) {
+              console.log(' membershare image_save 用户图片缓存失败', image_cache_name, res)
+              var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+              var membershare_qrcode_cache = wx.getStorageSync('membershare_qrcode_cache_' + that.data.act_id)
+              fs.getSavedFileList({
+                success(res) {
+                  console.log('membershare getSavedFileList 缓存文件列表', res)
+                  for (var i = 0; i < res.fileList.length; i++) {
+                    if (res.fileList[i]['filePath'] != wx_headimg_cache && res.fileList[i]['filePath'] != membershare_qrcode_cache) {
+                      fs.removeSavedFile({
+                        filePath: res.fileList[i]['filePath'],
+                        success(res) {
+                          console.log('membershare image_save 缓存清除成功', res)
+                        },
+                        fail(res) {
+                          console.log('membershare image_save 缓存清除失败', res)
+                        }
+                      })
+                    }
+                  }
+                  fs.saveFile({
+                    tempFilePath: img_tempFilePath, // 传入一个临时文件路径
+                    success(res) {
+                      wx.setStorageSync(image_cache_name, res.savedFilePath)
+                    },
+                  })
+                },
+                fail(res) {
+                  console.log('membershare getSavedFileList 缓存文件列表查询失败', res)
+                }
+              })
+            },
+          })
+        } else {
+          console.log('membershare image_save 响应失败', res.statusCode)
+        }
+      }
+    })
+  },
   get_project_gift_para: function () {
     var that = this
     var page = that.data.page
@@ -120,11 +175,12 @@ Page({
     var share_member_qrcode_cache = that.data.share_member_qrcode_cache ? that.data.share_member_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
     var share_qrcode = ''
     var qrtitle_len = act_title.length //计算文字居中
-    if (qrtitle_len<11){
+    if (qrtitle_len<15){
       var qrtitle_width = qrtitle_len*20  /*每个默认字体的汉字宽度大约20px*/
-      qrtitle_left = (400 - qrtitle_width)/2   /*画布宽度默认400*/
+    }else{
+      var qrtitle_width = 15 * 20  /*每个默认字体的汉字宽度大约20px*/
     }
-
+    qrtitle_left = (400 - qrtitle_width) / 2   /*画布宽度默认400*/
     if (act_id) {
       share_qrcode = share_activity_qrcode
     } else if (coupons_id){
@@ -250,6 +306,7 @@ Page({
     var that = this
     console.log('share options:', options)
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var hiddenqrcode = that.data.hiddenqrcode
     var appid = that.data.appid
     var secret = that.data.secret
@@ -262,10 +319,18 @@ Page({
     var coupons_id = coupons_json?coupons['id']:0
     var coupons_type = coupons_json ? coupons['type'] : 1
     var coupons_flag = coupons_json?coupons['flag']:0
-    var share_activity_qrcode_cache = options.share_activity_qrcode_cache ? options.share_activity_qrcode_cache : ''
-    var share_coupon_qrcode_cache = options.share_coupon_qrcode_cache ? options.share_coupon_qrcode_cache : ''
-    var share_member_qrcode_cache = options.share_member_qrcode_cache ? options.share_member_qrcode_cache : ''
-   
+    //var share_activity_qrcode_cache = options.share_activity_qrcode_cache ? options.share_activity_qrcode_cache : ''
+    //var share_coupon_qrcode_cache = options.share_coupon_qrcode_cache ? options.share_coupon_qrcode_cache : ''
+    //var share_member_qrcode_cache = options.share_member_qrcode_cache ? options.share_member_qrcode_cache : ''
+    var share_coupon_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json
+    var share_activity_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&act_id=' + act_id
+    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    if (qr_type=='membershare'){
+      that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
+    } else if (act_id){
+      that.image_save(share_activity_qrcode, 'activity_qrcode_cache_' + act_id)
+    }
+    
     that.setData({
       username:username,
       appid: appid,
@@ -280,9 +345,9 @@ Page({
       coupons_id: coupons_id,
       coupons_type: coupons_type,
       coupons_flag: coupons_flag,
-      share_activity_qrcode_cache: share_activity_qrcode_cache,
-      share_coupon_qrcode_cache: share_coupon_qrcode_cache,
-      share_member_qrcode_cache: share_member_qrcode_cache,
+      share_activity_qrcode_cache: share_activity_qrcode,
+      share_coupon_qrcode_cache: share_coupon_qrcode,
+      share_member_qrcode_cache: share_activity_qrcode,
 		})
     wx.getSystemInfo({
       success: function (res) {

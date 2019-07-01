@@ -153,7 +153,7 @@ Page({
     var qr_type = that.data.qr_type
     var coupons_json = JSON.stringify(coupons)
     var share_coupon_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupon_flag + '&coupons_type=' + coupon_type + '&coupons_id=' + coupon_id + '&coupons=' + coupons_json
-    that.image_save(share_coupon_qrcode, 'coupon_qrcode_cache_' + coupon_id)
+    //that.image_save(share_coupon_qrcode, 'coupon_qrcode_cache_' + coupon_id)
     console.log('confirm name:', name,'coupon_id:',coupon_id)
     that.setData({
       hiddenmodalput: true,
@@ -225,9 +225,9 @@ Page({
       qr_type: qr_type,
     })
     //that.eventDraw()
-    var share_coupon_qrcode_cache = wx.getStorageSync('coupon_qrcode_cache_' + that.data.coupon_id)
+    //var share_coupon_qrcode_cache = wx.getStorageSync('coupon_qrcode_cache_' + that.data.coupon_id)
     wx.navigateTo({
-      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name + '&share_coupon_qrcode_cache=' + share_coupon_qrcode_cache
+      url: '../share/share?coupons=' + coupons_json + '&act_title=' + name + '&share_coupon_qrcode_cache=' + share_coupon_qrcode
     })
 
   },

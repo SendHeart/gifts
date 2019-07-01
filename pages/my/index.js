@@ -172,7 +172,6 @@ Page({
             duration: 1500
           })
         }
-       
       }
     })
   },
@@ -864,6 +863,7 @@ Page({
       url: '/pages/member/donate/donate'
     })
   },
+
   image_save: function (image_url, image_cache_name) {
     var that = this
     console.log('membershare imge save image url:', image_url, 'image_cache_name:', image_cache_name)
@@ -924,8 +924,9 @@ Page({
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     //var share_member_qrcode = wx.getStorageSync('member_qrcode_cache_' + m_id)
     var qr_type = 'membershare'
-    var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
-    that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
+   // var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    //that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
+    /*
     wx.showToast({
       title: "加载中...",
       icon: 'loading',
@@ -935,11 +936,13 @@ Page({
       that.setData({
         loadingHidden: true,
       })
-      var share_member_qrcode_cache = wx.getStorageSync('member_qrcode_cache_' + m_id)
-      wx.navigateTo({
-        url: '/pages/member/share/share?qr_type=membershare' + '&share_member_qrcode_cache=' + share_member_qrcode_cache
-      })
+      //var share_member_qrcode_cache = wx.getStorageSync('member_qrcode_cache_' + m_id)
+    
     }, 1300)
+    */
+    wx.navigateTo({
+      url: '/pages/member/share/share?qr_type=membershare' //+ '&share_member_qrcode_cache=' + share_member_qrcode_cache
+    })
   },
   navigateToCoupon: function () {
     wx.navigateTo({
