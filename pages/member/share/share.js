@@ -133,7 +133,7 @@ Page({
       share_qrcode = share_member_qrcode_cache
       qrtitle_left = 60
       qrcode_width = 230
-      qrcode_height = 260
+      qrcode_height = 230
       qrcode_left = 85
       qrcode_top = 80
     }
