@@ -172,7 +172,7 @@ Page({
     var coupons_name = that.data.coupons_name
     var share_activity_qrcode = that.data.share_activity_qrcode_cache ? that.data.share_activity_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json + '&act_id=' + act_id
     var share_coupon_qrcode = that.data.share_coupon_qrcode_cache ? that.data.share_coupon_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&coupons_flag=' + coupons_flag + '&coupons_type=' + coupons_type + '&coupons_id=' + coupons_id + '&coupons=' + coupons_json
-    var share_member_qrcode_cache = that.data.share_member_qrcode_cache ? that.data.share_member_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+    var share_member_qrcode = that.data.share_member_qrcode_cache ? that.data.share_member_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
     var share_qrcode = ''
     var qrtitle_len = act_title.length //计算文字居中
     if (qrtitle_len<15){
@@ -186,7 +186,7 @@ Page({
     } else if (coupons_id){
       share_qrcode = share_coupon_qrcode
     } else if (qr_type=='membershare') {
-      share_qrcode = share_member_qrcode_cache
+      share_qrcode = share_member_qrcode
       qrtitle_left = 60
       qrcode_width = 230
       qrcode_height = 230
@@ -326,9 +326,9 @@ Page({
     var share_activity_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&act_id=' + act_id
     var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
     if (qr_type=='membershare'){
-      that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
+      //that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
     } else if (act_id){
-      that.image_save(share_activity_qrcode, 'activity_qrcode_cache_' + act_id)
+      //that.image_save(share_activity_qrcode, 'activity_qrcode_cache_' + act_id)
     }
     
     that.setData({

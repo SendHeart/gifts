@@ -103,7 +103,6 @@ Component({
           this.downLoadImages(index + 1)
         }).catch(fail =>{
           console.log('canvasdrawer downLoadImages fail:', imageList[index], 'index:', index)
-          
           //this.downLoadImages(index)
         })
       } else {
@@ -317,12 +316,12 @@ Component({
                   }
                 })
                 this.triggerEvent('getImage', { errMsg: 'canvasdrawer:download fail' })
-                reject(new Error(' canvasdrawer getImageInfo fail'))
+                //reject(new Error(' canvasdrawer getImageInfo fail'))
               }
             },
             fail:res=>{
               console.log(' canvasdrawer wx.getImageInfo 接口调用失败', res,url)
-              reject(new Error('canvasdrawer wx.getImageInfo 接口调用失败'))
+              //reject(new Error('canvasdrawer wx.getImageInfo 接口调用失败'))
             }
           })
           if (objExp.test(url) || objExp2.test(url)|| objExp3.test(url)) {
