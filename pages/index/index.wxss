@@ -125,6 +125,7 @@ page {
   font-size: 24rpx;
   line-height: 24rpx;
 }
+
 .commbtn {
   font-size: 24rpx;
   border: 3rpx solid #e34c55;
@@ -333,6 +334,7 @@ page {
   height: 90%;
   z-index: 99;
 }
+
 .buyin_title {
   display: flex;
   flex-direction:column;

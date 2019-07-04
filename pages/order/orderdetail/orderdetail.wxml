@@ -5,7 +5,7 @@
 <view class="banner" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
   <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status<2}}">对方已接受,待付款</text>
   <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status>=2}}">礼物寄送中</text>
-  <text class="status2" wx:if="{{send_rcv=='send' && order_status==2 && gift_status==1}}">对方未接受</text>
+  <text class="status2" wx:if="{{send_rcv=='send' && order_status<=2 && gift_status==1}}">对方未接受</text>
   <text class="status2" wx:if="{{send_rcv=='send' && gift_status==0 }}">未送出</text>
   <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status<2}}">已接受,对方未付款</text>
   <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status>=2}}">礼物寄送中</text>
