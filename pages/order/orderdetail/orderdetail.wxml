@@ -9,7 +9,6 @@
   <text class="status2" wx:if="{{send_rcv=='send' && gift_status==0 }}">未送出</text>
   <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status<2}}">已接受,对方未付款</text>
   <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status>=2}}">礼物寄送中</text>
-  <text class="status2" wx:if="{{gift_status==2 && order_status==3}}">礼物寄送中</text>
 </view>
 <view class='container'>
   <view class="order-item" wx:for="{{orders}}" wx:key="">
@@ -30,7 +29,6 @@
           <text>{{sku_value?sku_value['name']+':':''}}</text>
           <text wx:if="{{sku_value['type']==1}}">{{sku_value?sku_value['value']:''}}</text>
           <text wx:if="{{sku_value['type']==2}}">{{sku_value?sku_value['note']:''}}</text>
-
         </view>
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
@@ -105,7 +103,7 @@
     </view>-->
   </view>
   <view class="delivery-detail-info">
-  <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">物流跟踪</text>
+    <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">物流跟踪</text>
     <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key=""  >
       <view class="delivery-detail-info-text" >
       <view class="timeline-date" style='margin-left:20rpx;'>
@@ -120,7 +118,6 @@
            <!-- <text style="width:10%;margin-right:20rpx;">|</text> -->
           <text style="width:80%;margin-left:20rpx;">{{itme.operator}}</text>
         </view>
-        
       </view>
     </block>
   </view>
@@ -137,5 +134,4 @@
       <button open-type='contact' class="button-group" style="width:200rpx;margin-left:50rpx;" >咨询客服</button>
     </form>
   </view>
-
 </view>
