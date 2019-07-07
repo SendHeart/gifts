@@ -69,6 +69,21 @@ Page({
       }
     })
   },
+  showGoods: function (e) {
+    var skuId = e.currentTarget.dataset.skuId
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_name = e.currentTarget.dataset.goodsName
+    var goods_price = e.currentTarget.dataset.goodsPrice
+    var goods_sale = e.currentTarget.dataset.goodsSale
+    var goods_info = e.currentTarget.dataset.goodsInfo
+    var goods_image = e.currentTarget.dataset.image
+    wx.navigateTo({
+      url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&goods_info=' + '&image=' + goods_image+'&token=' + token + '&username=' + username
+    });
+  },
+
   order_num: function (e) {
     var that = this
     var order_num = parseInt(e.detail.value ? e.detail.value:0)
@@ -123,7 +138,7 @@ Page({
 		var that = this
     console.log('order checkout from hall  readCarts options:', options)
 		var amount = parseFloat(options.amount)
-    var delivery_price = parseFloat(options.delivery_price)
+    //var delivery_price = parseFloat(options.delivery_price)
     var payamount = that.data.payamount
     var discountpay = that.data.discountpay
     var carts = JSON.parse(options.carts)

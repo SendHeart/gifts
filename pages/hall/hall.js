@@ -657,6 +657,7 @@ Page({
                 showmorehidden: showmorehidden
               })
               that.sum()
+              that.query_cart()
             }
           })
 
