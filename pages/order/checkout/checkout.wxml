@@ -1,6 +1,5 @@
 <view class="container carts-list">
-  <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}"
-    bindtap="showGoods">
+  <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}">
     <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}">
       <!-- 缩略图 -->
       <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
@@ -30,10 +29,10 @@
   <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
   <view style='width:16%'>商品金额:</view>
   <view class="amount" style='width:34%'>{{(payamount)}}
-  <text wx:if="{{delivery_price>0}}"> + {{(delivery_price)}}(运费)</text>
+  <text wx:if="{{delivery_price>0}}"> {{(delivery_price>0?'+'+delivery_price:'')}}(运费)</text>
   </view>
   <view style='width:16%'>优惠金额:</view>
-  <view class="amount" style='width:34%;'>-{{discountpay}}</view>
+  <view class="amount" style='width:34%;'>{{discountpay>0?'-'+discountpay:'0'}}</view>
 </view>
 <view class="carts-more" hidden="{{showmorehidden}}">
 

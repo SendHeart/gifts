@@ -235,7 +235,7 @@ swiper-item image {
   align-content:center;
   justify-content:space-around;
   width: 98%;
-  margin: 0 auto;
+  margin: 0 auto 50rpx;
   overflow: hidden;
 }
 
