@@ -175,8 +175,11 @@ Page({
     })
   },
   searchTapTag: function (e) {
-    var that = this;
+    var that = this
     console.log('搜索关键字：' + that.data.search_goodsname)
+    that.setData({
+      page: 1,
+    })
     that.get_goods_list()
   },
 
@@ -267,12 +270,13 @@ Page({
     })
 
   },
+  /*
   searchTapTag: function (e) {
     var that = this;
     console.log('搜索关键字:', that.data.keyword, that.data.search_goodsname, that.data.defaultkeyword)
     that.get_goods_list()
   },
-
+*/
   get_goods_list: function (event) {
     //venuesList
     var that = this;

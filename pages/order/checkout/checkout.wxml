@@ -35,7 +35,6 @@
   <view class="amount" style='width:34%;'>{{discountpay>0?'-'+discountpay:'0'}}</view>
 </view>
 <view class="carts-more" hidden="{{showmorehidden}}">
-
   <view class="select-and-amount" bindtap="bindSelectRedAll">
     <icon style="margin:10rpx;" type="{{selectedRedAllStatus ? 'success' : 'circle'}}" size="18" color='#e34c55' />
     <text style="margin-left:10rpx;">使用红包</text>
@@ -49,12 +48,13 @@
   <modal class="counpons" title="请选择" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirmCoupon" bindcancel="modalBindcancelCoupon" no-cancel="">
     <view class="counpon-item-banner" style='width:{{}};height:{{dkheight-34}}px'>
       <view wx:for="{{coupons_list}}" wx:for-item="mapping" wx:key="index" class="gifts-item">
-        <view bindtap="bindSelectCoupon" class='coupons_list' data-couponindex="{{index}}" data-couponid="{{mapping.id}}" data-starttime="{{mapping.start_time}}" data-endtime="{{mapping.end_time}}" data-couponname="{{mapping.name}}" data-couponcontent="{{mapping.content}}"
+        <view bindtap="bindSelectCoupon" class='coupons-list' data-couponindex="{{index}}" data-couponid="{{mapping.id}}" data-starttime="{{mapping.start_time}}" data-endtime="{{mapping.end_time}}" data-couponname="{{mapping.name}}" data-couponcontent="{{mapping.content}}"
           data-couponamount="{{mapping.amount}}" data-couponfooter="{{mapping.footer}}" data-coupontype="{{mapping.type}}" data-couponimage="{{mapping.image}}">
           <view class="select-and-amount-mark">
             <icon type="{{mapping.selected ? 'success_circle' : 'circle'}}" size="18" color='rgb(255,255,255)' />
             <!-- 
-		    <text style="margin-left:10rpx;">选中</text>-->
+		    <text style="margin-left:10rpx;">选中</text>
+        -->
           </view>
           <view style="background-image:url('{{mapping.image}}');background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;" class="counpons-item">
             <!-- 
