@@ -185,9 +185,10 @@ page {
   top: 0;   
   right: 0; 
   background: #1d1d1d; 
-  width:40rpx;
+  width:30rpx;
   height:40rpx;
-  padding: 15rpx 30rpx;
+  padding: 15rpx 20rpx;
+  margin:-10rpx auto;
   z-index:99;
 }
 /*辅助导航 nav2*/

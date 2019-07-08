@@ -36,8 +36,6 @@
   <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
 
 </view>
-  
-
   <view class="venues_box" >
       <block wx:for="{{venuesItems}}" wx:key="">
         <view class="venues_item"> 
