@@ -189,6 +189,7 @@ page {
 .hidden {
 	display: none;
 }
+
 .pay_recomment {
   width: 100%;
  

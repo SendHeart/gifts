@@ -70,7 +70,7 @@
         </view>
       </view>
       <form bindsubmit="formSubmit"  data-name='getMoreOrders' report-submit="true" >
-      <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" style="width:200rpx;" formType="submit"  >更多</button><!--bindtap="getMoreOrdersTapTag" -->
+      <button wx:if="{{page_num>1}}" type="default" size="default" hover-class="none" class="morebtn" style="width:200rpx;" formType="submit" >更多</button>
       </form>
     </view>
   </modal>

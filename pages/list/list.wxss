@@ -157,7 +157,7 @@ page {
   
   white-space: nowrap;
   text-align: center;
-  width: 90%;
+  width: 92%;
   height: 70rpx;
   overflow-y: hidden;
   background: #1d1d1d; 
@@ -185,11 +185,11 @@ page {
   top: 0;   
   right: 0; 
   background: #1d1d1d; 
-  width:30rpx;
-  height:40rpx;
-  padding: 15rpx 20rpx;
-  margin:-10rpx auto;
-  z-index:99;
+  width:45rpx;
+  height:46rpx;
+  padding: 10rpx 10rpx 15rpx 15rpx;
+  margin:-0 auto;
+  z-index:1000;
 }
 /*辅助导航 nav2*/
 .top-bar2 {
