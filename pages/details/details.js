@@ -599,34 +599,46 @@ Page({
     goodsmodel: function () {
       var that = this
       var modalHidden = that.data.modalHidden
-      var sku_id = that.data.commodityAttr[0].id
-      var attrValueList = that.data.attrValueList
-      var sku_sell_price = that.data.commodityAttr[0].sell_price
-      var sku_delivery_price = that.data.commodityAttr[0].delivery_price
-      var is_buymyself = that.data.is_buymyself
-      console.log('detail goodsmodel is_buymyself:',is_buymyself)
-      if(attrValueList.length>0){
-        that.setData({
-          modalHidden: !modalHidden,
-          sku_id: sku_id,
-          sku_sell_price: sku_sell_price,
-          sku_delivery_price: sku_delivery_price,
-          add_cart_title: '商品名称',
-          wishflag: 0,
-        })
-        console.log('挑选 sku_id:' + that.data.commodityAttr[0].id, 'modalHidden:', that.data.modalHidden)
+      if (that.data.commodityAttr.length>0){
+        var sku_id = that.data.commodityAttr[0].id
+        var attrValueList = that.data.attrValueList
+        var sku_sell_price = that.data.commodityAttr[0].sell_price
+        var sku_delivery_price = that.data.commodityAttr[0].delivery_price
+        var is_buymyself = that.data.is_buymyself
+        console.log('detail goodsmodel is_buymyself:', is_buymyself)
+        if (attrValueList.length > 0) {
+          that.setData({
+            modalHidden: !modalHidden,
+            sku_id: sku_id,
+            sku_sell_price: sku_sell_price,
+            sku_delivery_price: sku_delivery_price,
+            add_cart_title: '商品名称',
+            wishflag: 0,
+          })
+          console.log('挑选 sku_id:' + that.data.commodityAttr[0].id, 'modalHidden:', that.data.modalHidden)
+        } else {
+          console.log('送礼 sku_id:' + that.data.commodityAttr[0].id, 'attrValueList:', attrValueList)
+          that.setData({
+            modalHidden: !modalHidden,
+            sku_sell_price: sku_sell_price,
+            sku_delivery_price: sku_delivery_price,
+            add_cart_title: that.data.goodsname,
+            sku_id: sku_id,
+            wishflag: 0,
+          })
+          //that.addCart()
+        }
       }else{
-        console.log('送礼 sku_id:' + that.data.commodityAttr[0].id, 'attrValueList:', attrValueList)
-        that.setData({
-          modalHidden: !modalHidden,
-          sku_sell_price: sku_sell_price,
-          sku_delivery_price: sku_delivery_price,
-          add_cart_title: that.data.goodsname,
-          sku_id: sku_id,
-          wishflag: 0,
-        })
-        //that.addCart()
+        setTimeout(function () {
+          wx.showToast({
+            title: "加载中...",
+            icon: 'loading',
+            duration: 500,
+          })
+          that.goodsmodel()
+        }, 500)
       }
+      
     },
     wishCart: function () {
       var that = this
