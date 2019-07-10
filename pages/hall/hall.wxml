@@ -34,8 +34,6 @@
   </swiper>
 </view>
 
-
-
 <view class="wrap">
 <view class="middle-goods">
 <view class="image-btnbuy" bindtap="bindPickGoods">
@@ -83,14 +81,11 @@
               <!-- 加号 -->
               <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
             </view>
-            
           </view>
-          
         </view>
         <view data-index="{{cart_idx}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
       </view>
     </view>
-
   </view>
   <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">  
     <view class="pick-goods-text">

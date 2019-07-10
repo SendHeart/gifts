@@ -1164,6 +1164,11 @@ Page({
         url: '/pages/details/details?' + scene
       })
     }
+    if (scene.indexOf("ordno=") >= 0) {
+      wx.navigateTo({
+        url: '/pages/order/receive/receive?receive=1&' + scene
+      })
+    }
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()

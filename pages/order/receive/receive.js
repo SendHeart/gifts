@@ -303,7 +303,8 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-    var order_no = options.order_no ? options.order_no:''
+    var ordno = options.ordno ? options.ordno : '' //APP 送礼订单
+    var order_no = options.order_no ? options.order_no : ordno
     var order_id = options.order_id ? options.order_id:0
     var receive = options.receive ? options.receive:0
     var is_buymyself = options.is_buymyself ? options.is_buymyself : 0

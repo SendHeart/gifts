@@ -79,7 +79,6 @@ Page({
     wx.switchTab({
       url: '../../hall/hall'
     })
-
   },
 
   receiveTapTag: function (e) {
