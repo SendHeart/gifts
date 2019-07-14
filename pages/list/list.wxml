@@ -22,10 +22,8 @@
 </view>
   <!-- 
 <view class="search" style='height:30rpx;'>
-
 		<input value="{{keyword}}" class="wx-input" placeholder="寻找..."  bindinput='search_goodsnameTapTag'/>
     <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
-
 </view>
   -->
 
@@ -34,7 +32,6 @@
   <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
   <view class='' style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
   <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
-
 </view>
   <view class="venues_box" >
       <block wx:for="{{venuesItems}}" wx:key="">
@@ -57,7 +54,6 @@
           </view>
         </view>
       </block>
-    
   </view>
 
   <!--使用懒加载替代

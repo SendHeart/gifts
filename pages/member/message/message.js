@@ -692,7 +692,6 @@ Page({
           }
           that.setData({
             attrValueList: attrValueList,
-           
           })
          
         }

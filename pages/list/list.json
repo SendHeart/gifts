@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "礼物商城"
+    "navigationBarTitleText": "礼物商城",
+    "disableScroll": true
 }

@@ -316,6 +316,12 @@ Page({
     var nickname = that.data.nickname
     var note = that.data.note
     var shop_type = that.data.shop_type
+    var scene = decodeURIComponent(options.scene)
+    if (scene.indexOf("ordno=") >= 0) {
+      var ordnoReg = new RegExp(/(?=ordno=).*?(?=\&)/)
+      var scene_ordno = scene.match(ordnoReg)[0]
+      order_no = order_no ? order_no : scene_ordno
+    }
     app.globalData.is_receive = receive
     app.globalData.order_no = order_no
     app.globalData.order_id = order_id

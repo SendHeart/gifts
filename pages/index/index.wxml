@@ -18,7 +18,7 @@
       <text wx:if="{{item.status==10 && giftflag ==0 }}" class="status">退款中</text>
       <text wx:if="{{item.status==6 && giftflag ==0 }}" class="status2">已退款</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" class="status2">已发货</text>
-      <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2}}" class="status2">未发货</text>
+      <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2 && mapping.status==1}}" class="status2">未发货</text>
 
     </view>
 

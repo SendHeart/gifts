@@ -65,7 +65,7 @@ page {
     height: 100%;
     overflow-x: hidden;
     margin: 45rpx 0 0 0;
-    padding: 0;
+    padding-bottom: 100rpx;
 }
 
 .all-classify{ 
@@ -236,8 +236,9 @@ swiper-item image {
   align-content:center;
   justify-content:space-around;
   width: 98%;
-  margin: 0 auto 50rpx;
+  margin: 0 auto 150rpx;
   overflow: hidden;
+   padding-bottom: 40rpx;
 }
 
 .venues_item {
