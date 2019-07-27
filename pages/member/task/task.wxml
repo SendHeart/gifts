@@ -59,7 +59,7 @@
       <!--弹出框开始-->
       <!-- 分享人列表 -->
       <view class='layerframe'>
-      <view  class="red-item" style="background-image:url('{{message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+      <view  class="red-item" style="background-image:url({{message.image}}); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
       <text class='red-title'>已查看的好友</text>
           <view class='name-list' wx:for="{{refer_list}}" wx:key="" wx:for-item="refer_list">
           <text class="red-name">{{refer_list.wx_nickname?refer_list.wx_nickname:''}}</text>

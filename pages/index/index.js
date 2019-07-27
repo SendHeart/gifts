@@ -615,7 +615,6 @@ Page({
       success: function (res) {
         if (res.confirm) {
           var objectId = e.currentTarget.dataset.objectId;
-
           wx.request({
             url: weburl + '/api/client/order_confirm',
             method: 'POST',

@@ -5,23 +5,26 @@
 <import src="../common/hall_title.wxml" />
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
  -->
-<view class="userinfo" hidden="{{shareflag}}" style="background-image: url({{wish_banner}});background-size:cover;"><!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+<view class="userinfo" hidden="{{shareflag}}" style="background-image: url({{wish_banner}});background-size:cover;">
    <image class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover" bindtap=""></image>
 	<text class="userinfo-nickname">{{wish_nickname?wish_nickname+'的心愿单':'心愿单'}}</text>
 </view>
 <view class="userinfo_my" hidden="{{!shareflag}}" style="background-image: url({{wish_banner}});background-size:cover;">
   <text class="userinfo-nickname" style='margin-top:20rpx;'>我的心愿单</text>
-
-<view class="banner" style='margin-top:20rpx;' hidden="{{!shareflag}}" >
-  <form bindsubmit="formSubmit"  data-name='onShareAppMessage' report-submit="true" wx:if="{{carts.length>0}}" >
-    <button  open-type="share" bindtap="onShareAppMessage"  formType="submit" class="btnshare">
+  <view class="banner" style='margin-top:20rpx;' hidden="{{!shareflag}}" >
+    <form bindsubmit="formSubmit"  data-name='onShareAppMessage' report-submit="true" wx:if="{{carts.length>0}}" >
+      <button  open-type="share" bindtap="onShareAppMessage"  formType="submit" class="btnshare">
       <image class="shareto" src="../../images/shareto.png"></image>分享
     </button>
-  </form>
-  <form bindsubmit="formSubmit"  data-name='addWish' report-submit="true" >
-    <button  formType="submit" formType="submit" class="btnadd">+</button> <!--bindtap="addWishTapTag"  -->
-  </form>
-</view>
+    </form>
+    <form bindsubmit="formSubmit"  data-name='addWish' report-submit="true" >
+      <button  formType="submit" formType="submit" class="btnadd">
+      <!-- 
+      <image style="width:100rpx;height:100rpx;" src="../../images/icon_add_bg_red.png" />
+      -->
+      </button> <!--bindtap="addWishTapTag"  -->
+    </form>
+  </view>
 </view>
 <!-- 
 <view class="banner" style="height:90rpx;margin-bottom:20rpx;"  hidden="{{shareflag==1?false:true}}">
@@ -54,12 +57,11 @@
         <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:50rpx;height:50rpx;' src="../../images/icon_delete.png"/>
         </view>
       </view>
-         <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag}}">
+      <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag}}">
         <button data-index="{{index}}" data-object-id="{{item.objectId}}" type="warn" size="mini" hover-class="button-hover" class="button" bindtap="sendGoodsTapTag" style="margin-top:10px;">送Ta</button>
-        </view>
-                 
-                </view>
-            </block>
+      </view>
+      </view>
+      </block>
     </view>
    
    <!-- 

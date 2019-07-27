@@ -1112,7 +1112,7 @@ Page({
     app.globalData.is_task = task
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
     
-    that.get_project_gift_para()
+    //that.get_project_gift_para()
    
     var message_info = {
       addtime: myDate,
@@ -1167,6 +1167,12 @@ Page({
     if (scene.indexOf("ordno=") >= 0) {
       wx.navigateTo({
         url: '/pages/order/receive/receive?receive=1&' + scene
+      })
+    }
+
+    if (scene.indexOf("wish_id=") >= 0) {
+      wx.navigateTo({
+        url: '/pages/wish/wish?' + scene
       })
     }
     socketMsgQueue.push(that.data.message)
