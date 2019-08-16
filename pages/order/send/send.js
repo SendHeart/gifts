@@ -1,3 +1,5 @@
+import defaultData from '../../../data';
+var util = require('../../../utils/util.js');
 var app = getApp()
 var appid = app.globalData.appid
 var secret = app.globalData.secret
@@ -83,7 +85,14 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_flag= that.data.goods_flag
     var order_no = that.data.order_no
+    var order_id = that.data.order_id
+    var order_note = that.data.note
     var is_buymyself = that.data.is_buymyself
+    var goodsshape = that.data.goodsshape   //5贺卡请柬
+    var order_bg = that.data.sku_image
+    var order_share_image = that.data.sku_share_image
+    var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
+    var headimg = wx_headimg_cache ?wx_headimg_cache:that.data.headimg
     wx.request({ //更新发送状态
       url: weburl + '/api/client/update_order_status',
       method: 'POST',
@@ -103,17 +112,24 @@ Page({
       success: function (res) {
         console.log('礼物发送状态更新完成:', res.data, ' is_buymyself:', is_buymyself)
         //自购礼品 接收处理
-        if (is_buymyself == 1){
+        if (is_buymyself == 1 && goodsshape!=5){
           console.log('order send returnTapTag() 自购礼品 自动接收处理')
           wx.navigateTo({
             url: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
           })
+        } else if (is_buymyself == 1 || goodsshape == 5){
+          //wx.hideLoading()
+          console.log('order send returnTapTag() 贺卡请柬 转分享页面')
+          wx.navigateTo({
+            url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + goodsshape + '&share_order_note=' + order_note + '&share_order_bg=' + order_bg + '&share_order_image=' + order_share_image
+          })
+        } else {
+          wx.switchTab({
+            url: '../../index/index'
+          })
         }
       }
     }) 
-    wx.switchTab({
-      url: '../../index/index'
-    });
   },
 
   /**
@@ -233,12 +249,13 @@ Page({
     var receive = options.receive
     var is_buymyself = options.is_buymyself ? options.is_buymyself:0
     var shop_type = that.data.shop_type
+    var share_order_wx_headimg = options.share_order_wx_headimg ? options.share_order_wx_headimg : ''
     that.setData({
       order_no: order_no,
       is_buymyself: is_buymyself,
     })
     //that.setNavigation()
-    console.log('礼品信息 order_no:', order_no, 'is_buymyself:', is_buymyself)
+    console.log('礼品信息 options:', options,'orders:',JSON.parse(options.orders))
     that.get_project_gift_para()
     if (receive == 1){
       console.log('礼品接受处理:', options)
@@ -259,6 +276,7 @@ Page({
     }
 
     //再次确认订单状态
+    /*
     wx.request({
       url: weburl + '/api/client/query_order',
       method: 'POST',
@@ -289,7 +307,7 @@ Page({
           
           return
         } else {
-          if (orderObjects[0]['rcv_openid'].length>1) { //已经有接收人
+          if (orderObjects[0]['rcv_openid']) { //已经有接收人
             console.log('该订单已送出 orderObjects:', orderObjects)
             wx.showToast({
               title: '该订单已送出',
@@ -303,76 +321,97 @@ Page({
           }else{
             that.setData({
               send_status: 0,
-              orders: orderObjects,
-              goods_flag: orderObjects[0]['order_sku'][0]['goods_flag'],
-              order_price: orderObjects[0]['order_price'],
-            })
-           //获取带价格的分享图片  
-            var navList2 = that.data.navList2
-            var imageUrl = navList2.length > 0 ? navList2[0]['img'] : that.data.gift_logo 
-            console.log('获取带价格的分享图片 ' )
-            wx.request({
-              url: weburl + '/api/client/get_text_watermark',
-              method: 'POST',
-              data: {
-                username: username,
-                access_token: token,
-                order_no: order_no,
-                text:that.data.order_price,
-                image: imageUrl,
-                shop_type: shop_type,
-              },
-              header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-              },
-              success: function (res) {
-                console.log('order send onload() image with watermark:',res.data)
-                var watermark_info = res.data.result
-                if (watermark_info){
-                  that.setData({
-                    'shareimage_url': watermark_info.image,
-                  })
-                }
-              }
+              //orders: orderObjects,
+              //goods_flag: orderObjects[0]['order_sku'][0]['goods_flag'],
+              //order_price: orderObjects[0]['order_price'],
             })
           }
         }
       }
     })
-
+    */
     var orders = options.orders ? JSON.parse(options.orders) : that.data.orders
-    var orderskus = that.data.orderskus;
+    var orderskus = that.data.orderskus
     var note_title = that.data.note_title
     var headimg = that.data.headimg
     var nickname = that.data.nickname
-    var note = that.data.note;
-    note = orders[0]['rcv_note'];
-    headimg = orders[0]['from_headimg'];
-    nickname = orders[0]['from_nickname'];
+    var note = that.data.note
+    var goodsshape = orders[0]['shape']
+    var order_id = orders[0]['id']
+    note = orders[0]['rcv_note']
+    
+    //headimg = orders[0]['from_headimg']
+    //nickname = orders[0]['from_nickname']
     console.log(orders);
     // order_sku 合并在一个对象中
     for (var i = 0; i < orders.length; i++) {
       for (var j = 0; j < orders[i]['order_sku'].length; j++) {
         orders[i]['order_sku'][j]['goods_name'] = orders[i]['order_sku'][j]['goods_name'].substring(0,15)
         orderskus.push(orders[i]['order_sku'][j])
+        if (orders[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+          orders[i]['order_sku'][j]['sku_image'] = weburl + '/' + orders[i]['order_sku'][j]['sku_image'];
+        } 
+        if (goodsshape==5){
+          if (orders[i]['order_sku'][j]['sku_share_image'].indexOf("http") < 0) {
+            orders[i]['order_sku'][j]['sku_share_image'] = weburl + '/' + orders[i]['order_sku'][j]['sku_share_image'];
+          } 
+        }
       }
     }
     console.log('order send onload() order sku list:', orderskus);
     //console.log(orderskus);
     that.setData({
       order_no: order_no,
+      order_id: order_id,
       orders: orders,
       orderskus:orderskus,
+      goodsshape: goodsshape,
+      goodsname: orders[0]['order_sku'][0]['goods_name'],
       note:note,
       note_title:note_title,
       headimg:headimg,
       nickname:nickname,
       username:username,
       token:token,
+      send_status: 0,
+      goods_flag: orders[0]['order_sku'][0]['goods_flag'],
+      order_price: orders[0]['order_price'],
+      sku_image: orders[0]['order_sku'][0]['sku_image'],
+      sku_share_image: orders[0]['order_sku'][0]['sku_share_image'],
     })
-   
-    if (is_buymyself == 1) { //自购礼品 无需分享到微信
+
+    if (orders[0]['shape'] != 5) { // 贺卡请柬
+      //获取带价格的分享图片  
+      var navList2 = that.data.navList2
+      var imageUrl = navList2.length > 0 ? navList2[0]['img'] : that.data.gift_logo
+      console.log('获取带价格的分享图片 ')
+      wx.request({
+        url: weburl + '/api/client/get_text_watermark',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          order_no: order_no,
+          text: that.data.order_price,
+          image: imageUrl,
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('order send onload() image with watermark:', res.data)
+          var watermark_info = res.data.result
+          if (watermark_info) {
+            that.setData({
+              'shareimage_url': watermark_info.image,
+            })
+          }
+        }
+      })
+    }
+    if (is_buymyself == 1 || goodsshape==5) { //自购礼品
       console.log('自购礼品无需分享到微信 ' )
       that.returnTapTag()
     } 
@@ -395,73 +434,7 @@ Page({
       })
     }  
   },
-
-  reloadData: function () {
-    /*
-    var that = this;
-    var order_type = that.data.tab2;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var status = that.data.status;
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
-    //从服务器获取订单列表
-    wx.request({
-      url: weburl + '/api/client/query_order_list',
-      method: 'POST',
-      data: {
-        username: username,
-        access_token: token,
-        status: status,
-        order_type: order_type,
-        page: page,
-      },
-      header: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Accept': 'application/json'
-      },
-      success: function (res) {
-        console.log(res.data.result);
-        var orderObjects = res.data.result;
-        var all_rows = res.data.all_rows;
-        if (!res.data.result) {
-          wx.showToast({
-            title: '没有该类型订单',
-            icon: 'loading',
-            duration: 1500
-          });
-          setTimeout(function () {
-            wx.navigateBack();
-          }, 500);
-          that.setData({
-            orders: [],
-            all_rows: 0
-          });
-        } else {
-          // 存储地址字段
-          for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo'];
-            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image'];
-            }
-
-          }
-          if (page > 1 && orderObjects) {
-            //向后合拼
-            orderObjects = that.data.orders.concat(orderObjects);
-          }
-          that.setData({
-            orders: orderObjects,
-            all_rows: all_rows
-          });
-        }
-
-
-      }
-    })
-*/
-  },
-  
+ 
   showGoods: function (e) {
     var skuId = e.currentTarget.dataset.skuId
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -481,13 +454,19 @@ Page({
     var order_no = that.data.order_no
     var username = that.data.username;
     var goods_flag = that.data.goods_flag
-    var token = that.data.token;
+    var token = that.data.token
+    var goodsshape = that.data.goodsshape
+    var sku_share_image = that.data.orderskus[0]['sku_share_image']
+    var goods_name = that.data.orderskus[0]['goods_name']
     var navList2 = that.data.navList2
-    var title = '您收到一份来自' + that.data.nickname +'的礼物,点击立即打开。';
+    var title = goodsshape == 5 ? '您收到一份来自' + that.data.nickname + '的'+goods_name+',点击立即打开。' : '您收到一份来自' + that.data.nickname + '的礼物,点击立即打开。'
     var shareimage_url = that.data.shareimage_url //带价格水印的图片
     var imageUrl = navList2.length>0?navList2[0]['img'] : that.data.gift_logo
     imageUrl = shareimage_url ? shareimage_url : imageUrl
-    console.log('开始送礼 options:', options, 'order_no:', order_no, 'goods_flag:', goods_flag, ' navList2:', navList2); 
+    if (goodsshape==5){
+      imageUrl = sku_share_image
+    }
+    console.log('开始送礼 options:', options, 'order_no:', order_no, 'sku_share_image:', sku_share_image, ' navList2:', navList2); 
     //console.log(options);  
     if (!order_no){
       console.log('礼品单号为空 send')
@@ -501,14 +480,13 @@ Page({
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: "开启礼物电商时代，200万人都在用的礼物小程序！",
       //path: '/pages/hall/hall?page_type=2&order_no=' + order_no + '&receive=1' + '&random=' + Math.random().toString(36).substr(2, 15),   // 默认是当前页面，必须是以‘/’开头的完整路径
-      path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&goods_flag=' + goods_flag,  
-      imageUrl: imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4
+      path: '/pages/order/receive/receive?page_type=2&order_no=' + order_no + '&receive=1' + '&goods_shape=' + goodsshape + '&goods_flag=' + goods_flag,  
+      imageUrl: imageUrl,     
       success: function (res) {
         console.log('更新发送状态:', res)
         if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
-
+        //微信已经取消回调服务
         }
-
       },
       fail: function (res) {
         console.log('转发失败之后', res)
@@ -546,4 +524,4 @@ Page({
     return shareObj
   } ,
    
-});
+})

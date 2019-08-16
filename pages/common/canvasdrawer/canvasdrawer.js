@@ -195,11 +195,10 @@ Component({
         //console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width,width)
         for (let i = 0; i < content.length; i++) {
           fillText += [content[i]]
-          //console.log('drawText() breakWord content:', content, content.length, this.ctx.measureText(fillText).width, width)
           if (this.ctx.measureText(fillText).width > width) {
             if (lineNum === MaxLineNumber) {
               if (i !== content.length) {
-                fillText = fillText.substring(0, fillText.length - 1) + '...' 
+                fillText = fillText.substring(0, fillText.length - 1) + '...'
                 this.ctx.fillText(fillText, left, fillTop)
                 this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
                 fillText = ''
@@ -210,7 +209,13 @@ Component({
             this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
             fillText = ''
             fillTop += lineHeight
-            lineNum ++
+            lineNum++
+          } else if (content.charCodeAt(i) == 10){
+            this.ctx.fillText(fillText, left, fillTop)
+            this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
+            fillText = ''
+            fillTop += lineHeight
+            lineNum++
           }
         }
         this.ctx.fillText(fillText, left, fillTop)

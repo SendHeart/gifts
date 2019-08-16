@@ -147,6 +147,7 @@ Page({
     var cartIdArray = cartIds.split(',')
     var order_type = options.order_type
     var order_note = options.order_note
+    var order_image = options.order_image
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     payamount = (amount - discountpay).toFixed(2)
 
@@ -158,6 +159,7 @@ Page({
       cartIds: cartIdArray,
       order_type: order_type,
       order_note: order_note,
+      order_image: order_image,
       username: options.username,
       token: options.token,
       is_buymyself: is_buymyself,
@@ -196,7 +198,8 @@ Page({
     var shop_type = that.data.shop_type
     var amount = that.data.amount
     var order_type = 'gift'
-    var order_note = that.data.note
+    var order_image = that.data.order_image
+    var order_note = that.data.order_note
     var order_num = that.data.order_num
     if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
     console.log('选中 优惠券 类型:', selected_coupon_type, 'coupon_id:', selected_coupon_id, ' 红包 red coupon_type:', selected_coupon_red_type, ' red coupon_id:', selected_coupon_red_id, 'red amount:', selected_coupon_red_amount)
@@ -211,6 +214,7 @@ Page({
         buy_type: 'cart',
         order_type: order_type,
         note: order_note,
+        order_image: order_image,
         coupon_id: selectedAllStatus?selected_coupon_id:0,
         coupon_type: selectedAllStatus?selected_coupon_type:0,
         coupon_amount: selectedAllStatus ? selected_coupon_amount:0,
@@ -234,9 +238,14 @@ Page({
             duration: 1500
           })
           */
-          wx.navigateTo({
-            url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself
-          })
+          if (order_data['order_pay']==0){
+            that.delete_cart()
+            that.zero_pay(order_data['order_no']) //0支付直接送出
+          }else{
+            wx.navigateTo({
+              url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself
+            })
+          }
         } else {
           wx.showToast({
             title: res.data.info,
@@ -244,10 +253,89 @@ Page({
             duration: 2000
           })
         }
-      
       }
     })
+  },
+  delete_cart: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var sku_id = that.data.cartIds
+    var shop_type = that.data.shop_type
+    console.log('payment delete_cart sku_id:', sku_id);
+    // 购物车单个删除
+    wx.request({
+      url: weburl + '/api/client/delete_cart',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        sku_id: sku_id,
+        shop_type: shop_type
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('payment delete_cart:', res.data.result);
+      }
+    })
+  },
+  zero_pay: function (order_no='') {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var is_buymyself = that.data.is_buymyself
 
+    //再次确认订单状态
+    wx.request({
+      url: weburl + '/api/client/query_order',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        order_no: order_no,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('order checkout zero_pay() 0支付订单查询:', res.data)
+        var orderObjects = res.data.result;
+        if (!orderObjects) {
+          console.log('order checkout zero_pay() 没有该订单 orderObjects:', orderObjects)
+          wx.showToast({
+            title: '没有该订单',
+            icon: 'none',
+            duration: 1500
+          })
+          setTimeout(function () {
+            wx.navigateBack()
+          }, 1500);
+          return
+        } else {
+          if (orderObjects[0]['gift_status'] > 0) {
+            console.log('order checkout zero_pay() 该订单已送出 orderObjects:', orderObjects)
+            wx.showToast({
+              title: '该订单已送出',
+              icon: 'none',
+              duration: 1500
+            })
+            setTimeout(function () {
+              wx.navigateBack();
+            }, 1500)
+            return
+          } else {
+            wx.navigateTo({
+              url: '../send/send?order_no=' + order_no + '&orders=' + JSON.stringify(orderObjects) + '&is_buymyself=' + is_buymyself
+            })
+          }
+        }
+      }
+    })
   },
 	loadAddress: function () {
 		var that = this;

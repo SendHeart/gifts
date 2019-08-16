@@ -94,6 +94,7 @@ page {
   height: 750rpx;
   display: inline-block;
   overflow: hidden;
+  z-index:1;
 }
 
 .shopping_container {
@@ -567,4 +568,37 @@ border: none;
     margin-left:-80rpx;   
     opacity: 0.5; 
 }
+
+.swiperitem text{
+    position: absolute;
+    top:0;
+    margin-top: 480rpx;
+    left:10%;
+    right:10%;
+    /*
+    text-indent:40rpx;
+    transform:translateX(1%);
+    */
+}
+
+.share-goods-wx-info{
+    position: absolute;
+    bottom:0;
+    display:flex;
+    flex-direction:row;
+    margin-bottom: 200rpx;
+    margin-left:300rpx;
+}
  
+ .share-goods-remark{
+    position: absolute;
+    bottom:0;
+    display:flex;
+    flex-direction:row;
+    opacity: 0.5;
+    font-size:24rpx;
+    margin-bottom: 50rpx;
+    margin-left:300rpx;
+    line-height:100rpx;
+    height:100rpx;
+}

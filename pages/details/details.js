@@ -11,8 +11,10 @@ Page({
         title_name: '详情',
         title_logo: '../../images/footer-icon-05.png',
         share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
+        card_blessing:'送心礼物祝您:万事如意，平平安安！',
         share_desc:'送心礼物，开启礼物社交时代！',
         share_avatarUrl: weburl + '/uploads/avatar.png',
+        share_goods_avatarUrl: weburl + '/uploads/avatar.png',
         nickname: userInfo.nickName,
         avatarUrl: userInfo.avatarUrl,
         user:null,
@@ -63,6 +65,8 @@ Page({
         image_save_times:0,
         is_buymyself:0,
         buynum:1,
+        notehidden:true,
+        has_cardpayed:0,
     },
 
   formSubmit: function (e) {
@@ -84,6 +88,8 @@ Page({
         is_buymyself: 0,
       })
       that.mycommTapTag()
+    } else if (form_name == 'myblessing') {
+      that.myblessing()  
     }
     if (formId) that.submintFromId(formId)
   },
@@ -159,20 +165,46 @@ Page({
     })
     //console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
   },
+
+  bindTextAreaBlur: function (e) {
+    var that = this;
+    that.setData({
+      card_blessing: e.detail.value
+    })
+  }, 
+  //确定按钮点击事件 
+  shareConfirm: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+      hidden_share: !that.data.hidden_share
+    })
+  },
+  //取消按钮点击事件  
+  shareCandel: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+    })
+  },  
   sharegoodsTapTag: function () {
     var that = this
     var share_goods_id = that.data.goodsid
+    var share_goods_org = that.data.goodsorg
+    var share_goods_shape = that.data.goodsshape
     var share_goods_price = that.data.goodsprice
     var share_goods_name = that.data.goodsname
     share_goods_name = share_goods_name.replace(/\&/g, ' ')
     var cur_img_id = that.data.cur_img_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
-    var share_goods_title = that.data.share_title
+    var share_goods_title = share_goods_org=='5'?'送心礼物，祝您万事如意，平平安安！':that.data.share_title
     var share_goods_desc = that.data.share_desc
     var share_avatarUrl = that.data.share_avatarUrl
     var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
     var goods_image_cache = wx.getStorageSync('goods_image_cache_' + share_goods_id)
     var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache_' + share_goods_id)
+  
+    if (share_goods_shape == 5 || share_goods_shape==undefined) return
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -203,7 +235,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
+      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape +'&share_goods_org=' + share_goods_org+'&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
     })
     /*
     wx.getStorageInfo({
@@ -291,6 +323,14 @@ Page({
     }),
       this.videoContext.play()
   },
+
+  myblessing: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+    })
+  },
+
   onLoad:function(options) {
         var that = this
         var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
@@ -300,7 +340,10 @@ Page({
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
         var keyword = options.keyword ? options.keyword:''
         var is_satisfy = options.is_satisfy ? options.is_satisfy:0
+        var has_cardpayed = options.has_cardpayed ? options.has_cardpayed : 0
         var rule_selected_info = options.rule_selected_info ? options.rule_selected_info:''
+        var goodsorg = options.goods_org ? options.goods_org : 1
+        var goodsshape = options.goods_shape ? options.goods_shape : 1
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -319,7 +362,7 @@ Page({
         var qr_type = 'wishshare' 
         var image_video = []
         var image_pic = []
-      
+    
         console.log('detail options:', options,'scene:',scene)
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
@@ -375,6 +418,8 @@ Page({
         that.setData({
           goodsname: goodsname ? goodsname:'',
           goodsinfo: goodsinfo ? goodsinfo:'',
+          goodsorg: goodsorg,
+          goodsshape: goodsshape,
           goodsid: goodsid ? goodsid:0,
           refer_mid: refer_mid,
           goodsprice: goodsprice ? goodsprice:0,
@@ -418,6 +463,8 @@ Page({
                   goodsprice: goods_info[0]['sell_price'],
                   marketprice: goods_info[0]['market_price'],
                   goodssale: goods_info[0]['sale'],
+                  goodsorg: goods_info[0]['goods_org'],
+                  goodsshape: goods_info[0]['shape'],
                   //goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
                   goodscoverimg: goods_info[0]['activity_image'],
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
@@ -769,11 +816,22 @@ Page({
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
       var order_type = 'gift'
       var order_note = '送你一份礼物，希望你喜欢!'; //默认祝福
+      var order_image = that.data.order_image
       var buynum = that.data.buynum
       var sku_sell_price = that.data.sku_sell_price
       var amount = parseFloat(sku_sell_price) * buynum
       var sku_id = that.data.sku_id
       var is_buymyself = that.data.is_buymyself
+      var cur_img_id = that.data.cur_img_id
+      var share_goods_image = that.data.image_pic[cur_img_id]['url']
+      var goodsshape = that.data.goodsshape
+      if(goodsshape==5) {
+        order_note = that.data.card_blessing
+        if (cur_img_id != 0) {
+          cur_img_id = cur_img_id - that.data.image_video.length
+          share_goods_image = that.data.image_pic[cur_img_id]['url']
+        }
+      }
       wx.request({
         url: weburl + '/api/client/query_cart',
         method: 'POST',
@@ -821,7 +879,7 @@ Page({
           })
           var amount = parseFloat(that.data.sku_sell_price) * buynum
           wx.navigateTo({
-            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_note=' + order_note + '&username=' + username + '&token=' + token
+            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_note=' + order_note + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
           })
         }
       })

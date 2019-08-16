@@ -154,16 +154,16 @@
   align-items: center;
   background: #fff;
 }
-.star_title {
+.star-title {
   font-size: 28rpx;
   height: 48rpx;
   line-height: 52rpx;
 }
-.star_image {
+.star-image {
   padding: 0;
   height: 48rpx;
   }
-.star_image image {
+.star-image image {
 width: 32rpx;
 height: 32rpx;
 margin-left: 20rpx;
@@ -180,6 +180,7 @@ margin-left: 20rpx;
   opacity:1;
   z-index: 999;
 }
+
 .note {
   display: flex;
   flex-direction: row;
@@ -195,6 +196,7 @@ margin-left: 20rpx;
   padding: 15rpx;
   width: 98%;
 }
+
 .upimg {
   display: flex;
   flex-direction: column;
@@ -253,7 +255,7 @@ margin-left: 20rpx;
   background: #fff;
   width: 100%;
 }
-.comm_title {
+.comm-title {
   display: flex;
   flex-direction: row;
   justify-content: center;

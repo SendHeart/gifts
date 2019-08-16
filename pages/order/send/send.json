@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "送心礼物"
+  "navigationBarTitleText": "送心礼物",
+    "usingComponents": {
+      "canvasdrawer": "../../common/canvasdrawer/canvasdrawer"
+    }
 }

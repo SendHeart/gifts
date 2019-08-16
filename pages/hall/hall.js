@@ -557,14 +557,12 @@ Page({
       that.setData({
         is_buymyself: 0,
       })
-      that.bindCheckout()
     }else if(form_name=='buymyself'){
       that.setData({
         is_buymyself: 1,
       })
-      that.bindCheckout()
     }
-    
+    that.bindCheckout()
     that.submintFromId(formId)
   },
  
@@ -704,6 +702,8 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_id = e.currentTarget.dataset.goodsId
+    var goods_org = e.currentTarget.dataset.goodsOrg
+    var goods_shape = e.currentTarget.dataset.goodsShape
     var goods_name = e.currentTarget.dataset.goodsName
     var goods_price = e.currentTarget.dataset.goodsPrice
     var goods_info = e.currentTarget.dataset.goodsInfo
@@ -712,7 +712,7 @@ Page({
     //var carts = this.data.carts
     var sku_id = objectId
     wx.navigateTo({
-      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name+'&image=' + image+'&token=' + token + '&username=' + username
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_shape=' + goods_shape +  '&goods_org=' + goods_org + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name+'&image=' + image+'&token=' + token + '&username=' + username
     })
   },
  
@@ -1140,7 +1140,6 @@ Page({
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
       var midReg = new RegExp(/\&mid=(.*)/)
-
       var scene_artid = scene.match(artidReg)[0]
       art_id = scene_artid ? scene_artid.substring(6, scene_artid.length) : art_id
       var scene_artcatid = scene.match(artcatidReg)[0]
@@ -1331,5 +1330,4 @@ Page({
     obj['buyhidden1'] = e.detail.value ? '' : 'true'
     this.setData(obj)
   }
-  
 })

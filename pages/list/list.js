@@ -236,11 +236,13 @@ Page({
     var username = options.username ? options.username : wx.getStorageSync('username')
     var token = options.token ? options.token : wx.getStorageSync('token')
     var navlist_toView = options.navlist ? options.navlist:0
-    
+    var navlist_title = options.navlist_title ? options.navlist_title : ''
+
     that.setData({
       username: username,
       token: token,
       navlist_toView: navlist_toView,
+      navlist_title: navlist_title,
     })
     //that.setNavigation()
     //调用应用实例的方法获取全局数据
@@ -373,6 +375,7 @@ Page({
   get_menubar: function (event) { //获取菜单项
     var that = this
     var navlist_toView = that.data.navlist_toView
+    var navlist_title = that.data.navlist_title
     wx.request({
       url: weburl + '/api/client/get_menubar',
       method: 'POST',
@@ -394,6 +397,12 @@ Page({
             duration: 1500
           });
           return;
+        }
+        for (var i = 0; i < navList_new.length;i++){
+          if (navList_new[i]['title'].indexOf(navlist_title)>=0){
+            navlist_toView = i
+            break
+          }
         }
         that.setData ({
           navList: navList_new,

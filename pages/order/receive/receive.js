@@ -109,6 +109,8 @@ Page({
 
   },
   returnTapTag: function (e) {
+    var that = this
+    var order_shape = that.data.order_shape
     /*
     wx.navigateTo({
       url: '../../order/list/list'
@@ -119,37 +121,50 @@ Page({
       url: '../../hall/hall'
     });
      */
-    wx.switchTab({
-      url: '../../hall/hall'
-    })
-
+    if(order_shape==5){
+      wx.navigateTo({
+        url: '/pages/list/list?navlist_title=贺卡请柬'
+      })
+      
+    }else{
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
   },
 
   receiveTapTag: function () {
     var that = this 
+    var order_shape = that.data.order_shape //5贺卡请柬
     var is_buymyself = that.data.is_buymyself
     var title = is_buymyself == 1 ? '收货地址' :'请确认'
     var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
-   
-    if (is_buymyself == 1){
-      that.set_address()
+    
+    if (order_shape == 5) { //贺卡请柬不需要设置接收地址
+      that.confirm_card()
     }else{
-      wx.showModal({
-        title: title,
-        content: content,
-        success: function (res) {
-          if (res.confirm) {
-            that.set_address()
+      if (is_buymyself == 1) {
+        that.set_address()
+      } else {
+        wx.showModal({
+          title: title,
+          content: content,
+          success: function (res) {
+            if (res.confirm) {
+              that.set_address()
+            }
           }
-        }
-      })
+        })
+      }
     }
+   
   },
 
   set_address: function () {
     var that = this
     var shop_type = that.data.shop_type
     var order_no = that.data.order_no
+    var order_price = that.data.order_price
     var goods_flag = that.data.goods_flag
     var openid = that.data.openid
     var nickname = that.data.userInfo.nickName
@@ -257,11 +272,13 @@ Page({
                   })
                 }, 200)
               }
-              if(is_buymyself == 1){ //自购礼物订单抽奖
+              if(is_buymyself == 1 && order_price>0){ //自购礼物订单抽奖
                 console.log('自购礼物订单抽奖 to lottery order_no:', order_no)
                 wx.navigateTo({
                   url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + that.data.order_no,
                 })
+              }else{
+                that.goBack()
               }
             } else {
               console.log('礼物接收失败 order_no:', that.data.order_no)
@@ -276,6 +293,71 @@ Page({
             }
           }
         })
+      }
+    })
+  },
+  confirm_card:function(){
+    var that = this
+    var shop_type = that.data.shop_type
+    var order_id = that.data.order_id
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var nickname = that.data.userInfo.nickName
+    var headimg = that.data.userInfo.avatarUrl
+    wx.request({ //更新收礼物状态
+      url: weburl + '/api/client/update_order_status',
+      method: 'POST',
+      data: {
+        username: username,
+        shop_type: shop_type,
+        openid:openid,
+        nickname: nickname,
+        headimg: headimg,
+        order_id: order_id,
+        status_info: 'receive',
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('order receive set_address()礼物已接收:', res.data);
+        if (res.data.status == 'y') {
+          wx.showToast({
+            title: '礼物已接收',
+            icon: 'success',
+            duration: 1500
+          })
+          that.setData({
+            receive_status: 1,
+          })
+          if (goods_flag == 3) { //虚拟商品订单
+            setTimeout(function () {
+              wx.navigateTo({
+                url: '/pages/member/task/task',
+              })
+            }, 200)
+          }
+          if (is_buymyself == 1 && order_price > 0) { //自购礼物订单抽奖
+            console.log('自购礼物订单抽奖 to lottery order_no:', order_no)
+            wx.navigateTo({
+              url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + that.data.order_no,
+            })
+          } else {
+            that.goBack()
+          }
+        } else {
+          console.log('礼物接收失败 order_no:', that.data.order_no)
+          wx.showToast({
+            title: res.data.info ? res.data.info : '礼物接收失败',
+            icon: 'loading',
+            duration: 1500
+          })
+          that.setData({
+            receive_status: 0,
+          })
+        }
       }
     })
   },
@@ -306,6 +388,7 @@ Page({
     var ordno = options.ordno ? options.ordno : '' //APP 送礼订单
     var order_no = options.order_no ? options.order_no : ordno
     var order_id = options.order_id ? options.order_id:0
+    var order_shape = options.order_shape ? options.order_shape : 0
     var receive = options.receive ? options.receive:0
     var is_buymyself = options.is_buymyself ? options.is_buymyself : 0
     var goods_flag = options.goods_flag ? options.goods_flag:0
@@ -321,6 +404,13 @@ Page({
       var ordnoReg = new RegExp(/(?=ordno=).*?(?=\&)/)
       var scene_ordno = scene.match(ordnoReg)[0]
       order_no = order_no ? order_no : scene_ordno
+    } else if (scene.indexOf("ordid=") >= 0) {
+      var ordidReg = new RegExp(/(?=ordid=).*?(?=\&)/)
+      var scene_ordid = scene.match(ordidReg)[0]
+      var tyReg = new RegExp(/\&ty=(.*)/)
+      var scene_order_shape = scene.match(tydReg)[0]
+      order_id = order_id > 0 ? order_id : scene_ordid
+      order_shape = scene_order_shape
     }
     app.globalData.is_receive = receive
     app.globalData.order_no = order_no
@@ -329,6 +419,7 @@ Page({
     that.setData({
       order_no: order_no,
       order_id: order_id,
+      order_shape: order_shape,
       receive: app.globalData.is_receive,
       openid: openid,
       username: username,
@@ -346,8 +437,8 @@ Page({
       }
     })
    
-    if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1) {
-      console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive)
+    if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1 && that.data.order_shape != 5) {
+      console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive, ' order shape:', order_shape,'order id:',order_id)
       wx.switchTab({
         url: '/pages/hall/hall'
       })
@@ -433,6 +524,7 @@ Page({
     var note = that.data.note
     var is_buymyself = that.data.is_buymyself
     var isreload = that.data.isreload
+    var order_price = 0
     //从服务器获取订单列表
     if (is_buymyself!=1){
       setTimeout(function () { //3秒超时
@@ -502,6 +594,7 @@ Page({
             note = orderObjects[i]['rcv_note']
             headimg = orderObjects[i]['from_headimg']
             nickname = orderObjects[i]['from_nickname']
+            order_price = order_price + orderObjects[i]['order_price']
           }
           receive_status = orderObjects[0]['gift_status'] == 2 ? 1 : 0
           if (receive_status==1 && goods_flag == 3) { //虚拟商品订单
@@ -525,16 +618,19 @@ Page({
           }
           that.setData({
             orders: orderObjects,
+            order_price: order_price,
             all_rows: all_rows,
             orderskus: orderskus,
             note: note,
             note_title: note_title,
             headimg: headimg,
             nickname: nickname,
+            order_image: orderskus[0]['sku_image'],
             receive_status: receive_status,
           })
           console.log('order sku list:', orderskus)
           app.globalData.is_receive = 0 
+          var order_price = orderObjects[0]
           if(is_buymyself==1){ //自购礼品 直接接收
             that.receiveTapTag()
           }

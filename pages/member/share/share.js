@@ -279,7 +279,7 @@ Page({
     })
   },
   eventGetImage: function (event) {
-    console.log('eventGetImage:', event)
+    console.log('member share eventGetImage:', event)
     const { tempFilePath, errMsg } = event.detail
     if (errMsg === 'canvasdrawer:ok') {
       this.setData({

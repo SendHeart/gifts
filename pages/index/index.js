@@ -13,9 +13,14 @@ Page({
     title_name: '礼物袋',
     title_logo: '../../images/history_s.png',
     orders: [],
+    orders_show: [],
+    orders_prev: [],
+    orders_next: [],
+    colors: [],
     shop_type:shop_type,
-    page: 1,
+    page: 0,
     pagesize: 10,
+    show_max:2,  //最多显示页数
     status: 0,
     navList_order: navList_order,
     tab2: 'send',
@@ -30,24 +35,102 @@ Page({
     navList2: navList2,
     buyin_rate:90,  //礼物折现率
     loadingHidden: true, // loading
+    scrollTop: 0,
+    is_loading:false,
+    lastX: 0,          //滑动开始x轴位置
+    lastY: 0,          //滑动开始y轴位置
+    text: "没有滑动",
+    currentGesture: 0, //标识手势
+    current_scrollTop:0,
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
+  /*
+  //监听屏幕滚动 判断上下滚动  
+  onPageScroll: function (ev) {
+    var that = this
+    //当滚动的top值最大或者最小时，为什么要做这一步是由于在手机实测小程序的时候会发生滚动条回弹，所以为了解决回弹，设置默认最大最小值   
+    if (ev.scrollTop <= 0) {
+      ev.scrollTop = 0
+    } else if (ev.scrollTop > that.data.dkheight) {
+      ev.scrollTop = that.data.dkheight
+    }
+    //判断浏览器滚动条上下滚动   
+    if (ev.scrollTop > that.data.scrollTop || ev.scrollTop == that.data.dkheight) {
+      console.log('向下滚动')
+    } else {
+      console.log('向上滚动');
+    }
+    console.log('当前scrollTop:', ev.scrollTop, ' 当前屏幕高:', that.data.dkheight);
+    //给scrollTop重新赋值    
+    
+    setTimeout(function () {
+      that.setData({
+        scrollTop: ev.scrollTop
+      })
+    }, 0)
+     
+  },
+  */
+ 
+  //滑动移动事件
+  handletouchmove: function (event) {
+    var that = this
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - that.data.lastX
+    var ty = currentY - that.data.lastY
+    var screenHeight = that.data.dkheight
+    var text = ""
+    //左右方向滑动
+    if (Math.abs(tx) > Math.abs(ty)) {
+      if (tx < 0) {//text = "向左滑动"
+
+      } else if (tx > 0) {//text = "向右滑动"
+
       }
+    }else{
+      //上下方向滑动
+      if (ty < 0) {
+        text = "向上滑动"
+        if (that.data.current_scrollTop >30)  that.getMoreOrdersTapTag()
+      } else if (ty > 0) {
+        text = "向下滑动"
+        //if (that.data.current_scrollTop<10) that.getPrevOrdersTapTag()
+      }
+    }  
+   
+    //将当前坐标进行保存以进行下一次计算
+    that.data.lastX = currentX
+    that.data.lastY = currentY
+    that.setData({
+      text: text,
+    })
+    //console.log('handletouchmove:', text, 'ty:', ty, 'tx:', tx, ' currentY:', currentY, 'current_scrollTop:', that.data.current_scrollTop, ' screenHeight:', screenHeight, 'page:', that.data.page)
+  },
+
+  //滑动开始事件
+  handletouchtart: function (event) {
+    var that = this
+    that.data.lastX = event.touches[0].pageX
+    that.data.lastY = event.touches[0].pageY
+  },
+  //滑动结束事件
+  handletouchend: function (event) {
+    var that = this
+    that.data.currentGesture = 0;
+    that.setData({
+      text: "没有滑动",
+      is_longtap : false,
+    });
+  },
+ 
+  onPageScroll: function (e) {
+    var that = this
+    //console.log(e);//{scrollTop:99}
+    that.setData({
+      current_scrollTop: e.scrollTop,
     })
   },
+
   goBack: function () {
     wx.switchTab({
       url: '../hall/hall'
@@ -110,9 +193,13 @@ Page({
       activeIndex2: index,
       tab2: tab,
       orders: [],
+      orders_show: [],
+      orders_prev:[],
+      orders_next:[],
+      loadingHidden: true,
       giftflag: giftflag,
       all_rows:0,
-      page:1,
+      page:0,
       page_num:1
     });
     console.log('tab:' + tab, ' giftflag:', giftflag)
@@ -130,6 +217,10 @@ Page({
         floorstatus: false
       })
     }
+    this.setData({
+      current_scrollTop: e.detail.scrollTop
+    })
+  
   },
 
   //回到顶部
@@ -139,11 +230,12 @@ Page({
       scrollTop: 0
     })
   },
-  getMoreOrdersTapTag: function (e) {
-    var that = this;
+  getMoreOrdersTapTag: function () {
+    var that = this
+    if(that.data.is_loading) return
     var page = that.data.page + 1;
     var pagesize = that.data.pagesize;
-    var all_rows = that.data.all_rows;
+    var all_rows = that.data.all_rows
     if (page > that.data.page_num) {
       wx.showToast({
         title: '没有更多了',
@@ -152,9 +244,7 @@ Page({
       });
       return
     }
-    that.setData({
-      page: page,
-    })
+    console.log('get More Orders page:',page,'current scrollTop:',that.data.current_scrollTop)
     that.reloadData()
   },
 
@@ -168,29 +258,43 @@ Page({
   },
   send: function (e) {
     var that = this
+    var page = that.data.page
     var order_no = e.currentTarget.dataset.objectId
     var index = e.currentTarget.dataset.index
-    var orders = []
-    orders[0] = that.data.orders[index]
-    console.log('送出:', order_no, ' order info:', orders, 'index:', index)
+    var orders = that.data.orders
+    var index = 0
+    var order_send=[]
+    for (var i = 0; i < orders.length;i++){
+      if (orders[i]['order_no'] == order_no){
+        index = i
+        order_send.push(orders[i])
+        break
+      }
+    }
+    
+    console.log('送出 order no:', order_no, ' order info:', orders, 'index:', index)
     wx.navigateTo({
-      url: '../order/send/send?order_no=' + order_no+'&orders=' + JSON.stringify(orders)
+      url: '../order/send/send?order_no=' + order_no + '&orders=' + JSON.stringify(order_send)
     })
   },
   sendOtherTapTag: function (e) {
     var that = this
+    var page = that.data.page
     var order_no = e.currentTarget.dataset.orderNo
-    var index = e.currentTarget.dataset.index
-    var orders = []
-     orders[0] = that.data.orders[index]
+    //var index = e.currentTarget.dataset.index
+    var orders = that.data.orders
+    var index = 0
+    var order_send = []
+    for (var i = 0; i < orders.length; i++) {
+      if (orders[i]['order_no'] == order_no) {
+        index = i
+        order_send.push(orders[i])
+        break
+      }
+    }
     wx.navigateTo({
-      url: '../order/transfer/transfer?receive=-1&order_no=' + order_no + '&orders=' + JSON.stringify(orders)
+      url: '../order/transfer/transfer?receive=-1&order_no=' + order_no + '&orders=' + JSON.stringify(order_send)
     })
-    orders = that.data.orders
-    orders[index]['duetime'] = that.data.currenttime
-    that.setData({
-      orders: orders,
-    });
   },
   refundTapTag: function (e) {
     var that = this
@@ -291,12 +395,13 @@ Page({
         buyin_rate: navList_new ? navList_new[7]['value'] : buyin_rate,
       })
     }
-   
+   /*
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
       })
     }, 1500)
+    */
   },
 
   onLoad: function (options) {
@@ -326,12 +431,11 @@ Page({
         that.setData({
           windowWidth: res.windowWidth,
           windowHeight: res.windowHeight,
-          dkheight: winHeight - 2,
-          scrollTop: that.data.scrollTop + 10
+          dkheight: winHeight,
+          //scrollTop: that.data.scrollTop + 10
         })
       }
     }) 
-    that.setNavigation()
     that.reloadData()
   },
   onShow: function () {
@@ -339,21 +443,54 @@ Page({
   },
 
   reloadData: function () {
-    var that = this;
-    var order_type = that.data.tab2;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var that = this
+    var scrollTop = that.data.scrollTop //保留当前位置
+    var current_scrollTop = that.data.current_scrollTop ? that.data.current_scrollTop:0//保留当前位置
+    var order_type = that.data.tab2
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var status = that.data.status
     var shop_type = that.data.shop_type
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
+    var page = that.data.page+1 //从服务器获取页面序号
+    var show_max = that.data.show_max
+    var orders_prev = that.data.orders_prev
+    var orders_next = that.data.orders_next
+    var pagesize = that.data.pagesize
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
-    console.log('reloadData shop_type:' + shop_type+' pagesize:'+pagesize,' current time:',currenttime);
+    var tips = "加载第" + (page) + "页";
     that.setData({
-      loadingHidden: false,
+      is_loading:true,
     })
+    wx.showLoading({
+      title: tips,
+    })
+    var page_show = orders_next.length 
+    var orders_show = [] 
+    if(orders_next.length>0){
+      if (orders_show.length < show_max) {
+        page_show = page_show + 1
+      } else {
+        orders_prev.push(orders_show.shift())
+        page_show = show_max
+      }
+      orders_new = orders_next.pop()
+      that.setData({
+        ["orders_show[" + (page_show - 1) + "]"]: orders_new,
+        orders_prev: orders_prev,
+        orders_next: orders_next,
+        scrollTop: 0,
+        page: page,
+      })
+      wx.hideLoading()
+      setTimeout(function () {
+        that.setData({
+          is_loading: false,
+        })
+      }, 800)
+      return
+    } 
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_list',
@@ -376,10 +513,6 @@ Page({
         console.log(res.data);
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows
-        that.setData({
-          loadingHidden: true,
-        })
-       
         if (!res.data.result && page==1) {
           wx.showToast({
             title:"空空如也,快去送礼吧！",
@@ -391,16 +524,17 @@ Page({
           }, 500)
           that.setData({
             orders: [],
+            orders_show: [],
             all_rows: 0,
           })
         } else {
           // 存储地址字段
+          var orders = that.data.orders
           if (orderObjects){
             for (var i = 0; i < orderObjects.length; i++) {
               if (orderObjects[i]['logo'].indexOf("http") < 0) {
                 orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
               }
-             
               if (orderObjects[i]['order_sku']){
                 for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
                   if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
@@ -409,16 +543,16 @@ Page({
                   orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
                 }
               }
-              
               var duetime = orderObjects[i]['duetime'] - currenttime
               orderObjects[i]['hour'] = parseInt(duetime / 3600)
               orderObjects[i]['minus'] = parseInt((duetime - orderObjects[i]['hour'] * 3600) / 60)
               orderObjects[i]['sec'] = duetime - orderObjects[i]['hour'] * 3600 - orderObjects[i]['minus'] * 60
+              //orders.push(orderObjects[i])
             }
-            if (page > 1 && orderObjects) {
+            //if (page > 1 && orderObjects) {
               //向后合拼
-              orderObjects = that.data.orders.concat(orderObjects);
-            }
+            //}
+            orders = orders.concat(orderObjects)
             var gift_send = that.data.gift_send
             var gift_rcv = that.data.gift_rcv
             var page_num = that.data.page_num
@@ -428,14 +562,35 @@ Page({
             } else {
               gift_rcv = all_rows
             }
+            //更新当前显示页信息
+            if(orders_show.length<show_max){
+              orders_show.push(orderObjects)
+              page_show =  page_show +1
+            }else{
+              orders_prev.push(orders_show.shift())
+              orders_show.push(orderObjects)
+              page_show = show_max
+            }
+
             that.setData({
-              orders: orderObjects,
+              orders: orders,
+              ["orders_show[" + (page-1) + "]"]: orderObjects,
               all_rows: all_rows,
               gift_send: gift_send,
               gift_rcv: gift_rcv,
               page_num: page_num.toFixed(0),
-            });
-            console.log('gift_send:' + gift_send + ' gift_rcv:' + gift_rcv);
+              scrollTop: 0,
+              page:page,
+            })
+            wx.hideLoading()
+            setTimeout(function () {
+              that.setData({
+                is_loading: false,
+                loadingHidden: false,
+              })
+            }, 1500)
+           
+            console.log('reloadData page:' + page + ' pagesize:' + pagesize, ' current time:', currenttime, 'current scrollTop', scrollTop, ' orders', that.data.orders)
           }
           if (order_type=='send'){
             setTimeout(function () {
@@ -449,9 +604,12 @@ Page({
   },
   duetime_update: function () {
     var that = this
+    var page = that.data.page
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
-    var orderObjects = that.data.orders
+    if (!that.data.orders_show[page-1]) return
+    var orderObjects = that.data.orders_show[page-1]
+    //console.log('duetime page:',page,' orders[page]',that.data.orders[page-1])
     for (var i = 0; i < orderObjects.length; i++) {
       var duetime = orderObjects[i]['duetime'] - currenttime
       orderObjects[i]['hour'] = parseInt(duetime / 3600)
@@ -459,7 +617,8 @@ Page({
       orderObjects[i]['sec'] = duetime - orderObjects[i]['hour'] * 3600 - orderObjects[i]['minus'] * 60
     }
     that.setData({
-      orders: orderObjects,
+     // orders: orderObjects,
+      ["orders_show[" + (page - 1) + "]"]: orderObjects,
     })
     setTimeout(function () {
       that.duetime_update()
@@ -509,10 +668,11 @@ Page({
             icon: 'success',
             duration: 1500
           })
-          var orders = that.data.orders
+          var orders = that.data.orders_show[page-1]
           orders[order_index]['order_sku'][sku_index]['status'] = 1
           that.setData({
-            orders: orders,
+            //orders: orders,
+            ["orders_show[" + (page - 1) + "]"]: orders,
           })
         }
       }
@@ -548,7 +708,8 @@ Page({
     })
   },
   cancel_order: function (e) {
-    var that = this;
+    var that = this
+    var page = that.data.page
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var order_no = e.currentTarget.dataset.objectId;
@@ -582,10 +743,11 @@ Page({
                   icon: 'success',
                   duration: 1000
                 })
-                var orders = that.data.orders
+                var orders = that.data.orders[page -1]
                 orders[order_index]['status'] = 8  // 8 订单取消
                 that.setData({
-                  orders: orders,
+                  //orders: orders,
+                  ["orders[" + (page - 1) + "]"]: orders,
                 })
 
               } else {
@@ -664,20 +826,22 @@ Page({
     });
   },
 
-  onPullDownRefresh() {
+  getPrevOrdersTapTag() {
     var that = this 
-    console.log('onPullDownRefresh:下拉刷新')
+    var page = that.data.page
+    var last_page = page - 1 > 0 ? page - 1 : 0
+    var is_loading = that.data.is_loading
+    console.log('getPrevOrdersTapTag:下拉刷新 page:', page, ' is loading:', is_loading, ' loadingHIdden:',that.data.loadingHidden,'current scrollTop:', that.data.current_scrollTop)
+    if (page == 1 || is_loading || !that.data.loadingHidden ){
+      return
+    }
     that.setData({
-      page: 1,
-      orders: [],
-      loadingHidden: false,
+      //["orders[" + (last_page - 1) + "]"]: that.data.orders[last_page - 1],
+      page: last_page,
     })
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true,
-      })
-    }, 1500)
-    that.reloadData()
   },
 
+  onReady: function () {
+    
+  },
 });

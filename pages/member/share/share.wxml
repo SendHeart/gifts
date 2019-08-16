@@ -1,6 +1,7 @@
-<import src="../../common/hall_title.wxml" />
+
 <view hidden="{{!hiddenqrcode}}"  class="gifts-item" >
   <!--
+  <import src="../../common/hall_title.wxml" />
   <text class="desc" style=''>  
 	  {{act_title==''?'开启礼物电商时代，200万人都在用的礼物小程序':act_title}}
   </text>

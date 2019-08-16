@@ -5,7 +5,7 @@
 <!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
 <view  class="pagewrap" >
   <view class="share-goods"  >
-    <view class="share-buttons">
+    <view wx:if="{{goodsshape!=5}}" class="share-buttons">
       <!--<view class="btnshare leftround" bindtap="returnTapTag">返回</view> -->
       <view class="btnshare" bindtap="sharegoodsTapTag">
       <image class="shareto" src="../../images/shareto.png"></image>
@@ -14,7 +14,7 @@
   </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}">
-      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="{{goodsshape==5?'height:1100rpx;':''}}">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
             <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="" objectFit="contain">
@@ -30,8 +30,14 @@
           </swiper-item>
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{item.id}}'>
-          <swiper-item item-id="{{item.id}}">
-            <image src="{{pic.url}}" class="slide-image" />
+          <swiper-item item-id="{{item.id}}" class="swiperitem">
+            <image src="{{pic.url}}" class="slide-image" style="{{goodsshape==5?'height:1055rpx;':''}}" />
+            <text wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing">{{card_blessing}}</text>
+            <view class="share-goods-wx-info">
+              <image wx:if="{{goodsshape==5}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
+              <view wx:if="{{goodsshape==5}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
+            </view>
+            <view wx:if="{{goodsshape==5}}" class="share-goods-remark">《 请选择背景图 》</view>
           </swiper-item>
         </block>
       </swiper>
@@ -55,7 +61,7 @@
       </view>
     </view>
     <view wx:if="{{goodsdiscount<100}}" class="prd-prom"><image src='../../images/discount.png' style='width:75rpx;height:32rpx;'></image> {{goodsdiscount<100?discountinfo:''}}</view>
-    <view class="comm-text">
+    <view wx:if="{{goodsorg!=5}}"class="comm-text">
       <text class="comm-name">服务</text>
       <view class="comm-listitem">
       <image class='icon-item' src='../../images/icon-zp.png'></image>
@@ -129,26 +135,48 @@
       </view>
     </modal>
 </view>
-
+<modal title="编辑祝词" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-330}}px;">
+     <view class="note">
+      <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindTextAreaBlur" placeholder="{{card_blessing}}" maxlength="200" />
+      </view>
+    </view>
+</modal>
 <view class="footer">
   <view class="opt-buttons">
-  <form bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
-    <button class="sec-btn" formType="submit" >
+   <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myvoiceTapTag' report-submit="true" style='width:20%;' >
+    <button class="sec-btn" formType="submit">
+    <image class='icon-detail' src="../../images/notification.png"></image>
+    <text>+语音</text></button>
+  </form>
+  <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:24%;' >
+    <button class="sec-btn" formType="submit">
+    <image class='icon-detail' src="../../images/u621.png"></image>
+    <text>编辑祝词</text>
+    </button>  
+  </form>
+  <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
+    <button class="sec-btn" formType="submit">
     <image class='icon-detail' src="../../images/bottom-comment.png"></image>
     <text>写评论</text></button>
   </form>
-  <form bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
+  <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
     <button class="sec-btn" formType="submit">
     <image class='icon-detail' src="../../images/bottom-unpraise.png"></image>
     <text>+心愿单</text>
     </button>  
   </form>
-  <form bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
+  <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
     <button class="add-cart2"  formType="submit">立即购买</button>  
   </form>
-  <form bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
+  <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
     <button class="add-cart" formType="submit">
       <text>发起送礼</text>
+    </button>  
+  </form>
+   <form wx:if="{{goodsorg==5 && has_cardpayed!=0}}" bindsubmit="formSubmit"  data-name='sharecard' report-submit="true" style='width:28%;' >
+    <button class="add-cart" formType="submit">
+      <text>预览</text>
     </button>  
   </form>
   </view>

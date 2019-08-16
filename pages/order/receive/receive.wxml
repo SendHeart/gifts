@@ -3,13 +3,20 @@
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 -->
 <view wx:if="{{is_buymyself==0}}" class="subject" style=''>
-  <text class='toptitle' wx:if='{{receive_status==0}}'>恭喜，您收到一份礼物</text>
+  <text class='toptitle' wx:if='{{receive_status==0}}'>{{order_shape==5?'恭喜，您收到一份惊喜':'恭喜，您收到一份礼物'}}</text>
   <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>礼物已领取</text>
-  <text wx:if='{{receive_status==0}}'>点击拆开，收取礼物</text>
-  <text wx:if='{{receive_status==1}}'>点击回赠，也给Ta送一个礼物吧</text>
+  <text wx:if='{{receive_status==0}}'>{{order_shape==5?'点击确认':'点击拆开，收取礼物'}}</text>
+  <text wx:if='{{receive_status==1}}'>{{order_shape==5?'点击回赠，也给Ta送一个惊喜吧':'点击回赠，也给Ta送一个礼物吧'}}</text>
 </view>
-
-<view  wx:if="{{is_buymyself==0}}" class="order-item">
+ <view wx:if="{{is_buymyself==0 && order_shape==5}}" class="card-info">
+    <image src="{{order_image}}" class="card-image" />
+    <text class="card-text" space="ensp">{{note}}</text>
+    <view class="card-wx-info">
+      <image src="{{headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
+      <view style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
+    </view>
+</view>
+<view  wx:if="{{is_buymyself==0 && order_shape!=5}}" class="order-item">
   <view class="order-item-banner">
     <view>
       <image src="../../../images/gift.gif" style='width:378rpx;height:202rpx;' mode='aspectFill'></image>
@@ -28,26 +35,25 @@
       </view>
       <text class="carts-title">{{item.goods_name}} x{{item.sku_num}}</text>
     </view>
-   
-    <view wx:if="{{receive_status<=1}}" class="sentbtn">
-    <form bindsubmit="formSubmit"  data-name='receivegift' report-submit="true"  hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' >
-      <button class="button" style="width:200rpx;" formType="submit" >拆开</button> <!-- bindtap="receiveTapTag" -->
-    </form>
-    <form bindsubmit="formSubmit"  data-name='refresh' report-submit="true"  hidden='{{overtime_status==0?true:false}}' >  
-      <button formType="submit"  style="width:200rpx;">请刷新重试</button> <!-- bindtap="refresh"  data-isreload="1" -->
-    </form>
-      <view style="width:100%; display: flex;flex-direction: column;text-align:center;" hidden='{{receive_status==0}}'>
-        <text  hidden='{{(receive_status==1 || overtime_status==0)?true:false}}' style='margin-top:10rpx;'>填写收货地址，礼物会很快奔向您了</text>
-        <view bindtap='returnTapTag' style='margin-top:10rpx;'>
-          <text hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' style='color:#E34C55;font-size:28rpx;'>暂不接受，看看其他内容</text>
-        </view>
-      </view>
-    <form bindsubmit="formSubmit"  data-name='resendgift' report-submit="true"  hidden='{{(receive_status==0 || overtime_status==1)?true:false}}' >  
-      <button class="button" formType="submit"  style="width:200rpx;">回赠</button> <!-- bindtap="returnTapTag" -->
-    </form>
-      <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:15rpx;" wx:if='{{receive_status==1 && overtime_status==0}}'>
-        <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
-      </view>
+  </view>
+</view>
+<view wx:if="{{receive_status<=1}}" class="sentbtn" style="z-index:2;">
+  <form bindsubmit="formSubmit"  data-name='receivegift' report-submit="true"  hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' >
+    <button class="button" style="width:200rpx;" formType="submit" >{{order_shape==5?'接受':'拆开'}}</button> <!-- bindtap="receiveTapTag" -->
+  </form>
+  <form bindsubmit="formSubmit"  data-name='refresh' report-submit="true"  hidden='{{overtime_status==0?true:false}}' >  
+    <button formType="submit"  style="width:200rpx;">请刷新重试</button> <!-- bindtap="refresh"  data-isreload="1" -->
+  </form>
+  <view style="width:100%; display: flex;flex-direction: column;text-align:center;" hidden='{{receive_status==0}}'>
+    <text  hidden='{{(receive_status==1 || overtime_status==0)?true:false}}' style='margin-top:10rpx;'>填写收货地址，礼物会很快奔向您</text>
+    <view bindtap='returnTapTag' style='margin-top:10rpx;'>
+      <text hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' style='color:#E34C55;font-size:28rpx;'>{{order_shape==5?'暂不接受，看看其他内容':'暂不接受，看看其他内容'}}</text>
     </view>
+  </view>
+  <form bindsubmit="formSubmit"  data-name='resendgift' report-submit="true"  hidden='{{(receive_status==0 || overtime_status==1)?true:false}}' >  
+    <button class="button" formType="submit"  style="width:200rpx;">回赠</button> <!-- bindtap="returnTapTag" -->
+  </form>
+  <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:15rpx;" wx:if='{{receive_status==1 && overtime_status==0}}'>
+    <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
   </view>
 </view>

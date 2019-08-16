@@ -164,7 +164,9 @@ Page({
         if (!res.data.info) {
           var order_price =0
           for (var i = 0; i < orderObjects.length; i++) {
-            orderObjects[i]['logo'] = weburl + orderObjects[i]['logo'];
+            if (orderObjects[i]['logo'].indexOf("http") < 0) {
+              orderObjects[i]['logo'] = weburl + orderObjects[i]['logo'];
+            }
             for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
               if (orderObjects[i]['order_sku'][j]['sku_image'] .indexOf("http") < 0) {
                 orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
@@ -174,13 +176,12 @@ Page({
               }else{
                 sku_id = orderObjects[i]['order_sku'][j]['sku_id']
               }
-              
             }
             order_price = order_price + orderObjects[i]['order_price']
           }
           totalFee = order_price.toFixed(2)*100
           //totalFee = totalFee.toFixed(0)
-          console.log('order_price:'+order_price)
+          console.log('order_price:' + order_price, 'totalFee:', totalFee)
           that.setData({
             orders: orderObjects,
             orderNo: orderNo,
@@ -191,7 +192,7 @@ Page({
             is_buymyself:is_buymyself,
             received:received,
           })
-         if(is_buymyself==0 && received==0) that.pay()
+          if ((is_buymyself == 0 && received == 0) || totalFee==0 ) that.pay()
         } else {
           wx.showToast({
             title: res.data.info,

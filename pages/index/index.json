@@ -1,4 +1,7 @@
 {
     "navigationBarTitleText": "礼物袋",
-    "backgroundColor": "#F2F2F2"
+    "backgroundColor": "#F2F2F2",
+      "usingComponents": {
+        "x-scroll-view": "../common/xing-components/x-scroll-view"
+      }
 }

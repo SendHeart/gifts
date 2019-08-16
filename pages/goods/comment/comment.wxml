@@ -12,10 +12,10 @@
     </view>
   </view>
 </view>
-<view class="comm_title">发表评论</view>
+<view class="comm-title">发表评论</view>
 <view class="star-level">
-    <view class='star_title'>推荐度</view>
-    <view class='star_image'>
+    <view class='star-title'>推荐度</view>
+    <view class='star-image'>
       <image data-star-id="1" bindtap='comment_star' src="{{comment_level>0?'../../../images/star_on.png':'../../../images/star.png'}}" />
       <image data-star-id="2" bindtap='comment_star' src="{{comment_level>1?'../../../images/star_on.png':'../../../images/star.png'}}" />
       <image data-star-id="3" bindtap='comment_star' src="{{comment_level>2?'../../../images/star_on.png':'../../../images/star.png'}}" />
