@@ -164,9 +164,6 @@ Page({
       search_goodsname: search_goodsname,
       toView: toView ? toView : 0,
       scrollTop:0,
-      venuesItems_show: [],
-      venuesItems_prev: [],
-      venuesItems_next: [],
     })
     console.log('toView:' + that.data.toView)
     that.get_goods_list()
@@ -187,9 +184,6 @@ Page({
       tab2: tab,
       page: 1,
       updown:updown,
-      venuesItems_show: [],
-      venuesItems_prev: [],
-      venuesItems_next: [],
     });
  
     that.get_goods_list()
@@ -219,11 +213,6 @@ Page({
   searchTapTag: function (e) {
     var that = this;
     console.log('搜索关键字：' + that.data.search_goodsname)
-    that.setData({
-      venuesItems_show: [],
-      venuesItems_prev: [],
-      venuesItems_next: [],
-    })
     that.get_goods_list()
   },
   
@@ -318,31 +307,7 @@ Page({
     var shop_type=that.data.shop_type
     var shape = 1
     var show_max = that.data.show_max
-    var venuesItems_prev = that.data.venuesItems_prev
-    var venuesItems_next = that.data.venuesItems_next
-    var venuesItems_show = that.data.venuesItems_show 
-    if(that.data.is_goodslist_loading){
-      setTimeout(function () {
-        that.get_goods_list()
-      }, 300)
-    }
-    var venuesItems_new = []
-    if (venuesItems_next.length > 0) {
-      if (venuesItems_show.length >= show_max) {
-        venuesItems_prev.push(venuesItems_show.shift())
-      }
-      venuesItems_new = venuesItems_next.pop()
-      that.setData({
-        ["venuesItems_show[" + (page - 1) + "]"]: venuesItems_new,
-        venuesItems_prev: venuesItems_prev,
-        venuesItems_next: venuesItems_next,
-        scrollTop: 0,
-        page: page+1,
-      })
-    } 
-    if (venuesItems_next.length > 0) {
-      return
-    }
+  
     that.setData({
       is_goodslist_loading: true,
     })
@@ -369,10 +334,10 @@ Page({
 
       },
       success: function (res) {
-        console.log('get_goods_list:',res.data.result)
-        var venuesItems_update = res.data.result
-        var page = that.data.page;
-        var all_rows = res.data.all_rows;
+        var venuesItems_show = that.data.venuesItems_show
+        console.log('get_goods_list:',res.data.result,'page:',page)
+        var venuesItems_new = res.data.result
+        var all_rows = res.data.all_rows
         if (!venuesItems_new) {
           wx.showToast({
             title: '没有搜到记录',
@@ -387,55 +352,37 @@ Page({
           return;
         }
         var venuesItems = that.data.venuesItems
-        var venuesItems_cache = []
-        if (venuesItems_update){
-          for (var i = 0; i < venuesItems_update.length; i++) {
-            venuesItems_update[i]['short_name'] = venuesItems_update[i]['name'].substring(0, 10) + '...'
-            if (!venuesItems_update[i]['act_info']) {
-              venuesItems_update[i]['act_info'] = ''
+        if (venuesItems_new){
+          for (var i = 0; i < venuesItems_new.length; i++) {
+            venuesItems_new[i]['short_name'] = venuesItems_new[i]['name'].substring(0, 10) + '...'
+            if (!venuesItems_new[i]['act_info']) {
+              venuesItems_new[i]['act_info'] = ''
             } else {
-              //venuesItems_update[i]['act_info'] = venuesItems_update[i]['act_info'].substring(0, 10) + '...'
+              //venuesItems_new[i]['act_info'] = venuesItems_new[i]['act_info'].substring(0, 10) + '...'
             }
-            if (!venuesItems_update[i]['goods_tag']) {
-              venuesItems_update[i]['goods_tag'] = ''
+            if (!venuesItems_new[i]['goods_tag']) {
+              venuesItems_new[i]['goods_tag'] = ''
             } else {
-              venuesItems_update[i]['goods_tag'] = venuesItems_update[i]['goods_tag'].substring(0, 10)
+              venuesItems_new[i]['goods_tag'] = venuesItems_new[i]['goods_tag'].substring(0, 10)
             }
-            if (i < pagesize) {
-              venuesItems_new.push(venuesItems_update[i])
-            } else {
-              venuesItems_cache.push(venuesItems_update[i])
-            }
+            
           }
           if (page > 1 && venuesItems_new) {
             //向后合拼
             venuesItems = that.data.venuesItems.concat(venuesItems_new);
           }
           //更新当前显示页信息
-          if (venuesItems_show.length < show_max) {
-            venuesItems_show.push(venuesItems_new)
-
-          } else {
-            venuesItems_prev.push(venuesItems_show.shift())
-            venuesItems_show.push(venuesItems_new)
-
+          if (venuesItems_show.length>=show_max) {
+            venuesItems_show.shift()
           }
           that.setData({
             venuesItems: venuesItems,
             ["venuesItems_show[" + (page - 1) + "]"]: venuesItems_new,
-            ["venuesItems_next[" + (page) + "]"]: venuesItems_cache,
-            venuesItems_prev: venuesItems_prev,
-            page: page + 1,
+            page: page ,
             all_rows: all_rows,
             keyword: '',
             is_goodslist_loading: false,
           })
-        }else{
-          wx.showToast({
-            title: '已经到底了',
-            icon: 'loading',
-            duration: 1000
-          });
         }
       }
     })
@@ -478,9 +425,6 @@ Page({
           activeIndex: navlist_toView,
           tab: navList_new[navlist_toView]['id'],
           tab_value: navList_new[navlist_toView]['value'],
-          venuesItems_show: [],
-          venuesItems_prev: [],
-          venuesItems_next: [],
         })
         that.get_goods_list()
         that.setData({
