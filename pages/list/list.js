@@ -25,10 +25,7 @@ Page({
     navList2: navList2,
     images: [],
     all_rows:0,
-    venuesItems: [],
-    venuesItems_show:[],
-    venuesItems_prev: [],
-    venuesItems_next: [],
+    venuesItems_show: [],
     show_max:1,
     search_goodsname: null,
     keyword:'',
@@ -164,6 +161,7 @@ Page({
       search_goodsname: search_goodsname,
       toView: toView ? toView : 0,
       scrollTop:0,
+      venuesItems_show: [],
     })
     console.log('toView:' + that.data.toView)
     that.get_goods_list()
@@ -184,7 +182,8 @@ Page({
       tab2: tab,
       page: 1,
       updown:updown,
-    });
+      venuesItems_show: [],
+    })
  
     that.get_goods_list()
   },
@@ -207,12 +206,15 @@ Page({
   goTop: function (e) {  // 一键回到顶部
     var that = this
     that.setData({
-      scrollTop: 0
+      scrollTop: 0,
     })
   },
   searchTapTag: function (e) {
     var that = this;
     console.log('搜索关键字：' + that.data.search_goodsname)
+    that.setData({
+      venuesItems_show: [],
+    })
     that.get_goods_list()
   },
   
@@ -345,13 +347,13 @@ Page({
             duration: 1000
           });
           that.setData({
-            venuesItems: [],
+            venuesItems_show: [],
             all_rows: 0,
             keyword: ''
           })
           return;
         }
-        var venuesItems = that.data.venuesItems
+        //var venuesItems = that.data.venuesItems
         if (venuesItems_new){
           for (var i = 0; i < venuesItems_new.length; i++) {
             venuesItems_new[i]['short_name'] = venuesItems_new[i]['name'].substring(0, 10) + '...'
@@ -369,14 +371,14 @@ Page({
           }
           if (page > 1 && venuesItems_new) {
             //向后合拼
-            venuesItems = that.data.venuesItems.concat(venuesItems_new);
+            //venuesItems = that.data.venuesItems.concat(venuesItems_new);
           }
           //更新当前显示页信息
           if (venuesItems_show.length>=show_max) {
             venuesItems_show.shift()
           }
           that.setData({
-            venuesItems: venuesItems,
+            //venuesItems: venuesItems,
             ["venuesItems_show[" + (page - 1) + "]"]: venuesItems_new,
             page: page ,
             all_rows: all_rows,
@@ -425,6 +427,7 @@ Page({
           activeIndex: navlist_toView,
           tab: navList_new[navlist_toView]['id'],
           tab_value: navList_new[navlist_toView]['value'],
+          venuesItems_show: [],
         })
         that.get_goods_list()
         that.setData({

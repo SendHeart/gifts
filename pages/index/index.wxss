@@ -56,7 +56,7 @@ page {
   margin-left: 20rpx;
 }
 .container {
-  padding-top: 80rpx;
+  padding-top: 20rpx;
   background: #f2f2f2;
   height: 100%;
   overflow-x: hidden;
@@ -381,7 +381,15 @@ page {
   font-size: 8;
   z-index: 999;
 }
-
+.prevbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  margin: 20rpx auto;
+  width: 100%;
+  height: 50rpx;
+}
 .sentbtn {
   display: flex;
   flex-direction: row;

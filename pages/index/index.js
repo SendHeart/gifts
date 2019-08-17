@@ -20,7 +20,7 @@ Page({
     shop_type:shop_type,
     page: 0,
     pagesize: 10,
-    show_max:2,  //最多显示页数
+    show_max:3,  //最多显示页数
     status: 0,
     navList_order: navList_order,
     tab2: 'send',
@@ -229,14 +229,16 @@ Page({
     that.setData({
       scrollTop: 0
     })
+    console.log('goTop:',that.data.scrollTop)
+    that.getPrevOrdersTapTag()
   },
   getMoreOrdersTapTag: function () {
     var that = this
     if(that.data.is_loading) return
-    var page = that.data.page + 1;
+    var page = that.data.page;
     var pagesize = that.data.pagesize;
     var all_rows = that.data.all_rows
-    if (page > that.data.page_num) {
+    if (page + 1 > that.data.page_num) {
       wx.showToast({
         title: '没有更多了',
         icon: 'none',
@@ -468,29 +470,7 @@ Page({
     })
     var page_show = orders_next.length 
     var orders_show = [] 
-    if(orders_next.length>0){
-      if (orders_show.length < show_max) {
-        page_show = page_show + 1
-      } else {
-        orders_prev.push(orders_show.shift())
-        page_show = show_max
-      }
-      orders_new = orders_next.pop()
-      that.setData({
-        ["orders_show[" + (page_show - 1) + "]"]: orders_new,
-        orders_prev: orders_prev,
-        orders_next: orders_next,
-        scrollTop: 0,
-        page: page,
-      })
-      wx.hideLoading()
-      setTimeout(function () {
-        that.setData({
-          is_loading: false,
-        })
-      }, 800)
-      return
-    } 
+   
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_list',
@@ -574,7 +554,7 @@ Page({
 
             that.setData({
               orders: orders,
-              ["orders_show[" + (page-1) + "]"]: orderObjects,
+              ["orders_show[" + (page_show-1) + "]"]: orderObjects,
               all_rows: all_rows,
               gift_send: gift_send,
               gift_rcv: gift_rcv,
@@ -582,13 +562,16 @@ Page({
               scrollTop: 0,
               page:page,
             })
+            wx.pageScrollTo({
+              scrollTop: 0
+            })
             wx.hideLoading()
             setTimeout(function () {
               that.setData({
                 is_loading: false,
                 loadingHidden: false,
               })
-            }, 1500)
+            }, 500)
            
             console.log('reloadData page:' + page + ' pagesize:' + pagesize, ' current time:', currenttime, 'current scrollTop', scrollTop, ' orders', that.data.orders)
           }
@@ -831,14 +814,14 @@ Page({
     var page = that.data.page
     var last_page = page - 1 > 0 ? page - 1 : 0
     var is_loading = that.data.is_loading
-    console.log('getPrevOrdersTapTag:下拉刷新 page:', page, ' is loading:', is_loading, ' loadingHIdden:',that.data.loadingHidden,'current scrollTop:', that.data.current_scrollTop)
-    if (page == 1 || is_loading || !that.data.loadingHidden ){
+    console.log('getPrevOrdersTapTag:下拉刷新 page:', page, ' is loading:', is_loading, ' last_page:',last_page,'current scrollTop:', that.data.current_scrollTop)
+    if (page == 1 || is_loading){
       return
     }
     that.setData({
-      //["orders[" + (last_page - 1) + "]"]: that.data.orders[last_page - 1],
-      page: last_page,
+      page: last_page - 1,
     })
+    that.reloadData()
   },
 
   onReady: function () {
