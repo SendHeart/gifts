@@ -26,6 +26,10 @@ Page({
     images: [],
     all_rows:0,
     venuesItems: [],
+    venuesItems_show:[],
+    venuesItems_prev: [],
+    venuesItems_next: [],
+    show_max:1,
     search_goodsname: null,
     keyword:'',
     page: 1,
@@ -36,6 +40,7 @@ Page({
     interval: 3000,
     duration: 1000,
     loadingHidden: true, // loading
+    is_goodslist_loading:false,
     msgList: [],
     hidden: true,
     scrollTop: 0,
@@ -159,6 +164,9 @@ Page({
       search_goodsname: search_goodsname,
       toView: toView ? toView : 0,
       scrollTop:0,
+      venuesItems_show: [],
+      venuesItems_prev: [],
+      venuesItems_next: [],
     })
     console.log('toView:' + that.data.toView)
     that.get_goods_list()
@@ -178,7 +186,10 @@ Page({
       activeIndex2: index,
       tab2: tab,
       page: 1,
-      updown:updown
+      updown:updown,
+      venuesItems_show: [],
+      venuesItems_prev: [],
+      venuesItems_next: [],
     });
  
     that.get_goods_list()
@@ -208,6 +219,11 @@ Page({
   searchTapTag: function (e) {
     var that = this;
     console.log('搜索关键字：' + that.data.search_goodsname)
+    that.setData({
+      venuesItems_show: [],
+      venuesItems_prev: [],
+      venuesItems_next: [],
+    })
     that.get_goods_list()
   },
   
@@ -301,7 +317,35 @@ Page({
     var keyword=that.data.keyword;
     var shop_type=that.data.shop_type
     var shape = 1
-
+    var show_max = that.data.show_max
+    var venuesItems_prev = that.data.venuesItems_prev
+    var venuesItems_next = that.data.venuesItems_next
+    var venuesItems_show = that.data.venuesItems_show 
+    if(that.data.is_goodslist_loading){
+      setTimeout(function () {
+        that.get_goods_list()
+      }, 300)
+    }
+    var venuesItems_new = []
+    if (venuesItems_next.length > 0) {
+      if (venuesItems_show.length >= show_max) {
+        venuesItems_prev.push(venuesItems_show.shift())
+      }
+      venuesItems_new = venuesItems_next.pop()
+      that.setData({
+        ["venuesItems_show[" + (page - 1) + "]"]: venuesItems_new,
+        venuesItems_prev: venuesItems_prev,
+        venuesItems_next: venuesItems_next,
+        scrollTop: 0,
+        page: page+1,
+      })
+    } 
+    if (venuesItems_next.length > 0) {
+      return
+    }
+    that.setData({
+      is_goodslist_loading: true,
+    })
     wx.request({
       url: weburl + '/api/client/get_goods_list',
       method: 'POST',
@@ -326,10 +370,10 @@ Page({
       },
       success: function (res) {
         console.log('get_goods_list:',res.data.result)
-        var venuesItems = res.data.result;
+        var venuesItems_update = res.data.result
         var page = that.data.page;
         var all_rows = res.data.all_rows;
-        if (!venuesItems) {
+        if (!venuesItems_new) {
           wx.showToast({
             title: '没有搜到记录',
             icon: 'loading',
@@ -342,33 +386,57 @@ Page({
           })
           return;
         }
-        for (var i = 0; i < venuesItems.length; i++) {
-          venuesItems[i]['short_name'] = venuesItems[i]['name'].substring(0, 10) + '...'
-          if (!venuesItems[i]['act_info']){
-            venuesItems[i]['act_info'] = ''
-          } else{
-            //venuesItems[i]['act_info'] = venuesItems[i]['act_info'].substring(0, 10) + '...'
+        var venuesItems = that.data.venuesItems
+        var venuesItems_cache = []
+        if (venuesItems_update){
+          for (var i = 0; i < venuesItems_update.length; i++) {
+            venuesItems_update[i]['short_name'] = venuesItems_update[i]['name'].substring(0, 10) + '...'
+            if (!venuesItems_update[i]['act_info']) {
+              venuesItems_update[i]['act_info'] = ''
+            } else {
+              //venuesItems_update[i]['act_info'] = venuesItems_update[i]['act_info'].substring(0, 10) + '...'
+            }
+            if (!venuesItems_update[i]['goods_tag']) {
+              venuesItems_update[i]['goods_tag'] = ''
+            } else {
+              venuesItems_update[i]['goods_tag'] = venuesItems_update[i]['goods_tag'].substring(0, 10)
+            }
+            if (i < pagesize) {
+              venuesItems_new.push(venuesItems_update[i])
+            } else {
+              venuesItems_cache.push(venuesItems_update[i])
+            }
           }
-          if (!venuesItems[i]['goods_tag']) {
-            venuesItems[i]['goods_tag'] = ''
+          if (page > 1 && venuesItems_new) {
+            //向后合拼
+            venuesItems = that.data.venuesItems.concat(venuesItems_new);
+          }
+          //更新当前显示页信息
+          if (venuesItems_show.length < show_max) {
+            venuesItems_show.push(venuesItems_new)
+
           } else {
-            venuesItems[i]['goods_tag'] = venuesItems[i]['goods_tag'].substring(0, 10)
+            venuesItems_prev.push(venuesItems_show.shift())
+            venuesItems_show.push(venuesItems_new)
+
           }
-        }
-        if (page > 1 && venuesItems) {
-        //向后合拼
-          venuesItems = that.data.venuesItems.concat(venuesItems);
-        }
-        that.setData({
-          venuesItems: venuesItems,
-          all_rows:all_rows,
-          keyword:''
-        })
-        setTimeout(function () {
           that.setData({
-            loadingHidden: true,
+            venuesItems: venuesItems,
+            ["venuesItems_show[" + (page - 1) + "]"]: venuesItems_new,
+            ["venuesItems_next[" + (page) + "]"]: venuesItems_cache,
+            venuesItems_prev: venuesItems_prev,
+            page: page + 1,
+            all_rows: all_rows,
+            keyword: '',
+            is_goodslist_loading: false,
           })
-        }, 1500)
+        }else{
+          wx.showToast({
+            title: '已经到底了',
+            icon: 'loading',
+            duration: 1000
+          });
+        }
       }
     })
   },
@@ -410,13 +478,14 @@ Page({
           activeIndex: navlist_toView,
           tab: navList_new[navlist_toView]['id'],
           tab_value: navList_new[navlist_toView]['value'],
+          venuesItems_show: [],
+          venuesItems_prev: [],
+          venuesItems_next: [],
         })
         that.get_goods_list()
-        setTimeout(function () {
-          that.setData({
-            loadingHidden: true,
-          })
-        }, 1500)
+        that.setData({
+          loadingHidden: true,
+        })
       }
     })
   },

@@ -34,7 +34,8 @@
   <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
 </view>
   <view class="venues_box" >
-      <block wx:for="{{venuesItems}}" wx:key="">
+   <block wx:for="{{venuesItems_show}}"  wx:key="index" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
+      <block wx:for="{{venuesItems_show}}" wx:key="{{item.id}}">
         <view class="venues_item"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&goods_marketprice={{item.market_price}}&sale={{item.sale}}&goods_info={{item.act_info}}&goods_org={{item.goods_org}}" hover-class="none">
             <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}" mode="{{item.shape==5?'widthFix':'aspectFill'}}"></image>
@@ -54,6 +55,7 @@
           </view>
         </view>
       </block>
+    </block>
   </view>
 
   <!--使用懒加载替代
