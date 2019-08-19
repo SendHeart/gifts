@@ -602,3 +602,12 @@ border: none;
     line-height:100rpx;
     height:100rpx;
 }
+.share-play-rec{
+    position: absolute;
+    bottom:0;
+    display:flex;
+    flex-direction:row;
+    margin-bottom: 150rpx;
+    margin-left:50rpx;
+    font-size:25rpx;
+}

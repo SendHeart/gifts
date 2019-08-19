@@ -1,6 +1,14 @@
 <!--index.wxml-->
 <view class="container" style='height:{{dkheight}}px;'>
-  <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="sharegoods" ></image>
+ <view class="share-goods"  >
+    <view class="share-buttons">
+      <view class="btnshare" bindtap="eventDraw">
+      <image class="shareto" src="../../../images/refresh.png"></image>
+      刷新
+      </view>
+    </view>
+  </view>
+  <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="sharegoods"></image>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
   <!-- 
   <view  hidden="{{!notehidden}}" style='margin:10rpx;font-size:26rpx;color:#999;height:120rpx;' >{{share_goods_title?'分享语: '+share_goods_title:'分享语为空'}}</view>

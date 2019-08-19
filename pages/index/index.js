@@ -243,7 +243,7 @@ Page({
         title: '没有更多了',
         icon: 'none',
         duration: 1000
-      });
+      })
       return
     }
     console.log('get More Orders page:',page,'current scrollTop:',that.data.current_scrollTop)

@@ -9,7 +9,7 @@ const defaultScale = 14;
 var mapInterval = app.globalData.mapInterval;
 var consoleUtil = require('../../../utils/consoleUtil.js');
 var constant = require('../../../utils/constant.js');
-var QQMapWX = require('../../../utils/qqmap-wx-jssdk.js');
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 //定义全局变量
 var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';

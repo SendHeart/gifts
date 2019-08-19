@@ -4,8 +4,9 @@ var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var from_page = app.globalData.from_page;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
-var appid = app.globalData.appid;
-var secret = app.globalData.secret;
+var appid = app.globalData.appid
+var secret = app.globalData.secret
+var uploadurl = app.globalData.uploadurl;
 Page({
     data: {
         title_name: '详情',
@@ -331,6 +332,116 @@ Page({
     })
   },
 
+  startRecode: function () {
+    var that = this
+    console.log("start")
+    wx.getSetting({
+      success(res) {
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap info 长度:" + length, authMap)
+        if (authMap.hasOwnProperty('scope.record')) {
+          if (!res.authSetting['scope.record']) {
+            wx.showModal({
+              title: '用户未授权',
+              content: '请授权录音权限',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定授权录音权限')
+                  wx.openSetting({
+                    success: function success(res) {
+                      console.log('openSetting success', res.authSetting);
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      }
+    })
+    wx.startRecord({
+      success: function (res) {
+        console.log(res);
+        var tempFilePath = res.tempFilePath;
+        that.setData({ 
+          recodePath: tempFilePath, 
+          isRecode: true,
+        })
+      },
+      fail: function (res) {
+        console.log("fail",res)
+        wx.showToast({
+          title: '录音失败',
+          icon: 'none',
+          duration: 1000
+        })
+      }
+    })
+  },
+
+  endRecode: function () {//结束录音 
+    var that = this
+    var goods_id = that.data.goods_id
+    wx.stopRecord()
+    that.setData({ 
+      isRecode: false,   
+    })
+    wx.showToast({
+      title: '录音结束',
+      icon: 'none',
+      duration: 1000
+    })
+    setTimeout(function () {
+      var urls = uploadurl
+      console.log('录音文件上传：',that.data.recodePath)
+      wx.uploadFile({
+        url: uploadurl,
+        filePath: that.data.recodePath,
+        name: 'wechat_upimg',
+        formData: {
+          latitude: encodeURI(0.0),
+          longitude: encodeURI(0.0),
+          restaurant_id: encodeURI(0),
+          city: encodeURI('杭州'),
+          prov: encodeURI('浙江'),
+          name: encodeURI(goods_id), // 名称
+        }, 
+        success: function (res) {
+          var retinfo = JSON.parse(res.data.trim())
+          var new_rec_url=[]
+          if (retinfo['status'] == "y") {
+            new_rec_url.push(retinfo['result']['rec_url'])
+            that.setData({
+              new_rec_url: new_rec_url,
+            })
+            wx.showToast({
+              title: '录音上传完成',
+              icon: 'none',
+              duration: 1000,
+            })
+          }else{
+            wx.showToast({
+              title: '录音上传返回失败',
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        },
+      })
+    }, 1000)
+  },
+
+  play_rec: function () {
+    var that = this
+    var recodePath = that.data.recodePath
+    console.log('播放声音文件:', recodePath)
+    //播放声音文件  
+    wx.playVoice({
+      filePath: recodePath
+    })
+  },
   onLoad:function(options) {
         var that = this
         var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
@@ -748,13 +859,13 @@ Page({
         })
       }else{
         if (that.data.sku_id){
-          that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info);
+          that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info)
         }else{
           wx.showToast({
             title: '该产品无货',
             icon: 'loading',
             duration: 1500
-          });
+          })
         }
       }
     },

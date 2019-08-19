@@ -9,7 +9,8 @@
       <!--<view class="btnshare leftround" bindtap="returnTapTag">返回</view> -->
       <view class="btnshare" bindtap="sharegoodsTapTag">
       <image class="shareto" src="../../images/shareto.png"></image>
-      分享</view>
+      分享
+      </view>
     </view>
   </view>
   <view class="banner">
@@ -38,6 +39,9 @@
               <view wx:if="{{goodsshape==5}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
             </view>
             <view wx:if="{{goodsshape==5}}" class="share-goods-remark">《 请选择背景图 》</view>
+            <view wx:if="{{goodsshape==5 && recodePath}}" class="share-play-rec" bindtap="play_rec" >
+              <image src="../../images/notification.png" style="width:50rpx;height:50rpx;"></image>
+            </view>
           </swiper-item>
         </block>
       </swiper>
@@ -144,11 +148,11 @@
 </modal>
 <view class="footer">
   <view class="opt-buttons">
-   <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myvoiceTapTag' report-submit="true" style='width:20%;' >
-    <button class="sec-btn" formType="submit">
-    <image class='icon-detail' src="../../images/notification.png"></image>
+   <view wx:if="{{goodsorg==5}}" style='width:20%;' >
+    <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn" formType="submit">
+    <image class='icon-detail' src="../../images/record.png"></image>
     <text>+语音</text></button>
-  </form>
+  </view>
   <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:24%;' >
     <button class="sec-btn" formType="submit">
     <image class='icon-detail' src="../../images/u621.png"></image>

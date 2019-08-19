@@ -590,7 +590,7 @@ Page({
             },
             {
               type: 'text',
-              content: '长按识别二维码查看详情',
+              content: '长按识别二维码听声音',
               fontSize: 18,
               color: '#333',
               textAlign: 'left',
