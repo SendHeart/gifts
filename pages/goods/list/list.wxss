@@ -322,7 +322,7 @@ swiper-item image {
   right: 30rpx;
   border-radius: 50%;
   color:#fff;
-  font-size: 25rpx;
+  font-size: 22rpx;
   z-index: 999;
 }
 
