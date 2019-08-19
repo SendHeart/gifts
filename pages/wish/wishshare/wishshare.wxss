@@ -11,6 +11,12 @@ page {
   border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
+.icon-recorder {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 10rpx;
+}
+
 .top-title {
   height: 75rpx;
   background: #333;
@@ -98,7 +104,7 @@ page {
 
 .sentbtn button {
   line-height: 70rpx;
-  width: 48%;
+  width: 40%;
   height: 70rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
   background: #e34c55;
@@ -260,4 +266,14 @@ main_message .main_red{
   color: #999;
   background: #F3F3F3;
   border-radius: 14rpx;
+}
+
+.share-play-rec{
+  position: absolute;
+  bottom:0;
+  display:flex;
+  flex-direction:row;
+  margin-bottom: 350rpx;
+  font-size:25rpx;
+  z-index: 1000;
 }

@@ -393,44 +393,7 @@ Page({
       icon: 'none',
       duration: 1000
     })
-    setTimeout(function () {
-      var urls = uploadurl
-      console.log('录音文件上传：',that.data.recodePath)
-      wx.uploadFile({
-        url: uploadurl,
-        filePath: that.data.recodePath,
-        name: 'wechat_upimg',
-        formData: {
-          latitude: encodeURI(0.0),
-          longitude: encodeURI(0.0),
-          restaurant_id: encodeURI(0),
-          city: encodeURI('杭州'),
-          prov: encodeURI('浙江'),
-          name: encodeURI(goods_id), // 名称
-        }, 
-        success: function (res) {
-          var retinfo = JSON.parse(res.data.trim())
-          var new_rec_url=[]
-          if (retinfo['status'] == "y") {
-            new_rec_url.push(retinfo['result']['rec_url'])
-            that.setData({
-              new_rec_url: new_rec_url,
-            })
-            wx.showToast({
-              title: '录音上传完成',
-              icon: 'none',
-              duration: 1000,
-            })
-          }else{
-            wx.showToast({
-              title: '录音上传返回失败',
-              icon: 'none',
-              duration: 1000
-            })
-          }
-        },
-      })
-    }, 1000)
+    wx.setStorageSync('cardvoice', that.data.recodePath)
   },
 
   play_rec: function () {

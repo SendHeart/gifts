@@ -149,7 +149,7 @@
 <view class="footer">
   <view class="opt-buttons">
    <view wx:if="{{goodsorg==5}}" style='width:20%;' >
-    <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn" formType="submit">
+    <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
     <image class='icon-detail' src="../../images/record.png"></image>
     <text>+语音</text></button>
   </view>

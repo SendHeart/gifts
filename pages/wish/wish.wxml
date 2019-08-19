@@ -54,7 +54,7 @@
       <view class="goods_bottom">
         <view>已收到:{{item.sale?item.sale:0}}件</view>
         <view hidden="{{!shareflag}}">
-        <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:50rpx;height:50rpx;' src="../../images/icon_delete.png"/>
+        <image  data-index="{{index}}" data-object-id="{{item.objectId}}" bindtap="deleteTapTag" style='width:40rpx;height:40rpx;' src="../../images/icon_delete.png"/>
         </view>
       </view>
       <view style='text-align:right;margin-top:-50rpx;margin-right:10rpx' hidden="{{shareflag}}">

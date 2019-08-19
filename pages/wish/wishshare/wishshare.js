@@ -10,6 +10,7 @@ var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var appid = app.globalData.appid;
 var secret = app.globalData.secret;
+var uploadurl = app.globalData.uploadurl;
 var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -134,6 +135,131 @@ Page({
     }  
   },
 
+
+  startRecode: function () {
+    var that = this
+    console.log("start")
+    wx.getSetting({
+      success(res) {
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap info 长度:" + length, authMap)
+        if (authMap.hasOwnProperty('scope.record')) {
+          if (!res.authSetting['scope.record']) {
+            wx.showModal({
+              title: '用户未授权',
+              content: '请授权录音权限',
+              showCancel: false,
+              success: function (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定授权录音权限')
+                  wx.openSetting({
+                    success: function success(res) {
+                      console.log('openSetting success', res.authSetting);
+                    }
+                  })
+                }
+              }
+            })
+          }
+        }
+      }
+    })
+    wx.startRecord({
+      success: function (res) {
+        console.log(res);
+        var tempFilePath = res.tempFilePath;
+        that.setData({
+          recodePath: tempFilePath,
+          isRecode: true,
+        })
+      },
+      fail: function (res) {
+        console.log("fail", res)
+        wx.showToast({
+          title: '录音失败',
+          icon: 'none',
+          duration: 1000
+        })
+      }
+    })
+  },
+
+  endRecode: function () {//结束录音 
+    var that = this
+    var goods_id = that.data.goods_id
+    wx.stopRecord()
+    wx.setStorageSync('cardvoice', that.data.recodePath)
+    that.setData({
+      isRecode: false,
+      cardvoice: that.data.recodePath
+    })
+    wx.showToast({
+      title: '录音结束',
+      icon: 'none',
+      duration: 1000
+    })
+   
+
+    setTimeout(function () {
+      var urls = uploadurl
+      console.log('录音文件上传：',that.data.recodePath)
+      wx.uploadFile({
+        url: uploadurl,
+        filePath: that.data.recodePath,
+        name: 'wechat_upimg',
+        formData: {
+          latitude: encodeURI(0.0),
+          longitude: encodeURI(0.0),
+          restaurant_id: encodeURI(0),
+          city: encodeURI('杭州'),
+          prov: encodeURI('浙江'),
+          name: encodeURI(goods_id), // 名称
+        }, 
+        success: function (res) {
+          var retinfo = JSON.parse(res.data.trim())
+          var new_rec_url=[]
+          if (retinfo['status'] == "y") {
+            new_rec_url.push(retinfo['result']['rec_url'])
+            that.setData({
+              new_rec_url: new_rec_url,
+            })
+            wx.showToast({
+              title: '录音上传完成',
+              icon: 'none',
+              duration: 1000,
+            })
+          }else{
+            wx.showToast({
+              title: '录音上传返回失败',
+              icon: 'none',
+              duration: 1000
+            })
+          }
+        },
+      })
+    }, 1000)
+  },
+
+  play_rec: function () {
+    var that = this
+    var recodePath = that.data.recodePath
+    if (recodePath){
+      console.log('播放声音文件:', recodePath)
+      //播放声音文件  
+      wx.playVoice({
+        filePath: recodePath
+      })
+    }else{
+      wx.showToast({
+        title: '您还没有录音',
+        icon: 'none',
+        duration: 1000
+      })
+    }
+   
+  },
+
   onLoad (options) {
     var that = this
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
@@ -172,6 +298,7 @@ Page({
     if (share_order_wx_headimg.indexOf("https://wx.qlogo.cn") >= 0) {
       share_order_wx_headimg = share_order_wx_headimg.replace('https://wx.qlogo.cn',weburl+'/qlogo')
     }
+    var cardvoice = wx.getStorageSync('cardvoice') 
     share_goods_title = activity_id > 0 ? share_activity_title : share_goods_title
     console.log('onload wishshare options:',options)
     that.setData({
@@ -204,6 +331,7 @@ Page({
       share_order_bg: share_order_bg,
       share_order_image: share_order_image,
       share_order_wx_headimg: share_order_wx_headimg,
+      cardvoice: cardvoice,
     })
     if (activity_name){
       var title_len = activity_name.length
