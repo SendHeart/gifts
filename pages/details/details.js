@@ -1,14 +1,61 @@
+var util = require('../../utils/util.js')
 var app = getApp();
-var wxparse = require("../../wxParse/wxParse.js");
+var wxparse = require("../../wxParse/wxParse.js")
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var from_page = app.globalData.from_page;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var appid = app.globalData.appid
 var secret = app.globalData.secret
-var uploadurl = app.globalData.uploadurl;
+var uploadurl = app.globalData.uploadurl
+const recorderManager = wx.getRecorderManager()
+const myaudio = wx.createInnerAudioContext();
+const options = {
+  duration: 10000,//指定录音的时长，单位 ms
+  sampleRate: 16000,//采样率
+  numberOfChannels: 1,//录音通道数
+  encodeBitRate: 96000,//编码码率
+  format: 'mp3',//音频格式，有效值 aac/mp3
+  frameSize: 50,//指定帧大小，单位 KB
+}
+const version = wx.getSystemInfoSync().SDKVersion;
+if (compareVersion(version, '2.3.0') >= 0) {
+  wx.setInnerAudioOption({
+    obeyMuteSwitch: false
+  })
+} else {
+  wx.showModal({
+    title: '提示',
+    content: '当前微信版本过低，静音模式下可能会导致播放音频失败。'
+  })
+}
+// 版本对比  兼容
+function compareVersion(v1, v2) {
+  v1 = v1.split('.')
+  v2 = v2.split('.')
+  const len = Math.max(v1.length, v2.length)
+
+  while (v1.length < len) {
+    v1.push('0')
+  }
+  while (v2.length < len) {
+    v2.push('0')
+  }
+
+  for (let i = 0; i < len; i++) {
+    const num1 = parseInt(v1[i])
+    const num2 = parseInt(v2[i])
+    if (num1 > num2) {
+      return 1
+    } else if (num1 < num2) {
+      return -1
+    }
+  }
+  return 0
+}
+
 Page({
-    data: {
+  data: {
         title_name: '详情',
         title_logo: '../../images/footer-icon-05.png',
         share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
@@ -68,8 +115,24 @@ Page({
         buynum:1,
         notehidden:true,
         has_cardpayed:0,
-    },
+        openRecordingdis: "block", //显示录机图标
+        shutRecordingdis: "none", //隐藏停止图标
+        recordingTimeqwe: 0, //录音计时
+        setInter: "",  
+  },
 
+  //录音计时器
+  recordingTimer: function() {
+    var that = this
+        //将计时器赋值给setInter
+    that.data.setInter = setInterval(
+    function () {
+      var time = that.data.recordingTimeqwe + 1
+      that.setData({
+          recordingTimeqwe: time,
+      })  
+    }, 1000)
+  },
   formSubmit: function (e) {
     var that = this
     var formId = e.detail.formId;
@@ -335,6 +398,9 @@ Page({
   startRecode: function () {
     var that = this
     console.log("start")
+    wx.showLoading({
+      title: '录音中',
+    })
     wx.getSetting({
       success(res) {
         var authMap = res.authSetting;
@@ -361,50 +427,117 @@ Page({
         }
       }
     })
-    wx.startRecord({
-      success: function (res) {
-        console.log(res);
-        var tempFilePath = res.tempFilePath;
-        that.setData({ 
-          recodePath: tempFilePath, 
-          isRecode: true,
-        })
-      },
-      fail: function (res) {
-        console.log("fail",res)
-        wx.showToast({
-          title: '录音失败',
-          icon: 'none',
-          duration: 1000
-        })
-      }
+    
+    that.setData({
+      shutRecordingdis: "block",
+      openRecordingdis: "none",
+    })
+    
+    //开始录音计时   
+    that.recordingTimer()
+    //开始录音
+    recorderManager.start(options);
+    recorderManager.onStart(() => {
+      console.log('开始录音')
+    })
+    //错误回调
+    recorderManager.onError((res) => {
+      console.log('错误回调:',res);
     })
   },
 
   endRecode: function () {//结束录音 
     var that = this
     var goods_id = that.data.goods_id
-    wx.stopRecord()
-    that.setData({ 
-      isRecode: false,   
+    that.setData({
+      shutRecordingdis: "none",
+      openRecordingdis: "block"
     })
-    wx.showToast({
-      title: '录音结束',
-      icon: 'none',
-      duration: 1000
+    recorderManager.stop();
+    recorderManager.onStop((res) => {
+      let timestamp = util.formatTime(new Date())
+      console.log('停止录音', res.tempFilePath)
+      wx.hideLoading()
+      const {tempFilePath} = res
+      //结束录音计时  
+      clearInterval(that.data.setInter)
+      myaudio.src = res.tempFilePath
+      //myaudio.autoplay = true
+      that.save_recorder(res.tempFilePath)
     })
-    wx.setStorageSync('cardvoice', that.data.recodePath)
+  },
+
+  save_recorder: function (voice) {
+    var that = this
+    var goods_id = that.data.goods_id
+    var urls = uploadurl
+   
+    wx.uploadFile({
+      url: uploadurl,
+      filePath: voice,
+      name: 'wechat_upimg',
+      formData: {
+        latitude: encodeURI(0.0),
+        longitude: encodeURI(0.0),
+        restaurant_id: encodeURI(0),
+        city: encodeURI('杭州'),
+        prov: encodeURI('浙江'),
+        name: encodeURI(goods_id), // 名称
+      },
+      success: function (res) {
+        var retinfo = JSON.parse(res.data.trim())
+        var new_rec_url = ''
+        if (retinfo['status'] == "y") {
+          new_rec_url = retinfo['result']['img_url']
+          that.setData({
+            new_rec_url: new_rec_url,
+          })
+          wx.setStorageSync('cardvoice', new_rec_url)
+          /*
+          wx.showToast({
+            title: '录音上传完成',
+            icon: 'none',
+            duration: 1000,
+          })
+          */
+          console.log('录音上传完成', voice, new_rec_url)
+        } else {
+          wx.showToast({
+            title: '录音上传返回失败',
+            icon: 'none',
+            duration: 1000
+          })
+          console.log('录音上传返回失败', voice, new_rec_url)
+        }
+      }
+    })
   },
 
   play_rec: function () {
     var that = this
-    var recodePath = that.data.recodePath
-    console.log('播放声音文件:', recodePath)
-    //播放声音文件  
-    wx.playVoice({
-      filePath: recodePath
-    })
+    var new_rec_url = that.data.new_rec_url
+    console.log('录音文件url:' , myaudio.src)
+    if (new_rec_url) {
+      wx.downloadFile({
+        url: new_rec_url, //音频文件url                  
+        success: res => {
+          if (res.statusCode === 200) {
+            myaudio.src = res.tempFilePath
+            myaudio.play()
+            console.log('录音播放完成', res.tempFilePath)
+          }
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '暂无录音',
+        icon: 'none',
+        duration: 1000
+      })
+    }
+
   },
+  
   onLoad:function(options) {
         var that = this
         var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
@@ -486,7 +619,7 @@ Page({
             image_pic: image_pic,
           })
         }
-      
+       
         that.showGoodspara()
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
         that.setData({
@@ -898,6 +1031,7 @@ Page({
       var is_buymyself = that.data.is_buymyself
       var cur_img_id = that.data.cur_img_id
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
+      var order_voice = that.data.new_rec_url ? that.data.new_rec_url:'' //录音文件url
       var goodsshape = that.data.goodsshape
       if(goodsshape==5) {
         order_note = that.data.card_blessing
@@ -953,7 +1087,7 @@ Page({
           })
           var amount = parseFloat(that.data.sku_sell_price) * buynum
           wx.navigateTo({
-            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_note=' + order_note + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
+            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_note=' + order_note + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
           })
         }
       })
@@ -1190,3 +1324,17 @@ Page({
     }
   }
 })
+
+//麦克风帧动画  
+function speaking() {
+  var that = this
+  //话筒帧动画  
+  var i = 1
+  that.timer = setInterval(function () {
+    i++
+    i = i % 5;
+    that.setData({
+      j: i
+    })
+  }, 200)
+}

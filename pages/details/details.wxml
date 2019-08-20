@@ -1,12 +1,7 @@
 <import src="../../wxParse/wxParse.wxml" />
-<!-- <import src="../common/hall_title.wxml" /> -->
-<!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-<!-- <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" /> -->
-<!-- <scroll-view class="pagewrap" scroll-y scroll-into-view="{{toView}}" enable-back-to-top > -->
 <view  class="pagewrap" >
   <view class="share-goods"  >
     <view wx:if="{{goodsshape!=5}}" class="share-buttons">
-      <!--<view class="btnshare leftround" bindtap="returnTapTag">返回</view> -->
       <view class="btnshare" bindtap="sharegoodsTapTag">
       <image class="shareto" src="../../images/shareto.png"></image>
       分享
@@ -39,8 +34,8 @@
               <view wx:if="{{goodsshape==5}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
             </view>
             <view wx:if="{{goodsshape==5}}" class="share-goods-remark">《 请选择背景图 》</view>
-            <view wx:if="{{goodsshape==5 && recodePath}}" class="share-play-rec" bindtap="play_rec" >
-              <image src="../../images/notification.png" style="width:50rpx;height:50rpx;"></image>
+            <view wx:if="{{goodsshape==5 && new_rec_url}}" class="share-play-rec" bindtap="play_rec" >
+              <image src="../../images/notification.png" style="width:80rpx;height:80rpx;"></image>
             </view>
           </swiper-item>
         </block>
@@ -148,40 +143,40 @@
 </modal>
 <view class="footer">
   <view class="opt-buttons">
-   <view wx:if="{{goodsorg==5}}" style='width:20%;' >
-    <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
-    <image class='icon-detail' src="../../images/record.png"></image>
-    <text>+语音</text></button>
-  </view>
-  <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:24%;' >
-    <button class="sec-btn" formType="submit">
-    <image class='icon-detail' src="../../images/u621.png"></image>
-    <text>编辑祝词</text>
-    </button>  
-  </form>
-  <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
-    <button class="sec-btn" formType="submit">
-    <image class='icon-detail' src="../../images/bottom-comment.png"></image>
-    <text>写评论</text></button>
-  </form>
-  <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
-    <button class="sec-btn" formType="submit">
-    <image class='icon-detail' src="../../images/bottom-unpraise.png"></image>
-    <text>+心愿单</text>
-    </button>  
-  </form>
-  <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
-    <button class="add-cart2"  formType="submit">立即购买</button>  
-  </form>
-  <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
-    <button class="add-cart" formType="submit">
-      <text>发起送礼</text>
-    </button>  
-  </form>
-   <form wx:if="{{goodsorg==5 && has_cardpayed!=0}}" bindsubmit="formSubmit"  data-name='sharecard' report-submit="true" style='width:28%;' >
-    <button class="add-cart" formType="submit">
+    <view wx:if="{{goodsorg==5}}" style='width:30%;' >
+      <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
+      <image class='icon-detail' src="../../images/record.png"></image>
+      <text>长按说话</text></button>
+    </view>
+    <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:30%;' >
+      <button class="sec-btn" formType="submit">
+      <image class='icon-detail' src="../../images/u621.png"></image>
+      <text>编辑祝词</text>
+      </button>  
+    </form>
+    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
+      <button class="sec-btn" formType="submit">
+      <image class='icon-detail' src="../../images/bottom-comment.png"></image>
+      <text>写评论</text></button>
+    </form>
+    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
+      <button class="sec-btn" formType="submit">
+      <image class='icon-detail' src="../../images/bottom-unpraise.png"></image>
+      <text>+心愿单</text>
+      </button>  
+    </form>
+    <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
+      <button class="add-cart2"  formType="submit">立即购买</button>  
+    </form>
+    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
+      <button class="add-cart" formType="submit">
+        <text>发起送礼</text>
+      </button>  
+    </form>
+    <form wx:if="{{goodsorg==5 && has_cardpayed!=0}}" bindsubmit="formSubmit"  data-name='sharecard' report-submit="true" style='width:28%;' >
+      <button class="add-cart" formType="submit">
       <text>预览</text>
-    </button>  
-  </form>
+      </button>  
+    </form>
   </view>
 </view>

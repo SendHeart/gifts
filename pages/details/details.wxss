@@ -608,6 +608,6 @@ border: none;
     display:flex;
     flex-direction:row;
     margin-bottom: 150rpx;
-    margin-left:50rpx;
+    margin-left:80rpx;
     font-size:25rpx;
 }

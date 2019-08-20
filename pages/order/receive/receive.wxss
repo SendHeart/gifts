@@ -13,7 +13,7 @@
 */
 
 page {
-  background: #1d1d1d;
+  background: #f2f2f2;
 }
 
 ::-webkit-scrollbar {
@@ -253,7 +253,9 @@ page {
   display: flex;
   flex-direction: column;
   text-align: center;
-  margin-top: 20rpx;
+  margin-top: 0rpx;
+  padding-top:10rpx;
+  background: #1d1d1d;
 }
 
 .subject text {
@@ -323,4 +325,17 @@ swiper-item image {
     margin-bottom: 300rpx;
     margin-left:300rpx;
     z-index: 2;
+}
+
+.share-play-rec{
+    position: absolute;
+    text-align: center;
+    align-content: center;
+    bottom:0;
+    display:flex;
+    flex-direction:row;
+    margin-bottom: 220rpx;
+    margin-left:80rpx;
+    font-size:25rpx;
+    z-index: 1000;
 }

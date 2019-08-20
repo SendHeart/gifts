@@ -1,11 +1,7 @@
-<!-- 
-<import src="../../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
--->
-<view wx:if="{{is_buymyself==0}}" class="subject" style=''>
+ <view wx:if="{{is_buymyself==0}}" class="subject" style=''>
   <text class='toptitle' wx:if='{{receive_status==0}}'>{{order_shape==5?'恭喜，您收到一份惊喜':'恭喜，您收到一份礼物'}}</text>
   <text class='toptitle' wx:if='{{receive_status==1}}' style='color:#999;'>礼物已领取</text>
-  <text wx:if='{{receive_status==0}}'>{{order_shape==5?'点击确认':'点击拆开，收取礼物'}}</text>
+  <text wx:if='{{receive_status==0}}'>{{order_shape==5?'点击接受':'点击拆开，收取礼物'}}</text>
   <text wx:if='{{receive_status==1}}'>{{order_shape==5?'点击回赠，也给Ta送一个惊喜吧':'点击回赠，也给Ta送一个礼物吧'}}</text>
 </view>
  <view wx:if="{{is_buymyself==0 && order_shape==5}}" class="card-info">
@@ -15,6 +11,9 @@
       <image src="{{headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
       <view style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
     </view>
+     <view wx:if="{{order_shape==5}}" class="share-play-rec" bindtap="play_rec" >
+        <image src="../../../images/notification.png" style="width:80rpx;height:80rpx;"></image>
+      </view>
 </view>
 <view  wx:if="{{is_buymyself==0 && order_shape!=5}}" class="order-item">
   <view class="order-item-banner">

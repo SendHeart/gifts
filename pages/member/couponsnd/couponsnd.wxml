@@ -1,5 +1,3 @@
-<import src="../../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <view hidden="{{!hiddenmodalput}}"  class="subject" style=''> <!-- margin-top:{{navgationHeight+startBarHeight+10}}px -->
   <text class='toptitle'>{{coupon_type==1?'优惠券':''}}{{coupon_type==2?'红包':''}}{{coupon_type==3?'积分奖励':''}}已经生成</text>
   <text>点击送出发送给对方</text>

@@ -2,7 +2,44 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var util = require('../../../utils/util.js');
 var now = new Date().getTime();
-var shop_type = app.globalData.shop_type; 
+var shop_type = app.globalData.shop_type
+const myaudio = wx.createInnerAudioContext();
+const version = wx.getSystemInfoSync().SDKVersion;
+if (compareVersion(version, '2.3.0') >= 0) {
+  wx.setInnerAudioOption({
+    obeyMuteSwitch: false
+  })
+} else {
+  wx.showModal({
+    title: '提示',
+    content: '当前微信版本过低，静音模式下可能会导致播放音频失败。'
+  })
+}
+// 版本对比  兼容
+function compareVersion(v1, v2) {
+  v1 = v1.split('.')
+  v2 = v2.split('.')
+  const len = Math.max(v1.length, v2.length)
+
+  while (v1.length < len) {
+    v1.push('0')
+  }
+  while (v2.length < len) {
+    v2.push('0')
+  }
+
+  for (let i = 0; i < len; i++) {
+    const num1 = parseInt(v1[i])
+    const num2 = parseInt(v2[i])
+    if (num1 > num2) {
+      return 1
+    } else if (num1 < num2) {
+      return -1
+    }
+  }
+  return 0
+}
+
 Page({
   data: {
     title_name: '收到礼物',
@@ -165,7 +202,7 @@ Page({
     var shop_type = that.data.shop_type
     var order_no = that.data.order_no
     var order_price = that.data.order_price
-    var goods_flag = that.data.goods_flag
+    var goods_flag = that.data.goods_flag ? that.data.goods_flag:0
     var openid = that.data.openid
     var nickname = that.data.userInfo.nickName
     var headimg = that.data.userInfo.avatarUrl
@@ -497,16 +534,34 @@ Page({
     }
   },
 
-/*
-  refresh: function () {
+  play_rec: function () {
     var that = this
-    var isreload = that.data.isreload
-    that.setData({
-      isreload: isreload,
-      all_rows: 0
-    });
+    var order_voice = that.data.order_voice
+    var new_rec_url = that.data.voice_url
+    console.log('录音文件url:', myaudio.src)
+    if (order_voice) {
+      myaudio.src = order_voice
+      myaudio.play()
+    } else if (new_rec_url){
+      wx.downloadFile({
+        url: new_rec_url, //音频文件url                  
+        success: res => {
+          if (res.statusCode === 200) {
+            myaudio.src = res.tempFilePath
+            myaudio.play()
+            console.log('录音播放完成', res.tempFilePath)
+          }
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '暂无录音',
+        icon: 'none',
+        duration: 1000
+      })
+    }
   },
-  */
+
   reloadData: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -616,6 +671,28 @@ Page({
               orderskus.push(orderObjects[i]['order_sku'][j])
             }
           }
+          
+          if (orderObjects[0]['shape'] == 5 && orderObjects[0]['m_desc']){
+            var m_desc = JSON.parse(orderObjects[0]['m_desc'])
+            var voice_url = m_desc['voice']
+            if (voice_url) {
+              wx.downloadFile({
+                url: voice_url, //音频文件url                  
+                success: res => {
+                  if (res.statusCode === 200) {
+                    //myaudio.src = res.tempFilePath
+                    //myaudio.play()
+                    console.log('录音文件下载完成', res.tempFilePath)
+                    that.setData({
+                      order_voice: res.tempFilePath,
+                      voice_url: voice_url,
+                    })
+                  }
+                }
+              })
+            }
+          }
+
           that.setData({
             orders: orderObjects,
             order_price: order_price,

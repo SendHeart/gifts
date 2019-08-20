@@ -145,9 +145,11 @@ Page({
     var cartIds = options.cartIds
     var delivery_price = parseFloat(carts[0].delivery_price)
     var cartIdArray = cartIds.split(',')
-    var order_type = options.order_type
-    var order_note = options.order_note
-    var order_image = options.order_image
+    var order_type = options.order_type ? options.order_type:''
+    var order_note = options.order_note ? options.order_note:''
+    var order_image = options.order_image ? options.order_image:''
+    var order_shape = options.order_shape ? options.order_shape: 0   //5贺卡请柬
+    var order_voice = order_shape == 5 ? wx.getStorageSync('cardvoice') : ''  //贺卡请柬录音
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     payamount = (amount - discountpay).toFixed(2)
 
@@ -163,7 +165,9 @@ Page({
       username: options.username,
       token: options.token,
       is_buymyself: is_buymyself,
-		});
+      order_shape:order_shape,
+      order_voice: order_voice,
+		})
 	},
 
   confirmOrder: function () {
@@ -200,6 +204,8 @@ Page({
     var order_type = 'gift'
     var order_image = that.data.order_image
     var order_note = that.data.order_note
+    var order_shape = that.data.order_shape
+    var order_voice = that.data.order_voice
     var order_num = that.data.order_num
     if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
     console.log('选中 优惠券 类型:', selected_coupon_type, 'coupon_id:', selected_coupon_id, ' 红包 red coupon_type:', selected_coupon_red_type, ' red coupon_id:', selected_coupon_red_id, 'red amount:', selected_coupon_red_amount)
@@ -215,6 +221,8 @@ Page({
         order_type: order_type,
         note: order_note,
         order_image: order_image,
+        order_shape: order_shape,
+        order_voice: order_voice,
         coupon_id: selectedAllStatus?selected_coupon_id:0,
         coupon_type: selectedAllStatus?selected_coupon_type:0,
         coupon_amount: selectedAllStatus ? selected_coupon_amount:0,

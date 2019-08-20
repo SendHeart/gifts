@@ -16,7 +16,7 @@
 </view>-->
 <movable-area class='inlinetips' style="margin-left:{{windowWidth-45}}px;margin-top:{{hidddensearch?70:120}}rpx;"><!-- style="height:{{dkheight}}px"  这个组件撑满页面时部分手机无法点击进入详情页-->
 <movable-view class='floatlayer' x="330" y="10" direction="all">
-<image bindtap='searchTapTag' src="../../../images/floatbanner.png" bindtap="gotoAITagTap"></image>
+<image src="../../../images/floatbanner.png" bindtap="gotoAITagTap"></image>
 </movable-view>
 </movable-area>
 

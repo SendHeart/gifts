@@ -20,7 +20,16 @@ var navList2_init = [
   { id: "wechat_share", title: "背景", value: "", img: "/uploads/wechat_share.png" },
 ]
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
-
+const recorderManager = wx.getRecorderManager()
+const myaudio = wx.createInnerAudioContext()
+const options = {
+  duration: 10000,//指定录音的时长，单位 ms
+  sampleRate: 16000,//采样率
+  numberOfChannels: 1,//录音通道数
+  encodeBitRate: 96000,//编码码率
+  format: 'mp3',//音频格式，有效值 aac/mp3
+  frameSize: 50,//指定帧大小，单位 KB
+}
 Page({
   data: {
     title_name: '分享',
@@ -40,6 +49,19 @@ Page({
     overtime_status: 0, 
     notehidden:true,
     hidden_share:true,
+  },
+
+  //录音计时器
+  recordingTimer: function () {
+    var that = this
+    //将计时器赋值给setInter
+    that.data.setInter = setInterval(
+      function () {
+        var time = that.data.recordingTimeqwe + 1
+        that.setData({
+          recordingTimeqwe: time,
+        })
+      }, 1000)
   },
 
   formSubmit: function (e) {
@@ -79,8 +101,9 @@ Page({
     })
   },
   goBack: function () {
+    var that = this
     var pages = getCurrentPages();
-    if (pages.length >1) {
+    if (pages.length >1 && that.data.share_order_shape!=5) {
       wx.navigateBack({ changed: true });//返回上一页
     }else{
       wx.switchTab({
@@ -138,7 +161,6 @@ Page({
 
   startRecode: function () {
     var that = this
-    console.log("start")
     wx.getSetting({
       success(res) {
         var authMap = res.authSetting;
@@ -165,99 +187,155 @@ Page({
         }
       }
     })
-    wx.startRecord({
-      success: function (res) {
-        console.log(res);
-        var tempFilePath = res.tempFilePath;
-        that.setData({
-          recodePath: tempFilePath,
-          isRecode: true,
-        })
-      },
-      fail: function (res) {
-        console.log("fail", res)
-        wx.showToast({
-          title: '录音失败',
-          icon: 'none',
-          duration: 1000
-        })
-      }
+    that.setData({
+      shutRecordingdis: "block",
+      openRecordingdis: "none",
+    })
+    wx.showLoading({
+      title: '录音中',
+    })
+    //开始录音计时   
+    that.recordingTimer()
+    //开始录音
+    recorderManager.start(options)
+    recorderManager.onStart(() => {
+      console.log('开始录音')
+    })
+    //错误回调
+    recorderManager.onError((res) => {
+      console.log('错误回调:', res);
     })
   },
 
   endRecode: function () {//结束录音 
     var that = this
-    var goods_id = that.data.goods_id
-    wx.stopRecord()
-    wx.setStorageSync('cardvoice', that.data.recodePath)
+    var goods_id = that.data.share_goods_id
     that.setData({
-      isRecode: false,
-      cardvoice: that.data.recodePath
+      shutRecordingdis: "none",
+      openRecordingdis: "block"
     })
-    wx.showToast({
-      title: '录音结束',
-      icon: 'none',
-      duration: 1000
+    recorderManager.stop();
+    recorderManager.onStop((res) => {
+    
+      let timestamp = util.formatTime(new Date())
+      console.log('停止录音', res.tempFilePath)
+      const { tempFilePath } = res
+      wx.hideLoading()
+      //结束录音计时  
+      clearInterval(that.data.setInter)
+      myaudio.src = res.tempFilePath
+      //myaudio.autoplay = true
+      that.save_recorder(res.tempFilePath)
     })
-   
-
-    setTimeout(function () {
-      var urls = uploadurl
-      console.log('录音文件上传：',that.data.recodePath)
-      wx.uploadFile({
-        url: uploadurl,
-        filePath: that.data.recodePath,
-        name: 'wechat_upimg',
-        formData: {
-          latitude: encodeURI(0.0),
-          longitude: encodeURI(0.0),
-          restaurant_id: encodeURI(0),
-          city: encodeURI('杭州'),
-          prov: encodeURI('浙江'),
-          name: encodeURI(goods_id), // 名称
-        }, 
-        success: function (res) {
-          var retinfo = JSON.parse(res.data.trim())
-          var new_rec_url=[]
-          if (retinfo['status'] == "y") {
-            new_rec_url.push(retinfo['result']['rec_url'])
-            that.setData({
-              new_rec_url: new_rec_url,
-            })
-            wx.showToast({
-              title: '录音上传完成',
-              icon: 'none',
-              duration: 1000,
-            })
-          }else{
-            wx.showToast({
-              title: '录音上传返回失败',
-              icon: 'none',
-              duration: 1000
-            })
-          }
-        },
-      })
-    }, 1000)
+  },
+  
+  save_recorder: function (voice) {
+    var that = this
+    var goods_id = that.data.share_goods_id
+    var urls = uploadurl
+    wx.uploadFile({
+      url: uploadurl,
+      filePath: voice,
+      name: 'wechat_upimg',
+      formData: {
+        latitude: encodeURI(0.0),
+        longitude: encodeURI(0.0),
+        restaurant_id: encodeURI(0),
+        city: encodeURI('杭州'),
+        prov: encodeURI('浙江'),
+        name: encodeURI(goods_id), // 名称
+      },
+      success: function (res) {
+        var retinfo = JSON.parse(res.data.trim())
+        var new_rec_url = ''
+        if (retinfo['status'] == "y") {
+          new_rec_url = retinfo['result']['img_url']
+          that.setData({
+            new_rec_url: new_rec_url,
+          })
+          wx.setStorageSync('cardvoice', new_rec_url)
+          /*
+          wx.showToast({
+            title: '录音上传完成',
+            icon: 'none',
+            duration: 1000,
+          })
+          */
+          console.log('录音上传完成', voice, new_rec_url)
+          that.update_order_note()
+        } else {
+          wx.showToast({
+            title: '录音上传返回失败',
+            icon: 'none',
+            duration: 1000
+          })
+          console.log('录音上传返回失败', voice, new_rec_url)
+        }
+      }
+    })
   },
 
   play_rec: function () {
     var that = this
-    var recodePath = that.data.recodePath
-    if (recodePath){
-      console.log('播放声音文件:', recodePath)
-      //播放声音文件  
-      wx.playVoice({
-        filePath: recodePath
+    var goods_id = that.data.share_goods_id
+    var new_rec_url = that.data.new_rec_url ? that.data.new_rec_url:that.data.cardvoice
+
+    if (new_rec_url){
+      wx.downloadFile({
+        url: new_rec_url, //音频文件url                  
+        success: res => {
+          if (res.statusCode === 200) {
+            myaudio.src = res.tempFilePath
+            myaudio.play()
+            console.log('录音播放完成', res.tempFilePath)
+          }
+        }
       })
     }else{
       wx.showToast({
-        title: '您还没有录音',
+        title: '暂无录音',
         icon: 'none',
         duration: 1000
       })
     }
-   
+  },
+  
+  update_order_note:function(){
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var share_order_id = that.data.share_order_id
+    var share_order_note = that.data.share_order_note
+    var share_order_shape = that.data.share_order_shape 
+    var new_rec_url = that.data.new_rec_url ? that.data.new_rec_url : that.data.cardvoice
+    wx.request({
+      url: weburl + '/api/client/update_order_note',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        order_id: share_order_id,
+        rcv_note: share_order_note,
+        order_shape: share_order_shape,
+        order_voice: new_rec_url,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('wishshare 修改订单信息完成:', res.data.result);
+        var order_data = res.data.result;
+        if (res.data.status=='n') {
+          wx.showToast({
+            title: res.data.info,
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
+    })
   },
 
   onLoad (options) {
@@ -345,7 +423,7 @@ Page({
         })
       }
     }
-  
+    
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
@@ -707,14 +785,6 @@ Page({
               width: 50,
               height: 50,
               bolder: false
-            },
-            {
-              type: 'rect',
-              top: 680,
-              left: 85,
-              background: '#eeeeee',
-              width: 350,
-              height: 1,
             },
             {
               type: 'text',
