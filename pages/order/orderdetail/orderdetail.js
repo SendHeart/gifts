@@ -50,11 +50,18 @@ Page({
     var that = this
     var formId = e.detail.formId;
     var form_name = e.currentTarget.dataset.name
+    var order_shape = that.data.order_shape
     console.log('formSubmit() formID：', formId, ' form name:', form_name)
     if (form_name == 'express') {
       that.expressTapTag()
     } else if (form_name == 'goBack') {
-      that.goBack()
+      if (order_shape==5){
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=贺卡请柬'
+        })
+      }else{
+        that.goBack()
+      }
     }
     if(formId) that.submintFromId(formId)
   },
@@ -356,6 +363,7 @@ Page({
             var sku_num = orderObjects[0]['order_sku'][0]['sku_num']
             var giftflag = orderObjects[0]['m_id'] == m_id?0:1
             var send_rcv = giftflag==0?'send':'receive'
+            var order_shape = orderObjects[0]['shape']
 
             that.setData({
               orders: orderObjects,
@@ -373,6 +381,7 @@ Page({
               orderprice: orderprice,
               orderaddress: orderaddress,
               tel: tel,
+              order_shape: order_shape,
               fullname: fullname,
               from_nickname: from_nickname,
               from_headimg: from_headimg,
@@ -457,10 +466,17 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var goods_id = e.currentTarget.dataset.goodsId;
-    var goods_name = e.currentTarget.dataset.goodsName;
-    wx.navigateTo({
-      url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
-    });
+    var goods_name = e.currentTarget.dataset.goodsName
+    var goods_shape = e.currentTarget.dataset.goodsShape
+    if(goods_shape==5){
+      wx.navigateTo({
+        url: '/pages/list/list?navlist_title=贺卡请柬'
+      })
+    }else{
+      wx.navigateTo({
+        url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
+      })
+    }
   },
 
   onShareAppMessage: function () {

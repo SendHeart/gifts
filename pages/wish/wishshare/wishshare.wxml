@@ -1,18 +1,14 @@
 <!--index.wxml-->
 <view class="container" style='height:{{dkheight}}px;'>
-  <view class="share-goods"  >
-    <view class="share-buttons">
-      <view class="btnshare" bindtap="eventDraw">
-      <image class="shareto" src="../../../images/refresh.png"></image>
-      刷新
+  <view class="share-goods" >
+    <view class="share-buttons" >
+      <view wx:if="{{share_order_shape==5}}" class="btncard" bindtap="goBack">
+        <image class="shareto" src="../../../images/home-white.png"></image>
+        返回
       </view>
-    </view>
-  </view>
-  <view wx:if="{{share_order_shape==5}}" class="card-back"  >
-    <view class="card-back-buttons">
-      <view class="btncard" bindtap="goBack">
-      <image class="card-back-to" src="../../../images/home-white.png"></image>
-      首页
+      <view class="btnshare" bindtap="eventDraw">
+        <image class="shareto" src="../../../images/refresh.png"></image>
+        刷新
       </view>
     </view>
   </view>

@@ -23,7 +23,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 const recorderManager = wx.getRecorderManager()
 const myaudio = wx.createInnerAudioContext()
 const options = {
-  duration: 10000,//指定录音的时长，单位 ms
+  duration: 180 * 1000,//指定录音的时长，单位 ms
   sampleRate: 16000,//采样率
   numberOfChannels: 1,//录音通道数
   encodeBitRate: 96000,//编码码率
@@ -105,7 +105,11 @@ Page({
     var pages = getCurrentPages();
     if (pages.length >1 && that.data.share_order_shape!=5) {
       wx.navigateBack({ changed: true });//返回上一页
-    }else{
+    } else if (that.data.share_order_shape == 5){
+      wx.switchTab({
+        url: '../../index/index'
+      })
+    } else {
       wx.switchTab({
         url: '../../hall/hall'
       })

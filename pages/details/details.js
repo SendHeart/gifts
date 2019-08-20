@@ -11,7 +11,7 @@ var uploadurl = app.globalData.uploadurl
 const recorderManager = wx.getRecorderManager()
 const myaudio = wx.createInnerAudioContext();
 const options = {
-  duration: 10000,//指定录音的时长，单位 ms
+  duration: 180*1000,//指定录音的时长，单位 ms
   sampleRate: 16000,//采样率
   numberOfChannels: 1,//录音通道数
   encodeBitRate: 96000,//编码码率
