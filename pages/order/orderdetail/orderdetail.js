@@ -213,7 +213,7 @@ Page({
       wx_notes:wx_notes,
     })
     //that.setNavigation()
-    console.log('订单 order_no:', order_no)
+    console.log('orderdetail onload options:', options)
     if (options.order_object) {
       var order_object = options.order_object ? JSON.parse(options.order_object) : []
       console.log('订单详情', order_object)
@@ -221,6 +221,7 @@ Page({
       var status = order_object['status']
       var gift_status = order_object['gift_status']
       var order_no = order_object['order_no']
+      var order_shape = order_object['shape']
       var sendtime = order_object['paytime']
       var rcvtime = order_object['rcvtime']
       var orderprice = order_object['order_price']
@@ -244,6 +245,7 @@ Page({
         gift_status: gift_status,
         send_rcv: send_rcv ? send_rcv : 0,
         order_status: order_status,
+        order_shape: order_shape,
         sku_num: sku_num,
         buy_num: buy_num,
         order_no: order_no,
@@ -311,7 +313,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log(res.data.result);
+          console.log('orderdetail query order:',res.data.result);
           var orderObjects = res.data.result;
           var all_rows = res.data.all_rows;
           if (!res.data.result) {
@@ -363,7 +365,7 @@ Page({
             var sku_num = orderObjects[0]['order_sku'][0]['sku_num']
             var giftflag = orderObjects[0]['m_id'] == m_id?0:1
             var send_rcv = giftflag==0?'send':'receive'
-            var order_shape = orderObjects[0]['shape']
+            var order_shape = orderObjects[0]['shape'] ? orderObjects[0]['shape']: 1
 
             that.setData({
               orders: orderObjects,
@@ -462,15 +464,19 @@ Page({
     })
   },
   showGoods: function (e) {
+    var that = this
     var skuId = e.currentTarget.dataset.skuId;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var goods_id = e.currentTarget.dataset.goodsId;
     var goods_name = e.currentTarget.dataset.goodsName
     var goods_shape = e.currentTarget.dataset.goodsShape
+    var order_no = that.data.order_no
+    var order_shape = that.data.order_shape
+    var receive = that.data.send_rcv
     if(goods_shape==5){
       wx.navigateTo({
-        url: '/pages/list/list?navlist_title=贺卡请柬'
+        url: '/pages/order/receive/receive?order_no=' + order_no + '&order_shape=' + order_shape + '&receive=' + receive
       })
     }else{
       wx.navigateTo({

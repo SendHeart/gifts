@@ -366,7 +366,7 @@ page {
 
 /* 返回顶部 */
 .goTop{
-  display: flex;
+   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;  
@@ -378,7 +378,7 @@ page {
   right: 30rpx;
   border-radius: 50%;
   color:#fff;
-  font-size: 8;
+  font-size: 22rpx;
   z-index: 999;
 }
 .prevbtn {
@@ -418,5 +418,99 @@ page {
 .sentbtn text {
   font-size: 24rpx;
   color: #999;
+}
+.inlinetips {
+  width: 20rpx;
+  height: 20rpx;
+  position: absolute;
+  top: 0;
+  left: 0;
+ /* margin-top: 120rpx; */
+  z-index: 999;
+}
+.inlinetips image {
+  width: 80rpx;
+  height: 80rpx;
+}
+.floatlayer {
+  width: 80rpx;
+  height: 80rpx;
+}
+
+.search {
+	width: 100%;
+	height: 72rpx;
+  display: flex;
+  background: #1d1d1d;
+	flex-direction: row;
+	justify-content: space-between;/*子项横轴上居中对齐*/
+	align-items: center;/*子项纵轴上居中对齐*/
+  padding: 4rpx 10rpx 8rpx 10rpx;
+  top:0rpx;
+  position: fixed;
+  z-index:999;
+}
+
+.search .wx-input {
+	display: flex;
+  flex-direction: row;
+	width: 80%;
+	height: 60rpx;
+  background: #ffffff;
+	border-radius: 120rpx;
+  text-align: left;
+  z-index: 99;
+  margin-left: 20rpx;
+}
+.wx-input input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 60rpx;
+  width: 94%;
+  font-size: 24rpx;
+  line-height: 50rpx;
+  padding-left: 20rpx;
+  min-height: 1.2rem;
+}
+.wx-input image {
+	width: 36rpx;
+	height: 36rpx;
+  margin: 12rpx 2rpx 12rpx -40rpx; 
+}
+.searchcancel {
+  width: 20%;
+  color: #eee;
+  font-size: 26rpx;
+  line-height: 60rpx;
+  text-align: center;
+}
+.serach-comm {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+  background: #1d1d1d;
+  margin-bottom: 0rpx;
+  margin-top: 0rpx;
+  top:84rpx;
+  width: 100%;
+  position: fixed;
+  z-index: 999;
+}
+
+.search-comm-vote {
+	width:100%;
+  height: 100%;
+	color: #444;
+	background: white;
+	display: flex;
+  flex-direction: row;
+	align-items: center;
+  padding: 10rpx 0 10rpx 20rpx;
+  font-size: 24rpx;
+}
+.linegray {
+	border-bottom: 1rpx solid #eee;
 }
 

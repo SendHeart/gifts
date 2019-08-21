@@ -1,10 +1,10 @@
 <view class="banner" style=''>
   <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status<2}}">对方已接受,待付款</text>
-  <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status>=2}}">礼物寄送中</text>
+  <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status>=2 && order_shape!=5}}">礼物寄送中</text>
   <text class="status2" wx:if="{{send_rcv=='send' && order_status<=2 && gift_status==1}}">对方未接受</text>
   <text class="status2" wx:if="{{send_rcv=='send' && gift_status==0 }}">未送出</text>
   <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status<2}}">已接受,对方未付款</text>
-  <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status>=2}}">礼物寄送中</text>
+  <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status>=2 && order_shape!=5}}">礼物寄送中</text>
 </view>
 <view class='container'>
   <view class="order-item" wx:for="{{orders}}" wx:key="">
@@ -69,7 +69,7 @@
       <text>{{rcvtime?rcvtime:'对方未接受'}}{{gift_status=='1'?'':''}}</text>
     </view>
   </view>
-  <view class="delivery-detail">
+  <view wx:if="{{order_shape!=5}}" class="delivery-detail">
     <view class="delivery-detail-text">
       <text class="labeltext">收货人:</text>
       <text>{{fullname?fullname:''}}</text>
@@ -98,7 +98,7 @@
    
     </view>-->
   </view>
-  <view class="delivery-detail-info">
+  <view wx:if="{{order_shape!=5}}" class="delivery-detail-info">
     <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">物流跟踪</text>
     <block wx:for="{{delivery_status}}" wx:for-item="itme" wx:key=""  >
       <view class="delivery-detail-info-text" >
@@ -120,10 +120,10 @@
 </view>
 <view class="footer">
   <view class="opt-buttons" >
-    <form bindsubmit="formSubmit"  data-name='express' report-submit="true" hidden="{{currentPages_length>1?false:true}}" >
+    <form bindsubmit="formSubmit"  data-name='express' report-submit="true" hidden="{{(currentPages_length>1 && order_shape!=5)?false:true}}" >
       <button class="button-group" style="width:200rpx;" formType="submit" >物流跟踪</button>
     </form>
-    <form bindsubmit="formSubmit"  data-name='goBack' report-submit="true" hidden="{{currentPages_length>1?true:false}}" >
+    <form bindsubmit="formSubmit"  data-name='goBack' report-submit="true" hidden="{{(currentPages_length>1&&order_shape!=5)?true:false}}" >
       <button class="button-group" style="width:200rpx;" formType="submit" >返回</button>
     </form>
     <form bindsubmit="formSubmit"  data-name='express' report-submit="true" >

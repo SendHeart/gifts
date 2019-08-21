@@ -1,6 +1,4 @@
 <import src="../../wxParse/wxParse.wxml" />
-<import src="../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
 <view class="userinfo" style=''>  <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
 	<image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover" bindtap="chooseImage"></image>
 	<text class="userinfo-nickname">{{userInfo.nickName}}</text>
@@ -85,8 +83,10 @@
   </view>
  </view> 
  
-<button open-type="getUserInfo" lang="zh_CN" hover-class='none' bindgetuserinfo="onGotUserInfo" class="logout">重新登录
-</button>
+
+<view class="sentbtn">
+  <button open-type="getUserInfo" hover-class='none' bindgetuserinfo="onGotUserInfo">重新登录</button>
+</view>
 <!--
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
@@ -110,6 +110,11 @@
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
       </view> 
+    </view>
+</modal>
+<modal class="modalbox" title="{{needPhoneNumber}}"  hidden="{{modalHiddenPhone}}" confirm-text="确定" no-cancel  bindconfirm="modalBindconfirmPhone">
+    <view class="sentbtn">
+      <button open-type="getPhoneNumber" lang="zh_CN" bindgetphonenumber="getPhoneNumber">手机授权</button>
     </view>
 </modal>
 <modal hidden="{{modalHiddenArt}}" title="请选择文章" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelArt" bindconfirm="modalBindconfirmArt">
@@ -140,5 +145,6 @@
 
 </modal>
   -->
+
 </view>
  

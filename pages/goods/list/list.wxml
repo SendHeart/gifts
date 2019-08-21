@@ -24,11 +24,11 @@
   <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>
 <scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
-<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-  <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-  <view style="margin-top:-22rpx;">{{page}}</view>
-  <view style="margin-top:-5rpx;border-top:1rpx solid #fff">{{all_rows}}</view>
-</view>
+  <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+    <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
+    <view style="margin-top:-22rpx;">{{page}}</view>
+    <view style="margin-top:-5rpx;border-top:1rpx solid #fff">{{all_rows}}</view>
+  </view>
 
   <view class="venues_box" style="{{hidddensearch?'margin-top:80rpx;':'margin-top:150rpx;'}}">
       <block wx:for="{{venuesItems}}" wx:key="">

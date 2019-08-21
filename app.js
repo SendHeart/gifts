@@ -158,7 +158,7 @@ App({
     })
 
     // 实例化腾讯地图API核心类
-    var QQMapWX = require('./utils/qqmap-wx-jssdk.js')
+    var QQMapWX = require('./utils/qqmap-wx-jssdk.min.js')
     var qqmapsdk
     qqmapsdk = new QQMapWX({
       key: that.globalData.mapkey // 必填

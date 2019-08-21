@@ -1,9 +1,20 @@
 <import src="../common/nav_order.wxml" />
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <!--
-
 <view style="height:{{dkheight}}px;margin-top:80rpx;scroll-y"><!--  bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" -->
 -->
+<view wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="search">
+		<view class="wx-input">
+    <input name="search" value="{{keyword}}" placeholder="鲜花"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="orderSearch"/>
+    <image bindtap='orderSearch' src="../../images/search-btn.png"></image>
+    </view>
+    <text class='searchcancel' bindtap='searchTagTap'>取消</text>
+</view>
+<modal class="modalbox" title="{{needPhoneNumber}}"  hidden="{{modalHiddenPhone}}" confirm-text="确定" no-cancel  bindconfirm="modalBindconfirmPhone">
+    <view class="sentbtn">
+      <button open-type="getPhoneNumber" lang="zh_CN" bindgetphonenumber="getPhoneNumber">手机授权</button>
+    </view>
+</modal>
 <scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" > <!-- bindscrolltolower="getMoreOrdersTapTag" bindscrolltoupper="getPrevOrdersTapTag"  -->
   <view wx:if="{{page>1}}"  class="prevbtn" bindtap="goTop">
     <image id="top" src="../../images/top.png" style="width:50rpx;height:50rpx;"></image>
@@ -11,7 +22,8 @@
   
   <view  class='goTop' bindtap="goTop"  hidden='{{!floorstatus}}'> <!-- -->
     <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-    <view class='' style="margin-top:-25rpx;font-size:25rpx;">{{page<=0?1:page}}/{{page_num<=0?1:page_num}}</view>
+    <view style="margin-top:-22rpx;">{{page}}</view>
+    <view style="margin-top:-5rpx;border-top:1rpx solid #fff">{{page_num}}</view>
   </view>
   <block wx:for="{{orders_show}}"  wx:key="{{order_show.id}}" wx:for-item="orders_show" wx:for-index="ordersIndex">
     <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders_show}}" wx:key="{{item.id}}" wx:for-index="order_idx">
@@ -50,7 +62,7 @@
         </view>
       </view>
       <text hidden="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1)?false:true}}" class="recyclestatus">已回收</text>
-      <view hidden="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1 && item.rcv_openid == username)?false:true}}" bindtap="modalinput_buyin" data-order-index="{{order_idx}}" data-sku-index="{{sku_idx}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}"
+      <view hidden="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1 && item.shape!=5 && item.rcv_openid == username)?false:true }}" bindtap="modalinput_buyin" data-order-index="{{order_idx}}" data-sku-index="{{sku_idx}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}"
         data-goods-skuid="{{mapping.sku_id}}" data-order-sku-price="{{mapping.sku_sell_price_real}}" data-order-sku-num="{{mapping.sku_num}}" class="{{(item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status!=1) ? '': 'hidden'}} recyclebtn">
         <image src="../../images/recycle.png"></image>礼物回收
       </view>
@@ -83,7 +95,7 @@
   <!-- 
 </view>
 -->
-  <view class="sentbtn" hidden="{{loadingHidden}}">
+  <view class="sentbtn" hidden="{{hiddenmore}}">
     <button bindtap="getMoreOrdersTapTag">加载更多</button>
   </view>
 </scroll-view>

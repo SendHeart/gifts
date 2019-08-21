@@ -21,7 +21,7 @@
     </view>
   </view>
 </view>
-<view class="order-num">
+<view wx:if="{{order_shape!=5}}" class="order-num">
   <text>份数:</text> <!--份数，不是件数，用于群发礼物订单 -->
   <input type="number" bindinput="order_num" value="{{order_num}}" />
 </view>

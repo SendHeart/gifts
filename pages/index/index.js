@@ -1,10 +1,12 @@
 var app = getApp()
 var weburl = app.globalData.weburl
+var appid = app.globalData.appid
+var appsecret = app.globalData.secret
 var shop_type = app.globalData.shop_type
 var navList_order = [
   { id: "send", title: "我送出的" },
   { id: "receive", title: "我收到的" },
-];
+]
 var now = new Date().getTime()
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 
@@ -17,6 +19,7 @@ Page({
     orders_prev: [],
     orders_next: [],
     colors: [],
+    keyword: '',
     shop_type:shop_type,
     page: 0,
     pagesize: 10,
@@ -31,6 +34,9 @@ Page({
     gift_rcv:0,
     page_num: 0, 
     hiddenmodalput: true,
+    hidddensearch: true,
+    hiddenmore:true,
+    modalHiddenPhone:true,
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
     buyin_rate:90,  //礼物折现率
@@ -42,6 +48,7 @@ Page({
     text: "没有滑动",
     currentGesture: 0, //标识手势
     current_scrollTop:0,
+    needPhoneNumber: '手机号授权',
   },
   /*
   //监听屏幕滚动 判断上下滚动  
@@ -136,6 +143,88 @@ Page({
       url: '../hall/hall'
     })
   },
+
+  orderSearch: function () {
+    var that = this
+    that.setData({
+      page: 0,
+    })
+    that.reloadData()
+  },
+
+  searchTagTap: function(){
+    var that = this
+    var hidddensearch = that.data.hidddensearch
+    that.setData({
+      hidddensearch: !hidddensearch,
+    })
+  },
+  search_goodsnameTapTag: function (e) {
+    var that = this
+    var keyword = e.detail.value
+    that.setData({
+      keyword: keyword
+    })
+  },
+
+  getPhoneNumber: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var session_key = wx.getStorageSync('session_key') ? wx.getStorageSync('session_key') : ''
+
+    console.log('index getPhoneNumber:',e.detail.errMsg == "getPhoneNumber:ok");
+    if (e.detail.errMsg == "getPhoneNumber:ok") {
+      wx.request({
+        url: weburl + '/api/client/update_name',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          appid: appid,
+          session_key: session_key,
+          type: '1',
+          shop_type: shop_type,
+          encryptedData: encodeURIComponent(e.detail.encryptedData),
+          iv: e.detail.iv,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          var result = res.data.result
+          var phoneNumber = result.phoneNumber
+          wx.setStorageSync('user_phone', phoneNumber)
+          that.setData({
+            modalHiddenPhone: !that.data.modalHiddenPhone
+          })
+          that.reloadData()
+        }
+      })
+    } else { //授权失败，具体进入‘我的’页面
+      wx.switchTab({
+        url: '../hall/hall'
+      })
+    }
+  },
+  //按钮点击事件  获取手机号
+  modalBindconfirmPhone: function () {
+    var that = this
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    if (user_phone) {
+      that.setData({
+        modalHiddenPhone: !that.data.modalHiddenPhone
+      })
+    } else {
+      var needPhoneNumber = '需要您的手机号授权'
+      that.setData({
+        needPhoneNumber: needPhoneNumber
+      })
+    }
+  },  
+
   //点击按钮指定的hiddenmodalput弹出框  
   modalinput_buyin: function (e) {
     var that = this
@@ -197,11 +286,12 @@ Page({
       orders_prev:[],
       orders_next:[],
       loadingHidden: true,
+      hiddenmore: true,
       giftflag: giftflag,
       all_rows:0,
       page:0,
-      page_num:1
-    });
+      page_num:1,
+    })
     console.log('tab:' + tab, ' giftflag:', giftflag)
     that.reloadData()
   },
@@ -210,11 +300,13 @@ Page({
   scrolltoupper: function (e) {
     if (e.detail.scrollTop > 100) {
       this.setData({
-        floorstatus: true
-      });
+        floorstatus: true,
+        hidddensearch:false
+      })
     } else {
       this.setData({
-        floorstatus: false
+        floorstatus: false,
+        hidddensearch: true,
       })
     }
     this.setData({
@@ -243,6 +335,9 @@ Page({
         title: '没有更多了',
         icon: 'none',
         duration: 1000
+      })
+      that.setData({
+        hiddenmore: true,
       })
       return
     }
@@ -343,10 +438,10 @@ Page({
   },
   detailTapTag: function (e) {
     var that = this;
-    var order_object = e.currentTarget.dataset.orderObject;
-    var order_id = order_object['id'];
+    var order_object = e.currentTarget.dataset.orderObject
+    var order_id = order_object['id']
     var tab2 = that.data.tab2
-    console.log('订单ID:' + order_id)
+    console.log('index detail 订单ID:' + order_id)
     wx.navigateTo({
       url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2
     });
@@ -412,10 +507,13 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var modalHiddenPhone = that.data.modalHiddenPhone
     if (!username) {//登录
       wx.navigateTo({
         url: '../login/login'
       })
+      return
     }
     that.get_project_gift_para()
     // 存为全局变量，控制支付按钮是否显示
@@ -424,9 +522,6 @@ Page({
         status: status,
       })
     }
-    that.setData({
-      username: username,
-    })
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -437,8 +532,16 @@ Page({
           //scrollTop: that.data.scrollTop + 10
         })
       }
-    }) 
-    that.reloadData()
+    })
+   
+    if (!user_phone) { //必须获取手机号
+      modalHiddenPhone = !modalHiddenPhone
+      that.setData({
+        modalHiddenPhone: modalHiddenPhone,
+      })
+    }else{
+      that.reloadData()
+    }
   },
   onShow: function () {
     //
@@ -461,7 +564,9 @@ Page({
     var pagesize = that.data.pagesize
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
-    var tips = "加载第" + (page) + "页";
+    var tips = "加载第" + (page) + "页"
+    var hidddensearch = that.data.hidddensearch
+    var keyword = hidddensearch?'':that.data.keyword
     that.setData({
       is_loading:true,
     })
@@ -482,6 +587,7 @@ Page({
         shop_type:shop_type,
         openid:openid,
         order_type: order_type,
+        keyword: keyword,
         page: page,
         pagesize:pagesize
       },
@@ -506,6 +612,7 @@ Page({
             orders: [],
             orders_show: [],
             all_rows: 0,
+            hiddenmore:true,
           })
         } else {
           // 存储地址字段
@@ -561,6 +668,7 @@ Page({
               page_num: page_num.toFixed(0),
               scrollTop: 0,
               page:page,
+              hiddenmore:false,
             })
             wx.pageScrollTo({
               scrollTop: 0
@@ -572,7 +680,6 @@ Page({
                 loadingHidden: false,
               })
             }, 500)
-           
             console.log('reloadData page:' + page + ' pagesize:' + pagesize, ' current time:', currenttime, 'current scrollTop', scrollTop, ' orders', that.data.orders)
           }
           if (order_type=='send'){
@@ -583,7 +690,6 @@ Page({
         }
       }
     })
-
   },
   duetime_update: function () {
     var that = this

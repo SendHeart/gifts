@@ -248,6 +248,9 @@ Page({
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
         wx.setStorageSync('username', res.data.result['username'])
         wx.setStorageSync('m_id', res.data.result['m_id'])
+        if (res.data.result['user_phone']!=''){
+          wx.setStorageSync('user_phone', res.data.result['user_phone'])
+        }
         wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.showToast({
           title: '授权登录成功',

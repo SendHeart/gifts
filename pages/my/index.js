@@ -1,8 +1,8 @@
 var wxparse = require("../../wxParse/wxParse.js");
 var app = getApp();
-var weburl = app.globalData.weburl;
-var appid = app.globalData.appid;
-var appsecret = app.globalData.secret;
+var weburl = app.globalData.weburl
+var appid = app.globalData.appid
+var appsecret = app.globalData.secret
 var user_type = app.globalData.user_type ? app.globalData.user_type:0;
 var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -30,12 +30,14 @@ Page({
     modalHiddenPlaysx: true,
     modalHiddenArt: true,
     modalHiddenArtInfo:true,
+    modalHiddenPhone:true,
     shop_type:shop_type,
     index: 0,
     art_index:0,
     web_url:'',
     web_id: '',
     image_save_count:0,
+    needPhoneNumber:'手机号授权'
   },
   setNavigation: function () {
     let startBarHeight = 20
@@ -233,6 +235,47 @@ Page({
     }
   },
 
+  getPhoneNumber: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var session_key = wx.getStorageSync('session_key') ? wx.getStorageSync('session_key') : ''
+
+    console.log('my getPhoneNumber:',e.detail.errMsg == "getPhoneNumber:ok");
+    if (e.detail.errMsg == "getPhoneNumber:ok") {
+      wx.request({
+        url: weburl + '/api/client/update_name',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          appid:appid,
+          session_key: session_key,
+          type:'1',
+          shop_type: shop_type,
+          encryptedData: encodeURIComponent(e.detail.encryptedData),
+          iv: e.detail.iv,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          var result = res.data.result
+          var phoneNumber = result.phoneNumber
+          wx.setStorageSync('user_phone', phoneNumber)
+          that.setData({
+            modalHiddenPhone: !that.data.modalHiddenPhone
+          })
+        }
+      })
+    }else{ //授权失败，具体进入‘我的’页面
+      wx.switchTab({
+        url: '../hall/hall'
+      })
+    }
+  },
   navigateToAgreement:function(){
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -263,13 +306,10 @@ Page({
           console.log('送心协议:', that.data.agreementInfo)
           that.showAgreementinfo()
         }
-
       })
     } else{
       that.showAgreementinfo()
     }
-    
-    
   },
   navigateToPlaysx: function () {
     var that = this
@@ -516,6 +556,22 @@ Page({
     that.setData({
       modalHiddenCele: !that.data.modalHiddenCele
     })
+  },  
+
+  //按钮点击事件  获取手机号
+  modalBindconfirmPhone: function () {
+    var that = this
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    if (user_phone){
+      that.setData({
+        modalHiddenPhone: !that.data.modalHiddenPhone
+      })
+    }else{
+      var needPhoneNumber='需要您的手机号授权'
+      that.setData({
+        needPhoneNumber: needPhoneNumber
+      })
+    }
   },  
 
   bindArtPickerChange: function (e) {
@@ -778,17 +834,14 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var modalHiddenPhone = that.data.modalHiddenPhone
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
-    that.setData({
-      art_id: art_id,
-      art_cat_id: art_cat_id,
-      art_title: art_title,
-      refer_id: refer_id,
-    })
+   
     that.get_project_gift_para()
     console.log("my index onload:", options , 'scene:', scene)
     if (!username) { // 登录
@@ -796,6 +849,17 @@ Page({
         url: '../login/login?'
       })
     }
+    if (!user_phone) {
+      modalHiddenPhone = !modalHiddenPhone
+    }
+    that.setData({
+      art_id: art_id,
+      art_cat_id: art_cat_id,
+      art_title: art_title,
+      refer_id: refer_id,
+      modalHiddenPhone: modalHiddenPhone,
+      
+    })
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
