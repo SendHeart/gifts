@@ -109,7 +109,6 @@
 </view>
   <view class="buybutton">
   <view class="btnconfirm">
-    
     <form bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true" >
       <button class="send-button" formType="submit" >
       <image src="../../images/packed.png"></image>

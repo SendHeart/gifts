@@ -581,7 +581,7 @@ Page({
       url: weburl + '/api/client/query_order_list',
       method: 'POST',
       data: {
-        username: username,
+        username: username ? username:openid,
         access_token: token,
         status: status,
         shop_type:shop_type,

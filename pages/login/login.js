@@ -58,15 +58,18 @@ Page({
             },
             success: function (res) {
               var user = res.data//返回openid
-              wx.setStorageSync('openid', user.openid);
+              wx.setStorageSync('openid', user.openid)
+              wx.setStorageSync('username', user.openid);
               wx.setStorageSync('session_key', user.session_key)
              // wx.setStorageSync('username', user.openid) //用openid代替用户手机号登录
-              
-              that.setData({
-                username: user.openid
+              wx.getUserInfo({
+                success: function (res) {
+                  wx.setStorageSync('userInfo', res.userInfo);
+                  console.log('获取用户公开信息授权：' + res.userInfo)
+                }
               })
-              console.log('获取用户OpenId:')
-              console.log(user.openid)
+              
+             
               //权限
               wx.getSetting({
                 success(res) {
@@ -109,6 +112,21 @@ Page({
                       }
                     })
                   }
+
+                  //录音权限
+                  /*
+                  if (!res.authSetting['scope.record']) {
+                    wx.authorize({
+                      scope: 'scope.record',
+                      success(e) {
+                        console.log('录音权限成功' + e.errMsg)
+                      },
+                      fail(e) {
+                        console.log('录音权限失败' + e.errMsg)
+                      }
+                    })
+                  }
+                  */
                 }
               })
               that.login()
@@ -160,7 +178,7 @@ Page({
       disabled: true
     })
   },
-  vscode() {
+  vscode: function() {
     if (!this.data.phoneNo) {
       app.wxToast({
         title: '请输入手机号码'
@@ -198,9 +216,11 @@ Page({
       }
     })
   },
-  login() {
+  login : function () {
     console.log(this.data.scode)
     let that = this
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var shop_type = that.data.shop_type
     /*
     if (!that.data.phoneNo) {
@@ -226,7 +246,7 @@ Page({
       url: weburl + '/api/web/user/login/user_xcx_login',
       method: 'POST',
       data: { 
-        username: that.data.username, 
+        username: username ?username:openid, 
         wx_nickname:that.data.wx_nickname,
         wx_headimg:that.data.wx_headimg,
         login_type:1,

@@ -120,9 +120,17 @@ Page({
         } else if (is_buymyself == 1 || goodsshape == 5){
           //wx.hideLoading()
           console.log('order send returnTapTag() 贺卡请柬 转分享页面')
-          wx.navigateTo({
-            url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + goodsshape + '&share_order_note=' + order_note + '&share_order_bg=' + order_bg + '&share_order_image=' + order_share_image
+          wx.showToast({
+            title: ' 加载中',
+            icon: 'loading',
+            duration: 1500
           })
+          setTimeout(function () {
+            wx.navigateTo({
+              url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + goodsshape + '&share_order_note=' + order_note + '&share_order_bg=' + order_bg + '&share_order_image=' + order_share_image
+            })
+          }, 1500)
+         
         } else {
           wx.switchTab({
             url: '../../index/index'
@@ -243,6 +251,14 @@ Page({
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that = this
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        headimg: userInfo.avatarUrl,
+        nickname: userInfo.nickName
+      })
+      console.log('wishshare onShow get userInfo：', userInfo)
+    })
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var order_no = options.order_no;

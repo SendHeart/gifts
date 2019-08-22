@@ -14,7 +14,7 @@
   </view>
   <image src="{{shareImage}}" class="share-image" mode='aspectFit'  catchtap="sharegoods"></image>
   <view wx:if="{{share_order_shape==5}}" class="share-play-rec" bindtap="play_rec" >
-    <image src="../../../images/notification.png" style="width:50rpx;height:50rpx;"></image>
+    <image src="../../../images/notification.png" style="width:70rpx;height:70rpx;"></image>
   </view>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
   <!-- 

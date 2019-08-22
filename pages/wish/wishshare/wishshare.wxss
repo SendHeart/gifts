@@ -12,9 +12,10 @@ page {
   z-index: 99;
 }
 .icon-recorder {
-  width: 60rpx;
-  height: 60rpx;
-  margin-top: 10rpx;
+  width: 80rpx;
+  height: 80rpx;
+  margin-top:-10rpx;
+  margin-left:-25rpx;
 }
 
 .top-title {
@@ -319,7 +320,7 @@ main_message .main_red{
   bottom:0;
   display:flex;
   flex-direction:row;
-  margin-bottom: 350rpx;
+  margin-bottom: 320rpx;
   font-size:25rpx;
   z-index: 1000;
 }

@@ -4,41 +4,6 @@ var util = require('../../../utils/util.js');
 var now = new Date().getTime();
 var shop_type = app.globalData.shop_type
 const myaudio = wx.createInnerAudioContext();
-const version = wx.getSystemInfoSync().SDKVersion;
-if (compareVersion(version, '2.3.0') >= 0) {
-  wx.setInnerAudioOption({
-    obeyMuteSwitch: false
-  })
-} else {
-  wx.showModal({
-    title: '提示',
-    content: '当前微信版本过低，静音模式下可能会导致播放音频失败。'
-  })
-}
-// 版本对比  兼容
-function compareVersion(v1, v2) {
-  v1 = v1.split('.')
-  v2 = v2.split('.')
-  const len = Math.max(v1.length, v2.length)
-
-  while (v1.length < len) {
-    v1.push('0')
-  }
-  while (v2.length < len) {
-    v2.push('0')
-  }
-
-  for (let i = 0; i < len; i++) {
-    const num1 = parseInt(v1[i])
-    const num2 = parseInt(v2[i])
-    if (num1 > num2) {
-      return 1
-    } else if (num1 < num2) {
-      return -1
-    }
-  }
-  return 0
-}
 
 Page({
   data: {
@@ -73,23 +38,7 @@ Page({
     is_buymyself:0,
     messageHidden: true,
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
-  },
+
   formSubmit: function (e) {
     var that = this
     var formId = e.detail.formId;
@@ -340,8 +289,15 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('openid') ? wx.getStorageSync('m_id') : ''
+    var order_m_id = that.data.order_m_id
     var nickname = that.data.userInfo.nickName
     var headimg = that.data.userInfo.avatarUrl
+    var order_shape = that.data.order_shape
+    if (order_shape == 5 && order_m_id==m_id) {
+      that.goBack() //避免自己收自己的
+      return
+    }
     wx.request({ //更新收礼物状态
       url: weburl + '/api/client/update_order_status',
       method: 'POST',
@@ -468,6 +424,19 @@ Page({
       success: function (res) {
         let winHeight = res.windowHeight;
         console.log('getSystemInfo:', winHeight);
+        if(res.platform == "ios"){
+          var version = res.SDKVersion;
+          if (util.compareVersion(version, '2.3.0') >= 0) {
+            wx.setInnerAudioOption({
+              obeyMuteSwitch: false
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '当前微信版本过低，静音模式下可能会导致播放音频失败。'
+            })
+          }
+        }
         that.setData({
           dkheight: winHeight,
         })
@@ -539,6 +508,7 @@ Page({
     var order_voice = that.data.order_voice
     var new_rec_url = that.data.voice_url
     console.log('录音文件url:', myaudio.src)
+     
     if (order_voice) {
       myaudio.src = order_voice
       myaudio.play()
@@ -547,9 +517,11 @@ Page({
         url: new_rec_url, //音频文件url                  
         success: res => {
           if (res.statusCode === 200) {
+            console.log('音频文件下载完成:', res.tempFilePath)
+            
             myaudio.src = res.tempFilePath
             myaudio.play()
-            console.log('录音播放完成', res.tempFilePath)
+            console.log('录音播放完成')
           }
         }
       })
@@ -591,7 +563,7 @@ Page({
       url: weburl + '/api/client/query_order',
       method: 'POST',
       data: {
-        username: username,
+        username: username ? username: openid,
         access_token: token,
         order_no: order_no,
         order_id: order_id,
@@ -607,6 +579,7 @@ Page({
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows ? res.data.all_rows : 0
         var receive_status = that.data.receive_status
+        var order_m_id = 0
         if (!res.data.result) {
           wx.showToast({
             title: '没有该订单',
@@ -652,6 +625,7 @@ Page({
             order_price = order_price + orderObjects[i]['order_price']
           }
           receive_status = orderObjects[0]['gift_status'] == 2 ? 1 : 0
+          order_m_id = orderObjects[0]['m_id'] ? orderObjects[0]['m_id'] : 0
           if (receive_status==1 && goods_flag == 3) { //虚拟商品订单
             setTimeout(function () {
               wx.navigateTo({
@@ -675,6 +649,7 @@ Page({
           if (orderObjects[0]['shape'] == 5 && orderObjects[0]['m_desc']){
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
+           
             if (voice_url) {
               wx.downloadFile({
                 url: voice_url, //音频文件url                  
@@ -683,6 +658,7 @@ Page({
                     //myaudio.src = res.tempFilePath
                     //myaudio.play()
                     console.log('录音文件下载完成', res.tempFilePath)
+                    
                     that.setData({
                       order_voice: res.tempFilePath,
                       voice_url: voice_url,
@@ -704,6 +680,7 @@ Page({
             nickname: nickname,
             order_image: orderskus[0]['sku_image'],
             receive_status: receive_status,
+            order_m_id: order_m_id,
           })
           console.log('order sku list:', orderskus)
           app.globalData.is_receive = 0 

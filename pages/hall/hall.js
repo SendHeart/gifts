@@ -524,6 +524,8 @@ Page({
       }
     }
     if (cartselected.length==0){
+      that.query_cart()
+      that.sum()
       wx.showToast({
         title: '礼物包是空的，先挑选礼物吧~', /* 文案修改 */
         icon: 'none',
@@ -774,14 +776,27 @@ Page({
   },  
   query_cart:function(){
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var minusStatuses = []
     var shop_type = that.data.shop_type
+    if (!openid && !username){
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+        that.query_cart()
+      }, 500)
+      return
+    } 
+
     // cart info
     wx.request({
       url: weburl + '/api/client/query_cart',
       method: 'POST',
       data: {
-        username: username,
+        username: username ? username : openid,
         access_token: token,
         shop_type: shop_type,
       },
@@ -854,18 +869,18 @@ Page({
   },
   reloadData: function (username, token) {
     // auto login
-    var that = this;
+    var that = this
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var minusStatuses = []
     var page=that.data.page
     var pagesize=that.data.pagesize
     var shop_type = that.data.shop_type
-    that.query_cart()
     // recommend goods info
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
       method: 'POST',
       data: { 
-        username: username, 
+        username: username ? username:openid, 
         access_token: token,
         shop_type:shop_type,
         page:page,
@@ -917,7 +932,7 @@ Page({
       url: weburl + '/api/client/query_member_gift',
       method: 'POST',
       data: {
-        username: username,
+        username: username ? username : openid,
         access_token: token,
         openid: openid,
         shop_type:shop_type
@@ -1093,6 +1108,7 @@ Page({
   onLoad: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var shop_type = that.data.shop_type
     var page_type = options.page_type ? options.page_type:0
@@ -1111,8 +1127,8 @@ Page({
     var scene = decodeURIComponent(options.scene)
     app.globalData.is_task = task
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
-    
-    //that.get_project_gift_para()
+    that.query_cart()
+    that.get_project_gift_para()
    
     var message_info = {
       addtime: myDate,
@@ -1305,12 +1321,9 @@ Page({
         userInfo: userInfo
       })
     })
-    this.setData({
-      username: username
-    })
-    this.reloadData(username, token)
-    // sum
-    this.sum()
+   
+    that.reloadData(username, token)
+    that.sum()
     console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]) 
     //app.globalData.messageflag = 0
   },

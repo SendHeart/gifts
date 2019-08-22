@@ -4,10 +4,10 @@ var util = require('../../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
-var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var appid = app.globalData.appid;
 var secret = app.globalData.secret;
 var uploadurl = app.globalData.uploadurl;
@@ -37,18 +37,20 @@ Page({
     share_goods_bg: weburl+'/uploads/share_goods_bg.png',
     activity_share_image: weburl+'/uploads/activity_share.jpg',
     activity_avatarUrl: weburl + '/uploads/avatar.png',
-    share_goods_avatarUrl: weburl + '/uploads/avatar.png',
+    share_goods_avatarUrl: '../../../images/my.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
     painting: {},
     shareImage: '',
     shop_type:shop_type,
     wechat_share: '',
-
     start_time: util.getDateStr(new Date, 0),
     overtime_status: 0, 
     notehidden:true,
     hidden_share:true,
+    windowHeight:900,
+    windowWidth:500,
+    background:'#f2f2f2',
   },
 
   //录音计时器
@@ -120,7 +122,7 @@ Page({
     var that = this
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
     var shop_type = that.data.shop_type
-    //console.log('wishshare get_project_gift_para navList2:', navList2)
+    console.log('wishshare get_project_gift_para navList2:', navList2)
     if (navList2.length == 0) {
       //项目列表
       wx.request({
@@ -161,7 +163,6 @@ Page({
       })
     }  
   },
-
 
   startRecode: function () {
     var that = this
@@ -214,21 +215,20 @@ Page({
   endRecode: function () {//结束录音 
     var that = this
     var goods_id = that.data.share_goods_id
-    that.setData({
-      shutRecordingdis: "none",
-      openRecordingdis: "block"
-    })
+    
     recorderManager.stop();
     recorderManager.onStop((res) => {
-    
-      let timestamp = util.formatTime(new Date())
       console.log('停止录音', res.tempFilePath)
-      const { tempFilePath } = res
+      that.setData({
+        shutRecordingdis: "none",
+        openRecordingdis: "block",
+      })
+      that.current_voice = res.tempFilePath,
       wx.hideLoading()
       //结束录音计时  
       clearInterval(that.data.setInter)
       myaudio.src = res.tempFilePath
-      //myaudio.autoplay = true
+      myaudio.autoplay = true
       that.save_recorder(res.tempFilePath)
     })
   },
@@ -257,7 +257,9 @@ Page({
           that.setData({
             new_rec_url: new_rec_url,
           })
-          wx.setStorageSync('cardvoice', new_rec_url)
+          //wx.setStorageSync('cardvoice', new_rec_url)
+          //wx.setStorageSync('cardvoicetime', that.data.recordingTimeqwe)
+          
           /*
           wx.showToast({
             title: '录音上传完成',
@@ -282,9 +284,14 @@ Page({
   play_rec: function () {
     var that = this
     var goods_id = that.data.share_goods_id
-    var new_rec_url = that.data.new_rec_url ? that.data.new_rec_url:that.data.cardvoice
-
-    if (new_rec_url){
+    var order_voice = that.data.order_voice  
+    if (that.current_voice) {
+      myaudio.src = that.current_voice
+      myaudio.play()
+    } else if (order_voice) {
+      myaudio.src = order_voice
+      myaudio.play()
+    } else if (voice_url) {
       wx.downloadFile({
         url: new_rec_url, //音频文件url                  
         success: res => {
@@ -295,7 +302,7 @@ Page({
           }
         }
       })
-    }else{
+    } else {
       wx.showToast({
         title: '暂无录音',
         icon: 'none',
@@ -311,7 +318,8 @@ Page({
     var share_order_id = that.data.share_order_id
     var share_order_note = that.data.share_order_note
     var share_order_shape = that.data.share_order_shape 
-    var new_rec_url = that.data.new_rec_url ? that.data.new_rec_url : that.data.cardvoice
+    var new_rec_url = that.data.new_rec_url ? that.data.new_rec_url : that.data.voice_url
+    var cardvoicetime = that.data.recordingTimeqwe ? that.data.recordingTimeqwe:that.data.cardvoicetime
     wx.request({
       url: weburl + '/api/client/update_order_note',
       method: 'POST',
@@ -323,6 +331,7 @@ Page({
         rcv_note: share_order_note,
         order_shape: share_order_shape,
         order_voice: new_rec_url,
+        order_voicetime: cardvoicetime,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -344,9 +353,111 @@ Page({
 
   onLoad (options) {
     var that = this
+    var share_order_id = options.share_order_id ? options.share_order_id : 0
+    var share_order_shape = options.share_order_shape ? options.share_order_shape : 0
+    that.get_project_gift_para()
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        avatarUrl: userInfo.avatarUrl,
+        nickname: userInfo.nickName
+      })
+      console.log('wishshare onShow get userInfo：', userInfo)
+    })
+    if (share_order_id > 0 && parseInt(share_order_shape)==5){
+      var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+      var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+      wx.request({
+        url: weburl + '/api/client/query_order',
+        method: 'POST',
+        data: {
+          username: username ? username : openid,
+          access_token: token,
+          order_id: share_order_id,
+          shop_type: shop_type,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log(' wishshare onload() 订单查询:', res.data.result)
+          var orderObjects = res.data.result
+          // 存储地址字段
+          for (var i = 0; i < orderObjects.length; i++) {
+            if (orderObjects[i]['logo'].indexOf("http") < 0) {
+              orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
+            }
+
+            for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+              if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+                orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+              }
+            }
+          }
+        
+          if (orderObjects[0]['shape'] == 5 && orderObjects[0]['m_desc']) {
+            var m_desc = JSON.parse(orderObjects[0]['m_desc'])
+            var voice_url = m_desc['voice']
+            if (voice_url) {
+              wx.downloadFile({
+                url: voice_url, //音频文件url                  
+                success: res => {
+                  if (res.statusCode === 200) {
+                    console.log('录音文件下载完成', res.tempFilePath)
+                    that.setData({
+                      order_voice: res.tempFilePath,
+                      voice_url: voice_url,
+                    })
+                  }
+                }
+              })
+            }
+          }
+        }
+      })
+    }
+    
+    wx.getSystemInfo({
+      success: function (res) {
+        console.log('wishshare getSystemInfo:',res)
+        that.setData({
+          windowHeight: res.windowHeight,
+          windowWidth: res.windowWidth,
+          dkheight: res.windowHeight - 10,
+        })
+        if (res.platform == "ios") {
+          var version = res.SDKVersion;
+          if (util.compareVersion(version, '2.3.0') >= 0) {
+            wx.setInnerAudioOption({
+              obeyMuteSwitch: false
+            })
+          } else {
+            wx.showModal({
+              title: '提示',
+              content: '当前微信版本过低，静音模式下可能会导致播放音频失败。'
+            })
+          }
+        }
+      }
+    })
+   
+    setTimeout(function () {
+      that.reloadData(options)
+    }, 1000)
+    
+  },
+  onShow:function(){
+   var that = this
+  
+  },
+
+  reloadData: function (options){
+    var that = this
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
-    var task = options.task ? options.task:0
-    var task_image = options.image ?options.image: ''
+    var task = options.task ? options.task : 0
+    var task_image = options.image ? options.image : ''
     var msg_id = options.msg_id ? options.msg_id : ''
     var activity_id = options.activity_id ? options.activity_id : 0
     var activity_name = options.activity_name ? options.activity_name : 0
@@ -369,22 +480,22 @@ Page({
     var share_art_cat_id = options.share_art_cat_id ? options.share_art_cat_id : 0
     var share_art_title = options.share_art_title ? options.share_art_title : ''
     var share_art_image = options.share_art_image ? options.share_art_image : ''
-    var share_art_wx_headimg = options.share_art_wx_headimg ? options.share_art_wx_headimg:''
-
-    var share_order_id = options.share_order_id ? options.share_order_id:0
-    var share_order_note = options.share_order_note ? options.share_order_note:''
-    var share_order_shape = options.share_order_shape ? options.share_order_shape:0
-    var share_order_bg = options.share_order_bg ? options.share_order_bg:''
+    var share_art_wx_headimg = options.share_art_wx_headimg ? options.share_art_wx_headimg : ''
+    var share_order_id = options.share_order_id ? options.share_order_id : 0
+    var share_order_note = options.share_order_note ? options.share_order_note : ''
+    var share_order_shape = options.share_order_shape ? options.share_order_shape : 0
+    var share_order_bg = options.share_order_bg ? options.share_order_bg : ''
     var share_order_image = options.share_order_image ? options.share_order_image : ''
     var share_order_wx_headimg = options.share_order_wx_headimg ? options.share_order_wx_headimg : that.data.avatarUrl
+    console.log('wishshare reloadData options:', options, 'share_order_wx_headimg:', share_order_wx_headimg, ' avatarUrl:', that.data.avatarUrl, 'share_goods_id:', share_goods_id,'')
     if (share_order_wx_headimg.indexOf("https://wx.qlogo.cn") >= 0) {
-      share_order_wx_headimg = share_order_wx_headimg.replace('https://wx.qlogo.cn',weburl+'/qlogo')
+      share_order_wx_headimg = share_order_wx_headimg.replace('https://wx.qlogo.cn', weburl + '/qlogo')
     }
-    var cardvoice = wx.getStorageSync('cardvoice') 
-    share_goods_title = activity_id > 0 ? share_activity_title : share_goods_title
-    console.log('onload wishshare options:',options)
+    //var cardvoice = wx.getStorageSync('cardvoice')
+    //var cardvoicetime = wx.getStorageSync('cardvoicetime')
+
     that.setData({
-      m_id:m_id,
+      m_id: m_id,
       task: task,
       task_image: task_image,
       msg_id: msg_id,
@@ -392,6 +503,11 @@ Page({
       activity_image: activity_image,
       activity_name: activity_name,
       activity_headimg: activity_headimg,
+      share_art_id: share_art_id,
+      share_art_cat_id: share_art_cat_id,
+      share_art_title: share_art_title,
+      share_art_image: share_art_image,
+      share_art_wx_headimg: share_art_wx_headimg,
       share_goods_id: share_goods_id,
       share_goods_price: share_goods_price,
       share_goods_name: share_goods_name,
@@ -399,55 +515,33 @@ Page({
       share_goods_image: share_goods_image,
       share_goods_image2: share_goods_image2,
       share_goods_wx_headimg: share_goods_wx_headimg,
-      share_goods_title: share_goods_title,
+      share_goods_title: activity_id > 0 ? share_activity_title : share_goods_title,
       share_goods_desc: share_goods_desc,
       share_goods_qrcode_cache: share_goods_qrcode_cache,
-      share_art_id: share_art_id,
-      share_art_cat_id: share_art_cat_id,
-      share_art_title: share_art_title,
-      share_art_image: share_art_image,
-      share_art_wx_headimg: share_art_wx_headimg,
       share_order_shape: share_order_shape,
       share_order_id: share_order_id,
       share_order_note: share_order_note,
       share_order_bg: share_order_bg,
       share_order_image: share_order_image,
       share_order_wx_headimg: share_order_wx_headimg,
-      cardvoice: cardvoice,
+      //cardvoice: cardvoice,
+      //cardvoicetime: cardvoicetime,
     })
-    if (activity_name){
+    
+    if (activity_name) {
       var title_len = activity_name.length
-      if (title_len>13){
+      if (title_len > 13) {
         wx.setNavigationBarTitle({
           title: activity_name.substring(0, 10) + '...'
         })
-      }else{
+      } else {
         wx.setNavigationBarTitle({
           title: activity_name
         })
       }
     }
-    
-    wx.getSystemInfo({
-      success: function (res) {
-        that.setData({
-          windowHeight: res.windowHeight,
-          windowWidth: res.windowWidth,
-          dkheight: res.windowHeight-10,
-        })
-      }
-    })
-    that.get_project_gift_para()
     that.share_image_creat()
-  },
-  onShow:function(){
-    var that = this
-    var pages = getCurrentPages()
-    if (pages.length > 1) {
-        that.setData({
-          title_logo: '../../../images/back.png'
-      })
-    }  
+
   },
   bindTextAreaBlur: function (e) {
     var that = this
@@ -473,18 +567,29 @@ Page({
 
   share_image_creat:function(){
     var that = this
-    var share_order_shape = that.data.share_order_shape
+    var share_order_shape = that.data.share_order_shape + 0
+    var activity_id = that.data.activity_id + 0
+    var share_goods_id = that.data.share_goods_id + 0
     wx.showToast({
-      title: share_order_shape=5?"加载中":"开始生成海报",
+      title: share_order_shape==5?"加载中":"开始生成海报",
       icon: 'loading',
       duration: 1500,
     })
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true,
-      })
+    console.log('share_image_creat share_goods_id:', share_goods_id, ' share_order_shape:', share_order_shape)
+    if (share_goods_id>0 || activity_id>0 || share_order_shape>0){
       that.eventDraw()
-    }, 1300)
+      that.setData({
+        loadingHidden: false,
+      })
+    }else{
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+        that.share_image_creat()
+      }, 1200)
+    }
+   
   },
 
   //确定按钮点击事件 
@@ -524,7 +629,7 @@ Page({
     var share_goods_price = that.data.share_goods_price ? that.data.share_goods_price : 0
     var share_goods_image = that.data.share_goods_image ? that.data.share_goods_image : ''
     var share_goods_qrcode = that.data.share_goods_qrcode_cache ? that.data.share_goods_qrcode_cache : weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + share_goods_id+'&m_id='+m_id
-    var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg :      share_goods_avatarUrl
+    var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg :      that.data.share_goods_avatarUrl
     var share_goods_title = that.data.share_goods_title
     var share_goods_desc = that.data.share_goods_desc
     var nickname = that.data.nickname
@@ -546,6 +651,7 @@ Page({
     })
     
     if (activity_id>0){
+      console.log('activity_id:', activity_id)
       that.setData({
         painting: {
           width: 500,
@@ -607,14 +713,15 @@ Page({
         }
       })
     } else if (share_goods_id > 0) {
+      console.log('share_goods_id:', share_goods_id)
       that.setData({
         painting: {
           width: 520,
           height: 900,
-          windowHeight: that.data.windowHeight,
-          windowWidth: that.data.windowWidth,
+          windowHeight: 550,
+          windowWidth: 1000,
           clear: true,
-          background: 'white',
+          background: '#fff',
           views: [
             {
               type: 'image',
@@ -739,6 +846,7 @@ Page({
         }
       })
     } else if (share_order_shape == 5) { //贺卡请柬
+      console.log('share_order_shape:', share_order_shape)
       that.setData({
         painting: {
           width: 520,
@@ -823,6 +931,7 @@ Page({
         }
       })  
     } else if (share_art_id > 0) {
+      console.log('share_art_id:', share_art_id)
       that.setData({
         painting: {
           width: 520,
@@ -904,6 +1013,7 @@ Page({
         }
       })  
     }else{
+      console.log('其他 else' )
       that.setData({
         painting: {
           width: 375,
@@ -966,6 +1076,9 @@ Page({
       })
     }
     console.log('二维码 paint:', that.data.painting)
+    that.setData({
+      loadingHidden: false,
+    })
   },
   eventSave: function () {
     wx.getSetting({
