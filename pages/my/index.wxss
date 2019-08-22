@@ -340,3 +340,13 @@ prd-detail {
   font-size: 24rpx;
   color: #999;
 }
+
+.sentbtn input{
+  width: 300rpx;
+  height:50rpx;
+  line-height: 50rpx;
+  border: 1rpx solid #f2f2f2;
+  margin: 23rpx auto;
+  border-radius:10rpx; 
+}
+

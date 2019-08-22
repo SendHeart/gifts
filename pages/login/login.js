@@ -271,6 +271,12 @@ Page({
         if (res.data.result['user_phone']!=''){
           wx.setStorageSync('user_phone', res.data.result['user_phone'])
         }
+        if (res.data.result['user_name'] != '') {
+          wx.setStorageSync('user_name', res.data.result['user_name'])
+        }
+        if (res.data.result['user_gender'] != '') {
+          wx.setStorageSync('user_gender', res.data.result['user_gender'])
+        }
         wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.showToast({
           title: '授权登录成功',

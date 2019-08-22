@@ -31,31 +31,18 @@ Page({
     modalHiddenArt: true,
     modalHiddenArtInfo:true,
     modalHiddenPhone:true,
+    modalHiddenUserName: true,
     shop_type:shop_type,
     index: 0,
     art_index:0,
     web_url:'',
     web_id: '',
     image_save_count:0,
-    needPhoneNumber:'手机号授权'
+    needPhoneNumber:'手机号授权',
+    needUserName: '姓名和性别',
+    inputShowed: false
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
-  },
+  
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -275,6 +262,76 @@ Page({
         url: '../hall/hall'
       })
     }
+  },
+  getUserName: function (user_name, user_gender) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    if (!user_name || !user_gender) {
+      return
+    }
+    wx.request({
+      url: weburl + '/api/client/update_name',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        full_name: user_name,
+        sex: user_gender,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.status = 'y') {
+          wx.setStorageSync('user_name', user_name)
+        } else {
+          wx.showToast({
+            title: '姓名更新失败',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
+  },
+
+  user_nameTapTag: function (e) {
+    var that = this
+    var user_name = e.detail.value
+    that.setData({
+      user_name: user_name
+    })
+  },
+  //按钮点击事件  获取姓名
+  modalBindconfirmUsername: function () {
+    var that = this
+    var user_name = that.data.user_name
+    var user_gender = that.data.user_gender
+    if (user_name && user_gender) {
+      that.setData({
+        modalHiddenUserName: !that.data.modalHiddenUserName
+      })
+      that.getUserName(user_name, user_gender)
+    } else {
+      var needUserName = '需要您的姓名和性别'
+      that.setData({
+        needUserName: needUserName
+      })
+    }
+  },
+
+  radiochange: function (e) {
+    var that = this
+    var user_gender = e.detail.value
+    //console.log('radio发生change事件，携带的value值为：', e.detail.value)
+    that.setData({
+      user_gender: user_gender
+    })
+    wx.setStorageSync('user_gender', user_gender)
   },
   navigateToAgreement:function(){
     var that = this
@@ -834,13 +891,13 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
-    var modalHiddenPhone = that.data.modalHiddenPhone
+  
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
+    
    
     that.get_project_gift_para()
     console.log("my index onload:", options , 'scene:', scene)
@@ -849,16 +906,13 @@ Page({
         url: '../login/login?'
       })
     }
-    if (!user_phone) {
-      modalHiddenPhone = !modalHiddenPhone
-    }
+   
+   
     that.setData({
       art_id: art_id,
       art_cat_id: art_cat_id,
       art_title: art_title,
-      refer_id: refer_id,
-      modalHiddenPhone: modalHiddenPhone,
-      
+      refer_id: refer_id,   
     })
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
@@ -882,15 +936,29 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : 0
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
+    var modalHiddenPhone = that.data.modalHiddenPhone
+    var modalHiddenUserName = that.data.modalHiddenUserName
+    var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
-    var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement'):0
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../../images/left_arrow.png',
       })
     }  
-    if (isReadAgreement == 0 && username){ //已登录未阅读用户购买协议
+    if (!user_phone || user_phone == '') { //必须获取手机号
+      modalHiddenPhone = !modalHiddenPhone
+      that.setData({
+        modalHiddenPhone: modalHiddenPhone,
+      })
+    } else if (!user_name || user_name == '') {
+      modalHiddenUserName = !modalHiddenUserName
+      that.setData({
+        modalHiddenUserName: modalHiddenUserName,
+      })
+    } else if (isReadAgreement == 0 && username) { //已登录未阅读用户购买协议
       that.navigateToAgreement()
     }
     that.setData({

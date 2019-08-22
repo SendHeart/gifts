@@ -404,7 +404,6 @@ page {
   line-height: 100rpx;
   width: 60%;
   height: 100rpx;
-  /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
   background: #e34c55;
   color: white;
   font-size: 34rpx;
@@ -419,6 +418,16 @@ page {
   font-size: 24rpx;
   color: #999;
 }
+
+.sentbtn input{
+  width: 300rpx;
+  height:50rpx;
+  line-height: 50rpx;
+  border: 1rpx solid #f2f2f2;
+  margin: 23rpx auto;
+  border-radius:10rpx; 
+}
+
 .inlinetips {
   width: 20rpx;
   height: 20rpx;
@@ -513,4 +522,3 @@ page {
 .linegray {
 	border-bottom: 1rpx solid #eee;
 }
-

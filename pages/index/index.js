@@ -20,6 +20,7 @@ Page({
     orders_next: [],
     colors: [],
     keyword: '',
+    user_name:'',
     shop_type:shop_type,
     page: 0,
     pagesize: 10,
@@ -36,6 +37,7 @@ Page({
     hiddenmodalput: true,
     hidddensearch: true,
     hiddenmore:true,
+    modalHiddenUserName:true,
     modalHiddenPhone:true,
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
@@ -49,6 +51,8 @@ Page({
     currentGesture: 0, //标识手势
     current_scrollTop:0,
     needPhoneNumber: '手机号授权',
+    needUserName: '姓名和性别',
+    inputShowed: false
   },
   /*
   //监听屏幕滚动 判断上下滚动  
@@ -171,7 +175,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var session_key = wx.getStorageSync('session_key') ? wx.getStorageSync('session_key') : ''
 
     console.log('index getPhoneNumber:',e.detail.errMsg == "getPhoneNumber:ok");
@@ -180,11 +184,11 @@ Page({
         url: weburl + '/api/client/update_name',
         method: 'POST',
         data: {
-          username: username,
+          username: username ? username : openid,
           access_token: token,
           appid: appid,
           session_key: session_key,
-          type: '1',
+          type: '1', //需要后台解密 encryptedData
           shop_type: shop_type,
           encryptedData: encodeURIComponent(e.detail.encryptedData),
           iv: e.detail.iv,
@@ -224,6 +228,78 @@ Page({
       })
     }
   },  
+
+  getUserName: function (user_name, user_gender) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    if(!user_name || !user_gender){
+        return
+    }
+    wx.request({
+      url: weburl + '/api/client/update_name',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        full_name: user_name,
+        sex: user_gender,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.status='y'){
+          wx.setStorageSync('user_name', user_name)
+          that.reloadData()
+        }else{
+          wx.showToast({
+            title: '姓名更新失败',
+            icon: 'none',
+            duration: 1000
+          })
+        }
+      }
+    })
+  },
+
+  user_nameTapTag: function (e) {
+    var that = this
+    var user_name = e.detail.value
+    that.setData({
+      user_name: user_name
+    })
+  },
+  //按钮点击事件  获取姓名
+  modalBindconfirmUsername: function () {
+    var that = this
+    var user_name = that.data.user_name
+    var user_gender = that.data.user_gender
+    if (user_name && user_gender) {
+      that.setData({
+        modalHiddenUserName: !that.data.modalHiddenUserName
+      })
+      that.getUserName(user_name, user_gender)
+    } else {
+      var needUserName = '需要您的姓名和性别'
+      that.setData({
+        needUserName: needUserName
+      })
+    }
+  },  
+
+  radiochange: function (e) {
+    var that = this
+    var user_gender = e.detail.value
+    //console.log('radio发生change事件，携带的value值为：', e.detail.value)
+    that.setData({
+      user_gender: user_gender
+    })
+    wx.setStorageSync('user_gender', user_gender)
+  },
 
   //点击按钮指定的hiddenmodalput弹出框  
   modalinput_buyin: function (e) {
@@ -507,8 +583,7 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
-    var modalHiddenPhone = that.data.modalHiddenPhone
+   
     if (!username) {//登录
       wx.navigateTo({
         url: '../login/login'
@@ -534,17 +609,27 @@ Page({
       }
     })
    
-    if (!user_phone) { //必须获取手机号
+  },
+  onShow: function () {
+    var that = this
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
+    var modalHiddenPhone = that.data.modalHiddenPhone
+    var modalHiddenUserName = that.data.modalHiddenUserName
+
+    if (!user_phone || user_phone == '') { //必须获取手机号
       modalHiddenPhone = !modalHiddenPhone
       that.setData({
         modalHiddenPhone: modalHiddenPhone,
       })
-    }else{
+    } else if (!user_name || user_name == '') {
+      modalHiddenUserName = !modalHiddenUserName
+      that.setData({
+        modalHiddenUserName: modalHiddenUserName,
+      })
+    } else {
       that.reloadData()
     }
-  },
-  onShow: function () {
-    //
   },
 
   reloadData: function () {

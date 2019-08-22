@@ -15,6 +15,15 @@
       <button open-type="getPhoneNumber" lang="zh_CN" bindgetphonenumber="getPhoneNumber">手机授权</button>
     </view>
 </modal>
+<modal class="modalbox" title="{{needUserName}}"  hidden="{{modalHiddenUserName}}" confirm-text="确定" no-cancel  bindconfirm="modalBindconfirmUsername">
+  <view class="sentbtn" style="height:100rpx;background: #f2f2f2;">
+    <input name="user_name" value="{{user_name}}" placeholder="请输入姓名"  bindinput='user_nameTapTag' focus="{{inputShowed}}" maxlength='50' />
+  </view>
+  <radio-group bindchange="radiochange" style="margin-left:80rpx;">
+    <radio value='1' style="margin-left:30rpx;">男</radio>
+    <radio value='2' style="margin-left:30rpx;">女</radio>
+  </radio-group>
+</modal>
 <scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" > <!-- bindscrolltolower="getMoreOrdersTapTag" bindscrolltoupper="getPrevOrdersTapTag"  -->
   <view wx:if="{{page>1}}"  class="prevbtn" bindtap="goTop">
     <image id="top" src="../../images/top.png" style="width:50rpx;height:50rpx;"></image>

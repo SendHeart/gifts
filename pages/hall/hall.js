@@ -1127,9 +1127,6 @@ Page({
     var scene = decodeURIComponent(options.scene)
     app.globalData.is_task = task
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
-    that.query_cart()
-    that.get_project_gift_para()
-   
     var message_info = {
       addtime: myDate,
       username: username,
@@ -1245,6 +1242,7 @@ Page({
     var msg_id = that.data.msg_id
     var page_type = that.data.page_type
     var pages = getCurrentPages()
+    that.query_cart()
     that.get_project_gift_para()
     if (pages.length > 1) {
       that.setData({
