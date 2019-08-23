@@ -105,9 +105,9 @@ Page({
   goBack: function () {
     var that = this
     var pages = getCurrentPages();
-    if (pages.length >1 && that.data.share_order_shape!=5) {
+    if (pages.length > 1 && that.data.share_order_shape != 5 && that.data.share_order_shape != 4) {
       wx.navigateBack({ changed: true });//返回上一页
-    } else if (that.data.share_order_shape == 5){
+    } else if (that.data.share_order_shape == 5 || that.data.share_order_shape == 4){
       wx.switchTab({
         url: '../../index/index'
       })
@@ -354,7 +354,7 @@ Page({
   onLoad (options) {
     var that = this
     var share_order_id = options.share_order_id ? options.share_order_id : 0
-    var share_order_shape = options.share_order_shape ? options.share_order_shape : 0
+    var share_order_shape = options.share_order_shape ? options.share_order_shape : 1
     that.get_project_gift_para()
     app.getUserInfo(function (userInfo) {
       //更新数据
@@ -364,7 +364,7 @@ Page({
       })
       console.log('wishshare onShow get userInfo：', userInfo)
     })
-    if (share_order_id > 0 && parseInt(share_order_shape)==5){
+    if (share_order_id > 0 && (parseInt(share_order_shape) == 5 || parseInt(share_order_shape) == 4)){
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
       var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -397,7 +397,7 @@ Page({
             }
           }
         
-          if (orderObjects[0]['shape'] == 5 && orderObjects[0]['m_desc']) {
+          if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']) {
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
             if (voice_url) {
@@ -467,13 +467,21 @@ Page({
     var share_goods_id = options.share_goods_id ? options.share_goods_id : 0
     var share_goods_name = options.share_goods_name ? options.share_goods_name : ''
     var share_goods_org = options.share_goods_org ? options.share_goods_org : '1' //5虚拟商品 1自营商品
-    var share_goods_shape = options.share_goods_shape ? options.share_goods_shape : '1' //5贺卡请柬 1普通商品
+    var share_goods_shape = options.share_goods_shape ? options.share_goods_shape : '1' //5贺卡请柬 4互动卡 1普通商品
     var share_goods_price = options.share_goods_price ? options.share_goods_price : 0
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
     var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
     var share_goods_qrcode_cache = options.share_goods_qrcode_cache ? options.share_goods_qrcode_cache : ''
     var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
-    var share_goods_default_title = share_goods_shape == '5' ? '平安是福' : '这个礼物真不错，来看看吧，要是你能送我就更好了~'
+   
+    var share_goods_default_title = ''
+    if (share_goods_shape == 5) {
+      share_goods_default_title = '平安是福'
+    } else if (share_goods_shape == 4) {
+      share_goods_default_title = '一起来吧'
+    } else {
+      share_goods_default_title = '这个礼物真不错，来看看吧，要是你能送我就更好了~'
+    }
     var share_goods_title = options.share_goods_title ? options.share_goods_title : share_goods_default_title
     var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
     var share_art_id = options.share_art_id ? options.share_art_id : 0
@@ -483,7 +491,7 @@ Page({
     var share_art_wx_headimg = options.share_art_wx_headimg ? options.share_art_wx_headimg : ''
     var share_order_id = options.share_order_id ? options.share_order_id : 0
     var share_order_note = options.share_order_note ? options.share_order_note : ''
-    var share_order_shape = options.share_order_shape ? options.share_order_shape : 0
+    var share_order_shape = options.share_order_shape ? options.share_order_shape : '1'
     var share_order_bg = options.share_order_bg ? options.share_order_bg : ''
     var share_order_image = options.share_order_image ? options.share_order_image : ''
     var share_order_wx_headimg = options.share_order_wx_headimg ? options.share_order_wx_headimg : that.data.avatarUrl
@@ -512,6 +520,7 @@ Page({
       share_goods_price: share_goods_price,
       share_goods_name: share_goods_name,
       share_goods_org: share_goods_org,
+      share_goods_shape: share_goods_shape,
       share_goods_image: share_goods_image,
       share_goods_image2: share_goods_image2,
       share_goods_wx_headimg: share_goods_wx_headimg,
@@ -546,7 +555,7 @@ Page({
   bindTextAreaBlur: function (e) {
     var that = this
     var share_order_shape = that.data.share_order_shape
-    if (share_order_shape==5){
+    if (share_order_shape == 5 || share_order_shape == 4){
        that.setData({
          share_order_note: e.detail.value
     })
@@ -571,7 +580,7 @@ Page({
     var activity_id = that.data.activity_id + 0
     var share_goods_id = that.data.share_goods_id + 0
     wx.showToast({
-      title: share_order_shape==5?"加载中":"开始生成海报",
+      title: (share_order_shape == 5 || share_order_shape == 4)?"加载中":"开始生成海报",
       icon: 'loading',
       duration: 1500,
     })
@@ -845,7 +854,7 @@ Page({
           ]
         }
       })
-    } else if (share_order_shape == 5) { //贺卡请柬
+    } else if (share_order_shape == 5 || share_order_shape == 4) { //贺卡请柬
       console.log('share_order_shape:', share_order_shape)
       that.setData({
         painting: {
@@ -1149,8 +1158,16 @@ Page({
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
     var share_goods_image = that.data.share_goods_image2 ? that.data.share_goods_image2 : ''
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_goods_avatarUrl
+    var share_goods_shape = that.data.share_goods_shape ? that.data.share_goods_shape : '1'
     var share_goods_org = that.data.share_goods_org ? that.data.share_goods_org : '1' //5虚拟商品 1自营商品
-    var share_goods_default_title = share_goods_org == '5' ? '平安是福' :'这个礼物真不错，来看看吧，要是你能送我就更好了~'
+    var share_goods_default_title = ''
+    if (share_goods_shape==5){
+      share_goods_default_title = '平安是福' 
+    } else if (share_goods_shape==4){
+      share_goods_default_title = '一起来吧' 
+    }else{
+      share_goods_default_title = '这个礼物真不错，来看看吧，要是你能送我就更好了~' 
+    }
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : share_goods_default_title
     
     var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
@@ -1206,7 +1223,7 @@ Page({
         shareObj['imageUrl'] = share_art_image
         shareObj['path'] = '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&mid=' + m_id
       } 
-      if (share_order_shape == 5) {
+      if (share_order_shape == 5 || share_order_shape == 4 ) {
         shareObj['title'] = share_order_note
         shareObj['imageUrl'] = share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id

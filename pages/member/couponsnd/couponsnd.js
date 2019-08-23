@@ -232,11 +232,6 @@ Page({
 
   },
   returnTapTag: function (e) {
-    /*
-    wx.navigateTo({
-      url: '../../order/list/list'
-    });
-    */
     wx.switchTab({
       url: '../../my/index'
     });

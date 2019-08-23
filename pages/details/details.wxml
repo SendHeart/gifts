@@ -1,7 +1,7 @@
 <import src="../../wxParse/wxParse.wxml" />
 <view  class="pagewrap" >
   <view class="share-goods"  >
-    <view wx:if="{{goodsshape!=5}}" class="share-buttons">
+    <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="share-buttons">
       <view class="btnshare" bindtap="sharegoodsTapTag">
       <image class="shareto" src="../../images/shareto.png"></image>
       分享
@@ -10,7 +10,7 @@
   </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}">
-      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="{{goodsshape==5?'height:1100rpx;':''}}">
+      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="{{(goodsshape==5||goodsshape==4)?'height:1100rpx;':''}}">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
             <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="" objectFit="contain">
@@ -27,14 +27,19 @@
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{item.id}}'>
           <swiper-item item-id="{{item.id}}" class="swiperitem">
-            <image src="{{pic.url}}" class="slide-image" style="{{goodsshape==5?'height:1055rpx;':''}}" />
-            <text wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing">{{card_blessing}}</text>
+            <image src="{{pic.url}}" class="slide-image" style="{{(goodsshape==5||goodsshape==4)?'height:1055rpx;':''}}" />
+            <text id="card_content" wx:if="{{goodsshape==5||goodsshape==4}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}">{{card_content}}</text>
             <view class="share-goods-wx-info">
-              <image wx:if="{{goodsshape==5}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
-              <view wx:if="{{goodsshape==5}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
+              <image wx:if="{{goodsshape==5||goodsshape==4}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
+              <view wx:if="{{goodsshape==5||goodsshape==4}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;color:{{current_card_color}}">{{nickname}}</view>
             </view>
-            <view wx:if="{{goodsshape==5}}" class="share-goods-remark">《 请选择背景图 》</view>
-            <view wx:if="{{goodsshape==5 && new_rec_url}}" class="share-play-rec" bindtap="play_rec" >
+            <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-remark">《 滑动选背景图 》</view>
+            <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-card-color">
+              <picker name="picker_card_color" class="picker-box" data-selecthx="{{card_color[card_color_index].title}}" range="{{card_color}}" range-key="{{'title'}}"  bindchange="bindPickerChange_card_color">
+                <view class="picker" >{{card_color[card_color_index].title}}字</view>
+              </picker>
+            </view>
+            <view wx:if="{{(goodsshape==5||goodsshape==4 ) && new_rec_url}}" class="share-play-rec" bindtap="play_rec" >
               <image src="../../images/notification.png" style="width:80rpx;height:80rpx;"></image>
             </view>
           </swiper-item>

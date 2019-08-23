@@ -70,11 +70,6 @@ Page({
 
   },
   returnTapTag: function (e) {
-    /*
-    wx.navigateTo({
-      url: '../../order/list/list'
-    });
-    */
     wx.switchTab({
       url: '../../index/index'
     });
@@ -447,11 +442,6 @@ Page({
             duration: 1500
           })
         }
-        */
-        /*
-        wx.navigateTo({
-          url: '../../order/list/list?username=' + username
-        });
         */
         wx.switchTab({
           url: '../../index/index'

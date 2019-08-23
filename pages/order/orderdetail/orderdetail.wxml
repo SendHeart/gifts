@@ -1,10 +1,10 @@
 <view class="banner" style=''>
-  <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status<2}}">对方已接受,待付款</text>
-  <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status>=2 && order_shape!=5}}">礼物寄送中</text>
+  <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status<2 && order_shape!=5 && order_shape!=4 }}">对方已接受,待付款</text>
+  <text class="status1" wx:if="{{send_rcv=='send' && gift_status==2 && order_status>=2 && order_shape!=5&& order_shape!=4}}">礼物寄送中</text>
   <text class="status2" wx:if="{{send_rcv=='send' && order_status<=2 && gift_status==1}}">对方未接受</text>
   <text class="status2" wx:if="{{send_rcv=='send' && gift_status==0 }}">未送出</text>
-  <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status<2}}">已接受,对方未付款</text>
-  <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status>=2 && order_shape!=5}}">礼物寄送中</text>
+  <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status<2 && order_shape!=5 && order_shape!=4}}">已接受,对方未付款</text>
+  <text class="status1" wx:if="{{send_rcv=='receive' && gift_status==2 && order_status>=2 && order_shape!=5 && order_shape!=4}}">礼物寄送中</text>
 </view>
 <view class='container'>
   <view class="order-item" wx:for="{{orders}}" wx:key="">
@@ -35,7 +35,9 @@
       <view style="width:80%">
         <text class="order_price">金额:￥{{item.order_price}}{{item.amountpay<item.order_price?'(实付￥'+item.amountpay+')':''}}</text>
         <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" data-received="1" class="{{(item.status==1 && item.gift_status==2  && (item.rcv_openid ||item.rcv_receivetime>0) && giftflag==0) ? '': 'hidden'}} smallbtn" style="background:#e34c55;color:#fff;">去支付</text>
-        <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1) ? '': 'hidden'}} smallbtn">确认收货</text>
+        <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1 ) ? '': 'hidden'}} smallbtn">确认收货</text>
+         <text style="width:20%;" bindtap="showGoods" data-goods-shape="{{order_shape}}" class="{{(order_shape==5 || order_shape==4) ? '': 'hidden'}} smallbtn">看内容</text>
+        <text style="width:20%;" bindtap="showGoods" data-goods-shape="{{order_shape}}" class="{{(order_shape==4) ? '': 'hidden'}} smallbtn">查互动</text>
       </view>
     </view>
     <!--<view class="order-footer">

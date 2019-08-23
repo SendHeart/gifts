@@ -112,12 +112,12 @@ Page({
       success: function (res) {
         console.log('礼物发送状态更新完成:', res.data, ' is_buymyself:', is_buymyself)
         //自购礼品 接收处理
-        if (is_buymyself == 1 && goodsshape!=5){
+        if (is_buymyself == 1 && goodsshape != 5 && goodsshape != 4){ //5贺卡请柬 4互动卡
           console.log('order send returnTapTag() 自购礼品 自动接收处理')
           wx.navigateTo({
             url: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
           })
-        } else if (is_buymyself == 1 || goodsshape == 5){
+        } else if (is_buymyself == 1 || goodsshape == 5 || goodsshape == 4){
           //wx.hideLoading()
           console.log('order send returnTapTag() 贺卡请柬 转分享页面')
           wx.showToast({

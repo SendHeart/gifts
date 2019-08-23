@@ -535,12 +535,14 @@ Page({
       url: '../member/mylocation/mylocation?'
     })
   },
+  /*
   navigateToOrder: function (e) {
     var status = e.currentTarget.dataset.status
     wx.navigateTo({
       url: '../../order/list/list?status=' + status
     });
   },
+  */
   navigateToAccount: function (e) {
     wx.navigateTo({
       url: '../member/account/account?'

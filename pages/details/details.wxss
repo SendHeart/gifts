@@ -595,12 +595,13 @@ border: none;
     bottom:0;
     display:flex;
     flex-direction:row;
+    background: #f2f2f2;
     opacity: 0.5;
     font-size:24rpx;
-    margin-bottom: 50rpx;
+    margin-bottom: 100rpx;
     margin-left:300rpx;
-    line-height:100rpx;
-    height:100rpx;
+    line-height:50rpx;
+    height:50rpx;
 }
 .share-play-rec{
     position: absolute;
@@ -611,3 +612,44 @@ border: none;
     margin-left:80rpx;
     font-size:25rpx;
 }
+.share-goods-card-color{
+    position: absolute;
+    bottom:0;
+    background: #f2f2f2;
+    display:flex;
+    flex-direction:row;
+    opacity: 0.5;
+    font-size:24rpx;
+    margin-bottom: 100rpx;
+    margin-left:30rpx;
+    line-height:50rpx;
+    height:50rpx;
+}
+.picker-box{
+  background: #fff;
+  width: 100%;
+  margin: 5rpx auto;
+  position: relative;
+}
+.picker{
+  box-sizing: border-box;
+  width: 100%;
+  height: 50rpx;
+  border:1px solid #efefef;
+  border-radius: 8rpx;
+  display: flex;
+  align-items: center;
+  padding: 0 20rpx;
+  font-size: 25rpx;
+}
+.picker .text{
+  font-size: 28rpx;
+  flex: 1;
+}
+.picker .img{
+  width: 40rpx;
+  height: 40rpx;
+  display: block;
+  transition:transform 0.3s;
+}
+

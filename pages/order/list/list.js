@@ -105,13 +105,13 @@ Page({
       });
     }
     this.setNavigation()
-    this.reloadData()
+    this.reloadData(options)
 	},
 	onShow: function() {
 		//
 	},
   
-	reloadData: function() {
+  reloadData: function (options) {
 		var that = this;
     var order_type= that.data.tab2;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';

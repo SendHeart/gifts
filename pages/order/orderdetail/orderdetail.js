@@ -59,6 +59,10 @@ Page({
         wx.navigateTo({
           url: '/pages/list/list?navlist_title=贺卡请柬'
         })
+      } else if (order_shape == 4){
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=互动卡'
+        })
       }else{
         that.goBack()
       }
@@ -399,10 +403,10 @@ Page({
         title: '订单不存在',
         icon: 'loading',
         duration: 1500
-      });
+      })
       setTimeout(function () {
         wx.navigateBack();
-      }, 1500);
+      }, 1500)
     }
   },
   pay: function (e) {

@@ -18,13 +18,22 @@ const options = {
   format: 'mp3',//音频格式，有效值 aac/mp3
   frameSize: 50,//指定帧大小，单位 KB
 }
-
+var card_color = [
+  { id: "gray", title: "灰色", value: "#f2f2f2" },
+  { id: "red", title: "红色", value: "#e34c55" },
+  { id: "white", title: "白色", value: "#fff"},
+  { id: "black", title: "黑色", value: "#333" },
+  { id: "blue", title: "蓝色", value: "#6495ED" },
+  { id: "yellow", title: "黄色", value: "#FFFF00" },
+]
 Page({
   data: {
         title_name: '详情',
         title_logo: '../../images/footer-icon-05.png',
         share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
         card_blessing:'送心礼物祝您:万事如意，平平安安！',
+        card_invitation: '送心礼物和您一起分享快乐，分享成功！',
+        card_content : '',
         share_desc:'送心礼物，开启礼物社交时代！',
         share_avatarUrl: weburl + '/uploads/avatar.png',
         share_goods_avatarUrl: weburl + '/uploads/avatar.png',
@@ -84,6 +93,20 @@ Page({
         shutRecordingdis: "none", //隐藏停止图标
         recordingTimeqwe: 0, //录音计时
         setInter: "",  
+        card_color: card_color,
+        current_card_color:'#333',
+        card_color_index:0,
+  },
+
+  bindPickerChange_card_color: function (e) {
+    var that = this
+    var card_color = that.data.card_color
+    var card_color_index = e.detail.value
+    console.log('picker发送选择改变，携带值为', e.detail.value, card_color[card_color_index]['value']);
+    that.setData({   //给变量赋值
+      current_card_color: card_color[card_color_index]['value'],  
+      card_color_index: card_color_index,
+    })
   },
 
   //录音计时器
@@ -226,14 +249,19 @@ Page({
     share_goods_name = share_goods_name.replace(/\&/g, ' ')
     var cur_img_id = that.data.cur_img_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
-    var share_goods_title = share_goods_org=='5'?'送心礼物，祝您万事如意，平平安安！':that.data.share_title
+    var share_goods_title = ''
+    if (share_goods_shape == 5 || share_goods_shape==4){
+      share_goods_title = that.data.card_content 
+    }else{
+      share_goods_title = that.data.share_title
+    }
     var share_goods_desc = that.data.share_desc
     var share_avatarUrl = that.data.share_avatarUrl
     var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
     var goods_image_cache = wx.getStorageSync('goods_image_cache_' + share_goods_id)
     var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache_' + share_goods_id)
   
-    if (share_goods_shape == 5 || share_goods_shape==undefined) return
+    if (share_goods_shape == 5 || share_goods_shape == 4 || share_goods_shape==undefined) return
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -520,6 +548,8 @@ Page({
         var rule_selected_info = options.rule_selected_info ? options.rule_selected_info:''
         var goodsorg = options.goods_org ? options.goods_org : 1
         var goodsshape = options.goods_shape ? options.goods_shape : 1
+        var card_content = ''
+      
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -546,6 +576,7 @@ Page({
           keyword: keyword,
           is_satisfy:is_satisfy,
           rule_selected_info:rule_selected_info,
+          card_content: card_content,
         })
         if(scene){
           if (scene.indexOf("goodsid=") >= 0) {
@@ -632,6 +663,11 @@ Page({
               var ret_info = res.data.info
               console.log('获取单个产品信息 res.data:',res.data,' goods info:',goods_info);
               if (goods_info) {
+                if (goods_info[0]['shape'] == 5) {
+                  card_content = that.data.card_blessing
+                } else if (goods_info[0]['shape'] == 4) {
+                  card_content = that.data.card_invitation
+                }
                 that.setData({
                   goodsname: goods_info[0]['name'],
                   goodsinfo: goods_info[0]['act_info'],
@@ -647,10 +683,12 @@ Page({
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
                   goodsdiscount: goods_info[0]['discount'],
                   discountinfo: goods_info[0]['discount_info'],
+                  card_content: card_content,
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
                // console.log('头像图片下载缓存 wx_headimg_cache')
+              
                 
               }else{
                 wx.showToast({
@@ -669,6 +707,7 @@ Page({
           return
         }
 
+       
         // 商品详情图片
        // console.log('商品详情图片', image_pic)
         wx.request({
@@ -1003,8 +1042,9 @@ Page({
       var order_voice = that.data.new_rec_url ? that.data.new_rec_url:'' //录音文件url
       var order_voicetime = that.data.recordingTimeqwe ? that.data.recordingTimeqwe : 0 //录音文件url
       var goodsshape = that.data.goodsshape
-      if(goodsshape==5) {
-        order_note = that.data.card_blessing
+      var current_card_color = that.data.current_card_color
+      if (goodsshape == 5 || goodsshape == 4) {
+        order_note = that.data.card_content
         if (cur_img_id != 0) {
           cur_img_id = cur_img_id - that.data.image_video.length
           share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -1057,7 +1097,7 @@ Page({
           })
           var amount = parseFloat(that.data.sku_sell_price) * buynum
           wx.navigateTo({
-            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
+            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color+'&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
           })
         }
       })

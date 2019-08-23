@@ -97,21 +97,15 @@ Page({
   returnTapTag: function (e) {
     var that = this
     var order_shape = that.data.order_shape
-    /*
-    wx.navigateTo({
-      url: '../../order/list/list'
-    });
-   
-   
-    wx.navigateTo({
-      url: '../../hall/hall'
-    });
-     */
     if(order_shape==5){
       wx.navigateTo({
         url: '/pages/list/list?navlist_title=贺卡请柬'
       })
-      
+    } else if (order_shape == 4){
+      wx.navigateTo({
+        url: '/pages/list/list?navlist_title=互动卡'
+      })
+    
     }else{
       wx.switchTab({
         url: '../../hall/hall'
@@ -121,12 +115,12 @@ Page({
 
   receiveTapTag: function () {
     var that = this 
-    var order_shape = that.data.order_shape //5贺卡请柬
+    var order_shape = that.data.order_shape //5贺卡请柬 4互动卡
     var is_buymyself = that.data.is_buymyself
     var title = is_buymyself == 1 ? '收货地址' :'请确认'
     var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
     
-    if (order_shape == 5) { //贺卡请柬不需要设置接收地址
+    if (order_shape == 5 || order_shape == 4 ) { //贺卡请柬 或 互动卡 不需要设置接收地址
       that.confirm_card()
     }else{
       if (is_buymyself == 1) {
@@ -294,7 +288,7 @@ Page({
     var nickname = that.data.userInfo.nickName
     var headimg = that.data.userInfo.avatarUrl
     var order_shape = that.data.order_shape
-    if (order_shape == 5 && order_m_id==m_id) {
+    if ((order_shape == 5 || order_shape == 4)&& order_m_id==m_id) {
       that.goBack() //避免自己收自己的
       return
     }
@@ -443,7 +437,7 @@ Page({
       }
     })
    
-    if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1 && that.data.order_shape != 5) {
+    if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1 && that.data.order_shape != 5 && that.data.order_shape != 4) {
       console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive, ' order shape:', order_shape,'order id:',order_id)
       wx.switchTab({
         url: '/pages/hall/hall'
@@ -646,7 +640,7 @@ Page({
             }
           }
           
-          if (orderObjects[0]['shape'] == 5 && orderObjects[0]['m_desc']){
+          if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']){
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
            

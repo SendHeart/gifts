@@ -104,32 +104,12 @@ Page({
     that.query_coupon()
   },
   returnTapTag: function (e) {
-    /*
-    wx.navigateTo({
-      url: '../../order/list/list'
-    });
-   
-   
-    wx.navigateTo({
-      url: '../../hall/hall'
-    });
-     */
     wx.switchTab({
       url: '../../hall/hall'
     })
 
   },
   couponTapTag: function (e) {
-    /*
-    wx.navigateTo({
-      url: '../../order/list/list'
-    });
-   
-   wx.switchTab({
-      url: '../../hall/hall'
-    })
-    
-     */
     wx.navigateTo({
       url: '../../list/list'
     });
