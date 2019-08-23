@@ -55,7 +55,7 @@ Page({
     username: null,
     token: null,
     carts: [],
-    recommentList: [],
+    recommentslist: [], 
     minusStatuses: [],
     selectedAllStatus: true,
     total: '',
@@ -79,7 +79,9 @@ Page({
     text: text,
     content: '',
     buyhidden1: false,
-    buyhidden2: true
+    buyhidden2: true,
+    page:1,
+    rpage_num:1,
   }, 
   
   //回到顶部，内部调用系统API
@@ -475,33 +477,7 @@ Page({
       showmorehidden: true //false 不需要收起功能了
     })
   },
-  bindShowMoreR: function () {
-    var that = this;
-    var recommentList = that.data.recommentList
-    // 遍历 设置 hidden
-    for (var i = 0; i < recommentList.length; i++) {
-      recommentList[i]['hidden'] = 0;
-    }
-
-    that.setData({
-      recommentList: recommentList,
-      rshowmorehidden: true
-    })
-  },
-  bindShowLessR: function () {
-    var that = this;
-    var recommentList = that.data.recommentList
-    // 遍历 设置 hidden
-    for (var i = 0; i < recommentList.length; i++) {
-      if (i > 1) recommentList[i]['hidden'] = 1
-    }
-
-    that.setData({
-      recommentList: recommentList,
-      rshowmorehidden: true // false 不需要收起功能了
-
-    });
-  },
+  
   bindCheckout: function () {
     var that = this
     var is_buymyself = that.data.is_buymyself ? that.data.is_buymyself: 0
@@ -867,15 +843,16 @@ Page({
       }
     })
   },
-  reloadData: function (username, token) {
-    // auto login
+  reloadData: function () {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var minusStatuses = []
     var page=that.data.page
     var pagesize=that.data.pagesize
     var shop_type = that.data.shop_type
-    // recommend goods info
+  
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
       method: 'POST',
@@ -891,34 +868,41 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('会员推荐商品列表获取:', res.data);
-         
-        var recommentslist = res.data.result;
+        var recommentslist = that.data.recommentslist
+        var recommentslist_new = res.data.result;
+        var rpage_num = res.data.all_rows
         var rshowmorehidden;
-        if (!recommentslist) return
-        for (var i = 0; i < recommentslist.length; i++) {
-          if (recommentslist[i]['activity_image'].indexOf("http") < 0 && recommentslist[i]['activity_image'] ) {
-            recommentslist[i]['activity_image'] = weburl + '/' + recommentslist[i]['activity_image'];
+        if (!recommentslist_new) return
+        for (var i = 0; i < recommentslist_new.length; i++) {
+          if (recommentslist_new[i]['activity_image'].indexOf("http") < 0 && recommentslist_new[i]['activity_image'] ) {
+            recommentslist_new[i]['activity_image'] = weburl + '/' + recommentslist_new[i]['activity_image'];
           }
-          if (recommentslist[i]['image'].indexOf("http") < 0 && recommentslist[i]['image']) {
-            recommentslist[i]['image'] = weburl + '/' + recommentslist[i]['image'];
+          if (recommentslist_new[i]['image'].indexOf("http") < 0 && recommentslist_new[i]['image']) {
+            recommentslist_new[i]['image'] = weburl + '/' + recommentslist_new[i]['image'];
           }
           //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
           if (i > 1) {
-            recommentslist[i]['hidden'] = 0;  //1
+            recommentslist_new[i]['hidden'] = 0;  //1
           }
-
         }
-        if (recommentslist.length > 0) {
+        if (recommentslist_new.length > 0) {
           rshowmorehidden = true // false
         } else {
           rshowmorehidden = true
         }
+        if (page > 1 && recommentslist_new) {
+          //向后合拼
+          recommentslist = recommentslist.concat(recommentslist_new);
+        }else{
+          recommentslist = recommentslist_new
+        }
+       
         that.setData({
-          recommentList: recommentslist,
+          recommentslist: recommentslist,
           rshowmorehidden: rshowmorehidden,
-          rall_rows: recommentslist.length
-        });
+          rpage_num: rpage_num,
+        })
+        console.log('会员推荐商品列表获取:', recommentslist);
       }
     })
     
@@ -958,6 +942,43 @@ Page({
     })
 
   },
+
+  // 获取滚动条当前位置
+  scrolltoupper: function (e) {
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true
+      });
+    } else {
+      this.setData({
+        floorstatus: false
+      })
+    }
+  },
+
+  getMoreGoodsTapTag: function (e) {
+    var that = this;
+    var page = that.data.page + 1;
+    var rpage_num = that.data.rpage_num;
+    if (page > rpage_num) {
+      wx.showToast({
+        title: '已经到底了~',
+        icon: 'none',
+        duration: 1000
+      })
+      return
+    }
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1000
+    })
+    that.setData({
+      page: page,
+    })
+    that.reloadData()
+  },
+
   showCart: function () {
     wx.switchTab({
       url: '../../cart/cart'
@@ -1206,34 +1227,11 @@ Page({
         })
       }
     })
+    that.reloadData()
+    that.sum()
   },
   //事件处理函数
  
-  //页面滑动到底部
-  bindDownLoad: function () {
-    var that = this;
-    that.setData({
-      page: page++
-    });
-   // this.loadgoods(reid,this.data.navLeftItems[this.data.curIndex]['id']);
-    console.log("lower");
-  },
-  scroll: function (event) {
-    //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
-    this.setData({
-      scrollTop: event.detail.scrollTop
-    });
-  },
-  topLoad: function (event) {
-    //   该方法绑定了页面滑动到顶部的事件，然后做上拉刷新
-    //page = 1;
-    this.setData({
-      //list: [],
-      scrollTop: 0
-    });
-    //loadMore(this);
-    console.log("lower");
-  },
   onShow: function () {
     var that = this;
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -1320,8 +1318,6 @@ Page({
       })
     })
    
-    that.reloadData(username, token)
-    that.sum()
     console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]) 
     //app.globalData.messageflag = 0
   },

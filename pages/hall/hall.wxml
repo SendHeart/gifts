@@ -274,21 +274,24 @@
       --> 
     </view> 
   </view>  
-  <view wx:if="{{recommentList.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
+  <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
     <text>近期热门<text class='title_ex'>大家都在送</text></text>
     <text class='more'>更多...</text>
   </view>
-  <view class="venues_box">
-    <view wx:for="{{recommentList}}" class="venues_item" wx:key="id" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
+  <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" >
+  <view class="venues-box">
+    <view wx:for="{{recommentslist}}" class="venues-item" wx:key="id" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
       <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       <image class="img-discount" src="{{item.discount<100?img_discount:''}}"></image>
-      <text class="goods_name">{{item.name}}</text>
-      <view class="goods_prom">{{item.act_info?item.act_info:''}}</view>
+      <text class="goods-name">{{item.name}}</text>
+      <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
       <view class="price-list">
-      <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-      <view class="price-now">￥{{item.sell_price}}</view>
+        <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+        <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+        <view class="price-now">￥{{item.sell_price}}</view>
       </view>
     </view>
   </view>
+  </scroll-view>
 </view>
 <add-tips />
