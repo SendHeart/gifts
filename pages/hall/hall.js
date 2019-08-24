@@ -39,7 +39,8 @@ Page({
     notehidden : false,
     dkheight: 250,
     scrollTop: 0,
-    scrollHeight: 0,
+    current_scrollTop: 0,
+    scrollHeight: 500,
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -82,8 +83,89 @@ Page({
     buyhidden2: true,
     page:1,
     rpage_num:1,
+    is_reloading:false,
   }, 
   
+  //滑动移动事件
+  /*
+  handletouchmove: function (event) {
+    var that = this
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - that.data.lastX
+    var ty = currentY - that.data.lastY
+    var screenHeight = that.data.dkheight
+    var text = ""
+    //左右方向滑动
+    if (Math.abs(tx) > Math.abs(ty)) {
+      if (tx < 0) {//text = "向左滑动"
+
+      } else if (tx > 0) {//text = "向右滑动"
+
+      }
+    } else {
+      //上下方向滑动
+      if (ty < 0) {
+        text = "向上滑动"
+        if (that.data.current_scrollTop > 30) that.getMoreGoodsTapTag()
+      } else if (ty > 0) {
+        text = "向下滑动"
+        //if (that.data.current_scrollTop<10) that.getMoreGoodsTapTag()
+      }
+    }
+
+    //将当前坐标进行保存以进行下一次计算
+    that.data.lastX = currentX
+    that.data.lastY = currentY
+    that.setData({
+      text: text,
+    })
+    //console.log('handletouchmove:', text, 'ty:', ty, 'tx:', tx, ' currentY:', currentY, 'current_scrollTop:', that.data.current_scrollTop, ' screenHeight:', screenHeight, 'page:', that.data.page)
+  },
+
+  //滑动开始事件
+  handletouchtart: function (event) {
+    var that = this
+    that.data.lastX = event.touches[0].pageX
+    that.data.lastY = event.touches[0].pageY
+  },
+  //滑动结束事件
+  handletouchend: function (event) {
+    var that = this
+    that.data.currentGesture = 0;
+    that.setData({
+      text: "没有滑动",
+      is_longtap: false,
+    });
+  },
+  */
+  
+  onPageScroll: function (e) {
+    var that = this
+    if (e.scrollTop <= 0) {
+      // 滚动到最顶部
+      e.scrollTop = 0;
+    } else if (e.scrollTop > that.data.scrollHeight) {
+      // 滚动到最底部
+      e.scrollTop = that.data.scrollHeight
+      that.getMoreGoodsTapTag()
+    }
+    if (e.scrollTop > that.data.scrollTop || e.scrollTop >= that.data.scrollHeight) {
+      //向下滚动 
+      //console.log('向下 ', that.data.scrollHeight)
+      that.setData({
+        floorstatus: true
+      })
+    } else {
+      //向上滚动 
+      //console.log('向上滚动 ', that.data.scrollHeight)
+    }
+    //给scrollTop重新赋值 
+    that.setData({
+      scrollTop: e.scrollTop
+    })
+  },
+
   //回到顶部，内部调用系统API
   goTop: function () {  // 一键回到顶部
     if (wx.pageScrollTo) {
@@ -451,32 +533,7 @@ Page({
       url: '/pages/member/message/message',
     })
   },
-  bindShowMore: function () {
-   var that = this;
-   var carts = that.data.carts
-   // 遍历 设置 hidden
-   for (var i = 0; i < carts.length; i++) {
-     carts[i]['hidden'] = 0;
-   }
-
-   that.setData({
-     carts: carts,
-     showmorehidden:true
-   });
-  },
-  bindShowLess: function () {
-    var that = this;
-    var carts = that.data.carts
-    // 遍历 设置 hidden
-    for (var i = 0; i < carts.length; i++) {
-      if(i>1) carts[i]['hidden'] = 0; //1  不需要收起功能了
-    }
-
-    that.setData({
-      carts: carts,
-      showmorehidden: true //false 不需要收起功能了
-    })
-  },
+ 
   
   bindCheckout: function () {
     var that = this
@@ -815,24 +872,7 @@ Page({
         } else {
           showmorehidden = true
         }
-        //倒序
-        /*
-        var k = carts.length
-        var carts_sort = []
-        var minusStatuses_sort = []
-        var j=0
-        for (var i = k-1; i >=0 ; i--) {
-          carts_sort[j] = carts[i]
-          if(j>1){
-            carts_sort[j]['hidden'] = 1
-          } else{
-            carts_sort[j]['hidden'] = 0
-          }
-          minusStatuses_sort[j] = minusStatuses[i]
-          j++
-        }
-        */
-        //console.log(carts);
+       
         that.setData({
           carts: carts,
           minusStatuses: minusStatuses,
@@ -852,7 +892,10 @@ Page({
     var page=that.data.page
     var pagesize=that.data.pagesize
     var shop_type = that.data.shop_type
-  
+
+    that.setData({
+      is_reloading: true,
+    })
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
       method: 'POST',
@@ -869,7 +912,7 @@ Page({
       },
       success: function (res) {
         var recommentslist = that.data.recommentslist
-        var recommentslist_new = res.data.result;
+        var recommentslist_new = res.data.result
         var rpage_num = res.data.all_rows
         var rshowmorehidden;
         if (!recommentslist_new) return
@@ -901,14 +944,19 @@ Page({
           recommentslist: recommentslist,
           rshowmorehidden: rshowmorehidden,
           rpage_num: rpage_num,
+          is_reloading: false,
         })
-        console.log('会员推荐商品列表获取:', recommentslist);
+        setTimeout(function () {
+          that.getScrollHeight() //获取页面实际高度
+        }, 2000)
+       
+        //console.log('会员推荐商品列表获取:', recommentslist,' page num:', rpage_num);
       }
     })
     
     var gifts_rcv = that.data.gifts_rcv;
     var gifts_send = that.data.gifts_send;
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     console.log("openid:" + openid + ' username:' + username)
   
     // 送收礼物信息查询
@@ -926,11 +974,10 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('会员礼物收送信息获取');
-        console.log(res.data);
+        console.log('会员礼物收送信息获取:',res.data)
         if (res.data.result){
-          var gifts_rcv = res.data.result['giftgetnum'];
-          var gifts_send = res.data.result['giftsendnum'];
+          var gifts_rcv = res.data.result['giftgetnum']
+          var gifts_send = res.data.result['giftsendnum']
 
           that.setData({
             gifts_rcv: gifts_rcv,
@@ -945,10 +992,12 @@ Page({
 
   // 获取滚动条当前位置
   scrolltoupper: function (e) {
+    console.log('获取滚动条当前位置:', e.detail.scrollTop)
     if (e.detail.scrollTop > 100) {
       this.setData({
         floorstatus: true
-      });
+      })
+      
     } else {
       this.setData({
         floorstatus: false
@@ -959,7 +1008,9 @@ Page({
   getMoreGoodsTapTag: function (e) {
     var that = this;
     var page = that.data.page + 1;
-    var rpage_num = that.data.rpage_num;
+    var rpage_num = that.data.rpage_num
+    var is_reloading = that.data.is_reloading
+    if(is_reloading) return
     if (page > rpage_num) {
       wx.showToast({
         title: '已经到底了~',
@@ -1321,6 +1372,16 @@ Page({
     console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]) 
     //app.globalData.messageflag = 0
   },
+
+  getScrollHeight: function () {
+    wx.createSelectorQuery().select('#venues_box').boundingClientRect((rect) => {
+      this.setData({
+        scrollHeight: rect.height
+      })
+      console.log('页面实际高度:',this.data.scrollHeight)
+    }).exec()
+  },
+
   onShareAppMessage: function () {
     return {
       title: '开启礼物电商时代,200万人都在用的礼物小程序',

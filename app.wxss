@@ -16,6 +16,7 @@
 */
 .container {
     font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    widows: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
