@@ -1,8 +1,9 @@
+ 
+<view class="container" scroll-y  bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" ><!--    bindtouchend="handletouchend" bindscroll="scrolltoupper" -->
 <!-- 
-<import src="../common/hall_title.wxml" />
-<template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
+<scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
-<view id="mypage" class="container" scroll-y ><!--  bindscroll="scrolltoupper" bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" -->
+
 <view class="search">
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
@@ -17,17 +18,13 @@
       <image class="icon-message" src="../../images/u72.png"></image>
     </view>
 </view>
-<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-  <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-  <view class='' style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
-  <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
-</view>
+
 <view class="banner">
   <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" easing-function="easeInOutCubic" >
       <block wx:for="{{hall_banner}}" wx:key="" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
-            <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}"  controls autoplay="" custom-cache="{{false}}" objectFit="contain"> <!-- poster="{{goodscoverimg}}" -->
+            <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}"  controls autoplay="" custom-cache="{{false}}" objectFit="contain"> 
               <cover-view class="controls" mode="aspecFit" >
               <cover-image class="img"  src="{{banner_list.pic}}" mode="aspectFill" />
               </cover-view>
@@ -39,8 +36,24 @@
   </swiper>
 </view>
 <!-- 
-<scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" >
+<view class="banner-bar-list">
+  <scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="x_{{toView}}"  class="banner-bar">
+      <block wx:for="{{hall_banner}}" wx:key="{{banner_list.id}}" wx:for-item="banner_list">
+      <view id="x_{{index}}" data-index="{{index}}" data-id="{{banner_list.id}}" class="banner-bar-item">
+        <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
+          <image class="banner-bar-image" src="{{banner_list.img}}" mode='aspectFill'></image>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+</view>
 -->
+<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+  <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
+  <view class='' style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
+  <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
+</view>
+ 
 <view class="wrap">
 <view class="middle-goods">
 <view class="image-btnbuy" bindtap="bindPickGoods">
@@ -192,7 +205,6 @@
     
      <!--弹出框结束-->
   </view>
-  
   <view class="middle-goods">
     <view class="recomment-title" bindtap='bindPickGoods'>
       <text>精选清单<text class='title_ex'>达人推荐</text></text>
@@ -240,9 +252,6 @@
     <text>推荐分类<text class='title_ex'>品质好货</text></text>
     <text class='more'>更多...</text>
   </view>
-
-
-
     <view wx:if="{{middle5_img}}" class="image-btn2"  bindtap="bindMiddleGoods"  data-goods-type='5' data-middle-title="{{middle5_title}}" style='border-top-left-radius:14rpx;' >
         <image class="middle-goods-image2" src="{{middle5_img}}"  mode="aspectFill"></image>
       <!-- 
@@ -280,13 +289,16 @@
       --> 
     </view> 
   </view>  
+  
   <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
     <text>近期热门<text class='title_ex'>大家都在送</text></text>
     <text class='more'>更多...</text>
   </view>
 
   <view id="venues_box" class="venues-box">
-    <view wx:for="{{recommentslist}}" class="venues-item" wx:key="id" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
+  <block wx:for="{{recommentslist_show}}"  wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
+    <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id" >
+      <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
       <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       <image class="img-discount" src="{{item.discount<100?img_discount:''}}"></image>
       <text class="goods-name">{{item.name}}</text>
@@ -296,11 +308,16 @@
         <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
         <view class="price-now">￥{{item.sell_price}}</view>
       </view>
-    </view>
+      </view>
+    </block>
+  </block>
   </view>
 </view>
 <!--
-</scroll-view>
+ </scroll-view>
  -->
+</view>
+<view class="loading-show" hidden="{{loadingHidden}}">
+   <text> 加载中</text>
 </view>
 <add-tips />

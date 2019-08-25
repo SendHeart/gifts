@@ -139,32 +139,45 @@
       </view>
     </modal>
 </view>
-<modal title="编辑祝词" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">
+<modal title="编辑祝词" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirmCard" bindcancel="shareCandelCard" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-330}}px;">
      <view class="note">
-      <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindTextAreaBlur" placeholder="{{card_blessing}}" maxlength="200" />
+      <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindCardTextAreaBlur" placeholder="{{card_blessing}}" maxlength="200" />
+      </view>
+    </view>
+</modal>
+<modal title="编辑内容" no-cancel="{{nocancel}}" hidden="{{invitationhidden}}" bindconfirm="shareConfirmInvitation" bindcancel="shareCandelInvitation" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-330}}px;">
+     <view class="note">
+      <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindInvitationTextAreaBlur" placeholder="{{card_invitation}}" maxlength="200" />
       </view>
     </view>
 </modal>
 <view class="footer">
   <view class="opt-buttons">
-    <view wx:if="{{goodsorg==5}}" style='width:30%;' >
+    <view wx:if="{{goodsshape==5||goodsshape==4}}" style='width:30%;' >
       <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
       <image class='icon-detail' src="../../images/record.png"></image>
       <text>长按说话</text></button>
     </view>
-    <form wx:if="{{goodsorg==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:30%;' >
+    <form wx:if="{{goodsshape==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:30%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/u621.png"></image>
       <text>编辑祝词</text>
       </button>  
     </form>
-    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
+     <form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit"  data-name='myinvitation' report-submit="true" style='width:30%;' >
+      <button class="sec-btn" formType="submit">
+      <image class='icon-detail' src="../../images/u621.png"></image>
+      <text>编辑内容</text>
+      </button>  
+    </form>
+    <form wx:if="{{goodsshape!=5 && goodsshape!=4}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/bottom-comment.png"></image>
       <text>写评论</text></button>
     </form>
-    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
+    <form wx:if="{{goodsshape!=5&&goodsshape!=4}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/bottom-unpraise.png"></image>
       <text>+心愿单</text>

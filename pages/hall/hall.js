@@ -11,7 +11,7 @@ var message = ""
 
 var text = '';
 var page = 1
-var pagesize = 10
+var pagesize = 25
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -57,13 +57,15 @@ Page({
     token: null,
     carts: [],
     recommentslist: [], 
+    recommentslist_show: [],
+    show_max:2,
     minusStatuses: [],
     selectedAllStatus: true,
     total: '',
     startX: 0,
     itemLefts: [],
     showmorehidden: true,
-    rshowmorehidden: true,
+    loadingHidden: true,
     all_rows:0,
     rall_rows:0,
     windowWidth: 0,
@@ -84,73 +86,85 @@ Page({
     page:1,
     rpage_num:1,
     is_reloading:false,
+    toView: 0,
   }, 
-  
-  //滑动移动事件
+
   /*
+  // 定位数据  
+  getleft: function (e) {
+    var that = this
+    console.log('getleft:', e)
+    that.setData({
+      scrollLeft: that.data.scrollLeft + 10
+    })
+  },
+*/
   handletouchmove: function (event) {
     var that = this
-    var currentX = event.touches[0].pageX
-    var currentY = event.touches[0].pageY
-    var tx = currentX - that.data.lastX
-    var ty = currentY - that.data.lastY
-    var screenHeight = that.data.dkheight
-    var text = ""
-    //左右方向滑动
+    let currentX = event.touches[0].pageX
+    let currentY = event.touches[0].pageY
+    let tx = currentX - this.data.lastX
+    let ty = currentY - this.data.lastY
+    let scrollHeight = that.data.scrollHeight
+   
     if (Math.abs(tx) > Math.abs(ty)) {
-      if (tx < 0) {//text = "向左滑动"
-
-      } else if (tx > 0) {//text = "向右滑动"
+      if (tx < 0) { // text = "向左滑动"
 
       }
-    } else {
-      //上下方向滑动
-      if (ty < 0) {
-        text = "向上滑动"
-        if (that.data.current_scrollTop > 30) that.getMoreGoodsTapTag()
-      } else if (ty > 0) {
-        text = "向下滑动"
-        //if (that.data.current_scrollTop<10) that.getMoreGoodsTapTag()
+      else if (tx > 0) {   // text = "向右滑动"
+
+      }
+    } else { //上下方向滑动
+      if (ty < 0) {  // text = "向上滑动"
+        that.setData({
+          loadingHidden: true,
+        })
+      } else if (ty > 0) {  //text = "向下滑动"
+        that.setData({
+          floorstatus: true
+        })
       }
     }
-
+    if (currentY > scrollHeight - 1000) {
+      that.getMoreGoodsTapTag()
+    } 
+    if (currentY > scrollHeight - 100) {
+      that.setData({
+        loadingHidden: false,
+      })
+    }
     //将当前坐标进行保存以进行下一次计算
-    that.data.lastX = currentX
-    that.data.lastY = currentY
-    that.setData({
-      text: text,
-    })
-    //console.log('handletouchmove:', text, 'ty:', ty, 'tx:', tx, ' currentY:', currentY, 'current_scrollTop:', that.data.current_scrollTop, ' screenHeight:', screenHeight, 'page:', that.data.page)
+    this.data.lastX = currentX
+    this.data.lastY = currentY
+    //console.log('currentX:', currentX, 'currentY:', currentY, scrollHeight)
   },
-
-  //滑动开始事件
   handletouchtart: function (event) {
-    var that = this
-    that.data.lastX = event.touches[0].pageX
-    that.data.lastY = event.touches[0].pageY
+    // console.log(event)
+    // 赋值
+    this.data.lastX = event.touches[0].pageX
+    this.data.lastY = event.touches[0].pageY
   },
-  //滑动结束事件
-  handletouchend: function (event) {
-    var that = this
-    that.data.currentGesture = 0;
-    that.setData({
-      text: "没有滑动",
-      is_longtap: false,
-    });
-  },
-  */
-  
+   
+/*
   onPageScroll: function (e) {
     var that = this
     if (e.scrollTop <= 0) {
       // 滚动到最顶部
       e.scrollTop = 0;
+      //给scrollTop重新赋值 
+      that.setData({
+        scrollTop: e.scrollTop
+      })
     } else if (e.scrollTop > that.data.scrollHeight) {
       // 滚动到最底部
       e.scrollTop = that.data.scrollHeight
+      //给scrollTop重新赋值 
+      that.setData({
+        scrollTop: e.scrollTop,
+      })
       that.getMoreGoodsTapTag()
     }
-    if (e.scrollTop > that.data.scrollTop || e.scrollTop >= that.data.scrollHeight) {
+    if (e.scrollTop > that.data.scrollTop || e.scrollTop > that.data.scrollHeight-1000) {
       //向下滚动 
       //console.log('向下 ', that.data.scrollHeight)
       that.setData({
@@ -160,23 +174,25 @@ Page({
       //向上滚动 
       //console.log('向上滚动 ', that.data.scrollHeight)
     }
-    //给scrollTop重新赋值 
-    that.setData({
-      scrollTop: e.scrollTop
-    })
+    
   },
-
+  */
   //回到顶部，内部调用系统API
-  goTop: function () {  // 一键回到顶部
+  goTop: function (e) {  // 一键回到顶部
+    var that = this
+   /*
+    that.setData({
+      scrollTop: 0
+    })
+    */
+   // console.log('goTop:', that.data.scrollTop)
+   
     if (wx.pageScrollTo) {
-      // wx.pageScrollTo(OBJECT)
-      // 基础库 1.4.0 开始支持，低版本需做兼容处理
-      // 将页面滚动到目标位置。
-      // OBJECT参数说明：
-      // 参数名	类型	必填	说明
-      // scrollTop	Number	是	滚动到页面的目标位置（单位px）
-      // duration	Number	否	滚动动画的时长，默认300ms，单位 ms
       wx.pageScrollTo({
+        scrollTop: 0 ,
+        duration:300,
+      })
+      that.setData({
         scrollTop: 0
       })
     } else {
@@ -185,6 +201,7 @@ Page({
         content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
       })
     }
+     
   },
   searchTapTag: function (e) {
     var that = this;
@@ -866,17 +883,10 @@ Page({
             index++;
           }
         }
-
-        if (index > 1) {
-          showmorehidden = true // false
-        } else {
-          showmorehidden = true
-        }
        
         that.setData({
           carts: carts,
           minusStatuses: minusStatuses,
-          showmorehidden: showmorehidden,
           all_rows: carts.length
         })
         that.sum()
@@ -914,9 +924,11 @@ Page({
         var recommentslist = that.data.recommentslist
         var recommentslist_new = res.data.result
         var rpage_num = res.data.all_rows
-        var rshowmorehidden;
+        var show_max = that.data.show_max
+        var recommentslist_show = that.data.recommentslist_show
         if (!recommentslist_new) return
-        for (var i = 0; i < recommentslist_new.length; i++) {
+        var recomm_len = recommentslist_new.length
+        for (var i = 0; i < recomm_len; i++) {
           if (recommentslist_new[i]['activity_image'].indexOf("http") < 0 && recommentslist_new[i]['activity_image'] ) {
             recommentslist_new[i]['activity_image'] = weburl + '/' + recommentslist_new[i]['activity_image'];
           }
@@ -928,28 +940,31 @@ Page({
             recommentslist_new[i]['hidden'] = 0;  //1
           }
         }
-        if (recommentslist_new.length > 0) {
-          rshowmorehidden = true // false
-        } else {
-          rshowmorehidden = true
-        }
+        
         if (page > 1 && recommentslist_new) {
           //向后合拼
           recommentslist = recommentslist.concat(recommentslist_new);
         }else{
           recommentslist = recommentslist_new
         }
-       
+        //更新当前显示页信息
+        if (recommentslist_show.length >= show_max) {
+          recommentslist_show.shift()
+        }
+        
         that.setData({
           recommentslist: recommentslist,
-          rshowmorehidden: rshowmorehidden,
+          ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
           rpage_num: rpage_num,
           is_reloading: false,
+          loadingHidden: true,
         })
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
-        }, 2000)
-       
+        }, 500)
+        
+        
+        
         //console.log('会员推荐商品列表获取:', recommentslist,' page num:', rpage_num);
       }
     })
@@ -991,19 +1006,23 @@ Page({
   },
 
   // 获取滚动条当前位置
+   /*
   scrolltoupper: function (e) {
     console.log('获取滚动条当前位置:', e.detail.scrollTop)
-    if (e.detail.scrollTop > 100) {
+    if (e.detail.scrollTop > 10) {
       this.setData({
-        floorstatus: true
+        floorstatus: true,
+        scrollTop:e.detail.scrollTop,
       })
       
     } else {
       this.setData({
-        floorstatus: false
+        floorstatus: false,
+        scrollTop: e.detail.scrollTop,
       })
     }
   },
+  */
 
   getMoreGoodsTapTag: function (e) {
     var that = this;
@@ -1019,11 +1038,13 @@ Page({
       })
       return
     }
+    /*
     wx.showToast({
       title: '加载中',
       icon: 'loading',
-      duration: 1000
+      duration: 500
     })
+    */
     that.setData({
       page: page,
     })
@@ -1170,11 +1191,13 @@ Page({
         console.log('hall getSavedFileList 缓存文件列表查询失败', res)
       }
     })
+    /*
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
       })
     }, 1500)
+    */
   },
 
   onLoad: function (options) {
@@ -1292,6 +1315,7 @@ Page({
     var page_type = that.data.page_type
     var pages = getCurrentPages()
     that.query_cart()
+    that.goTop()
     that.get_project_gift_para()
     if (pages.length > 1) {
       that.setData({

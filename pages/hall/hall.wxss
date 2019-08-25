@@ -39,8 +39,9 @@ page {
   border-radius: 50%;
   color:#fff;
   font-size: 8;
-  z-index: 999;
+  z-index: 1000;
 }
+
 /*外部容器*/
 .container {
   width: 100%;
@@ -48,7 +49,7 @@ page {
   overflow-x: hidden;
   margin: 0 auto;
   box-sizing: border-box;
-  z-index: 1;
+  z-index: 0;
 }
 
 .search {
@@ -60,7 +61,7 @@ page {
 	align-items: center;/*子项纵轴上居中对齐*/
   padding: 4rpx 10rpx 8rpx 10rpx;
   top:0;
-  position: fixed;
+  position: absolute;
   background: #1d1d1d;
   z-index: 999;
   margin-bottom: 10rpx;
@@ -185,10 +186,61 @@ modal {
   width: 96%;
   margin: 0 auto;
   position: absolute;
+  margin-left:2%;
+  margin-top:82rpx;
+  /*
   left: 2%;
   top: 82rpx;
+  */
+  z-index: 1000
 }
 .slide-image {
+  border-radius: 15rpx;
+  display: block;
+  height: auto;
+}
+
+
+.banner-bar-list{  
+  background-color: #1d1d1d;
+  background-repeat: norepeat;
+  align-content: center;
+  opacity: 1;
+  background-size: 100% 80%;
+ 
+} 
+.banner-bar { 
+  display: flex;
+  direction: row;
+  justify-content: center;
+  text-align: center;
+  width: 98%;
+  height: 400rpx;
+  overflow-y: hidden;
+  z-index:99;
+  margin-bottom: 20rpx;
+   white-space: nowrap
+}
+.banner-bar-item {
+  display:inline-block;
+  vertical-align:top;
+  width: 100%;
+  height: 380rpx;
+  color: #333;
+  align-content: center;
+  text-align: center;
+  font-size: 28rpx;
+  padding: 0 10rpx;
+  margin: 0 10rpx;
+  border-radius: 10rpx;
+  line-height: 20rpx;
+}
+
+.banner-bar-image {
+  width:96%;
+  height:260rpx;
+  margin:80rpx auto;
+  z-index:1000;
   border-radius: 15rpx;
 }
 
@@ -199,12 +251,9 @@ modal {
 }
 .wrap {
   width: 100%;
- /*
-  margin-top:95rpx;
-  */
   position: absolute;
   top: 335rpx;
- 
+  z-index: 1
 }
 
 .user {
@@ -855,9 +904,10 @@ modal {
 
 .prom-goods-list {
   width: 100%;
-  height: 100%;
+  /*height: 100%;*/
+  height: 1100rpx;
   overflow-x: hidden;
-  margin: 45rpx 0 0 0;
+  margin: 20rpx 0 0 0;
   padding-bottom: 10rpx;
 }
 
@@ -870,11 +920,13 @@ modal {
   width: 98%;
   margin:0 auto;
   padding-bottom: 50rpx;
+  margin-bottom:20rpx;
   overflow: hidden;
+  z-index: 1
 }
 
 .venues-item {
-  width: 48%;
+  width: 49%;
   margin-top: 0;
   margin-bottom:15rpx;
   background: #fff;
@@ -1166,4 +1218,18 @@ main_message .main_red{
   width: 100%;
   margin-top:20rpx;
 } 
- 
+
+.loading-show {
+  width: 100%;
+  position: fixed;
+  height: 50rpx;
+  line-height: 50rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #333;
+  bottom:0; 
+  margin-bottom:20rpx;
+  z-index: -1;
+}

@@ -88,6 +88,7 @@ Page({
         is_buymyself:0,
         buynum:1,
         notehidden:true,
+        invitationhidden: true,
         has_cardpayed:0,
         openRecordingdis: "block", //显示录机图标
         shutRecordingdis: "none", //隐藏停止图标
@@ -142,6 +143,8 @@ Page({
       that.mycommTapTag()
     } else if (form_name == 'myblessing') {
       that.myblessing()  
+    } else if (form_name == 'myinvitation') {
+      that.myinvitation()  
     }
     if (formId) that.submintFromId(formId)
   },
@@ -218,14 +221,20 @@ Page({
     //console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
   },
 
-  bindTextAreaBlur: function (e) {
+  bindCardextAreaBlur: function (e) {
     var that = this;
     that.setData({
       card_blessing: e.detail.value
     })
   }, 
+  bindInvitationTextAreaBlur: function (e) {
+    var that = this;
+    that.setData({
+      card_invitation: e.detail.value
+    })
+  }, 
   //确定按钮点击事件 
-  shareConfirm: function () {
+  shareConfirmCard: function () {
     var that = this
     that.setData({
       notehidden: !that.data.notehidden,
@@ -233,10 +242,25 @@ Page({
     })
   },
   //取消按钮点击事件  
-  shareCandel: function () {
+  shareCandelCard: function () {
     var that = this
     that.setData({
       notehidden: !that.data.notehidden,
+    })
+  },  
+  //确定按钮点击事件 
+  shareConfirmInivation: function () {
+    var that = this
+    that.setData({
+      notehidden: !that.data.notehidden,
+      hidden_share: !that.data.hidden_share
+    })
+  },
+  //取消按钮点击事件  
+  shareCandelInvitation: function () {
+    var that = this
+    that.setData({
+      invitationhidden: !that.data.invitationhidden,
     })
   },  
   sharegoodsTapTag: function () {
@@ -385,6 +409,13 @@ Page({
     var that = this
     that.setData({
       notehidden: !that.data.notehidden,
+    })
+  },
+
+  myinvitation: function () {
+    var that = this
+    that.setData({
+      invitationhidden: !that.data.invitationhidden,
     })
   },
 
