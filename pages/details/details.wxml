@@ -46,16 +46,16 @@
               </block>
               </swiper>
             </view>
-            -->
-           
-            <view class="card-register-info">
-              <view wx:if="{{goodsshape==4}}" space="ensp" bindtap="myinvitation" class="card-register-title" style="color:{{current_card_color}};">{{card_register_title}}
+            --> 
+            <view wx:if="{{goodsshape==4}}" class="card-register-info">
+              <view  bindtap="myinvitation" class="card-register-title" style="color:{{current_card_color}};">
+                <text space="ensp" >{{card_register_title}}</text>
               </view>
-              <view wx:if="{{goodsshape==4}}" space="ensp" bindtap="myinvitation" class="card-register-content" style="color:{{current_card_color}}">
-              {{card_register_content}}
+              <view  bindtap="myinvitation" class="card-register-content" style="color:{{current_card_color}}">
+                <text space="ensp" >{{card_register_content}}</text>
               </view>
             </view>
-             <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}">{{card_content}}
+             <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}" class="card-blessing" >{{card_blessing}}
               </text>
             <view class="share-goods-wx-info">
               <image wx:if="{{goodsshape==5||goodsshape==4}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
@@ -178,7 +178,7 @@
     <view style="height:{{dkheight-130}}px;">
       <view class="note">
         <input style='margin-top:10rpx;font-size:38rpx;color:#333; border: 1rpx solid #eee;' value="" placeholder="请输入标题"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='50' />
-        <textarea style='margin-top:10rpx;width:550rpx;font-size:38rpx;color:#333;border: 1rpx solid #eee;' bindblur="bindInvitationTextAreaBlur" placeholder="请输入说明" maxlength="300" />
+        <textarea style='margin-top:10rpx;width:550rpx;font-size:38rpx;color:#333;border: 1rpx solid #eee;' bindblur="bindInvitationTextAreaBlur" placeholder="请输入说明" maxlength="230" />
       </view>
     </view>
 </modal>

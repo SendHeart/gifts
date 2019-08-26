@@ -308,7 +308,7 @@ Page({
     })
     //console.log('detail swiperchange_share:', e.detail.current, 'cur_img_share_id:',cur_img_share_id)
   },
-  bindCardextAreaBlur: function (e) {
+  bindCardTextAreaBlur: function (e) {
     var that = this;
     that.setData({
       card_blessing: e.detail.value
