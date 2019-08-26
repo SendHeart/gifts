@@ -11,7 +11,7 @@ var message = ""
 
 var text = '';
 var page = 1
-var pagesize = 25
+var pagesize = 20
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -120,19 +120,20 @@ Page({
           loadingHidden: true,
         })
       } else if (ty > 0) {  //text = "向下滑动"
-        that.setData({
-          floorstatus: true
-        })
+        
       }
     }
     if (currentY > scrollHeight - 1000) {
       that.getMoreGoodsTapTag()
-    } 
-    if (currentY > scrollHeight - 100) {
       that.setData({
-        loadingHidden: false,
+        floorstatus: true,
       })
+    } 
+    /*
+    if (currentY > scrollHeight - 100) {
+     
     }
+    */
     //将当前坐标进行保存以进行下一次计算
     this.data.lastX = currentX
     this.data.lastY = currentY
@@ -143,6 +144,12 @@ Page({
     // 赋值
     this.data.lastX = event.touches[0].pageX
     this.data.lastY = event.touches[0].pageY
+  },
+  handletouchend: function (event) {
+    var that = this
+    var currentY = that.data.lastY
+    //console.log('滑动停止 currentX:', that.data.lastX, 'currentY:', that.data.lastY, that.data.scrollHeight)
+    
   },
    
 /*
@@ -178,8 +185,9 @@ Page({
   },
   */
   //回到顶部，内部调用系统API
-  goTop: function (e) {  // 一键回到顶部
+  goTop: function () {  // 一键回到顶部
     var that = this
+     
    /*
     that.setData({
       scrollTop: 0
@@ -832,10 +840,12 @@ Page({
     var minusStatuses = []
     var shop_type = that.data.shop_type
     if (!openid && !username){
+      wx.showToast({
+        title: '加载中', /* 文案修改 */
+        icon: 'loading',
+        duration: 500
+      })
       setTimeout(function () {
-        that.setData({
-          loadingHidden: true,
-        })
         that.query_cart()
       }, 500)
       return
@@ -905,6 +915,7 @@ Page({
 
     that.setData({
       is_reloading: true,
+      loadingHidden: false,
     })
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
@@ -1036,6 +1047,9 @@ Page({
         icon: 'none',
         duration: 1000
       })
+      that.setData({
+        loadingHidden: true,
+      })
       return
     }
     /*
@@ -1047,6 +1061,7 @@ Page({
     */
     that.setData({
       page: page,
+      loadingHidden: false,
     })
     that.reloadData()
   },

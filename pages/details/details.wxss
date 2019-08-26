@@ -84,17 +84,22 @@ page {
   width: 100% !important;
 }
 
-.swiper_box {
+.swiper-box {
   width: 100%;
   height: 750rpx;
 }
 
-.swiper_box .slide-image {
+.swiper-box .slide-image {
   width: 100%;
   height: 750rpx;
   display: inline-block;
   overflow: hidden;
   z-index:1;
+}
+
+.swiper-share-box {
+  width: 100%;
+  height: 300rpx;
 }
 
 .shopping_container {
@@ -221,20 +226,22 @@ font-size: 32rpx;
   font-size: 28rpx;
 }
 
+
 .share-goods {
   width: 100%;
   padding-bottom: 20rpx;
   padding-top: 20rpx;
-  position: fixed;
+  position: absolute;
   top: 0;
   z-index: 9; 
 }
+
 .share-buttons {
   display: flex;
   flex-direction: row;
   justify-content:flex-end;
   align-items: right;
-  padding: 10rpx 20rpx 0 0;
+  padding: 0 auto;
 }
 .share-buttons .btnshare {
   display: flex;
@@ -580,7 +587,69 @@ border: none;
     transform:translateX(1%);
     */
 }
+.card-register-info {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  margin-top:90rpx;
+  display: flex;
+  flex-direction:column; 
+  opacity: 0.6;
+  z-index: 2; 
+  border-radius: 20rpx;
+}
 
+.card-register-title{ 
+    width:80%;
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size:28rpx;
+    margin-left:10%;
+    color:#f2f2f2;
+    background: #ffffff;
+    margin-bottom:10rpx;
+}
+.card-register-content{ 
+    width:80%;
+    height: 350rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 5; 
+    margin-left:10%;
+    font-size:28rpx;
+    color:#f2f2f2;
+    background: #ffffff;
+}
+.share-card-register-image {
+    width: 100%;
+    display:flex;
+    flex-direction:row;
+    justify-content: center;
+    position: absolute;
+    top:0;
+    margin-top:10rpx;
+}
+
+.share-card-register-image image {
+  width: 80%;
+  height: 280rpx;
+  margin-left:10%;
+  z-index:2;
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  border-radius: 15rpx;
+}
+.share-card-register-image-note {
+  width: 100%;
+  z-index:1000;
+  align-content: center;
+  text-align: center;
+  align-items: center;
+  margin-top:460rpx;
+}
 .share-goods-wx-info{
     position: absolute;
     bottom:0;
@@ -623,12 +692,13 @@ border: none;
     margin-bottom: 100rpx;
     margin-left:30rpx;
     line-height:50rpx;
+    padding: 0 auto;
     height:50rpx;
 }
 .picker-box{
   background: #fff;
   width: 100%;
-  margin: 5rpx auto;
+  margin: 0 auto;
   position: relative;
 }
 .picker{

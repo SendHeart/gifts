@@ -3,14 +3,22 @@
   <view class="share-goods"  >
     <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="share-buttons">
       <view class="btnshare" bindtap="sharegoodsTapTag">
-      <image class="shareto" src="../../images/shareto.png"></image>
-      分享
+        <image class="shareto" src="../../images/shareto.png"></image>
+        分享
       </view>
     </view>
+    <form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit" data-name='mycardregister' report-submit="true" style='width:100%;' >
+       <view wx:if="{{goodsshape==4}}" class="share-buttons">
+        <button class="btnshare"  formType="submit"><!--bindtap="uploadcardTapTag" -->
+          <image class="shareto" src="../../images/image.png"></image>
+          上传背景图
+        </button>
+      </view>
+    </form>
   </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}">
-      <swiper class="swiper_box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="{{(goodsshape==5||goodsshape==4)?'height:1100rpx;':''}}">
+      <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="{{(goodsshape==5||goodsshape==4)?'height:1100rpx;':''}}">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
             <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="" objectFit="contain">
@@ -25,10 +33,30 @@
             </video>
           </swiper-item>
         </block>
-        <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{item.id}}'>
-          <swiper-item item-id="{{item.id}}" class="swiperitem">
+        <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{pic.id}}'>
+          <swiper-item item-id="{{pic.id}}" class="swiperitem">
             <image src="{{pic.url}}" class="slide-image" style="{{(goodsshape==5||goodsshape==4)?'height:1055rpx;':''}}" />
-            <text id="card_content" wx:if="{{goodsshape==5||goodsshape==4}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}">{{card_content}}</text>
+           <!-- 
+            <view wx:if="{{goodsshape==4}}" class="share-card-register-image"> 
+            <swiper class="swiper-share-box" bindchange="swiperchange_share" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
+              <block wx:for="{{image_share}}" wx:for-item="pic_share" wx:key='{{pic_share.id}}'>
+              <swiper-item item-id="{{pic_share.id}}">
+               <image  src="{{pic_share.url}}"  mode="aspectFill" />
+              </swiper-item>
+              </block>
+              </swiper>
+            </view>
+            -->
+           
+            <view class="card-register-info">
+              <view wx:if="{{goodsshape==4}}" space="ensp" bindtap="myinvitation" class="card-register-title" style="color:{{current_card_color}};">{{card_register_title}}
+              </view>
+              <view wx:if="{{goodsshape==4}}" space="ensp" bindtap="myinvitation" class="card-register-content" style="color:{{current_card_color}}">
+              {{card_register_content}}
+              </view>
+            </view>
+             <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}">{{card_content}}
+              </text>
             <view class="share-goods-wx-info">
               <image wx:if="{{goodsshape==5||goodsshape==4}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
               <view wx:if="{{goodsshape==5||goodsshape==4}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;color:{{current_card_color}}">{{nickname}}</view>
@@ -146,10 +174,11 @@
       </view>
     </view>
 </modal>
-<modal title="编辑内容" no-cancel="{{nocancel}}" hidden="{{invitationhidden}}" bindconfirm="shareConfirmInvitation" bindcancel="shareCandelInvitation" confirm-text="确定" cancel-text="返回">
-    <view style="height:{{dkheight-330}}px;">
-     <view class="note">
-      <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindInvitationTextAreaBlur" placeholder="{{card_invitation}}" maxlength="200" />
+<modal title="编辑内容" no-cancel="{{nocancel}}" hidden="{{cardregisterhidden}}" bindconfirm="confirmcardregister" confirm-text="确定" no-cancel>
+    <view style="height:{{dkheight-130}}px;">
+      <view class="note">
+        <input style='margin-top:10rpx;font-size:38rpx;color:#333; border: 1rpx solid #eee;' value="" placeholder="请输入标题"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='50' />
+        <textarea style='margin-top:10rpx;width:550rpx;font-size:38rpx;color:#333;border: 1rpx solid #eee;' bindblur="bindInvitationTextAreaBlur" placeholder="请输入说明" maxlength="300" />
       </view>
     </view>
 </modal>

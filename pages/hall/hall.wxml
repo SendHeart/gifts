@@ -1,5 +1,5 @@
  
-<view class="container" scroll-y  bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" ><!--    bindtouchend="handletouchend" bindscroll="scrolltoupper" -->
+<view class="container" scroll-y scroll-x="false" bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend"  ><!--    bindscroll="scrolltoupper" -->
 <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
@@ -55,9 +55,9 @@
 </view>
  
 <view class="wrap">
-<view class="middle-goods">
-<view class="image-btnbuy" bindtap="bindPickGoods">
-        <image class="pick-goods-image" src="../../images/menu1.png" mode="aspectFill"></image>
+  <view class="middle-goods">
+    <view class="image-btnbuy" bindtap="bindPickGoods">
+      <image class="pick-goods-image" src="../../images/menu1.png" mode="aspectFill"></image>
     </view>
     <view class="image-btnbuy2" bindtap="bindAIPickGoods">
         <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
@@ -65,8 +65,7 @@
     </view>
     </view>
   <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-  
-  <view class="user">
+    <view class="user">
     <view class='usertitle'>我的礼物包</view>
     <view class="usergifts" bindtap='usergiftTapTag'>
       <text>收到</text>
@@ -248,46 +247,46 @@
       </view>
     </view>
     
-<view class="recomment-title" bindtap='bindPickGoods'>
+  <view class="recomment-title" bindtap='bindPickGoods'>
     <text>推荐分类<text class='title_ex'>品质好货</text></text>
     <text class='more'>更多...</text>
   </view>
-    <view wx:if="{{middle5_img}}" class="image-btn2"  bindtap="bindMiddleGoods"  data-goods-type='5' data-middle-title="{{middle5_title}}" style='border-top-left-radius:14rpx;' >
-        <image class="middle-goods-image2" src="{{middle5_img}}"  mode="aspectFill"></image>
+  <view wx:if="{{middle5_img}}" class="image-btn2"  bindtap="bindMiddleGoods"  data-goods-type='5' data-middle-title="{{middle5_title}}" style='border-top-left-radius:14rpx;' >
+      <image class="middle-goods-image2" src="{{middle5_img}}"  mode="aspectFill"></image>
       <!-- 
       <view class="image-btntext">
         <text class="middle-goods-action">{{middle5_title}}</text>
         <text class="middle-goods-btntips">{{middle5_note}}</text>
       </view>
       -->
-    </view>
-    <view wx:if="{{middle6_img}}" class="image-btn2" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='6' data-middle-title="{{middle6_title}}" style='border-top-right-radius:14rpx;'>
-        <image class="middle-goods-image2" src="{{middle6_img}}"  mode="aspectFill"></image>
+  </view>
+  <view wx:if="{{middle6_img}}" class="image-btn2" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='6' data-middle-title="{{middle6_title}}" style='border-top-right-radius:14rpx;'>
+    <image class="middle-goods-image2" src="{{middle6_img}}"  mode="aspectFill"></image>
        <!-- 
       <view class="image-btntext">
         <text class="middle-goods-action">{{middle6_title}}</text>
         <text class="middle-goods-btntips">{{middle6_note}}</text>
       </view>
       -->
-    </view>  
-    <view wx:if="{{middle7_img}}" class="image-btn2"   bindtap="bindMiddleGoods"  data-goods-type='7' data-middle-title="{{middle7_title}}" style='border-bottom-left-radius:14rpx;'>
-        <image class="middle-goods-image2" src="{{middle7_img}}"  mode="aspectFill"></image>
+  </view>  
+  <view wx:if="{{middle7_img}}" class="image-btn2"   bindtap="bindMiddleGoods"  data-goods-type='7' data-middle-title="{{middle7_title}}" style='border-bottom-left-radius:14rpx;'>
+    <image class="middle-goods-image2" src="{{middle7_img}}"  mode="aspectFill"></image>
       <!-- 
       <view class="image-btntext">
         <text class="middle-goods-action">{{middle7_title}}</text>
         <text class="middle-goods-btntips">{{middle7_note}}</text>
       </view>
       -->
-    </view> 
-    <view wx:if="{{middle8_img}}" class="image-btn2" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='8' data-middle-title="{{middle8_title}}" style='border-bottom-right-radius:14rpx;'>
-        <image class="middle-goods-image2" src="{{middle8_img}}"  mode="aspectFill"></image>
+  </view> 
+  <view wx:if="{{middle8_img}}" class="image-btn2" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='8' data-middle-title="{{middle8_title}}" style='border-bottom-right-radius:14rpx;'>
+    <image class="middle-goods-image2" src="{{middle8_img}}"  mode="aspectFill"></image>
       <!-- 
       <view class="image-btntext">
         <text class="middle-goods-action">{{middle8_title}}</text>
         <text class="middle-goods-btntips">{{middle8_note}}</text>
       </view>
       --> 
-    </view> 
+  </view> 
   </view>  
   
   <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
@@ -312,12 +311,14 @@
     </block>
   </block>
   </view>
+  <view class="loading-show" hidden="{{loadingHidden}}">
+   <text>加载中</text>
+  </view>
 </view>
 <!--
  </scroll-view>
  -->
+
 </view>
-<view class="loading-show" hidden="{{loadingHidden}}">
-   <text> 加载中</text>
-</view>
+
 <add-tips />

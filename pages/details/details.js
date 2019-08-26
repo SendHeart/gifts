@@ -9,7 +9,7 @@ var appid = app.globalData.appid
 var secret = app.globalData.secret
 var uploadurl = app.globalData.uploadurl
 const recorderManager = wx.getRecorderManager()
-const myaudio = wx.createInnerAudioContext();
+const myaudio = wx.createInnerAudioContext()
 const options = {
   duration: 180*1000,//指定录音的时长，单位 ms
   sampleRate: 16000,//采样率
@@ -88,7 +88,7 @@ Page({
         is_buymyself:0,
         buynum:1,
         notehidden:true,
-        invitationhidden: true,
+        cardregisterhidden: true,
         has_cardpayed:0,
         openRecordingdis: "block", //显示录机图标
         shutRecordingdis: "none", //隐藏停止图标
@@ -97,6 +97,9 @@ Page({
         card_color: card_color,
         current_card_color:'#333',
         card_color_index:0,
+        card_register_img: weburl + '/uploads/card_register_share.png',
+        card_register_title:'[标题]',
+        card_register_content: '[说明]',
   },
 
   bindPickerChange_card_color: function (e) {
@@ -131,6 +134,8 @@ Page({
       that.buyGift()
     } else if (form_name == 'buyMyself') {
       that.buyMyself()
+    } else if (form_name == 'mycardregister') {
+      that.upimg()   
     } else if (form_name == 'wishcart') {
       that.setData({
         is_buymyself: 0,
@@ -174,6 +179,78 @@ Page({
       }
     })
   },
+  upimg: function () {
+    var that = this
+    var new_img_arr = ''
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'],
+      success: function (res) {
+        that.setData({
+          new_img_arr: res.tempFilePaths
+        })
+        console.log('本次上传图片:', that.data.new_img_arr, res.tempFilePaths)
+        that.upload()
+      }
+    }) 
+   
+  },
+
+  upload: function () {
+    var that = this;
+    var goods_id = that.data.goodsid
+    var new_img_arr = that.data.new_img_arr[0] //本次上传图片的手机端文件地址
+    var image_pic = that.data.image_pic
+    if (new_img_arr) {
+      wx.uploadFile({
+        url: uploadurl,
+        filePath: new_img_arr,
+        name: 'wechat_upimg',
+        formData: {
+          latitude: encodeURI(0.0),
+          longitude: encodeURI(0.0),
+          restaurant_id: encodeURI(0),
+          city: encodeURI('杭州'),
+          prov: encodeURI('浙江'),
+          name: encodeURI(goods_id), // 名称
+        }, // HTTP 请求中其他额外的 form data
+        success: function (res) {
+          var retinfo = JSON.parse(res.data.trim());
+          if (retinfo['status'] == "y") {
+            var new_image_pic = []
+            that.image_save(retinfo['result']['img_url'], 'myregistercard_image')
+            var myregistercard_image = wx.getStorageSync('myregistercard_image')
+            var new_image_pic = {
+              id: goods_id,
+              goods_id: goods_id,
+              url: retinfo['result']['img_url'],
+             // ext: new_image_pic['url'].substring(new_image_pic['url'].length-4, 3)
+            }
+            image_pic.push(new_image_pic)
+           
+            setTimeout(function () {
+              that.setData({
+                image_pic: image_pic,
+              })
+            }, 3000)
+          
+            console.log('图片上传完成:', new_image_pic,image_pic )
+          }
+        },
+      })
+    }
+    wx.showToast({
+      title: '已提交！',
+      duration: 2000
+    })
+    var content = that.data.content
+    if (!content) {
+      that.setData({
+        content: '图片:'
+      })
+    }
+
+  },
+
   goBack: function () {
     var pages = getCurrentPages();
    // console.log('details goBack pages:', pages)
@@ -221,6 +298,16 @@ Page({
     //console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
   },
 
+  swiperchange_share: function (e) {
+    var that = this
+    var cur_img_share_id = e.detail.current
+    //console.log(e)
+
+    that.setData({
+      cur_img_share_id: cur_img_share_id,
+    })
+    //console.log('detail swiperchange_share:', e.detail.current, 'cur_img_share_id:',cur_img_share_id)
+  },
   bindCardextAreaBlur: function (e) {
     var that = this;
     that.setData({
@@ -228,11 +315,17 @@ Page({
     })
   }, 
   bindInvitationTextAreaBlur: function (e) {
-    var that = this;
+    var that = this
     that.setData({
-      card_invitation: e.detail.value
+      card_register_content: e.detail.value
     })
   }, 
+  cardregistertitleTapTag: function (e) {
+    var that = this
+    that.setData({
+        card_register_title: e.detail.value
+    })
+  },
   //确定按钮点击事件 
   shareConfirmCard: function () {
     var that = this
@@ -249,20 +342,13 @@ Page({
     })
   },  
   //确定按钮点击事件 
-  shareConfirmInivation: function () {
+  confirmcardregister: function () {
     var that = this
     that.setData({
-      notehidden: !that.data.notehidden,
-      hidden_share: !that.data.hidden_share
+      cardregisterhidden: !that.data.cardregisterhidden,
     })
   },
-  //取消按钮点击事件  
-  shareCandelInvitation: function () {
-    var that = this
-    that.setData({
-      invitationhidden: !that.data.invitationhidden,
-    })
-  },  
+   
   sharegoodsTapTag: function () {
     var that = this
     var share_goods_id = that.data.goodsid
@@ -415,7 +501,7 @@ Page({
   myinvitation: function () {
     var that = this
     that.setData({
-      invitationhidden: !that.data.invitationhidden,
+      cardregisterhidden: !that.data.cardregisterhidden,
     })
   },
 
@@ -579,8 +665,11 @@ Page({
         var rule_selected_info = options.rule_selected_info ? options.rule_selected_info:''
         var goodsorg = options.goods_org ? options.goods_org : 1
         var goodsshape = options.goods_shape ? options.goods_shape : 1
+        var goodstag = options.goods_tag ? options.goods_tag : ''
+        var is_register = goodstag.indexOf("报名")>0?1:0
+        var card_register_content = ''
+        var card_register_title = ''
         var card_content = ''
-      
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -607,6 +696,8 @@ Page({
           keyword: keyword,
           is_satisfy:is_satisfy,
           rule_selected_info:rule_selected_info,
+          card_register_content: card_register_content,
+          card_register_title: card_register_title,
           card_content: card_content,
         })
         if(scene){
@@ -658,6 +749,8 @@ Page({
           goodsinfo: goodsinfo ? goodsinfo:'',
           goodsorg: goodsorg,
           goodsshape: goodsshape,
+          goodstag: goodstag,
+          is_register:is_register,
           goodsid: goodsid ? goodsid:0,
           refer_mid: refer_mid,
           goodsprice: goodsprice ? goodsprice:0,
@@ -697,8 +790,11 @@ Page({
                 if (goods_info[0]['shape'] == 5) {
                   card_content = that.data.card_blessing
                 } else if (goods_info[0]['shape'] == 4) {
-                  card_content = that.data.card_invitation
+                  card_register_content = that.data.card_register_content
+                  card_register_title = that.data.card_register_title
                 }
+                var goodstag = goods_info[0]['goods_tag']
+                var is_register = goodstag.indexOf("报名") > 0 ? 1 : 0
                 that.setData({
                   goodsname: goods_info[0]['name'],
                   goodsinfo: goods_info[0]['act_info'],
@@ -708,19 +804,21 @@ Page({
                   goodssale: goods_info[0]['sale'],
                   goodsorg: goods_info[0]['goods_org'],
                   goodsshape: goods_info[0]['shape'],
-                  //goodsshortname: goods_info[0]['name'] ? goods_info[0]['name'].trim().substring(0, 20) + '...' : '',
+                  goodstag: goods_info[0]['goods_tag'],
+                  is_register: is_register,
                   goodscoverimg: goods_info[0]['activity_image'],
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
                   goodsdiscount: goods_info[0]['discount'],
                   discountinfo: goods_info[0]['discount_info'],
-                  card_content: card_content,
+                  card_content: card_content, 
+                  card_register_content: card_register_content,
+                  card_register_title: card_register_title,
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
                // console.log('头像图片下载缓存 wx_headimg_cache')
               
-                
               }else{
                 wx.showToast({
                   title: '商品已下架',
@@ -774,12 +872,13 @@ Page({
               goodsPicsInfo: res.data.result,
               image_video: image_video,
               image_pic: image_pic,
+              image_share: goodsPicsInfo.share_image
             })
             if (!share_goods_image) {
               that.image_save(image_pic[0]['url'], 'goods_image_cache_' + goodsid)
              // console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
             } 
-           // console.log('get_goodsdesc_list image_pic:', that.data.image_pic)
+            console.log('get_goodsdesc_list image_share:', that.data.image_share)
             that.showGoodsinfo()
           }
          
