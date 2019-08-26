@@ -49,18 +49,35 @@
             --> 
             <view wx:if="{{goodsshape==4}}" class="card-register-info">
               <view  bindtap="myinvitation" class="card-register-title" style="color:{{current_card_color}};">
-                <text space="ensp" >{{card_register_title}}</text>
+                <text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text>
               </view>
               <view  bindtap="myinvitation" class="card-register-content" style="color:{{current_card_color}}">
-                <text space="ensp" >{{card_register_content}}</text>
+                <text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text>
+              </view>
+              <view   class="card-register-startend" style="color:{{current_card_color}}">
+              <picker mode="date" value="{{register_start_time}}" start="register_start_time" end="2999-12-12" bindchange="bindChangeStartTime">
+ 报名期限: {{register_start_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+    </picker>
+     <picker mode="date" value="{{register_end_time}}" start="register_end_time" end="2999-12-12" bindchange="bindChangeEndTime">
+ (结束): {{register_end_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+    </picker>
+              </view>
+              <view   class="card-register-act-startend" style="color:{{current_card_color}}">
+                <picker mode="date" value="{{action_start_time}}" start="action_start_time" end="2999-12-12" bindchange="bindChangeActStartTime">
+ 活动期限: {{action_start_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+    </picker>
+                <picker mode="date" value="{{action_end_time}}" start="action_end_time" end="2999-12-12" bindchange="bindChangeActEndTime">
+ (结束): {{action_end_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+    </picker>
               </view>
             </view>
-             <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}" class="card-blessing" >{{card_blessing}}
-              </text>
+            <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}" class="card-blessing" >{{card_blessing}}
+            </text>
             <view class="share-goods-wx-info">
               <image wx:if="{{goodsshape==5||goodsshape==4}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
               <view wx:if="{{goodsshape==5||goodsshape==4}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;color:{{current_card_color}}">{{nickname}}</view>
             </view>
+             
             <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-remark">《 滑动选背景图 》</view>
             <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-card-color">
               <picker name="picker_card_color" class="picker-box" data-selecthx="{{card_color[card_color_index].title}}" range="{{card_color}}" range-key="{{'title'}}"  bindchange="bindPickerChange_card_color">
@@ -176,9 +193,11 @@
 </modal>
 <modal title="编辑内容" no-cancel="{{nocancel}}" hidden="{{cardregisterhidden}}" bindconfirm="confirmcardregister" confirm-text="确定" no-cancel>
     <view style="height:{{dkheight-130}}px;">
-      <view class="note">
-        <input style='margin-top:10rpx;font-size:38rpx;color:#333; border: 1rpx solid #eee;' value="" placeholder="请输入标题"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='50' />
-        <textarea style='margin-top:10rpx;width:550rpx;font-size:38rpx;color:#333;border: 1rpx solid #eee;' bindblur="bindInvitationTextAreaBlur" placeholder="请输入说明" maxlength="230" />
+      <view class="card-register-note">
+        <input style='margin-top:10rpx;font-size:38rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" value="" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='30' />
+      </view>
+      <view class="card-register-note">
+        <textarea style='margin-top:10rpx;width:550rpx;height:400rpx;font-size:38rpx;color:#333;border: 1rpx solid #eee;' bindblur="bindInvitationTextAreaBlur" placeholder="请输入说明(限230个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="230" />
       </view>
     </view>
 </modal>

@@ -100,6 +100,10 @@ Page({
         card_register_img: weburl + '/uploads/card_register_share.png',
         card_register_title:'[标题]',
         card_register_content: '[说明]',
+        register_start_time: util.getDateStr(new Date, 0),
+        register_end_time: util.getDateStr(new Date, 3),
+        action_start_time: util.getDateStr(new Date, 0),
+        action_end_time: util.getDateStr(new Date, 3),
   },
 
   bindPickerChange_card_color: function (e) {
@@ -349,6 +353,40 @@ Page({
     })
   },
    
+  bindChangeStartTime: function (e) {
+    var that = this;
+    var start_time = e.detail.value
+    that.setData({
+      register_start_time: start_time
+    })
+    console.log('register_start_time:' + that.data.start_time)
+  },
+  bindChangeEndTime: function (e) {
+    var that = this
+    var end_time = e.detail.value
+    that.setData({
+      register_end_time: end_time
+    })
+    console.log('register_end_time:' + that.data.end_time)
+  },  
+
+  bindChangeActStartTime: function (e) {
+    var that = this;
+    var start_time = e.detail.value
+    that.setData({
+      action_start_time: start_time
+    })
+    console.log('action_start_time:' + that.data.start_time)
+  },
+  bindChangeActEndTime: function (e) {
+    var that = this
+    var end_time = e.detail.value
+    that.setData({
+      action_end_time: end_time
+    })
+    console.log('action_end_time:' + that.data.end_time)
+  },  
+
   sharegoodsTapTag: function () {
     var that = this
     var share_goods_id = that.data.goodsid

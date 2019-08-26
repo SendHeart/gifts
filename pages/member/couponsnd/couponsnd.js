@@ -184,6 +184,7 @@ Page({
     console.log('nums:' + that.data.nums)
 
   },   
+  
   bindChangeStartTime: function (e) {
     var that = this;
     var start_time = e.detail.value

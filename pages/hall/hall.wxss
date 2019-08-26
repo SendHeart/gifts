@@ -600,6 +600,7 @@ modal {
   margin: 10rpx;
   z-index: 1;
 }
+
 .note {
   width: 96%;
   margin: 0 auto;
