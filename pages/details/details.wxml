@@ -223,7 +223,7 @@
          <input value="{{card_register_fee}}" style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="digit" value="" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed}}" maxlength='30' />
       </view>
        <view class="card-register-note">
-        <input value="{{card_register_addr}}" style='margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="digit" placeholder="活动地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed}}" maxlength='30' />
+        <input value="{{card_register_addr}}" style='margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="活动地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed}}" maxlength='30' />
        </view>
       <view class="card-register-note">
         <picker bindchange="bindChangeRegisterRight" value="{{card_register_right_index}}" range="{{card_register_right_picker}}">
