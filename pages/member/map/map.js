@@ -7,7 +7,6 @@ var qqmapkey = app.globalData.mapkey;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 const defaultScale = 14;
 var mapInterval = app.globalData.mapInterval;
-var consoleUtil = require('../../../utils/consoleUtil.js');
 var constant = require('../../../utils/constant.js');
 var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js');
 //定义全局变量
