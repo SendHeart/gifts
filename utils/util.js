@@ -121,6 +121,12 @@ function calDateDiff(startTime, endTime,type=0) {
   //console.log("day = ", day);
 }
 
+function filterEmoji(name) {
+
+  var str = name.replace(/[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF][\u200D|\uFE0F]|[\uD83C|\uD83D|\uD83E][\uDC00-\uDFFF]|[0-9|*|#]\uFE0F\u20E3|[0-9|#]\u20E3|[\u203C-\u3299]\uFE0F\u200D|[\u203C-\u3299]\uFE0F|[\u2122-\u2B55]|\u303D|[\A9|\AE]\u3030|\uA9|\uAE|\u3030/ig, "");
+  return str;
+}
+
 // 版本对比  兼容
 function compareVersion(v1, v2) {
   v1 = v1.split('.')
@@ -152,4 +158,5 @@ module.exports = {
   formatString: formatString,
   calDateDiff: calDateDiff,
   compareVersion:compareVersion,
+  filterEmoji: filterEmoji,
 }

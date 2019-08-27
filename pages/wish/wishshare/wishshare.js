@@ -285,6 +285,7 @@ Page({
     var that = this
     var goods_id = that.data.share_goods_id
     var order_voice = that.data.order_voice  
+    var voice_url = that.data.voice_url
     if (that.current_voice) {
       myaudio.src = that.current_voice
       myaudio.play()
@@ -398,6 +399,7 @@ Page({
           }
         
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']) {
+            console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
             if (voice_url) {
@@ -891,8 +893,7 @@ Page({
               width: 300,
               height: 50,
               lineHeight: 50,
-              MaxLineNumber: 8,
-              breakWord: true,
+              breakWord: false,
              
             },
             {
@@ -903,7 +904,7 @@ Page({
               top: 130,
               left: 50,
               lineHeight: 50,
-              MaxLineNumber: 6,
+              MaxLineNumber: 8,
               breakWord: true,
               width: 390,
               height: 50,

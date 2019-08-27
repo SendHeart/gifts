@@ -332,18 +332,20 @@ Page({
   }, 
   cardRegisterTextAreaBlur: function (e) {
     var that = this
+    var card_register_content = util.filterEmoji(e.detail.value)
     that.setData({
-      card_register_content: e.detail.value
+      card_register_content: card_register_content
     })
   }, 
   cardregistertitleTapTag: function (e) {
     var that = this
+    var card_register_title = util.filterEmoji(e.detail.value)
     that.setData({
-        card_register_title: e.detail.value
+      card_register_title: card_register_title
     })
   },
   cardregisterLimTapTag: function (e) {
-    var that = this;
+    var that = this
     that.setData({
       card_register_lim: e.detail.value
     })
@@ -356,20 +358,23 @@ Page({
   }, 
   cardregisterAddrTapTag: function (e) {
     var that = this;
+    var card_register_addr = util.filterEmoji(e.detail.value)
     that.setData({
-      card_register_addr: e.detail.value
+      card_register_addr: card_register_addr
     })
   }, 
   cardregisterOwnerNameTapTag: function (e) {
-    var that = this;
+    var that = this
+    var card_register_ownerrname = util.filterEmoji(e.detail.value)
     that.setData({
-      card_register_ownerrname: e.detail.value
+      card_register_ownerrname: card_register_ownerrname
     })
   }, 
   cardregisterOwnerWechatTapTag: function (e) {
-    var that = this;
+    var that = this
+    var card_register_ownerwechat = util.filterEmoji(e.detail.value)
     that.setData({
-      card_register_ownerwechat: e.detail.value
+      card_register_ownerwechat: card_register_ownerwechat
     })
   }, 
   //确定按钮点击事件 
@@ -1463,6 +1468,7 @@ Page({
             })
           }else{
             var card_register_info = wx.getStorageSync('card_register_info')  //从缓存中读取
+            console.log('detail checkout 贺卡请柬互动卡  order_image:', share_goods_image, 'card_register_info',card_register_info)
             wx.navigateTo({
               url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&card_register_info=' + card_register_info + '&username=' + username + '&token=' + token
             })
