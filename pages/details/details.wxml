@@ -1,17 +1,17 @@
 <import src="../../wxParse/wxParse.wxml" />
 <view  class="pagewrap" >
   <view class="share-goods"  >
-    <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="share-buttons">
+    <view wx:if="{{goodsshape==1}}" class="share-buttons">
       <view class="btnshare" bindtap="sharegoodsTapTag">
         <image class="shareto" src="../../images/shareto.png"></image>
         分享
       </view>
     </view>
-    <form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit" data-name='mycardregister' report-submit="true" style='width:100%;' >
-       <view wx:if="{{goodsshape==4}}" class="share-buttons">
-        <button class="btnshare"  formType="submit"><!--bindtap="uploadcardTapTag" -->
+    <form wx:if="{{goodsshape==4 && is_register==1}}" bindsubmit="formSubmit" data-name='mycardregister' report-submit="true" >
+       <view class="share-buttons" >
+        <button class="btnshare" formType="submit"><!--bindtap="uploadcardTapTag" -->
           <image class="shareto" src="../../images/image.png"></image>
-          上传背景图
+          我有报名海报
         </button>
       </view>
     </form>
@@ -48,27 +48,44 @@
             </view>
             --> 
             <view wx:if="{{goodsshape==4}}" class="card-register-info">
-              <view  bindtap="myinvitation" class="card-register-title" style="color:{{current_card_color}};">
+              <view  bindtap="card_register" class="card-register-title" style="color:{{current_card_color}};">
                 <text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text>
               </view>
-              <view  bindtap="myinvitation" class="card-register-content" style="color:{{current_card_color}}">
+              <view  bindtap="card_register" class="card-register-content" style="color:{{current_card_color}}">
                 <text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text>
               </view>
-              <view   class="card-register-startend" style="color:{{current_card_color}}">
-              <picker mode="date" value="{{register_start_time}}" start="register_start_time" end="2999-12-12" bindchange="bindChangeStartTime">
- 报名期限: {{register_start_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
-    </picker>
-     <picker mode="date" value="{{register_end_time}}" start="register_end_time" end="2999-12-12" bindchange="bindChangeEndTime">
- (结束): {{register_end_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
-    </picker>
+              <view wx:if="{{goodsshape==4 && is_register==1}}" bindtap="card_register"  class="card-register-biz" style="color:{{current_card_color}}">
+                <view>{{card_register_lim>0?card_register_lim:'报名人数:不限'}}</view>
+                <view>{{card_register_fee?card_register_fee:'报名费:0元'}}</view>
+                <view>{{card_register_right_str?card_register_right_str:'权限:参与者可看'}}</view>
               </view>
-              <view   class="card-register-act-startend" style="color:{{current_card_color}}">
-                <picker mode="date" value="{{action_start_time}}" start="action_start_time" end="2999-12-12" bindchange="bindChangeActStartTime">
- 活动期限: {{action_start_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+              <view wx:if="{{goodsshape==4 && is_register==1}}" class="card-register-startend" style="color:{{current_card_color}}">
+              <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
+ 报名开始: {{register_start_date}}  
     </picker>
-                <picker mode="date" value="{{action_end_time}}" start="action_end_time" end="2999-12-12" bindchange="bindChangeActEndTime">
- (结束): {{action_end_time}} <icon style="margin-top:-10rpx;" class="Hui-iconfont iconv-downarrow" />
+              <picker mode="time" value="{{register_start_time}}" start="register_start_time" end="23:59" bindchange="bindChangeStartTime">【时间】{{register_start_time}}
+  </picker>
+              </view>
+              <view wx:if="{{goodsshape==4 && is_register==1}}"  class="card-register-startend" style="color:{{current_card_color}}">
+                <picker mode="date" value="{{register_end_date}}" start="register_end_date" end="2999-12-12" bindchange="bindChangeEndDate">
+ 报名结束: {{register_end_date}}  
     </picker>
+     <picker mode="time" value="{{register_end_time}}" start="register_end_time" end="23:59" bindchange="bindChangeEndTime"> 【时间】{{register_end_time}}
+  </picker>
+              </view>
+              <view wx:if="{{goodsshape==4 && is_register==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
+                <picker mode="date" value="{{action_start_date}}" start="action_start_date" end="2999-12-12" bindchange="bindChangeActStartDate">
+ 活动开始: {{action_start_date}}  
+    </picker>
+              <picker mode="time" value="{{action_start_time}}" start="action_start_time" end="23:59" bindchange="bindChangeActStartTime"> 【时间】{{action_start_time}}
+  </picker>
+              </view>
+              <view wx:if="{{goodsshape==4 && is_register==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
+                <picker mode="date" value="{{action_end_date}}" start="action_end_date" end="2999-12-12" bindchange="bindChangeActEndDate">
+ 活动结束: {{action_end_date}}  
+    </picker>
+       <picker mode="time" value="{{action_end_time}}" start="action_end_time" end="23:59" bindchange="bindChangeActEndTime"> 【时间】{{action_end_time}}
+  </picker>
               </view>
             </view>
             <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}" class="card-blessing" >{{card_blessing}}
@@ -101,7 +118,7 @@
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
         <view class="right-tag">
         {{marketprice>0?'市场价':''}} <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
-        {{marketprice>0?'送心价':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:'0'}}</text>
+        {{marketprice>0?'送心价':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:''}}</text>
         </view>
       </view>
       <view class="fitfor">
@@ -175,12 +192,14 @@
         <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
         <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
        </view>
- 
-        <view  class='buy-num'>数量:</view><!-- wx:if="{{is_buymyself==1}}"-->
-        <view  class='buy-num-minus' catchtap="bindMinus"><image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image></view> <!-- wx:if="{{is_buymyself==1}}"-->
-        <view  class='buy-num-count'>{{buynum}}</view> <!-- wx:if="{{is_buymyself==1}}"-->
-         <view class='buy-num-plus' catchtap="bindPlus" ><image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image> <!-- wx:if="{{is_buymyself==1}}"-->
-         </view>
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view><!-- wx:if="{{is_buymyself==1}}"-->
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">
+          <image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image>
+        </view> <!-- wx:if="{{is_buymyself==1}}"-->
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-count'>{{buynum}}</view> <!-- wx:if="{{is_buymyself==1}}"-->
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >
+          <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image> <!-- wx:if="{{is_buymyself==1}}"-->
+        </view>
       </view>
     </modal>
 </view>
@@ -192,13 +211,31 @@
     </view>
 </modal>
 <modal title="编辑内容" no-cancel="{{nocancel}}" hidden="{{cardregisterhidden}}" bindconfirm="confirmcardregister" confirm-text="确定" no-cancel>
-    <view style="height:{{dkheight-130}}px;">
+    <view style="height:{{dkheight-60}}px;">
       <view class="card-register-note">
-        <input style='margin-top:10rpx;font-size:38rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" value="" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='30' />
+        <input style='margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='30' />
       </view>
       <view class="card-register-note">
-        <textarea style='margin-top:10rpx;width:550rpx;height:400rpx;font-size:38rpx;color:#333;border: 1rpx solid #eee;' bindblur="bindInvitationTextAreaBlur" placeholder="请输入说明(限230个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="230" />
+        <textarea style='margin-top:10rpx;width:550rpx;height:330rpx;font-size:28rpx;color:#333;border: 1rpx solid #eee;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限230个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="230" />
       </view>
+      <view class="card-register-note">
+        <input value="{{card_register_lim}}" style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="number" value="" placeholder="报名人数(0不限)"  bindinput='cardregisterLimTapTag' focus="{{inputShowed}}" maxlength='30' />
+         <input value="{{card_register_fee}}" style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="digit" value="" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed}}" maxlength='30' />
+      </view>
+       <view class="card-register-note">
+        <input value="{{card_register_addr}}" style='margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="digit" placeholder="活动地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed}}" maxlength='30' />
+       </view>
+      <view class="card-register-note">
+        <picker bindchange="bindChangeRegisterRight" value="{{card_register_right_index}}" range="{{card_register_right_picker}}">
+          <view style='margin-left:10rpx;margin-top:10rpx;font-size:28rpx;{{card_register_right_index==0?"color:#e2e2e2;":"color:#333;"}}  border: 1rpx solid #eee;background:#f2f2f2;' >
+         {{card_register_right_picker[card_register_right_index]}}
+          </view>
+        </picker>
+     </view>
+     <view class="card-register-note" style="border-top:2rpx solid:#eee;margin-top:20rpx;">
+      <input style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed}}" maxlength='30' />
+         <input style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed}}" maxlength='30' />
+     </view>
     </view>
 </modal>
 <view class="footer">
@@ -214,7 +251,7 @@
       <text>编辑祝词</text>
       </button>  
     </form>
-     <form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit"  data-name='myinvitation' report-submit="true" style='width:30%;' >
+     <form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit"  data-name='card_register' report-submit="true" style='width:30%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/u621.png"></image>
       <text>编辑内容</text>
@@ -232,7 +269,7 @@
       </button>  
     </form>
     <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
-      <button class="add-cart2"  formType="submit">立即购买</button>  
+      <button class="add-cart2"  formType="submit">{{(goodsshape==5||goodsshape==4)?'立即使用':'立即购买'}}</button>  
     </form>
     <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
       <button class="add-cart" formType="submit">

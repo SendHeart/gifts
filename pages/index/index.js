@@ -444,11 +444,18 @@ Page({
         break
       }
     }
-    
-    console.log('送出 order no:', order_no, ' order info:', orders, 'index:', index)
-    wx.navigateTo({
-      url: '../order/send/send?order_no=' + order_no + '&orders=' + JSON.stringify(order_send)
-    })
+    if (order_send[0]['shape'] == 4 || order_send[0]['shape'] == 5){
+      wx.navigateTo({
+        url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_send[0]['id'] + '&share_order_shape=' + order_send[0]['shape'] + '&share_order_note=' + order_send[0]['rcv_note'] + '&share_order_bg=' + order_send[0]['order_sku'][0]['sku_image'] + '&share_order_image=' + order_send[0]['order_sku'][0]['sku_share_image']
+      })
+      console.log('贺卡请柬互动卡 送出 order no:', order_no, 'order_send:', order_send)
+    }else{
+      console.log('送出 order no:', order_no, ' order info:', order_send, 'index:', index)
+      wx.navigateTo({
+        url: '../order/send/send?order_no=' + order_no + '&orders=' + JSON.stringify(order_send)
+      })
+    }
+   
   },
   sendOtherTapTag: function (e) {
     var that = this

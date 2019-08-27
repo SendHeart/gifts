@@ -10,7 +10,7 @@ function formatTime(date) {
   return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
 }
 
-function getDateStr(today, addDayCount) {
+function getDateStr(today, addDayCount,type=0) {
   var dd;
   if (today) {
     dd = new Date(today);
@@ -21,13 +21,33 @@ function getDateStr(today, addDayCount) {
   var y = dd.getFullYear();
   var m = dd.getMonth() + 1;//获取当前月份的日期 
   var d = dd.getDate();
+  var hour = dd.getHours()
+  var minute = dd.getMinutes()
+  var second = dd.getSeconds()
   if (m < 10) {
     m = '0' + m;
   };
   if (d < 10) {
     d = '0' + d;
   };
-  return y + "-" + m + "-" + d;
+  if (hour < 10) {
+    hour = '0' + hour;
+  };
+  if (minute < 10) {
+    minute = '0' + minute;
+  };
+  if (second < 10) {
+    second = '0' + second;
+  };
+  if(type==0){ //返回日期
+    return y + "-" + m + "-" + d;
+  }else if(type==1){//返回时间 分钟
+    return hour + ":" + minute;
+  } else if (type == 2) {//返回时间 秒
+    return hour + ":" + minute + ":" + second;
+  }else{
+    return y + "-" + m + "-" + d;
+  }
 }
 
 function formatNumber(n) {
@@ -83,6 +103,24 @@ function getDateDiff(dateTimeStamp) {
   return str;
 }
 
+//计算两个时间戳的差
+function calDateDiff(startTime, endTime,type=0) {
+  //日期格式化
+  var start_date = new Date(startTime.replace(/-/g, "/"));
+  var end_date = new Date(endTime.replace(/-/g, "/"));
+  //转成毫秒数，两个日期相减
+  var ms = end_date.getTime() - start_date.getTime();
+  //转换成天数
+  var day = parseInt(ms / (1000 * 60 * 60 * 24));
+  if(type==0){ //毫秒级
+    return ms ;
+  }else if(type==1){//日级
+    return day ;
+  }
+  //do something
+  //console.log("day = ", day);
+}
+
 // 版本对比  兼容
 function compareVersion(v1, v2) {
   v1 = v1.split('.')
@@ -112,5 +150,6 @@ module.exports = {
   getDateDiff: getDateDiff,
   getDateStr: getDateStr,
   formatString: formatString,
+  calDateDiff: calDateDiff,
   compareVersion:compareVersion,
 }

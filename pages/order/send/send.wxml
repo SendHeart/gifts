@@ -11,7 +11,7 @@
  </view>
  -->
 </view>
-<view wx:if="{{is_buymyself==0 &&  goodsshape!=5}}" class="order-item">
+<view wx:if="{{is_buymyself==0 &&  goodsshape!=5 &&  goodsshape!=4}}" class="order-item">
   <view class="order-item-banner">
     <view>
       <image src="../../../images/gift.gif" style='width:378rpx;height:202rpx;' mode='aspectFill'></image>

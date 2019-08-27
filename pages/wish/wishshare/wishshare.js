@@ -414,6 +414,12 @@ Page({
                 }
               })
             }
+            var card_register_info = m_desc['card_register_info']
+            if (card_register_info){
+              that.setData({
+                card_register_info: card_register_info,
+              })
+            }
           }
         }
       })
@@ -652,6 +658,7 @@ Page({
     var share_order_note = that.data.share_order_note
     var share_order_shape = that.data.share_order_shape
     var share_order_bg = that.data.share_order_bg
+    var card_register_info = that.data.card_register_info //shape:4 互动卡 
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id
     wx.showLoading({
@@ -854,7 +861,123 @@ Page({
           ]
         }
       })
-    } else if (share_order_shape == 5 || share_order_shape == 4) { //贺卡请柬
+    } else if (share_order_shape == 4) { //互动卡
+      console.log('share_order_shape:', share_order_shape)
+      that.setData({
+        painting: {
+          width: 520,
+          height: 800,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
+          clear: true,
+          background: 'white',
+          views: [
+            {
+              type: 'image',
+              url: share_order_bg,
+              top: 0,
+              left: 0,
+              width: 520,
+              height: 800,
+            },
+            {
+              type: 'text',
+              content: card_register_info['card_register_title'],
+              fontSize: 35,
+              color: card_register_info['card_color'],
+              textAlign: 'left',
+              top: 60,
+              left: 50,
+              width: 300,
+              height: 50,
+              lineHeight: 50,
+              MaxLineNumber: 8,
+              breakWord: true,
+             
+            },
+            {
+              type: 'text',
+              content: card_register_info['card_register_content'],
+              fontSize:28,
+              color: card_register_info['card_color'],
+              top: 130,
+              left: 50,
+              lineHeight: 50,
+              MaxLineNumber: 6,
+              breakWord: true,
+              width: 390,
+              height: 50,
+            
+            },
+            {
+              type: 'text',
+              content: '地址:'+card_register_info['card_register_addr'],
+              fontSize: 22,
+              color: card_register_info['card_color'],
+              textAlign: 'left',
+              top: 520,
+              left: 50,
+              width: 300,
+              height: 40,
+              bolder: false
+            },
+            {
+              type: 'text',
+              content: '开始:' + card_register_info['register_start_date'] + ' ' + card_register_info['register_start_time'],
+              fontSize: 22,
+              color: card_register_info['card_color'],
+              textAlign: 'left',
+              top: 570,
+              left: 50,
+              width: 300,
+              height: 40,
+              breakWord: false,
+              bolder: false,
+            },
+            {
+              type: 'text',
+              content: '截至:' + card_register_info['register_end_date'] + ' ' + card_register_info['register_end_time'],
+              fontSize: 22,
+              color: card_register_info['card_color'],
+              textAlign: 'left',
+              top: 620,
+              left: 50,
+              width: 300,
+              height: 40,
+              breakWord: false,
+            },
+            {
+              type: 'image',
+              url: share_order_wx_headimg,
+              top: 690,
+              left: 50,
+              width: 80,
+              height: 80,
+              borderRadius: 40,
+            },
+            {
+              type: 'text',
+              content: nickname.substring(0,13),
+              color: card_register_info['card_color'],
+              fontSize: 22,
+              top: 720,
+              left: 150,
+              width: 80,
+              height: 80,
+            },
+            {
+              type: 'image',
+              url: share_order_qrcode,
+              top: 690,
+              left: 380,
+              width: 80,
+              height: 80,
+              borderRadius: 40,
+            }
+          ]
+        }
+      })  
+    } else if (share_order_shape == 5) { //贺卡请柬
       console.log('share_order_shape:', share_order_shape)
       that.setData({
         painting: {

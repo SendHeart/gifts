@@ -241,6 +241,7 @@ font-size: 32rpx;
   flex-direction: row;
   justify-content:flex-end;
   align-items: right;
+  margin-right:20rpx;
   padding: 0 auto;
 }
 .share-buttons .btnshare {
@@ -595,8 +596,8 @@ border: none;
   margin-top:90rpx;
   display: flex;
   flex-direction:column; 
-  opacity: 0.6;
   z-index: 2; 
+  border:1px solid #eee;
   border-radius: 20rpx;
 }
 
@@ -605,14 +606,14 @@ border: none;
     height: 50rpx;
     line-height: 50rpx;
     font-size:35rpx;
-    color:#f2f2f2;
-    background: #ffffff;
+   
+    border:1px solid #eee;
     margin-bottom:10rpx;
     padding: 20rpx;
 }
 .card-register-title text {
   display: -webkit-box;
-  color: #999999;
+  
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -624,44 +625,50 @@ border: none;
   width:100%;
   height: 380rpx;
   font-size:35rpx;
-  color:#f2f2f2;
-  background: #ffffff;
+  border:1px solid #eee; 
   padding: 20rpx;
   margin-bottom:10rpx;
 }
 .card-register-content text {
   display: -webkit-box;
-  color: #999999;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 6; 
-  width:338rpx;
+  width:536rpx;
   padding: 10rpx;
 }
 .card-register-startend { 
   width:100%;
-  height: 50rpx;
+  height: 30rpx;
+  line-height: 30rpx;
   display:flex;
   flex-direction:row;
-  justify-content: space-around;
+  justify-content: center;
   font-size:25rpx;
-  color:#f2f2f2;
-  background: #ffffff;
-  
   padding: 10rpx;
 }
 .card-register-act-startend { 
   width:100%;
-  height: 50rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: center;
+
+  font-size:25rpx;
+  padding: 10rpx;
+}
+.card-register-biz { 
+  width:100%;
+  height: 30rpx;
+  line-height: 30rpx;
   display:flex;
   flex-direction:row;
   justify-content: space-around;
-
+  border:1px solid #eee; 
   font-size:25rpx;
-  color:#f2f2f2;
-  background: #ffffff;
   padding: 10rpx;
 }
 .share-card-register-image {
@@ -743,11 +750,13 @@ border: none;
   margin: 0 auto;
   display: flex;
   flex-direction: row;
+  justify-content: space-around;
 }
 
 .card-register-note input {
   width: 100%;
-  height: 60rpx;
+  height: 40rpx;
+  line-height: 40rpx;
   margin: 0 0 20rpx 10rpx;
   padding: 15rpx;
   font-size: 24rpx;

@@ -299,6 +299,19 @@ swiper-item image {
 .price-now::first-letter {
   font-size: 20rpx;
 }
+
+.left-tag {
+  width: 100rpx;
+  height: 30rpx;
+  background: #e34c55;
+  border-radius: 0 10rpx 10rpx 0;
+  line-height: 30rpx;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left:10rpx;
+  margin-right:20rpx;
+}
+
 .goods_bottom {
   display: flex;
   flex-direction: row;

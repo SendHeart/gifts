@@ -40,10 +40,14 @@
             </navigator>
             <view class="goods_prom">{{item.act_info?item.act_info:'高端大气'}}</view>
             <view class="goods_bottom">
+              <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+            </view>
+            <view class="goods_bottom">
               <view class="goods_tag">
                 <!--<image src="../../images/u48.png"></image>-->
                 <text space="ensp">{{item.goods_tag}} </text>
               </view>
+             
               <view class="price-list"> 
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
                 <view class="price-now">￥{{item.sell_price}}</view>

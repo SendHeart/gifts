@@ -26,84 +26,96 @@ var card_color = [
   { id: "blue", title: "蓝色", value: "#6495ED" },
   { id: "yellow", title: "黄色", value: "#FFFF00" },
 ]
+
 Page({
   data: {
-        title_name: '详情',
-        title_logo: '../../images/footer-icon-05.png',
-        share_title:'这个礼物真不错，来看看吧，要是你能送我就更好了~',
-        card_blessing:'送心礼物祝您:万事如意，平平安安！',
-        card_invitation: '送心礼物和您一起分享快乐，分享成功！',
-        card_content : '',
-        share_desc:'送心礼物，开启礼物社交时代！',
-        share_avatarUrl: weburl + '/uploads/avatar.png',
-        share_goods_avatarUrl: weburl + '/uploads/avatar.png',
-        nickname: userInfo.nickName,
-        avatarUrl: userInfo.avatarUrl,
-        user:null,
-        userInfo:{},
-        username:null,
-        indicatorDots: true,
-        vertical: false,
-        autoplay: false,
-        page:1,
-        interval: 3000,
-        duration: 300,
-        circular: true,
-        goodsname:'',
-        goodsshortname: '',
-        goodsinfo:[],
-        goodsprice: 0,
-        goodssale: 0,
-        goodsid: 0,
-        goodsdiscount:100,
-        discountinfo:'9折优惠券',
-        sku_gov_price:0,
-        sku_earnest_price:0,
-        sku_sell_price: 0,
-        sku_id:0,
-        commodityAttr:[],
-        attrValueList:[],
-        firstIndex:0,
-        cur_img_id:0,
-        image:'',
-        image_pic:[],
-        hideviewgoodsinfo:true,
-        hideviewgoodspara:true,
-        dkheight: 300,
-        scrollTop: 0,
-        scrollTop_init:10,
-        toView: 'red',
-        hideviewgoodsinfoflag:true, 
-        hideviewgoodsparaflag:true,
-        modalHidden: true,//是否隐藏对话框  
-        dkcontent:[],
-        goodsPicsInfo:[],
-        selectValueInfo:'',
-        wishflag:0,
-        goodsinfoshowflag:0,
-        shop_type:shop_type,
-        comm_list: [],
-        image_save_count:0,
-        image_save_times:0,
-        is_buymyself:0,
-        buynum:1,
-        notehidden:true,
-        cardregisterhidden: true,
-        has_cardpayed:0,
-        openRecordingdis: "block", //显示录机图标
-        shutRecordingdis: "none", //隐藏停止图标
-        recordingTimeqwe: 0, //录音计时
-        setInter: "",  
-        card_color: card_color,
-        current_card_color:'#333',
-        card_color_index:0,
-        card_register_img: weburl + '/uploads/card_register_share.png',
-        card_register_title:'[标题]',
-        card_register_content: '[说明]',
-        register_start_time: util.getDateStr(new Date, 0),
-        register_end_time: util.getDateStr(new Date, 3),
-        action_start_time: util.getDateStr(new Date, 0),
-        action_end_time: util.getDateStr(new Date, 3),
+    title_name: '详情',
+    title_logo: '../../images/footer-icon-05.png',
+    share_title: '这个礼物真不错，来看看吧，要是你能送我就更好了~',
+    card_blessing: '送心礼物祝您:万事如意，平平安安！',
+    card_invitation: '送心礼物和您一起分享快乐，分享成功！',
+    card_content: '',
+    share_desc: '送心礼物，开启礼物社交时代！',
+    share_avatarUrl: weburl + '/uploads/avatar.png',
+    share_goods_avatarUrl: weburl + '/uploads/avatar.png',
+    nickname: userInfo.nickName,
+    avatarUrl: userInfo.avatarUrl,
+    user: null,
+    userInfo: {},
+    username: null,
+    indicatorDots: true,
+    vertical: false,
+    autoplay: false,
+    page: 1,
+    interval: 3000,
+    duration: 300,
+    circular: true,
+    goodsname: '',
+    goodsinfo: [],
+    goodsprice: 0,
+    goodssale: 0,
+    goodsid: 0,
+    goodsdiscount: 100,
+    discountinfo: '9折优惠券',
+    sku_gov_price: 0,
+    sku_earnest_price: 0,
+    sku_sell_price: 0,
+    sku_id: 0,
+    commodityAttr: [],
+    attrValueList: [],
+    firstIndex: 0,
+    cur_img_id: 0,
+    image: '',
+    image_pic: [],
+    hideviewgoodsinfo: true,
+    hideviewgoodspara: true,
+    dkheight: 300,
+    scrollTop: 0,
+    scrollTop_init: 10,
+    toView: 'red',
+    hideviewgoodsinfoflag: true,
+    hideviewgoodsparaflag: true,
+    modalHidden: true,//是否隐藏对话框  
+    dkcontent: [],
+    goodsPicsInfo: [],
+    selectValueInfo: '',
+    wishflag: 0,
+    goodsinfoshowflag: 0,
+    shop_type: shop_type,
+    comm_list: [],
+    image_save_count: 0,
+    image_save_times: 0,
+    is_buymyself: 0,
+    buynum: 1,
+    notehidden: true,
+    cardregisterhidden: true,
+    has_cardpayed: 0,
+    openRecordingdis: "block", //显示录机图标
+    shutRecordingdis: "none", //隐藏停止图标
+    recordingTimeqwe: 0, //录音计时
+    setInter: "",
+    card_color: card_color,
+    current_card_color: '#333',
+    card_color_index: 0,
+    card_register_img: weburl + '/uploads/card_register_share.png',
+    card_register_title: '',
+    card_register_content: '',
+    register_start_date: util.getDateStr(new Date, 0),
+    register_end_date: util.getDateStr(new Date, 3),
+    register_start_time: util.getDateStr(new Date, 0, 1),
+    register_end_time: util.getDateStr(new Date, 3, 1),
+    action_start_date: util.getDateStr(new Date, 3),
+    action_end_date: util.getDateStr(new Date, 6),
+    action_start_time: util.getDateStr(new Date, 3, 1),
+    action_end_time: util.getDateStr(new Date, 6, 1),
+    card_register_lim: 0,
+    card_register_fee: 0,
+    card_register_addr: '',
+    card_register_ownername: '',
+    card_register_ownerwechat: '',
+    card_register_right_str: '',
+    card_register_right_picker: ['参与者可看', '管理者可看', '公开'],
+    card_register_right_index: 0,  
   },
 
   bindPickerChange_card_color: function (e) {
@@ -152,8 +164,8 @@ Page({
       that.mycommTapTag()
     } else if (form_name == 'myblessing') {
       that.myblessing()  
-    } else if (form_name == 'myinvitation') {
-      that.myinvitation()  
+    } else if (form_name == 'card_register') {
+      that.card_register()  
     }
     if (formId) that.submintFromId(formId)
   },
@@ -318,7 +330,7 @@ Page({
       card_blessing: e.detail.value
     })
   }, 
-  bindInvitationTextAreaBlur: function (e) {
+  cardRegisterTextAreaBlur: function (e) {
     var that = this
     that.setData({
       card_register_content: e.detail.value
@@ -330,6 +342,36 @@ Page({
         card_register_title: e.detail.value
     })
   },
+  cardregisterLimTapTag: function (e) {
+    var that = this;
+    that.setData({
+      card_register_lim: e.detail.value
+    })
+  }, 
+  cardregisterFeeTapTag: function (e) {
+    var that = this;
+    that.setData({
+      card_register_fee: e.detail.value
+    })
+  }, 
+  cardregisterAddrTapTag: function (e) {
+    var that = this;
+    that.setData({
+      card_register_addr: e.detail.value
+    })
+  }, 
+  cardregisterOwnerNameTapTag: function (e) {
+    var that = this;
+    that.setData({
+      card_register_ownerrname: e.detail.value
+    })
+  }, 
+  cardregisterOwnerWechatTapTag: function (e) {
+    var that = this;
+    that.setData({
+      card_register_ownerwechat: e.detail.value
+    })
+  }, 
   //确定按钮点击事件 
   shareConfirmCard: function () {
     var that = this
@@ -348,45 +390,159 @@ Page({
   //确定按钮点击事件 
   confirmcardregister: function () {
     var that = this
+    var card_register_info = [
+      {
+        card_color: that.data.current_card_color,
+        card_register_title: that.data.card_register_title,
+        card_register_content: that.data.card_register_content,
+        image: that.data.card_register_img,
+        register_start_date: that.data.register_start_date,
+        register_end_date: that.data.register_end_date,
+        register_end_date: that.data.register_end_date,
+        register_start_time: that.data.register_start_time,
+        register_end_time: that.data.register_end_time,
+        action_start_date: that.data.action_start_date,
+        action_end_date: that.data.action_end_date,
+        action_start_time: that.data.action_start_time,
+        action_end_time: that.data.action_end_time,
+        card_register_lim: that.data.card_register_lim,
+        card_register_fee: that.data.card_register_fee,
+        card_register_addr: that.data.card_register_addr,
+        card_register_ownername: that.data.card_register_ownername,
+        card_register_ownerwechat: that.data.card_register_ownerwechat,
+        card_register_right_index: that.data.card_register_right_index,
+      }
+    ]
+    wx.setStorageSync('card_register_info',JSON.stringify(card_register_info[0]))
     that.setData({
       cardregisterhidden: !that.data.cardregisterhidden,
     })
   },
    
+  bindChangeStartDate: function (e) {
+    var that = this;
+    var start_date = e.detail.value
+    that.setData({
+      register_start_date: start_date
+    })
+    console.log('register_start_date:' + that.data.register_start_date)
+  },
   bindChangeStartTime: function (e) {
     var that = this;
     var start_time = e.detail.value
     that.setData({
       register_start_time: start_time
     })
-    console.log('register_start_time:' + that.data.start_time)
+    console.log('register_start_time:' + that.data.register_start_time)
   },
+  bindChangeEndDate: function (e) {
+    var that = this
+    var end_date = e.detail.value
+    var end_time = that.data.register_end_time+":00"
+    var diff_start_time = that.data.register_start_date + ' ' + that.data.register_start_time+':00'
+    var diff_end_time = end_date + ' ' + end_time
+    var diff = util.calDateDiff(diff_start_time, diff_end_time) 
+    if(diff > 0){
+      that.setData({
+        register_end_date: end_date
+      })
+    }else{
+      wx.showToast({
+        title: "结束时间小于开始时间",
+        icon: 'none',
+        duration: 1500,
+      })
+    }
+   
+    console.log('register_end_date:', that.data.register_end_date, diff_start_time, diff_end_time)
+  },  
   bindChangeEndTime: function (e) {
     var that = this
     var end_time = e.detail.value
-    that.setData({
-      register_end_time: end_time
-    })
-    console.log('register_end_time:' + that.data.end_time)
+    var end_date = that.data.register_end_date
+    var diff_start_time = that.data.register_start_date + ' ' + that.data.register_start_time + ':00'
+    var diff_end_time = end_date + ' ' + end_time +':00'
+    var diff = util.calDateDiff(diff_start_time, diff_end_time)
+    if (diff > 0) {
+      that.setData({
+        register_end_time: end_time
+      })
+    } else {
+      wx.showToast({
+        title: "结束时间小于开始时间",
+        icon: 'none',
+        duration: 1500,
+      })
+    }
+    console.log('register_end_time:' + that.data.register_end_time, diff_start_time, diff_end_time)
   },  
-
+  bindChangeActStartDate: function (e) {
+    var that = this;
+    var start_date = e.detail.value
+    that.setData({
+      action_start_date: start_date
+    })
+    console.log('action_start_date:' + that.data.action_start_date)
+  },
   bindChangeActStartTime: function (e) {
     var that = this;
     var start_time = e.detail.value
     that.setData({
       action_start_time: start_time
     })
-    console.log('action_start_time:' + that.data.start_time)
+    console.log('action_start_time:' + that.data.action_start_time)
   },
+  bindChangeActEndDate: function (e) {
+    var that = this
+    var end_date = e.detail.value
+    var end_time = that.data.action_end_time + ":00"
+    var diff_start_time = that.data.action_start_date + ' ' + that.data.action_start_time + ':00'
+    var diff_end_time = end_date + ' ' + end_time
+    var diff = util.calDateDiff(diff_start_time, diff_end_time)
+    if (diff > 0) {
+      that.setData({
+        action_end_date: end_date
+      })
+    } else {
+      wx.showToast({
+        title: "结束时间小于开始时间",
+        icon: 'none',
+        duration: 1500,
+      })
+    }
+   
+    console.log('action_end_date:' + that.data.action_end_date, diff_start_time, diff_end_time)
+  },  
   bindChangeActEndTime: function (e) {
     var that = this
     var end_time = e.detail.value
-    that.setData({
-      action_end_time: end_time
-    })
-    console.log('action_end_time:' + that.data.end_time)
+    var end_date = that.data.action_end_date
+    var diff_start_time = that.data.action_start_date + ' ' + that.data.action_start_time + ':00'
+    var diff_end_time = end_date + ' ' + end_time + ':00'
+    var diff = util.calDateDiff(diff_start_time, diff_end_time)
+    if (diff > 0) {
+      that.setData({
+        action_end_time: end_time
+      })
+    } else {
+      wx.showToast({
+        title: "结束时间小于开始时间",
+        icon: 'none',
+        duration: 1500,
+      })
+    }
+   
+    console.log('action_end_time:' + that.data.action_end_time, diff_start_time,diff_end_time)
   },  
 
+  bindChangeRegisterRight: function (e) {
+    var that = this;
+    var card_register_right_index = e.detail.value
+    that.setData({
+      card_register_right_index: card_register_right_index,
+    })
+    console.log('card_register_right:' + that.data.card_register_right)
+  },
   sharegoodsTapTag: function () {
     var that = this
     var share_goods_id = that.data.goodsid
@@ -536,7 +692,7 @@ Page({
     })
   },
 
-  myinvitation: function () {
+  card_register: function () {
     var that = this
     that.setData({
       cardregisterhidden: !that.data.cardregisterhidden,
@@ -702,11 +858,15 @@ Page({
         var has_cardpayed = options.has_cardpayed ? options.has_cardpayed : 0
         var rule_selected_info = options.rule_selected_info ? options.rule_selected_info:''
         var goodsorg = options.goods_org ? options.goods_org : 1
-        var goodsshape = options.goods_shape ? options.goods_shape : 1
+        var goodsshape = options.goods_shape ? options.goods_shape : 0
         var goodstag = options.goods_tag ? options.goods_tag : ''
-        var is_register = goodstag.indexOf("报名")>0?1:0
-        var card_register_content = ''
+        var is_register = options.is_reg ? options.is_reg:0
         var card_register_title = ''
+        var card_register_content = ''
+        var card_register_addr = ''
+        var card_register_lim = 0
+        var card_register_fee = 0
+        var card_register_right_index = 0
         var card_content = ''
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
@@ -726,23 +886,35 @@ Page({
         var qr_type = 'wishshare' 
         var image_video = []
         var image_pic = []
-    
-        console.log('detail options:', options,'scene:',scene)
+        var card_register_prev = wx.getStorageSync('card_register_info')
+    console.log('detail options:', options, 'scene:', scene, 'is_register:', is_register, 'card_register_info:', card_register_prev)
+        if (is_register == 1 && card_register_prev){  
+          var card_register_info = JSON.parse(card_register_prev) 
+          card_register_content = card_register_info['card_register_content']
+          card_register_title = card_register_info['card_register_title']
+          card_register_addr = card_register_info['card_register_addr']
+          card_register_lim = card_register_info['card_register_lim']
+          card_register_fee = card_register_info['card_register_fee']
+          card_register_right_index = card_register_info['card_register_right']
+        }
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
           keyword: keyword,
           is_satisfy:is_satisfy,
           rule_selected_info:rule_selected_info,
-          card_register_content: card_register_content,
-          card_register_title: card_register_title,
+          card_register_content: card_register_content ? card_register_content:'',
+          card_register_title: card_register_title ? card_register_title:'',
+          card_register_addr: card_register_addr ? card_register_addr:'',
+          card_register_lim: card_register_lim ? card_register_lim:0,
+          card_register_fee: card_register_fee ? card_register_fee:0,
+          card_register_right_index: card_register_right_index ? card_register_right_index:0,
           card_content: card_content,
         })
         if(scene){
           if (scene.indexOf("goodsid=") >= 0) {
             var goodsidReg = new RegExp(/(?=goodsid=).*?(?=\&)/)
             var midReg = new RegExp(/\&mid=(.*)/)
-        
             var scene_goodsid = scene.match(goodsidReg)[0]
             goodsid = scene_goodsid ? scene_goodsid.substring(8,scene_goodsid.length):goodsid
             //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
@@ -832,7 +1004,7 @@ Page({
                   card_register_title = that.data.card_register_title
                 }
                 var goodstag = goods_info[0]['goods_tag']
-                var is_register = goodstag.indexOf("报名") > 0 ? 1 : 0
+                var is_register = goods_info[0]['is_reg'] ? goods_info[0]['is_reg'] : 0
                 that.setData({
                   goodsname: goods_info[0]['name'],
                   goodsinfo: goods_info[0]['act_info'],
@@ -1035,7 +1207,22 @@ Page({
         var sku_sell_price = that.data.commodityAttr[0].sell_price
         var sku_delivery_price = that.data.commodityAttr[0].delivery_price
         var is_buymyself = that.data.is_buymyself
-        console.log('detail goodsmodel is_buymyself:', is_buymyself)
+        var goodsshape = that.data.goodsshape
+        var is_register = that.data.is_register
+        var card_register_title = that.data.card_register_title
+        var card_register_content = that.data.card_register_content
+        var card_register_addr = that.data.card_register_addr
+        console.log('detail goodsmodel is_buymyself:', is_buymyself, 'goodsshape:', goodsshape)
+        if (goodsshape == 4 && is_register==1 ){
+          if (card_register_title == '' || card_register_content == '' || card_register_addr==''){
+            wx.showToast({
+              title: "信息不全,请补齐标题、说明和活动地址",
+              icon: 'none',
+              duration: 1500,
+            })
+            return
+          }
+        }
         if (attrValueList.length > 0) {
           that.setData({
             modalHidden: !modalHidden,
@@ -1058,6 +1245,7 @@ Page({
           })
           //that.addCart()
         }
+
       }else{
         setTimeout(function () {
           wx.showToast({
@@ -1141,6 +1329,7 @@ Page({
         }
       }
     },
+
   insertCart: function (sku_id, buynum, username, token, shop_type, wishflag, is_buymyself,keyword,is_satisfy,rule_selected_info) {
       var that = this
       //var shop_type = that.data.shop_type
@@ -1173,9 +1362,14 @@ Page({
           })
           app.globalData.from_page = '/pages/details/details'
           if (wishflag == 1) {
+            wx.switchTab({
+              url: '/pages/wish/wish'
+            })
+            /*
             wx.navigateTo({
               url: '/pages/wish/wish'
             })
+            */
           } 
           else {
             if (is_buymyself==1){
@@ -1190,7 +1384,6 @@ Page({
           }
         }
       })
-      
     },
 
     queryCart: function () {
@@ -1264,9 +1457,16 @@ Page({
             is_buymyself:0,
           })
           var amount = parseFloat(that.data.sku_sell_price) * buynum
-          wx.navigateTo({
-            url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color+'&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
-          })
+          if(goodsshape!=5 && goodsshape!=4){
+            wx.navigateTo({
+              url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
+            })
+          }else{
+            var card_register_info = wx.getStorageSync('card_register_info')  //从缓存中读取
+            wx.navigateTo({
+              url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&card_register_info=' + card_register_info + '&username=' + username + '&token=' + token
+            })
+          }
         }
       })
     },
@@ -1425,9 +1625,7 @@ Page({
           })
           //break
         }
-        
       }
-     
     },
     /* 选中 */
     selectValue: function (index, key, value) {

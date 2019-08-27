@@ -125,10 +125,11 @@ Page({
             icon: 'loading',
             duration: 1500
           })
+          wx.navigateTo({
+            url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + goodsshape + '&share_order_note=' + order_note + '&share_order_bg=' + order_bg + '&share_order_image=' + order_share_image
+          })
           setTimeout(function () {
-            wx.navigateTo({
-              url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + goodsshape + '&share_order_note=' + order_note + '&share_order_bg=' + order_bg + '&share_order_image=' + order_share_image
-            })
+            
           }, 1500)
          
         } else {
@@ -271,7 +272,7 @@ Page({
       is_buymyself: is_buymyself,
     })
     //that.setNavigation()
-    console.log('礼品信息 options:', options,'orders:',JSON.parse(options.orders))
+    console.log('order send 礼品信息 options:', options,'orders:',JSON.parse(options.orders))
     that.get_project_gift_para()
     if (receive == 1){
       console.log('礼品接受处理:', options)
@@ -396,7 +397,7 @@ Page({
       sku_share_image: orders[0]['order_sku'][0]['sku_share_image'],
     })
 
-    if (orders[0]['shape'] != 5) { // 贺卡请柬
+    if (orders[0]['shape'] != 5 && orders[0]['shape'] != 4) { // 5贺卡请柬 4互动卡 
       //获取带价格的分享图片  
       var navList2 = that.data.navList2
       var imageUrl = navList2.length > 0 ? navList2[0]['img'] : that.data.gift_logo
@@ -427,7 +428,7 @@ Page({
         }
       })
     }
-    if (is_buymyself == 1 || goodsshape==5) { //自购礼品
+    if (is_buymyself == 1 || goodsshape == 5 || goodsshape == 4 ) { //自购礼品 5贺卡请柬 4互动卡
       console.log('自购礼品无需分享到微信 ' )
       that.returnTapTag()
     } 
