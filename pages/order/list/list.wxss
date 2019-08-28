@@ -1,7 +1,7 @@
 @import "../../../lib/style/font.wxss";
 
 page {
-	background: #eee;
+	background: #fff;
 }
 
 .Hui-iconfont {
