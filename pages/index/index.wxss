@@ -434,7 +434,6 @@ page {
   position: absolute;
   top: 0;
   left: 0;
- /* margin-top: 120rpx; */
   z-index: 999;
 }
 .inlinetips image {

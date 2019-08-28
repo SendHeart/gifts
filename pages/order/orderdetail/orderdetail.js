@@ -489,6 +489,20 @@ Page({
     }
   },
 
+  showinteracton: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var order_id = e.currentTarget.dataset.orderId;
+    var order_shape = e.currentTarget.dataset.orderShape
+    var receive = that.data.send_rcv
+    if (order_shape == 4) {
+      wx.navigateTo({
+        url: '/pages/order/list/list?order_id=' + order_id + '&order_shape=' + order_shape + '&receive=' + receive
+      })
+    } 
+  },
+
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

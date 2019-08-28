@@ -1,50 +1,25 @@
 <import src="../../common/nav_order.wxml"/>
-
+<!--   
 <view class="banner"> 
  <template is="nav_order" data="{{navList_order, activeIndex2}}"/>
 </view>
-<view class="order-item" wx:for="{{orders}}" wx:key="">
-	<!-- 厂家logo缩略图 -->
-  <view class="shop-text">
-			<image class="logo-image" src="{{item.logo}}" mode="aspectFill"/>
-      <text class="shop-text" style="width:50%;font-size:14px;">{{item.shop_name}}</text>
-      <text bindtap="detailTapTag" class="shop-text" style="width:10%;font-size:12px;color:blue;text-align:left" data-order-object="{{item}}">详情</text>
-      <text style="width:20%;font-size:12px;color:brown;text-align:center">{{item.status>=4?'已收到':'未收到'}}</text>
-  </view>
-  
-	<view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="" class="carts-item" bindtap="showGoods" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
+ -->
+<view>
+	<view wx:for="{{orders}}" wx:for-item="mapping" wx:key="{{mapping.id}}" class="carts-item" bindtap="showGoods" data-inter-id="{{mapping.id}}" data-order-id="{{mapping.order_id}}" >
 		<view>
-			<!-- 缩略图 -->
-			<image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill"/>
+			<image class="carts-image" src="{{mapping.from_headimg}}" mode="aspectFill"/>
 		</view>
 		<view class="carts-text">
-			<!-- 商品标题 -->
-			<text class="carts-title">{{mapping.goods_name}}</text>
+			<text class="carts-title">微信昵称:{{mapping.from_nickname}}</text>
+      <text class="carts-title">申报姓名:{{mapping.name}}</text>
+      <text class="carts-title">手机号码:{{mapping.phone}}</text>
+      <text class="carts-title" space="ensp">性别:{{mapping.sex==1?'男':'女'}}      时间:{{mapping.register_time}}</text>
 			<view class="carts-subtitle">
-				<text>x{{mapping.sku_num}}</text>
+			
 			</view>
 		</view>
 	</view>
-	<view class="order-footer">
-    <view style="width:80%">
-		<text>金额:￥{{item.order_price}}元</text>
-		<text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{item.status == 1 ? '': 'hidden'}}" style="color:red" >去支付</text>
-   
-		<text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{status != 3 ? 'hidden': ''}}">确认收货</text>
-    </view>
-	<text bindtap="sendAginTapTag" style="width:20%;color:gray;text-align:center;border:1px solid; border-radius: 5px">{{(giftflag==0 && item.status==2)?'再送一次':''}}</text>
-  	<text bindtap="sendAginTapTag" style="width:20%;color:gray;text-align:center;border:1px solid; border-radius: 5px">{{(giftflag==1 &&item.status==2)?'回赠':''}}</text>
-	</view>
-	<view class="order-footer">
-  <!-- 
-		<text>收货地址</text>
-		<text>{{item.address}}</text>
-    -->
-    <view style="width:80%">
-    <text>{{giftflag==0?'送给:':'来自:'}}</text>
-		<image src="{{giftflag==0?item.rcv_headimg:item.from_headimg}}"></image>
-    <text>{{giftflag==0?item.rcv_nickname:item.from_nickname}}</text>
-    </view>
-	</view>
 </view>
- <button type="default" size="default" hover-class="button-hover" class="button" bindtap="getMoreOrdersTapTag" style="margin-top:10px;"> 更多...【{{page}}/{{all_rows}}】</button>
+<view class="sentbtn" hidden="{{hiddenmore}}">
+  <button bindtap="getMoreOrdersTapTag">加载更多</button>
+</view>
