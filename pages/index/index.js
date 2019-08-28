@@ -598,6 +598,7 @@ Page({
       return
     }
     that.get_project_gift_para()
+    that.reloadData()
     // 存为全局变量，控制支付按钮是否显示
     if (status) {
       that.setData({
@@ -635,7 +636,7 @@ Page({
         modalHiddenUserName: modalHiddenUserName,
       })
     } else {
-      that.reloadData()
+      
     }
   },
 

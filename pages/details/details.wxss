@@ -239,8 +239,8 @@ font-size: 32rpx;
 .share-buttons {
   display: flex;
   flex-direction: row;
-  justify-content:flex-end;
-  align-items: right;
+  justify-content:space-around;
+  align-items: center;
   margin-right:20rpx;
   padding: 0 auto;
 }
@@ -588,6 +588,7 @@ border: none;
     transform:translateX(1%);
     */
 }
+
 .card-register-info {
   width: 80%;
   position: absolute;
@@ -638,6 +639,26 @@ border: none;
   -webkit-line-clamp: 6; 
   width:536rpx;
   padding: 10rpx;
+}
+
+.card-register-addr { 
+    width:100%;
+    height: 30rpx;
+    line-height: 30rpx;
+    font-size:25rpx;
+    border:1px solid #eee;
+    margin-bottom:10rpx;
+    padding: 20rpx;
+}
+
+.card-register-addr text {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 10rpx;
+  line-height: 25rpx;
+  height: 25rpx;
 }
 .card-register-startend { 
   width:100%;

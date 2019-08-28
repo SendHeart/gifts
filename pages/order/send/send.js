@@ -394,7 +394,7 @@ Page({
       goods_flag: orders[0]['order_sku'][0]['goods_flag'],
       order_price: orders[0]['order_price'],
       sku_image: orders[0]['order_sku'][0]['sku_image'],
-      sku_share_image: orders[0]['order_sku'][0]['sku_share_image'],
+      sku_share_image: orders[0]['order_sku'][0]['sku_share_image'] ? orders[0]['order_sku'][0]['sku_share_image']:'',
     })
 
     if (orders[0]['shape'] != 5 && orders[0]['shape'] != 4) { // 5贺卡请柬 4互动卡 

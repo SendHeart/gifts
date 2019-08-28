@@ -37,15 +37,28 @@ Page({
     currenttime: now ? parseInt(now / 1000) : 0,
     is_buymyself:0,
     messageHidden: true,
+    cardregisterHidden: true,
+    needCardRegisterName:'请提供个人信息',
+    card_register_name:'',
+    card_register_phone: '',
+    card_register_gender: '',
   },
 
   formSubmit: function (e) {
     var that = this
     var formId = e.detail.formId;
     var form_name = e.currentTarget.dataset.name
+    var order_shape = that.data.order_shape
     console.log('formSubmit() formID：', formId, ' form name:', form_name)
     if (form_name == 'receivegift') {
-      that.receiveTapTag()
+      if(order_shape==4){
+        that.setData({
+          cardregisterHidden: !that.data.cardregisterHidden
+        })
+      }else{
+        that.receiveTapTag()
+      }
+     
     } else if (form_name == 'refresh') {
       var isreload = e.currentTarget.dataset.isreload ? e.currentTarget.dataset.isreload : 0
       that.setData({
@@ -53,7 +66,14 @@ Page({
         all_rows: 0,
       })
     } else if (form_name == 'resendgift') {
-      that.returnTapTag()
+      if (order_shape == 4 || order_shape==5) {
+        wx.switchTab({
+          url: '/pages/index/index'
+        })
+      } else {
+        that.returnTapTag()
+      }
+     
     }
     if (formId) that.submintFromId(formId)
   },
@@ -105,12 +125,72 @@ Page({
       wx.navigateTo({
         url: '/pages/list/list?navlist_title=互动卡'
       })
-    
     }else{
       wx.switchTab({
         url: '../../hall/hall'
       })
     }
+  },
+
+  radiochange: function (e) {
+    var that = this
+    var card_register_gender = e.detail.value
+    //console.log('radio发生change事件，携带的value值为：', e.detail.value)
+    that.setData({
+      card_register_gender: card_register_gender
+    })
+  },
+
+  card_register_phone: function (e) {
+    var that = this
+    var card_register_phone = e.detail.value
+    that.setData({
+      card_register_phone: card_register_phone
+    })
+  },
+
+  card_register_name: function (e) {
+    var that = this
+    var card_register_name = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_register_name: card_register_name
+    })
+  },
+
+  //按钮点击事件  获取姓名
+  confirmCardRegisterInfo: function () {
+    var that = this
+    var card_register_name = that.data.card_register_name
+    var card_register_phone = that.data.card_register_phone
+    var card_register_gender = that.data.card_register_gender
+    if (!util.checkPhoneNumber(card_register_phone)) {
+      wx.showToast({
+        title: '手机号码无效',
+        icon: 'none',
+        duration: 1500
+      })    
+      return 
+    }
+    if (card_register_name && card_register_gender && card_register_phone) {
+      that.receiveTapTag()
+      that.setData({
+        cardregisterHidden: !that.data.cardregisterHidden
+      })
+
+    } else {
+      var needCardRegisterName = '需要提供姓名、性别和手机号'
+      that.setData({
+        needCardRegisterName: needCardRegisterName
+      })
+    }
+  },
+
+  //按钮点击事件  取消
+  cancelCardRegisterInfo: function () {
+    var that = this
+    that.setData({
+      cardregisterHidden: !that.data.cardregisterHidden
+    })
   },
 
   receiveTapTag: function () {
@@ -276,6 +356,8 @@ Page({
       }
     })
   },
+
+  //贺卡请柬 互动卡 接受处理
   confirm_card:function(){
     var that = this
     var shop_type = that.data.shop_type
@@ -288,10 +370,29 @@ Page({
     var nickname = that.data.userInfo.nickName
     var headimg = that.data.userInfo.avatarUrl
     var order_shape = that.data.order_shape
-    if ((order_shape == 5 || order_shape == 4)&& order_m_id==m_id) {
-      that.goBack() //避免自己收自己的
+    var card_register_name = that.data.card_register_name ? that.data.card_register_name:''
+    var card_register_phone = that.data.card_register_phone ? that.data.card_register_phone:''
+    var card_register_gender = that.data.card_register_gender ? that.data.card_register_gender:''
+    if ((order_shape == 5 || order_shape == 4) && order_m_id==m_id) { //贺卡请柬 互动卡 不能自己接受
+      if (order_shape == 5) {
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=贺卡请柬'
+        })
+      } else if (order_shape == 4) {
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=互动卡'
+        })
+      }
       return
     }
+    var card_register_info = [
+      { 
+        card_register_name: card_register_name, 
+        card_register_phone: card_register_phone, 
+        card_register_gender: card_register_gender, 
+      },
+    ]
+
     wx.request({ //更新收礼物状态
       url: weburl + '/api/client/update_order_status',
       method: 'POST',
@@ -303,17 +404,27 @@ Page({
         headimg: headimg,
         order_id: order_id,
         status_info: 'receive',
+        order_shape: order_shape,
+        card_register_info: JSON.stringify(card_register_info[0]),
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('order receive set_address()礼物已接收:', res.data);
+        console.log('order receive set_address()礼物已接收:', res.data)
+        var title = ''
+        if (order_shape==5){
+          title = '已接收'
+        } else if (order_shape==4){
+          title = '提交完成'
+        }else{
+          title ='礼物已接收'
+        }
         if (res.data.status == 'y') {
           wx.showToast({
-            title: '礼物已接收',
-            icon: 'success',
+            title: title,
+            icon: 'none',
             duration: 1500
           })
           that.setData({
@@ -337,7 +448,7 @@ Page({
         } else {
           console.log('礼物接收失败 order_no:', that.data.order_no)
           wx.showToast({
-            title: res.data.info ? res.data.info : '礼物接收失败',
+            title: res.data.info ? res.data.info : '系统错误',
             icon: 'loading',
             duration: 1500
           })
@@ -546,6 +657,8 @@ Page({
     var is_buymyself = that.data.is_buymyself
     var isreload = that.data.isreload
     var order_price = 0
+    var card_register_info = ''
+    var is_register = 0
     //从服务器获取订单列表
     if (is_buymyself!=1){
       setTimeout(function () { //3秒超时
@@ -643,7 +756,8 @@ Page({
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']){
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
-           
+            card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
+            is_register = m_desc['card_register_info'] ? 1 : 0 
             if (voice_url) {
               wx.downloadFile({
                 url: voice_url, //音频文件url                  
@@ -675,8 +789,10 @@ Page({
             order_image: orderskus[0]['sku_image'],
             receive_status: receive_status,
             order_m_id: order_m_id,
+            card_register_info: card_register_info,
+            is_register: is_register,
           })
-          console.log('order sku list:', orderskus)
+          console.log('order sku list:', orderskus, ' is_register:', that.data.is_register,' card_register_info:', that.data.card_register_info)
           app.globalData.is_receive = 0 
           var order_price = orderObjects[0]
           if(is_buymyself==1){ //自购礼品 直接接收

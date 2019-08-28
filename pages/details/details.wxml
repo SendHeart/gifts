@@ -1,20 +1,16 @@
 <import src="../../wxParse/wxParse.wxml" />
 <view  class="pagewrap" >
   <view class="share-goods"  >
-    <view wx:if="{{goodsshape==1}}" class="share-buttons">
+    <view class="share-buttons" style="{{(goodsshape!=4&&goodsshape!=5)?'justify-content: flex-end;':''}}">
+       <view  wx:if="{{goodsshape==4||goodsshape==5}}" class="btnshare" bindtap="upimg"><!-- -->
+        <image class="shareto" src="../../images/image.png"></image>
+        上传图片
+      </view>
       <view class="btnshare" bindtap="sharegoodsTapTag">
         <image class="shareto" src="../../images/shareto.png"></image>
-        分享
+        {{(goodsshape!=4 && goodsshape!=5)?'分享':'分享图片'}}
       </view>
     </view>
-    <form wx:if="{{goodsshape==4 && is_register==1}}" bindsubmit="formSubmit" data-name='mycardregister' report-submit="true" >
-       <view class="share-buttons" >
-        <button class="btnshare" formType="submit"><!--bindtap="uploadcardTapTag" -->
-          <image class="shareto" src="../../images/image.png"></image>
-          我有报名海报
-        </button>
-      </view>
-    </form>
   </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}">
@@ -53,6 +49,9 @@
               </view>
               <view  bindtap="card_register" class="card-register-content" style="color:{{current_card_color}}">
                 <text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text>
+              </view>
+               <view  bindtap="card_register" class="card-register-addr" style="color:{{current_card_color}};">
+                <text space="ensp" >{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</text>
               </view>
               <view wx:if="{{goodsshape==4 && is_register==1}}" bindtap="card_register"  class="card-register-biz" style="color:{{current_card_color}}">
                 <view>{{card_register_lim>0?card_register_lim:'报名人数:不限'}}</view>

@@ -570,7 +570,9 @@ Page({
     var goods_image_cache = wx.getStorageSync('goods_image_cache_' + share_goods_id)
     var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache_' + share_goods_id)
   
-    if (share_goods_shape == 5 || share_goods_shape == 4 || share_goods_shape==undefined) return
+    if (share_goods_shape == 5 || share_goods_shape == 4 || share_goods_shape==undefined) {
+      
+    }
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -1219,9 +1221,9 @@ Page({
         var card_register_addr = that.data.card_register_addr
         console.log('detail goodsmodel is_buymyself:', is_buymyself, 'goodsshape:', goodsshape)
         if (goodsshape == 4 && is_register==1 ){
-          if (card_register_title == '' || card_register_content == '' || card_register_addr==''){
+          if (card_register_content == '' || card_register_addr==''){
             wx.showToast({
-              title: "信息不全,请补齐标题、说明和活动地址",
+              title: "信息不全,请补齐说明和活动地址",
               icon: 'none',
               duration: 1500,
             })

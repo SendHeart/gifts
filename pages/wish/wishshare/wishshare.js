@@ -402,6 +402,7 @@ Page({
             console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
+           
             if (voice_url) {
               wx.downloadFile({
                 url: voice_url, //音频文件url                  
@@ -416,12 +417,11 @@ Page({
                 }
               })
             }
-            var card_register_info = m_desc['card_register_info']
-            if (card_register_info){
-              that.setData({
-                card_register_info: card_register_info,
-              })
-            }
+            //var card_register_info = m_desc['card_register_info']
+            that.setData({
+              card_register_info: m_desc['card_register_info'] ? m_desc['card_register_info']:'',
+              card_color: m_desc['color'] ? m_desc['color']:'#333'
+            })
           }
         }
       })
@@ -577,6 +577,8 @@ Page({
 
   sharegoods: function () {
     var that = this
+    var share_order_shape = that.data.share_order_shape
+    if (share_order_shape==4) return
     that.setData({
       notehidden: !that.data.notehidden,
     })
@@ -661,11 +663,12 @@ Page({
     var share_order_shape = that.data.share_order_shape
     var share_order_bg = that.data.share_order_bg
     var card_register_info = that.data.card_register_info //shape:4 互动卡 
+    var card_color = that.data.card_color //贺卡请柬文字颜色
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id
     wx.showLoading({
       title: '生成中',
-      mask: true
+      //mask: true
     })
     
     if (activity_id>0){
@@ -774,7 +777,7 @@ Page({
               top: 120,
               left: 85,
               width: 350,
-              height: 350
+              height: share_goods_price>0?350:480
             },
             {
               type: 'text',
@@ -782,7 +785,7 @@ Page({
               fontSize: 20,
               color: '#333',
               textAlign: 'left',
-              top: 490,
+              top: share_goods_price>0?490:620,
               left: 85,
               bolder: true,
               lineHeight: 25,
@@ -792,13 +795,13 @@ Page({
             },
             {
               type: 'text',
-              content: '￥' + share_goods_price,
+              content: share_goods_price>0?'￥' + share_goods_price:'',
               fontSize: 20,
               color: '#444444',
               textAlign: 'left',
-              top: 550,
+              top: share_goods_price > 0 ? 550 : 670,
               left: 85,
-           
+              lineHeight: 25,
             },
             {
               type: 'text',
@@ -806,7 +809,7 @@ Page({
               fontSize: 20,
               color: '#444',
               textAlign: 'left',
-              top: 630,
+              top: share_goods_price>0?630:695,
               left: 85,
               bolder: true,
             },
@@ -816,7 +819,7 @@ Page({
               fontSize: 18,
               color: '#666',
               textAlign: 'left',
-              top: 660,
+              top: share_goods_price > 0 ? 660 :720 ,
               left: 85,
               lineHeight: 25,
               MaxLineNumber: 2,
@@ -828,7 +831,7 @@ Page({
               top: 770,
               left: 85,
               background: '#eeeeee',
-              width: 350,
+              width: 360,
               height: 1,
             },
             {
@@ -884,9 +887,9 @@ Page({
             },
             {
               type: 'text',
-              content: card_register_info['card_register_title'],
+              content: card_register_info['card_register_title'] ? card_register_info['card_register_title']:'',
               fontSize: 35,
-              color: card_register_info['card_color'],
+              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
               top: 60,
               left: 50,
@@ -898,9 +901,9 @@ Page({
             },
             {
               type: 'text',
-              content: card_register_info['card_register_content'],
+              content: card_register_info['card_register_content'] ? card_register_info['card_register_content']:'',
               fontSize:28,
-              color: card_register_info['card_color'],
+              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               top: 130,
               left: 50,
               lineHeight: 50,
@@ -912,9 +915,9 @@ Page({
             },
             {
               type: 'text',
-              content: '地址:'+card_register_info['card_register_addr'],
+              content: '地址:' + card_register_info['card_register_addr'] ? card_register_info['card_register_addr']:'',
               fontSize: 22,
-              color: card_register_info['card_color'],
+              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
               top: 520,
               left: 50,
@@ -924,9 +927,9 @@ Page({
             },
             {
               type: 'text',
-              content: '开始:' + card_register_info['register_start_date'] + ' ' + card_register_info['register_start_time'],
+              content: '开始:' + card_register_info['register_start_date'] ? card_register_info['register_start_date'] : '' + ' ' + card_register_info['register_start_time'] ? card_register_info['register_start_time']:'',
               fontSize: 22,
-              color: card_register_info['card_color'],
+              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
               top: 570,
               left: 50,
@@ -937,9 +940,9 @@ Page({
             },
             {
               type: 'text',
-              content: '截至:' + card_register_info['register_end_date'] + ' ' + card_register_info['register_end_time'],
+              content: '截至:' + card_register_info['register_end_date'] ? card_register_info['register_end_date'] : '' + ' ' + card_register_info['register_end_time'] ? card_register_info['register_end_time']:'',
               fontSize: 22,
-              color: card_register_info['card_color'],
+              color: card_register_info['card_color'] ? card_register_info['card_color']:'',
               textAlign: 'left',
               top: 620,
               left: 50,
@@ -958,8 +961,8 @@ Page({
             },
             {
               type: 'text',
-              content: nickname.substring(0,13),
-              color: card_register_info['card_color'],
+              content: nickname?nickname.substring(0,13):'',
+              color: card_register_info['card_color'] ? card_register_info['card_color']:'',
               fontSize: 22,
               top: 720,
               left: 150,
@@ -1001,7 +1004,7 @@ Page({
               type: 'text',
               content: share_order_note,
               fontSize: 18,
-              color: '#666',
+              color: card_color ? card_color : '#333',
               textAlign: 'left',
               top: 360,
               left: 100,
@@ -1023,7 +1026,7 @@ Page({
               type: 'text',
               content: nickname,
               fontSize: 18,
-              color: '#333',
+              color: card_color ? card_color : '#333',
               textAlign: 'left',
               top: 620,
               left: 210,
@@ -1035,7 +1038,7 @@ Page({
               type: 'text',
               content: '长按识别二维码听声音',
               fontSize: 18,
-              color: '#333',
+              color: card_color ? card_color : '#333',
               textAlign: 'left',
               top: 710,
               left: 85,
@@ -1046,7 +1049,7 @@ Page({
               type: 'text',
               content: '送心礼物，开启礼物社交时代!',
               fontSize: 18,
-              color: '#999',
+              color: card_color ? card_color : '#999',
               textAlign: 'left',
               top: 740,
               left: 85,

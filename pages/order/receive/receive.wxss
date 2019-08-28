@@ -59,6 +59,41 @@ page {
   margin-top: 0rpx;
   margin-left: 20rpx;
 }
+
+
+.share-goods {
+  width: 100%;
+  padding-bottom: 20rpx;
+  padding-top: 20rpx;
+  position: absolute;
+  top: 0;
+  z-index: 9; 
+}
+
+.share-buttons {
+  display: flex;
+  flex-direction: row;
+  justify-content:space-around;
+  align-items: center;
+  margin-right:20rpx;
+  padding: 0 auto;
+}
+.share-buttons .btnshare {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  background:rgba(0, 0, 0, 0.5);
+  font-size: 24rpx;
+  color: #fff;
+  padding: 6rpx 20rpx;
+  line-height: 2;
+  border-radius: 10rpx;
+}
+.share-buttons .shareto {
+  width: 32rpx;
+  height: 32rpx;
+  margin:8rpx 6rpx 0 0;
+}
 .order-item-banner {
   width: 100%;
   display: flex;
@@ -137,8 +172,32 @@ page {
   height: 150rpx;
 }
 
-/*立即按钮*/
+.modalbox {
+  background: #ffffff;
+  margin-top: 10px;
+}
 
+.card-register-input {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-register-input input {
+  width: 50%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin: 0 0 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #F3F3F3;
+  border-radius: 14rpx;
+}
+
+/*立即按钮*/
 .sentbtn {
   position: absolute;
   bottom:0;
@@ -338,4 +397,103 @@ swiper-item image {
     margin-left:80rpx;
     font-size:25rpx;
     z-index: 1000;
+}
+
+.card-register-info {
+  width: 80%;
+  position: absolute;
+  top: 0;
+  margin-left:10%;
+  margin-top:90rpx;
+  display: flex;
+  flex-direction:column; 
+  z-index: 2; 
+  border-radius: 20rpx;
+}
+
+.card-register-title { 
+    width:100%;
+    height: 50rpx;
+    line-height: 50rpx;
+    font-size:35rpx;
+    margin-bottom:10rpx;
+    padding: 20rpx;
+}
+.card-register-title text {
+  display: -webkit-box;
+  
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding: 10rpx;
+  line-height: 30rpx;
+  height: 30rpx;
+}
+.card-register-content { 
+  width:100%;
+  height: 380rpx;
+  font-size:35rpx;
+  padding: 20rpx;
+  margin-bottom:10rpx;
+}
+.card-register-content text {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 6; 
+  width:536rpx;
+  padding: 10rpx;
+}
+
+.card-register-addr { 
+  width:100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  font-size:25rpx;
+  margin-bottom:10rpx;
+  padding: 10rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+}
+.card-register-addr text {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 25rpx;
+  height: 25rpx;
+}
+.card-register-startend { 
+  width:100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  font-size:25rpx;
+  padding: 10rpx;
+}
+.card-register-act-startend { 
+  width:100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+
+  font-size:25rpx;
+  padding: 10rpx;
+}
+.card-register-biz { 
+  width:100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  font-size:25rpx;
+  padding: 10rpx;
 }
