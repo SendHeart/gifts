@@ -24,6 +24,7 @@ page {
   height: 100%;
   overflow-x: hidden;
   /* -webkit-overflow-scrolling:touch; IPHONE 不能弹出商品类型窗口 */
+  
 }
 .pagewrap {
   width: 100%;
@@ -607,90 +608,81 @@ border: none;
     height: 50rpx;
     line-height: 50rpx;
     font-size:35rpx;
-   
     border:1px solid #eee;
     margin-bottom:10rpx;
-    padding: 20rpx;
 }
 .card-register-title text {
   display: -webkit-box;
-  
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding: 10rpx;
   line-height: 30rpx;
   height: 30rpx;
 }
 .card-register-content { 
   width:100%;
-  height: 380rpx;
-  font-size:35rpx;
+  height: 360rpx;
+  font-size:28rpx;
   border:1px solid #eee; 
   padding: 20rpx;
   margin-bottom:10rpx;
 }
-.card-register-content text {
+.card-register-content textarea {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6; 
-  width:536rpx;
+  -webkit-line-clamp: 8; 
+  width:539rpx;
   padding: 10rpx;
 }
-
-.card-register-addr { 
-    width:100%;
-    height: 30rpx;
-    line-height: 30rpx;
-    font-size:25rpx;
-    border:1px solid #eee;
-    margin-bottom:10rpx;
-    padding: 20rpx;
-}
-
-.card-register-addr text {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 10rpx;
-  line-height: 25rpx;
-  height: 25rpx;
-}
-.card-register-startend { 
+.card-register-owner { 
   width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: center;
-  font-size:25rpx;
-  padding: 10rpx;
-}
-.card-register-act-startend { 
-  width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: center;
-
-  font-size:25rpx;
-  padding: 10rpx;
-}
-.card-register-biz { 
-  width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
+  height: 55rpx;
+  line-height: 55rpx;
   display:flex;
   flex-direction:row;
   justify-content: space-around;
   border:1px solid #eee; 
   font-size:25rpx;
-  padding: 10rpx;
+  align-items: center;
+}
+
+.card-register-addr { 
+    width:100%;
+    height: 55rpx;
+    line-height: 55rpx;
+    font-size:25rpx;
+    border:1px solid #eee;
+    align-items: center;
+}
+.card-register-startend { 
+  width:100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  font-size:25rpx;
+}
+.card-register-act-startend { 
+  width:100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  font-size:25rpx;
+}
+.card-register-biz { 
+  width:100%;
+  display:flex;
+  flex-direction:row;
+  justify-content: space-around;
+  border:1px solid #eee; 
+  font-size:25rpx;
+  align-items: center;
 }
 .share-card-register-image {
     width: 100%;
@@ -748,7 +740,7 @@ border: none;
     display:flex;
     flex-direction:row;
     margin-bottom: 150rpx;
-    margin-left:80rpx;
+    margin-left:10rpx;
     font-size:25rpx;
 }
 .share-goods-card-color{
@@ -796,6 +788,17 @@ border: none;
   border-radius: 14rpx;
 }
 
+.card-register-note picker {
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin: 0 0 0rpx 20rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #F3F3F3;
+  border-radius: 14rpx;
+}
 .picker-box{
   background: #fff;
   width: 100%;

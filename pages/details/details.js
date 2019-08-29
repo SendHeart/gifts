@@ -116,6 +116,8 @@ Page({
     card_register_right_str: '',
     card_register_right_picker: ['参与者可看', '管理者可看', '公开'],
     card_register_right_index: 0,  
+    card_register_reqid_picker: ['0无需证件', '1身份证', '2微信号', '3QQ号', '4邮箱','5学号','6工号'],
+    card_register_reqid_index: 0,  
   },
 
   bindPickerChange_card_color: function (e) {
@@ -346,9 +348,12 @@ Page({
   },
   cardregisterLimTapTag: function (e) {
     var that = this
+    var card_register_lim = e.detail.value
+    card_register_lim.replace('不限', '')
     that.setData({
-      card_register_lim: e.detail.value
+      card_register_lim: card_register_lim
     })
+    console.log('card_register_lim:', that.data.card_register_lim)
   }, 
   cardregisterFeeTapTag: function (e) {
     var that = this;
@@ -365,9 +370,9 @@ Page({
   }, 
   cardregisterOwnerNameTapTag: function (e) {
     var that = this
-    var card_register_ownerrname = util.filterEmoji(e.detail.value)
+    var card_register_ownername = util.filterEmoji(e.detail.value)
     that.setData({
-      card_register_ownerrname: card_register_ownerrname
+      card_register_ownername: card_register_ownername
     })
   }, 
   cardregisterOwnerWechatTapTag: function (e) {
@@ -416,14 +421,16 @@ Page({
         card_register_ownername: that.data.card_register_ownername,
         card_register_ownerwechat: that.data.card_register_ownerwechat,
         card_register_right_index: that.data.card_register_right_index,
+        card_register_reqid_index: that.data.card_register_reqid_index,
       }
     ]
     wx.setStorageSync('card_register_info',JSON.stringify(card_register_info[0]))
+    console.log('card_register_info:', wx.getStorageSync('card_register_info'))
     that.setData({
       cardregisterhidden: !that.data.cardregisterhidden,
     })
   },
-   
+  
   bindChangeStartDate: function (e) {
     var that = this;
     var start_date = e.detail.value
@@ -546,7 +553,15 @@ Page({
     that.setData({
       card_register_right_index: card_register_right_index,
     })
-    console.log('card_register_right:' + that.data.card_register_right)
+    console.log('card_register_right:' + that.data.card_register_right_index)
+  },
+  bindChangeRegisterReqid: function (e) {
+    var that = this;
+    var card_register_reqid_index = e.detail.value
+    that.setData({
+      card_register_reqid_index: card_register_reqid_index,
+    })
+    console.log('card_register_reqid_index:' + that.data.card_register_reqid_index)
   },
   sharegoodsTapTag: function () {
     var that = this
@@ -874,6 +889,9 @@ Page({
         var card_register_lim = 0
         var card_register_fee = 0
         var card_register_right_index = 0
+        var card_register_reqid_index = 0
+        var card_register_ownername = ''
+        var card_register_ownerwechat = ''
         var card_content = ''
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
@@ -895,14 +913,17 @@ Page({
         var image_pic = []
         var card_register_prev = wx.getStorageSync('card_register_info')
     console.log('detail options:', options, 'scene:', scene, 'is_register:', is_register, 'card_register_info:', card_register_prev)
-        if (is_register == 1 && card_register_prev){  
+        if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']
           card_register_title = card_register_info['card_register_title']
           card_register_addr = card_register_info['card_register_addr']
           card_register_lim = card_register_info['card_register_lim']
           card_register_fee = card_register_info['card_register_fee']
-          card_register_right_index = card_register_info['card_register_right']
+          card_register_right_index = card_register_info['card_register_right_index']
+          card_register_reqid_index = card_register_info['card_register_reqid_index']
+          card_register_ownername = card_register_info['card_register_ownername']
+          card_register_ownerwechat = card_register_info['card_register_ownerwechat']
         }
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
@@ -916,6 +937,9 @@ Page({
           card_register_lim: card_register_lim ? card_register_lim:0,
           card_register_fee: card_register_fee ? card_register_fee:0,
           card_register_right_index: card_register_right_index ? card_register_right_index:0,
+          card_register_reqid_index: card_register_reqid_index ? card_register_reqid_index : 0,
+          card_register_ownername: card_register_ownername ? card_register_ownername : '',
+          card_register_ownerwechat: card_register_ownerwechat ? card_register_ownerwechat : '',
           card_content: card_content,
         })
         if(scene){
@@ -1286,9 +1310,11 @@ Page({
     },
     buyMyself: function () {
       var that = this
+      var goodsshape = that.data.goodsshape
       that.setData({
         is_buymyself: 1,
       })
+      if (goodsshape==4) that.confirmcardregister()
       that.goodsmodel()
     },
   buyGift: function () {

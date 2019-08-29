@@ -196,7 +196,19 @@ page {
   background: #F3F3F3;
   border-radius: 14rpx;
 }
-
+.card-register-input textarea {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+  background: #F3F3F3;
+  width:420rpx;
+  height:200rpx;
+  padding: 10rpx;
+  border-radius: 14rpx;
+}
 /*立即按钮*/
 .sentbtn {
   position: absolute;
@@ -431,8 +443,8 @@ swiper-item image {
 }
 .card-register-content { 
   width:100%;
-  height: 380rpx;
-  font-size:35rpx;
+  height: 450rpx;
+  font-size:32rpx;
   padding: 20rpx;
   margin-bottom:10rpx;
 }
@@ -442,7 +454,7 @@ swiper-item image {
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp: 6; 
+  -webkit-line-clamp: 9; 
   width:536rpx;
   padding: 10rpx;
 }
@@ -483,7 +495,6 @@ swiper-item image {
   display:flex;
   flex-direction:row;
   justify-content: flex-start;
-
   font-size:25rpx;
   padding: 10rpx;
 }

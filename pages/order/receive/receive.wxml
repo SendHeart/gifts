@@ -5,10 +5,14 @@
   <text wx:if='{{receive_status==1}}'>{{(order_shape==5||order_shape==4)?'点击回赠，也给Ta送一个惊喜吧':'点击回赠，也给Ta送一个礼物吧'}}</text>
 </view>
 <view class="share-goods"  >
-    <view class="share-buttons" style="{{(order_shape==4 || order_shape==5)?'justify-content: flex-start;':''}}">
-       <view  wx:if="{{order_shape==4||order_shape==5}}" class="btnshare" bindtap="returnTapTag"><!-- -->
-        <image class="shareto" src="../../../images/home-white.png"></image>
-        去商城
+    <view class="share-buttons" style="{{(order_shape==5)?'justify-content: flex-start;':''}}">
+       <view  wx:if="{{order_shape==4||order_shape==5}}" class="btnshare" data-type="1" bindtap="returnTapTag"><!-- -->
+        <image class="shareto" src="../../../images/icon_shopping.png"></image>
+        商城
+      </view>
+       <view  wx:if="{{order_shape==4}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag"><!-- -->
+        <image class="shareto" src="../../../images/icon_normal.png"></image>
+        详情
       </view>
     </view>
   </view>
@@ -20,34 +24,35 @@
     <view style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
   </view>
     
-  <view wx:if="{{order_shape==4  && is_register==1 }}" class="card-register-info">
+  <view wx:if="{{order_shape==4}}" class="card-register-info">
     <view class="card-register-title" style="color:{{card_register_info['card_color']}};">
       <text space="ensp" >{{card_register_info['card_register_title']}}</text>
     </view>
     <view  class="card-register-content" style="color:{{card_register_info['card_color']}}">
       <text space="ensp" >{{card_register_info['card_register_content']}}</text>
     </view>
+    <view class="card-register-biz" style="color:{{card_register_info['card_color']}};margin-top:20rpx;">
+      <text space="ensp">{{card_register_info['card_register_ownername']?'发起人:'+card_register_info['card_register_ownername']:''}}</text>
+      <text space="ensp">{{card_register_info['card_register_ownerwechat']?'\t 微信:'+card_register_info['card_register_ownerwechat']:''}}</text>
+    </view>
+    <view class="card-register-biz" style="color:{{card_register_info['card_color']}}">
+      <text>{{card_register_info['card_register_lim']>0?'限制人数:'+card_register_info['card_register_lim'] :''}}</text>
+      <text>{{card_register_info['card_register_fee']>0?'费用:'+card_register_info['card_register_fee']:''}}</text>
+    </view>
     <view class="card-register-addr" style="color:{{card_register_info['card_color']}};">
       <text space="ensp">{{card_register_info['card_register_addr']?'活动地址:'+card_register_info['card_register_addr']:''}}</text>
     </view>
-    <view class="card-register-biz" style="color:{{card_register_info['card_color']}}">
-      <text>{{card_register_info['card_register_lim']>0?'报名人数:'+card_register_info['card_register_lim'] :'报名人数:不限'}}</text>
-      <text>{{card_register_info['card_register_fee']>0?'报名费:'+card_register_info['card_register_fee']:''}}</text>
+    
+    <!--
+    <view wx:if="{{is_register==1}}" class="card-register-startend" style="color:{{card_register_info['card_color']}}"> 
+      <text space="ensp">'开始日期'}}:{{card_register_info['register_start_date']}} {{card_register_info['register_start_time']}}</text>
+      <text space="ensp"> 至 {{card_register_info['register_end_date']}} {{card_register_info['register_end_time']}}</text>
     </view>
-    <view class="card-register-startend" style="color:{{card_register_info['card_color']}}"> 
-      <text space="ensp" >报名日期:{{card_register_info['register_start_date']}} {{card_register_info['register_start_time']}}</text>
-      <text space="ensp" > 至 {{card_register_info['register_end_date']}} {{card_register_info['register_end_time']}}</text>
-    </view>
-    <!-- view class="card-register-startend" style="color:{{card_register_info['card_color']}}">
-     
-    </view -->
+    -->
     <view class="card-register-act-startend" style="color:{{card_register_info['card_color']}}">
       <text space="ensp" >活动日期:{{card_register_info['action_start_date']}} {{card_register_info['action_start_time']}}</text>
-      <text space="ensp" > 至 {{card_register_info['action_end_date']}} {{card_register_info['action_end_time']}}</text>
+      <text space="ensp" > ~~ {{card_register_info['action_end_date']}} {{card_register_info['action_end_time']}}</text>
     </view>
-    <!-- view class="card-register-act-startend" style="color:{{card_register_info['card_color']}}">
-      
-    </view -->
   </view>
   <view wx:if="{{(order_shape==5||order_shape==4)}}" class="share-play-rec" bindtap="play_rec" >
     <image src="../../../images/notification.png" style="width:80rpx;height:80rpx;"></image>
@@ -75,8 +80,8 @@
   </view>
 </view>
 <view wx:if="{{receive_status<=1}}" class="sentbtn" style="z-index:2;">
-  <form bindsubmit="formSubmit"  data-name='receivegift' report-submit="true"  hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' >
-    <button class="button" style="width:200rpx;" formType="submit" >{{(order_shape==5||order_shape==4)?'确定':'拆开'}}</button> <!-- bindtap="receiveTapTag" -->
+  <form bindsubmit="formSubmit"  data-name='receivegift' report-submit="true" hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' >
+    <button class="button" style="width:200rpx;" formType="submit" >{{button_name?button_name:'拆开'}}</button> <!-- bindtap="receiveTapTag" -->
   </form>
   <form bindsubmit="formSubmit"  data-name='refresh' report-submit="true"  hidden='{{overtime_status==0?true:false}}' >  
     <button formType="submit"  style="width:200rpx;">请刷新重试</button> <!-- bindtap="refresh"  data-isreload="1" -->
@@ -88,17 +93,21 @@
     </view>
   </view>
   <form bindsubmit="formSubmit"  data-name='resendgift' report-submit="true"  hidden='{{(receive_status==0 || overtime_status==1)?true:false}}' >  
-    <button class="button" formType="submit"  style="width:200rpx;">{{(order_shape==5||order_shape==4)?'返回':'回赠'}}</button> <!-- bindtap="returnTapTag" -->
+    <button class="button" formType="submit"  style="width:200rpx;">{{(order_shape==4)?'返回':'回赠'}}</button> <!-- bindtap="returnTapTag" -->
   </form>
   <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:15rpx;" wx:if='{{receive_status==1 && overtime_status==0}}'>
     <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
   </view>
 </view>
+<view >
 <modal class="modalbox" title="{{needCardRegisterName}}"  hidden="{{cardregisterHidden}}" confirm-text="确定"   bindconfirm="confirmCardRegisterInfo" cancel-text="返回" bindcancel="cancelCardRegisterInfo" >
-  <view style="height:120px;">
+  <view style="height:250rpx;">
     <view class="card-register-input">
       <input style="width:200rpx;" value="{{card_register_name}}" placeholder-style="text-align:center;" placeholder="请输入姓名"  bindinput='card_register_name' focus="{{inputShowed}}" type="text" maxlength='20' />   
-      <input style="width:200rpx;"  value="{{card_register_phone}}"  placeholder-style="text-align:center;" placeholder="请输入手机号"  bindinput='card_register_phone' focus="{{inputShowed}}" type="number" maxlength='20' />  
+      <input style="width:200rpx;"  value="{{card_register_phone}}"  placeholder-style="text-align:center;" placeholder="请输入手机号"  bindinput='card_register_phone' focus="{{inputShowed}}" type="number" maxlength='20' />   
+    </view>
+    <view wx:if="{{card_register_reqid_index>0}}" class="card-register-input">
+      <input style="width:280rpx;" value="{{card_register_reqid_value}}" placeholder-style="text-align:center;" placeholder="请输入{{card_register_req[card_register_info['card_register_reqid_index']]}}" type="{{card_register_reqid_index==1?'idcard':'text'}}" bindinput='card_register_req' focus="{{inputShowed}}" maxlength='20' />   
     </view>
     <view class="card-register-input">
       <radio-group bindchange="radiochange">
@@ -107,4 +116,9 @@
       </radio-group>
     </view>
   </view>
+  <view class="card-register-input">
+    <textarea style="width:100%;" value="{{card_register_note}}" placeholder-style="text-align:center;" placeholder="您的留言"  bindinput='card_register_note' focus="{{inputShowed}}" type="text" maxlength='60'></textarea>
+  </view>
 </modal>
+</view>
+

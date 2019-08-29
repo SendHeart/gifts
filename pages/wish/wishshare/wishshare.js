@@ -868,6 +868,11 @@ Page({
       })
     } else if (share_order_shape == 4) { //互动卡
       console.log('share_order_shape:', share_order_shape)
+      var card_addr = card_register_info['card_register_addr'] ?'地址:' + card_register_info['card_register_addr']: ''
+      var start_time = card_register_info['register_start_date'] ? '时间:' + card_register_info['register_start_date']+' ' : '' 
+      start_time += card_register_info['register_start_time'] ? card_register_info['register_start_time'] : ''
+      var end_time = card_register_info['register_end_date'] ? '~~' + card_register_info['register_end_date']+' ' : ''   
+      end_time += card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
       that.setData({
         painting: {
           width: 520,
@@ -915,11 +920,11 @@ Page({
             },
             {
               type: 'text',
-              content: '地址:' + card_register_info['card_register_addr'] ? card_register_info['card_register_addr']:'',
+              content: card_register_info['card_register_addr'] ? '地址:' +card_register_info['card_register_addr']:'',
               fontSize: 22,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
-              top: 520,
+              top: 550,
               left: 50,
               width: 300,
               height: 40,
@@ -927,26 +932,26 @@ Page({
             },
             {
               type: 'text',
-              content: '开始:' + card_register_info['register_start_date'] ? card_register_info['register_start_date'] : '' + ' ' + card_register_info['register_start_time'] ? card_register_info['register_start_time']:'',
+              content: start_time,
               fontSize: 22,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
-              top: 570,
+              top: 590,
               left: 50,
-              width: 300,
+              width: 150,
               height: 40,
               breakWord: false,
               bolder: false,
             },
             {
               type: 'text',
-              content: '截至:' + card_register_info['register_end_date'] ? card_register_info['register_end_date'] : '' + ' ' + card_register_info['register_end_time'] ? card_register_info['register_end_time']:'',
+              content: end_time,
               fontSize: 22,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'',
               textAlign: 'left',
-              top: 620,
-              left: 50,
-              width: 300,
+              top: 590,
+              left: 270,
+              width: 150,
               height: 40,
               breakWord: false,
             },

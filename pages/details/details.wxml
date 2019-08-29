@@ -44,56 +44,84 @@
             </view>
             --> 
             <view wx:if="{{goodsshape==4}}" class="card-register-info">
-              <view  bindtap="card_register" class="card-register-title" style="color:{{current_card_color}};">
-                <text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text>
+              <view  bindtap="" class="card-register-title" style="color:{{current_card_color}};">
+                <!-- text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text -->
+                <input style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='30' />
               </view>
-              <view  bindtap="card_register" class="card-register-content" style="color:{{current_card_color}}">
-                <text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text>
+              <view bindtap="" class="card-register-content" style="color:{{current_card_color}}">
+                <!-- text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text -->
+                  <textarea style='font-size:28rpx;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
               </view>
-               <view  bindtap="card_register" class="card-register-addr" style="color:{{current_card_color}};">
-                <text space="ensp" >{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</text>
+              <view  bindtap="" class="card-register-owner" style="color:{{current_card_color}};">
+              <!-- 
+                <view>{{card_register_ownername?'发起人:'+card_register_ownername:''}}</view>
+                <view>{{card_register_ownerwechat?'微信:'+card_register_ownerwechat:''}}</view>
+              -->
+                <text>发起人:</text>
+                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownername}}" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed}}" maxlength='30' />
+                <text>微信号:</text>
+                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownerwechat}}" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed}}" maxlength='30' />
               </view>
-              <view wx:if="{{goodsshape==4 && is_register==1}}" bindtap="card_register"  class="card-register-biz" style="color:{{current_card_color}}">
+              <view  bindtap="" class="card-register-addr" style="color:{{current_card_color}};">
+                <!-- view>{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</view -->
+                <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed}}" maxlength='30' />
+              </view>
+              <view wx:if="{{goodsshape==4 && is_register==1}}" bindtap="" class="card-register-biz" style="color:{{current_card_color}}">
+              <!--
                 <view>{{card_register_lim>0?card_register_lim:'报名人数:不限'}}</view>
                 <view>{{card_register_fee?card_register_fee:'报名费:0元'}}</view>
                 <view>{{card_register_right_str?card_register_right_str:'权限:参与者可看'}}</view>
+              -->
+                <text>人数(0不限):</text>
+                <input style="width:100rpx;" value="{{card_register_lim}}" type="number" bindinput='cardregisterLimTapTag' focus="{{inputShowed}}" maxlength='10' />
+                <text>费用:</text>
+                <input style="width:100rpx;" value="{{card_register_fee}}" type="digit" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed}}" maxlength='10' />
               </view>
+               <view wx:if="{{goodsshape==4 && is_register==1}}" class="card-register-startend" style="color:{{current_card_color}}">
+                <picker value="{{card_register_reqid_index}}"  range="{{card_register_reqid_picker}}" bindchange="bindChangeRegisterReqid">
+ 证件类型:{{card_register_reqid_picker[card_register_reqid_index]}}  
+                </picker>
+               </view>
               <view wx:if="{{goodsshape==4 && is_register==1}}" class="card-register-startend" style="color:{{current_card_color}}">
-              <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
- 报名开始: {{register_start_date}}  
-    </picker>
-              <picker mode="time" value="{{register_start_time}}" start="register_start_time" end="23:59" bindchange="bindChangeStartTime">【时间】{{register_start_time}}
-  </picker>
-              </view>
-              <view wx:if="{{goodsshape==4 && is_register==1}}"  class="card-register-startend" style="color:{{current_card_color}}">
+                <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
+ 开始时间:{{register_start_date}}  
+                </picker>
+                <text space="ensp">  </text>
+                <picker mode="time" value="{{register_start_time}}" start="register_start_time" end="23:59" bindchange="bindChangeStartTime">{{register_start_time}}
+                </picker>
                 <picker mode="date" value="{{register_end_date}}" start="register_end_date" end="2999-12-12" bindchange="bindChangeEndDate">
- 报名结束: {{register_end_date}}  
-    </picker>
-     <picker mode="time" value="{{register_end_time}}" start="register_end_time" end="23:59" bindchange="bindChangeEndTime"> 【时间】{{register_end_time}}
-  </picker>
+  ~~ {{register_end_date}}  
+                </picker>
+                 <text space="ensp">  </text>
+                <picker mode="time" value="{{register_end_time}}" start="register_end_time" end="23:59" bindchange="bindChangeEndTime"> {{register_end_time}}
+                </picker>
               </view>
               <view wx:if="{{goodsshape==4 && is_register==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
                 <picker mode="date" value="{{action_start_date}}" start="action_start_date" end="2999-12-12" bindchange="bindChangeActStartDate">
- 活动开始: {{action_start_date}}  
-    </picker>
-              <picker mode="time" value="{{action_start_time}}" start="action_start_time" end="23:59" bindchange="bindChangeActStartTime"> 【时间】{{action_start_time}}
-  </picker>
+ 活动时间:{{action_start_date}}  
+                </picker>
+                 <text space="ensp">  </text>
+                <picker mode="time" value="{{action_start_time}}" start="action_start_time" end="23:59" bindchange="bindChangeActStartTime"> {{action_start_time}}
+                </picker>
+  <picker mode="date" value="{{action_end_date}}" start="action_end_date" end="2999-12-12" bindchange="bindChangeActEndDate">
+ ~~ {{action_end_date}}  
+                </picker>
+                 <text space="ensp">  </text>
+                <picker mode="time" value="{{action_end_time}}" start="action_end_time" end="23:59" bindchange="bindChangeActEndTime"> {{action_end_time}}
+                </picker>
               </view>
               <view wx:if="{{goodsshape==4 && is_register==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
-                <picker mode="date" value="{{action_end_date}}" start="action_end_date" end="2999-12-12" bindchange="bindChangeActEndDate">
- 活动结束: {{action_end_date}}  
-    </picker>
-       <picker mode="time" value="{{action_end_time}}" start="action_end_time" end="23:59" bindchange="bindChangeActEndTime"> 【时间】{{action_end_time}}
-  </picker>
+                
               </view>
             </view>
             <text id="card_content" wx:if="{{goodsshape==5}}" space="ensp" bindtap="myblessing" style="color:{{current_card_color}}" class="card-blessing" >{{card_blessing}}
             </text>
+            <!-- 
             <view class="share-goods-wx-info">
               <image wx:if="{{goodsshape==5||goodsshape==4}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
               <view wx:if="{{goodsshape==5||goodsshape==4}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;color:{{current_card_color}}">{{nickname}}</view>
             </view>
-             
+            -->
             <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-remark">《 滑动选背景图 》</view>
             <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-card-color">
               <picker name="picker_card_color" class="picker-box" data-selecthx="{{card_color[card_color_index].title}}" range="{{card_color}}" range-key="{{'title'}}"  bindchange="bindPickerChange_card_color">
@@ -101,7 +129,7 @@
               </picker>
             </view>
             <view wx:if="{{(goodsshape==5||goodsshape==4 ) && new_rec_url}}" class="share-play-rec" bindtap="play_rec" >
-              <image src="../../images/notification.png" style="width:80rpx;height:80rpx;"></image>
+              <image src="../../images/notification.png" style="width:50rpx;height:50rpx;"></image>
             </view>
           </swiper-item>
         </block>
@@ -202,6 +230,7 @@
       </view>
     </modal>
 </view>
+<view hidden="{{notehidden}}" style='z-index:999;'>
 <modal title="编辑祝词" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirmCard" bindcancel="shareCandelCard" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-330}}px;">
      <view class="note">
@@ -209,34 +238,8 @@
       </view>
     </view>
 </modal>
-<modal title="编辑内容" no-cancel="{{nocancel}}" hidden="{{cardregisterhidden}}" bindconfirm="confirmcardregister" confirm-text="确定" no-cancel>
-    <view style="height:{{dkheight-60}}px;">
-      <view class="card-register-note">
-        <input style='margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='30' />
-      </view>
-      <view class="card-register-note">
-        <textarea style='margin-top:10rpx;width:550rpx;height:330rpx;font-size:28rpx;color:#333;border: 1rpx solid #eee;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限230个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="230" />
-      </view>
-      <view class="card-register-note">
-        <input value="{{card_register_lim}}" style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="number" value="" placeholder="报名人数(0不限)"  bindinput='cardregisterLimTapTag' focus="{{inputShowed}}" maxlength='30' />
-         <input value="{{card_register_fee}}" style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="digit" value="" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed}}" maxlength='30' />
-      </view>
-       <view class="card-register-note">
-        <input value="{{card_register_addr}}" style='margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="活动地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed}}" maxlength='30' />
-       </view>
-      <view class="card-register-note">
-        <picker bindchange="bindChangeRegisterRight" value="{{card_register_right_index}}" range="{{card_register_right_picker}}">
-          <view style='margin-left:10rpx;margin-top:10rpx;font-size:28rpx;{{card_register_right_index==0?"color:#e2e2e2;":"color:#333;"}}  border: 1rpx solid #eee;background:#f2f2f2;' >
-         {{card_register_right_picker[card_register_right_index]}}
-          </view>
-        </picker>
-     </view>
-     <view class="card-register-note" style="border-top:2rpx solid:#eee;margin-top:20rpx;">
-      <input style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed}}" maxlength='30' />
-         <input style='width:200rpx;;margin-top:10rpx;font-size:28rpx;color:#333; border: 1rpx solid #eee;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed}}" maxlength='30' />
-     </view>
-    </view>
-</modal>
+</view>
+
 <view class="footer">
   <view class="opt-buttons">
     <view wx:if="{{goodsshape==5||goodsshape==4}}" style='width:30%;' >

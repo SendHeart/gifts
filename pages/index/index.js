@@ -395,7 +395,8 @@ Page({
   goTop: function (e) {  // 一键回到顶部
     var that = this
     that.setData({
-      scrollTop: 0
+      scrollTop: 0,
+      page:0,
     })
     console.log('goTop:',that.data.scrollTop)
     that.getPrevOrdersTapTag()
@@ -524,9 +525,10 @@ Page({
     var order_object = e.currentTarget.dataset.orderObject
     var order_id = order_object['id']
     var tab2 = that.data.tab2
+    var is_register = 1
     console.log('index detail 订单ID:' + order_id)
     wx.navigateTo({
-      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2
+      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2+'&is_register='+is_register
     });
   },
 
@@ -657,11 +659,12 @@ Page({
     var pagesize = that.data.pagesize
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
-    var tips = "加载第" + (page) + "页"
+    var tips = "加载第" + (page==0?1:page) + "页"
     var hidddensearch = that.data.hidddensearch
     var keyword = hidddensearch?'':that.data.keyword
     that.setData({
       is_loading:true,
+      page: page,
     })
     wx.showLoading({
       title: tips,
@@ -751,7 +754,7 @@ Page({
               orders_show.push(orderObjects)
               page_show = show_max
             }
-
+            
             that.setData({
               orders: orders,
               ["orders_show[" + (page_show-1) + "]"]: orderObjects,
@@ -760,7 +763,7 @@ Page({
               gift_rcv: gift_rcv,
               page_num: page_num.toFixed(0),
               scrollTop: 0,
-              page:page,
+            
               hiddenmore:false,
             })
             wx.pageScrollTo({

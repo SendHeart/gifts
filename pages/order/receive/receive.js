@@ -39,9 +39,13 @@ Page({
     messageHidden: true,
     cardregisterHidden: true,
     needCardRegisterName:'请提供个人信息',
-    card_register_name:'',
+    card_register_note:'',
+    card_register_name: '',
     card_register_phone: '',
     card_register_gender: '',
+    card_register_req: ['无需证件', '身份证号', '微信号', 'QQ号', '电子邮箱','学号', '工号'],
+    card_register_reqid_index: 0,
+    card_register_reqid_value : ''
   },
 
   formSubmit: function (e) {
@@ -116,14 +120,22 @@ Page({
   },
   returnTapTag: function (e) {
     var that = this
+    var type = e.currentTarget.dataset.type
+    var order_id = e.currentTarget.dataset.orderId
     var order_shape = that.data.order_shape
-    if(order_shape==5){
+    if(type==1){ //转商城
+      if (order_shape == 5) {
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=贺卡请柬'
+        })
+      } else if (order_shape == 4) {
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=互动卡'
+        })
+      }  
+    }else if(type==2){ //转互动详情
       wx.navigateTo({
-        url: '/pages/list/list?navlist_title=贺卡请柬'
-      })
-    } else if (order_shape == 4){
-      wx.navigateTo({
-        url: '/pages/list/list?navlist_title=互动卡'
+        url: '/pages/order/list/list?order_id='+order_id+'&order_shape='+order_shape
       })
     }else{
       wx.switchTab({
@@ -141,6 +153,14 @@ Page({
     })
   },
 
+  card_register_req: function (e) {
+    var that = this
+    var card_register_reqid_value = e.detail.value
+    that.setData({
+      card_register_reqid_value: card_register_reqid_value
+    })
+  },
+
   card_register_phone: function (e) {
     var that = this
     var card_register_phone = e.detail.value
@@ -154,6 +174,14 @@ Page({
     var card_register_name = util.filterEmoji(e.detail.value)
     that.setData({
       card_register_name: card_register_name
+    })
+  },
+
+  card_register_note: function (e) {
+    var that = this
+    var card_register_note = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_register_note: card_register_note
     })
   },
 
@@ -373,6 +401,9 @@ Page({
     var card_register_name = that.data.card_register_name ? that.data.card_register_name:''
     var card_register_phone = that.data.card_register_phone ? that.data.card_register_phone:''
     var card_register_gender = that.data.card_register_gender ? that.data.card_register_gender:''
+    var card_register_reqid_value = that.data.card_register_reqid_value ? that.data.card_register_reqid_value : ''
+    var card_register_reqid_index = that.data.card_register_reqid_index ? that.data.card_register_reqid_index:0
+    var card_register_note = that.data.card_register_note ? that.data.card_register_note:''
     if ((order_shape == 5 || order_shape == 4) && order_m_id==m_id) { //贺卡请柬 互动卡 不能自己接受
       if (order_shape == 5) {
         wx.navigateTo({
@@ -390,6 +421,9 @@ Page({
         card_register_name: card_register_name, 
         card_register_phone: card_register_phone, 
         card_register_gender: card_register_gender, 
+        card_register_note: card_register_note, 
+        card_register_reqid_value: card_register_reqid_value,
+        card_register_reqid_index: card_register_reqid_index,
       },
     ]
 
@@ -659,6 +693,8 @@ Page({
     var order_price = 0
     var card_register_info = ''
     var is_register = 0
+    var button_name = ''
+    var card_register_reqid_index = that.data.card_register_reqid_index
     //从服务器获取订单列表
     if (is_buymyself!=1){
       setTimeout(function () { //3秒超时
@@ -752,12 +788,13 @@ Page({
               orderskus.push(orderObjects[i]['order_sku'][j])
             }
           }
-          
+          button_name = orderObjects[0]['button_name'] //按钮提示 后端提供
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']){
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
             is_register = m_desc['card_register_info'] ? 1 : 0 
+            card_register_reqid_index = card_register_info['card_register_reqid_index']
             if (voice_url) {
               wx.downloadFile({
                 url: voice_url, //音频文件url                  
@@ -791,6 +828,8 @@ Page({
             order_m_id: order_m_id,
             card_register_info: card_register_info,
             is_register: is_register,
+            button_name: button_name,
+            card_register_reqid_index: card_register_reqid_index,
           })
           console.log('order sku list:', orderskus, ' is_register:', that.data.is_register,' card_register_info:', that.data.card_register_info)
           app.globalData.is_receive = 0 
