@@ -1311,7 +1311,7 @@ Page({
     var share_order_image = that.data.share_order_image
     var share_order_shape = that.data.share_order_shape
     var share_order_note = that.data.share_order_note
-    var card_register_title =that.data.card_register_info['card_register_title']  
+   
     console.log('开始分享送礼任务', options)
 
     var shareObj = {
@@ -1357,6 +1357,7 @@ Page({
         shareObj['path'] = '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&mid=' + m_id
       } 
       if (share_order_shape == 4 ) {
+        var card_register_title = that.data.card_register_info['card_register_title'] ? that.data.card_register_info['card_register_title'] : ''  
         shareObj['title'] = card_register_title  //share_order_note
         shareObj['imageUrl'] = share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id
