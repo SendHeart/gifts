@@ -45,38 +45,53 @@ page {
 	flex-direction: row;
 	justify-content: flex-start;
 }
+.order-owner {
+  width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+.order_owner text{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
 /*每行单元格*/
 .order-list {
 	display: flex;
 	flex-direction: row;
   justify-content: space-around;
-	height:100rpx;
-  line-height: 100rpx;
+	height:150rpx;
+  line-height: 150rpx;
 	width:100%;
-	border-bottom: 1px solid #eee;
-	padding: 10rpx;
- 
+	border-bottom: 1px solid #eee; 
+  padding: 10rpx;
 }
 
 /*左部图片*/
 .order-image {
-  margin-left: 10rpx;
-  margin-top: 10rpx;
-	width:80rpx;
-	height:80rpx;
-  border-radius: 50%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  height:150rpx;
+}
+
+.order-image image{
+  width:80rpx;
+  height:80rpx;
+  border-radius:50%;
 }
 
 /*右部描述*/
 .order-item {
 	margin-left: 10rpx;
-	width: 85%;
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 }
  .order-list text{
    font-size:28rpx;
+  
  }
 
 .order-sub-item {

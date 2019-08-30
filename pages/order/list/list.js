@@ -19,24 +19,29 @@ Page({
     all_rows:0,
     hiddenmore:true,
     shop_type:shop_type,
+    modalHiddenMember:true,
 	},
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
+  memberinfo:function(e){
+    var that = this
+    var name = e.currentTarget.dataset.name
+    var phone = e.currentTarget.dataset.phone
+    var sex = e.currentTarget.dataset.sex
+    that.setData({
+      modalHiddenMember: !that.data.modalHiddenMember,
+      name: name,
+      phone: phone,
+      sex: sex,
     })
   },
+  modalBindconfirmMember: function () {
+    var that = this
+ 
+    that.setData({
+      modalHiddenMember: !that.data.modalHiddenMember,
+      
+    })
+  },
+
   goBack: function () {
     wx.switchTab({
       url: '../hall/hall'
@@ -78,7 +83,7 @@ Page({
     }
     that.setData({
       page: page,
-    });
+    })
     that.reloadData()
   },
   
@@ -103,6 +108,13 @@ Page({
 		// 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
 	  var that = this
     var order_id = options.order_id ? options.order_id : ''
+    var receive = options.receive ? options.receive : 0
+    var order_shape = options.order_shape ? options.order_shape : 4
+    that.setData({
+      order_id: order_id,
+      receive: receive,
+      order_shape: order_shape,
+    })
     that.reloadData(options)
     that.query_interaction_info(order_id)
 	},
@@ -110,19 +122,19 @@ Page({
 		//
 	},
   
-  reloadData: function (options) {
+  reloadData: function () {
 		var that = this;
     //var order_type= that.data.tab2;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0;
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-    var receive = options.receive ? options.receive : 0
-    var order_shape = options.order_shape ? options.order_shape:4
-    var order_id = options.order_id ? options.order_id : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var receive = that.data.receive ? that.data.receive : 0
+    var order_shape = that.data.order_shape ? that.data.order_shape:4
+    var order_id = that.data.order_id ? that.data.order_id : ''
     var page = that.data.page
-    var pagesize = that.data.pagesize;
-    console.log('reloadData shop_type:',that.data.shop_type);
+    var pagesize = that.data.pagesize
+    console.log('reloadData shop_type:',that.data.shop_type)
     
     //从服务器获取订单列表
     wx.request({
@@ -153,21 +165,24 @@ Page({
             icon: 'none',
             duration: 2000
           })
-          setTimeout(function () {
-            wx.navigateBack()
-          }, 500);
-          that.setData({
-            orders: [],
-            all_rows: 0,
-            hiddenmore: true,
-
-          })
+          if(page==1){
+            that.setData({
+              orders: [],
+              all_rows: 0,
+              hiddenmore: true,
+            })
+          }else{
+            that.setData({
+              hiddenmore: true,
+            })
+          }
         } else {
           for (var i = 0; i < orderObjects.length;i++){
             if (orderObjects[i]['from_headimg'].indexOf("https://wx.qlogo.cn") >= 0) {
               orderObjects[i]['from_headimg'] = orderObjects[i]['from_headimg'].replace('https://wx.qlogo.cn', weburl + '/qlogo')
               orderObjects[i]['register_time'] = util.getDateDiff(orderObjects[i]['addtime'] * 1000)
             }
+            orderObjects[i]['phone_enc'] = orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11)
           }
         
           if (page > 1 && orderObjects) {
@@ -195,7 +210,9 @@ Page({
     var shop_type = that.data.shop_type
     var card_register_info = ''
     var is_register = 0
-    //从服务器获取订单列表
+    var card_register_ownername = ''
+    var card_register_ownerwechat = ''
+    //从服务器获取互动订单详情
    
     wx.request({
       url: weburl + '/api/client/query_order',
@@ -212,20 +229,21 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(' order receive reloadData() 互动订单查询:', res.data.result)
+        console.log(' order receive reloadData() 互动订单查询:', res.data.result, ' order_id:', order_id)
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows ? res.data.all_rows : 0
         var receive_status = that.data.receive_status
         var order_m_id = 0
         if (!res.data.result) {
           wx.showToast({
-            title: '没有该订单',
+            title: '暂无信息',
             icon: 'loading',
             duration: 1500
           })
           that.setData({
             orders: [],
-            all_rows: 0
+            all_rows: 0,
+            hiddenmore:true,
           })
         } else {
           // 存储地址字段
@@ -239,8 +257,8 @@ Page({
                 orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
               }
             }
-            var headimg = orderObjects[i]['from_headimg']
-            var nickname = orderObjects[i]['from_nickname']
+            var owner_headimg = orderObjects[i]['from_headimg']
+            var owner_nickname = orderObjects[i]['from_nickname']
            
           }
           receive_status = orderObjects[0]['gift_status'] == 2 ? 1 : 0
@@ -251,7 +269,8 @@ Page({
             var voice_url = m_desc['voice']
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
             is_register = m_desc['card_register_info'] ? 1 : 0
-
+            card_register_ownerwechat = card_register_info['card_register_ownerwechat'] ? card_register_info['card_register_ownerwechat']:''
+            card_register_ownername = card_register_info['card_register_ownername'] ? card_register_info['card_register_ownername'] : ''
             if (voice_url) {
               wx.downloadFile({
                 url: voice_url, //音频文件url                  
@@ -270,8 +289,8 @@ Page({
 
           that.setData({
             inter_order: orderObjects,
-            headimg: headimg,
-            nickname: nickname,
+            owner_headimg: owner_headimg,
+            owner_nickname: owner_nickname,
             receive_status: receive_status,
             order_m_id: order_m_id,
             card_register_info: card_register_info,

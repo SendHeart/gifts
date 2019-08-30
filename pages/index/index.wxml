@@ -38,7 +38,7 @@
     <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders_show}}" wx:key="{{item.id}}" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
-      <text>礼物单号: {{item.order_no}}</text>
+      <text>{{(item.shape!=5 && item.shape!=4)?'礼物单号:':'订单号:'}}{{item.order_no}}</text>
       <text hidden="{{(item.gift_status==2 && giftflag ==0)?false:true}}" class="status2">对方已接受</text>
       <text hidden="{{(item.status==2 && item.gift_status==0 && giftflag ==0)?false:true}}" class="status">已支付未送出</text>
       <text hidden="{{(item.gift_status==1 && giftflag ==0)?false:true}}" class="status">对方未接受</text>

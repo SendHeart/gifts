@@ -103,7 +103,7 @@ page {
   margin: 10rpx 20rpx;
 	width:100rpx;
 	height:100rpx;
-   overflow-y: hidden;
+  overflow-y: hidden;
 }
 
 
