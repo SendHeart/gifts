@@ -46,7 +46,7 @@
             <view wx:if="{{goodsshape==4}}" class="card-register-info">
               <view  bindtap="" class="card-register-title" style="color:{{current_card_color}};">
                 <!-- text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text -->
-                <input style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}" maxlength='30' />
+                <input style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}"  maxlength='30' />
               </view>
               <view bindtap="" class="card-register-content" style="color:{{current_card_color}}">
                 <!-- text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text -->
@@ -58,13 +58,13 @@
                 <view>{{card_register_ownerwechat?'微信:'+card_register_ownerwechat:''}}</view>
               -->
                 <text>发起人:</text>
-                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownername}}" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed}}" maxlength='30' />
+                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownername}}" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed2}}" maxlength='30' />
                 <text>微信号:</text>
-                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownerwechat}}" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed}}" maxlength='30' />
+                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownerwechat}}" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed3}}" maxlength='30' />
               </view>
               <view  bindtap="" class="card-register-addr" style="color:{{current_card_color}};">
                 <!-- view>{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</view -->
-                <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed}}" maxlength='30' />
+                <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
               </view>
               <view wx:if="{{goodsshape==4 && is_register==1}}" bindtap="" class="card-register-biz" style="color:{{current_card_color}}">
               <!--
@@ -73,9 +73,9 @@
                 <view>{{card_register_right_str?card_register_right_str:'权限:参与者可看'}}</view>
               -->
                 <text>人数(0不限):</text>
-                <input style="width:100rpx;" value="{{card_register_lim}}" type="number" bindinput='cardregisterLimTapTag' focus="{{inputShowed}}" maxlength='10' />
+                <input style="width:100rpx;" value="{{card_register_lim}}" type="number" bindinput='cardregisterLimTapTag' focus="{{inputShowed5}}" maxlength='10' />
                 <text>费用:</text>
-                <input style="width:100rpx;" value="{{card_register_fee}}" type="digit" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed}}" maxlength='10' />
+                <input style="width:100rpx;" value="{{card_register_fee}}" type="digit" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed6}}" maxlength='10' />
               </view>
                <view wx:if="{{goodsshape==4 && is_register==1}}" class="card-register-startend" style="color:{{current_card_color}}">
                 <picker value="{{card_register_reqid_index}}"  range="{{card_register_reqid_picker}}" bindchange="bindChangeRegisterReqid">
@@ -254,12 +254,12 @@
       <text>编辑祝词</text>
       </button>  
     </form>
-     <form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit"  data-name='card_register' report-submit="true" style='width:30%;' >
+    <!-- form wx:if="{{goodsshape==4}}" bindsubmit="formSubmit"  data-name='card_register' report-submit="true" style='width:30%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/u621.png"></image>
       <text>编辑内容</text>
       </button>  
-    </form>
+    </form -->
     <form wx:if="{{goodsshape!=5 && goodsshape!=4}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/bottom-comment.png"></image>

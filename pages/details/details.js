@@ -89,6 +89,7 @@ Page({
     buynum: 1,
     notehidden: true,
     cardregisterhidden: true,
+    name_focus:true,
     has_cardpayed: 0,
     openRecordingdis: "block", //显示录机图标
     shutRecordingdis: "none", //隐藏停止图标
@@ -427,7 +428,8 @@ Page({
     wx.setStorageSync('card_register_info',JSON.stringify(card_register_info[0]))
     console.log('card_register_info:', wx.getStorageSync('card_register_info'))
     that.setData({
-      cardregisterhidden: !that.data.cardregisterhidden,
+      //cardregisterhidden: !that.data.cardregisterhidden,
+      inputShowed:true,
     })
     that.goodsmodel()
   },
