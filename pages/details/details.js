@@ -429,6 +429,7 @@ Page({
     that.setData({
       cardregisterhidden: !that.data.cardregisterhidden,
     })
+    that.goodsmodel()
   },
   
   bindChangeStartDate: function (e) {
@@ -1312,11 +1313,17 @@ Page({
     buyMyself: function () {
       var that = this
       var goodsshape = that.data.goodsshape
+      var refer_mid = that.data.refer_mid
+    
       that.setData({
         is_buymyself: 1,
       })
-      if (goodsshape==4) that.confirmcardregister()
-      that.goodsmodel()
+      if (goodsshape==4) {
+        that.confirmcardregister()
+      }else{
+        that.goodsmodel()
+      }
+     
     },
   buyGift: function () {
     var that = this
@@ -1366,6 +1373,7 @@ Page({
 
   insertCart: function (sku_id, buynum, username, token, shop_type, wishflag, is_buymyself,keyword,is_satisfy,rule_selected_info) {
       var that = this
+      var order_shape = that.data.order_shape
       //var shop_type = that.data.shop_type
       wx.request({
         url: weburl + '/api/client/add_cart',
@@ -1389,6 +1397,7 @@ Page({
           console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
           var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物包'
           title = is_buymyself==1?'自购礼品':title
+          title = (order_shape == 5 || order_shape==4) ? '处理中' : title
           wx.showToast({
             title: title,
             icon:'loading',
