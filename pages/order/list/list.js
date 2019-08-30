@@ -26,16 +26,17 @@ Page({
     var name = e.currentTarget.dataset.name
     var phone = e.currentTarget.dataset.phone
     var sex = e.currentTarget.dataset.sex
+    var note = e.currentTarget.dataset.note
     that.setData({
       modalHiddenMember: !that.data.modalHiddenMember,
       name: name,
       phone: phone,
       sex: sex,
+      note:note,
     })
   },
   modalBindconfirmMember: function () {
     var that = this
- 
     that.setData({
       modalHiddenMember: !that.data.modalHiddenMember,
       
@@ -178,11 +179,16 @@ Page({
           }
         } else {
           for (var i = 0; i < orderObjects.length;i++){
+            var m_desc = orderObjects[i]['m_desc']
             if (orderObjects[i]['from_headimg'].indexOf("https://wx.qlogo.cn") >= 0) {
               orderObjects[i]['from_headimg'] = orderObjects[i]['from_headimg'].replace('https://wx.qlogo.cn', weburl + '/qlogo')
               orderObjects[i]['register_time'] = util.getDateDiff(orderObjects[i]['addtime'] * 1000)
             }
             orderObjects[i]['phone_enc'] = orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11)
+            if (m_desc){
+              var desc_note = JSON.parse(m_desc)
+              orderObjects[i]['note'] = desc_note['note'] 
+            }
           }
         
           if (page > 1 && orderObjects) {

@@ -27,7 +27,7 @@
     </view>
   </view>
 	<view style="margin-top:180rpx;"  >
-    <view  wx:for="{{orders}}" wx:for-item="mapping" wx:key="{{mapping.id}}" class="order-list" data-order-id="{{mapping.order_id}}" data-inter-id="{{mapping.id}}" bindtap="memberinfo" data-phone="{{mapping.phone}}" data-sex="{{mapping.sex}}"  data-name="{{mapping.name}}">
+    <view  wx:for="{{orders}}" wx:for-item="mapping" wx:key="{{mapping.id}}" class="order-list" data-order-id="{{mapping.order_id}}" data-inter-id="{{mapping.id}}" bindtap="memberinfo" data-phone="{{mapping.phone}}" data-sex="{{mapping.sex}}"  data-name="{{mapping.name}}" data-note="{{mapping.note}}">
       <view class="order-image"  >
         <image src="{{mapping.from_headimg}}" mode="aspectFill"/>
       </view>
@@ -39,17 +39,23 @@
 </view>
 <view>
   <modal class="modalbox" title=""  hidden="{{modalHiddenMember}}" confirm-text="返回" no-cancel  bindconfirm="modalBindconfirmMember">
-    <view class="order-dueday" style="font-size:28rpx;">
+    <view class="order-member-info" style="font-size:28rpx;">
       <text>姓名：</text>
       <text space="ensp">{{name}}</text>
     </view>
-    <view class="order-dueday" style="font-size:28rpx;">
+    <view class="order-member-info" style="font-size:28rpx;">
       <text>手机:</text>
       <text space="ensp">{{phone}}</text>
     </view>
-    <view class="order-dueday" style="font-size:28rpx;">
+    <view class="order-member-info" style="font-size:28rpx;">
       <text>性别：</text>
       <text space="ensp">{{sex==1?'男':'女'}}</text>
+    </view>
+     <view class="order-member-info" style="font-size:28rpx;">
+      <text>留言：</text>
+    </view>
+     <view class="order-member-info" style="font-size:28rpx;">
+      <text space="ensp">{{note?note:''}}</text>
     </view>
   </modal>
 </view>

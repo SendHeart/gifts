@@ -103,6 +103,13 @@ page {
 	justify-content:space-around;
 }
 
+.order-member-info {
+  width: 100%;
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+}
+
 .sentbtn {
   display: flex;
   flex-direction: row;
