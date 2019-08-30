@@ -260,6 +260,18 @@ swiper-item image {
   height: 32rpx;
   margin:6rpx 0 0 20rpx;
 }
+.venues_item .goods-org {
+  display: block;
+  width: 60rpx;
+  height: 32rpx;
+  background: #e34c55;
+  line-height: 32rpx;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left:20rpx;
+  padding: 10rpx;
+  text-align: center;
+}
 .venues_item .goods_name {
   color: #444;
   font-size: 26rpx;
@@ -375,4 +387,6 @@ swiper-item image {
    background-color: #fff;
    white-space: nowrap;
 }
+
+
 

@@ -940,7 +940,17 @@ modal {
   width: 356rpx;
   height: 356rpx;
 }
-
+.venues-item .goods-org {
+  width: 60rpx;
+  height: 32rpx;
+  background: #e34c55;
+  line-height: 32rpx;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left:20rpx;
+  padding: 10rpx;
+  text-align:center;
+}
 .venues-item .img-discount {
   display: block;
   width: 75rpx;

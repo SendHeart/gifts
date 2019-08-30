@@ -882,6 +882,7 @@ Page({
         var goodsorg = options.goods_org ? options.goods_org : 1
         var goodsshape = options.goods_shape ? options.goods_shape : 0
         var goodstag = options.goods_tag ? options.goods_tag : ''
+        var goodsorg = options.goods_org ? options.goods_org : ''
         var is_register = options.is_reg ? options.is_reg:0
         var card_register_title = ''
         var card_register_content = ''

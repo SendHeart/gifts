@@ -138,6 +138,7 @@
   </view>
   <view class="shopping_container">
       <view class="goods-name">
+        <text class="goods-org">{{goodsorg==4?'京东':'自营'}}</text>
         <text>{{goodsname?goodsname:''}}</text>
         <text class="goods_prom">{{goodsinfo?goodsinfo:''}}</text>
       </view>

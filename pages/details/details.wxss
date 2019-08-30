@@ -131,6 +131,17 @@ page {
   font-weight: bold;
   color: #444;
 }
+.shopping_container .goods-org {
+  width: 60rpx;
+  height: 32rpx;
+  background: #e34c55;
+  line-height: 32rpx;
+  color: #fff;
+  font-size: 24rpx;
+  margin-left:20rpx;
+  padding: 10rpx;
+  z-index: 1000;
+}
 
 .shopping_container .goods_prom {
   display: block;
