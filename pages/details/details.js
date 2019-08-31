@@ -32,8 +32,7 @@ Page({
     title_name: '详情',
     title_logo: '../../images/footer-icon-05.png',
     share_title: '这个礼物真不错，来看看吧，要是你能送我就更好了~',
-    card_blessing: '送心礼物祝您:万事如意，平平安安！',
-    card_invitation: '送心礼物和您一起分享快乐，分享成功！',
+    card_blessing: '',
     card_content: '',
     share_desc: '送心礼物，开启礼物社交时代！',
     share_avatarUrl: weburl + '/uploads/avatar.png',
@@ -89,6 +88,7 @@ Page({
     buynum: 1,
     notehidden: true,
     cardregisterhidden: true,
+    name_focus:true,
     has_cardpayed: 0,
     openRecordingdis: "block", //显示录机图标
     shutRecordingdis: "none", //隐藏停止图标
@@ -327,9 +327,11 @@ Page({
     //console.log('detail swiperchange_share:', e.detail.current, 'cur_img_share_id:',cur_img_share_id)
   },
   bindCardTextAreaBlur: function (e) {
-    var that = this;
+    var that = this
+    var card_blessing = util.filterEmoji(e.detail.value)
     that.setData({
-      card_blessing: e.detail.value
+      card_blessing: card_blessing,
+      card_content: card_blessing,
     })
   }, 
   cardRegisterTextAreaBlur: function (e) {
@@ -427,8 +429,10 @@ Page({
     wx.setStorageSync('card_register_info',JSON.stringify(card_register_info[0]))
     console.log('card_register_info:', wx.getStorageSync('card_register_info'))
     that.setData({
-      cardregisterhidden: !that.data.cardregisterhidden,
+      //cardregisterhidden: !that.data.cardregisterhidden,
+      inputShowed:true,
     })
+    that.goodsmodel()
   },
   
   bindChangeStartDate: function (e) {
@@ -1312,11 +1316,17 @@ Page({
     buyMyself: function () {
       var that = this
       var goodsshape = that.data.goodsshape
+      var refer_mid = that.data.refer_mid
+    
       that.setData({
         is_buymyself: 1,
       })
-      if (goodsshape==4) that.confirmcardregister()
-      that.goodsmodel()
+      if (goodsshape==4) {
+        that.confirmcardregister()
+      }else{
+        that.goodsmodel()
+      }
+     
     },
   buyGift: function () {
     var that = this
@@ -1366,6 +1376,7 @@ Page({
 
   insertCart: function (sku_id, buynum, username, token, shop_type, wishflag, is_buymyself,keyword,is_satisfy,rule_selected_info) {
       var that = this
+      var order_shape = that.data.order_shape
       //var shop_type = that.data.shop_type
       wx.request({
         url: weburl + '/api/client/add_cart',
@@ -1389,6 +1400,7 @@ Page({
           console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
           var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物包'
           title = is_buymyself==1?'自购礼品':title
+          title = (order_shape == 5 || order_shape==4) ? '处理中' : title
           wx.showToast({
             title: title,
             icon:'loading',

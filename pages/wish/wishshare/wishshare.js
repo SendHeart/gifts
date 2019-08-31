@@ -873,6 +873,8 @@ Page({
       start_time += card_register_info['register_start_time'] ? card_register_info['register_start_time'] : ''
       var end_time = card_register_info['register_end_date'] ? '~~' + card_register_info['register_end_date']+' ' : ''   
       end_time += card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
+      var owner_info = card_register_info['card_register_ownername'] ? '发起人:' + card_register_info['card_register_ownername'] : ''
+      owner_info += card_register_info['card_register_ownerwechat'] ? '   微信:' + card_register_info['card_register_ownerwechat'] : ''
       that.setData({
         painting: {
           width: 520,
@@ -893,10 +895,10 @@ Page({
             {
               type: 'text',
               content: card_register_info['card_register_title'] ? card_register_info['card_register_title']:'',
-              fontSize: 35,
+              fontSize: 32,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
-              top: 60,
+              top: 50,
               left: 50,
               width: 300,
               height: 50,
@@ -907,9 +909,9 @@ Page({
             {
               type: 'text',
               content: card_register_info['card_register_content'] ? card_register_info['card_register_content']:'',
-              fontSize:28,
+              fontSize:25,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
-              top: 130,
+              top: 120,
               left: 50,
               lineHeight: 50,
               MaxLineNumber: 8,
@@ -920,11 +922,23 @@ Page({
             },
             {
               type: 'text',
+              content:owner_info,
+              fontSize: 22,
+              color: card_register_info['card_color'] ? card_register_info['card_color'] : '#333',
+              textAlign: 'left',
+              top: 530,
+              left: 50,
+              width: 300,
+              height: 40,
+              bolder: false
+            },
+            {
+              type: 'text',
               content: card_register_info['card_register_addr'] ? '地址:' +card_register_info['card_register_addr']:'',
               fontSize: 22,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
-              top: 550,
+              top: 560,
               left: 50,
               width: 300,
               height: 40,
@@ -936,7 +950,7 @@ Page({
               fontSize: 22,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
               textAlign: 'left',
-              top: 590,
+              top: 600,
               left: 50,
               width: 150,
               height: 40,
@@ -949,7 +963,7 @@ Page({
               fontSize: 22,
               color: card_register_info['card_color'] ? card_register_info['card_color']:'',
               textAlign: 'left',
-              top: 590,
+              top: 600,
               left: 270,
               width: 150,
               height: 40,

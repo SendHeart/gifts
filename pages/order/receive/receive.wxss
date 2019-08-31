@@ -428,7 +428,7 @@ swiper-item image {
     height: 50rpx;
     line-height: 50rpx;
     font-size:35rpx;
-    margin-bottom:10rpx;
+    margin-bottom:0rpx;
     padding: 20rpx;
 }
 .card-register-title text {

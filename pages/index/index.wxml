@@ -31,7 +31,7 @@
   
   <view  class='goTop' bindtap="goTop"  hidden='{{!floorstatus}}'> <!-- -->
     <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-    <view style="margin-top:-22rpx;">{{page}}</view>
+    <view style="margin-top:-22rpx;">{{page==0?1:page}}</view>
     <view style="margin-top:-5rpx;border-top:1rpx solid #fff">{{page_num}}</view>
   </view>
   <block wx:for="{{orders_show}}"  wx:key="{{order_show.id}}" wx:for-item="orders_show" wx:for-index="ordersIndex">

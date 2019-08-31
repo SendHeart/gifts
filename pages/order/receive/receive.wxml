@@ -4,18 +4,22 @@
   <text wx:if='{{receive_status==0}}'>{{(order_shape==5||order_shape==4)?'点击确定':'点击拆开，收取礼物'}}</text>
   <text wx:if='{{receive_status==1}}'>{{(order_shape==5||order_shape==4)?'点击回赠，也给Ta送一个惊喜吧':'点击回赠，也给Ta送一个礼物吧'}}</text>
 </view>
-<view class="share-goods"  >
+<view class="share-goods">
     <view class="share-buttons" style="{{(order_shape==5)?'justify-content: flex-start;':''}}">
-       <view  wx:if="{{order_shape==4||order_shape==5}}" class="btnshare" data-type="1" bindtap="returnTapTag"><!-- -->
+       <view  wx:if="{{order_shape==4||order_shape==5}}" class="btnshare" data-type="1" bindtap="returnTapTag">
         <image class="shareto" src="../../../images/icon_shopping.png"></image>
         商城
       </view>
-       <view  wx:if="{{order_shape==4}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag"><!-- -->
+      <view  wx:if="{{order_shape==4}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag">
         <image class="shareto" src="../../../images/icon_normal.png"></image>
         详情
       </view>
+      <view  wx:if="{{order_shape==4}}" class="btnshare" data-type="3" data-order-id="{{order_id}}" bindtap="shareorderTapTag">
+        <image class="shareto" src="../../../images/shareto.png"></image>
+        分享
+      </view>
     </view>
-  </view>
+</view>
  <view wx:if="{{is_buymyself==0 && (order_shape==5||order_shape==4)}}" class="card-info">
   <image src="{{order_image}}" class="card-image" />
   <text wx:if="{{order_shape==5}}" class="card-text" space="ensp">{{note}}</text>
