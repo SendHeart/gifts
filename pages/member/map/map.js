@@ -151,13 +151,13 @@ Page({
     //检测更新
     that.checkUpdate();
     if (that.data.userInfo) {
-      consoleUtil.log(1);
+     
       this.setData({
         hasUserInfo: true
       })
     } else {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-      consoleUtil.log(2);
+     
       app.getUserInfo(function (userInfo) {
         //更新数据
         that.setData({
@@ -177,12 +177,12 @@ Page({
   },
 
   onShow: function () {
-    consoleUtil.log('onShow--------------------->');
+    console.log('onShow--------------------->');
     var that = this;
     that.changeMapHeight();
     //that.setHomeActionLeftDistance();
     //如果刚从选择地址页面带数据回调回来，则显示选择的地址
-    consoleUtil.log(that.data.callbackAddressInfo)
+    console.log(that.data.callbackAddressInfo)
     if (that.data.callbackAddressInfo == null) {
       that.getCenterLocation();
       //正在上传的话，不去请求地理位置信息
@@ -256,7 +256,7 @@ Page({
         query.select('#home-action-wrapper').boundingClientRect()
         query.exec(function (res) {
           //res就是 所有标签为mjltest的元素的信息 的数组
-          consoleUtil.log(res);
+          console.log(res);
           /*
           that.setData({
             homeActionLeftDistance: ((windowWidth - res[0].width) / 2) + 'px'
@@ -272,7 +272,7 @@ Page({
     var count = 0;
     wx.getSystemInfo({
       success: function (res) {
-        consoleUtil.log(res);
+        console.log(res);
         windowHeight = res.windowHeight;
         windowWidth = res.windowWidth;
         //创建节点选择器
@@ -281,7 +281,7 @@ Page({
         var query = wx.createSelectorQuery();
         query.select('#bottom-layout').boundingClientRect()
         query.exec(function (res) {
-          consoleUtil.log(res);
+          console.log(res);
           bottomHeight = res[0].height;
           that.setMapHeight();
         })
@@ -314,7 +314,7 @@ Page({
 
   scopeSetting: function () {
     var that = this
-    consoleUtil.log('scopeSetting')
+    console.log('scopeSetting')
     that.initMap()
   },
 
@@ -326,7 +326,7 @@ Page({
     qqmapsdk = new QQMapWX({
       key: constant.tencentAk
     })
-    consoleUtil.log('初始化地图')
+    console.log('初始化地图')
     that.getCenterLocation()
     that.getMemberLocation()
     /*
@@ -545,7 +545,7 @@ Page({
    */
   confirmClick: function (res) {
     var that = this;
-    consoleUtil.log(res);
+    console.log(res);
     var message = res.detail.value.message.trim();
     if (!that.data.centerLatitude || !that.data.centerLongitude) {
       that.showModal('请选择上传地点~');
@@ -821,8 +821,8 @@ Page({
       }
     }
     currentMarker = currentMarker.concat(markerList);
-    consoleUtil.log('-----------------------');
-    consoleUtil.log(currentMarker);
+ 
+    console.log(currentMarker);
     that.setData({
       markers: currentMarker
     })
@@ -846,8 +846,8 @@ Page({
       const updateManager = wx.getUpdateManager();
       updateManager.onCheckForUpdate(function (res) {
         // 请求完新版本信息的回调
-        consoleUtil.log('onCheckForUpdate----------------->');
-        consoleUtil.log(res.hasUpdate);
+        console.log('onCheckForUpdate----------------->');
+        console.log(res.hasUpdate);
       })
 
       updateManager.onUpdateReady(function () {
