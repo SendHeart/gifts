@@ -11,7 +11,7 @@
   content:'\e6d5';
 }
 page {
-  background-color:#f2f2f2;
+  background-color:#1d1d1d;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -60,7 +60,6 @@ page {
   margin-left: 20rpx;
 }
 .container {
-    background-color: #F2f2f2;
     width: 100%;
     height: 100%;
     overflow-x: hidden;
@@ -184,10 +183,10 @@ page {
   position: fixed; 
   top: 0;   
   right: 0; 
-  background: #1d1d1d; 
-  width:45rpx;
+  background: -webkit-linear-gradient(bottom,#1d1d1d,#333333); 
+  width:55rpx;
   height:46rpx;
-  padding: 10rpx 10rpx 15rpx 15rpx;
+  padding: 10rpx 15rpx;
   margin:-0 auto;
   z-index:1000;
 }
@@ -196,14 +195,12 @@ page {
   display:flex;
   flex-direction: row;
   justify-content: center;
-  height: 70rpx;
-  background: #FFF; 
+  height: 60rpx;
+  background: #444; 
   width:100%;
   position: fixed;
   margin-top: 70rpx;
   top:0;
-  border-top: 1rpx solid #F2f2f2;
-  border-bottom: 1rpx solid #F2f2f2;
   z-index:99;
 }
 .top-bar-item2 {
@@ -211,14 +208,14 @@ page {
   flex-direction: row;
   justify-content: center;
   width: 33.3%;
-  color: #999;
+  color: #ccc;
   text-align: center;
   height: 60rpx;
   line-height: 60rpx;
   font-size: 24rpx;
 }
 .top-bar-active2 {
-  color: #444;
+  color: #fff;
 }
 
 swiper-item image {
@@ -251,8 +248,8 @@ swiper-item image {
 
 .venues_item .mainpic {
   display: block;
-  width: 356rpx;
-  height: 356rpx;
+  width: 354rpx;
+  height: 354rpx;
 }
 .venues_item .img-discount {
   display: block;
@@ -261,36 +258,38 @@ swiper-item image {
   margin:6rpx 0 0 20rpx;
 }
 .venues_item .goods-org {
-  display: block;
-  width: 60rpx;
-  height: 32rpx;
-  background: #e34c55;
-  line-height: 32rpx;
   color: #fff;
-  font-size: 24rpx;
-  margin-left:20rpx;
-  padding: 10rpx;
+  font-size: 22rpx;
+  background: #EC4844;
   text-align: center;
+  padding: 2rpx 10rpx;
+  border-radius: 6rpx;
 }
 .venues_item .goods_name {
   color: #444;
   font-size: 26rpx;
+  font-weight: bold;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding-left: 20rpx;
+  padding:10rpx;
 }
 
 .venues_item .goods_tag {
   color: #999;
   font-size: 20rpx;
-  padding: 2rpx 4rpx;
+  padding: 2rpx 5rpx;
   border: 1px solid #f2f2f2;
   border-radius: 6rpx;
-  text-align: center;
+}
+.venues_item .goods-tags {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding:10rpx 0 0 10rpx;
 }
 .venues_item .goods_tag image{
   width: 10%;
@@ -298,12 +297,12 @@ swiper-item image {
 }
 .venues_item .goods_prom {
   display: block;
-  color: #E52445;
+  color: #999;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-left: 20rpx;
+  padding:0 10rpx;
 }
 
 .price-list {
@@ -325,9 +324,8 @@ swiper-item image {
 }
 .price-now {
   text-indent: 0;
-  color: #e34c55;
+  color: #EC4844;
   font-size: 26rpx;
-  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 20rpx;
@@ -337,7 +335,7 @@ swiper-item image {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin: 0 20rpx;
+  padding: 10rpx;
   text-indent: 0;
 }
 .search {

@@ -1,7 +1,7 @@
 @import "../../lib/style/font.wxss";
 
 page {
-  background: #f2f2f2;
+  background: #1d1d1d;
   height: 100%;
 }
 
@@ -20,22 +20,20 @@ page {
 
 .startBar {
   height: 75rpx;
-  background: #333;
+  background: #444;
   width: 100%;
   position: fixed;
   top: 0;
   padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
 .top-title {
   height: 75rpx;
-  background: #333;
+  background: #444;
   width: 100%;
   position: fixed;
   top: 0;
   padding: 5rpx;
-  border-bottom: 0px solid #f2f2f2;
   z-index: 99;
 }
 .top-title-item {
@@ -57,7 +55,6 @@ page {
 }
 .container {
   padding-top: 20rpx;
-  background: #f2f2f2;
   height: 100%;
   overflow-x: hidden;
 }
@@ -298,11 +295,10 @@ page {
 
 .top-bar2 {
   height: 76rpx;
-  background: #1d1d1d;
+  background: #444;
   width: 100%;
   position: fixed;
   top: 0;
-  border-bottom: 1px solid #f2f2f2;
   z-index: 99;
 }
 

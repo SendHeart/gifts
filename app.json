@@ -41,21 +41,21 @@
     "backgroundTextStyle": "light",
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "送心礼物",
-    "navigationBarBackgroundColor": "#1D1D1D",
+    "navigationBarBackgroundColor": "#1d1d1d",
     "backgroundColor": "#F5F5F5",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#616161",
-    "selectedColor": "#E34C55",
+    "color": "#fff",
+    "selectedColor": "#EC4844",
     "borderStyle": "black",
-    "backgroundColor": "#f2f2f2",
+    "backgroundColor": "#444444",
     "list": [
       {
         "pagePath": "pages/hall/hall",
-        "iconPath": "images/logo.png",
-        "selectedIconPath": "images/logo_s.png",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_s.png",
         "text": "送礼"
       },
       {
@@ -66,8 +66,8 @@
       },
       {
         "pagePath": "pages/member/message/message",
-        "iconPath": "images/ai.png",
-        "selectedIconPath": "images/ai_s.png",
+        "iconPath": "images/logo.png",
+        "selectedIconPath": "images/logo_s.png",
         "text": "智能助手"
       },
       {

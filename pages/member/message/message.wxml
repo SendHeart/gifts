@@ -40,10 +40,10 @@
       <view class=""  bindtap="showGoods"  data-goods-id="{{select_goods_list.id}}" data-image="{{select_goods_list.image}}" data-goods-name="{{select_goods_list.name}}" data-goods-price="{{select_goods_list.sell_price}}" >
         <image class="select-goods-image" src="{{select_goods_list.activity_image?select_goods_list.activity_image:select_goods_list.image}}" mode='aspectFill'></image>
         <view class="select-goods-content">{{select_goods_list.name}}</view>
-        <view class="select-goods-content" style='color:gray'>{{select_goods_list.act_info}}</view>
+        <view class="select-goods-content" style='color:#999;font-weight:normal;'>{{select_goods_list.act_info}}</view>
         <view class="price-list"> 
           <!--{{select_goods_list.market_price>0?'市场价':''}} <view class="price-market">{{select_goods_list.market_price>0?'￥'+select_goods_list.market_price+' ':''}}</view>-->
-          {{select_goods_list.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_list.sell_price}}</view>
+          {{select_goods_list.market_price>0?'':''}}<view class="price-now">￥{{select_goods_list.sell_price}}</view>
         </view>
       </view>
       <view class="opt-buttons">
@@ -61,14 +61,14 @@
         <view class="select-goods-content">{{select_goods_1.name}}</view>
         <view class="select-goods-content" style='color:gray'>{{select_goods_1.act_info}}</view>
          <view class="price-list"> 
-           {{select_goods_1.market_price>0?'市场价':''}} <view class="price-market">{{select_goods_1.market_price>0?'￥'+select_goods_1.market_price+' ':''}}</view>
-          {{select_goods_1.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_1.sell_price}}</view>
+           {{select_goods_1.market_price>0?'':''}} <view class="price-market">{{select_goods_1.market_price>0?'￥'+select_goods_1.market_price+' ':''}}</view>
+          {{select_goods_1.market_price>0?'':''}}<view class="price-now">￥{{select_goods_1.sell_price}}</view>
         </view>
       </view>
        <view class="opt-buttons">
         <form bindsubmit="formSubmit"  data-name='addCart' data-goods-id="{{select_goods_1.id}}" report-submit="true" >
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
-          <button type="warn" formType="submit" size="mini" hover-class="button-hover" class="button">立即送出</button>
+          <button class="send-button" type="warn" formType="submit" size="mini" hover-class="button-hover">立即送出</button>
         </view>
       </form>
       </view>
@@ -80,14 +80,14 @@
         <view class="select-goods-content">{{select_goods_2.name}}</view>
         <view class="select-goods-content" style='color:gray'>{{select_goods_2.act_info}}</view>
         <view class="price-list">   
-           {{select_goods_2.market_price>0?'市场价':''}} <view class="price-market">{{select_goods_2.market_price>0?'￥'+select_goods_2.market_price+' ':''}}</view>
-          {{select_goods_2.market_price>0?' 送心价':''}}<view class="price-now">￥{{select_goods_2.sell_price}}</view>
+           {{select_goods_2.market_price>0?'':''}} <view class="price-market">{{select_goods_2.market_price>0?'￥'+select_goods_2.market_price+' ':''}}</view>
+          {{select_goods_2.market_price>0?'':''}}<view class="price-now">￥{{select_goods_2.sell_price}}</view>
         </view> 
       </view>
        <view class="opt-buttons">
         <form bindsubmit="formSubmit"  data-name='addCart' data-goods-id="{{select_goods_2.id}}" report-submit="true" >
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
-          <button type="warn" formType="submit" size="mini" hover-class="button-hover" class="button">立即送出</button>
+          <button class="send-button" type="warn" formType="submit" size="mini" hover-class="button-hover">立即送出</button>
         </view>
         </form>
       </view>

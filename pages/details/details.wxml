@@ -138,15 +138,15 @@
   </view>
   <view class="shopping_container">
       <view class="goods-name">
-        <text class="goods-org">{{goodsorg==4?'京东':'自营'}}</text>
+        <text class="goods-org">{{goodsorg==4?'京东物流':'自营'}}</text>
         <text>{{goodsname?goodsname:''}}</text>
         <text class="goods_prom">{{goodsinfo?goodsinfo:''}}</text>
       </view>
       <view class="goods-info">
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
         <view class="right-tag">
-        {{marketprice>0?'市场价':''}} <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
-        {{marketprice>0?'送心价':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:''}}</text>
+        {{marketprice>0?'':''}} <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
+        {{marketprice>0?'':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:''}}</text>
         </view>
       </view>
       <view class="fitfor">

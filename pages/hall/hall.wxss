@@ -11,7 +11,7 @@
   content:'\e6d5';
 }
 page {
-  background: #F2F2F2;
+  background: #1d1d1d;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -60,9 +60,9 @@ page {
 	flex-direction: row;
 	justify-content: space-between;/*子项横轴上居中对齐*/
 	align-items: center;/*子项纵轴上居中对齐*/
-  padding: 4rpx 10rpx 8rpx 10rpx;
+  padding: 0rpx 0rpx 8rpx 0rpx;
   top:0;
-  position: absolute;
+  position:fixed;
   background: #1d1d1d;
   z-index: 999;
   margin-bottom: 10rpx;
@@ -95,7 +95,7 @@ page {
   flex-direction: row;
 	width: 70%;
 	height: 60rpx;
-  background: #ffffff;
+  background: #444;
 	border-radius: 120rpx;
   padding-left: 10rpx;
   text-align: left;
@@ -159,14 +159,14 @@ modal {
 
 .banner {
   width: 100%;
-  height: 280rpx;
+  height: 340rpx;
   /*margin-left: 15rpx;*/
   background-color: #1d1d1d;
   background-repeat: norepeat;
   align-content: center;
   opacity: 1;
   background-size: 100% 80%;
-  
+  z-index: 900;
 }
 
 .banner image {
@@ -259,8 +259,8 @@ modal {
 
 .user {
   width: 96%;
-  margin: 15rpx auto 0 auto;
-  background: #fff;
+  margin: 0 auto;
+  background: #444;
   display: flex;
   /*flex-flow: column nowrap;*/
   justify-content: space-between; /*子项横轴上居中对齐*/
@@ -270,7 +270,7 @@ modal {
 }
 
 .usergifts {
-  color: #444;
+  color: #eee;
   width: 45%;
   text-align: right;
   font-size: 22rpx;
@@ -286,7 +286,7 @@ modal {
 }
 .usergifts .snum {
   color: #fff;
-  background: #444;
+  background: #1d1d1d;
   margin-right: 16rpx;
   padding: 2rpx 8rpx;
   border-radius: 6rpx;
@@ -296,7 +296,7 @@ modal {
   font-size: 30rpx;
   font-weight: bold;
   padding: 8rpx 0 0 30rpx;
-  color: #444;
+  color: #fff;
 }
 
 
@@ -305,7 +305,8 @@ modal {
 .carts-list {
   display: flex;
   flex-direction: column;
-  padding-left: 10rpx;
+  margin: 0 auto;
+  width: 96%;
 }
 
 /*item与button的容器*/
@@ -314,7 +315,7 @@ modal {
   width: 100%;
   height: 145rpx;
   padding: 20rpx 0 0 0;
-  background: #fff;
+  background: #444;
   z-index:1;
 }
 
@@ -350,7 +351,7 @@ modal {
 
 .carts-title {
   font-size: 24rpx;
-  color: #444;
+  color: #eee;
   line-height: 150%;
   padding-right: 10rpx;
   text-overflow: ellipsis;
@@ -383,7 +384,7 @@ modal {
 }
 
 .carts-en-price {
-  color: #444;
+  color: #eee;
   font-size: 24rpx;
   line-height: 2;
   width: 150rpx;
@@ -393,7 +394,7 @@ modal {
 }
 
 .subtitle2 {
-  background: white;
+  background: #444;
   width: 100%;
   height: 6rpx;
   border-radius: 0 0 10rpx 10rpx;
@@ -582,7 +583,7 @@ modal {
   justify-content:center; /*子项横轴上居中对齐*/
   text-align: left;
   bottom: 0;
-  background: #fff;
+  background: #444;
   z-index: 1;
   padding-top: 10rpx
 }
@@ -614,8 +615,8 @@ modal {
   margin: 0 0 20rpx 10rpx;
   padding: 15rpx;
   font-size: 24rpx;
-  color: #999;
-  background: #F3F3F3;
+  color: #eee;
+  background: #333;
   border-radius: 14rpx;
 }
 
@@ -626,7 +627,7 @@ modal {
   flex-direction: row;
   justify-content:flex-end;
   font-size: 24rpx;
-  color: #999;
+  color: #eee;
 }
 .modeswitch label { 
   display: flex;
@@ -637,7 +638,7 @@ modal {
   }
 .pick-goods-slogan {
   font-size: 24rpx;
-  color: #444;
+  color: #eee;
   margin-left: 20rpx;
   /*line-height: 10rpx;*/
   display: block;
@@ -657,55 +658,28 @@ modal {
   margin-left: 8rpx;
 }
 .pick-goods-image {
-  width: 352rpx;
-  height: 120rpx;
+  width: 85rpx;
+  height: 85rpx;
 }
 
 .image-btnbuy {
   display: flex;
-  flex-direction: row;
-  justify-content: left;
+  flex-direction:column;
+  justify-content:center;
   text-align: center;
-  width: 49%;
+  align-items: center;
+  width: 20%;
   height: 120rpx;
-  margin: 15rpx 2% 0rpx 0;
-  border: 0rpx solid #ffc9d5;
-  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
+  margin: 20rpx 0;
   border-radius: 14rpx;
   overflow: hidden;
 }
-.image-btnbuy2 {
-  display: flex;
-  flex-direction: row;
-  justify-content: left;
-  text-align: center;
-  width: 49%;
-  height: 120rpx;
-  margin: 15rpx 0 0rpx 0;
-  border: 0rpx solid #aaa;
-  box-shadow: 0rpx 3rpx 0rpx rgba(100, 100, 100, 0.2);
-  border-radius: 14rpx;
-  background: #292929;
-  position: relative;
-  overflow: hidden;
+.image-btnbuy text {
+  font-size: 22rpx;
+  color: #eee;
+  padding: 0;
+  margin: 0;
 }
-.subscript{
-        color: #fff;
-        font-size: 16rpx;
-        height: 20rpx;
-        width: 90rpx;
-        position: absolute;
-        right: -28rpx;
-        top:10rpx;
-        text-align: center;
-        line-height: 20rpx;
-        background-color: #EC4844;
-        -moz-transform:rotate(45deg);
-        -webkit-transform:rotate(45deg);
-        -o-transform:rotate(45deg);
-        -ms-transform:rotate(45deg);
-        transform:rotate(45deg);
-      }
 .image-btntext {
   display: flex;
   flex-direction: column;
@@ -724,37 +698,27 @@ modal {
 }
 /*送出按钮*/
 
-.buybutton {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 96%;
-  height: 90rpx;
-  margin: 0 auto 10rpx auto;
-  background: #fff;
-  border-radius: 0 0 30rpx 30rpx;
-  padding-top: 10rpx;
-}
+
 .btnconfirm {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  width: 100%;
-  height: 70rpx;
+  width: 96%;
+  height: 80rpx;
   background: #EC4844;
-  box-shadow: 0rpx 4rpx 0rpx rgba(179, 22, 1, 0.8);
-  border-radius: 30rpx;
+  box-shadow: 0rpx 4rpx 3rpx rgba(179, 22, 1, 1);
+  border-radius: 0 0 30rpx 30rpx;
   color: #fff;
   font-size: 30rpx;
   font-weight: bold;
   line-height: 70rpx;
-  padding: 8rpx;
+  margin: 0 auto;
 }
 
 .btnconfirm image {
   width: 48rpx;
   height: 48rpx;
-  margin: 12rpx 6rpx;
+  margin: 12rpx 4rpx;
 }
 .btnconfirm form {
   width: 100%;
@@ -765,8 +729,8 @@ modal {
   justify-content: center;
   text-align: center;
   width: 100%;
-  height: 70rpx;
-  line-height: 70rpx;
+  height: 80rpx;
+  line-height: 80rpx;
   color: #fff;
   font-size: 30rpx;
   border-radius: 0;
@@ -788,7 +752,6 @@ modal {
   flex-wrap: wrap;
   justify-content:center; /*子项横轴上居中对齐*/
   text-align: left;
-  padding-bottom: 3rpx;
   z-index: 1;
 }
 
@@ -797,12 +760,11 @@ modal {
   flex-direction: row;
   justify-content: left;
   text-align: center;
-  width: 46%;
+  width: 50%;
   height: 100rpx;
-  border: 1rpx solid #F2F2F2;
-  background: #fff;
-  padding: 10rpx;
+  background: #444;
   margin: 0;
+  padding: 20rpx 0;
 }
 .middle-goods .middle-goods-image {
   width: 70rpx;
@@ -818,13 +780,13 @@ modal {
   margin-top: 10rpx;
 }
 .middle-goods .middle-goods-action {
-  color: #444;
+  color: #fff;
   font-size: 28rpx;
   line-height: 1.4;
   font-weight: bold;
 }
 .middle-goods .middle-goods-btntips {
-  color: #999;
+  color: #eee;
   font-size: 22rpx;
   line-height: 1.4;
 } 
@@ -860,12 +822,12 @@ modal {
 }
 .recomment-title text{
   width: 350rpx;
-  color: #444;
+  color: #fff;
   font-size: 32rpx;
   font-weight: bold;
 }
 .recomment-title text.title_ex{
-  color: #999;
+  color: #ccc;
   font-size: 24rpx;
   font-weight: normal;
   margin-left: 10rpx;
@@ -873,9 +835,10 @@ modal {
 .recomment-title text.more {
   font-size: 24rpx;
   line-height: 50rpx;
-  color: #999;
+  color: #ccc;
   font-weight: normal;
   text-align: right;
+  display: none;
 }
 
 /*推荐商品列表头*/
@@ -918,56 +881,52 @@ modal {
   flex-direction: row;
   flex-wrap:wrap;
   align-content:center;
-  justify-content:space-around;
-  width: 98%;
+  justify-content:space-between;
+  width: 96%;
   margin:0 auto;
   padding-bottom: 60rpx;
   overflow: hidden;
-  z-index: 1
+  z-index: 1;
+
 }
 
 .venues-item {
   width: 49%;
-  margin-top: 0;
   margin-bottom:15rpx;
+  border-radius: 14rpx;
   background: #fff;
-  border-radius: 10rpx;
-  padding-bottom: 10rpx;
 }
 
 .venues-item .mainpic {
   display: block;
-  width: 356rpx;
-  height: 356rpx;
+  width: 354rpx;
+  height: 354rpx;
 }
 .venues-item .goods-org {
-  width: 60rpx;
-  height: 32rpx;
-  background: #e34c55;
-  line-height: 32rpx;
   color: #fff;
-  font-size: 24rpx;
-  margin-left:20rpx;
-  padding: 10rpx;
-  text-align:center;
+  font-size: 22rpx;
+  background: #EC4844;
+  text-align: center;
+  padding: 0 8rpx;
+  border-radius: 6rpx;
 }
 .venues-item .img-discount {
-  display: block;
   width: 75rpx;
   height: 32rpx;
-  margin:6rpx 0 0 20rpx;
+  margin-left: 10rpx;
 }
 
 .venues-item .goods-name {
   color: #444;
   font-size: 26rpx;
+  font-weight: bold;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding-left: 20rpx;
+  padding:10rpx;
 }
 
 .venues-item .goods_tag {
@@ -977,7 +936,12 @@ modal {
   border: 1px solid #f2f2f2;
   border-radius: 6rpx;
 }
-
+.venues-item .goods-tags {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  padding:10rpx 0 0 10rpx;
+}
 .venues-item .goods_tag image {
   width: 10%;
   height: 30rpx;
@@ -985,20 +949,19 @@ modal {
 
 .venues-item .goods-prom {
   display: block;
-  color: #E52445;
+  color: #999;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  padding-left: 20rpx;
+  padding:0 10rpx;
 }
 
 .price-list {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  width: 100%;
-  padding: 10rpx;
+  padding:10rpx;
 }
 
 .price-market {
@@ -1016,7 +979,6 @@ modal {
   text-indent: 0;
   color: #EC4844;
   font-size: 26rpx;
-  font-weight: bold;
   margin-right: 24rpx;
 }
 
@@ -1025,15 +987,14 @@ modal {
 }
 
 .left-tag {
-  width: 120rpx;
-  height: 40rpx;
-  background: #e34c55;
-  border-radius: 0 10rpx 10rpx 0;
-  line-height: 40rpx;
-  color: #fff;
+  height: 32rpx;
+  line-height: 32rpx;
+  color: #EC4844;
   font-size: 24rpx;
-  margin-left:10rpx;
-  margin-right:20rpx;
+  text-align: center;
+  border: 1rpx #EC4844 solid;
+  border-radius: 6rpx;
+  padding: 2rpx 6rpx;
 }
 
 .main-prom {
