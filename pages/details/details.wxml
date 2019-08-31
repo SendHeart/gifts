@@ -270,7 +270,7 @@
       </button>  
     </form>
     <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
-      <button class="add-cart2"  formType="submit">{{(goodsshape==5||goodsshape==4)?'立即使用':'立即购买'}}</button>  
+      <button class="add-cart2"  formType="submit">{{(goodsshape==5||goodsshape==4)?'立即使用':'送自己'}}</button>  
     </form>
     <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
       <button class="add-cart" formType="submit">
