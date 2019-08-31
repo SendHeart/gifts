@@ -32,8 +32,7 @@ Page({
     title_name: '详情',
     title_logo: '../../images/footer-icon-05.png',
     share_title: '这个礼物真不错，来看看吧，要是你能送我就更好了~',
-    card_blessing: '送心礼物祝您:万事如意，平平安安！',
-    card_invitation: '送心礼物和您一起分享快乐，分享成功！',
+    card_blessing: '',
     card_content: '',
     share_desc: '送心礼物，开启礼物社交时代！',
     share_avatarUrl: weburl + '/uploads/avatar.png',
@@ -328,9 +327,11 @@ Page({
     //console.log('detail swiperchange_share:', e.detail.current, 'cur_img_share_id:',cur_img_share_id)
   },
   bindCardTextAreaBlur: function (e) {
-    var that = this;
+    var that = this
+    var card_blessing = util.filterEmoji(e.detail.value)
     that.setData({
-      card_blessing: e.detail.value
+      card_blessing: card_blessing,
+      card_content: card_blessing,
     })
   }, 
   cardRegisterTextAreaBlur: function (e) {

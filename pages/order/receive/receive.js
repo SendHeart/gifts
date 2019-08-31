@@ -153,6 +153,20 @@ Page({
     })
   },
 
+  shareorderTapTag:function(){
+    var that = this
+    var order_id = that.data.order_id
+    var order_shape = that.data.order_shape
+    var order_bg = that.data.order_bg
+    var order_image = that.data.order_image
+    var share_order_image = that.data.share_order_image
+
+    wx.navigateTo({
+      url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + order_shape + '&share_order_bg=' + order_image + '&share_order_image=' + share_order_image
+    })
+
+  },
+
   card_register_req: function (e) {
     var that = this
     var card_register_reqid_value = e.detail.value
@@ -245,7 +259,6 @@ Page({
         })
       }
     }
-   
   },
 
   set_address: function () {
@@ -694,7 +707,7 @@ Page({
     var card_register_info = ''
     var is_register = 0
     var button_name = ''
-    var card_register_reqid_index = that.data.card_register_reqid_index
+    var card_register_reqid_index = that.data.card_register_reqid_index ? that.data.card_register_reqid_index:0
     //从服务器获取订单列表
     if (is_buymyself!=1){
       setTimeout(function () { //3秒超时
@@ -761,6 +774,9 @@ Page({
               if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
                 orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
               }
+              if (orderObjects[i]['order_sku'][j]['sku_share_image'].indexOf("http") < 0) {
+                orderObjects[i]['order_sku'][j]['sku_share_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_share_image']
+              }
             }
             note = orderObjects[i]['rcv_note']
             headimg = orderObjects[i]['from_headimg']
@@ -824,6 +840,7 @@ Page({
             headimg: headimg,
             nickname: nickname,
             order_image: orderskus[0]['sku_image'],
+            share_order_image: orderskus[0]['sku_share_image'],
             receive_status: receive_status,
             order_m_id: order_m_id,
             card_register_info: card_register_info,
@@ -854,6 +871,7 @@ Page({
       url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
     })
   },
+
 
   onShareAppMessage: function (options ) {
       var that = this 

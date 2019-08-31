@@ -40,23 +40,7 @@ Page({
     navList2: navList2,
     is_buymyself:0, //1自购礼品
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
-  },
+  
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -117,9 +101,9 @@ Page({
           wx.navigateTo({
             url: '/pages/order/receive/receive?order_no=' + order_no + '&receive=1' + '&is_buymyself=' + is_buymyself
           })
-        } else if (is_buymyself == 1 || goodsshape == 5 || goodsshape == 4){
+        } else if (is_buymyself == 1 && ( goodsshape == 5 || goodsshape == 4)){
           //wx.hideLoading()
-          console.log('order send returnTapTag() 贺卡请柬 转分享页面')
+          console.log('order send returnTapTag() 贺卡请柬 互动卡 转分享页面')
           wx.showToast({
             title: ' 加载中',
             icon: 'loading',
