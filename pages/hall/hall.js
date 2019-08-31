@@ -203,11 +203,13 @@ Page({
       that.setData({
         scrollTop: 0
       })
+      app.globalData.hall_gotop = 0
     } else {
       wx.showModal({
         title: '提示',
         content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
       })
+
     }
      
   },
@@ -973,10 +975,7 @@ Page({
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
         }, 500)
-        
-        
-        
-        //console.log('会员推荐商品列表获取:', recommentslist,' page num:', rpage_num);
+        console.log('会员推荐商品列表获取:', recommentslist,' page num:', rpage_num);
       }
     })
     
@@ -1330,7 +1329,6 @@ Page({
     var page_type = that.data.page_type
     var pages = getCurrentPages()
     that.query_cart()
-    that.goTop()
     that.get_project_gift_para()
     if (pages.length > 1) {
       that.setData({
@@ -1397,6 +1395,7 @@ Page({
         })
       }
     }
+
     if(app.globalData.hall_gotop == 1){
       that.goTop()
     }
