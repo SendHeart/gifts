@@ -36,7 +36,7 @@
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}&keyword={{keyword}}&is_satisfy={{is_satisfy}}" hover-class="none">
             <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
             <view class="goods-tags">
-              <text  class="goods-org">{{item.goods_org==4?'京东物流':'自营'}}</text>
+              <text wx:if="{{item.shape!=5 && item.shape!=4}}" class="goods-org">{{item.goods_org==4?'京东物流':'自营'}}</text>
               <image class="img-discount" src="{{item.discount<100?img_discount:''}}"></image>
             </view>
             <text class="goods_name">{{item.name}}</text>
