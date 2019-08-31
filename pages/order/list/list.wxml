@@ -43,9 +43,10 @@
       <text>姓名：</text>
       <text space="ensp">{{name}}</text>
     </view>
-    <view class="order-member-info" style="font-size:28rpx;">
-      <text>手机:</text>
+    <view class="order-member-info" style="font-size:28rpx;" catchtap="callphone" data-phone="{{phone}}">
+      <text >手机:</text>
       <text space="ensp">{{phone}}</text>
+      <image style="margin-left:20rpx;margin-top:15rpx;width:20rpx;height:20rpx;" src="../../../images/acontact.png" />
     </view>
     <view class="order-member-info" style="font-size:28rpx;">
       <text>性别：</text>

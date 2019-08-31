@@ -21,6 +21,15 @@ Page({
     shop_type:shop_type,
     modalHiddenMember:true,
 	},
+
+  callphone: function (e) {
+    var that = this
+    var phone = e.currentTarget.dataset.phone
+    wx.makePhoneCall({
+      phoneNumber: phone,
+    })
+  },
+
   memberinfo:function(e){
     var that = this
     var name = e.currentTarget.dataset.name

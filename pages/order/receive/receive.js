@@ -38,14 +38,16 @@ Page({
     is_buymyself:0,
     messageHidden: true,
     cardregisterHidden: true,
-    needCardRegisterName:'请提供个人信息',
+    needCardRegisterName:'请提供相关信息',
     card_register_note:'',
     card_register_name: '',
     card_register_phone: '',
     card_register_gender: '',
     card_register_req: ['无需证件', '身份证号', '微信号', 'QQ号', '电子邮箱','学号', '工号'],
     card_register_reqid_index: 0,
-    card_register_reqid_value : ''
+    card_register_reqid_value : '',
+    is_showable:0,
+
   },
 
   formSubmit: function (e) {
@@ -152,7 +154,23 @@ Page({
       card_register_gender: card_register_gender
     })
   },
-
+  textPaste:function(e) {
+    var that = this
+    var content = e.currentTarget.dataset.content
+    wx.showToast({
+      title: '复制成功',
+    })
+    wx.setClipboardData({
+      data: content,
+      success: function (res) {
+        wx.getClipboardData({
+          success: function(res) {
+            console.log('点击复制微信号:',res.data)  
+          }
+        })
+      }
+    })
+  },
   shareorderTapTag:function(){
     var that = this
     var order_id = that.data.order_id
@@ -847,6 +865,7 @@ Page({
             is_register: is_register,
             button_name: button_name,
             card_register_reqid_index: card_register_reqid_index,
+            is_showable: orderObjects[0]['is_showable'],
           })
           console.log('order sku list:', orderskus, ' is_register:', that.data.is_register,' card_register_info:', that.data.card_register_info)
           app.globalData.is_receive = 0 

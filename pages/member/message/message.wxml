@@ -28,7 +28,7 @@
     
     <view class="select-goods-list">
     <view class="select-goods" style="height:{{dkheight-80}}px;">
-      <image class="img-loading" src="../../../images/loading.gif"></image>
+      <image class="img-loading" src="{{loading_img}}"></image> <!-- ../../../images/loading.gif-->
       <text class="loadingtext">正在为您挑选中...</text>
     </view>
   </view>

@@ -1373,12 +1373,12 @@ Page({
       if (share_order_shape == 4 ) {
         var card_register_title = that.data.card_register_info['card_register_title'] ? that.data.card_register_info['card_register_title'] : ''  
         shareObj['title'] = card_register_title  //share_order_note
-        shareObj['imageUrl'] = share_order_image
+        shareObj['imageUrl'] = that.data.shareImage //share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id
       }
       if (share_order_shape == 5) {
         shareObj['title'] = share_order_note  
-        shareObj['imageUrl'] = share_order_image
+        shareObj['imageUrl'] = that.data.shareImage //share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id
       }
       console.log('送心分享', shareObj)

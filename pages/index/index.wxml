@@ -26,7 +26,7 @@
 </modal>
 <scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" > <!-- bindscrolltolower="getMoreOrdersTapTag" bindscrolltoupper="getPrevOrdersTapTag"  -->
   <view wx:if="{{page>1}}"  class="prevbtn" bindtap="goTop">
-    <image id="top" src="../../images/top.png" style="width:50rpx;height:50rpx;"></image>
+    <image src="../../images/top.png" style="width:50rpx;height:50rpx;background:#fff;border-radius: 50%;"></image>
   </view>
   
   <view  class='goTop' bindtap="goTop"  hidden='{{!floorstatus}}'> <!-- -->

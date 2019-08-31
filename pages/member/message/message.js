@@ -16,6 +16,7 @@ var now = new Date().getTime()
 Page({
   data: {
     new_task_image: weburl + "/uploads/gift_logo.png", //默认的新人送礼图片
+    loading_img: weburl + "/uploads/loading.gif",
     shop_type: shop_type,
     user: null,
     userInfo: {},

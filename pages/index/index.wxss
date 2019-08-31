@@ -380,7 +380,7 @@ page {
 .prevbtn {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: center;
   align-content: center;
   margin: 20rpx auto;
   width: 100%;

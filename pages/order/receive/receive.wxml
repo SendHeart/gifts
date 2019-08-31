@@ -10,7 +10,7 @@
         <image class="shareto" src="../../../images/icon_shopping.png"></image>
         商城
       </view>
-      <view  wx:if="{{order_shape==4}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag">
+      <view  wx:if="{{order_shape==4 && is_showable==1}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag">
         <image class="shareto" src="../../../images/icon_normal.png"></image>
         详情
       </view>
@@ -37,7 +37,7 @@
     </view>
     <view class="card-register-biz" style="color:{{card_register_info['card_color']}};margin-top:20rpx;">
       <text space="ensp">{{card_register_info['card_register_ownername']?'发起人:'+card_register_info['card_register_ownername']:''}}</text>
-      <text space="ensp">{{card_register_info['card_register_ownerwechat']?'\t 微信:'+card_register_info['card_register_ownerwechat']:''}}</text>
+      <text space="ensp" bindtap='textPaste' data-content="{{card_register_info['card_register_ownerwechat']}}">{{card_register_info['card_register_ownerwechat']?'\t 微信:'+card_register_info['card_register_ownerwechat']:''}}</text>
     </view>
     <view class="card-register-biz" style="color:{{card_register_info['card_color']}}">
       <text>{{card_register_info['card_register_lim']>0?'限制人数:'+card_register_info['card_register_lim'] :''}}</text>
