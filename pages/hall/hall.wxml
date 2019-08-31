@@ -151,7 +151,7 @@
     <view class='buttonwrap'>
       <button class="send-button" formType="submit" >
       <image src="../../images/buynow.png"></image>
-      立即自购</button>
+      送自己</button>
       </view>  <!--  bindtap="bindCheckout" -->
      </form> 
   </view>
