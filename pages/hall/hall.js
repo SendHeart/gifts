@@ -11,7 +11,7 @@ var message = ""
 
 var text = '';
 var page = 1
-var pagesize = 20
+var pagesize = 10
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -33,6 +33,7 @@ Page({
     img_discount: '../../images/discount.png',
     img_service: weburl+'/uploads/service.png',
     img_service2: weburl + '/uploads/service2.png',
+    pagesize: pagesize,
     hidden: true,
     resp_message:{},
     messageHidden : true,
@@ -123,8 +124,10 @@ Page({
         
       }
     }
-    if (currentY > scrollHeight - 1000) {
-      that.getMoreGoodsTapTag()
+    if (currentY > scrollHeight - 3000) {
+      if(that.data.page < that.data.rpage_num){
+        that.getMoreGoodsTapTag()
+      }
       that.setData({
         floorstatus: true,
       })
@@ -970,7 +973,6 @@ Page({
           ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
           rpage_num: rpage_num,
           is_reloading: false,
-          loadingHidden: true,
         })
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
@@ -1413,10 +1415,18 @@ Page({
 
   getScrollHeight: function () {
     wx.createSelectorQuery().select('#venues_box').boundingClientRect((rect) => {
-      this.setData({
-        scrollHeight: rect.height
-      })
-      console.log('页面实际高度:',this.data.scrollHeight)
+      if (rect.height){
+        this.setData({
+          scrollHeight: rect.height,
+          loadingHidden:true
+        })
+        console.log('页面实际高度:', this.data.scrollHeight)
+      }else{
+        setTimeout(function () {
+          that.getScrollHeight()
+        }, 300)
+      }
+     
     }).exec()
   },
 

@@ -307,7 +307,7 @@ Page({
     var search_goodsname = that.data.search_goodsname;
     var keyword=that.data.keyword;
     var shop_type=that.data.shop_type
-    var shape = 1
+    //var shape = 1
     var show_max = that.data.show_max
   
     that.setData({
@@ -328,7 +328,7 @@ Page({
         updown:updown,
         keyword:keyword,
         shop_type:shop_type,
-        shape:shape
+       // shape:shape
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',

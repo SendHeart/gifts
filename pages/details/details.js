@@ -1044,7 +1044,7 @@ Page({
                 }
                 var goodstag = goods_info[0]['goods_tag']
                 var card_type = goods_info[0]['card_type'] ? goods_info[0]['card_type'] : 0
-                if (card_type == 1) {
+                if (card_type == 1 || goods_info[0]['shape'] == 5) {
                   card_image_height = '1055'
                 } else if (card_type == 2) {
                   card_image_height = '550'

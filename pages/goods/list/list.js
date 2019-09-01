@@ -292,6 +292,14 @@ Page({
     var keyword = that.data.keyword;
     var shop_type = that.data.shop_type
     var shape = 1
+    if (!search_goodsname && !keyword && !goods_type_value){
+      wx.showToast({
+        title: '搜到内容为空',
+        icon: 'loading',
+        duration: 2000
+      })
+      return
+    }
     that.setData({
       loadingHidden: false,
     })
