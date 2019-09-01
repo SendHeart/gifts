@@ -88,7 +88,7 @@ Page({
     buynum: 1,
     notehidden: true,
     cardregisterhidden: true,
-    name_focus:true,
+    card_image_height:'1055;',
     has_cardpayed: 0,
     openRecordingdis: "block", //显示录机图标
     shutRecordingdis: "none", //隐藏停止图标
@@ -887,7 +887,7 @@ Page({
         var goodsshape = options.goods_shape ? options.goods_shape : 0
         var goodstag = options.goods_tag ? options.goods_tag : ''
         var goodsorg = options.goods_org ? options.goods_org : ''
-        var is_register = options.is_reg ? options.is_reg:0
+        var card_type = options.card_type ? options.card_type:0
         var card_register_title = ''
         var card_register_content = ''
         var card_register_addr = ''
@@ -916,8 +916,9 @@ Page({
         var qr_type = 'wishshare' 
         var image_video = []
         var image_pic = []
+        var card_image_height = that.data.card_image_height ? that.data.card_image_height:'750'
         var card_register_prev = wx.getStorageSync('card_register_info')
-    console.log('detail options:', options, 'scene:', scene, 'is_register:', is_register, 'card_register_info:', card_register_prev)
+    console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_register_info:', card_register_prev)
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']
@@ -930,6 +931,7 @@ Page({
           card_register_ownername = card_register_info['card_register_ownername']
           card_register_ownerwechat = card_register_info['card_register_ownerwechat']
         }
+       
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
@@ -946,6 +948,7 @@ Page({
           card_register_ownername: card_register_ownername ? card_register_ownername : '',
           card_register_ownerwechat: card_register_ownerwechat ? card_register_ownerwechat : '',
           card_content: card_content,
+          card_image_height: card_image_height,
         })
         if(scene){
           if (scene.indexOf("goodsid=") >= 0) {
@@ -996,7 +999,7 @@ Page({
           goodsorg: goodsorg,
           goodsshape: goodsshape,
           goodstag: goodstag,
-          is_register:is_register,
+          card_type: card_type,
           goodsid: goodsid ? goodsid:0,
           refer_mid: refer_mid,
           goodsprice: goodsprice ? goodsprice:0,
@@ -1040,7 +1043,14 @@ Page({
                   card_register_title = that.data.card_register_title
                 }
                 var goodstag = goods_info[0]['goods_tag']
-                var is_register = goods_info[0]['is_reg'] ? goods_info[0]['is_reg'] : 0
+                var card_type = goods_info[0]['card_type'] ? goods_info[0]['card_type'] : 0
+                if (card_type == 1) {
+                  card_image_height = '1055'
+                } else if (card_type == 2) {
+                  card_image_height = '550'
+                } else {
+                  card_image_height = '750'
+                }
                 that.setData({
                   goodsname: goods_info[0]['name'],
                   goodsinfo: goods_info[0]['act_info'],
@@ -1051,7 +1061,7 @@ Page({
                   goodsorg: goods_info[0]['goods_org'],
                   goodsshape: goods_info[0]['shape'],
                   goodstag: goods_info[0]['goods_tag'],
-                  is_register: is_register,
+                  card_type: card_type,
                   goodscoverimg: goods_info[0]['activity_image'],
                   share_title: goods_info[0]['3D_image'] ? goods_info[0]['3D_image']:that.data.share_title, 
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
@@ -1060,10 +1070,11 @@ Page({
                   card_content: card_content, 
                   card_register_content: card_register_content,
                   card_register_title: card_register_title,
+                  card_image_height: card_image_height,
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
-               // console.log('头像图片下载缓存 wx_headimg_cache')
+                console.log('头像图片下载缓存 card_type:', card_type)
               
               }else{
                 wx.showToast({
@@ -1244,12 +1255,12 @@ Page({
         var sku_delivery_price = that.data.commodityAttr[0].delivery_price
         var is_buymyself = that.data.is_buymyself
         var goodsshape = that.data.goodsshape
-        var is_register = that.data.is_register
+        var card_type = that.data.card_type
         var card_register_title = that.data.card_register_title
         var card_register_content = that.data.card_register_content
         var card_register_addr = that.data.card_register_addr
         console.log('detail goodsmodel is_buymyself:', is_buymyself, 'goodsshape:', goodsshape)
-        if (goodsshape == 4 && is_register==1 ){
+        if (goodsshape == 4 && card_type==1 ){
           if (card_register_content == '' || card_register_addr==''){
             wx.showToast({
               title: "信息不全,请补齐说明和活动地址",

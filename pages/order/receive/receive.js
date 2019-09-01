@@ -723,7 +723,7 @@ Page({
     var isreload = that.data.isreload
     var order_price = 0
     var card_register_info = ''
-    var is_register = 0
+    var card_type = 0
     var button_name = ''
     var card_register_reqid_index = that.data.card_register_reqid_index ? that.data.card_register_reqid_index:0
     //从服务器获取订单列表
@@ -827,7 +827,7 @@ Page({
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
-            is_register = m_desc['card_register_info'] ? 1 : 0 
+            card_type = m_desc['card_register_info'] ? 1 : 0 
             card_register_reqid_index = card_register_info['card_register_reqid_index']
             if (voice_url) {
               wx.downloadFile({
@@ -862,12 +862,12 @@ Page({
             receive_status: receive_status,
             order_m_id: order_m_id,
             card_register_info: card_register_info,
-            is_register: is_register,
+            card_type: card_type,
             button_name: button_name,
             card_register_reqid_index: card_register_reqid_index,
             is_showable: orderObjects[0]['is_showable'],
           })
-          console.log('order sku list:', orderskus, ' is_register:', that.data.is_register,' card_register_info:', that.data.card_register_info)
+          console.log('order sku list:', orderskus, ' card_type:', that.data.card_type,' card_register_info:', that.data.card_register_info)
           app.globalData.is_receive = 0 
           var order_price = orderObjects[0]
           if(is_buymyself==1){ //自购礼品 直接接收
