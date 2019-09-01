@@ -28,7 +28,7 @@ Page({
     satisfy:true,
     is_satiify:0,
     page: 1,
-    pagesize: 30,
+    pagesize: 10,
     indicatorDots: true,
     vertical: false,
     autoplay: true,

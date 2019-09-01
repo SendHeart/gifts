@@ -30,7 +30,7 @@ Page({
     search_goodsname: null,
     keyword:'',
     page: 1,
-    pagesize: 30,
+    pagesize: 10,
     indicatorDots: true,
     vertical: false,
     autoplay: true,
