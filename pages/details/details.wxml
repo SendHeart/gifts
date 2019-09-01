@@ -31,7 +31,7 @@
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{pic.id}}'>
           <swiper-item item-id="{{pic.id}}" class="swiperitem">
-            <image src="{{pic.url}}" class="slide-image" style="{{(goodsshape==5||goodsshape==4)?'height:1055rpx;':''}}" />
+            <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" />
            <!-- 
             <view wx:if="{{goodsshape==4}}" class="share-card-register-image"> 
             <swiper class="swiper-share-box" bindchange="swiperchange_share" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
@@ -66,7 +66,7 @@
                 <!-- view>{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</view -->
                 <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
               </view>
-              <view wx:if="{{goodsshape==4 && is_register==1}}" bindtap="" class="card-register-biz" style="color:{{current_card_color}}">
+              <view wx:if="{{goodsshape==4 && card_type==1}}" bindtap="" class="card-register-biz" style="color:{{current_card_color}}">
               <!--
                 <view>{{card_register_lim>0?card_register_lim:'报名人数:不限'}}</view>
                 <view>{{card_register_fee?card_register_fee:'报名费:0元'}}</view>
@@ -77,12 +77,12 @@
                 <text>费用:</text>
                 <input style="width:100rpx;" value="{{card_register_fee}}" type="digit" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed6}}" maxlength='10' />
               </view>
-               <view wx:if="{{goodsshape==4 && is_register==1}}" class="card-register-startend" style="color:{{current_card_color}}">
+               <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-startend" style="color:{{current_card_color}}">
                 <picker value="{{card_register_reqid_index}}"  range="{{card_register_reqid_picker}}" bindchange="bindChangeRegisterReqid">
  证件类型:{{card_register_reqid_picker[card_register_reqid_index]}}  
                 </picker>
                </view>
-              <view wx:if="{{goodsshape==4 && is_register==1}}" class="card-register-startend" style="color:{{current_card_color}}">
+              <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-startend" style="color:{{current_card_color}}">
                 <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
  开始时间:{{register_start_date}}  
                 </picker>
@@ -96,7 +96,7 @@
                 <picker mode="time" value="{{register_end_time}}" start="register_end_time" end="23:59" bindchange="bindChangeEndTime"> {{register_end_time}}
                 </picker>
               </view>
-              <view wx:if="{{goodsshape==4 && is_register==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
+              <view wx:if="{{goodsshape==4 && card_type==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
                 <picker mode="date" value="{{action_start_date}}" start="action_start_date" end="2999-12-12" bindchange="bindChangeActStartDate">
  活动时间:{{action_start_date}}  
                 </picker>

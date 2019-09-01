@@ -47,7 +47,7 @@
       <text space="ensp">{{card_register_info['card_register_addr']?'活动地址:'+card_register_info['card_register_addr']:''}}</text>
     </view>
     <!--
-    <view wx:if="{{is_register==1}}" class="card-register-startend" style="color:{{card_register_info['card_color']}}"> 
+    <view wx:if="{{card_type==1}}" class="card-register-startend" style="color:{{card_register_info['card_color']}}"> 
       <text space="ensp">'开始日期'}}:{{card_register_info['register_start_date']}} {{card_register_info['register_start_time']}}</text>
       <text space="ensp"> 至 {{card_register_info['register_end_date']}} {{card_register_info['register_end_time']}}</text>
     </view>
