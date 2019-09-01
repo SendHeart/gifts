@@ -42,7 +42,7 @@
     "navigationBarTextStyle": "white",
     "navigationBarTitleText": "送心礼物",
     "navigationBarBackgroundColor": "#1d1d1d",
-    "backgroundColor": "#F5F5F5",
+    "backgroundColor": "#1d1d1d",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },

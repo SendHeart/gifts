@@ -61,7 +61,7 @@ page {
 	justify-content: space-between;/*子项横轴上居中对齐*/
 	align-items: center;/*子项纵轴上居中对齐*/
   padding: 0rpx 0rpx 8rpx 0rpx;
-  top:0;
+  top:-2rpx;
   position:fixed;
   background: #1d1d1d;
   z-index: 999;
@@ -877,30 +877,32 @@ modal {
 }
 
 .venues-box {
-  display: flex;
-  flex-direction: row;
-  flex-wrap:wrap;
-  align-content:center;
-  justify-content:space-between;
   width: 96%;
   margin:0 auto;
   padding-bottom: 60rpx;
   overflow: hidden;
   z-index: 1;
-
 }
 
 .venues-item {
-  width: 49%;
   margin-bottom:15rpx;
   border-radius: 14rpx;
   background: #fff;
+  box-sizing: border-box;
+  display: inline-block;
 }
-
+.box-left,.box-right{
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
+}
+.box-right{
+  float: right;
+}
 .venues-item .mainpic {
   display: block;
-  width: 354rpx;
-  height: 354rpx;
+  width: 355rpx;
+  height: 355rpx;
 }
 .venues-item .goods-org {
   color: #fff;
@@ -909,11 +911,16 @@ modal {
   text-align: center;
   padding: 0 8rpx;
   border-radius: 6rpx;
+  margin-right: 8rpx;
 }
 .venues-item .img-discount {
-  width: 75rpx;
-  height: 32rpx;
-  margin-left: 10rpx;
+  color: #fff;
+  font-size: 22rpx;
+  background: #EC4844;
+  text-align: center;
+  padding: 0 8rpx;
+  border-radius: 6rpx;
+  margin-right: 8rpx;
 }
 
 .venues-item .goods-name {
@@ -992,7 +999,7 @@ modal {
   color: #EC4844;
   font-size: 24rpx;
   text-align: center;
-  border: 1rpx #EC4844 solid;
+  border: 2rpx #EC4844 solid;
   border-radius: 6rpx;
   padding: 2rpx 6rpx;
 }
@@ -1199,7 +1206,7 @@ main_message .main_red{
   */
   height: 50rpx;
   line-height: 50rpx;
-  display: flex;
+  display: none;
   flex-direction: row;
   justify-content: center;
   font-size: 30rpx;

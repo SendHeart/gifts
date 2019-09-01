@@ -1,41 +1,42 @@
-
-<view class="container" scroll-y scroll-x="false" bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" ><!--    bindscroll="scrolltoupper" -->
-<!-- 
+<view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+  <!--    bindscroll="scrolltoupper" -->
+  <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
 
-<view class="search">
+  <view class="search">
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
       <!--<text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
     </view>
-    <view class="wx-input"  bindtap='searchTapTag' >
-    <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
-    <text>好礼搜一下</text>
+    <view class="wx-input" bindtap='searchTapTag'>
+      <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
+      <text>好礼搜一下</text>
     </view>
-    <view class="messages" catchtap="messagesTapTag" >
+    <view class="messages" catchtap="messagesTapTag">
       <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
       <image class="icon-message" src="../../images/u72.png"></image>
     </view>
-</view>
+  </view>
 
-<view class="banner">
-  <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" easing-function="easeInOutCubic" >
+  <view class="banner">
+    <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}"
+      easing-function="easeInOutCubic">
       <block wx:for="{{hall_banner}}" wx:key="" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
-            <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}"  controls autoplay="" custom-cache="{{false}}" objectFit="contain"> 
-              <cover-view class="controls" mode="aspecFit" >
-              <cover-image class="img"  src="{{banner_list.pic}}" mode="aspectFill" />
+            <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}" controls autoplay="" custom-cache="{{false}}" objectFit="contain">
+              <cover-view class="controls" mode="aspecFit">
+                <cover-image class="img" src="{{banner_list.pic}}" mode="aspectFill" />
               </cover-view>
             </video>
-            <image wx:else src="{{banner_list.img}}" class="slide-image" mode="aspectFill"/>
+            <image wx:else src="{{banner_list.img}}" class="slide-image" mode="aspectFill" />
           </swiper-item>
         </view>
       </block>
-  </swiper>
-</view>
-<!-- 
+    </swiper>
+  </view>
+  <!-- 
 <view class="banner-bar-list">
   <scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="x_{{toView}}"  class="banner-bar">
       <block wx:for="{{hall_banner}}" wx:key="{{banner_list.id}}" wx:for-item="banner_list">
@@ -48,115 +49,122 @@
   </scroll-view>
 </view>
 -->
-<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-  <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-  <view class='' style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
-  <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
-</view>
- 
-<view class="wrap">
-  <view class="middle-goods">
-    <view wx:if="{{middle8_img}}" class="image-btnbuy" bindtap="bindAIPickGoods" data-goods-type='8' data-middle-title="{{middle8_title}}">
+  <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+    <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
+    <view class='' style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
+    <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
+  </view>
+
+  <view class="wrap">
+    <view class="middle-goods">
+      <view wx:if="{{middle8_img}}" class="image-btnbuy" bindtap="bindAIPickGoods" data-goods-type='8' data-middle-title="{{middle8_title}}">
         <image class="pick-goods-image" src="{{middle8_img}}" mode="aspectFill"></image>
         <text>{{middle8_title}}</text>
-    </view>
-   
-    <view wx:if="{{middle5_img}}" class="image-btnbuy" bindtap="bindMiddleGoods" data-goods-type='5' data-middle-title="{{middle5_title}}">
+      </view>
+
+      <view wx:if="{{middle5_img}}" class="image-btnbuy" bindtap="bindMiddleGoods" data-goods-type='5' data-middle-title="{{middle5_title}}">
         <image class="pick-goods-image" src="{{middle5_img}}" mode="aspectFill"></image>
         <text>{{middle5_title}}</text>
-    </view>
-    <view wx:if="{{middle6_img}}" class="image-btnbuy" bindtap="bindMiddleGoods" data-goods-type='6' data-middle-title="{{middle6_title}}">
+      </view>
+      <view wx:if="{{middle6_img}}" class="image-btnbuy" bindtap="bindMiddleGoods" data-goods-type='6' data-middle-title="{{middle6_title}}">
         <image class="pick-goods-image" src="{{middle6_img}}" mode="aspectFill"></image>
         <text>{{middle6_title}}</text>
-    </view>
-    <view wx:if="{{middle7_img}}" class="image-btnbuy" bindtap="bindMiddleGoods" data-goods-type='7' data-middle-title="{{middle7_title}}">
+      </view>
+      <view wx:if="{{middle7_img}}" class="image-btnbuy" bindtap="bindMiddleGoods" data-goods-type='7' data-middle-title="{{middle7_title}}">
         <image class="pick-goods-image" src="{{middle7_img}}" mode="aspectFill"></image>
         <text>{{middle7_title}}</text>
+      </view>
+      <view class="image-btnbuy" bindtap="bindPickGoods">
+        <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
+        <text>全部精选</text>
+      </view>
     </view>
-    <view class="image-btnbuy" bindtap="bindPickGoods">
-      <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
-      <text>更多精选</text>
-    </view>
-    </view>
-  <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+    <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
     <view class="user">
-    <view class='usertitle'>我的礼物包</view>
-    <view class="usergifts" bindtap='usergiftTapTag'>
-      <text>收到</text>
-      <text class='snum'>{{gifts_rcv}}</text>
-      <text>送出</text>
-      <text class='snum'>{{gifts_send}}</text>
+      <view class='usertitle'>我的礼物包</view>
+      <view class="usergifts" bindtap='usergiftTapTag'>
+        <text>收到</text>
+        <text class='snum'>{{gifts_rcv}}</text>
+        <text>送出</text>
+        <text class='snum'>{{gifts_send}}</text>
+      </view>
     </view>
-  </view>
-  
-  <view class="carts-list">
-    <view wx:for="{{carts}}" class="carts-container" wx:for-index="cart_idx" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-org="{{item.goods_org}}" data-goods-shape="{{item.shape}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" hidden="{{item.hidden==1?false:false}}" bindtap="showGoods"> 
-      <view class="carts-item" data-index="{{cart_idx}}">
-        <!-- 复选框图标 -->
-        <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{cart_idx}}" hidden="true" />
-        <!-- 缩略图 -->
-        <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
-        <!-- 商品标题 -->
-        <view class="carts-text">
-          <view class="carts-title"><text>{{item.name}}</text></view> 
-          <view class="carts-subtitle">
+
+    <view class="carts-list">
+      <view wx:for="{{carts}}" class="carts-container" wx:for-index="cart_idx" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-org="{{item.goods_org}}" data-goods-shape="{{item.shape}}" data-goods-info="{{item.act_info}}"
+        data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
+        <view class="carts-item" data-index="{{cart_idx}}">
+          <!-- 复选框图标 -->
+          <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{cart_idx}}" hidden="true" />
+          <!-- 缩略图 -->
+          <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
+          <!-- 商品标题 -->
+          <view class="carts-text">
+            <view class="carts-title">
+              <text>{{item.name}}</text>
+            </view>
+            <view class="carts-subtitle">
               <view class="carts-sku">
-              <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+                <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
               </view>
               <view class="carts-en-price">￥{{item.sell_price}} x{{item.num}}</view>
-            <!-- 数量加减 -->
-            <view class="stepper">
-              <!-- 减号 -->
-              <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindMinus">-</text>
-              <!-- 数值 -->
-              <input wx:if="{{cart_idx=='99999'}}" type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
-              <!-- 加号 -->
-              <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
+              <!-- 数量加减 -->
+              <view class="stepper">
+                <!-- 减号 -->
+                <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindMinus">-</text>
+                <!-- 数值 -->
+                <input wx:if="{{cart_idx=='99999'}}" type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
+                <!-- 加号 -->
+                <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
+              </view>
             </view>
           </view>
+          <view data-index="{{cart_idx}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}">
+            <image src="../../images/icon_delete.png"></image>
+          </view>
         </view>
-        <view data-index="{{cart_idx}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><image src="../../images/icon_delete.png"></image></view>
       </view>
     </view>
-  </view>
-  <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">  
-    <view class="pick-goods-text">
-      <text class="pick-goods-slogan">附赠留言</text>
+    <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
+      <view class="pick-goods-text">
+        <text class="pick-goods-slogan">附赠留言</text>
+      </view>
+      <view class="note" hidden='{{notehidden}}'>
+        <textarea bindblur="bindTextAreaBlur" auto-height placeholder="送你一份礼物，愿你喜欢！" maxlength="56" />
+      </view>
     </view>
-    <view class="note" hidden='{{notehidden}}'>
-      <textarea bindblur="bindTextAreaBlur" auto-height placeholder="送你一份礼物，愿你喜欢！" maxlength="56" />
+    <view class="pick-goods">
+      <view style='width:60%;'>
+        <image class='serviceimg' hidden='{{buyhidden1}}' src="{{img_service?img_service:'../../images/service.png'}}" mode="aspectFill"></image>
+        <image class='serviceimg' hidden='{{buyhidden2}}' src="{{img_service?img_service2:'../../images/service.png'}}" mode="aspectFill"></image>
+      </view>
+      <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>模式切换</text>
+          <switch bindchange="BuyModeChange" checked='true' color='#E34C55' style='zoom:0.6' />
+        </label>
+      </view>
     </view>
-  </view>
-<view class="pick-goods">
-<view style='width:60%;'>
-  <image class='serviceimg' hidden='{{buyhidden1}}' src="{{img_service?img_service:'../../images/service.png'}}" mode="aspectFill"></image>
-  <image class='serviceimg'  hidden='{{buyhidden2}}' src="{{img_service?img_service2:'../../images/service.png'}}" mode="aspectFill"></image>
-</view>
-<view class="modeswitch">
-  <label>
-  <text style='height:50rpx;line-height:50rpx;'>模式切换</text>
-  <switch bindchange="BuyModeChange" checked='true' color='#E34C55' style='zoom:0.6' />
-  </label>
-</view>
-</view>
-  
-  <view class="btnconfirm">
-    <form bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true" >
-      <button class="send-button" formType="submit" >
-      <image src="../../images/packed.png"></image>
-      打包送出</button> <!--  bindtap="bindCheckout" -->
-    </form>
-    <form bindsubmit="formSubmit"  hidden='{{buyhidden2}}' data-name='buymyself'  data-type="1" report-submit="true" >
-    <view class='buttonwrap'>
-      <button class="send-button" formType="submit" >
-      <image src="../../images/buynow.png"></image>
-      立即自购</button>
-      </view>  <!--  bindtap="bindCheckout" -->
-     </form> 
-  </view>
 
-<!--
+    <view class="btnconfirm">
+      <form bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true">
+        <button class="send-button" formType="submit">
+          <image src="../../images/packed.png"></image>
+          打包送出</button>
+        <!--  bindtap="bindCheckout" -->
+      </form>
+      <form bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='buymyself' data-type="1" report-submit="true">
+        <view class='buttonwrap'>
+          <button class="send-button" formType="submit">
+            <image src="../../images/buynow.png"></image>
+            立即自购</button>
+        </view>
+        <!--  bindtap="bindCheckout" -->
+      </form>
+    </view>
+
+    <!--
   <modal title="" no-cancel="{{nocancel}}" hidden="{{messageHidden}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="开始新手任务" cancel-text="跳过">
     <view style="height:{{dkheight-200}}px;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
      <view class="main-prom">
@@ -165,19 +173,19 @@
     </view>
   </modal>
    -->
-  
-  <view class="main_message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
-    <view class="t_w">
-      <!--右上角图标开始-->
-      <view class="t_image"  bindtap="messageCandel">
-        <image class="t_image1" src="/images/icon-no.png"></image>
-      </view>
-       
-      <!--右上角图标结束-->
 
-      <!--弹出框开始-->
-      <!-- 红包 -->
-      <!-- 
+    <view class="main_message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
+      <view class="t_w">
+        <!--右上角图标开始-->
+        <view class="t_image" bindtap="messageCandel">
+          <image class="t_image1" src="/images/icon-no.png"></image>
+        </view>
+
+        <!--右上角图标结束-->
+
+        <!--弹出框开始-->
+        <!-- 红包 -->
+        <!-- 
       <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
           <view class="bg_view">{{resp_message.title}}</view>  
           <text class="red-name">{{resp_message.message}}</text>
@@ -186,20 +194,20 @@
           <text class="red-footer">{{resp_message.footer}}</text>
           <text class="red-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
           -->
-          <!-- 
+        <!-- 
           <view class="txtys">{{resp_message.message}}</view>
           -->
-          <!--确定开始-->
-          <!-- 
+        <!--确定开始-->
+        <!-- 
           <view class="txtsure">
             <view class="txtsurebg" bindtap="messageCandel">
               <text class="txtsurename">确定</text>
             </view>        
           </view>
           -->
-          <!-- 确定结束-->
-      <!-- 优惠券 -->
-      <!-- 
+        <!-- 确定结束-->
+        <!-- 优惠券 -->
+        <!-- 
       <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
         <text class="coupon-name">{{resp_message.message}}</text>
         <text class="coupon-content">{{resp_message.content}}</text>
@@ -207,75 +215,129 @@
         <text class="coupon-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
       </view>
       -->
-       <!-- 消息通知 -->
-      <view wx:if="{{main_prom_image}}" class="main_red" style="width:600rpx;height:683rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;" bindtap="messageConfirm" >
-      <!--
+        <!-- 消息通知 -->
+        <view wx:if="{{main_prom_image}}" class="main_red" style="width:600rpx;height:683rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;"
+          bindtap="messageConfirm">
+          <!--
         <text class="" style='margin-top:250rpx;font-size:40rpx;color:#fff;'>{{main_prom_note?'':''}}</text>
       -->
+        </view>
       </view>
+
+      <!--弹出框结束-->
     </view>
-    
-     <!--弹出框结束-->
-  </view>
-  <view class="recomment-title" bindtap='bindPickGoods'>
+    <view class="recomment-title" bindtap='bindPickGoods'>
       <text>精选清单<text class='title_ex'>达人推荐</text></text>
       <text class='more'>更多...</text>
     </view>
-  <view class="middle-goods">
-    
-    <view  wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>
-      <view>
-        <image class="middle-goods-image" src="{{middle1_img}}"></image>
+    <view class="middle-goods">
+
+      <view wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>
+        <view>
+          <image class="middle-goods-image" src="{{middle1_img}}"></image>
+        </view>
+        <view class="image-btntext">
+          <text class="middle-goods-action">{{middle1_title}}</text>
+          <text class="middle-goods-btntips">{{middle1_note}}</text>
+        </view>
       </view>
-      <view class="image-btntext">
-        <text class="middle-goods-action">{{middle1_title}}</text>
-        <text class="middle-goods-btntips">{{middle1_note}}</text>
+      <view wx:if="{{middle2_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods" data-goods-type='2' data-middle-title="{{middle2_title}}" style='border-top-right-radius:14rpx;'>
+        <view>
+          <image class="middle-goods-image" src="{{middle2_img}}"></image>
+        </view>
+        <view class="image-btntext">
+          <text class="middle-goods-action">{{middle2_title}}</text>
+          <text class="middle-goods-btntips">{{middle2_note}}</text>
+        </view>
       </view>
+
+      <view wx:if="{{middle3_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='3' data-middle-title="{{middle3_title}}" style='border-bottom-left-radius:14rpx;'>
+        <view>
+          <image class="middle-goods-image" src="{{middle3_img}}"></image>
+        </view>
+        <view class="image-btntext">
+          <text class="middle-goods-action">{{middle3_title}}</text>
+          <text class="middle-goods-btntips">{{middle3_note}}</text>
+        </view>
+      </view>
+      <view wx:if="{{middle4_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods" data-goods-type='4' data-middle-title="{{middle4_title}}" style='border-bottom-right-radius:14rpx;'>
+        <view>
+          <image class="middle-goods-image" src="{{middle4_img}}"></image>
+        </view>
+        <view class="image-btntext">
+          <text class="middle-goods-action">{{middle4_title}}</text>
+          <text class="middle-goods-btntips">{{middle4_note}}</text>
+        </view>
+      </view>
+
     </view>
-    <view  wx:if="{{middle2_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods"  data-goods-type='2' data-middle-title="{{middle2_title}}"style='border-top-right-radius:14rpx;'>
-      <view>
-        <image class="middle-goods-image" src="{{middle2_img}}"></image>
-      </view>
-      <view class="image-btntext">
-        <text class="middle-goods-action">{{middle2_title}}</text>
-        <text class="middle-goods-btntips">{{middle2_note}}</text>
-      </view>
+
+    <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
+      <text>近期热门<text class='title_ex'>大家都在送</text></text>
+      <text class='more'>更多...</text>
     </view>
-  
-    <view  wx:if="{{middle3_img}}" class="image-btn" bindtap="bindMiddleGoods"  data-goods-type='3' data-middle-title="{{middle3_title}}" style='border-bottom-left-radius:14rpx;'>
-      <view>
-        <image class="middle-goods-image" src="{{middle3_img}}"></image>
+
+    <!--瀑布流列表-->
+    <view id="venues_box" class="venues-box">
+      <view class="box-left">
+        <block wx:for="{{recommentslist_show}}" wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
+          <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id">
+            <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
+              data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==0}}">
+              <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+              <view class="goods-tags">
+                <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
+                <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+              </view>
+              <text class="goods-name">{{item.name}}</text>
+              <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
+              <view class="goods-tags">
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+              </view>
+              <view class="price-list">
+                <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now">￥{{item.sell_price}}</view>
+              </view>
+            </view>
+          </block>
+        </block>
       </view>
-      <view class="image-btntext">
-        <text class="middle-goods-action">{{middle3_title}}</text>
-        <text class="middle-goods-btntips">{{middle3_note}}</text>
-      </view>
-    </view>
-    <view  wx:if="{{middle4_img}}" class="image-btn" style='margin-right:0;'  bindtap="bindMiddleGoods"  data-goods-type='4' data-middle-title="{{middle4_title}}" style='border-bottom-right-radius:14rpx;' >
-      <view>
-        <image class="middle-goods-image" src="{{middle4_img}}"></image>
-      </view>
-      <view class="image-btntext">
-        <text class="middle-goods-action">{{middle4_title}}</text>
-        <text class="middle-goods-btntips">{{middle4_note}}</text>
+
+      <view class="box-right">
+        <block wx:for="{{recommentslist_show}}" wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
+          <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id">
+            <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
+              data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==1}}">
+              <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+              <view class="goods-tags">
+                <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
+                <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+              </view>
+              <text class="goods-name">{{item.name}}</text>
+              <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
+              <view class="goods-tags">
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+              </view>
+              <view class="price-list">
+                <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now">￥{{item.sell_price}}</view>
+              </view>
+            </view>
+          </block>
+        </block>
       </view>
     </view>
 
-  </view>  
-  
-  <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
-    <text>近期热门<text class='title_ex'>大家都在送</text></text>
-    <text class='more'>更多...</text>
-  </view>
 
+    <!---
   <view id="venues_box" class="venues-box">
   <block wx:for="{{recommentslist_show}}"  wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
     <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id" >
       <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
       <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       <view class="goods-tags">
-      <text class="goods-org">{{item.goods_org==4?'京东物流':'自营'}}</text>
-      <image class="img-discount" src="{{item.discount<100?img_discount:''}}"></image>
+      <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
+      <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
       </view>
       
       <text class="goods-name">{{item.name}}</text>
@@ -295,11 +357,12 @@
     </block>
   </block>
   </view>
-  <view class="loading-show" hidden="{{loadingHidden}}">
-   <text>加载中</text>
+  --->
+    <view class="loading-show" hidden="{{loadingHidden}}">
+      <text>加载中</text>
+    </view>
   </view>
-</view>
-<!--
+  <!--
  </scroll-view>
  -->
 

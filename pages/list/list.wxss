@@ -183,12 +183,11 @@ page {
   position: fixed; 
   top: 0;   
   right: 0; 
-  background: -webkit-linear-gradient(bottom,#1d1d1d,#333333); 
-  width:55rpx;
-  height:46rpx;
-  padding: 10rpx 15rpx;
+  width:70rpx;
+  height:50rpx;
   margin:-0 auto;
   z-index:1000;
+  padding-right: 15rpx;
 }
 /*辅助导航 nav2*/
 .top-bar2 {
@@ -226,43 +225,49 @@ swiper-item image {
 }
 
 .venues_box {
-  padding: 10rpx 0;
-  display: flex;
-  flex-direction: row;
-  flex-wrap:wrap;
-  align-content:center;
-  justify-content:space-around;
-  width: 98%;
-  margin: 0 auto 150rpx;
+  padding: 10rpx 0 60rpx 0;
+  margin: 0 auto;
+  width: 96%;
   overflow: hidden;
-   padding-bottom: 40rpx;
+  z-index: 1;
 }
 
 .venues_item {
-  width: 48%;
   margin-bottom:15rpx;
   background: #ffffff;
-  border-radius: 10rpx;
+  border-radius: 14rpx;
   padding-bottom: 10rpx;
+  box-sizing: border-box;
+  display: inline-block;
 }
-
+.box-left,.box-right{
+  display: inline-block;
+  vertical-align: top;
+  width: 49%;
+}
+.box-right{
+  float: right;
+}
 .venues_item .mainpic {
   display: block;
   width: 354rpx;
   height: 354rpx;
 }
 .venues_item .img-discount {
-  display: block;
-  width: 75rpx;
-  height: 32rpx;
-  margin:6rpx 0 0 20rpx;
+  color: #fff;
+  font-size: 22rpx;
+  background: #EC4844;
+  text-align: center;
+  padding: 0 8rpx;
+  border-radius: 6rpx;
+  margin-right: 8rpx;
 }
 .venues_item .goods-org {
   color: #fff;
   font-size: 22rpx;
   background: #EC4844;
   text-align: center;
-  padding: 2rpx 10rpx;
+  padding: 0 8rpx;
   border-radius: 6rpx;
 }
 .venues_item .goods_name {
