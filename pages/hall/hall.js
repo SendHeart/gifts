@@ -12,6 +12,7 @@ var message = ""
 var text = '';
 var page = 1
 var pagesize = 10
+
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -34,6 +35,7 @@ Page({
     img_service: weburl+'/uploads/service.png',
     img_service2: weburl + '/uploads/service2.png',
     pagesize: pagesize,
+    pageoffset:0,
     hidden: true,
     resp_message:{},
     messageHidden : true,
@@ -127,6 +129,12 @@ Page({
     if (currentY > scrollHeight - 3000) {
       if(that.data.page < that.data.rpage_num){
         that.getMoreGoodsTapTag()
+      }else{
+        wx.showToast({
+          title: '已经到底了~',
+          icon: 'none',
+          duration: 1000
+        })
       }
       that.setData({
         floorstatus: true,
@@ -916,6 +924,7 @@ Page({
     var minusStatuses = []
     var page=that.data.page
     var pagesize=that.data.pagesize
+    var pageoffset = that.data.pageoffset
     var shop_type = that.data.shop_type
 
     that.setData({
@@ -930,7 +939,8 @@ Page({
         access_token: token,
         shop_type:shop_type,
         page:page,
-        pagesize:pagesize 
+        pagesize:pagesize,
+        pageoffset:pageoffset,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -940,6 +950,7 @@ Page({
         var recommentslist = that.data.recommentslist
         var recommentslist_new = res.data.result
         var rpage_num = res.data.all_rows
+        var pageoffset = res.data.pageoffset
         var show_max = that.data.show_max
         var recommentslist_show = that.data.recommentslist_show
         if (!recommentslist_new) return
@@ -972,12 +983,13 @@ Page({
           recommentslist: recommentslist,
           ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
           rpage_num: rpage_num,
+          pageoffset: pageoffset,
           is_reloading: false,
         })
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
         }, 500)
-        console.log('会员推荐商品列表获取:', recommentslist,' page num:', rpage_num);
+        console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:',page,' pageoffset:', pageoffset);
       }
     })
     
@@ -1043,11 +1055,7 @@ Page({
     var is_reloading = that.data.is_reloading
     if(is_reloading) return
     if (page > rpage_num) {
-      wx.showToast({
-        title: '已经到底了~',
-        icon: 'none',
-        duration: 1000
-      })
+
       that.setData({
         loadingHidden: true,
       })

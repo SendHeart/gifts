@@ -31,6 +31,7 @@ Page({
     keyword:'',
     page: 1,
     pagesize: 10,
+    pageoffset:0,
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -70,23 +71,7 @@ Page({
     })
     
   },
-  setNavigation: function () {
-    let startBarHeight = 20
-    let navgationHeight = 44
-    let that = this
-    wx.getSystemInfo({
-      success: function (res) {
-        console.log(res.model)
-        if (res.model == 'iPhone X') {
-          startBarHeight = 44
-        }
-        that.setData({
-          startBarHeight: startBarHeight,
-          navgationHeight: navgationHeight
-        })
-      }
-    })
-  },
+
   goBack: function () {
     var pages = getCurrentPages();
     if (pages.length > 1) {
@@ -162,6 +147,7 @@ Page({
       toView: toView ? toView : 0,
       scrollTop:0,
       venuesItems_show: [],
+      pageoffset:0,
     })
     console.log('toView:' + that.data.toView)
     that.get_goods_list()
@@ -295,17 +281,18 @@ Page({
   
   get_goods_list: function (event) {
     //venuesList
-    var that = this;
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
-    var username = that.data.username ;
-    var token = that.data.token;
-    var goods_type = that.data.tab;
-    var goods_type_value = that.data.tab_value;
-    var goods_sales = that.data.tab2;
-    var updown = that.data.updown;
-    var search_goodsname = that.data.search_goodsname;
-    var keyword=that.data.keyword;
+    var that = this
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+    var pageoffset = that.data.pageoffset
+    var username = that.data.username 
+    var token = that.data.token
+    var goods_type = that.data.tab
+    var goods_type_value = that.data.tab_value
+    var goods_sales = that.data.tab2
+    var updown = that.data.updown
+    var search_goodsname = that.data.search_goodsname
+    var keyword=that.data.keyword
     var shop_type=that.data.shop_type
     //var shape = 1
     var show_max = that.data.show_max
@@ -323,6 +310,7 @@ Page({
         access_token: token, 
         page: page, 
         pagesize: pagesize,
+        pageoffset:pageoffset,
         search_goodsname: search_goodsname,
         goods_sales:goods_sales,
         updown:updown,
@@ -337,9 +325,10 @@ Page({
       },
       success: function (res) {
         var venuesItems_show = that.data.venuesItems_show
-        console.log('get_goods_list:',res.data.result,'page:',page)
+        console.log('get_goods_list:',res.data,'page:',page)
         var venuesItems_new = res.data.result
         var all_rows = res.data.all_rows
+        var pageoffset = res.data.pageoffset
         if (!venuesItems_new) {
           wx.showToast({
             title: '没有搜到记录',
@@ -382,6 +371,7 @@ Page({
             ["venuesItems_show[" + (page - 1) + "]"]: venuesItems_new,
             page: page ,
             all_rows: all_rows,
+            pageoffset:pageoffset,
             keyword: '',
             is_goodslist_loading: false,
           })

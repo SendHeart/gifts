@@ -29,6 +29,7 @@ Page({
     is_satiify:0,
     page: 1,
     pagesize: 10,
+    pageoffset:0,
     indicatorDots: true,
     vertical: false,
     autoplay: true,
@@ -280,8 +281,9 @@ Page({
   get_goods_list: function (event) {
     //venuesList
     var that = this;
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+    var pageoffset = that.data.pageoffset
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_type = that.data.goods_type;
@@ -313,6 +315,7 @@ Page({
         access_token: token,
         page: page,
         pagesize: pagesize,
+        pageoffset: pageoffset,
         search_goodsname: search_goodsname,
         goods_sales: goods_sales,
         updown: updown,
@@ -327,9 +330,10 @@ Page({
       },
       success: function (res) {
         console.log('get_goods_list:', res.data.result)
-        var venuesItems = res.data.result;
-        var page = that.data.page;
-        var all_rows = res.data.all_rows;
+        var venuesItems = res.data.result
+        var page = that.data.page
+        var all_rows = res.data.all_rows
+        var pageoffset = res.data.pageoffset
         if (!venuesItems) {
           wx.showToast({
             title: '没有搜到记录',
@@ -367,6 +371,7 @@ Page({
         that.setData({
           venuesItems: venuesItems,
           all_rows: all_rows,
+          pageoffset:pageoffset,
           //keyword: ''
         })
         that.setData({
