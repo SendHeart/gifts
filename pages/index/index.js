@@ -659,16 +659,16 @@ Page({
     var pagesize = that.data.pagesize
     var now = new Date().getTime()
     var currenttime = now ? parseInt(now / 1000) : 0
-    var tips = "加载第" + (page==0?1:page) + "页"
+    var tips = "查看第" + (page==0?1:page) + "页"
     var hidddensearch = that.data.hidddensearch
     var keyword = hidddensearch?'':that.data.keyword
     that.setData({
       is_loading:true,
       page: page,
     })
-    wx.showLoading({
-      title: tips,
-    })
+    //wx.showLoading({
+      //title: tips,
+    //})
     var page_show = orders_next.length 
     var orders_show = [] 
    

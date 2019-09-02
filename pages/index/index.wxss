@@ -125,16 +125,14 @@ page {
 
 .commbtn {
   font-size: 24rpx;
-  border: 3rpx solid #e34c55;
+  border: 2rpx solid #e34c55;
   color: #e34c55;
-  padding: 4rpx 10rpx;
+  padding: 0 4rpx;
   border-radius: 8rpx;
-  margin-left:10rpx;
   text-align:center;
   z-index: 99;
-  position: absolute;
-  right: 20rpx;
-  bottom: 20rpx;
+  height: 40rpx;
+  width: 90rpx;
 }
 /*接受方微信头像*/
 
@@ -386,6 +384,29 @@ page {
   width: 100%;
   height: 50rpx;
 }
+
+.loadingbtn {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-content: center;
+  margin: 20rpx auto;
+  width: 100%;
+  height: 120rpx;
+}
+
+.loadingbtn text {
+  line-height: 100rpx;
+  text-align: center;
+  width: 80%;
+  height: 100rpx;
+  color: #eee;
+  font-size: 28rpx;
+  margin:10rpx;
+  display: block;
+}
+
+
 .sentbtn {
   display: flex;
   flex-direction: row;

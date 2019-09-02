@@ -8,7 +8,6 @@
       </view>
       <view class="btnshare" bindtap="eventDraw">
         <image class="shareto" src="../../../images/refresh.png"></image>
-        刷新
       </view>
     </view>
   </view>

@@ -79,12 +79,10 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  background:rgba(0, 0, 0, 0.5);
   font-size: 24rpx;
-  color: #fff;
+  color: #999;
   padding: 6rpx 20rpx;
   line-height: 2;
-  border-radius: 10rpx;
 }
 .share-buttons .btncard {
   position: absolute;
@@ -100,8 +98,8 @@ page {
   border-radius: 10rpx;
 }
 .share-buttons .shareto {
-  width: 32rpx;
-  height: 32rpx;
+  width: 48rpx;
+  height: 48rpx;
   margin:8rpx 6rpx 0 0;
 }
 

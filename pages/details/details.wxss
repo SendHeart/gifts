@@ -28,6 +28,7 @@ page {
 }
 .pagewrap {
   width: 100%;
+  background: #f2f2f2;
   /*
   height: 100%;
   */
@@ -132,16 +133,9 @@ page {
   color: #444;
 }
 .shopping_container .goods-org {
-  width: 100rpx;
-  height: 32rpx;
-  background: #EC4844;
-  line-height: 32rpx;
-  color: #fff;
+  color: #EC4844;
   font-size: 24rpx;
   margin-left:10rpx;
-  padding: 4rpx 10rpx;
-  z-index: 1000;
-  border-radius: 6rpx;
 }
 
 .shopping_container .goods_prom {
@@ -533,9 +527,8 @@ border: none;
   margin-top: 1rpx;
 }
 .comm-name {
-  font-size: 28rpx;
-  font-weight: bold;
-  color: #444;
+  font-size: 24rpx;
+  color: #999;
   line-height: 64rpx;
   margin-right: 30rpx;
 }
