@@ -19,6 +19,7 @@ Page({
     title_name: '商城首页',
     title_logo: '../../images/footer-icon-05.png',
     img_discount:'../../images/discount.png',
+    default_img: weburl + '/uploads/default_goods_image.png',
     activeIndex: 0,
     activeIndex2: 0,
     navList: navList,
@@ -193,7 +194,11 @@ Page({
     var that = this
     that.setData({
       scrollTop: 0,
+      venuesItems_show: [],
+      page: 1,
+      pageoffset: 0,
     })
+    that.get_goods_list()
   },
   searchTapTag: function (e) {
     var that = this;
@@ -356,7 +361,7 @@ Page({
             } else {
               venuesItems_new[i]['goods_tag'] = venuesItems_new[i]['goods_tag'].substring(0, 10)
             }
-            
+            venuesItems_new[i]['image'] = venuesItems_new[i]['activity_image'] ? venuesItems_new[i]['activity_image'] : venuesItems_new[i]['image']
           }
           if (page > 1 && venuesItems_new) {
             //向后合拼

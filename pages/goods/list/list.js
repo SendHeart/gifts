@@ -16,6 +16,7 @@ Page({
     title_name: '搜索礼物',
     title_logo: '../../../images/footer-icon-05.png',
     img_discount: '../../../images/discount.png',
+    default_img: weburl + '/uploads/default_goods_image.png',
     activeIndex: 0,
     activeIndex2: 0,
     navList2: navList2,
@@ -259,7 +260,7 @@ Page({
   },
   search_goodsnameTapTag: function (e) {
     var that = this;
-    var keyword = e.detail.value;
+    var keyword = e.detail.value
     that.setData({
       keyword: keyword
     })},
@@ -329,7 +330,7 @@ Page({
 
       },
       success: function (res) {
-        console.log('get_goods_list:', res.data.result)
+        console.log('get_goods_list:', res.data)
         var venuesItems = res.data.result
         var page = that.data.page
         var all_rows = res.data.all_rows
@@ -346,7 +347,7 @@ Page({
           that.setData({
             venuesItems: [],
             all_rows: 0,
-            keyword: ''
+            //keyword: ''
           })
           return;
         }
@@ -363,6 +364,7 @@ Page({
           } else {
             venuesItems[i]['goods_tag'] = venuesItems[i]['goods_tag'].substring(0, 10)
           }
+          venuesItems[i]['image'] = venuesItems[i]['activity_image'] ? venuesItems[i]['activity_image'] : venuesItems[i]['image']
         }
         if (page > 1 && venuesItems) {
           //向后合拼

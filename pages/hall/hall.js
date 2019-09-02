@@ -34,6 +34,7 @@ Page({
     img_discount: '../../images/discount.png',
     img_service: weburl+'/uploads/service.png',
     img_service2: weburl + '/uploads/service2.png',
+    default_img : weburl + '/uploads/default_goods_image.png',
     pagesize: pagesize,
     pageoffset:0,
     hidden: true,
@@ -126,16 +127,10 @@ Page({
         
       }
     }
-    if (currentY > scrollHeight - 3000) {
+    if (currentY > scrollHeight - 1000) {
       if(that.data.page < that.data.rpage_num){
         that.getMoreGoodsTapTag()
-      }else{
-        wx.showToast({
-          title: '已经到底了~',
-          icon: 'none',
-          duration: 1000
-        })
-      }
+      } 
       that.setData({
         floorstatus: true,
       })
@@ -212,9 +207,14 @@ Page({
         duration:300,
       })
       that.setData({
-        scrollTop: 0
+        scrollTop: 0,
+        recommentslist_show: [],
+        page:1,
+        pageoffset:0,
       })
+      that.reloadData()
       app.globalData.hall_gotop = 0
+      
     } else {
       wx.showModal({
         title: '提示',
@@ -962,6 +962,7 @@ Page({
           if (recommentslist_new[i]['image'].indexOf("http") < 0 && recommentslist_new[i]['image']) {
             recommentslist_new[i]['image'] = weburl + '/' + recommentslist_new[i]['image'];
           }
+          recommentslist_new[i]['image'] = recommentslist_new[i]['activity_image'] ? recommentslist_new[i]['activity_image'] : recommentslist_new[i]['image']
           //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
           if (i > 1) {
             recommentslist_new[i]['hidden'] = 0;  //1
@@ -1055,10 +1056,21 @@ Page({
     var is_reloading = that.data.is_reloading
     if(is_reloading) return
     if (page > rpage_num) {
-
-      that.setData({
-        loadingHidden: true,
+      wx.showToast({
+        title: '已经到底了~',
+        icon: 'none',
+        duration: 1000
       })
+      
+      that.setData({
+        loadingHidden: false,
+        loading_note:'已经到底了~'
+      })
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+      }, 1000)
       return
     }
     /*
@@ -1071,6 +1083,7 @@ Page({
     that.setData({
       page: page,
       loadingHidden: false,
+      loading_note: '加载中'
     })
     that.reloadData()
   },
@@ -1421,14 +1434,27 @@ Page({
     //app.globalData.messageflag = 0
   },
 
+  //图片加载出错，替换为默认图片
+  imageError: function (e) {
+    var that = this 
+    var errorImgIndex = e.target.dataset.imageindex  
+    var default_img = that.data.default_img    
+    var imgObject = "recommentslist_show[" + errorImgIndex + "].image"    //commentList为数据源，对象数组
+    var errorImg = {}
+    errorImg[imgObject] = default_img              //构建一个对象
+    that.setData(errorImg)
+    console.log('hall imageError():', errorImg) 
+  },
+ 
   getScrollHeight: function () {
+    var that = this 
     wx.createSelectorQuery().select('#venues_box').boundingClientRect((rect) => {
-      if (rect.height){
-        this.setData({
+      if (rect){
+        that.setData({
           scrollHeight: rect.height,
           loadingHidden:true
         })
-        console.log('页面实际高度:', this.data.scrollHeight)
+        console.log('页面实际高度:', that.data.scrollHeight)
       }else{
         setTimeout(function () {
           that.getScrollHeight()
