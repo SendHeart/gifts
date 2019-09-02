@@ -1,3 +1,7 @@
+page {
+  background: #fff;
+}
+
 /*总菜单容器*/
 .menu {
  	display: block;
@@ -252,7 +256,6 @@ margin-left: 20rpx;
 }
 
 .container {
-  background: #fff;
   width: 100%;
 }
 .comm-title {
