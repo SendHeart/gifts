@@ -822,7 +822,7 @@ Page({
               orderskus.push(orderObjects[i]['order_sku'][j])
             }
           }
-          button_name = orderObjects[0]['button_name'] //按钮提示 后端提供
+          button_name = orderObjects[0]['button_name'] ? orderObjects[0]['button_name']:'' //按钮提示 后端提供
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']){
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
@@ -865,7 +865,7 @@ Page({
             card_type: card_type,
             button_name: button_name,
             card_register_reqid_index: card_register_reqid_index,
-            is_showable: orderObjects[0]['is_showable'],
+            is_showable: orderObjects[0]['is_showable'] ? orderObjects[0]['is_showable']:0,
           })
           console.log('order sku list:', orderskus, ' card_type:', that.data.card_type,' card_register_info:', that.data.card_register_info)
           app.globalData.is_receive = 0 
