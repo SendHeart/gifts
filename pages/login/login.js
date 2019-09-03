@@ -221,6 +221,8 @@ Page({
     let that = this
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var shop_type = that.data.shop_type
     /*
     if (!that.data.phoneNo) {
@@ -249,6 +251,8 @@ Page({
         username: username ?username:openid, 
         wx_nickname:that.data.wx_nickname,
         wx_headimg:that.data.wx_headimg,
+        user_phone: user_phone,
+        user_name: user_name,
         login_type:1,
         type:8,
         shop_type:shop_type,
@@ -268,15 +272,9 @@ Page({
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
         wx.setStorageSync('username', res.data.result['username'])
         wx.setStorageSync('m_id', res.data.result['m_id'])
-        if (res.data.result['user_phone']!=''){
-          wx.setStorageSync('user_phone', res.data.result['user_phone'])
-        }
-        if (res.data.result['user_name'] != '') {
-          wx.setStorageSync('user_name', res.data.result['user_name'])
-        }
-        if (res.data.result['user_gender'] != '') {
-          wx.setStorageSync('user_gender', res.data.result['user_gender'])
-        }
+        wx.setStorageSync('user_phone', res.data.result['user_phone'])
+        wx.setStorageSync('user_name', res.data.result['user_name'])
+        wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.showToast({
           title: '授权登录成功',

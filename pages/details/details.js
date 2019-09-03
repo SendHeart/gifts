@@ -93,6 +93,7 @@ Page({
     openRecordingdis: "block", //显示录机图标
     shutRecordingdis: "none", //隐藏停止图标
     recordingTimeqwe: 0, //录音计时
+    goodsmodel_count:0, //商品属性加载计次数
     setInter: "",
     card_color: card_color,
     current_card_color: '#333',
@@ -431,6 +432,7 @@ Page({
     that.setData({
       //cardregisterhidden: !that.data.cardregisterhidden,
       inputShowed:true,
+      goodsmodel_count: 0,
     })
     that.goodsmodel()
   },
@@ -1248,6 +1250,7 @@ Page({
     goodsmodel: function () {
       var that = this
       var modalHidden = that.data.modalHidden
+      var goodsmodel_count = that.data.goodsmodel_count
       if (that.data.commodityAttr.length>0){
         var sku_id = that.data.commodityAttr[0].id
         var attrValueList = that.data.attrValueList
@@ -1295,12 +1298,25 @@ Page({
 
       }else{
         setTimeout(function () {
-          wx.showToast({
-            title: "加载中...",
-            icon: 'loading',
-            duration: 500,
-          })
-          that.goodsmodel()
+          goodsmodel_count = goodsmodel_count +1
+          if (goodsmodel_count<5){
+            wx.showToast({
+              title: "加载中...",
+              icon: 'loading',
+              duration: 500,
+            })
+            that.goodsmodel()
+          }else{
+            that.setData({
+              goodsmodel_count: 0,
+            })
+            wx.showToast({
+              title: "系统繁忙!",
+              icon: 'loading',
+              duration: 1500,
+            })
+            that.goBack()
+          }
         }, 500)
       }
       
@@ -1331,6 +1347,7 @@ Page({
     
       that.setData({
         is_buymyself: 1,
+        goodsmodel_count:0,
       })
       if (goodsshape==4) {
         that.confirmcardregister()
@@ -1343,6 +1360,7 @@ Page({
     var that = this
     that.setData({
       is_buymyself: 0,
+      goodsmodel_count: 0,
     })
     that.goodsmodel()
   },

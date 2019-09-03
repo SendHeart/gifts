@@ -944,6 +944,7 @@ Page({
     var modalHiddenUserName = that.data.modalHiddenUserName
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
+    console.log('my index onShow() user_phone:', user_phone, 'user_name:', user_name)
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({

@@ -14,7 +14,7 @@
   <view class="logininfo" style='margin:20rpx;'> 
     <view class="logininfo_row"> 
       <view class="logininfo-authinfo">授权后表明您已同意</view>
-      <view bindtap="navigateToMyAgreement" class='linegray' style='font-size:22rpx;'>用户协议</view>
+      <view bindtap="navigateToMyAgreement" class='linegray' style='color:#fff;font-size:22rpx;'>用户协议</view>
     </view>
    </view>
 </view>

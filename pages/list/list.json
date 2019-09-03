@@ -1,4 +1,7 @@
 {
     "navigationBarTitleText": "礼物商城",
-    "disableScroll": true
+    "disableScroll": true,
+    "usingComponents": {
+      "imageloader": "../common/imageloader/imageloader"
+    }
 }

@@ -1,5 +1,7 @@
-{"backgroundColor": "#1d1d1d",
-"usingComponents": {
-  "add-tips": "../common/weplug-add-tips-master/index"
-}
+{
+  "backgroundColor": "#1d1d1d",
+  "usingComponents": {
+    "add-tips": "../common/weplug-add-tips-master/index",
+    "imageloader": "../common/imageloader/imageloader"
+  }
 }

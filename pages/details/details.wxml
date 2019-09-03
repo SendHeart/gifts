@@ -136,7 +136,6 @@
   </view>
   <view class="shopping_container">
       <view class="goods-name">
-        
         <text>{{goodsname?goodsname:''}}</text>
         <text class="goods_prom">{{goodsinfo?goodsinfo:''}}</text>
       </view>

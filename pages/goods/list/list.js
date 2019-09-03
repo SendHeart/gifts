@@ -37,6 +37,7 @@ Page({
     interval: 3000,
     duration: 1000,
     loadingHidden: true, // loading
+    is_loading:false,
     msgList: [],
     hidden: true,
     scrollTop: 0,
@@ -158,15 +159,21 @@ Page({
 
   // 获取滚动条当前位置
   scrolltoupper: function (e) {
+    var that = this
     if (e.detail.scrollTop > 100) {
       this.setData({
         floorstatus: true
-      });
+      })
+      if (that.data.platform == 'ios') {
+        //that.getMoreGoodsTapTag() //苹果手机渲染更快，多给记录
+        //console.log('list scrolltoupper():', e.detail.scrollTop,that.data.platform)
+      }
     } else {
       this.setData({
         floorstatus: false
       })
     }
+    //console.log('list scrolltoupper():', e.detail.scrollTop)
   },
 
   //回到顶部
@@ -188,13 +195,26 @@ Page({
   getMoreGoodsTapTag: function (e) {
     var that = this;
     var page = that.data.page + 1;
-    var all_rows = that.data.all_rows;
+    var all_rows = that.data.all_rows
+    var is_loading = that.data.is_loading
+    if(is_loading) return
     if (page > all_rows) {
+      /*
       wx.showToast({
         title: '已经到底了~',
         icon: 'none',
         duration: 1000
-      });
+      })
+      */
+      that.setData({
+        loadingHidden: false,
+        loading_note: '已经到底了'
+      })
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+      }, 1000)
       return
     }
     
@@ -239,6 +259,7 @@ Page({
     wx.getSystemInfo({
       success: function (res) {
         that.setData({
+          platform: res.platform,
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
           dkheight: res.windowHeight - 60,
@@ -305,6 +326,7 @@ Page({
     }
     that.setData({
       loadingHidden: false,
+      is_loading:true,
     })
     wx.request({
       url: weburl + '/api/client/get_goods_list',
@@ -343,13 +365,12 @@ Page({
           })
           that.setData({
             loadingHidden: true,
-          })
-          that.setData({
+            is_loading: false,
             venuesItems: [],
             all_rows: 0,
             //keyword: ''
           })
-          return;
+          return
         }
       
         for (var i = 0; i < venuesItems.length; i++) {
@@ -374,10 +395,9 @@ Page({
           venuesItems: venuesItems,
           all_rows: all_rows,
           pageoffset:pageoffset,
-          //keyword: ''
-        })
-        that.setData({
           loadingHidden: true,
+          is_loading: false,
+          //keyword: ''
         })
       }
     })

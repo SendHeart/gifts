@@ -120,21 +120,17 @@ Page({
       }
     } else { //上下方向滑动
       if (ty < 0) {  // text = "向上滑动"
-        that.setData({
-          loadingHidden: true,
-        })
+       
       } else if (ty > 0) {  //text = "向下滑动"
         
       }
     }
-    if (currentY > scrollHeight - 1000) {
-      if(that.data.page < that.data.rpage_num){
-        that.getMoreGoodsTapTag()
-      } 
-      that.setData({
-        floorstatus: true,
-      })
+    if (that.data.page < that.data.rpage_num) {
+      that.getMoreGoodsTapTag()
     } 
+    that.setData({
+      floorstatus: true,
+    })
     /*
     if (currentY > scrollHeight - 100) {
      
@@ -143,7 +139,7 @@ Page({
     //将当前坐标进行保存以进行下一次计算
     this.data.lastX = currentX
     this.data.lastY = currentY
-    //console.log('currentX:', currentX, 'currentY:', currentY, scrollHeight)
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:',ty)
   },
   handletouchtart: function (event) {
     // console.log(event)
@@ -987,9 +983,11 @@ Page({
           pageoffset: pageoffset,
           is_reloading: false,
         })
+        /*
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
         }, 500)
+        */
         console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:',page,' pageoffset:', pageoffset);
       }
     })
