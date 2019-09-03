@@ -1069,6 +1069,7 @@ Page({
                   share_goods_wx_headimg: goods_info[0]['share_goods_wx_headimg'],
                   goodsdiscount: goods_info[0]['discount'],
                   discountinfo: goods_info[0]['discount_info'],
+                  evalrate: parseInt(goods_info[0]['evalrate']),
                   card_content: card_content, 
                   card_register_content: card_register_content,
                   card_register_title: card_register_title,
