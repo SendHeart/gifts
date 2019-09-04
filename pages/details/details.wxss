@@ -485,7 +485,7 @@ border: none;
 }
 .price-now {
   color: #E34C55;
-  width: 25%;
+  width: 35%;
   height: 50rpx;
   line-height: 50rpx;
   margin-left: 10rpx;
