@@ -610,7 +610,7 @@ Page({
       }
       setTimeout(function () {
         wx.showToast({
-          title: "开始分享" ,
+          title: "开始求赠" ,
           icon: 'loading',
           duration: 2000,
         })

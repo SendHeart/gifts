@@ -31,7 +31,7 @@ Page({
     search_goodsname: null,
     keyword:'',
     page: 1,
-    pagesize: 10,
+    pagesize: 20,
     pageoffset:0,
     indicatorDots: true,
     vertical: false,
