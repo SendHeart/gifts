@@ -477,10 +477,11 @@ border: none;
 .buy-return{
   position: relative;
   font-size: 35rpx;
- 
+  height:40rpx;
   line-height:40rpx;
   margin-left:30rpx; 
   padding: 10rpx;
+  margin:0 auto;
   background: #f2f2f2;
 }
 .price-now {
