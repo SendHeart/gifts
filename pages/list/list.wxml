@@ -37,7 +37,6 @@
   <view class="box-left">
    <block wx:for="{{venuesItems_show}}"  wx:key="index" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
       <block wx:for="{{venuesItems_show}}" wx:key="{{item.id}}">
-
         <view class="venues_item" wx:if="{{index%2==0}}"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&goods_marketprice={{item.market_price}}&sale={{item.sale}}&goods_info={{item.act_info}}&goods_org={{item.goods_org}}&goods_tag={{item.goods_tag}}&card_type={{item.card_type}}" hover-class="none" >
             <!-- image class="mainpic" src="{{item.image?item.image:default_image}}" mode="{{item.shape==5?'aspectFill':'aspectFill'}}"/ --> 
@@ -63,7 +62,7 @@
     </block>
     </view>
 
-    <view class="box-right">
+  <view class="box-right">
    <block wx:for="{{venuesItems_show}}"  wx:key="index" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
       <block wx:for="{{venuesItems_show}}" wx:key="{{item.id}}">
         <view class="venues_item" wx:if="{{index%2==1}}"> 

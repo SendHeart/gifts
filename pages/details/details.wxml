@@ -31,7 +31,7 @@
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{pic.id}}'>
           <swiper-item item-id="{{pic.id}}" class="swiperitem">
-            <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" />
+            <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" data-list="{{image_pic}}" data-src="{{pic.url}}" bindtap="imgYu" />
            <!-- 
             <view wx:if="{{goodsshape==4}}" class="share-card-register-image"> 
             <swiper class="swiper-share-box" bindchange="swiperchange_share" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
@@ -201,7 +201,43 @@
       </view>
     </view>
 </view>
+<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
+      <view class='modaltitletext'>{{attrValueList.length>0?'':add_cart_title}}</view>
+      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
+        <view style="max-height:{{dkheight-30}}px">
+          <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
+            <view class="sku_title">选择{{attrValueObj.name}}</view>
+            <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
+            data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >
+            
+              <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}"></image>
+              <text wx:elif="{{attrValueObj.type == 1}}">{{attrValueObj.value[valueIndex]}}</text>
+              <text>{{attrValueObj.note[valueIndex]}}</text>
+            </view>
+          </view>
+        </view>
+      </view> 
+      <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
+      <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
+      <view class="buy-info">
+        <view class="price-now">
+          <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
+          <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
+        </view>
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view> 
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">
+          <image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image>
+        </view> 
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-count'>{{buynum}}</view>  
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >
+          <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image>  
+        </view>
+         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-return' bindtap="modalBindcancel">返回</view>  
+      </view>
+  <action-sheet-cancel>确定</action-sheet-cancel>
+</action-sheet>
 
+<!-- 
 <view hidden="{{modalHidden}}" style='z-index:999;'>
     <modal class="modalbox" title=" "  confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirm" bindcancel="modalBindcancel">
       <view class='modaltitletext'>{{attrValueList.length>0?'':add_cart_title}}</view>
@@ -226,17 +262,18 @@
         <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
         <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
        </view>
-        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view><!-- wx:if="{{is_buymyself==1}}"-->
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view> 
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">
           <image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image>
-        </view> <!-- wx:if="{{is_buymyself==1}}"-->
-        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-count'>{{buynum}}</view> <!-- wx:if="{{is_buymyself==1}}"-->
+        </view> 
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-count'>{{buynum}}</view>  
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >
-          <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image> <!-- wx:if="{{is_buymyself==1}}"-->
+          <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image>  
         </view>
       </view>
     </modal>
-</view>
+  </view>
+  -->
 <view hidden="{{notehidden}}" style='z-index:999;'>
 <modal title="编辑祝词" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirmCard" bindcancel="shareCandelCard" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-330}}px;">

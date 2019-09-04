@@ -982,11 +982,14 @@ Page({
               image_video: image_video,
             })
           }
+
           var image_init = {
             id: 0,
             goods_id: goodsid,
             url: activity_image ? activity_image : image,
           }
+          image_init['url'] = image_init['url'].replace('/n11/','/n12/') // n12京东高清图片
+          image_init['url'] = image_init['url'].replace('/n1/', '/n12/') // n12京东高清图片
           image_pic.push(image_init)
           that.setData({
             image_pic: image_pic,
@@ -1138,7 +1141,7 @@ Page({
               that.image_save(image_pic[0]['url'], 'goods_image_cache_' + goodsid)
              // console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
             } 
-            console.log('get_goodsdesc_list image_share:', that.data.image_share)
+            console.log('get_goodsdesc_list image_share:', that.data.image_share, ' image_pic:', image_pic)
             that.showGoodsinfo()
           }
          
@@ -1228,15 +1231,30 @@ Page({
       })
     },
   
-    bindMinus: function (e) {
+  imgYu: function (event) {
+    var src = event.currentTarget.dataset.src //获取data-src
+    var list = event.currentTarget.dataset.list //获取data-list
+    var imgList = []
+    for (var i = 0; i < list.length;i++){
+      imgList.push(list[i]['url'])
+    }
+    console.log('image Yu imgList:', imgList)
+     //图片预览
+     wx.previewImage({
+        current: src, // 当前显示图片的http链接
+        urls: imgList // 需要预览的图片http链接列表
+     })
+   },
+
+  bindMinus: function (e) {
       var that = this
       var num = that.data.buynum
       num--
       that.setData({
         buynum: num>0?num:1
       })
-    },
-    bindPlus: function (e) {
+  },
+  bindPlus: function (e) {
       var that = this
       var num = that.data.buynum
     // 自增
@@ -1246,9 +1264,9 @@ Page({
       this.setData({
         buynum: num <= 1?1:num,
       })
-    },
+  },
     //事件处理函数 选择型号规格  
-    goodsmodel: function () {
+  goodsmodel: function () {
       var that = this
       var modalHidden = that.data.modalHidden
       var goodsmodel_count = that.data.goodsmodel_count
@@ -1321,8 +1339,8 @@ Page({
         }, 500)
       }
       
-    },
-    wishCart: function () {
+  },
+  wishCart: function () {
       var that = this
       var attrValueList = that.data.attrValueList
       if (attrValueList.length > 0) {
@@ -1340,8 +1358,8 @@ Page({
         that.addCart()
       }
       
-    },
-    buyMyself: function () {
+  },
+  buyMyself: function () {
       var that = this
       var goodsshape = that.data.goodsshape
       var refer_mid = that.data.refer_mid
@@ -1356,7 +1374,7 @@ Page({
         that.goodsmodel()
       }
      
-    },
+  },
   buyGift: function () {
     var that = this
     that.setData({

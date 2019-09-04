@@ -11,7 +11,7 @@ var message = ""
 
 var text = '';
 var page = 1
-var pagesize = 10
+var pagesize = 20
 
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -105,11 +105,13 @@ Page({
 */
   handletouchmove: function (event) {
     var that = this
-    let currentX = event.touches[0].pageX
-    let currentY = event.touches[0].pageY
-    let tx = currentX - this.data.lastX
-    let ty = currentY - this.data.lastY
-    let scrollHeight = that.data.scrollHeight
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - this.data.lastX
+    var ty = currentY - this.data.lastY
+    var scrollHeight = that.data.scrollHeight
+    var page  = that.data.page
+    var rpage_num = that.data.rpage_num
    
     if (Math.abs(tx) > Math.abs(ty)) {
       if (tx < 0) { // text = "向左滑动"
@@ -139,7 +141,7 @@ Page({
     //将当前坐标进行保存以进行下一次计算
     this.data.lastX = currentX
     this.data.lastY = currentY
-    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:',ty)
+    console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
   },
   handletouchtart: function (event) {
     // console.log(event)
@@ -977,11 +979,11 @@ Page({
         }
         
         that.setData({
+          is_reloading: false,
           recommentslist: recommentslist,
           ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
           rpage_num: rpage_num,
           pageoffset: pageoffset,
-          is_reloading: false,
         })
         /*
         setTimeout(function () {

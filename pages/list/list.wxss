@@ -225,7 +225,7 @@ swiper-item image {
 }
 
 .venues_box {
-  padding: 10rpx 0 60rpx 0;
+  padding: 10rpx 0 100rpx 0;
   margin: 0 auto;
   width: 96%;
   overflow: hidden;

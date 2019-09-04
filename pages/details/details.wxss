@@ -82,6 +82,7 @@ page {
   margin-bottom: 1rpx;
   position: relative;
 }
+
 .image {
   width: 100% !important;
 }
@@ -450,12 +451,14 @@ border: none;
 .buy-info {
   display: flex;
   flex-direction: row;
-  line-height: 40rpx;
+  justify-content: space-around;
+  line-height: 50rpx;
+  height:50rpx;
   padding: 10rpx;
 }
 .buy-num{
   position: relative;
-  font-size: 30rpx;
+  font-size: 28rpx;
   margin-left:20rpx; 
 }
 .buy-num-minus{
@@ -471,12 +474,20 @@ border: none;
   position: relative;
   margin-top: 6rpx;
 }
-
+.buy-return{
+  position: relative;
+  font-size: 35rpx;
+ 
+  line-height:40rpx;
+  margin-left:30rpx; 
+  padding: 10rpx;
+  background: #f2f2f2;
+}
 .price-now {
   color: #E34C55;
-  width: 45%;
-  height: 40rpx;
-  line-height: 40rpx;
+  width: 25%;
+  height: 50rpx;
+  line-height: 50rpx;
   margin-left: 10rpx;
 }
 .price-now::first-letter {
