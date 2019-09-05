@@ -411,13 +411,18 @@ Page({
       wx.showToast({
         title: '没有更多了',
         icon: 'none',
-        duration: 1000
+        duration: 1500
       })
       that.setData({
         hiddenmore: true,
       })
       return
     }
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1000
+    })
     console.log('get More Orders page:',page,'current scrollTop:',that.data.current_scrollTop)
     that.reloadData()
   },
@@ -577,13 +582,13 @@ Page({
         buyin_rate: navList_new ? navList_new[7]['value'] : buyin_rate,
       })
     }
-   /*
+ 
     setTimeout(function () {
       that.setData({
         loadingHidden: true,
       })
     }, 1500)
-    */
+     
   },
 
   onLoad: function (options) {
