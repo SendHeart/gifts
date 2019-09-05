@@ -23,7 +23,7 @@ Component({
         that.setData({
           isShowSheet: false,
         })
-      }, 200)
+      }, 300)
     },
     __showMaster() {
       //创建动画  展开
@@ -37,7 +37,7 @@ Component({
       contentAnimate.top(`-${this.properties.tops}`).step();
       //master透明度
       var masterAnimate = wx.createAnimation({
-        duration: 200,
+        duration: 500,
       })
       masterAnimate.opacity(.5).step();
       this.contentAnimate = contentAnimate;

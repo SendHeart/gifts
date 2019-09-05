@@ -50,8 +50,8 @@ Page({
     text: "没有滑动",
     currentGesture: 0, //标识手势
     current_scrollTop:0,
-    needPhoneNumber: '手机号授权',
-    needUserName: '姓名和性别',
+    needPhoneNumber: '微信授权',
+    needUserName: '微信授权',
     inputShowed: false
   },
   /*
@@ -284,7 +284,7 @@ Page({
       })
       that.getUserName(user_name, user_gender)
     } else {
-      var needUserName = '需要您的姓名和性别'
+      var needUserName = '请填写您的姓名和性别'
       that.setData({
         needUserName: needUserName
       })

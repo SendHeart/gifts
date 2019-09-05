@@ -38,8 +38,8 @@ Page({
     web_url:'',
     web_id: '',
     image_save_count:0,
-    needPhoneNumber:'手机号授权',
-    needUserName: '姓名和性别',
+    needPhoneNumber:'微信授权',
+    needUserName: '微信授权',
     inputShowed: false
   },
   

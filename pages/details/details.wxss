@@ -367,17 +367,20 @@ border: none;
 .modalbox {
   background-color: #fff;
 }
+
 .modaltitletext {
-  font-size: 28rpx;
+  font-size: 26rpx;
   color: #444;
-  margin-bottom: 40rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 .sku_title {
- font-size: 28rpx;
+ font-size: 26rpx;
  margin-bottom: 10rpx;
+ color: #999;
 }
 .commodity_attr_list {
-  background: #fafafc;
   padding: 0 10rpx;
   font-size: 24rpx;
   overflow: hidden;
@@ -418,11 +421,12 @@ border: none;
 .attr_value {
   display: flex;
   flex-direction: row;
-  padding: 10rpx 20rpx;
+  padding: 6rpx 20rpx;
   background: #eee;
   border-radius: 10rpx;
-  margin-bottom:10rpx;
+  margin:0 10rpx 10rpx 0;
   font-size: 24rpx;
+  float: left;
 }
 .attr_value image {
   width: 60rpx;
@@ -436,8 +440,9 @@ border: none;
 /*每个属性选中的当前样式*/
 
 .attr_value_active {
-  color: #fff;
-  background:#e34c55;
+  color: #EC4844;
+  background:rgb(253, 234, 234);
+  border: 2rpx #EC4844 solid;
   /* background: #fff;   */
 }
 
@@ -446,43 +451,53 @@ border: none;
 .attr_value_disabled {
   color: #444;
   font-size: 24rpx!important;
+  border: 2rpx #eeeeee solid;
 }
 
 .buy-info {
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content:flex-start;
   line-height: 50rpx;
   height:50rpx;
   padding: 10rpx;
+  font-size: 26rpx;
 }
 .buy-num{
   position: relative;
-  font-size: 28rpx;
+  font-size: 26rpx;
   margin-left:20rpx; 
 }
 .buy-num-minus{
   position: relative;
   margin-top: 6rpx;
+  width: 80rpx;
+  text-align: center;
 }
 .buy-num-count{
   position: relative;
-   width: 15%;
-   text-align: center;
+  padding: 0 20rpx;
+  text-align: center;
+  font-size: 26rpx;
 }
 .buy-num-plus{
   position: relative;
   margin-top: 6rpx;
+  width: 80rpx;
+  text-align: center;
 }
 .buy-return{
   position: relative;
   font-size: 35rpx;
-  height:40rpx;
-  line-height:40rpx;
-  margin-left:30rpx; 
-  padding: 10rpx;
-  margin:0 auto;
-  background: #f2f2f2;
+  height:36rpx;
+  line-height:34rpx;
+  width: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #999;
+  text-align: center;
+  align-items: center;
+  color: #999;
+  margin: 10rpx;
 }
 .price-now {
   color: #E34C55;

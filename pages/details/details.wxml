@@ -202,11 +202,18 @@
     </view>
 </view>
 <action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
-      <view class='modaltitletext'>{{attrValueList.length>0?'':add_cart_title}}</view>
+      <view class='modaltitletext'>
+      
+      <text>{{attrValueList.length>0?'':add_cart_title}}</text>
+      <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-return' bindtap="modalBindcancel">×</view>
+      
+      </view>
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
         <view style="max-height:{{dkheight-30}}px">
           <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
             <view class="sku_title">选择{{attrValueObj.name}}</view>
+
+<view class="attr_value_box">
             <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
             data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >
             
@@ -214,16 +221,21 @@
               <text wx:elif="{{attrValueObj.type == 1}}">{{attrValueObj.value[valueIndex]}}</text>
               <text>{{attrValueObj.note[valueIndex]}}</text>
             </view>
+</view>
+
           </view>
         </view>
       </view> 
       <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
       <view class="buy-info">
+        <text style="margin-left:20rpx;">单价: </text>
         <view class="price-now">
           <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
           <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
         </view>
+        </view>
+        <view class="buy-info">
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view> 
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">
           <image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image>
@@ -232,9 +244,10 @@
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >
           <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image>  
         </view>
-         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-return' bindtap="modalBindcancel">返回</view>  
       </view>
-  <action-sheet-cancel>确定</action-sheet-cancel>
+  <action-sheet-cancel>确定
+<view style='height:68rpx;'></view>
+</action-sheet-cancel>
 </action-sheet>
 
 <!-- 
