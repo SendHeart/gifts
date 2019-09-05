@@ -1,0 +1,6 @@
+<view class="actionSheet" wx:if="{{isShowSheet}}">
+  <view class="master" bindtap="__closeMaster" animation="{{masterAnimate}}"></view>
+  <view class="content" style="height: {{tops}};" animation="{{contentAnimate}}">
+    <slot></slot>
+  </view>
+</view>
