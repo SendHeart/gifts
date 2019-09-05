@@ -211,7 +211,7 @@ page {
 }
 /*立即按钮*/
 .sentbtn {
-  position: absolute;
+  position: relative;
   bottom:0;
   margin-bottom: 100rpx;
   display: flex;
