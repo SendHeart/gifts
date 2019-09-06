@@ -356,12 +356,14 @@ Page({
     var that = this
     var share_order_id = options.share_order_id ? options.share_order_id : 0
     var share_order_shape = options.share_order_shape ? options.share_order_shape : 1
+    var card_type = options.card_type ? options.card_type:0
     that.get_project_gift_para()
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         avatarUrl: userInfo.avatarUrl,
-        nickname: userInfo.nickName
+        nickname: userInfo.nickName,
+        card_type: card_type,
       })
       console.log('wishshare onShow get userInfo：', userInfo)
     })
@@ -401,6 +403,7 @@ Page({
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']) {
             console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
+            card_type = m_desc['card_type'] ? m_desc['card_type'] : card_type
             var voice_url = m_desc['voice']
            
             if (voice_url) {
@@ -420,7 +423,8 @@ Page({
             //var card_register_info = m_desc['card_register_info']
             that.setData({
               card_register_info: m_desc['card_register_info'] ? m_desc['card_register_info']:'',
-              card_color: m_desc['color'] ? m_desc['color']:'#333'
+              card_color: m_desc['color'] ? m_desc['color']:'#333',
+              card_type: card_type,
             })
           }
         }
@@ -431,8 +435,8 @@ Page({
       success: function (res) {
         console.log('wishshare getSystemInfo:',res)
         that.setData({
-          windowHeight: res.windowHeight,
-          windowWidth: res.windowWidth,
+          windowHeight: res.windowHeight ? res.windowHeight:that.data.windowHeight,
+          windowWidth: res.windowWidth ? res.windowWidth : that.data.windowWidth,
           dkheight: res.windowHeight - 10,
         })
         if (res.platform == "ios") {
@@ -663,6 +667,7 @@ Page({
     var share_order_shape = that.data.share_order_shape
     var share_order_bg = that.data.share_order_bg
     var card_register_info = that.data.card_register_info //shape:4 互动卡 
+    var card_type = that.data.card_type ? that.data.card_type:0
     var card_color = that.data.card_color //贺卡请柬文字颜色
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id
@@ -733,7 +738,7 @@ Page({
           ]
         }
       })
-    } else if (share_goods_id > 0) {
+    } else if (share_goods_id > 0 && card_type ==0) {
       console.log('share_goods_id:', share_goods_id)
       that.setData({
         painting: {
@@ -866,7 +871,7 @@ Page({
           ]
         }
       })
-    } else if (share_order_shape == 4) { //互动卡
+    } else if (share_order_shape == 4 && card_type==1) { //互动卡 报名卡
       console.log('share_order_shape:', share_order_shape)
       var card_addr = card_register_info['card_register_addr'] ?'地址:' + card_register_info['card_register_addr']: ''
       var start_time = card_register_info['register_start_date'] ? '时间:' + card_register_info['register_start_date']+' ' : '' 
@@ -1173,6 +1178,9 @@ Page({
         painting: {
           width: 375,
           height: 667,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
+          background: 'white',
           clear: true,
           views: [
             {

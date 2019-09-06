@@ -43,7 +43,7 @@
               </swiper>
             </view>
             --> 
-            <view wx:if="{{goodsshape==4}}" class="card-register-info">
+            <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-info">
               <view  bindtap="" class="card-register-title" style="color:{{current_card_color}};">
                 <!-- text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text -->
                 <input style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}"  maxlength='30' />
@@ -109,6 +109,29 @@
                  <text space="ensp">  </text>
                 <picker mode="time" value="{{action_end_time}}" start="action_end_time" end="23:59" bindchange="bindChangeActEndTime"> {{action_end_time}}
                 </picker>
+              </view>
+            </view>
+            <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-register-info">
+              <view class="card-register-title" style="color:{{current_card_color}};">
+                <input style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_name_name}}" placeholder="姓名"  bindinput='card_name_nameTapTag' focus="{{inputShowed}}"  maxlength='30' />
+              </view>
+              <view class="card-register-addr" style="color:{{current_card_color}}">
+                  <input style='font-size:28rpx;' bindinput="card_name_titleTapTag" value="{{card_name_title}}" placeholder="职务/称谓" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
+              </view>
+              <view class="card-register-addr" style="color:{{current_card_color}};">
+                <input value="{{card_name_phone}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="手机号"  bindinput='card_name_phoneTapTag' focus="{{inputShowed2}}" maxlength='30' />
+              </view>
+               <view class="card-register-addr" style="color:{{current_card_color}};">
+                <input value="{{card_name_email}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="电子邮箱" bindinput='card_name_emailTapTag' focus="{{inputShowed4}}" maxlength='30' />
+              </view>
+              <view class="card-register-addr" style="color:{{current_card_color}};">
+                <input value="{{card_name_companyaddr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="公司地址" bindinput='card_name_companyaddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
+              </view>
+              <view  class="card-register-addr" style="color:{{current_card_color}};">
+                <input value="{{card_name_website}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="公司网址" bindinput='card_name_websiteTapTag' focus="{{inputShowed4}}" maxlength='30' />
+              </view>
+              <view class="card-register-addr" style="color:{{current_card_color}};">
+                <input value="{{card_name_publicwechat}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="微信公众号" bindinput='ccard_name_publicwechatTapTag' focus="{{inputShowed4}}" maxlength='30' />
               </view>
             </view>
             <view wx:if="{{goodsshape==5}}" style="" class="card-blessing" >

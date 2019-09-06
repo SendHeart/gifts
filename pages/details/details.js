@@ -590,10 +590,10 @@ Page({
     var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
     var goods_image_cache = wx.getStorageSync('goods_image_cache_' + share_goods_id)
     var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache_' + share_goods_id)
-  
-    if (share_goods_shape == 5 || share_goods_shape == 4 || share_goods_shape==undefined) {
+    var card_type = that.data.card_type
+    //if (share_goods_shape == 5 || share_goods_shape == 4 || share_goods_shape==undefined) {
       
-    }
+    //}
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -624,7 +624,7 @@ Page({
       return
     }
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape +'&share_goods_org=' + share_goods_org+'&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode
+      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape +'&share_goods_org=' + share_goods_org+'&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode+'&card_type='+card_type
     })
     /*
     wx.getStorageInfo({
@@ -1052,7 +1052,7 @@ Page({
                 if (card_type == 1 || goods_info[0]['shape'] == 5) {
                   card_image_height = '1055'
                 } else if (card_type == 2) {
-                  card_image_height = '550'
+                  card_image_height = '520'
                 } else {
                   card_image_height = '750'
                 }
@@ -1128,6 +1128,9 @@ Page({
               if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
                 image_video.push(goodsPicsInfo.image[i])
               }else{
+                if (goodsPicsInfo.image[i]['url'].indexOf("http") < 0) {
+                  goodsPicsInfo.image[i]['url'] = weburl + '/' + goodsPicsInfo.image[i]['url']
+                }
                 image_pic.push(goodsPicsInfo.image[i])
               }
             }

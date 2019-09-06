@@ -421,7 +421,7 @@ Page({
     wx.showToast({
       title: '加载中',
       icon: 'loading',
-      duration: 1000
+      duration: 2000
     })
     console.log('get More Orders page:',page,'current scrollTop:',that.data.current_scrollTop)
     that.reloadData()
