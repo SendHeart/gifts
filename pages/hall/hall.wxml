@@ -6,7 +6,7 @@
 
   <view class="search">
     <view class="userinfo" bindtap='userTapTag'>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl}}" background-size="cover"></image>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
       <!--<text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
     </view>
     <view class="wx-input" bindtap='searchTapTag'>

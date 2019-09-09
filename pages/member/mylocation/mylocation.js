@@ -337,8 +337,13 @@ Page({
     })
    
     if(!username){
+      /*
       wx.navigateTo({
         url: '../../login/login'
+      })
+      */
+      wx.switchTab({
+        url: '/pages/my/index'
       })
     }
     that.location()

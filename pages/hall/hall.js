@@ -35,6 +35,7 @@ Page({
     img_service: weburl+'/uploads/service.png',
     img_service2: weburl + '/uploads/service2.png',
     default_img : weburl + '/uploads/default_goods_image.png',
+    default_avatar: weburl + '/uploads/avatar.png',
     pagesize: pagesize,
     pageoffset:0,
     hidden: true,
@@ -1381,13 +1382,14 @@ Page({
     }  
     if(!username){
       /*
-      wx.switchTab({
-        url: '../my/index'
-      })
-      */
-      wx.navigateTo({
+       wx.navigateTo({
         url: '/pages/login/login'
       })
+      wx.switchTab({
+        url: '/pages/my/index'
+      })
+      */
+      
     }else{
       if (page_type == 2) { //收到礼物
         console.log('hall page_type:', page_type, ' order_no:', order_no, ' receive:', receive)

@@ -25,7 +25,7 @@ Page({
       this.loadData(username, token);
     }else{
       wx.navigateTo({
-        url: '../../login/login?goods_id=' + this.data.goodsid
+        url: '../../login/login?goods_id=' + this.data.goodsid+'&is_permission=1'
       })
     }
 	

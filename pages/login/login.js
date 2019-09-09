@@ -5,6 +5,7 @@ var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
 var appsecret = app.globalData.secret;
 var shop_type = app.globalData.shop_type;
+
 Page({
 
   /**
@@ -69,7 +70,6 @@ Page({
                 }
               })
               
-             
               //权限
               wx.getSetting({
                 success(res) {
@@ -112,7 +112,6 @@ Page({
                       }
                     })
                   }
-
                   //录音权限
                   /*
                   if (!res.authSetting['scope.record']) {
@@ -130,6 +129,7 @@ Page({
                 }
               })
               that.login()
+              wx.navigateBack()
             }
           })
         } else {
@@ -149,7 +149,6 @@ Page({
       phoneNo: e.detail.value
     })
   },
-  
   getCode: function (options) {
     var that = this;
     var currentTime = that.data.currentTime
@@ -216,14 +215,20 @@ Page({
       }
     })
   },
-  login : function () {
-    console.log(this.data.scode)
+ 
+  login:function () {
+    //console.log(this.data.scode)
     let that = this
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var shop_type = that.data.shop_type
+    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
+    that.setData({
+      username: username,
+      is_permission: is_permission,
+    })
     /*
     if (!that.data.phoneNo) {
       app.wxToast({
@@ -243,7 +248,7 @@ Page({
       })
       return;
     }
-   */
+    */
     wx.request({
       url: weburl + '/api/web/user/login/user_xcx_login',
       method: 'POST',
@@ -262,12 +267,10 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('用户基本信息:',res.data.result)
+        console.log('login 用户基本信息:',res.data.result)
         that.setData({
-          username: res.data.result['username'],
-          token: res.data.result['token']
+          token: res.data.result['token'],
         })
-      
         wx.setStorageSync('token', res.data.result['token'])
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
         wx.setStorageSync('username', res.data.result['username'])
@@ -276,29 +279,11 @@ Page({
         wx.setStorageSync('user_name', res.data.result['user_name'])
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
-        wx.showToast({
-          title: '授权登录成功',
-          duration: 500
-        })
-        // 等待半秒，toast消失后返回上一页
-        setTimeout(function () {
-          wx.navigateBack()
-          /*
-          wx.switchTab({
-            url: '/pages/hall/hall'
-          })
-          */
-        }, 500)
       },
-      
     })
     //wx.navigateBack();
-    /*
-    wx.navigateTo({
-      url: '../details/index?username=' + this.data.phoneNo+'&id='+this.data.goods_id
-    })
-    */
   },
+  
   navigateToMyAgreement: function (e) {
     var that = this
     var isReadAgreement = 0
@@ -311,8 +296,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this;
-     
+    var that = this
+    var is_permission = options.is_permission ? options.is_permission:0
+    wx.setStorageSync('is_permission', is_permission)
+    that.login()
   },
 
   /**

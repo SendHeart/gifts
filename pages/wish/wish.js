@@ -492,8 +492,13 @@ Page({
       wish_id: wish_id,
     })
     if (!username) {//登录
+    /*
       wx.navigateTo({
         url: '/pages/login/login'
+      })
+      */
+      wx.switchTab({
+        url: '/pages/my/index'
       })
     } else{
       that.query_wish_cart()

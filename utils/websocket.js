@@ -1,4 +1,4 @@
-var url = 'wss://czw.saleii.com/wss';
+var url = 'wss://sendheart.dreamer-inc.com/wss';
  
 function connect(func) {
 

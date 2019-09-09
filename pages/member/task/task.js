@@ -506,12 +506,12 @@ Page({
     console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id, 'scene:', scene)
     if (!username) {
       /*
-      wx.switchTab({
-        url: '/pages/my/index'
-      })
-      */
       wx.navigateTo({
         url: '/pages/login/login'
+      })
+      */
+      wx.switchTab({
+        url: '/pages/my/index'
       })
     } else {
       if (page_type == 2) { //收到礼物

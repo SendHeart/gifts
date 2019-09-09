@@ -106,7 +106,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     if (!username) {//登录
       wx.navigateTo({
-        url: '../login/login?wechat=1'
+        url: '../login/login?is_permission=1'
       })
     }
     that.setData({

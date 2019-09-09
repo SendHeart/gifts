@@ -9,6 +9,7 @@ App({
     weburl:'https://sendheart.dreamer-inc.com', //https://xcx.itoldfarmer.com
     wssurl:'wss://sendheart.dreamer-inc.com' ,
     uploadurl: weburl+'/api/upload/index4',
+    httpserviceurl: weburl + '/api/upload/http_service',
     mapkey: 'SSPBZ-ALR32-4BWUC-CLUXY-HAFM3-3ABQF',
     mapkey2: 'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U',
     openid: null,
@@ -61,6 +62,7 @@ App({
                   //wx.setStorageSync('username', ''); //测试
                   console.log('获取用户OpenId:', user);
                   //console.log(user.openid);
+                  that.login(user.openid)
                   
                 }
               })
@@ -72,7 +74,46 @@ App({
     that.get_project_gift_para()
   
   },
-    
+
+  login: function (openid) {
+    var openid = openid ? openid: wx.getStorageSync('openid') 
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
+    var userInfo = wx.getStorageSync('userInfo') 
+    var shop_type = this.globalData.shop_type
+    wx.request({
+      url: weburl + '/api/web/user/login/user_xcx_login',
+      method: 'POST',
+      data: {
+        username: openid ? openid:username,
+        wx_nickname: userInfo.nickName,
+        wx_headimg: userInfo.avatarUrl,
+        user_phone: user_phone,
+        user_name: user_name,
+        login_type: 1,
+        type: 8,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('app login 用户基本信息:', res.data.result)
+        wx.setStorageSync('token', res.data.result['token'])
+        wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
+        wx.setStorageSync('username', res.data.result['username'])
+        wx.setStorageSync('m_id', res.data.result['m_id'])
+        wx.setStorageSync('user_phone', res.data.result['user_phone'])
+        wx.setStorageSync('user_name', res.data.result['user_name'])
+        wx.setStorageSync('user_gender', res.data.result['user_gender'])
+        wx.setStorageSync('user_type', res.data.result['user_type'])
+      },
+
+    })
+  },  
+
   get_project_gift_para: function () {
     var that = this
     var navList2 = that.globalData.navList2

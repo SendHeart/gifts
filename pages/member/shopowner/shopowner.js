@@ -246,8 +246,13 @@ Page({
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     if (!username) {//登录
+      /*
       wx.navigateTo({
         url: '../login/login'
+      })
+      */
+      wx.switchTab({
+        url: '../my/index'
       })
     }
     that.get_project_gift_para()

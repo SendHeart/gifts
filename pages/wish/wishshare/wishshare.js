@@ -392,11 +392,12 @@ Page({
             if (orderObjects[i]['logo'].indexOf("http") < 0) {
               orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
             }
-
+            orderObjects[i]['logo'] = orderObjects[i]['logo'].replace('http:','https:')
             for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
               if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
                 orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
               }
+              orderObjects[i]['order_sku'][j]['sku_image'] = orderObjects[i]['order_sku'][j]['sku_image'].replace('http:', 'https:')
             }
           }
         

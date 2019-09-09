@@ -573,7 +573,7 @@ Page({
     var that = this
     var share_goods_id = that.data.goodsid
     var share_goods_org = that.data.goodsorg
-    var share_goods_shape = that.data.goodsshape
+    var share_goods_shape = that.data.goodsshape ? that.data.goodsshape:1
     var share_goods_price = that.data.goodsprice
     var share_goods_name = that.data.goodsname
     share_goods_name = share_goods_name.replace(/\&/g, ' ')
@@ -591,9 +591,7 @@ Page({
     var goods_image_cache = wx.getStorageSync('goods_image_cache_' + share_goods_id)
     var share_goods_qrcode = wx.getStorageSync('goods_qrcode_cache_' + share_goods_id)
     var card_type = that.data.card_type
-    //if (share_goods_shape == 5 || share_goods_shape == 4 || share_goods_shape==undefined) {
-      
-    //}
+   
     share_goods_wx_headimg = wx_headimg_cache ? wx_headimg_cache : share_goods_wx_headimg
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
@@ -623,9 +621,18 @@ Page({
       }, 1500)
       return
     }
-    wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape +'&share_goods_org=' + share_goods_org+'&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price+ '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode+'&card_type='+card_type
-    })
+    if (share_goods_shape == 5 || share_goods_shape == 4) {
+      var contentText = "<p style='font-size:20px color:#333;'>测试测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试测试</p><br/><img src='https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=77d1cd475d43fbf2da2ca023807fca1e/9825bc315c6034a8ef5250cec5134954082376c9.jpg' width=345 /><br/><p style='font-size:20px color:#333;'>设计案例看得见老师讲课老师介绍方式结案了</p>"
+      var encode = encodeURIComponent(contentText)
+      wx.navigateTo({
+        url: '/pages/graphic/graphic?contentText=' +encode
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape + '&share_goods_org=' + share_goods_org + '&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode + '&card_type=' + card_type
+      })
+    }
+   
     /*
     wx.getStorageInfo({
       success: function (res) {
@@ -1131,6 +1138,7 @@ Page({
                 if (goodsPicsInfo.image[i]['url'].indexOf("http") < 0) {
                   goodsPicsInfo.image[i]['url'] = weburl + '/' + goodsPicsInfo.image[i]['url']
                 }
+                goodsPicsInfo.image[i]['url'] = goodsPicsInfo.image[i]['url'].replace("http:", "https:");
                 image_pic.push(goodsPicsInfo.image[i])
               }
             }
@@ -1326,6 +1334,9 @@ Page({
               title: "加载中...",
               icon: 'loading',
               duration: 500,
+            })
+            that.setData({
+              goodsmodel_count: goodsmodel_count,
             })
             that.goodsmodel()
           }else{

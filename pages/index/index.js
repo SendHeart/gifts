@@ -597,10 +597,10 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-   
-    if (!username) {//登录
-      wx.navigateTo({
-        url: '../login/login'
+    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
+    if (!username || is_permission == 0) {//登录
+      wx.switchTab({
+        url: '/pages/my/index'
       })
       return
     }
@@ -627,11 +627,18 @@ Page({
   },
   onShow: function () {
     var that = this
+     var username = wx.getStorageSync('username')
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
-
+    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
+    if (!username || is_permission == 0) {//登录
+      wx.switchTab({
+        url: '/pages/my/index'
+      })
+      return
+    }
     if (!user_phone || user_phone == '') { //必须获取手机号
       modalHiddenPhone = !modalHiddenPhone
       that.setData({

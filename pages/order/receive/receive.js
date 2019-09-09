@@ -640,12 +640,12 @@ Page({
     }  
     if (!username) {
       /*
-      wx.switchTab({
-        url: '/pages/my/index'
+       wx.navigateTo({
+        url: '/pages/login/login'
       })
       */
-      wx.navigateTo({
-        url: '../../login/login'
+      wx.switchTab({
+        url: '/pages/my/index'
       })
     } else {
       //调用应用实例的方法获取全局数据

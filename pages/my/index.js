@@ -14,10 +14,11 @@ var navList2 = wx .getStorageSync('navList2') ? wx.getStorageSync('navList2') : 
 Page({
   data:{
     title_name: '我的',
-    title_logo: '../../images/footer-icon-05.png',
+    title_logo: '/images/footer-icon-05.png',
     share_art_image: weburl+'/uploads/share_art_image.jpg',
-    nickname: userInfo.nickName,
+    nickname: userInfo.nickName ? userInfo.nickName:'登录',
     avatarUrl: userInfo.avatarUrl,
+    default_avatar: weburl + '/uploads/avatar.png',
     hideviewagreementinfo: true,
     agreementinfoshowflag: 0,
     playsxinfoshowflag: 0,
@@ -44,15 +45,17 @@ Page({
   },
   
   goBack: function () {
-    var pages = getCurrentPages();
-    if (pages.length > 1) {
-      wx.navigateBack({ changed: true });//返回上一页
-    } else {
-      wx.switchTab({
-        url: '../hall/hall'
-      })
+    var pages = getCurrentPages()
+    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
+    if (is_permission!=0){
+      if (pages.length > 1) {
+        wx.navigateBack({ changed: true });//返回上一页
+      } else {
+        wx.switchTab({
+          url: '../hall/hall'
+        })
+      }
     }
-
   },
   bindPickerChange: function (e) {
     var that = this
@@ -209,9 +212,7 @@ Page({
               duration: 1500
             })
           }
-
         }
-
       })
     } else {
       wx.showToast({
@@ -739,7 +740,7 @@ Page({
               console.log('获取用户OpenId:')
               console.log(user.openid)
               wx.navigateTo({
-                url: '../login/login?wechat=1'
+                url: '../login/login?is_permission=1'
               })
             }
           })
@@ -900,15 +901,13 @@ Page({
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
     
-   
     that.get_project_gift_para()
     console.log("my index onload:", options , 'scene:', scene)
     if (!username) { // 登录
       wx.navigateTo({
-        url: '../login/login?'
+        url: '/pages/hall/hall?'
       })
     }
-   
    
     that.setData({
       art_id: art_id,
@@ -942,6 +941,7 @@ Page({
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
+    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0 
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
     console.log('my index onShow() user_phone:', user_phone, 'user_name:', user_name)
@@ -951,18 +951,20 @@ Page({
         title_logo: '../../../images/left_arrow.png',
       })
     }  
-    if (!user_phone || user_phone == '') { //必须获取手机号
-      modalHiddenPhone = !modalHiddenPhone
-      that.setData({
-        modalHiddenPhone: modalHiddenPhone,
-      })
-    } else if (!user_name || user_name == '') {
-      modalHiddenUserName = !modalHiddenUserName
-      that.setData({
-        modalHiddenUserName: modalHiddenUserName,
-      })
-    } else if (isReadAgreement == 0 && username) { //已登录未阅读用户购买协议
-      that.navigateToAgreement()
+    if (is_permission!=0){
+      if (!user_phone || user_phone == '') { //必须获取手机号
+        modalHiddenPhone = !modalHiddenPhone
+        that.setData({
+          modalHiddenPhone: modalHiddenPhone,
+        })
+      } else if (!user_name || user_name == '') {
+        modalHiddenUserName = !modalHiddenUserName
+        that.setData({
+          modalHiddenUserName: modalHiddenUserName,
+        })
+      } else if (isReadAgreement == 0 && username) { //已登录未阅读用户购买协议
+        that.navigateToAgreement()
+      }
     }
     that.setData({
       user_type: user_type,
@@ -976,6 +978,7 @@ Page({
     })
     console.log('my index user_type:',that.data.user_type)
   },
+  /*
   chooseImage: function () {
     var that = this
     wx.chooseImage({
@@ -988,6 +991,14 @@ Page({
       }
     })
   },
+  */
+  login: function () { 
+    var that = this
+    wx.navigateTo({
+      url: '/pages/login/login?is_permission=1'
+    })
+  },
+
   navigateToAboutus: function () {
     wx.navigateTo({
       url: '/pages/member/aboutus/aboutus'

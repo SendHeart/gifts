@@ -642,7 +642,7 @@ Page({
     
     if (!username) {//登录
       wx.navigateTo({
-        url: '../login/login?goods_id=' + that.data.goodsid
+        url: '../login/login?goods_id=' + that.data.goodsid+'&is_permission=1'
       })
     } else {
       // 获取商品SKU

@@ -245,9 +245,15 @@ Page({
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     if (!username) {
+      /*
       wx.navigateTo({
         url: '../login/login'
       })
+      */
+      wx.switchTab({
+        url: '/pages/hall/hall'
+      })
+
     }
     that.setData({
       coupons_id: coupons_id,

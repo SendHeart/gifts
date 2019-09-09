@@ -73,6 +73,7 @@ page {
   padding: 0 20rpx 10rpx 20rpx;
   display: flex;
   flex-direction: row;
+  height:50rpx;
 }
 
 .order-footer text {
