@@ -604,18 +604,7 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var userInfo = wx.getStorageSync('userInfo') 
-    if (!username || !userInfo) {//登录
-    /*
-      wx.switchTab({
-        url: '/pages/my/index'
-      })
-      */
-      wx.navigateTo({
-        url: '/pages/login/login?frompage=/pages/index/index'
-      })
-      return
-    }
+    
     that.get_project_gift_para()
     //that.reloadData()
     // 存为全局变量，控制支付按钮是否显示

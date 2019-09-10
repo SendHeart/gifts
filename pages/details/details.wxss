@@ -623,6 +623,26 @@ border: none;
     */
 }
 
+.card-name-info {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-name-info input {
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin: 0 0 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #F3F3F3;
+  border-radius: 14rpx;
+}
+
 .card-register-info {
   width: 80%;
   position: absolute;

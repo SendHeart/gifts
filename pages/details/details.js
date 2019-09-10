@@ -90,6 +90,7 @@ Page({
     cardregisterhidden: true,
     card_image_height:'1055;',
     has_cardpayed: 0,
+    cardnamehidden:true,
     openRecordingdis: "block", //显示录机图标
     shutRecordingdis: "none", //隐藏停止图标
     recordingTimeqwe: 0, //录音计时
@@ -727,6 +728,28 @@ Page({
     })
   },
 
+  cardnameEditTapTag: function () {
+    var that = this
+    that.setData({
+      cardnamehidden: !that.data.cardnamehidden,
+    })
+  },
+
+  //确定按钮点击事件 
+  shareConfirmCardName: function () {
+    var that = this
+    that.setData({
+      cardnamehidden: !that.data.cardnamehidden,
+    })
+  },
+  //取消按钮点击事件  
+  shareCandelCardName: function () {
+    var that = this
+    that.setData({
+      cardnamehidden: !that.data.cardnamehidden,
+    })
+  },  
+
   card_register: function () {
     var that = this
     that.setData({
@@ -1059,7 +1082,7 @@ Page({
                 if (card_type == 1 || goods_info[0]['shape'] == 5) {
                   card_image_height = '1055'
                 } else if (card_type == 2) {
-                  card_image_height = '520'
+                  card_image_height = '480'
                 } else {
                   card_image_height = '750'
                 }
@@ -1141,6 +1164,9 @@ Page({
                 goodsPicsInfo.image[i]['url'] = goodsPicsInfo.image[i]['url'].replace("http:", "https:");
                 image_pic.push(goodsPicsInfo.image[i])
               }
+            }
+            if (that.data.card_type > 0) {  //互动卡需要获取 图片模板信息
+              image_pic[0]['template_config'] = goodsPicsInfo.image[0]['template_config']
             }
             that.setData({
               goodsPicsInfo: res.data.result,

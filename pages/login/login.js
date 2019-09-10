@@ -306,8 +306,8 @@ Page({
         wx.setStorageSync('user_type', res.data.result['user_type'])
       },
     })
-    //wx.navigateBack();
   },
+  
   returnTapTag: function (e) {
     var that = this
     wx.switchTab({

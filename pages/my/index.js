@@ -909,7 +909,7 @@ Page({
       art_title: art_title,
       refer_id: refer_id,  
       nickname: userInfo.nickName ? userInfo.nickName : '登录',
-      avatarUrl: userInfo.avatarUrl, 
+      avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl:'', 
     })
     console.log("my index onload nickname:", that.data.nickname, 'scene:', scene, ' userInfo:', JSON.stringify(userInfo))
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
