@@ -16,7 +16,8 @@
       <view class="logininfo-authinfo">授权后表明您已同意</view>
       <view bindtap="navigateToMyAgreement" class='linegray' style='color:#fff;font-size:22rpx;'>用户协议</view>
     </view>
-   </view>
+     <view bindtap="returnTapTag" class='logininfo-authinfo'>暂不授权</view>
+  </view>
 </view>
 <import src="../../toast/toast.wxml"/>
 <template is="wxToast" data="{{...wxToastConfig}}"></template>

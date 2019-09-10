@@ -122,8 +122,8 @@ Page({
   },
   returnTapTag: function (e) {
     var that = this
-    var type = e.currentTarget.dataset.type
-    var order_id = e.currentTarget.dataset.orderId
+    var type = e.currentTarget.dataset.type ? e.currentTarget.dataset.type: 1
+    var order_id = that.data.order_id //e.currentTarget.dataset.orderId
     var order_shape = that.data.order_shape
     if(type==1){ //转商城
       if (order_shape == 5) {
@@ -134,7 +134,11 @@ Page({
         wx.navigateTo({
           url: '/pages/list/list?navlist_title=互动卡'
         })
-      }  
+      } else{
+        wx.switchTab({
+          url: '../../hall/hall'
+        })
+      } 
     }else if(type==2){ //转互动详情
       wx.navigateTo({
         url: '/pages/order/list/list?order_id='+order_id+'&order_shape='+order_shape

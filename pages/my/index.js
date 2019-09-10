@@ -46,8 +46,8 @@ Page({
   
   goBack: function () {
     var pages = getCurrentPages()
-    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
-    if (is_permission!=0){
+    var userInfo = wx.getStorageSync('userInfo') 
+    if (userInfo){
       if (pages.length > 1) {
         wx.navigateBack({ changed: true });//返回上一页
       } else {
@@ -900,21 +900,17 @@ Page({
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
-    
+    var userInfo = wx.getStorageSync('userInfo')  
     that.get_project_gift_para()
-    console.log("my index onload:", options , 'scene:', scene)
-    if (!username) { // 登录
-      wx.navigateTo({
-        url: '/pages/hall/hall?'
-      })
-    }
-   
     that.setData({
       art_id: art_id,
       art_cat_id: art_cat_id,
       art_title: art_title,
-      refer_id: refer_id,   
+      refer_id: refer_id,  
+      nickname: userInfo.nickName ? userInfo.nickName : '登录',
+      avatarUrl: userInfo.avatarUrl, 
     })
+    console.log("my index onload nickname:", that.data.nickname, 'scene:', scene, ' userInfo:', JSON.stringify(userInfo))
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
@@ -941,7 +937,7 @@ Page({
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
-    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0 
+    var userInfo = wx.getStorageSync('userInfo') 
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
     console.log('my index onShow() user_phone:', user_phone, 'user_name:', user_name)
@@ -951,7 +947,7 @@ Page({
         title_logo: '../../../images/left_arrow.png',
       })
     }  
-    if (is_permission!=0){
+    if (userInfo){
       if (!user_phone || user_phone == '') { //必须获取手机号
         modalHiddenPhone = !modalHiddenPhone
         that.setData({

@@ -65,7 +65,7 @@ Page({
              // wx.setStorageSync('username', user.openid) //用openid代替用户手机号登录
               wx.getUserInfo({
                 success: function (res) {
-                  wx.setStorageSync('userInfo', res.userInfo);
+                  wx.setStorageSync('userInfo', res.userInfo)
                   console.log('获取用户公开信息授权：' + res.userInfo)
                 }
               })
@@ -224,10 +224,8 @@ Page({
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var shop_type = that.data.shop_type
-    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
     that.setData({
       username: username,
-      is_permission: is_permission,
     })
     /*
     if (!that.data.phoneNo) {
@@ -283,7 +281,13 @@ Page({
     })
     //wx.navigateBack();
   },
-  
+  returnTapTag: function (e) {
+    var that = this
+    wx.switchTab({
+      url: '/pages/hall/hall'
+    })
+  },
+
   navigateToMyAgreement: function (e) {
     var that = this
     var isReadAgreement = 0
@@ -297,8 +301,6 @@ Page({
    */
   onLoad: function (options) {
     var that = this
-    var is_permission = options.is_permission ? options.is_permission:0
-    wx.setStorageSync('is_permission', is_permission)
     that.login()
   },
 

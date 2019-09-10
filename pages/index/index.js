@@ -597,10 +597,15 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
-    if (!username || is_permission == 0) {//登录
+    var userInfo = wx.getStorageSync('userInfo')  
+    if (!username || !userInfo) {//登录
+    /*
       wx.switchTab({
         url: '/pages/my/index'
+      })
+      */
+      wx.navigateTo({
+        url: '/pages/login/login?is_permission=1'
       })
       return
     }
@@ -632,10 +637,16 @@ Page({
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
-    var is_permission = wx.getStorageSync('is_permission') ? wx.getStorageSync('is_permission') : 0
-    if (!username || is_permission == 0) {//登录
-      wx.switchTab({
-        url: '/pages/my/index'
+    var userInfo = wx.getStorageSync('userInfo')
+    console.log('index onShow() userInfo:',userInfo)
+    if (!username || !userInfo) {//登录
+      /*
+       wx.switchTab({
+         url: '/pages/my/index'
+       })
+       */
+      wx.navigateTo({
+        url: '/pages/login/login?is_permission=1'
       })
       return
     }
@@ -674,6 +685,19 @@ Page({
     var tips = "查看第" + (page==0?1:page) + "页"
     var hidddensearch = that.data.hidddensearch
     var keyword = hidddensearch?'':that.data.keyword
+    var userInfo = wx.getStorageSync('userInfo')
+    console.log('reloadData userInfo:' + JSON.stringify(userInfo))
+    if (!username || !userInfo) {//登录
+      /*
+        wx.switchTab({
+          url: '/pages/my/index'
+        })
+        */
+      wx.navigateTo({
+        url: '/pages/login/login?is_permission=1'
+      })
+      return
+    }
     that.setData({
       is_loading:true,
       page: page,

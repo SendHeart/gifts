@@ -109,8 +109,8 @@
   <!-- 
 </view>
 -->
-  <view class="loadingbtn" hidden="{{hiddenmore}}">
-    <text bindtap="getMoreOrdersTapTag">查看更多</text>
+  <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap="getMoreOrdersTapTag">
+    <text >查看更多</text>
   </view>
 </scroll-view>
 <modal class="modalbox" height="90%" hidden="{{hiddenmodalput}}" title="确定要把礼物折现回收?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">

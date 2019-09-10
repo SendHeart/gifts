@@ -50,19 +50,22 @@ Page({
    * 添加图片成功方法，添加图片成功，将图片上传到服务器
    */
   takePhotoSuccess(e){
+
   },
   /**
    * 图片删除回调，返回当前删除图片的imgUrl，根据url删除服务器上面的图片
    */
   graphicDeleteImg(e){
-    var imgUrl = e.detail;
+    var imgUrl = e.detail
+    console.log('graphicDeleteImg imgUrl:',e.detail)
     this._removeImage(imgUrl)
   },
 
   // 根据图片url删除图片，同时删除服务器上面的图片
   _removeImage(imgUrl) {
     var params = {
-      "imgUrl": imgUrl
+      "imgUrl": imgUrl,
+      "action_id": "removeimage",
     }
     httpClient.post(httpserviceurl, params).then(res => {
       console.log(res)

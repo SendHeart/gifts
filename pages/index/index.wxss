@@ -293,7 +293,7 @@ page {
 }
 
 .top-bar2 {
-  height: 76rpx;
+  height: 90rpx;
   background: #444;
   width: 100%;
   position: fixed;
