@@ -9,11 +9,13 @@ var navList_order = [
 ]
 var now = new Date().getTime()
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
-
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 Page({
   data: {
     title_name: '礼物袋',
     title_logo: '../../images/history_s.png',
+    nickname: userInfo.nickName,
+    avatarUrl: userInfo.avatarUrl,
     orders: [],
     orders_show: [],
     orders_prev: [],
@@ -22,7 +24,7 @@ Page({
     keyword: '',
     user_name:'',
     shop_type:shop_type,
-    page: 0,
+    page: 1,
     pagesize: 10,
     show_max:3,  //最多显示页数
     status: 0,
@@ -83,6 +85,7 @@ Page({
   */
  
   //滑动移动事件
+ /*
   handletouchmove: function (event) {
     var that = this
     var currentX = event.touches[0].pageX
@@ -141,7 +144,7 @@ Page({
       current_scrollTop: e.scrollTop,
     })
   },
-
+*/
   goBack: function () {
     wx.switchTab({
       url: '../hall/hall'
@@ -396,11 +399,12 @@ Page({
     var that = this
     that.setData({
       scrollTop: 0,
-      page:0,
+      page:1,
     })
     console.log('goTop:',that.data.scrollTop)
     that.getPrevOrdersTapTag()
   },
+
   getMoreOrdersTapTag: function () {
     var that = this
     if(that.data.is_loading) return
@@ -422,6 +426,9 @@ Page({
       title: '加载中',
       icon: 'loading',
       duration: 2000
+    })
+    that.setData({
+      page: page+1,
     })
     console.log('get More Orders page:',page,'current scrollTop:',that.data.current_scrollTop)
     that.reloadData()
@@ -597,8 +604,8 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var userInfo = wx.getStorageSync('userInfo')  
-    if (!username || !userInfo) {//登录
+    var nickname = that.data.nickname 
+    if (!username || !nickname) {//登录
     /*
       wx.switchTab({
         url: '/pages/my/index'
@@ -637,9 +644,9 @@ Page({
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
-    var userInfo = wx.getStorageSync('userInfo')
-    console.log('index onShow() userInfo:',userInfo)
-    if (!username || !userInfo) {//登录
+    var nickname = that.data.nickname
+    console.log('index onShow() nickname:', nickname)
+    if (!username || !nickname) {//登录
       /*
        wx.switchTab({
          url: '/pages/my/index'
@@ -675,7 +682,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var status = that.data.status
     var shop_type = that.data.shop_type
-    var page = that.data.page+1 //从服务器获取页面序号
+    var page = that.data.page //从服务器获取页面序号
     var show_max = that.data.show_max
     var orders_prev = that.data.orders_prev
     var orders_next = that.data.orders_next
@@ -685,9 +692,9 @@ Page({
     var tips = "查看第" + (page==0?1:page) + "页"
     var hidddensearch = that.data.hidddensearch
     var keyword = hidddensearch?'':that.data.keyword
-    var userInfo = wx.getStorageSync('userInfo')
-    console.log('reloadData userInfo:' + JSON.stringify(userInfo))
-    if (!username || !userInfo) {//登录
+    var nickname = that.data.nickname 
+    console.log('reloadData nickname:' , nickname)
+    if (!username || !nickname) {//登录
       /*
         wx.switchTab({
           url: '/pages/my/index'
@@ -700,7 +707,6 @@ Page({
     }
     that.setData({
       is_loading:true,
-      page: page,
     })
     //wx.showLoading({
       //title: tips,
@@ -799,7 +805,6 @@ Page({
               gift_rcv: gift_rcv,
               page_num: page_num.toFixed(0),
               scrollTop: 0,
-            
               hiddenmore:false,
             })
             wx.pageScrollTo({
@@ -1050,14 +1055,14 @@ Page({
   getPrevOrdersTapTag() {
     var that = this 
     var page = that.data.page
-    var last_page = page - 1 > 0 ? page - 1 : 0
+    var last_page = page - 1 > 0 ? page - 1 : 1
     var is_loading = that.data.is_loading
     console.log('getPrevOrdersTapTag:下拉刷新 page:', page, ' is loading:', is_loading, ' last_page:',last_page,'current scrollTop:', that.data.current_scrollTop)
     if (page == 1 || is_loading){
       return
     }
     that.setData({
-      page: last_page - 1,
+      page: last_page,
     })
     that.reloadData()
   },
