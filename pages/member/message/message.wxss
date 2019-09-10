@@ -2,9 +2,13 @@ page {
   background: #1d1d1d;
 }
 .headerbg {
-  height: 50rpx;
-  z-index: 98;
-  margin-bottom: 50rpx;
+  height: 90rpx;
+  background: #1d1d1d;
+  position: fixed;
+  top: 0;
+  left: 2%;
+  z-index: 999;
+  width: 96%;
 }
 .top-bar2 {
   display: flex;
@@ -12,11 +16,7 @@ page {
   justify-content: space-between;
   height: 70rpx;
   background: #444;
-  width: 96%;
-  position: fixed;
-  top: 0;
-  left: 2%;
-  z-index: 99;
+  z-index: 988;
   border-radius: 20rpx;
   box-shadow: 0rpx 3rpx 6rpx rgba(100, 100, 100, 0.3);
   margin: 10rpx auto;
@@ -41,12 +41,12 @@ page {
 .top-bar-active2 {
   font-weight: bold;
   color: #fff;
-  background: #e34c55;
+  background: #EC4844;
 }
 
 .container{
   margin-bottom: 50rpx;
-  margin-top: 40rpx;
+  margin-top: 110rpx;
   overflow: hidden;
 }
 
@@ -157,8 +157,7 @@ page {
 .morebtn {
   margin:20rpx auto 200rpx auto;
   border:none;
-  background: #f2f2f2;
-  color: #999;
+  color: #fff;
   font-size: 24rpx;
 }
 /*购物车按钮、收藏等*/

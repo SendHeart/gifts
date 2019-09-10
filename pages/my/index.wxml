@@ -2,7 +2,7 @@
 <view class="userinfo"  bindtap="login">  <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
 	<image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
 	<text wx:if="{{userInfo.nickName}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
-  <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">授权登录</button>
+  <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
 </view>
 <view class="menu-area">
   <!--<view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>

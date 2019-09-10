@@ -50,8 +50,8 @@
 </view>
 -->
   <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-    <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-    <view class='' style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
+    <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow" />
+    <view class='' style="margin-top:-10rpx;font-size:22rpx;">TOP</view>
     <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
   </view>
 

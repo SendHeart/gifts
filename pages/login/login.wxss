@@ -82,12 +82,12 @@ background-color:#fff;
 .subject .toptitle {
   font-size: 42rpx;
   font-weight: bold;
-  color: #333;
+  color: #fff;
   width: 90%;
   padding: 20rpx;
 }
 .linegray {
-	border-bottom: 1rpx solid #AFAFAF;
+	border-bottom: 1rpx solid #444;
 }
 
 /*user info*/
@@ -108,7 +108,7 @@ background-color:#fff;
 }
 
 .logininfo-auth {
-  color: #333;
+  color: #fff;
   font-size: 32rpx;
   font-weight: normal;
 }

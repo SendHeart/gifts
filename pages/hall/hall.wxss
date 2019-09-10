@@ -987,6 +987,8 @@ modal {
   color: #EC4844;
   font-size: 26rpx;
   margin-right: 24rpx;
+  line-height: 1.8;
+  font-weight: bold;
 }
 
 .price-now::first-letter {
