@@ -707,7 +707,7 @@ Page({
     })
   },
 
-  
+  /*
   onGotUserInfo: function (e) {
     var that = this
     console.log('onGotUserInfo errMsg:', e.detail.errMsg, 'userInfo:', e.detail.userInfo, 'rawData:', e.detail.rawData)
@@ -740,7 +740,7 @@ Page({
               console.log('获取用户OpenId:')
               console.log(user.openid)
               wx.navigateTo({
-                url: '../login/login?is_permission=1'
+                url: '../login/login?frompage=/pages/my/index'
               })
             }
           })
@@ -750,6 +750,7 @@ Page({
       }
     })
   },
+  */
   customerService: function (e) {
     wx.navigateTo({
      // url: '../wechat/wechat'
@@ -991,7 +992,7 @@ Page({
   login: function () { 
     var that = this
     wx.navigateTo({
-      url: '/pages/login/login?is_permission=1'
+      url: '/pages/login/login?frompage=/pages/my/index'
     })
   },
 

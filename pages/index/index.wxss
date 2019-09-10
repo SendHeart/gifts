@@ -306,7 +306,7 @@ page {
   width: 375rpx;
   color: #fff;
   text-align: center;
-  line-height: 84rpx;
+  line-height: 75rpx;
   font-size: 32rpx;
 }
 

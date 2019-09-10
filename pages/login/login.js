@@ -28,6 +28,28 @@ Page({
     logininfo_logo:weburl+'/uploads/songxin_logo.png'
   },
 
+  goBack: function () {
+    var that = this
+    var pages = getCurrentPages()
+    var frompage = that.data.frompage
+    var userInfo = wx.getStorageSync('userInfo')
+    if (userInfo) {
+      if (pages.length > 1) {
+        if (frompage){
+          wx.switchTab({
+            url: frompage
+          })
+        }else{
+          wx.navigateBack({ changed: true });//返回上一页
+        }
+       
+      } else {
+        wx.switchTab({
+          url: '../hall/hall'
+        })
+      }
+    }
+  },
   onGotUserInfo: function (e) {
     var that = this
     var userInfo = e.detail.userInfo
@@ -37,10 +59,75 @@ Page({
       wx_nickname: userInfo.nickName,
       wx_headimg: userInfo.avatarUrl
     })
-    console.log(e.detail.errMsg)
-    console.log('获取用户公开信息授权：')
-    console.log(e.detail.userInfo)
-    console.log(e.detail.rawData)
+    that.login()
+    setTimeout(function () {
+      that.goBack()
+    }, 500)
+
+    //权限
+    wx.getSetting({
+      success(res) {
+        var authMap = res.authSetting;
+        var length = Object.keys(authMap).length;
+        console.log("authMap 长度:", length, authMap)
+        //通讯录权限
+        if (!res.authSetting['scope.address']) {
+          wx.authorize({
+            scope: 'scope.address',
+            success(e) {
+              console.log('通讯录权限' + e.errMsg)
+            },
+            fail(e) {
+              console.log('通讯录权限授权失败' + e.errMsg)
+            }
+          })
+        }
+        //保存到相册权限
+        if (!res.authSetting['scope.writePhotosAlbum']) {
+          wx.authorize({
+            scope: 'scope.writePhotosAlbum',
+            success(e) {
+              console.log('保存到相册权限' + e.errMsg)
+            },
+            fail(e) {
+              console.log('保存到相册权限授权失败' + e.errMsg)
+            }
+          })
+        }
+        //位置权限
+        if (!res.authSetting['scope.userLocation']) {
+          wx.authorize({
+            scope: 'scope.userLocation',
+            success(e) {
+              console.log('位置授权成功' + e.errMsg)
+            },
+            fail(e) {
+              console.log('位置授权失败' + e.errMsg)
+            }
+          })
+        }
+        //录音权限
+        /*
+        if (!res.authSetting['scope.record']) {
+          wx.authorize({
+            scope: 'scope.record',
+            success(e) {
+              console.log('录音权限成功' + e.errMsg)
+            },
+            fail(e) {
+              console.log('录音权限失败' + e.errMsg)
+            }
+          })
+        }
+        */
+      }
+    })
+   
+    //console.log(e.detail.errMsg)
+    console.log('获取用户公开信息授权:', e.detail.userInfo, ' errMsg:', e.detail.errMsg, 'rawData:', e.detail.rawData)
+    //console.log(e.detail.userInfo)
+    //console.log(e.detail.rawData)
+    /*
     wx.login({
       success: function (res) {
         if (res.code) {
@@ -65,71 +152,10 @@ Page({
              // wx.setStorageSync('username', user.openid) //用openid代替用户手机号登录
               wx.getUserInfo({
                 success: function (res) {
-                  wx.setStorageSync('userInfo', res.userInfo)
-                  console.log('获取用户公开信息授权：' + res.userInfo)
+                  //wx.setStorageSync('userInfo', res.userInfo)
+                  //console.log('获取用户公开信息授权：' + res.userInfo)
                 }
               })
-              
-              //权限
-              wx.getSetting({
-                success(res) {
-                  var authMap = res.authSetting;
-                  var length = Object.keys(authMap).length;
-                  console.log("authMap 长度:", length, authMap)
-                  //通讯录权限
-                  if (!res.authSetting['scope.address']) {
-                    wx.authorize({
-                      scope: 'scope.address',
-                      success(e) {
-                        console.log('通讯录权限' + e.errMsg)
-                      },
-                      fail(e) {
-                        console.log('通讯录权限授权失败' + e.errMsg)
-                      }
-                    })
-                  }
-                  //保存到相册权限
-                  if (!res.authSetting['scope.writePhotosAlbum']) {
-                    wx.authorize({
-                      scope: 'scope.writePhotosAlbum',
-                      success(e) {
-                        console.log('保存到相册权限' + e.errMsg)
-                      },
-                      fail(e) {
-                        console.log('保存到相册权限授权失败' + e.errMsg)
-                      }
-                    })
-                  }
-                  //位置权限
-                  if (!res.authSetting['scope.userLocation']) {
-                    wx.authorize({
-                      scope: 'scope.userLocation',
-                      success(e) {
-                        console.log('位置授权成功' + e.errMsg)
-                      },
-                      fail(e) {
-                        console.log('位置授权失败' + e.errMsg)
-                      }
-                    })
-                  }
-                  //录音权限
-                  /*
-                  if (!res.authSetting['scope.record']) {
-                    wx.authorize({
-                      scope: 'scope.record',
-                      success(e) {
-                        console.log('录音权限成功' + e.errMsg)
-                      },
-                      fail(e) {
-                        console.log('录音权限失败' + e.errMsg)
-                      }
-                    })
-                  }
-                  */
-                }
-              })
-              that.login()
-              wx.navigateBack()
             }
           })
         } else {
@@ -137,6 +163,7 @@ Page({
         }
       }
     })
+    */
   },
 
   codeInput: function (e) {
@@ -301,6 +328,11 @@ Page({
    */
   onLoad: function (options) {
     var that = this
+    var frompage = options.frompage ? options.frompage:''
+    console.log('login onload() frompage:', frompage)
+    that.setData({
+      frompage: frompage,
+    })
     that.login()
   },
 
