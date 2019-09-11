@@ -54,6 +54,7 @@ Page({
     goodsprice: 0,
     goodssale: 0,
     goodsid: 0,
+    goodsshape:0,
     goodsdiscount: 100,
     discountinfo: '9折优惠券',
     sku_gov_price: 0,
@@ -119,7 +120,8 @@ Page({
     card_register_right_picker: ['参与者可看', '管理者可看', '公开'],
     card_register_right_index: 0,  
     card_register_reqid_picker: ['0无需证件', '1身份证', '2微信号', '3QQ号', '4邮箱','5学号','6工号'],
-    card_register_reqid_index: 0,  
+    card_register_reqid_index: 0, 
+    mycardname_logo_image: '/images/img_upload_field.png'
   },
 
   bindPickerChange_card_color: function (e) {
@@ -199,9 +201,13 @@ Page({
       }
     })
   },
-  upimg: function () {
+  upimg: function (e) {
     var that = this
+    var is_logo = e.currentTarget.dataset.logo ? e.currentTarget.dataset.logo:0
     var new_img_arr = ''
+    that.setData({
+      is_logo: is_logo
+    })
     wx.chooseImage({
       sizeType: ['original', 'compressed'],
       success: function (res) {
@@ -220,6 +226,7 @@ Page({
     var goods_id = that.data.goodsid
     var new_img_arr = that.data.new_img_arr[0] //本次上传图片的手机端文件地址
     var image_pic = that.data.image_pic
+    var is_logo = that.data.is_logo
     if (new_img_arr) {
       wx.uploadFile({
         url: uploadurl,
@@ -234,26 +241,32 @@ Page({
           name: encodeURI(goods_id), // 名称
         }, // HTTP 请求中其他额外的 form data
         success: function (res) {
-          var retinfo = JSON.parse(res.data.trim());
+          var retinfo = JSON.parse(res.data.trim())
+          console.log('upimg upload url:', retinfo['result']['img_url'])
           if (retinfo['status'] == "y") {
-            var new_image_pic = []
-            that.image_save(retinfo['result']['img_url'], 'myregistercard_image')
-            var myregistercard_image = wx.getStorageSync('myregistercard_image')
-            var new_image_pic = {
-              id: goods_id,
-              goods_id: goods_id,
-              url: retinfo['result']['img_url'],
-             // ext: new_image_pic['url'].substring(new_image_pic['url'].length-4, 3)
-            }
-            image_pic.push(new_image_pic)
-           
-            setTimeout(function () {
+            if(is_logo==1){ //logo 处理
+              that.image_save(retinfo['result']['img_url'], 'mycardname_logo_image')
               that.setData({
-                image_pic: image_pic,
+                mycardname_logo_image: retinfo['result']['img_url'],
               })
-            }, 3000)
-          
-            console.log('图片上传完成:', new_image_pic,image_pic )
+            }else{
+              var new_image_pic = []
+              that.image_save(retinfo['result']['img_url'], 'myregistercard_image')
+              var myregistercard_image = wx.getStorageSync('myregistercard_image')
+              var new_image_pic = {
+                id: goods_id,
+                goods_id: goods_id,
+                url: retinfo['result']['img_url'],
+              }
+              image_pic.push(new_image_pic)
+              setTimeout(function () {
+                that.setData({
+                  image_pic: image_pic,
+                })
+              }, 3000) 
+              console.log('图片上传完成:', new_image_pic, image_pic)
+            }
+            
           }
         },
       })
@@ -311,10 +324,10 @@ Page({
     var that = this
     var cur_img_id = e.detail.current
     //console.log(e)
-   
     that.setData({
       cur_img_id: cur_img_id,
     })
+    that.swiperchange_cardname(cur_img_id)
     //console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
   },
 
@@ -327,6 +340,57 @@ Page({
       cur_img_share_id: cur_img_share_id,
     })
     //console.log('detail swiperchange_share:', e.detail.current, 'cur_img_share_id:',cur_img_share_id)
+  },
+
+  swiperchange_cardname: function (cur_img_id) {
+    var that = this
+    var image_pic = that.data.image_pic
+    var template_config = image_pic[cur_img_id] ? image_pic[cur_img_id]['template_config']:''
+    var is_card_name_name = false
+    var is_card_name_title = false
+    var is_card_name_phone = false
+    var is_card_name_email = false
+    var is_card_name_website = false
+    var is_card_name_publicwechat = false
+    var is_card_name_companyaddr = false
+    var is_card_name_logo_image = false
+    var is_card_name_qrcode = false
+    if (template_config){
+      for (var i = 0; i < template_config.length;i++){
+        console.log('detail swiperchange_cardname template_config i:', template_config[i])
+        if(template_config[i]['typeId'] == 'card_name'){
+          is_card_name_name = true
+        } else if (template_config[i]['typeId'] == 'card_title'){
+          is_card_name_title = true
+        } else if (template_config[i]['typeId'] == 'card_phone') {
+          is_card_name_phone = true
+        } else if (template_config[i]['typeId'] == 'card_email') {
+          is_card_name_email = true
+        } else if (template_config[i]['typeId'] == 'card_weburl') {
+          is_card_name_website = true
+        } else if (template_config[i]['typeId'] == 'card_name_publicwechat') {
+          is_card_name_publicwechat = true
+        } else if (template_config[i]['typeId'] == 'card_addr') {
+          is_card_name_companyaddr = true
+        } else if (template_config[i]['typeId'] == 'card_logo') {
+          is_card_name_logo_image = true
+        } else if (template_config[i]['typeId'] == 'card_qrcode') {
+          is_card_name_qrcode = true
+        }
+      }
+      console.log('detail swiperchange_cardname template_config:', template_config.length, is_card_name_name, is_card_name_title, is_card_name_logo_image)
+      that.setData({
+        is_card_name_name: is_card_name_name,
+        is_card_name_title: is_card_name_title,
+        is_card_name_phone: is_card_name_phone,
+        is_card_name_email: is_card_name_email,
+        is_card_name_website: is_card_name_website,
+        is_card_name_publicwechat: is_card_name_publicwechat,
+        is_card_name_companyaddr: is_card_name_companyaddr,
+        is_card_name_logo_image: is_card_name_logo_image,
+        is_card_name_qrcode: is_card_name_qrcode,
+      })
+    }
   },
   bindCardTextAreaBlur: function (e) {
     var that = this
@@ -623,7 +687,7 @@ Page({
       return
     }
     if (share_goods_shape == 5 || share_goods_shape == 4) {
-      var contentText = "<p style='font-size:20px color:#333;'>测试测试测试测试测试测试测试测试测测试测试测试测试测试测试测试测试测试</p><br/><img src='https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=77d1cd475d43fbf2da2ca023807fca1e/9825bc315c6034a8ef5250cec5134954082376c9.jpg' width=345 /><br/><p style='font-size:20px color:#333;'>设计案例看得见老师讲课老师介绍方式结案了</p>"
+      var contentText = "<p style='font-size:20px color:#333;'></p><br/><img src='https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=77d1cd475d43fbf2da2ca023807fca1e/9825bc315c6034a8ef5250cec5134954082376c9.jpg' width=345 /><br/><p style='font-size:20px color:#333;'></p>"
       var encode = encodeURIComponent(contentText)
       wx.navigateTo({
         url: '/pages/graphic/graphic?contentText=' +encode
@@ -1161,12 +1225,13 @@ Page({
                 if (goodsPicsInfo.image[i]['url'].indexOf("http") < 0) {
                   goodsPicsInfo.image[i]['url'] = weburl + '/' + goodsPicsInfo.image[i]['url']
                 }
-                goodsPicsInfo.image[i]['url'] = goodsPicsInfo.image[i]['url'].replace("http:", "https:");
+                goodsPicsInfo.image[i]['url'] = goodsPicsInfo.image[i]['url'].replace("http:", "https:")
                 image_pic.push(goodsPicsInfo.image[i])
               }
             }
             if (that.data.card_type > 0) {  //互动卡需要获取 图片模板信息
               image_pic[0]['template_config'] = goodsPicsInfo.image[0]['template_config']
+              that.swiperchange_cardname(0)
             }
             that.setData({
               goodsPicsInfo: res.data.result,
@@ -1669,16 +1734,6 @@ Page({
       })
     },
 
-    upper: function (e) {
-      //console.log(e)
-    },
-    lower: function (e) {
-      //console.log(e)
-    },
-    scroll: function (e) {
-      //console.log(e)
-    },
-
     getAttrIndex: function (attrName, attrValueList) {
       // 判断数组中的attrKey是否有该属性值 
       for (var i = 0; i < attrValueList.length; i++) {
@@ -1797,20 +1852,7 @@ Page({
         title_logo: '../../images/back.png'
       })
     }  
-      //console.log('App Show');
-   // this.distachAttrValue(this.data.attrValueList);
-      // 只有一个属性组合的时候默认选中 
-      // console.log(this.data.attrValueList); 
-      /*
-      if (this.data.commodityAttr.length == 1) {
-        for (var i = 0; i < this.data.commodityAttr[0].attrValueList.length; i++) {
-          this.data.attrValueList[i].selectedValue = this.data.commodityAttr[0].attrValueList[i].attrValue;
-        }
-        this.setData({
-          attrValueList: this.data.attrValueList
-        });
-      }
-      */
+  
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -1848,17 +1890,3 @@ Page({
     }
   }
 })
-
-//麦克风帧动画  
-function speaking() {
-  var that = this
-  //话筒帧动画  
-  var i = 1
-  that.timer = setInterval(function () {
-    i++
-    i = i % 5;
-    that.setData({
-      j: i
-    })
-  }, 200)
-}

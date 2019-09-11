@@ -642,7 +642,24 @@ border: none;
   background: #F3F3F3;
   border-radius: 14rpx;
 }
-
+.card-name-info text {
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin: 0 0 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  border-radius: 14rpx;
+}
+.card-name-info image {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 0 auto;
+  padding: 5rpx;
+  font-size: 24rpx;
+  color: #999;
+}
 .card-register-info {
   width: 80%;
   position: absolute;
