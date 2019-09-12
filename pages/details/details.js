@@ -360,11 +360,12 @@ Page({
     var is_card_name_website = false
     var is_card_name_publicwechat = false
     var is_card_name_addr = false
+    var is_card_name_company = false
     var is_card_name_logo_image = false
     var is_card_name_qrcode = false
     if (template_config){
       for (var i = 0; i < template_config.length;i++){
-        console.log('detail swiperchange_cardname template_config i:', template_config[i])
+        //console.log('detail swiperchange_cardname template_config i:', template_config[i])
         if(template_config[i]['typeId'] == 'card_name'){
           is_card_name_name = true
         } else if (template_config[i]['typeId'] == 'card_title'){
@@ -379,13 +380,15 @@ Page({
           is_card_name_publicwechat = true
         } else if (template_config[i]['typeId'] == 'card_addr') {
           is_card_name_addr = true
+        } else if (template_config[i]['typeId'] == 'card_companyname') {
+          is_card_name_company = true
         } else if (template_config[i]['typeId'] == 'card_logo') {
           is_card_name_logo_image = true
         } else if (template_config[i]['typeId'] == 'card_qrcode') {
           is_card_name_qrcode = true
         }
       }
-     // console.log('detail swiperchange_cardname template_config:', template_config.length, is_card_name_name, is_card_name_title, is_card_name_logo_image)
+      console.log('detail swiperchange_cardname template_config:', template_config, is_card_name_name, is_card_name_company, is_card_name_company)
       that.setData({
         is_card_name_name: is_card_name_name,
         is_card_name_title: is_card_name_title,
@@ -394,6 +397,7 @@ Page({
         is_card_name_website: is_card_name_website,
         is_card_name_publicwechat: is_card_name_publicwechat,
         is_card_name_addr: is_card_name_addr,
+        is_card_name_company: is_card_name_company,
         is_card_name_logo_image: is_card_name_logo_image,
         is_card_name_qrcode: is_card_name_qrcode,
       })
@@ -455,7 +459,13 @@ Page({
       card_name_addr: card_name_addr
     })
   },
-
+  card_name_companyTapTag: function (e) {
+    var that = this
+    var card_name_company = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_company: card_name_company
+    })
+  },
   cardnameNoteTextAreaBlur: function (e) {
     var that = this
     var card_name_note = util.filterEmoji(e.detail.value)
@@ -540,6 +550,7 @@ Page({
   confirmcardinput: function () {
     var that = this
     var card_type = that.data.card_type
+    var is_buymyself = that.data.is_buymyself
     if(card_type==1){
       var card_register_info = [
         {
@@ -578,18 +589,22 @@ Page({
           card_name_website: that.data.card_name_website,
           card_name_publicwechat: that.data.card_name_publicwechat,
           card_name_addr: that.data.card_name_addr,
+          card_name_company: that.data.card_name_company,
           card_name_logo_image: that.data.card_name_logo_image,
           card_name_note: that.data.card_name_note,
         }
       ]
       wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
       console.log('card_name_info:', wx.getStorageSync('card_name_info'))
+
     }
     that.setData({
       inputShowed:true,
       goodsmodel_count: 0,
     })
-    that.goodsmodel()
+    if(is_buymyself == 1) {
+      that.goodsmodel()
+    }
   },
   
   bindChangeStartDate: function (e) {
@@ -882,10 +897,11 @@ Page({
     })
   },
 
-  cardnameEditTapTag: function () {
+  cardnameEditTapTag: function (is_buymyself=0) {
     var that = this
     that.setData({
       cardnamehidden: !that.data.cardnamehidden,
+      is_buymyself: is_buymyself ? is_buymyself:0,
     })
   },
 
@@ -1092,6 +1108,7 @@ Page({
         var card_name_website = ''
         var card_name_publicwechat = ''
         var card_name_addr = ''
+        var card_name_company = ''
         var card_name_note = ''
         var card_name_logo_image = ''
         var page = that.data.page
@@ -1137,6 +1154,7 @@ Page({
           card_name_website = card_name_info['card_name_website']
           card_name_publicwechat = card_name_info['card_name_publicwechat']
           card_name_addr = card_name_info['card_name_addr']
+          card_name_company = card_name_info['card_name_company']
           card_name_note = card_name_info['card_name_note'],
           card_name_logo_image = card_name_info['card_name_logo_image']
         }
@@ -1165,6 +1183,7 @@ Page({
           card_name_website: card_name_website ? card_name_website:'',
           card_name_publicwechat: card_name_publicwechat ? card_name_publicwechat:'',
           card_name_addr: card_name_addr ? card_name_addr:'',
+          card_name_company: card_name_company ? card_name_company:'',
           card_name_note: card_name_note ? card_name_note:'',
           card_name_logo_image: card_name_logo_image ? card_name_logo_image:'',
         })
@@ -1579,13 +1598,16 @@ Page({
       var that = this
       var goodsshape = that.data.goodsshape
       var refer_mid = that.data.refer_mid
-    
+      var card_type = that.data.card_type
+      
+      console.log('buyMyself card_type:', card_type, 'goodsshape:', goodsshape)
       that.setData({
         is_buymyself: 1,
         goodsmodel_count:0,
       })
       if (goodsshape==4) {
-        that.confirmcardinput()
+        //that.confirmcardinput()
+        that.cardnameEditTapTag(that.data.is_buymyself)
       }else{
         that.goodsmodel()
       }
@@ -1602,6 +1624,7 @@ Page({
     //确定按钮点击事件  
     modalBindaconfirm: function () {
       var that = this
+      //var card_type = that.data.card_type
       this.setData({
         modalHidden: !this.data.modalHidden,
       })

@@ -318,6 +318,9 @@
       <view class="card-name-info">
         <input hidden="{{!is_card_name_addr}}" style='font-size:25rpx;' value="{{card_name_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='card_name_addrTapTag' focus="{{inputShowed4}}" maxlength='80' />
       </view>
+       <view class="card-name-info">
+        <input hidden="{{!is_card_name_company}}" style='font-size:25rpx;' value="{{card_name_company}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="公司名称" bindinput='card_name_companyTapTag' focus="{{inputShowed4}}" maxlength='80' />
+      </view>
       <view hidden="{{!is_card_name_logo_image}}" class="card-name-info" data-logo='1' bindtap="upimg">
         <image src="{{card_name_logo_image}}"></image>
         <text style='font-size:35rpx;height:100rpx;line-height:100rpx;'>我的LOGO</text>
