@@ -20,7 +20,7 @@
   </view>
   <view class="banner">
     <view hidden="{{!modalHidden}}" style="{{card_type==2?'margin-top:90rpx;':''}}">
-      <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="{{(goodsshape==5||goodsshape==4)?'height:1100rpx;':''}}">
+      <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="height:{{card_image_height}}rpx;">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
           <swiper-item>
             <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="" objectFit="contain">
@@ -36,7 +36,7 @@
           </swiper-item>
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{pic.id}}'>
-          <swiper-item item-id="{{pic.id}}" class="swiperitem">
+          <swiper-item item-id="{{pic.id}}" class="swiper-item">
             <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" data-list="{{image_pic}}" data-src="{{pic.url}}" bindtap="imgYu" />
            <!-- 
             <view wx:if="{{goodsshape==4}}" class="share-card-register-image"> 
@@ -88,7 +88,7 @@
                 <picker value="{{card_register_reqid_index}}"  range="{{card_register_reqid_picker}}" bindchange="bindChangeRegisterReqid">
  证件类型:{{card_register_reqid_picker[card_register_reqid_index]}}  
                 </picker>
-               </view>
+              </view>
               <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-startend" style="color:{{current_card_color}}">
                 <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
  开始时间:{{register_start_date}}  
@@ -118,7 +118,13 @@
                 </picker>
               </view>
             </view>
-            
+            <!-- card name info view -->
+            <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-name-view" >
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+                <text style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}">{{template.typeText}}
+                </text>
+              </block>
+            </view>
             <view wx:if="{{goodsshape==5}}" style="" class="card-blessing" >
               <textarea style='margin-top:10rpx;font-size:26rpx;color:{{current_card_color}}' bindblur="bindCardTextAreaBlur" placeholder="请输入祝词" placeholder-style="text-align:center;color:#e3e3e3;" maxlength="200" value="{{card_blessing}}" />
             </view>
@@ -128,12 +134,14 @@
               <view wx:if="{{goodsshape==5||goodsshape==4}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;color:{{current_card_color}}">{{nickname}}</view>
             </view>
             -->
+            <!-- 
             <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-remark">《 滑动选背景图 》</view>
             <view wx:if="{{goodsshape==5||goodsshape==4}}" class="share-goods-card-color">
               <picker name="picker_card_color" class="picker-box" data-selecthx="{{card_color[card_color_index].title}}" range="{{card_color}}" range-key="{{'title'}}"  bindchange="bindPickerChange_card_color">
                 <view class="picker" >{{card_color[card_color_index].title}}字</view>
               </picker>
             </view>
+            -->
             <view wx:if="{{(goodsshape==5||goodsshape==4 ) && new_rec_url}}" class="share-play-rec" bindtap="play_rec" >
               <image src="../../images/notification.png" style="width:50rpx;height:50rpx;"></image>
             </view>

@@ -623,6 +623,15 @@ border: none;
     */
 }
 
+.card-name-view {
+    z-index: 1000;
+}
+.card-name-view text {
+  position: absolute;
+  font-size:25rpx; 
+  color: #666;
+  background: #fff;
+}
 .card-name-info {
   width: 100%;
   margin: 0 auto;
