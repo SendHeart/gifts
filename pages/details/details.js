@@ -121,7 +121,8 @@ Page({
     card_register_right_index: 0,  
     card_register_reqid_picker: ['0无需证件', '1身份证', '2微信号', '3QQ号', '4邮箱','5学号','6工号'],
     card_register_reqid_index: 0, 
-    mycardname_logo_image: '/images/img_upload_field.png'
+    card_name_modal_title:'名片内容',
+    card_name_logo_image: '/images/img_upload_field.png'
   },
 
   bindPickerChange_card_color: function (e) {
@@ -242,12 +243,13 @@ Page({
         }, // HTTP 请求中其他额外的 form data
         success: function (res) {
           var retinfo = JSON.parse(res.data.trim())
-          console.log('upimg upload url:', retinfo['result']['img_url'])
+          
+          //console.log('upimg upload url:', retinfo['result']['img_url'])
           if (retinfo['status'] == "y") {
             if(is_logo==1){ //logo 处理
-              that.image_save(retinfo['result']['img_url'], 'mycardname_logo_image')
+              that.image_save(retinfo['result']['img_url'], 'card_name_logo_image')
               that.setData({
-                mycardname_logo_image: retinfo['result']['img_url'],
+                card_name_logo_image: retinfo['result']['img_url'],
               })
             }else{
               var new_image_pic = []
@@ -266,7 +268,12 @@ Page({
               }, 3000) 
               console.log('图片上传完成:', new_image_pic, image_pic)
             }
-            
+          }else{
+            wx.showToast({
+              title: '图片加载失败，请再试一次',
+              icon:none,
+              duration: 2000
+            })
           }
         },
       })
@@ -352,7 +359,7 @@ Page({
     var is_card_name_email = false
     var is_card_name_website = false
     var is_card_name_publicwechat = false
-    var is_card_name_companyaddr = false
+    var is_card_name_addr = false
     var is_card_name_logo_image = false
     var is_card_name_qrcode = false
     if (template_config){
@@ -371,14 +378,14 @@ Page({
         } else if (template_config[i]['typeId'] == 'card_name_publicwechat') {
           is_card_name_publicwechat = true
         } else if (template_config[i]['typeId'] == 'card_addr') {
-          is_card_name_companyaddr = true
+          is_card_name_addr = true
         } else if (template_config[i]['typeId'] == 'card_logo') {
           is_card_name_logo_image = true
         } else if (template_config[i]['typeId'] == 'card_qrcode') {
           is_card_name_qrcode = true
         }
       }
-      console.log('detail swiperchange_cardname template_config:', template_config.length, is_card_name_name, is_card_name_title, is_card_name_logo_image)
+     // console.log('detail swiperchange_cardname template_config:', template_config.length, is_card_name_name, is_card_name_title, is_card_name_logo_image)
       that.setData({
         is_card_name_name: is_card_name_name,
         is_card_name_title: is_card_name_title,
@@ -386,12 +393,76 @@ Page({
         is_card_name_email: is_card_name_email,
         is_card_name_website: is_card_name_website,
         is_card_name_publicwechat: is_card_name_publicwechat,
-        is_card_name_companyaddr: is_card_name_companyaddr,
+        is_card_name_addr: is_card_name_addr,
         is_card_name_logo_image: is_card_name_logo_image,
         is_card_name_qrcode: is_card_name_qrcode,
       })
     }
   },
+  card_name_nameTapTag: function (e) {
+    var that = this
+    var card_name_name = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_name: card_name_name
+    })
+  },
+  card_name_titleTapTag: function (e) {
+    var that = this
+    var card_name_title = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_title: card_name_title
+    })
+  },
+  card_name_phoneTapTag: function (e) {
+    var that = this
+    var card_name_phone = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_phone: card_name_phone
+    })
+  },
+  card_name_phoneTapTag: function (e) {
+    var that = this
+    var card_name_phone = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_phone: card_name_phone
+    })
+  },
+  card_name_emailTapTag: function (e) {
+    var that = this
+    var card_name_email = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_email: card_name_email
+    })
+  },
+  card_name_websiteTapTag: function (e) {
+    var that = this
+    var card_name_website = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_website: card_name_website
+    })
+  },
+  card_name_publicwechatTapTag: function (e) {
+    var that = this
+    var card_name_publicwechat = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_publicwechat: card_name_publicwechat
+    })
+  },
+  card_name_addrTapTag: function (e) {
+    var that = this
+    var card_name_addr = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_addr: card_name_addr
+    })
+  },
+
+  cardnameNoteTextAreaBlur: function (e) {
+    var that = this
+    var card_name_note = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_name_note: card_name_note,
+    })
+  }, 
   bindCardTextAreaBlur: function (e) {
     var that = this
     var card_blessing = util.filterEmoji(e.detail.value)
@@ -466,36 +537,55 @@ Page({
     })
   },  
   //确定按钮点击事件 
-  confirmcardregister: function () {
+  confirmcardinput: function () {
     var that = this
-    var card_register_info = [
-      {
-        card_color: that.data.current_card_color,
-        card_register_title: that.data.card_register_title,
-        card_register_content: that.data.card_register_content,
-        image: that.data.card_register_img,
-        register_start_date: that.data.register_start_date,
-        register_end_date: that.data.register_end_date,
-        register_end_date: that.data.register_end_date,
-        register_start_time: that.data.register_start_time,
-        register_end_time: that.data.register_end_time,
-        action_start_date: that.data.action_start_date,
-        action_end_date: that.data.action_end_date,
-        action_start_time: that.data.action_start_time,
-        action_end_time: that.data.action_end_time,
-        card_register_lim: that.data.card_register_lim,
-        card_register_fee: that.data.card_register_fee,
-        card_register_addr: that.data.card_register_addr,
-        card_register_ownername: that.data.card_register_ownername,
-        card_register_ownerwechat: that.data.card_register_ownerwechat,
-        card_register_right_index: that.data.card_register_right_index,
-        card_register_reqid_index: that.data.card_register_reqid_index,
-      }
-    ]
-    wx.setStorageSync('card_register_info',JSON.stringify(card_register_info[0]))
-    console.log('card_register_info:', wx.getStorageSync('card_register_info'))
+    var card_type = that.data.card_type
+    if(card_type==1){
+      var card_register_info = [
+        {
+          card_color: that.data.current_card_color,
+          card_register_title: that.data.card_register_title,
+          card_register_content: that.data.card_register_content,
+          image: that.data.card_register_img,
+          register_start_date: that.data.register_start_date,
+          register_end_date: that.data.register_end_date,
+          register_end_date: that.data.register_end_date,
+          register_start_time: that.data.register_start_time,
+          register_end_time: that.data.register_end_time,
+          action_start_date: that.data.action_start_date,
+          action_end_date: that.data.action_end_date,
+          action_start_time: that.data.action_start_time,
+          action_end_time: that.data.action_end_time,
+          card_register_lim: that.data.card_register_lim,
+          card_register_fee: that.data.card_register_fee,
+          card_register_addr: that.data.card_register_addr,
+          card_register_ownername: that.data.card_register_ownername,
+          card_register_ownerwechat: that.data.card_register_ownerwechat,
+          card_register_right_index: that.data.card_register_right_index,
+          card_register_reqid_index: that.data.card_register_reqid_index,
+        }
+      ]
+      wx.setStorageSync('card_register_info', JSON.stringify(card_register_info[0]))
+      console.log('card_register_info:', wx.getStorageSync('card_register_info'))
+      
+    }else if(card_type==2){
+      var card_name_info = [
+        {
+          card_name_name: that.data.card_name_name,
+          card_name_title: that.data.card_name_title,
+          card_name_phone: that.data.card_name_phone,
+          card_name_email: that.data.card_name_email,
+          card_name_website: that.data.card_name_website,
+          card_name_publicwechat: that.data.card_name_publicwechat,
+          card_name_addr: that.data.card_name_addr,
+          card_name_logo_image: that.data.card_name_logo_image,
+          card_name_note: that.data.card_name_note,
+        }
+      ]
+      wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
+      console.log('card_name_info:', wx.getStorageSync('card_name_info'))
+    }
     that.setData({
-      //cardregisterhidden: !that.data.cardregisterhidden,
       inputShowed:true,
       goodsmodel_count: 0,
     })
@@ -805,6 +895,7 @@ Page({
     that.setData({
       cardnamehidden: !that.data.cardnamehidden,
     })
+    that.confirmcardinput()
   },
   //取消按钮点击事件  
   shareCandelCardName: function () {
@@ -994,6 +1085,15 @@ Page({
         var card_register_ownername = ''
         var card_register_ownerwechat = ''
         var card_content = ''
+        var card_name_name = ''
+        var card_name_title = ''
+        var card_name_phone = ''
+        var card_name_email = ''
+        var card_name_website = ''
+        var card_name_publicwechat = ''
+        var card_name_addr = ''
+        var card_name_note = ''
+        var card_name_logo_image = ''
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -1014,7 +1114,8 @@ Page({
         var image_pic = []
         var card_image_height = that.data.card_image_height ? that.data.card_image_height:'750'
         var card_register_prev = wx.getStorageSync('card_register_info')
-    console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_register_info:', card_register_prev)
+        var card_name_prev = wx.getStorageSync('card_name_info')
+   
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']
@@ -1027,7 +1128,19 @@ Page({
           card_register_ownername = card_register_info['card_register_ownername']
           card_register_ownerwechat = card_register_info['card_register_ownerwechat']
         }
-       
+        if (card_name_prev) {
+          var card_name_info = JSON.parse(card_name_prev)
+          card_name_name = card_name_info['card_name_name']
+          card_name_title = card_name_info['card_name_title']
+          card_name_phone = card_name_info['card_name_phone']
+          card_name_email = card_name_info['card_name_email']
+          card_name_website = card_name_info['card_name_website']
+          card_name_publicwechat = card_name_info['card_name_publicwechat']
+          card_name_addr = card_name_info['card_name_addr']
+          card_name_note = card_name_info['card_name_note'],
+          card_name_logo_image = card_name_info['card_name_logo_image']
+        }
+        console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_name_prev:', card_name_prev)
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
@@ -1045,6 +1158,15 @@ Page({
           card_register_ownerwechat: card_register_ownerwechat ? card_register_ownerwechat : '',
           card_content: card_content,
           card_image_height: card_image_height,
+          card_name_name: card_name_name ? card_name_name:'',
+          card_name_title: card_name_title ? card_name_title:'',
+          card_name_phone: card_name_phone ? card_name_phone:'',
+          card_name_email: card_name_email ? card_name_email:'',
+          card_name_website: card_name_website ? card_name_website:'',
+          card_name_publicwechat: card_name_publicwechat ? card_name_publicwechat:'',
+          card_name_addr: card_name_addr ? card_name_addr:'',
+          card_name_note: card_name_note ? card_name_note:'',
+          card_name_logo_image: card_name_logo_image ? card_name_logo_image:'',
         })
         if(scene){
           if (scene.indexOf("goodsid=") >= 0) {
@@ -1055,7 +1177,6 @@ Page({
             //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
             var scene_mid = scene.match(midReg) ? scene.match(midReg)[0]: 0
             refer_mid = scene_mid?scene_mid.substring(5, scene_mid.length):refer_mid
-            //console.log('scene_goodsid:', scene_goodsid, 'mid:', scene_mid, ' goodsid:', goodsid, 'refer_id:', refer_mid)//输出  
           }
         }
         if (image){
@@ -1383,17 +1504,8 @@ Page({
         var card_register_title = that.data.card_register_title
         var card_register_content = that.data.card_register_content
         var card_register_addr = that.data.card_register_addr
+        
         console.log('detail goodsmodel is_buymyself:', is_buymyself, 'goodsshape:', goodsshape)
-        if (goodsshape == 4 && card_type==1 ){
-          if (card_register_content == '' || card_register_addr==''){
-            wx.showToast({
-              title: "信息不全,请补齐说明和活动地址",
-              icon: 'none',
-              duration: 1500,
-            })
-            return
-          }
-        }
         if (attrValueList.length > 0) {
           that.setData({
             modalHidden: !modalHidden,
@@ -1443,7 +1555,6 @@ Page({
           }
         }, 500)
       }
-      
   },
   wishCart: function () {
       var that = this
@@ -1474,7 +1585,7 @@ Page({
         goodsmodel_count:0,
       })
       if (goodsshape==4) {
-        that.confirmcardregister()
+        that.confirmcardinput()
       }else{
         that.goodsmodel()
       }

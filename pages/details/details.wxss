@@ -638,8 +638,8 @@ border: none;
   margin: 0 0 20rpx 10rpx;
   padding: 15rpx;
   font-size: 24rpx;
-  color: #999;
-  background: #F3F3F3;
+  color: #666;
+  background: #fff;
   border-radius: 14rpx;
 }
 .card-name-info text {
@@ -651,6 +651,18 @@ border: none;
   font-size: 24rpx;
   color: #999;
   border-radius: 14rpx;
+}
+.card-name-info textarea {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
+  width:500rpx;
+  height:200rpx;
+  background: #fff;
+  padding: 10rpx;
 }
 .card-name-info image {
   width: 100rpx;
@@ -844,7 +856,7 @@ border: none;
   padding: 15rpx;
   font-size: 24rpx;
   color: #999;
-  background: #F3F3F3;
+  background: #fff;
   border-radius: 14rpx;
 }
 .card-register-note textarea {
@@ -854,7 +866,7 @@ border: none;
   padding: 15rpx;
   font-size: 24rpx;
   color: #999;
-  background: #F3F3F3;
+  background: #fff;
   border-radius: 14rpx;
 }
 
@@ -866,7 +878,7 @@ border: none;
   padding: 15rpx;
   font-size: 24rpx;
   color: #999;
-  background: #F3F3F3;
+  background: #fff;
   border-radius: 14rpx;
 }
 .picker-box{

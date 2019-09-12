@@ -212,31 +212,27 @@
 <action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
       <view class='modaltitletext'>
       <text>{{attrValueList.length>0?'':add_cart_title}}</text>
-      <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-return' bindtap="modalBindcancel">×</view>
-      
+      <view class='buy-return' bindtap="modalBindcancel">×</view>
       </view>
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
         <view style="max-height:{{dkheight-30}}px">
           <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
             <view class="sku_title">选择{{attrValueObj.name}}</view>
-
-<view class="attr_value_box">
-            <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
+            <view class="attr_value_box">
+              <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
             data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >
-            
-              <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}"></image>
-              <text wx:elif="{{attrValueObj.type == 1}}">{{attrValueObj.value[valueIndex]}}</text>
-              <text>{{attrValueObj.note[valueIndex]}}</text>
+                <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}"></image>
+                <text wx:elif="{{attrValueObj.type == 1}}">{{attrValueObj.value[valueIndex]}}</text>
+                <text>{{attrValueObj.note[valueIndex]}}</text>
+              </view>
             </view>
-</view>
-
           </view>
         </view>
       </view> 
       <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
       <view class="buy-info">
-        <text style="margin-left:20rpx;">单价: </text>
+        <text style="margin-left:20rpx;">{{sku_sell_price>0?'单价:':''}} </text>
         <view class="price-now">
           <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
           <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
@@ -304,27 +300,30 @@
 </modal>
 </view>
 <view hidden="{{cardnamehidden}}" style='z-index:999;'>
-<modal title="名片内容" hidden="{{cardnamehidden}}" bindconfirm="shareConfirmCardName" bindcancel="shareCandelCardName" confirm-text="确定" cancel-text="返回">
-    <view style="height:{{dkheight-130}}px;">
+<modal title="{{card_name_modal_title}}" hidden="{{cardnamehidden}}" bindconfirm="shareConfirmCardName" bindcancel="shareCandelCardName" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-100}}px;">
     <!-- name card -->
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_name}}" style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_name_name}}" placeholder="姓名"  bindinput='card_name_nameTapTag' focus="{{inputShowed}}"  maxlength='20' />
+        <input hidden="{{!is_card_name_name}}" style='font-size:35rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_name_name}}" placeholder="姓名"  bindinput='card_name_nameTapTag' focus="{{inputShowed}}"  maxlength='20' />
         <input hidden="{{!is_card_name_title}}" style='font-size:35rpx;' bindinput="card_name_titleTapTag" value="{{card_name_title}}" placeholder="职务/称谓" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="30" />
       </view>
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_phone}}" style='font-size:35rpx;' value="{{card_name_phone}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="手机号"  bindinput='card_name_phoneTapTag' focus="{{inputShowed2}}" maxlength='30' />
+        <input hidden="{{!is_card_name_phone}}" style='font-size:35rpx;' value="{{card_name_phone}}" placeholder-style="text-align:center;color:#e2e2e2;" type="number" placeholder="手机号"  bindinput='card_name_phoneTapTag' focus="{{inputShowed2}}" maxlength='30' />
         <input hidden="{{!is_card_name_email}}" style='font-size:35rpx;' value="{{card_name_email}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="电子邮箱" bindinput='card_name_emailTapTag' focus="{{inputShowed4}}" maxlength='30' />
       </view>
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_website}}" style='font-size:35rpx;' value="{{card_name_website}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="公司网址" bindinput='card_name_websiteTapTag' focus="{{inputShowed4}}" maxlength='30' />
+        <input hidden="{{!is_card_name_website}}" style='font-size:35rpx;' value="{{card_name_website}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="网址" bindinput='card_name_websiteTapTag' focus="{{inputShowed4}}" maxlength='30' />
         <input hidden="{{!is_card_name_publicwechat}}"  style='font-size:35rpx;' value="{{card_name_publicwechat}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="微信公众号" bindinput='ccard_name_publicwechatTapTag' focus="{{inputShowed4}}" maxlength='30' />
       </view>
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_companyaddr}}" style='font-size:35rpx;' value="{{card_name_companyaddr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="公司地址" bindinput='card_name_companyaddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
+        <input hidden="{{!is_card_name_addr}}" style='font-size:25rpx;' value="{{card_name_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='card_name_addrTapTag' focus="{{inputShowed4}}" maxlength='80' />
       </view>
       <view hidden="{{!is_card_name_logo_image}}" class="card-name-info" data-logo='1' bindtap="upimg">
-        <image src="{{mycardname_logo_image}}"></image>
-        <text style='font-size:35rpx;height:100rpx;line-height:100rpx;'>公司LOGO</text>
+        <image src="{{card_name_logo_image}}"></image>
+        <text style='font-size:35rpx;height:100rpx;line-height:100rpx;'>我的LOGO</text>
+      </view>
+      <view class="card-name-info">
+       <textarea style='font-size:28rpx;' bindblur="cardnameNoteTextAreaBlur" value="{{card_name_note}}" placeholder="请输入说明(限80个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="80" />
       </view>
     </view>
 </modal>
