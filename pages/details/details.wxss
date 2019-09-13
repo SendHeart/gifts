@@ -652,7 +652,7 @@ border: none;
   border-radius: 14rpx;
 }
 .card-name-info text {
-  width: 100%;
+  width: 70%;
   height: 40rpx;
   line-height: 40rpx;
   margin: 0 0 20rpx 10rpx;

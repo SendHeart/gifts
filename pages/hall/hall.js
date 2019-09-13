@@ -142,7 +142,7 @@ Page({
     //将当前坐标进行保存以进行下一次计算
     this.data.lastX = currentX
     this.data.lastY = currentY
-    console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
   },
   handletouchtart: function (event) {
     // console.log(event)
