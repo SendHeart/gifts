@@ -364,6 +364,7 @@ Page({
     var is_card_name_company = false
     var is_card_name_logo_image = false
     var is_card_name_qrcode = false
+    console.log('detail swiperchange_cardname template_config:', template_config)
     if (template_config){
       for (var i = 0; i < template_config.length;i++){
         //console.log('detail swiperchange_cardname template_config i:', template_config[i])
@@ -391,7 +392,7 @@ Page({
           is_card_name_qrcode = true
         }
       }
-      console.log('detail swiperchange_cardname template_config:', template_config, is_card_name_name, is_card_name_qrcode, is_card_name_logo_image)
+   
       that.setData({
         is_card_name_name: is_card_name_name,
         is_card_name_title: is_card_name_title,
@@ -1195,6 +1196,7 @@ Page({
           card_name_note: card_name_note ? card_name_note:'',
           card_name_logo_image: card_name_logo_image ? card_name_logo_image:'',
         })
+        
         if(scene){
           if (scene.indexOf("goodsid=") >= 0) {
             var goodsidReg = new RegExp(/(?=goodsid=).*?(?=\&)/)
@@ -1365,8 +1367,8 @@ Page({
             'Accept': 'application/json'
           },
           success: function (res) {
-           // console.log('get_goodsdesc_list:', res.data.result)
             var goodsPicsInfo = res.data.result
+            console.log('get_goodsdesc_list goodsPicsInfo:', goodsPicsInfo, ' template id:', goodsPicsInfo.image[0]['template_id'])
             var k = image?1:0
             for (var i = k; i < goodsPicsInfo.image.length;i++){
               if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
@@ -1379,21 +1381,22 @@ Page({
                 image_pic.push(goodsPicsInfo.image[i])
               }
             }
-            if (that.data.card_type > 0) {  //互动卡需要获取 图片模板信息
-              image_pic[0]['template_config'] = goodsPicsInfo.image[0]['template_config']
-              that.swiperchange_cardname(0)
-            }
+            image_pic[0]['template_config'] = goodsPicsInfo.image[0]['template_config']
+          
             that.setData({
               goodsPicsInfo: res.data.result,
               image_video: image_video,
               image_pic: image_pic,
               image_share: goodsPicsInfo.share_image
             })
+            if (goodsPicsInfo.image[0]['template_id'] != 0) {  //互动卡需要获取 图片模板信息
+              that.swiperchange_cardname(0)
+            }
             if (!share_goods_image) {
               that.image_save(image_pic[0]['url'], 'goods_image_cache_' + goodsid)
              // console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
             } 
-            console.log('get_goodsdesc_list image_share:', that.data.image_share, ' image_pic:', image_pic)
+            //console.log('get_goodsdesc_list image_share:', that.data.image_share, ' image_pic:', image_pic)
             that.showGoodsinfo()
           }
          
