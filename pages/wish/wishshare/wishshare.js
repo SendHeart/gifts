@@ -1034,14 +1034,17 @@ Page({
           view_item['type'] = 'image'
           if (card_name_template[i]['typeId'] == 'card_logo') {
             view_item['url'] = card_name_info['card_name_logo_image'] ? card_name_info['card_name_logo_image'] : ''
+            
           } else if (card_name_template[i]['typeId'] == 'card_qrcode') {
             view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
+            view_item['borderRadius'] = card_name_template[i]['width'] * views_width / 2
           }
-          view_item['borderRadius'] = card_name_template[i]['width'] * views_width/2
+          
         }else{
           view_item['type'] = 'text'
           if (card_name_template[i]['typeId']=='card_name'){
             view_item['content'] = card_name_info['card_name_name'] ? card_name_info['card_name_name'] : ''
+            view_item['left'] = view_item['left']  + 5
           } else if (card_name_template[i]['typeId'] == 'card_title'){
             view_item['content'] = card_name_info['card_name_title'] ? card_name_info['card_name_title'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_phone') {
@@ -1062,7 +1065,6 @@ Page({
           view_item['fontSize'] = card_name_template[i]['styleSheet']['fontSize']
           view_item['color'] = card_name_template[i]['color'] ? card_name_template[i]['color'] : '#333'
           view_item['textAlign'] = 'left'
-         
           view_item['lineHeight'] = card_name_template[i]['height'] * views_height
           view_item['breakWord'] = false
         }
