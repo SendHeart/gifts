@@ -152,6 +152,7 @@ Page({
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     var card_register_info = options.card_register_info? JSON.parse(options.card_register_info):'' //
     var card_name_info = options.card_name_info ? JSON.parse(options.card_name_info) : '' //
+    var card_name_template = options.card_name_template ? JSON.parse(options.card_name_template) : '' //
     payamount = (amount - discountpay).toFixed(2)
 
     that.setData({
@@ -172,8 +173,9 @@ Page({
       order_color:order_color,
       card_register_info: card_register_info,
       card_name_info: card_name_info,
+      card_name_template: card_name_template,
 		})
-    console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape, 'card_register_info:', card_register_info, ' card_name_info:', card_name_info)
+    console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape, 'card_name_template:', card_name_template, ' card_name_info:', card_name_info)
 	},
 
   confirmOrder: function () {
@@ -217,8 +219,9 @@ Page({
     var order_num = that.data.order_num
     var card_register_info = JSON.stringify(that.data.card_register_info)
     var card_name_info = JSON.stringify(that.data.card_name_info)
+    var card_name_template = JSON.stringify(that.data.card_name_template)
     if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
-    //console.log('选中 优惠券 类型:', selected_coupon_type, 'coupon_id:', selected_coupon_id, ' 红包 red coupon_type:', selected_coupon_red_type, ' red coupon_id:', selected_coupon_red_id, ' order_image:', order_image, 'order_shape:', order_shape, 'card_register_info:', card_register_info, ' card_name_info:', card_name_info)
+    console.log('order_image:', order_image, 'order_shape:', order_shape, 'card_name_template:', card_name_template, ' card_name_info:', card_name_info)
     wx.request({
       url: weburl + '/api/client/add_order',
       method: 'POST',
@@ -237,6 +240,7 @@ Page({
         order_color: order_color,
         card_register_info: card_register_info,
         card_name_info: card_name_info,
+        card_name_template: card_name_template,
         coupon_id: selectedAllStatus?selected_coupon_id:0,
         coupon_type: selectedAllStatus?selected_coupon_type:0,
         coupon_amount: selectedAllStatus ? selected_coupon_amount:0,

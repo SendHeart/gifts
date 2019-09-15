@@ -125,7 +125,7 @@ picker {
 .gifts-image {
   margin: 10rpx;
   width: 450rpx;
-  height: 250rpx;
+  height: 270rpx;
 }
 .morebtn {
   margin: 20rpx auto;
@@ -219,7 +219,7 @@ picker {
 .carts-sku {
 font-size:24rpx;
 color:#999;
-height:90rpx;
+height:110rpx;
  
 }
 .carts-sku text{

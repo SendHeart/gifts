@@ -379,7 +379,7 @@ Page({
           is_card_name_email = true
         } else if (template_config[i]['typeId'] == 'card_weburl') {
           is_card_name_website = true
-        } else if (template_config[i]['typeId'] == 'card_name_publicwechat') {
+        } else if (template_config[i]['typeId'] == 'card_publicwechat') {
           is_card_name_publicwechat = true
         } else if (template_config[i]['typeId'] == 'card_addr') {
           is_card_name_addr = true
@@ -1532,7 +1532,7 @@ Page({
         var card_register_content = that.data.card_register_content
         var card_register_addr = that.data.card_register_addr
         
-        console.log('detail goodsmodel is_buymyself:', is_buymyself, 'goodsshape:', goodsshape)
+        console.log('detail goodsmodel is_buymyself:', is_buymyself, 'goodsshape:', goodsshape, ' card_type:', card_type)
         if (attrValueList.length > 0) {
           that.setData({
             modalHidden: !modalHidden,
@@ -1545,15 +1545,26 @@ Page({
           console.log('挑选 sku_id:' + that.data.commodityAttr[0].id, 'modalHidden:', that.data.modalHidden)
         } else {
           console.log('送礼 sku_id:' + that.data.commodityAttr[0].id, 'attrValueList:', attrValueList)
-          that.setData({
-            modalHidden: !modalHidden,
-            sku_sell_price: sku_sell_price,
-            sku_delivery_price: sku_delivery_price,
-            add_cart_title: that.data.goodsname,
-            sku_id: sku_id,
-            wishflag: 0,
-          })
-          //that.addCart()
+          if (card_type > 0) {
+            that.setData({
+              sku_sell_price: sku_sell_price,
+              sku_delivery_price: sku_delivery_price,
+              add_cart_title: that.data.goodsname,
+              sku_id: sku_id,
+              wishflag: 0,
+            })
+            that.addCart()
+          }else{
+            that.setData({
+              modalHidden: !modalHidden,
+              sku_sell_price: sku_sell_price,
+              sku_delivery_price: sku_delivery_price,
+              add_cart_title: that.data.goodsname,
+              sku_id: sku_id,
+              wishflag: 0,
+            })
+          }
+         
         }
 
       }else{
@@ -1814,7 +1825,7 @@ Page({
               var card_name_info = wx.getStorageSync('card_name_info')  //从缓存中读取
               console.log('detail checkout 名片互动卡  order_image:', share_goods_image, 'card_name_info', card_name_info)
               wx.navigateTo({
-                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&username=' + username + '&token=' + token
+                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&card_name_template=' + JSON.stringify(share_goods_template) +'&username=' + username + '&token=' + token
               })
             }
            

@@ -356,14 +356,14 @@ Page({
     var that = this
     var share_order_id = options.share_order_id ? options.share_order_id : 0
     var share_order_shape = options.share_order_shape ? options.share_order_shape : 1
-    var card_type = options.card_type ? options.card_type:0
+    //var card_type = options.card_type ? options.card_type:0
     that.get_project_gift_para()
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         avatarUrl: userInfo.avatarUrl,
         nickname: userInfo.nickName,
-        card_type: card_type,
+        //card_type: card_type,
       })
       console.log('wishshare onShow get userInfo：', userInfo)
     })
@@ -385,7 +385,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log(' wishshare onload() 订单查询:', res.data.result)
+          //console.log(' wishshare onload() 订单查询:', res.data.result)
           var orderObjects = res.data.result
           // 存储地址字段
           for (var i = 0; i < orderObjects.length; i++) {
@@ -402,11 +402,10 @@ Page({
           }
         
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']) {
-            console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
+            //console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
-            card_type = m_desc['card_type'] ? m_desc['card_type'] : card_type
+            //card_type = m_desc['card_type'] ? m_desc['card_type'] : card_type
             var voice_url = m_desc['voice']
-           
             if (voice_url) {
               wx.downloadFile({
                 url: voice_url, //音频文件url                  
@@ -424,8 +423,10 @@ Page({
             //var card_register_info = m_desc['card_register_info']
             that.setData({
               card_register_info: m_desc['card_register_info'] ? m_desc['card_register_info']:'',
+              card_name_info: m_desc['card_name_info'] ? m_desc['card_name_info'] : '',
+              card_name_template: m_desc['card_name_template'] ? m_desc['card_name_template'] : '',
               card_color: m_desc['color'] ? m_desc['color']:'#333',
-              card_type: card_type,
+              //card_type: card_type,
             })
           }
         }
@@ -646,7 +647,7 @@ Page({
     var activity_image = that.data.activity_image ? that.data.activity_image : that.data.activity_share_image
     var activity_name = that.data.activity_name
     var share_activity_title = that.data.share_activity_title
-    //console.log('wishshare eventDraw activity_image:', activity_image, 'activity_name:', activity_name)
+   
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
     var share_goods_bg = that.data.share_goods_bg
     var share_goods_name = that.data.share_goods_name ? that.data.share_goods_name : ''
@@ -668,7 +669,9 @@ Page({
     var share_order_shape = that.data.share_order_shape
     var share_order_bg = that.data.share_order_bg
     var card_register_info = that.data.card_register_info //shape:4 互动卡 
-    var card_type = that.data.card_type ? that.data.card_type:0
+    var card_name_info = that.data.card_name_info //shape:4 互动卡 名片内容
+    var card_name_template = that.data.card_name_template //shape:4 互动卡 名片模板
+    //var card_type = that.data.card_type ? that.data.card_type:0
     var card_color = that.data.card_color //贺卡请柬文字颜色
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id
@@ -676,6 +679,7 @@ Page({
       title: '生成中',
       //mask: true
     })
+    console.log('wishshare eventDraw share_order_shape:', share_order_shape, 'card_name_template:', card_name_template)
     
     if (activity_id>0){
       console.log('activity_id:', activity_id)
@@ -739,7 +743,7 @@ Page({
           ]
         }
       })
-    } else if (share_goods_id > 0 && card_type ==0) {
+    } else if (share_goods_id > 0) {
       console.log('share_goods_id:', share_goods_id)
       that.setData({
         painting: {
@@ -872,10 +876,10 @@ Page({
           ]
         }
       })
-    } else if (share_order_shape == 4 && card_type==1) { //互动卡 报名卡
+    } else if (share_order_shape == 4 && card_register_info && share_goods_id == 0) { //互动卡
       console.log('share_order_shape:', share_order_shape)
       var card_addr = card_register_info['card_register_addr'] ?'地址:' + card_register_info['card_register_addr']: ''
-      var start_time = card_register_info['register_start_date'] ? '时间:' + card_register_info['register_start_date']+' ' : '' 
+      var start_time = card_register_info['register_start_date'] ? '时间:' + card_register_info['register_start_date']+' ' : 
       start_time += card_register_info['register_start_time'] ? card_register_info['register_start_time'] : ''
       var end_time = card_register_info['register_end_date'] ? '~~' + card_register_info['register_end_date']+' ' : ''   
       end_time += card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
@@ -1004,6 +1008,77 @@ Page({
               borderRadius: 40,
             }
           ]
+        }
+      })  
+    } else if (share_order_shape == 4 && card_name_info && share_goods_id == 0) { //互动卡 名片
+  
+      var views_width = that.data.windowWidth
+      var views_height = 200 
+      var views = [
+        {
+          type: 'image',
+          url: share_order_bg,
+          top: 0,
+          left: 0,
+          width: views_width,
+          height: views_height,
+        }
+      ]
+      for (var i = 0; i < card_name_template.length;i++){
+        var view_item ={}
+        view_item['top'] = card_name_template[i]['y'] * views_height
+        view_item['left'] = card_name_template[i]['x'] * views_width
+        view_item['width'] = card_name_template[i]['width'] * views_width
+        view_item['height'] = card_name_template[i]['height'] * views_height
+        if (card_name_template[i]['viewType']==1){
+          view_item['type'] = 'image'
+          if (card_name_template[i]['typeId'] == 'card_logo') {
+            view_item['url'] = card_name_info['card_name_logo_image'] ? card_name_info['card_name_logo_image'] : ''
+          } else if (card_name_template[i]['typeId'] == 'card_qrcode') {
+            view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
+          }
+          view_item['borderRadius'] = card_name_template[i]['width'] * views_width/2
+        }else{
+          view_item['type'] = 'text'
+          if (card_name_template[i]['typeId']=='card_name'){
+            view_item['content'] = card_name_info['card_name_name'] ? card_name_info['card_name_name'] : ''
+          } else if (card_name_template[i]['typeId'] == 'card_title'){
+            view_item['content'] = card_name_info['card_name_title'] ? card_name_info['card_name_title'] : ''
+          } else if (card_name_template[i]['typeId'] == 'card_phone') {
+            view_item['content'] = card_name_info['card_name_phone'] ? card_name_info['card_name_phone'] : '' 
+          } else if (card_name_template[i]['typeId'] == 'card_tel') {
+            view_item['content'] = card_name_info['card_name_tel'] ? card_name_info['card_name_tel'] : '' 
+          } else if (card_name_template[i]['typeId'] == 'card_email') {
+            view_item['content'] = card_name_info['card_name_email'] ? card_name_info['card_name_email'] : '' 
+          } else if (card_name_template[i]['typeId'] == 'card_weburl') {
+            view_item['content'] = card_name_info['card_name_website'] ? card_name_info['card_name_website'] : '' 
+          } else if (card_name_template[i]['typeId'] == 'card_publicwechat') {
+            view_item['content'] = card_name_info['card_name_publicwechat'] ? card_name_info['card_name_publicwechat'] : '' 
+          } else if (card_name_template[i]['typeId'] == 'card_companyname') {
+            view_item['content'] = card_name_info['card_name_company'] ? card_name_info['card_name_company'] : ''
+          } else if (card_name_template[i]['typeId'] == 'card_addr') {
+            view_item['content'] = card_name_info['card_name_addr'] ? card_name_info['card_name_addr'] : '' 
+          }
+          view_item['fontSize'] = card_name_template[i]['styleSheet']['fontSize']
+          view_item['color'] = card_name_template[i]['color'] ? card_name_template[i]['color'] : '#333'
+          view_item['textAlign'] = 'left'
+         
+          view_item['lineHeight'] = card_name_template[i]['height'] * views_height
+          view_item['breakWord'] = false
+        }
+       
+        views = views.concat(view_item)
+      }
+      console.log('share_order_shape:', share_order_shape, ' views:', views, 'card_name_template:', card_name_template)
+      that.setData({
+        painting: {
+          width: views_width,
+          height: views_height,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
+          clear: true,
+          background: 'white',
+          views: views
         }
       })  
     } else if (share_order_shape == 5) { //贺卡请柬
