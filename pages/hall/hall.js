@@ -634,7 +634,7 @@ Page({
       is_buymyself: is_buymyself,
     })
    
-    console.log('hall bindCheckout cartIds:', cartIds, 'cartselected:', cartselected)
+    console.log('hall bindCheckout cartIds:', cartIds, 'cartselected:', JSON.stringify(cartselected))
     wx.navigateTo({
       url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&is_buymyself='+is_buymyself +'&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
     });
@@ -656,23 +656,24 @@ Page({
       })
     }
     that.bindCheckout()
-    that.submintFromId(formId)
+    that.submintFromId(formId, form_name)
   },
  
   //提交formId，让服务器保存到数据库里
-  submintFromId: function (formId) {
+  submintFromId: function (formId = 0, form_name='') {
     var that = this
     var shop_type=that.data.shop_type
-    var formid = that.data.formid
+   // var formid = formId?formId:that.data.formid
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1' 
+    console.log('submintFromId() formID：', formId, ' form name:', form_name)
     wx.request({
       url: weburl + '/api/client/save_member_formid',
       method: 'POST',
       data: {
         username: username,
         access_token: token,
-        formid: formid,
+        formId: formId,
         shop_type: shop_type,
       },
       header: {

@@ -356,6 +356,7 @@ Page({
     var is_card_name_name = false
     var is_card_name_title = false
     var is_card_name_phone = false
+    var is_card_name_tel = false
     var is_card_name_email = false
     var is_card_name_website = false
     var is_card_name_publicwechat = false
@@ -372,6 +373,8 @@ Page({
           is_card_name_title = true
         } else if (template_config[i]['typeId'] == 'card_phone') {
           is_card_name_phone = true
+        } else if (template_config[i]['typeId'] == 'card_tel') {
+          is_card_name_tel = true
         } else if (template_config[i]['typeId'] == 'card_email') {
           is_card_name_email = true
         } else if (template_config[i]['typeId'] == 'card_weburl') {
@@ -388,11 +391,12 @@ Page({
           is_card_name_qrcode = true
         }
       }
-      console.log('detail swiperchange_cardname template_config:', template_config, is_card_name_name, is_card_name_company, is_card_name_company)
+      console.log('detail swiperchange_cardname template_config:', template_config, is_card_name_name, is_card_name_qrcode, is_card_name_logo_image)
       that.setData({
         is_card_name_name: is_card_name_name,
         is_card_name_title: is_card_name_title,
         is_card_name_phone: is_card_name_phone,
+        is_card_name_tel: is_card_name_tel,
         is_card_name_email: is_card_name_email,
         is_card_name_website: is_card_name_website,
         is_card_name_publicwechat: is_card_name_publicwechat,
@@ -424,11 +428,11 @@ Page({
       card_name_phone: card_name_phone
     })
   },
-  card_name_phoneTapTag: function (e) {
+  card_name_telTapTag: function (e) {
     var that = this
-    var card_name_phone = util.filterEmoji(e.detail.value)
+    var card_name_tel = util.filterEmoji(e.detail.value)
     that.setData({
-      card_name_phone: card_name_phone
+      card_name_tel: card_name_tel
     })
   },
   card_name_emailTapTag: function (e) {
@@ -585,6 +589,7 @@ Page({
           card_name_name: that.data.card_name_name,
           card_name_title: that.data.card_name_title,
           card_name_phone: that.data.card_name_phone,
+          card_name_tel: that.data.card_name_tel,
           card_name_email: that.data.card_name_email,
           card_name_website: that.data.card_name_website,
           card_name_publicwechat: that.data.card_name_publicwechat,
@@ -1104,6 +1109,7 @@ Page({
         var card_name_name = ''
         var card_name_title = ''
         var card_name_phone = ''
+        var card_name_tel = ''
         var card_name_email = ''
         var card_name_website = ''
         var card_name_publicwechat = ''
@@ -1150,6 +1156,7 @@ Page({
           card_name_name = card_name_info['card_name_name']
           card_name_title = card_name_info['card_name_title']
           card_name_phone = card_name_info['card_name_phone']
+          card_name_tel = card_name_info['card_name_tel']
           card_name_email = card_name_info['card_name_email']
           card_name_website = card_name_info['card_name_website']
           card_name_publicwechat = card_name_info['card_name_publicwechat']
@@ -1179,6 +1186,7 @@ Page({
           card_name_name: card_name_name ? card_name_name:'',
           card_name_title: card_name_title ? card_name_title:'',
           card_name_phone: card_name_phone ? card_name_phone:'',
+          card_name_tel: card_name_tel ? card_name_tel : '',
           card_name_email: card_name_email ? card_name_email:'',
           card_name_website: card_name_website ? card_name_website:'',
           card_name_publicwechat: card_name_publicwechat ? card_name_publicwechat:'',
@@ -1232,6 +1240,8 @@ Page({
        
         that.showGoodspara()
         goodsinfo = goodsinfo == 'undefined' ? '' : goodsinfo
+        var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid + '&m_id=' + m_id
+   
         that.setData({
           goodsname: goodsname ? goodsname:'',
           goodsinfo: goodsinfo ? goodsinfo:'',
@@ -1245,9 +1255,9 @@ Page({
           marketprice: marketprice ? marketprice : '',
           goodssale: goodssale ? goodssale:0,
           m_id:m_id,
+          share_goods_qrcode: share_goods_qrcode,
         })
-    var share_goods_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_goods_id=' + goodsid + '&m_id=' + m_id
-    that.image_save(share_goods_qrcode, 'goods_qrcode_cache_'+goodsid)
+        that.image_save(share_goods_qrcode, 'goods_qrcode_cache_' + goodsid)
    // console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
   
     //console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
@@ -1431,9 +1441,7 @@ Page({
                   }
                 }
               }
-            
             }
-           
             that.setData({
               attrValueList: attrValueList
             })
@@ -1733,6 +1741,7 @@ Page({
       var is_buymyself = that.data.is_buymyself
       var cur_img_id = that.data.cur_img_id
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
+      var share_goods_template = that.data.image_pic[cur_img_id]['template_config']
       var order_voice = that.data.new_rec_url ? that.data.new_rec_url:'' //录音文件url
       var order_voicetime = that.data.recordingTimeqwe ? that.data.recordingTimeqwe : 0 //录音文件url
       var goodsshape = that.data.goodsshape
@@ -1758,7 +1767,7 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log('hall reloadData:', res.data);
+          //console.log('details queryCart:', res.data, 'cur_img_id:',cur_img_id);
           var carts = [];
           if (!res.data.result) {
             wx.showToast({
@@ -1771,15 +1780,15 @@ Page({
           var cartlist = res.data.result.list;
           var index = 0;
           for (var key in cartlist) {
+            cartlist[key]['sku_list'][0]['image'] = share_goods_image
             for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
               if (cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
-                cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image'];
+                cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image']
               } 
-              cartlist[key]['sku_list'][i]['selected'] = true;
-              cartlist[key]['sku_list'][i]['shop_id'] = key;
-              cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id'];
-             
-              carts[index] = cartlist[key]['sku_list'][i];
+              cartlist[key]['sku_list'][i]['selected'] = true
+              cartlist[key]['sku_list'][i]['shop_id'] = key
+              cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id']
+              carts[index] = cartlist[key]['sku_list'][i]
               index++;
             }
           }
@@ -1795,11 +1804,20 @@ Page({
               url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
             })
           }else{
-            var card_register_info = wx.getStorageSync('card_register_info')  //从缓存中读取
-            console.log('detail checkout 贺卡请柬互动卡  order_image:', share_goods_image, 'card_register_info',card_register_info)
-            wx.navigateTo({
-              url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&card_register_info=' + card_register_info + '&username=' + username + '&token=' + token
-            })
+            if(that.data.card_type==1){
+              var card_register_info = wx.getStorageSync('card_register_info')  //从缓存中读取
+              console.log('detail checkout 贺卡请柬互动卡  order_image:', share_goods_image, 'card_register_info', card_register_info)
+              wx.navigateTo({
+                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&card_register_info=' + card_register_info + '&username=' + username + '&token=' + token
+              })
+            } else if (that.data.card_type == 2){
+              var card_name_info = wx.getStorageSync('card_name_info')  //从缓存中读取
+              console.log('detail checkout 名片互动卡  order_image:', share_goods_image, 'card_name_info', card_name_info)
+              wx.navigateTo({
+                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&username=' + username + '&token=' + token
+              })
+            }
+           
           }
         }
       })

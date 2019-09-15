@@ -629,8 +629,16 @@ border: none;
 .card-name-view text {
   position: absolute;
   font-size:25rpx; 
-  color: #666;
+  /*
   background: #fff;
+  */
+}
+.card-name-view image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
 }
 .card-name-info {
   width: 100%;

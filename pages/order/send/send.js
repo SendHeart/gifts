@@ -130,7 +130,7 @@ Page({
 */
   remindMessage: function () {
     var that = this
-    var formID = that.data.formID
+    var formId = that.data.formID
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -150,7 +150,7 @@ Page({
         openid: openid,
         from_username: username,
         access_token: token,
-        formid: formID,
+        formId: formId,
         order_no: order_no,
         appid: app.globalData.appid,
         appsecret: app.globalData.secret,

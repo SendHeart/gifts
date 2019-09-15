@@ -160,7 +160,7 @@ picker {
 .carts-container {
   position: relative;
   width: 100%;
-  height: 190rpx;
+  height: 280rpx;
 }
 
 /*每行单元格*/
@@ -169,7 +169,7 @@ picker {
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 150rpx;
+  height: 230rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
   border-bottom: 1px solid #F2F2F2;
   padding: 20rpx 0;
@@ -195,7 +195,7 @@ picker {
   width: 80%;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 /*右上部分标题*/
@@ -214,16 +214,27 @@ picker {
 	display: flex;
 	flex-direction: row;
 	justify-content:space-between;
+  height: 60rpx;
 }
 .carts-sku {
 font-size:24rpx;
 color:#999;
-line-height: 1.5;
+height:90rpx;
+ 
 }
+.carts-sku text{
+font-size:24rpx;
+color:#999;
+height:40rpx;
+line-height: 20rpx;
+}
+
 /*价格*/
 
 .carts-price {
-  line-height: 1.5;
+  padding: 8rpx;
+  height:30rpx;
+  line-height: 30rpx;
 }
 
 .carts-gov-price {
@@ -245,6 +256,16 @@ line-height: 1.5;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+
+.order-item {
+  width: 100%;
+  position: absolute;
+  top: 281rpx;
+  left: 0;
+  background: #fff;
+  z-index: 1;
+}
+
 
 .subtitle2 {
   background: white;
@@ -356,6 +377,8 @@ line-height: 1.5;
   flex-direction: row;
   justify-content: center;
   width: 100%;
+  position: absolute;
+  top:590rpx;
 }
 .confirmbtn form {
   width: 100%;

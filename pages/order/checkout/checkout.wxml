@@ -7,12 +7,20 @@
       <view class="carts-text">
         <text class="carts-title">{{item.name}}</text>
         <view class='carts-sku'>
-          <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index">
+          <view wx:if="{{order_shape!=5 && order_shape!=4}}" wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index">
             <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
           </view>
+          <view wx:if="{{order_shape==4 && card_name_info}}">
+            <text>{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?'  称谓:'+card_name_info.card_name_title:''}}
+            </text>
+            <text>{{card_name_info.card_name_email?'电子邮箱: '+card_name_info.card_name_email:''}}
+            </text>
+             <text>{{card_name_info.card_name_addr?'地址: '+card_name_info.card_name_addr:''}}
+            </text>
+          </view>
         </view>
-        <view class="carts-text carts-subtitle">
+        <view wx:if="{{order_shape!=4 && order_shape!=5}}" class="carts-subtitle">
           <view class='carts-price'>
             <view>{{item.sell_price>0?'￥'+item.sell_price:''}} {{item.num>0?'x'+item.num+' ':''}}</view>
           </view>
@@ -21,6 +29,7 @@
     </view>
   </view>
 </view>
+<view class="order-item">
 <view wx:if="{{order_shape!=5}}" class="order-num">
   <text>份数:</text> <!--份数，不是件数，用于群发礼物订单 -->
   <input type="number" bindinput="order_num" value="{{order_num}}" />
@@ -44,6 +53,8 @@
     <text style="margin-left:10rpx;">使用优惠券</text>
   </view>
 </view>
+</view>
+
 <view hidden="{{modalHiddenCoupon}}" style='width:100%;'>
   <modal class="counpons" title="请选择" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirmCoupon" bindcancel="modalBindcancelCoupon" no-cancel="">
     <view class="counpon-item-banner" style='width:{{}};height:{{dkheight-34}}px'>
