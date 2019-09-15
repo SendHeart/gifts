@@ -98,9 +98,9 @@ page {
   border-radius: 10rpx;
 }
 .share-buttons .shareto {
-  width: 48rpx;
-  height: 48rpx;
-  margin:8rpx 6rpx 0 0;
+  width: 40rpx;
+  height: 40rpx;
+  padding:10rpx auto;
 }
 
 

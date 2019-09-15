@@ -1013,6 +1013,7 @@ Page({
     } else if (share_order_shape == 4 && card_name_info && share_goods_id == 0) { //互动卡 名片
       var views_width = that.data.windowWidth
       var views_height = 250 
+      /*
       wx.getImageInfo({
         src: share_order_bg,
         success: function (res) {
@@ -1020,6 +1021,7 @@ Page({
           views_height = res.height  
         }
       })  
+      */
       var views = [
         {
           type: 'image',
@@ -1038,13 +1040,14 @@ Page({
           height: views_height - 10,
         }
       ]
-      console.log('share_order_shape views:', views)
+     
       for (var i = 0; i < card_name_template.length; i++) {
         var view_item = {}
         view_item['top'] = card_name_template[i]['y'] * views_height
         view_item['left'] = card_name_template[i]['x'] * views_width
         view_item['width'] = card_name_template[i]['width'] * views_width
         view_item['height'] = card_name_template[i]['height'] * views_height
+        view_item['lineHeight'] = card_name_template[i]['height'] * views_height
         if (card_name_template[i]['viewType'] == 1) {
           view_item['type'] = 'image'
           if (card_name_template[i]['typeId'] == 'card_logo') {
@@ -1060,8 +1063,9 @@ Page({
         } else {
           view_item['type'] = 'text'
           if (card_name_template[i]['typeId'] == 'card_name') {
-            view_item['content'] = card_name_info['card_name_name'] ? card_name_info['card_name_name'] : ''
-            view_item['left'] = view_item['left'] + 5
+            view_item['content'] = card_name_info['card_name_name'] ? card_name_info['card_name_name'].trim() : ''
+            view_item['left'] = view_item['left'] + 5 * (10 - view_item['content'].length)
+            console.log('share_order_shape length:', )
           } else if (card_name_template[i]['typeId'] == 'card_title') {
             view_item['content'] = card_name_info['card_name_title'] ? card_name_info['card_name_title'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_phone') {
@@ -1082,7 +1086,6 @@ Page({
           view_item['fontSize'] = card_name_template[i]['styleSheet']['fontSize']
           view_item['color'] = card_name_template[i]['color'] ? card_name_template[i]['color'] : '#333'
           view_item['textAlign'] = 'left'
-          view_item['lineHeight'] = card_name_template[i]['height'] * views_height
           view_item['breakWord'] = false
         }
 
