@@ -12,10 +12,20 @@
               </text>
           </view>
           <view wx:if="{{order_shape==4 && card_name_info}}">
-            <text>{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?'  称谓:'+card_name_info.card_name_title:''}}
+            <text>{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?' '+card_name_info.card_name_title:''}}
             </text>
+            <!-- 
+            <text>{{card_name_info.card_name_phone?'手机: '+card_name_info.card_name_phone:''}}
+            </text>
+            <text>{{card_name_info.card_name_tel?'公司电话: '+card_name_info.card_name_tel:''}}
+            </text>
+            -->
             <text>{{card_name_info.card_name_email?'电子邮箱: '+card_name_info.card_name_email:''}}
             </text>
+            <!-- 
+            <text>{{card_name_info.card_name_website?'网址: '+card_name_info.card_name_website:''}}
+            </text>
+            -->
              <text>{{card_name_info.card_name_addr?'地址: '+card_name_info.card_name_addr:''}}
             </text>
           </view>

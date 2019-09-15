@@ -160,7 +160,7 @@ picker {
 .carts-container {
   position: relative;
   width: 100%;
-  height: 280rpx;
+  height: 300rpx;
 }
 
 /*每行单元格*/
@@ -169,7 +169,7 @@ picker {
   width: 100%;
   display: flex;
   flex-direction: row;
-  height: 230rpx;
+  height: 250rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
   border-bottom: 1px solid #F2F2F2;
   padding: 20rpx 0;
@@ -260,7 +260,7 @@ line-height: 20rpx;
 .order-item {
   width: 100%;
   position: absolute;
-  top: 281rpx;
+  top: 301rpx;
   left: 0;
   background: #fff;
   z-index: 1;
