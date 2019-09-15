@@ -1298,7 +1298,7 @@ Page({
                 if (card_type == 1 || goods_info[0]['shape'] == 5) {
                   card_image_height = '1055'
                 } else if (card_type == 2) {
-                  card_image_height = '480'
+                  card_image_height = '470'
                 } else {
                   card_image_height = '750'
                 }
@@ -1627,13 +1627,15 @@ Page({
         is_buymyself: 1,
         goodsmodel_count:0,
       })
+      /*
       if (goodsshape==4) {
         //that.confirmcardinput()
-        that.cardnameEditTapTag(that.data.is_buymyself)
+        //that.cardnameEditTapTag(that.data.is_buymyself)
       }else{
-        that.goodsmodel()
+        
       }
-     
+      */
+      that.goodsmodel()
   },
   buyGift: function () {
     var that = this

@@ -1011,56 +1011,73 @@ Page({
         }
       })  
     } else if (share_order_shape == 4 && card_name_info && share_goods_id == 0) { //互动卡 名片
-  
       var views_width = that.data.windowWidth
-      var views_height = 200 
+      var views_height = 250 
+      wx.getImageInfo({
+        src: share_order_bg,
+        success: function (res) {
+          views_width = res.width
+          views_height = res.height  
+        }
+      })  
       var views = [
         {
           type: 'image',
-          url: share_order_bg,
+          url: share_goods_bg,
           top: 0,
           left: 0,
           width: views_width,
           height: views_height,
+        },
+        {
+          type: 'image',
+          url: share_order_bg,
+          top: 5,
+          left: 5,
+          width: views_width - 10,
+          height: views_height - 10,
         }
       ]
-      for (var i = 0; i < card_name_template.length;i++){
-        var view_item ={}
+      console.log('share_order_shape views:', views)
+      for (var i = 0; i < card_name_template.length; i++) {
+        var view_item = {}
         view_item['top'] = card_name_template[i]['y'] * views_height
         view_item['left'] = card_name_template[i]['x'] * views_width
         view_item['width'] = card_name_template[i]['width'] * views_width
         view_item['height'] = card_name_template[i]['height'] * views_height
-        if (card_name_template[i]['viewType']==1){
+        if (card_name_template[i]['viewType'] == 1) {
           view_item['type'] = 'image'
           if (card_name_template[i]['typeId'] == 'card_logo') {
             view_item['url'] = card_name_info['card_name_logo_image'] ? card_name_info['card_name_logo_image'] : ''
-            
+            view_item['width'] = 50
+            view_item['height'] = 50
           } else if (card_name_template[i]['typeId'] == 'card_qrcode') {
             view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
-            view_item['borderRadius'] = card_name_template[i]['width'] * views_width / 2
+            view_item['width'] = 50
+            view_item['height'] = 50
+            view_item['borderRadius'] = 25
           }
-          
-        }else{
+        } else {
           view_item['type'] = 'text'
-          if (card_name_template[i]['typeId']=='card_name'){
+          if (card_name_template[i]['typeId'] == 'card_name') {
             view_item['content'] = card_name_info['card_name_name'] ? card_name_info['card_name_name'] : ''
-            view_item['left'] = view_item['left']  + 5
-          } else if (card_name_template[i]['typeId'] == 'card_title'){
+            view_item['left'] = view_item['left'] + 5
+          } else if (card_name_template[i]['typeId'] == 'card_title') {
             view_item['content'] = card_name_info['card_name_title'] ? card_name_info['card_name_title'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_phone') {
-            view_item['content'] = card_name_info['card_name_phone'] ? card_name_info['card_name_phone'] : '' 
+            view_item['content'] = card_name_info['card_name_phone'] ? card_name_info['card_name_phone'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_tel') {
-            view_item['content'] = card_name_info['card_name_tel'] ? card_name_info['card_name_tel'] : '' 
+            view_item['content'] = card_name_info['card_name_tel'] ? card_name_info['card_name_tel'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_email') {
-            view_item['content'] = card_name_info['card_name_email'] ? card_name_info['card_name_email'] : '' 
+            view_item['content'] = card_name_info['card_name_email'] ? card_name_info['card_name_email'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_weburl') {
-            view_item['content'] = card_name_info['card_name_website'] ? card_name_info['card_name_website'] : '' 
+            view_item['content'] = card_name_info['card_name_website'] ? card_name_info['card_name_website'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_publicwechat') {
-            view_item['content'] = card_name_info['card_name_publicwechat'] ? card_name_info['card_name_publicwechat'] : '' 
+            view_item['content'] = card_name_info['card_name_publicwechat'] ? card_name_info['card_name_publicwechat'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_companyname') {
             view_item['content'] = card_name_info['card_name_company'] ? card_name_info['card_name_company'] : ''
           } else if (card_name_template[i]['typeId'] == 'card_addr') {
-            view_item['content'] = card_name_info['card_name_addr'] ? card_name_info['card_name_addr'] : '' 
+            view_item['content'] = card_name_info['card_name_addr'] ? card_name_info['card_name_addr'] : ''
           }
           view_item['fontSize'] = card_name_template[i]['styleSheet']['fontSize']
           view_item['color'] = card_name_template[i]['color'] ? card_name_template[i]['color'] : '#333'
@@ -1068,10 +1085,9 @@ Page({
           view_item['lineHeight'] = card_name_template[i]['height'] * views_height
           view_item['breakWord'] = false
         }
-       
+
         views = views.concat(view_item)
       }
-      console.log('share_order_shape:', share_order_shape, ' views:', views, 'card_name_template:', card_name_template)
       that.setData({
         painting: {
           width: views_width,
@@ -1082,7 +1098,7 @@ Page({
           background: 'white',
           views: views
         }
-      })  
+      })
     } else if (share_order_shape == 5) { //贺卡请柬
       console.log('share_order_shape:', share_order_shape)
       that.setData({
