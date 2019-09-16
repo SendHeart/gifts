@@ -290,12 +290,22 @@ Page({
   //按钮点击事件  获取姓名
   confirmCardNameInfo: function () {
     var that = this
-    that.receiveTapTag()
+    var card_name_hello = that.data.card_name_hello
+    if (card_name_hello){
+      that.receiveTapTag()
+    }
+  
     that.setData({
       cardnameHidden: !that.data.cardnameHidden
     })
   },
-
+  //按钮点击事件  取消
+  cancelCardNameInfo: function () {
+    var that = this
+    that.setData({
+      cardnameHidden: !that.data.cardnameHidden
+    })
+  },
   receiveTapTag: function () {
     var that = this 
     var order_shape = that.data.order_shape //5贺卡请柬 4互动卡

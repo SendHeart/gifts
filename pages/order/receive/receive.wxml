@@ -155,7 +155,7 @@
     <textarea style="width:100%;" value="{{card_register_note}}" placeholder-style="text-align:center;" placeholder="您的留言"  bindinput='card_register_note' focus="{{inputShowed}}" type="text" maxlength='80'></textarea>
   </view>
 </modal>
-<modal class="modalbox" title="{{needCardnameHello}}"  hidden="{{cardnameHidden}}" confirm-text="确定"   bindconfirm="confirmCardNameInfo" no-cancel>
+<modal class="modalbox" title="{{needCardnameHello}}"  hidden="{{cardnameHidden}}" confirm-text="确定"   bindconfirm="confirmCardNameInfo" cancel-text="返回" bindcancel="cancelCardNameInfo" >
   <view class="card-register-input">
     <textarea style="width:100%;" value="{{card_name_hello}}" placeholder-style="text-align:center;" placeholder="打个招呼"  bindinput='card_name_hello' focus="{{inputShowed}}" type="text" maxlength='80'></textarea>
   </view>
