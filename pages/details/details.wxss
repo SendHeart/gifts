@@ -661,9 +661,9 @@ border: none;
 }
 .card-name-info text {
   width: 70%;
-  height: 40rpx;
-  line-height: 40rpx;
-  margin: 0 0 20rpx 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin: 0 0 10rpx 10rpx;
   padding: 15rpx;
   font-size: 24rpx;
   color: #999;
@@ -677,7 +677,7 @@ border: none;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; 
   width:500rpx;
-  height:130rpx;
+  height:150rpx;
   background: #fff;
   padding: 10rpx;
 }

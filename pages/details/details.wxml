@@ -329,22 +329,22 @@
 </view>
 <view hidden="{{cardnamehidden}}" style='z-index:999;'>
 <modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" hidden="{{cardnamehidden}}" bindconfirm="shareConfirmCardName" bindcancel="shareCandelCardName" confirm-text="确定" cancel-text="返回">
-    <view style="height:{{dkheight-100}}px;">
+    <view style="height:{{dkheight-80}}px;">
     <!-- name card -->
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_name}}" style='font-size:35rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_name_name}}" placeholder="姓名"  bindinput='card_name_nameTapTag' focus="{{inputShowed}}"  maxlength='20' />
-        <input hidden="{{!is_card_name_title}}" style='font-size:35rpx;' bindinput="card_name_titleTapTag" value="{{card_name_title}}" placeholder="职务/称谓" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="30" />
+        <input hidden="{{!is_card_name_name}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_name_name}}" placeholder="姓名"  bindinput='card_name_nameTapTag' focus="{{inputShowed}}"  maxlength='20' />
+        <input hidden="{{!is_card_name_title}}" style='font-size:30rpx;' bindinput="card_name_titleTapTag" value="{{card_name_title}}" placeholder="职务/称谓" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="30" />
       </view>
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_phone}}" style='font-size:35rpx;' value="{{card_name_phone}}" placeholder-style="text-align:center;color:#e2e2e2;" type="number" placeholder="手机号"  bindinput='card_name_phoneTapTag' focus="{{inputShowed2}}" maxlength='30' />
-         <input hidden="{{!is_card_name_tel}}" style='font-size:35rpx;' value="{{card_name_tel}}" placeholder-style="text-align:center;color:#e2e2e2;" type="number" placeholder="公司电话"  bindinput='card_name_telTapTag' focus="{{inputShowed2}}" maxlength='30' />
+        <input hidden="{{!is_card_name_phone}}" style='font-size:30rpx;' value="{{card_name_phone}}" placeholder-style="text-align:center;color:#e2e2e2;" type="number" placeholder="手机号"  bindinput='card_name_phoneTapTag' focus="{{inputShowed2}}" maxlength='30' />
+         <input hidden="{{!is_card_name_tel}}" style='font-size:30rpx;' value="{{card_name_tel}}" placeholder-style="text-align:center;color:#e2e2e2;" type="number" placeholder="公司电话"  bindinput='card_name_telTapTag' focus="{{inputShowed2}}" maxlength='30' />
       </view>
       <view class="card-name-info">
-      <input hidden="{{!is_card_name_email}}" style='font-size:35rpx;' value="{{card_name_email}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="电子邮箱" bindinput='card_name_emailTapTag' focus="{{inputShowed4}}" maxlength='30' />
+      <input hidden="{{!is_card_name_email}}" style='font-size:30rpx;' value="{{card_name_email}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="电子邮箱" bindinput='card_name_emailTapTag' focus="{{inputShowed4}}" maxlength='30' />
       </view>
       <view class="card-name-info">
-        <input hidden="{{!is_card_name_website}}" style='font-size:35rpx;' value="{{card_name_website}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="网址" bindinput='card_name_websiteTapTag' focus="{{inputShowed4}}" maxlength='30' />
-        <input hidden="{{!is_card_name_publicwechat}}"  style='font-size:35rpx;' value="{{card_name_publicwechat}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="微信公众号" bindinput='ccard_name_publicwechatTapTag' focus="{{inputShowed4}}" maxlength='30' />
+        <input hidden="{{!is_card_name_website}}" style='font-size:30rpx;' value="{{card_name_website}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="网址" bindinput='card_name_websiteTapTag' focus="{{inputShowed4}}" maxlength='30' />
+        <input hidden="{{!is_card_name_publicwechat}}"  style='font-size:30rpx;' value="{{card_name_publicwechat}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="微信公众号" bindinput='ccard_name_publicwechatTapTag' focus="{{inputShowed4}}" maxlength='30' />
       </view>
       <view class="card-name-info">
         <input hidden="{{!is_card_name_addr}}" style='font-size:25rpx;' value="{{card_name_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='card_name_addrTapTag' focus="{{inputShowed4}}" maxlength='80' />
