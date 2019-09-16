@@ -356,14 +356,14 @@ Page({
     var that = this
     var share_order_id = options.share_order_id ? options.share_order_id : 0
     var share_order_shape = options.share_order_shape ? options.share_order_shape : 1
-    //var card_type = options.card_type ? options.card_type:0
+    var card_type = options.card_type ? options.card_type:0
     that.get_project_gift_para()
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         avatarUrl: userInfo.avatarUrl,
         nickname: userInfo.nickName,
-        //card_type: card_type,
+        card_type: card_type,
       })
       console.log('wishshare onShow get userInfo：', userInfo)
     })
@@ -404,7 +404,6 @@ Page({
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']) {
             //console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
-            //card_type = m_desc['card_type'] ? m_desc['card_type'] : card_type
             var voice_url = m_desc['voice']
             if (voice_url) {
               wx.downloadFile({
@@ -426,7 +425,7 @@ Page({
               card_name_info: m_desc['card_name_info'] ? m_desc['card_name_info'] : '',
               card_name_template: m_desc['card_name_template'] ? m_desc['card_name_template'] : '',
               card_color: m_desc['color'] ? m_desc['color']:'#333',
-              //card_type: card_type,
+              card_type: m_desc['card_name_template'][0]['type'] ? m_desc['card_name_template'][0]['type']:0,
             })
           }
         }
@@ -1476,8 +1475,11 @@ Page({
         shareObj['path'] = '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&mid=' + m_id
       } 
       if (share_order_shape == 4 ) {
-        var card_register_title = that.data.card_register_info['card_register_title'] ? that.data.card_register_info['card_register_title'] : ''  
-        shareObj['title'] = card_register_title  //share_order_note
+        if (that.data.card_register_info){
+          shareObj['title'] = that.data.card_register_info['card_register_title'] ? that.data.card_register_info['card_register_title'] : ''  
+        } else if (that.data.card_name_info){
+          shareObj['title'] = that.data.card_name_info['card_name_name'] ? that.data.card_name_info['card_name_name']+'的名片' : '' 
+        }
         shareObj['imageUrl'] = that.data.shareImage //share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id
       }

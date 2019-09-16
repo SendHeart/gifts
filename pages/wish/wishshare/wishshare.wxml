@@ -27,7 +27,7 @@
       <button formType="submit"  style="width:200rpx;" type='warn'>保存到相册</button> <!-- bindtap="eventSave"  -->
     </form>
     <view wx:if="{{share_order_shape==5}}" style='width:100%;' >
-      <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn" style="background: #fff;">
+      <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode" class="sec-btn" style="background: #fff;">
       <image class='icon-recorder' src="../../../images/record.png"></image>
     </button>
   </view>

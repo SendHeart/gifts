@@ -318,7 +318,7 @@ main_message .main_red{
   bottom:0;
   display:flex;
   flex-direction:row;
-  margin-bottom: 320rpx;
+  margin-bottom: 300rpx;
   font-size:25rpx;
   z-index: 1000;
 }

@@ -209,9 +209,44 @@ page {
   padding: 10rpx;
   border-radius: 14rpx;
 }
+
+
+.card-name-input {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-name-input input {
+  width: 50%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin: 0 0 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  background: #F3F3F3;
+  border-radius: 14rpx;
+}
+.card-name-input textarea {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2; 
+  background: #F3F3F3;
+  width:420rpx;
+  height:200rpx;
+  padding: 10rpx;
+  border-radius: 14rpx;
+}
+
 /*立即按钮*/
 .sentbtn {
-  position: relative;
+  position: absolute;
   bottom:0;
   margin-bottom: 100rpx;
   display: flex;
@@ -507,4 +542,35 @@ swiper-item image {
   justify-content: flex-start;
   font-size:25rpx;
   padding: 10rpx;
+}
+
+.card-name-info {
+    z-index: 1000;
+}
+.card-name-info text {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
+.card-name-info image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
+.card-name-note{
+  position: relative;
+  margin-top:5rpx;
+  width:100%;
+  height:120rpx;
+  line-height: 20rpx;
+  background: #fff;
+  color:#666;
+  border-radius:20rpx;
+  padding:20rpx; 
+  text-indent: 20rpx;
+  text-align: left;
 }

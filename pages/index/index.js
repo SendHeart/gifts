@@ -399,7 +399,6 @@ Page({
     var that = this
     that.setData({
       scrollTop: 0,
-      page:1,
     })
     console.log('goTop:',that.data.scrollTop)
     that.getPrevOrdersTapTag()
