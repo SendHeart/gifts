@@ -887,7 +887,7 @@ Page({
             //向后合拼
             orderObjects = that.data.orders.concat(orderObjects);
           }
-          console.log('receive status:' + receive_status);
+          //console.log('receive status:' + receive_status);
           // order_sku 合并在一个对象中
           for (var i = 0; i < orderObjects.length; i++) {
             for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
@@ -899,10 +899,11 @@ Page({
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']){
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
+            console.log('receive reloadData m_desc:' , m_desc);
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
             card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
             card_name_template = m_desc['card_name_template'] ? m_desc['card_name_template'] : ''
-            card_type = m_desc['card_name_template'][0]['type'] ? m_desc['card_name_template'][0]['type'] : 0 
+            card_type = card_name_template ? card_name_template[0]['type'] : 0 
             card_int_desc = orderObjects[0]['int_m_desc']
             if(card_type ==1 ){
               card_image_height = 1100
@@ -948,10 +949,10 @@ Page({
             card_name_info: card_name_info,
             card_name_template: card_name_template,
             card_image_height: card_image_height,
-            card_type: card_type,
-            card_name_hello: card_int_desc,
-            button_name: button_name,
-            card_register_reqid_index: card_register_reqid_index,
+            card_type: card_type?card_type:0,
+            card_name_hello: card_int_desc ? card_int_desc:'',
+            button_name: button_name ? button_name:'',
+            card_register_reqid_index: card_register_reqid_index ? card_register_reqid_index:0,
             is_showable: orderObjects[0]['is_showable'] ? orderObjects[0]['is_showable']:0,
           })
           console.log('order sku card_name_template:', card_name_template, ' card_type:', that.data.card_type, ' card_name_info:', that.data.card_name_info)

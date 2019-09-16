@@ -478,7 +478,7 @@ Page({
     var order_no = that.data.order_no
     var order_shape = e.currentTarget.dataset.orderShape
     var receive = that.data.send_rcv
-    console.log('orderdetail showGoods() 查看详情 order_no: ', order_no, ' order_shape:', order_shape)
+    console.log('orderdetail showGoods() 查看详情 order_no: ', order_no, ' order_shape:', order_shape, ' receive:', receive)
     if (order_shape==5||order_shape==4){
       wx.navigateTo({
         url: '/pages/order/receive/receive?order_no=' + order_no + '&order_shape=' + order_shape + '&receive=' + receive
