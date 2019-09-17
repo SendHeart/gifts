@@ -54,7 +54,7 @@ Page({
     current_scrollTop:0,
     needPhoneNumber: '微信授权',
     needUserName: '微信授权',
-    inputShowed: false
+    inputShowed: false,
   },
   /*
   //监听屏幕滚动 判断上下滚动  
@@ -761,6 +761,18 @@ Page({
               orderObjects[i]['minus'] = parseInt((duetime - orderObjects[i]['hour'] * 3600) / 60)
               orderObjects[i]['sec'] = duetime - orderObjects[i]['hour'] * 3600 - orderObjects[i]['minus'] * 60
               //orders.push(orderObjects[i])
+             
+              if ((orderObjects[i]['shape'] == 5 || orderObjects[i]['shape'] == 4) && orderObjects[i]['m_desc']) {
+                var m_desc = JSON.parse(orderObjects[i]['m_desc'])
+                var card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
+                var card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
+                var card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
+                var card_type = m_desc['card_register_info'] ? 1 : 0
+                card_type = m_desc['card_template'] ? m_desc['card_template'][0]['type'] : card_type    
+                orderObjects[i]['card_type']  = card_type
+                orderObjects[i]['card_name_info'] = card_name_info
+                orderObjects[i]['card_register_info'] = card_register_info
+              }
             }
             //if (page > 1 && orderObjects) {
               //向后合拼

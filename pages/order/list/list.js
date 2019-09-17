@@ -167,7 +167,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log(res.data.result);
+        console.log('order list reloadData query_order_interaction:',res.data.result);
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows;
         if (!res.data.result) {
@@ -192,7 +192,8 @@ Page({
             var m_desc = orderObjects[i]['m_desc']
             if (orderObjects[i]['from_headimg'].indexOf("https://wx.qlogo.cn") >= 0) {
               orderObjects[i]['from_headimg'] = orderObjects[i]['from_headimg']? orderObjects[i]['from_headimg'].replace('https://wx.qlogo.cn', weburl + '/qlogo'):''
-              orderObjects[i]['register_time'] = orderObjects[i]['register_time'] ?util.getDateDiff(orderObjects[i]['addtime'] * 1000):''
+              orderObjects[i]['register_time'] = orderObjects[i]['register_time'] ? util.getDateDiff(orderObjects[i]['register_time'] * 1000):''
+              orderObjects[i]['addtime'] = orderObjects[i]['addtime'] ? util.getDateDiff(orderObjects[i]['addtime'] * 1000) : ''
             }
             orderObjects[i]['phone_enc'] = orderObjects[i]['phone_enc']? orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11):''
             if (m_desc){
@@ -225,7 +226,9 @@ Page({
     var nickname = that.data.nickname
     var shop_type = that.data.shop_type
     var card_register_info = ''
-    var is_register = 0
+    var card_name_info = ''
+    var card_template = ''
+    var card_type = 0
     var card_register_ownername = ''
     var card_register_ownerwechat = ''
     //从服务器获取互动订单详情
@@ -284,7 +287,10 @@ Page({
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
-            is_register = m_desc['card_register_info'] ? 1 : 0
+            card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
+            card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
+            card_type = m_desc['card_register_info'] ? 1 : 0
+            card_type = m_desc['card_template'] ? m_desc['card_template'][0]['type'] : card_type
             card_register_ownerwechat = card_register_info['card_register_ownerwechat'] ? card_register_info['card_register_ownerwechat']:''
             card_register_ownername = card_register_info['card_register_ownername'] ? card_register_info['card_register_ownername'] : ''
             if (voice_url) {
@@ -310,9 +316,11 @@ Page({
             receive_status: receive_status,
             order_m_id: order_m_id,
             card_register_info: card_register_info,
-            is_register: is_register,
+            card_name_info: card_name_info,
+            card_template: card_template,
+            card_type: card_type,
           })
-          console.log('order list inter order  is_register:', that.data.is_register, ' card_register_info:', that.data.card_register_info)
+          console.log('order list inter order  card_type:', that.data.card_type, ' card_name_info:', that.data.card_name_info)
         }
       }
     })
