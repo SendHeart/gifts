@@ -182,12 +182,9 @@ page {
 
 /*价格*/
 .order-price {
-  float: right;
 	color: #f60;
 	font-size:14px;
 	line-height: 22px;
-   display: flex;
-	flex-direction: row;
 }
 
 /*隐藏元素*/
@@ -264,9 +261,7 @@ background-color: #E34C55;
   color: #444;
   padding: 0 20rpx;
 }
-.order_price {
-  color: #e34c55;
-}
+
 .labeltext {
   display: inline-block;
   width: 20%;

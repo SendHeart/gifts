@@ -170,7 +170,7 @@
       </swiper>
     </view>
   </view>
-  <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-name-note">
+  <view wx:if="{{goodsshape==4 && card_type==2}}" hidden="{{!cardnamehidden}}" class="card-name-note">
     <textarea style='font-size:28rpx;' bindblur="cardnameNoteTextAreaBlur" value="{{card_name_note}}" placeholder="请输入简介(限80个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="80" />
   </view>
   <view class="shopping_container">

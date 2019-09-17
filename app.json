@@ -11,7 +11,6 @@
     "pages/login/login",
     "pages/lottery/lottery",
     "pages/cart/cart",
-    "pages/graphic/graphic",
     "pages/order/list/list",
     "pages/classify/index",
     "pages/wechat/wechat",

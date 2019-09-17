@@ -59,7 +59,7 @@
     <view wx:for="{{item['order_sku']}}" wx:key="{{mapping.id}}" wx:for-item="mapping" wx:for-index="sku_idx" class="carts-item" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
       <view bindtap="detailTapTag" data-order-object="{{item}}">
         <!-- 缩略图 -->
-        <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill" />
+        <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFit" />
       </view>
       <view class="carts-text" bindtap="detailTapTag" data-order-object="{{item}}">
         <!-- 商品标题 -->

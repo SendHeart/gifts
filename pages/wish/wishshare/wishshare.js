@@ -420,12 +420,17 @@ Page({
               })
             }
             //var card_register_info = m_desc['card_register_info']
+            
             that.setData({
               card_register_info: m_desc['card_register_info'] ? m_desc['card_register_info']:'',
               card_name_info: m_desc['card_name_info'] ? m_desc['card_name_info'] : '',
               card_template: m_desc['card_template'] ? m_desc['card_template'] : '',
               card_color: m_desc['color'] ? m_desc['color']:'#333',
               card_type: m_desc['card_template']? m_desc['card_template'][0]['type']:0,
+            })
+
+            wx.setNavigationBarTitle({
+              title: '互动卡分享',
             })
           }
         }

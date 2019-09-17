@@ -608,7 +608,7 @@ Page({
 
     }
     that.setData({
-      inputShowed:true,
+      inputShowed:false,
       goodsmodel_count: 0,
     })
     if(is_buymyself == 1) {

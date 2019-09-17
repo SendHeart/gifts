@@ -97,7 +97,7 @@
           <!-- 复选框图标 -->
           <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{cart_idx}}" hidden="true" />
           <!-- 缩略图 -->
-          <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFill" />
+          <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFit" />
           <!-- 商品标题 -->
           <view class="carts-text">
             <view class="carts-title">

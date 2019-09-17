@@ -120,6 +120,7 @@ Page({
     var order_id = options.order_id ? options.order_id : ''
     var receive = options.receive ? options.receive : 0
     var order_shape = options.order_shape ? options.order_shape : 4
+    console.log('order list onLoad:', options)
     that.setData({
       order_id: order_id,
       receive: receive,
@@ -190,10 +191,10 @@ Page({
           for (var i = 0; i < orderObjects.length;i++){
             var m_desc = orderObjects[i]['m_desc']
             if (orderObjects[i]['from_headimg'].indexOf("https://wx.qlogo.cn") >= 0) {
-              orderObjects[i]['from_headimg'] = orderObjects[i]['from_headimg'].replace('https://wx.qlogo.cn', weburl + '/qlogo')
-              orderObjects[i]['register_time'] = util.getDateDiff(orderObjects[i]['addtime'] * 1000)
+              orderObjects[i]['from_headimg'] = orderObjects[i]['from_headimg']? orderObjects[i]['from_headimg'].replace('https://wx.qlogo.cn', weburl + '/qlogo'):''
+              orderObjects[i]['register_time'] = orderObjects[i]['register_time'] ?util.getDateDiff(orderObjects[i]['addtime'] * 1000):''
             }
-            orderObjects[i]['phone_enc'] = orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11)
+            orderObjects[i]['phone_enc'] = orderObjects[i]['phone_enc']? orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11):''
             if (m_desc){
               var desc_note = JSON.parse(m_desc)
               orderObjects[i]['note'] = desc_note['note'] 
