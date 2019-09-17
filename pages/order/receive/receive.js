@@ -793,7 +793,7 @@ Page({
     var order_price = 0
     var card_register_info = ''
     var card_name_info = ''
-    var card_name_template = ''
+    var card_template = ''
     var card_image_height = 500
     var card_type = 0
     var card_int_desc = ''
@@ -902,8 +902,8 @@ Page({
             console.log('receive reloadData m_desc:' , m_desc);
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
             card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
-            card_name_template = m_desc['card_name_template'] ? m_desc['card_name_template'] : ''
-            card_type = card_name_template ? card_name_template[0]['type'] : 0 
+            card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
+            card_type = card_template ? card_template[0]['type'] : 0 
             card_int_desc = orderObjects[0]['int_m_desc']
             if(card_type ==1 ){
               card_image_height = 1100
@@ -947,7 +947,7 @@ Page({
             order_m_id: order_m_id,
             card_register_info: card_register_info,
             card_name_info: card_name_info,
-            card_name_template: card_name_template,
+            card_template: card_template,
             card_image_height: card_image_height,
             card_type: card_type?card_type:0,
             card_name_hello: card_int_desc ? card_int_desc:'',
@@ -955,7 +955,7 @@ Page({
             card_register_reqid_index: card_register_reqid_index ? card_register_reqid_index:0,
             is_showable: orderObjects[0]['is_showable'] ? orderObjects[0]['is_showable']:0,
           })
-          console.log('order sku card_name_template:', card_name_template, ' card_type:', that.data.card_type, ' card_name_info:', that.data.card_name_info)
+          console.log('order sku card_template:', card_template, ' card_type:', that.data.card_type, ' card_name_info:', that.data.card_name_info)
           app.globalData.is_receive = 0 
           var order_price = orderObjects[0]
           if(is_buymyself==1){ //自购礼品 直接接收

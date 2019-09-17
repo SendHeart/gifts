@@ -121,9 +121,9 @@
             <!-- card name info view -->
             <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-name-view" >
               <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
-                <text hidden="{{template.typeId=='card_name'?fale:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_name?card_name_name:template.typeText}}
+                <text hidden="{{template.typeId=='card_name'?fale:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_name?card_name_name:template.typeText}}
                 </text>
-                <text hidden="{{template.typeId=='card_title'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_title?card_name_title:template.typeText}}
+                <text hidden="{{template.typeId=='card_title'?fale:true}}" style="text-align:right; {{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth*100)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_title?card_name_title:template.typeText}}
                 </text>
                 <text hidden="{{template.typeId=='card_phone'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_phone?card_name_phone:template.typeText}}
                 </text>
@@ -140,8 +140,8 @@
                 <view hidden="{{template.typeId=='card_logo'?false:true}}">
                 <image  style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_name_logo_image}}" />
                 </view>
-                <view hidden="{{template.typeId=='card_qrcode'?false:true}}" style="">
-                  <image style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}} border-radius:50%;" src="{{share_goods_qrcode}}" />
+                <view hidden="{{(template.typeId=='card_qrcode' && has_shlogo)?false:true}}" style="">
+                  <image style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}} width:80rpx;height:80rpx; border-radius:50%;" src="{{share_goods_qrcode}}" />
                 </view>
               </block>
             </view>
@@ -169,6 +169,9 @@
         </block>
       </swiper>
     </view>
+  </view>
+  <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-name-note">
+    <textarea style='font-size:28rpx;' bindblur="cardnameNoteTextAreaBlur" value="{{card_name_note}}" placeholder="请输入简介(限80个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="80" />
   </view>
   <view class="shopping_container">
       <view class="goods-name">
@@ -356,9 +359,13 @@
         <image src="{{card_name_logo_image}}"></image>
         <text style='font-size:35rpx;height:100rpx;line-height:100rpx;'>我的LOGO</text>
       </view>
-      <view class="card-name-info">
-       <textarea style='font-size:28rpx;' bindblur="cardnameNoteTextAreaBlur" value="{{card_name_note}}" placeholder="请输入简介(限80个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="80" />
+       <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
+        </label>
       </view>
+      
     </view>
 </modal>
 </view>

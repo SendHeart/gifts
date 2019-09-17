@@ -7,7 +7,7 @@
 }
 
 .Hui-iconfont {
-  font-family: "Hui-iconfont";
+  font-family: "Hui-iconfont"; 
   font-size: 30rpx;
 }
 
@@ -689,6 +689,26 @@ border: none;
   font-size: 24rpx;
   color: #999;
 }
+.card-name-note {
+  width: 100%;
+  margin: 5rpx auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.card-name-note textarea {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
+  height:130rpx;
+  color:#666;
+  background: #fff;
+  border-radius: 20rpx;
+  padding: 10rpx;
+}
 .card-register-info {
   width: 80%;
   position: absolute;
@@ -898,6 +918,23 @@ border: none;
   background: #fff;
   border-radius: 14rpx;
 }
+.modeswitch {
+  width: 36%;
+  margin: 0 8rpx 15rpx 8rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content:flex-end;
+  font-size: 24rpx;
+  color: #666;
+}
+.modeswitch label { 
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 186rpx;
+  line-height: 30rpx;
+}
+
 .picker-box{
   background: #fff;
   width: 100%;

@@ -126,7 +126,7 @@
         </view>
       </view>
     </view>
-    <view class="pick-goods jcleft" hidden="{{all_rows>0?false:false}}" bindtap="" style="border-bottom:0;">
+    <view class="pick-goods jcleft" style="border-bottom:0;">
       <view class="pick-goods-text">
         <text class="pick-goods-slogan">附赠留言</text>
       </view>

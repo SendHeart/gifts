@@ -58,7 +58,7 @@
     </view>
   </view>
   <view wx:if="{{order_shape==4 && card_type==2}}" class="card-name-info">
-    <block wx:for="{{card_name_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
       <text hidden="{{template.typeId=='card_name'?fale:true}}"  bindtap='textPaste' style="text-align:right;{{template.y?' top:'+(template.y*card_image_height+100)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_info['card_name_name']}}
       </text>
       <text hidden="{{template.typeId=='card_title'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height+100)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_info['card_name_title']}}

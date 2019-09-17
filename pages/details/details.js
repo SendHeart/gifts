@@ -122,7 +122,8 @@ Page({
     card_register_reqid_picker: ['0无需证件', '1身份证', '2微信号', '3QQ号', '4邮箱','5学号','6工号'],
     card_register_reqid_index: 0, 
     card_name_modal_title:'名片内容',
-    card_name_logo_image: '/images/img_upload_field.png'
+    card_name_logo_image: '/images/img_upload_field.png',
+    has_shlogo:false,
   },
 
   bindPickerChange_card_color: function (e) {
@@ -477,6 +478,7 @@ Page({
     that.setData({
       card_name_note: card_name_note,
     })
+    that.confirmcardinput()
   }, 
   bindCardTextAreaBlur: function (e) {
     var that = this
@@ -598,6 +600,7 @@ Page({
           card_name_company: that.data.card_name_company,
           card_name_logo_image: that.data.card_name_logo_image,
           card_name_note: that.data.card_name_note,
+          has_shlogo:that.data.has_shlogo,
         }
       ]
       wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
@@ -798,11 +801,7 @@ Page({
       return
     }
     if (share_goods_shape == 5 || share_goods_shape == 4) {
-      var contentText = "<p style='font-size:20px color:#333;'></p><br/><img src='https://ss1.baidu.com/9vo3dSag_xI4khGko9WTAnF6hhy/image/h%3D300/sign=77d1cd475d43fbf2da2ca023807fca1e/9825bc315c6034a8ef5250cec5134954082376c9.jpg' width=345 /><br/><p style='font-size:20px color:#333;'></p>"
-      var encode = encodeURIComponent(contentText)
-      wx.navigateTo({
-        url: '/pages/graphic/graphic?contentText=' +encode
-      })
+     //
     }else{
       wx.navigateTo({
         url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape + '&share_goods_org=' + share_goods_org + '&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode + '&card_type=' + card_type
@@ -1118,6 +1117,7 @@ Page({
         var card_name_company = ''
         var card_name_note = ''
         var card_name_logo_image = ''
+        var has_shlogo = that.data.has_shlogo
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -1163,8 +1163,9 @@ Page({
           card_name_publicwechat = card_name_info['card_name_publicwechat']
           card_name_addr = card_name_info['card_name_addr']
           card_name_company = card_name_info['card_name_company']
-          card_name_note = card_name_info['card_name_note'],
+          card_name_note = card_name_info['card_name_note']
           card_name_logo_image = card_name_info['card_name_logo_image']
+          has_shlogo = card_name_info['has_shlogo']
         }
         console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_name_prev:', card_name_prev)
         that.setData({
@@ -1195,6 +1196,7 @@ Page({
           card_name_company: card_name_company ? card_name_company:'',
           card_name_note: card_name_note ? card_name_note:'',
           card_name_logo_image: card_name_logo_image ? card_name_logo_image:'',
+          has_shlogo: has_shlogo? has_shlogo:false,
         })
         
         if(scene){
@@ -1831,7 +1833,7 @@ Page({
               var card_name_info = wx.getStorageSync('card_name_info')  //从缓存中读取
               console.log('detail checkout 名片互动卡  order_image:', share_goods_image, 'card_name_info', card_name_info)
               wx.navigateTo({
-                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&card_name_template=' + JSON.stringify(share_goods_template) +'&username=' + username + '&token=' + token
+                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&card_template=' + JSON.stringify(share_goods_template) +'&username=' + username + '&token=' + token
               })
             }
            
@@ -2012,7 +2014,17 @@ Page({
       })
      // console.log('selectValueInfo 取消选中信息:', attrValueList,' index:',index); 
     },
-    
+
+  shlogoChange: function (e) {
+    var that = this
+    var has_shlogo = e.detail.value
+    console.log('shlogoChange：',e.detail.value)
+    that.setData({
+      has_shlogo: has_shlogo
+    })
+    that.confirmcardinput()
+  },
+
   onShow: function () {
      var that = this
     var pages = getCurrentPages()
