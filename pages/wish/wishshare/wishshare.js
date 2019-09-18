@@ -428,7 +428,7 @@ Page({
               card_color: m_desc['color'] ? m_desc['color']:'#333',
               card_type: m_desc['card_template']? m_desc['card_template'][0]['type']:0,
             })
-
+            console.log('card type:',that.data.card_type)
             wx.setNavigationBarTitle({
               title: '互动卡分享',
             })
@@ -889,131 +889,100 @@ Page({
       end_time += card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
       var owner_info = card_register_info['card_register_ownername'] ? '发起人:' + card_register_info['card_register_ownername'] : ''
       owner_info += card_register_info['card_register_ownerwechat'] ? '   微信:' + card_register_info['card_register_ownerwechat'] : ''
+      var views_width = 500
+      var views_height = 700 
+
+      var views = [
+        {
+          type: 'image',
+          url: share_order_bg,
+          top: 5,
+          left: 5,
+          width: views_width ,
+          height: views_height,
+        }
+      ]
+
+      for (var i = 0; i < card_template.length; i++) {
+        var view_item = {}
+        view_item['top'] = card_template[i]['y'] * views_height
+        view_item['left'] = card_template[i]['x'] * views_width
+        view_item['width'] = card_template[i]['width'] * views_width
+        view_item['height'] = card_template[i]['height'] * views_height
+        view_item['lineHeight'] = card_template[i]['height'] * views_height
+        if (card_template[i]['viewType'] == 1) {
+          if (card_template[i]['typeId'] == 'card_register_adv') {
+            view_item['type'] = 'image'
+            view_item['url'] = card_register_info['card_register_adv'] ? card_register_info['card_register_adv'] : ''
+            //view_item['width'] = 50
+            //view_item['height'] = 50
+          }
+          if (card_template[i]['typeId'] == 'card_qrcode' && card_register_info['has_shlogo']) {
+            view_item['type'] = 'image'
+            view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
+            view_item['width'] = 36
+            view_item['height'] = 36
+            view_item['borderRadius'] = 18
+          }
+        } else {
+          view_item['type'] = 'text'
+          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
+          view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
+          view_item['textAlign'] = 'left'
+          view_item['breakWord'] = false
+          if (card_template[i]['typeId'] == 'card_register_title') {
+            view_item['content'] = card_register_info['card_register_title'] ? card_register_info['card_register_title'].trim() : ''
+            view_item['left'] = view_item['left'] 
+          } else if (card_template[i]['typeId'] == 'card_register_content') {
+            //console.log('share_order_shape', share_order_shape,' card_register_content:',card_register_info)
+            view_item['MaxLineNumber'] = 4 
+            view_item['breakWord'] = true
+            view_item['lineHeight'] = 25
+            //view_item['width'] = 400
+            view_item['content'] = card_register_info['card_register_content'] ? card_register_info['card_register_content'] : ''
+          } else if (card_template[i]['typeId'] == 'card_register_ownername') {
+            view_item['content'] = card_register_info['card_register_ownername'] ? '发起人:'+card_register_info['card_register_ownername'] : ''
+          } else if (card_template[i]['typeId'] == 'card_register_ownerwechat') {
+            view_item['content'] = card_register_info['card_register_ownerwechat'] ? '微信:'+card_register_info['card_register_ownerwechat'] : ''
+          } else if (card_template[i]['typeId'] == 'card_register_addr') {
+            view_item['content'] = card_register_info['card_register_addr'] ? '地址:'+card_register_info['card_register_addr'] : ''
+          } else if (card_template[i]['typeId'] == 'card_register_lim') {
+            view_item['content'] = card_register_info['card_register_lim']>0 ? '人数:'+card_register_info['card_register_lim'] : '人数:不限制'
+          } else if (card_template[i]['typeId'] == 'card_register_fee') {
+            view_item['content'] = card_register_info['card_register_fee']>0 ? '费用:￥'+card_register_info['card_register_fee'] : '费用:免费'
+          } else if (card_template[i]['typeId'] == 'register_start_date') {
+            view_item['content'] = card_register_info['register_start_date'] ? '注册时间：'+card_register_info['register_start_date'] : ''
+          } else if (card_template[i]['typeId'] == 'register_start_time') {
+            view_item['content'] = card_register_info['register_start_time'] ? card_register_info['register_start_time'] : ''
+          } else if (card_template[i]['typeId'] == 'register_end_date') {
+            view_item['content'] = card_register_info['register_end_date'] ? card_register_info['register_end_date'] : ''
+          } else if (card_template[i]['typeId'] == 'register_end_time') {
+            view_item['content'] = card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
+          } else if (card_template[i]['typeId'] == 'action_start_date') {
+            view_item['content'] = card_register_info['action_start_date'] ? '活动时间:'+card_register_info['action_start_date'] : ''
+          } else if (card_template[i]['typeId'] == 'action_start_time') {
+            view_item['content'] = card_register_info['action_start_time'] ? card_register_info['action_start_time'] : ''
+          } else if (card_template[i]['typeId'] == 'action_end_date') {
+            view_item['content'] = card_register_info['action_end_date'] ? card_register_info['action_end_date'] : ''
+          } else if (card_template[i]['typeId'] == 'action_end_time') {
+            view_item['content'] = card_register_info['action_end_time'] ? card_register_info['action_end_time'] : ''
+          }
+          view_item['fontSize'] = view_item['fontSize'] < 15 ? 15 : view_item['fontSize']
+        }
+
+        views = views.concat(view_item)
+      }
       that.setData({
         painting: {
-          width: 520,
-          height: 800,
+          width: views_width,
+          height: views_height,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
           background: 'white',
-          views: [
-            {
-              type: 'image',
-              url: share_order_bg,
-              top: 0,
-              left: 0,
-              width: 520,
-              height: 800,
-            },
-            {
-              type: 'text',
-              content: card_register_info['card_register_title'] ? card_register_info['card_register_title']:'',
-              fontSize: 32,
-              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
-              textAlign: 'left',
-              top: 50,
-              left: 50,
-              width: 300,
-              height: 50,
-              lineHeight: 50,
-              breakWord: false,
-             
-            },
-            {
-              type: 'text',
-              content: card_register_info['card_register_content'] ? card_register_info['card_register_content']:'',
-              fontSize:25,
-              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
-              top: 120,
-              left: 50,
-              lineHeight: 50,
-              MaxLineNumber: 8,
-              breakWord: true,
-              width: 390,
-              height: 50,
-            
-            },
-            {
-              type: 'text',
-              content:owner_info,
-              fontSize: 22,
-              color: card_register_info['card_color'] ? card_register_info['card_color'] : '#333',
-              textAlign: 'left',
-              top: 530,
-              left: 50,
-              width: 300,
-              height: 40,
-              bolder: false
-            },
-            {
-              type: 'text',
-              content: card_register_info['card_register_addr'] ? '地址:' +card_register_info['card_register_addr']:'',
-              fontSize: 22,
-              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
-              textAlign: 'left',
-              top: 560,
-              left: 50,
-              width: 300,
-              height: 40,
-              bolder: false
-            },
-            {
-              type: 'text',
-              content: start_time,
-              fontSize: 22,
-              color: card_register_info['card_color'] ? card_register_info['card_color']:'#333',
-              textAlign: 'left',
-              top: 600,
-              left: 50,
-              width: 150,
-              height: 40,
-              breakWord: false,
-              bolder: false,
-            },
-            {
-              type: 'text',
-              content: end_time,
-              fontSize: 22,
-              color: card_register_info['card_color'] ? card_register_info['card_color']:'',
-              textAlign: 'left',
-              top: 600,
-              left: 270,
-              width: 150,
-              height: 40,
-              breakWord: false,
-            },
-            {
-              type: 'image',
-              url: share_order_wx_headimg,
-              top: 690,
-              left: 50,
-              width: 80,
-              height: 80,
-              borderRadius: 40,
-            },
-            {
-              type: 'text',
-              content: nickname?nickname.substring(0,13):'',
-              color: card_register_info['card_color'] ? card_register_info['card_color']:'',
-              fontSize: 22,
-              top: 720,
-              left: 150,
-              width: 80,
-              height: 80,
-            },
-            {
-              type: 'image',
-              url: share_order_qrcode,
-              top: 690,
-              left: 380,
-              width: 80,
-              height: 80,
-              borderRadius: 40,
-            }
-          ]
+          views: views
         }
-      })  
+      })
     } else if (share_order_shape == 4 && card_name_info && share_goods_id == 0) { //互动卡 名片
       var views_width = that.data.windowWidth
       var views_height = 250 
@@ -1052,8 +1021,7 @@ Page({
         view_item['width'] = card_template[i]['width'] * views_width
         view_item['height'] = card_template[i]['height'] * views_height
         view_item['lineHeight'] = card_template[i]['height'] * views_height
-        if (card_template[i]['viewType'] == 1) {
-          
+        if (card_template[i]['viewType'] == 1) {  
           if (card_template[i]['typeId'] == 'card_logo') {
             view_item['type'] = 'image'
             view_item['url'] = card_name_info['card_name_logo_image'] ? card_name_info['card_name_logo_image'] : ''
@@ -1095,7 +1063,6 @@ Page({
           view_item['textAlign'] = 'left'
           view_item['breakWord'] = false
         }
-
         views = views.concat(view_item)
       }
       that.setData({

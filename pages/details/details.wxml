@@ -49,74 +49,43 @@
               </swiper>
             </view>
             --> 
-             <!-- register card -->
-            <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-info">
-              <view  bindtap="" class="card-register-title" style="color:{{current_card_color}};">
-                <!-- text space="ensp" >{{card_register_title?card_register_title:'标题'}}</text -->
-                <input style='font-size:35rpx;' placeholder-style="text-align:center;color:#e3e3e3;" value="{{card_register_title}}" placeholder="请输入标题(限30个汉字)"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}"  maxlength='30' />
-              </view>
-              <view bindtap="" class="card-register-content" style="color:{{current_card_color}}">
-                <!-- text space="ensp" >{{card_register_content?card_register_content:'说明'}}</text -->
-                  <textarea style='font-size:28rpx;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
-              </view>
-              <view  bindtap="" class="card-register-owner" style="color:{{current_card_color}};">
-              <!-- 
-                <view>{{card_register_ownername?'发起人:'+card_register_ownername:''}}</view>
-                <view>{{card_register_ownerwechat?'微信:'+card_register_ownerwechat:''}}</view>
-              -->
-                <text>发起人:</text>
-                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownername}}" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed2}}" maxlength='30' />
-                <text>微信号:</text>
-                <input style='width:200rpx;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownerwechat}}" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed3}}" maxlength='30' />
-              </view>
-              <view  bindtap="" class="card-register-addr" style="color:{{current_card_color}};">
-                <!-- view>{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</view -->
-                <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#666;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
-              </view>
-              <view wx:if="{{goodsshape==4 && card_type==1}}" bindtap="" class="card-register-biz" style="color:{{current_card_color}}">
-              <!--
-                <view>{{card_register_lim>0?card_register_lim:'报名人数:不限'}}</view>
-                <view>{{card_register_fee?card_register_fee:'报名费:0元'}}</view>
-                <view>{{card_register_right_str?card_register_right_str:'权限:参与者可看'}}</view>
-              -->
-                <text>人数(0不限):</text>
-                <input style="width:100rpx;" value="{{card_register_lim}}" type="number" bindinput='cardregisterLimTapTag' focus="{{inputShowed5}}" maxlength='10' />
-                <text>费用:</text>
-                <input style="width:100rpx;" value="{{card_register_fee}}" type="digit" placeholder="报名费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed6}}" maxlength='10' />
-              </view>
-               <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-startend" style="color:{{current_card_color}}">
-                <picker value="{{card_register_reqid_index}}"  range="{{card_register_reqid_picker}}" bindchange="bindChangeRegisterReqid">
- 证件类型:{{card_register_reqid_picker[card_register_reqid_index]}}  
-                </picker>
-              </view>
-              <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-startend" style="color:{{current_card_color}}">
-                <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
- 开始时间:{{register_start_date}}  
-                </picker>
-                <text space="ensp">  </text>
-                <picker mode="time" value="{{register_start_time}}" start="register_start_time" end="23:59" bindchange="bindChangeStartTime">{{register_start_time}}
-                </picker>
-                <picker mode="date" value="{{register_end_date}}" start="register_end_date" end="2999-12-12" bindchange="bindChangeEndDate">
-  ~~ {{register_end_date}}  
-                </picker>
-                 <text space="ensp">  </text>
-                <picker mode="time" value="{{register_end_time}}" start="register_end_time" end="23:59" bindchange="bindChangeEndTime"> {{register_end_time}}
-                </picker>
-              </view>
-              <view wx:if="{{goodsshape==4 && card_type==1}}"   class="card-register-act-startend" style="color:{{current_card_color}}">
-                <picker mode="date" value="{{action_start_date}}" start="action_start_date" end="2999-12-12" bindchange="bindChangeActStartDate">
- 活动时间:{{action_start_date}}  
-                </picker>
-                 <text space="ensp">  </text>
-                <picker mode="time" value="{{action_start_time}}" start="action_start_time" end="23:59" bindchange="bindChangeActStartTime"> {{action_start_time}}
-                </picker>
-  <picker mode="date" value="{{action_end_date}}" start="action_end_date" end="2999-12-12" bindchange="bindChangeActEndDate">
- ~~ {{action_end_date}}  
-                </picker>
-                 <text space="ensp">  </text>
-                <picker mode="time" value="{{action_end_time}}" start="action_end_time" end="23:59" bindchange="bindChangeActEndTime"> {{action_end_time}}
-                </picker>
-              </view>
+             <!-- register card  {{template.width?' width:'+(template.width*winWidth)+'px;':''}}-->
+            <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-view">
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+                <text hidden="{{template.typeId=='card_register_title'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_title?card_register_title:template.typeText}}
+                </text>
+                <text hidden="{{template.typeId=='card_register_content'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_content?card_register_content:template.typeText}}
+              </text>
+               <text hidden="{{template.typeId=='card_register_addr'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_addr?card_register_addr:template.typeText}}
+                </text>
+                <text hidden="{{template.typeId=='register_start_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_start_date?'注册:'+register_start_date:template.typeText}}
+                </text>
+                <text hidden="{{template.typeId=='register_start_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_start_time?register_start_time:template.typeText}}
+                </text> 
+                <text hidden="{{template.typeId=='register_end_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_end_date?register_end_date:template.typeText}}
+                </text> 
+                <text hidden="{{template.typeId=='register_end_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_end_time?register_end_time:template.typeText}}
+                </text>  
+                <text hidden="{{template.typeId=='action_start_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_start_date?'活动:'+action_start_date:template.typeText}}
+                </text>  
+                <text hidden="{{template.typeId=='action_start_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_start_time?action_start_time:template.typeText}}
+                </text>  
+                <text hidden="{{template.typeId=='action_end_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_end_date?action_end_date:template.typeText}}
+                </text> 
+                <text hidden="{{template.typeId=='action_end_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_end_time?action_end_time:template.typeText}}
+                </text>  
+                <text hidden="{{(template.typeId=='card_register_lim')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_lim==0?'人数:不限':'人数:'+card_register_lim}}
+                </text>  
+                <text hidden="{{(template.typeId=='card_register_fee')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_fee>0?'费用:￥'+card_register_fee:'费用:免费'}}
+                </text>  
+                <text hidden="{{(template.typeId=='card_register_ownername')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_ownername?'发起人:'+card_register_ownername:''}}
+                </text>   
+                <text hidden="{{(template.typeId=='card_register_ownerwechat')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_ownerwechat?'微信:'+card_register_ownerwechat:''}}
+                </text>  
+                <view hidden="{{template.typeId=='card_register_adv'?false:true}}">
+                <image  style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_register_adv}}" />
+                </view>
+              </block>
             </view>
             <!-- card name info view -->
             <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-name-view" >
@@ -378,9 +347,86 @@
         <input hidden="{{!is_card_register_title}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_register_title}}" placeholder="标题"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}"  maxlength='30' />
       </view>
       <view class="card-register-info">
-         <textarea style='font-size:28rpx;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
+         <textarea hidden="{{!is_card_register_content}}" style='font-size:28rpx;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
+      </view>
+       <view class="card-register-info">
+        <input hidden="{{!is_card_register_ownername}}" style='width:40%;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownername}}" placeholder="发起人署名"  bindinput='cardregisterOwnerNameTapTag' focus="{{inputShowed2}}" maxlength='30' />
+        <input hidden="{{!is_card_register_ownerwechat}}" style='width:60%;' placeholder-style="text-align:center;color:#e2e2e2;" type="text" value="{{card_register_ownerwechat}}" placeholder="发起人微信号"  bindinput='cardregisterOwnerWechatTapTag' focus="{{inputShowed3}}" maxlength='30' />
       </view>
       <view class="card-register-info">
+        <input hidden="{{!is_card_register_addr}}" value="{{card_register_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed4}}" maxlength='50' />
+      </view>
+      <view class="card-register-info">
+        <text  hidden="{{!is_card_register_lim}}" style="width:35%;padding:5rpx auto;">人数(0无限):</text>
+        <input hidden="{{!is_card_register_lim}}" style="width:20%;" value="{{card_register_lim}}" type="number"  placeholder-style="text-align:center;color:#e2e2e2;" placeholder="限制人数(0不限制)"  bindinput='cardregisterLimTapTag' focus="{{inputShowed5}}" maxlength='10' />
+        <text hidden="{{!is_card_register_fee}}" style="width:20%;padding:5rpx auto;">费用￥:</text>
+        <input hidden="{{!is_card_register_fee}}" style="width:20%;" value="{{card_register_fee}}" type="digit" placeholder-style="text-align:center;color:#e2e2e2;"  placeholder="参与费用"  bindinput='cardregisterFeeTapTag' focus="{{inputShowed6}}" maxlength='10' />
+      </view>
+      <view class="card-register-info" style="justify-content: left;">
+        <text style="width:150rpx;">所需证件:</text>
+        <picker value="{{card_register_reqid_index}}" range="{{card_register_reqid_picker}}" bindchange="bindChangeRegisterReqid">
+          <view style="font-size:25rpx;background:#fff;margin-top:15rpx;">
+           {{card_register_reqid_picker[card_register_reqid_index]}}  
+          </view>
+        </picker>
+      </view>
+      <view class="card-register-info" hidden="{{!is_register_start_date}}">
+        <text  style="width:300rpx;">注册开始:</text>
+        <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
+        <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
+         {{register_start_date}}
+        </view>
+        </picker>
+        <text style="width:20rpx;" space="ensp"></text>
+        <picker mode="time" value="{{register_start_time}}" start="register_start_time" end="23:59" bindchange="bindChangeStartTime">
+         <view style="font-size:25rpx;background:#fff;width:120rpx;margin-top:15rpx;">
+         {{register_start_time}}
+        </view>
+        </picker>
+      </view>
+       <view hidden="{{!is_register_end_date}}" class="card-register-info" >
+        <text style="width:300rpx;">注册结束:</text>
+        <picker mode="date" value="{{register_end_date}}" start="register_end_date" end="2999-12-12" bindchange="bindChangeEndDate">
+        <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
+         {{register_end_date}}
+        </view>
+        </picker>
+        <text style="width:20rpx;" space="ensp"></text>
+        <picker mode="time" value="{{register_end_time}}" start="register_end_time" end="23:59" bindchange="bindChangeEndTime">
+         <view style="font-size:25rpx;background:#fff;width:120rpx;margin-top:15rpx;">
+         {{register_end_time}}
+        </view>
+        </picker>
+      </view>
+      <view hidden="{{!is_register_start_time}}" class="card-register-info" >
+        <text style="width:300rpx;">活动开始:</text>
+        <picker mode="date" value="{{action_start_date}}" start="action_start_date" end="2999-12-12" bindchange="bindChangeActStartDate">
+        <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
+         {{action_start_date}}
+        </view>
+        </picker>
+        <text style="width:20rpx;" space="ensp"></text>
+        <picker mode="time" value="{{action_start_time}}" start="action_start_time" end="23:59" bindchange="bindChangeActStartTime">
+         <view style="font-size:25rpx;background:#fff;width:120rpx;margin-top:15rpx;">
+         {{action_start_time}}
+        </view>
+        </picker>
+      </view>
+      <view hidden="{{!is_action_end_time}}" class="card-register-info" >
+        <text  style="width:300rpx;">活动结束:</text>
+        <picker  mode="date" value="{{action_end_date}}" start="action_end_date" end="2999-12-12" bindchange="bindChangeActEndDate">
+        <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
+         {{action_end_date}}
+        </view>
+        </picker>
+        <text style="width:20rpx;" space="ensp"></text>
+        <picker mode="time" value="{{action_end_time}}" start="action_end_time" end="23:59" bindchange="bindChangeActEndTime">
+         <view style="font-size:25rpx;background:#fff;width:120rpx;margin-top:15rpx;">
+         {{action_end_time}}
+        </view>
+        </picker>
+      </view>
+      <view hidden="{{!is_card_register_adv}}" class="card-register-info">
         <image src="{{card_register_adv?card_register_adv:default_image}}"></image>
         <text hidden="{{card_register_adv}}"  data-logo='2' bindtap="upimg" style='font-size:25rpx;height:100rpx;line-height:100rpx;'>添加主题图片</text>
         <text  hidden="{{!card_register_adv}}" bindtap="cancel_upimg"  data-logo='2' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消主题图片</text>

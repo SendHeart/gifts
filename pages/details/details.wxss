@@ -651,9 +651,9 @@ border: none;
 
 .card-name-info input {
   width: 100%;
-  height: 40rpx;
-  line-height: 40rpx;
-  margin: 0 0 20rpx 10rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin: 0 0 10rpx 10rpx;
   padding: 15rpx;
   font-size: 24rpx;
   color: #666;
@@ -693,7 +693,7 @@ border: none;
 
 .card-register-info {
   width: 100%;
-  margin: 0 auto;
+  margin: 5rpx auto;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -701,10 +701,10 @@ border: none;
 
 .card-register-info input {
   width: 100%;
-  height: 40rpx;
-  line-height: 40rpx;
-  margin: 0 0 20rpx 10rpx;
-  padding: 15rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin: 0 0 10rpx 10rpx;
+  padding: 10rpx;
   font-size: 24rpx;
   color: #666;
   background: #fff;
@@ -763,36 +763,21 @@ border: none;
   padding: 10rpx;
 }
 .card-register-view {
-  width: 80%;
-  position: absolute;
-  top: 0;
-  margin-left:10%;
-  margin-top:90rpx;
-  display: flex;
-  flex-direction:column; 
-  z-index: 2; 
-  border:1px solid #eee;
-  border-radius: 20rpx;
+    z-index: 1000;
 }
-
 .card-register-view text {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 30rpx;
-  height: 30rpx;
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
 }
- 
-.card-register-view textarea {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 8; 
-  width:539rpx;
-  padding: 10rpx;
+.card-register-view image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
 }
 .share-goods-wx-info{
     position: absolute;

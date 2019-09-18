@@ -702,7 +702,6 @@ Page({
       ]
       wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
       console.log('card_name_info:', wx.getStorageSync('card_name_info'))
-
     }
     that.setData({
       inputShowed:false,
