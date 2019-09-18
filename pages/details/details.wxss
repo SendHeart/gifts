@@ -640,6 +640,7 @@ border: none;
   background: #fff;
   */
 }
+
 .card-name-info {
   width: 100%;
   margin: 0 auto;
@@ -689,6 +690,57 @@ border: none;
   font-size: 24rpx;
   color: #999;
 }
+
+.card-register-info {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-register-info input {
+  width: 100%;
+  height: 40rpx;
+  line-height: 40rpx;
+  margin: 0 0 20rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #666;
+  background: #fff;
+  border-radius: 14rpx;
+}
+.card-register-info text {
+  width: 70%;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin: 0 0 10rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  border-radius: 14rpx;
+}
+.card-register-info textarea {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
+  width:530rpx;
+  height:150rpx;
+  background: #fff;
+  padding: 10rpx;
+}
+.card-register-info image {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 0 auto;
+  padding: 5rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
 .card-name-note {
   width: 100%;
   margin: 5rpx auto;
@@ -710,7 +762,7 @@ border: none;
   border-radius: 20rpx;
   padding: 10rpx;
 }
-.card-register-info {
+.card-register-view {
   width: 80%;
   position: absolute;
   top: 0;
@@ -723,15 +775,7 @@ border: none;
   border-radius: 20rpx;
 }
 
-.card-register-title { 
-    width:100%;
-    height: 50rpx;
-    line-height: 50rpx;
-    font-size:35rpx;
-    border:1px solid #eee;
-    margin-bottom:10rpx;
-}
-.card-register-title text {
+.card-register-view text {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -739,15 +783,8 @@ border: none;
   line-height: 30rpx;
   height: 30rpx;
 }
-.card-register-content { 
-  width:100%;
-  height: 360rpx;
-  font-size:28rpx;
-  border:1px solid #eee; 
-  padding: 20rpx;
-  margin-bottom:10rpx;
-}
-.card-register-content textarea {
+ 
+.card-register-view textarea {
   display: -webkit-box;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -756,81 +793,6 @@ border: none;
   -webkit-line-clamp: 8; 
   width:539rpx;
   padding: 10rpx;
-}
-.card-register-owner { 
-  width:100%;
-  height: 55rpx;
-  line-height: 55rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: space-around;
-  border:1px solid #eee; 
-  font-size:25rpx;
-  align-items: center;
-}
-
-.card-register-addr { 
-    width:100%;
-    height: 55rpx;
-    line-height: 55rpx;
-    font-size:25rpx;
-    border:1px solid #eee;
-    align-items: center;
-}
-.card-register-startend { 
-  width:100%;
-  height: 50rpx;
-  line-height: 50rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-  font-size:25rpx;
-}
-.card-register-act-startend { 
-  width:100%;
-  height: 50rpx;
-  line-height: 50rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-  font-size:25rpx;
-}
-.card-register-biz { 
-  width:100%;
-  display:flex;
-  flex-direction:row;
-  justify-content: space-around;
-  border:1px solid #eee; 
-  font-size:25rpx;
-  align-items: center;
-}
-.share-card-register-image {
-    width: 100%;
-    display:flex;
-    flex-direction:row;
-    justify-content: center;
-    position: absolute;
-    top:0;
-    margin-top:10rpx;
-}
-
-.share-card-register-image image {
-  width: 80%;
-  height: 280rpx;
-  margin-left:10%;
-  z-index:2;
-  align-content: center;
-  text-align: center;
-  align-items: center;
-  border-radius: 15rpx;
-}
-.share-card-register-image-note {
-  width: 100%;
-  z-index:1000;
-  align-content: center;
-  text-align: center;
-  align-items: center;
-  margin-top:460rpx;
 }
 .share-goods-wx-info{
     position: absolute;

@@ -121,8 +121,9 @@ Page({
     card_register_right_index: 0,  
     card_register_reqid_picker: ['0无需证件', '1身份证', '2微信号', '3QQ号', '4邮箱','5学号','6工号'],
     card_register_reqid_index: 0, 
-    card_name_modal_title:'名片内容',
+    card_name_modal_title:'编辑内容',
     card_name_logo_image: '/images/img_upload_field.png',
+    default_image: '/images/img_upload_field.png',
     has_shlogo:false,
   },
 
@@ -220,9 +221,22 @@ Page({
         that.upload()
       }
     }) 
-   
   },
 
+  cancel_upimg: function (e) {
+    var that = this
+    var is_logo = e.currentTarget.dataset.logo ? e.currentTarget.dataset.logo : 0
+    console.log('cancel_upimg:',is_logo)
+    if(is_logo==1){
+      that.setData({
+        card_name_logo_image: ''
+      })
+    }else if(is_logo == 2){
+      that.setData({
+        card_register_adv: ''
+      })
+    }
+  },
   upload: function () {
     var that = this;
     var goods_id = that.data.goodsid
@@ -244,13 +258,16 @@ Page({
         }, // HTTP 请求中其他额外的 form data
         success: function (res) {
           var retinfo = JSON.parse(res.data.trim())
-          
           //console.log('upimg upload url:', retinfo['result']['img_url'])
           if (retinfo['status'] == "y") {
             if(is_logo==1){ //logo 处理
               that.image_save(retinfo['result']['img_url'], 'card_name_logo_image')
               that.setData({
                 card_name_logo_image: retinfo['result']['img_url'],
+              })
+            } else if (is_logo == 2){
+              that.setData({
+                card_register_adv: retinfo['result']['img_url'],
               })
             }else{
               var new_image_pic = []
@@ -354,6 +371,7 @@ Page({
     var that = this
     var image_pic = that.data.image_pic
     var template_config = image_pic[cur_img_id] ? image_pic[cur_img_id]['template_config']:''
+    var card_type = that.data.card_type
     var is_card_name_name = false
     var is_card_name_title = false
     var is_card_name_phone = false
@@ -365,8 +383,26 @@ Page({
     var is_card_name_company = false
     var is_card_name_logo_image = false
     var is_card_name_qrcode = false
+
+    var is_card_register_title = false
+    var is_card_register_content = false
+    var is_card_register_adv = false
+    var is_card_register_logo = false
+    var is_card_register_ownername = false
+    var is_card_register_ownerwechat = false
+    var is_card_register_addr = false
+    var is_card_register_lim = false
+    var is_card_register_fee = false
+    var is_register_start_date = false
+    var is_register_start_time = false
+    var is_register_end_date = false
+    var is_register_end_time = false
+    var is_action_start_date = false
+    var is_action_start_time = false
+    var is_action_end_date = false
+    var is_action_end_time = false
     console.log('detail swiperchange_cardname template_config:', template_config)
-    if (template_config){
+    if (template_config && card_type==2){
       for (var i = 0; i < template_config.length;i++){
         //console.log('detail swiperchange_cardname template_config i:', template_config[i])
         if(template_config[i]['typeId'] == 'card_name'){
@@ -407,8 +443,68 @@ Page({
         is_card_name_logo_image: is_card_name_logo_image,
         is_card_name_qrcode: is_card_name_qrcode,
       })
+    } else if (template_config && card_type == 1){
+      for (var i = 0; i < template_config.length; i++) {
+        //console.log('detail swiperchange_cardname template_config i:', template_config[i])
+        if (template_config[i]['typeId'] == 'card_register_title') {
+          is_card_register_title = true
+        } else if (template_config[i]['typeId'] == 'card_register_content') {
+          is_card_register_content = true
+        } else if (template_config[i]['typeId'] == 'card_register_adv') {
+          is_card_register_adv = true
+        } else if (template_config[i]['typeId'] == 'card_register_logo') {
+          is_card_register_logo = true
+        } else if (template_config[i]['typeId'] == 'card_register_ownername') {
+          is_card_register_ownername = true
+        } else if (template_config[i]['typeId'] == 'card_register_ownerwechat') {
+          is_card_register_ownerwechat = true
+        } else if (template_config[i]['typeId'] == 'card_register_addr') {
+          is_card_register_addr = true
+        } else if (template_config[i]['typeId'] == 'card_register_lim') {
+          is_card_register_lim = true
+        } else if (template_config[i]['typeId'] == 'card_register_fee') {
+          is_card_register_fee = true
+        } else if (template_config[i]['typeId'] == 'register_start_date') {
+          is_register_start_date = true
+        } else if (template_config[i]['typeId'] == 'register_start_time') {
+          is_register_start_time = true
+        } else if (template_config[i]['typeId'] == 'register_end_date') {
+          is_register_end_date = true
+        } else if (template_config[i]['typeId'] == 'register_end_time') {
+          is_register_end_time = true
+        } else if (template_config[i]['typeId'] == 'action_start_date') {
+          is_action_start_date = true
+        } else if (template_config[i]['typeId'] == 'action_start_time') {
+          is_action_start_time = true
+        } else if (template_config[i]['typeId'] == 'action_end_date') {
+          is_action_end_date = true
+        } else if (template_config[i]['typeId'] == 'action_end_time') {
+          is_action_end_time = true
+        }
+      }
+
+      that.setData({
+        is_card_register_title: is_card_register_title,
+        is_card_register_content: is_card_register_content,
+        is_card_register_adv: is_card_register_adv,
+        is_card_register_logo: is_card_register_logo,
+        is_card_register_ownername: is_card_register_ownername,
+        is_card_register_ownerwechat: is_card_register_ownerwechat,
+        is_card_register_addr: is_card_register_addr,
+        is_card_register_lim: is_card_register_lim,
+        is_card_register_fee: is_card_register_fee,
+        is_register_start_date: is_register_start_date,
+        is_register_start_time: is_register_start_time,
+        is_register_end_date: is_register_end_date,
+        is_register_end_time: is_register_end_time,
+        is_action_start_date: is_action_start_date,
+        is_action_start_time: is_action_start_time,
+        is_action_end_date: is_action_end_date,
+        is_action_end_time: is_action_end_time,
+      })
     }
   },
+
   card_name_nameTapTag: function (e) {
     var that = this
     var card_name_name = util.filterEmoji(e.detail.value)
@@ -564,6 +660,7 @@ Page({
           card_color: that.data.current_card_color,
           card_register_title: that.data.card_register_title,
           card_register_content: that.data.card_register_content,
+          card_register_adv: that.data.card_register_adv,
           image: that.data.card_register_img,
           register_start_date: that.data.register_start_date,
           register_end_date: that.data.register_end_date,
@@ -902,12 +999,22 @@ Page({
     })
   },
 
-  cardnameEditTapTag: function (is_buymyself=0) {
+  cardEditTapTag: function (is_buymyself=0) {
     var that = this
-    that.setData({
-      cardnamehidden: !that.data.cardnamehidden,
-      is_buymyself: is_buymyself ? is_buymyself:0,
-    })
+    var card_type = that.data.card_type
+    if(card_type == 1){
+      that.setData({
+        cardregisterhidden: !that.data.cardregisterhidden,
+        is_buymyself: is_buymyself ? is_buymyself : 0,
+        card_name_modal_title:'编辑内容'
+      })
+    }else if(card_type == 2){
+      that.setData({
+        cardnamehidden: !that.data.cardnamehidden,
+        is_buymyself: is_buymyself ? is_buymyself : 0,
+      })
+    }
+   
   },
 
   //确定按钮点击事件 
@@ -923,6 +1030,23 @@ Page({
     var that = this
     that.setData({
       cardnamehidden: !that.data.cardnamehidden,
+    })
+  },  
+
+
+  //确定按钮点击事件 
+  shareConfirmCardRegister: function () {
+    var that = this
+    that.setData({
+      cardregisterhidden: !that.data.cardregisterhidden,
+    })
+    that.confirmcardinput()
+  },
+  //取消按钮点击事件  
+  shareCandelCardRegister: function () {
+    var that = this
+    that.setData({
+      cardregisterhidden: !that.data.cardregisterhidden,
     })
   },  
 
@@ -1105,6 +1229,7 @@ Page({
         var card_register_reqid_index = 0
         var card_register_ownername = ''
         var card_register_ownerwechat = ''
+        var card_register_adv = ''
         var card_content = ''
         var card_name_name = ''
         var card_name_title = ''
@@ -1151,6 +1276,8 @@ Page({
           card_register_reqid_index = card_register_info['card_register_reqid_index']
           card_register_ownername = card_register_info['card_register_ownername']
           card_register_ownerwechat = card_register_info['card_register_ownerwechat']
+          card_register_adv = card_register_info['card_register_adv']
+          has_shlogo = card_register_info['has_shlogo']
         }
         if (card_name_prev) {
           var card_name_info = JSON.parse(card_name_prev)
@@ -1183,6 +1310,7 @@ Page({
           card_register_reqid_index: card_register_reqid_index ? card_register_reqid_index : 0,
           card_register_ownername: card_register_ownername ? card_register_ownername : '',
           card_register_ownerwechat: card_register_ownerwechat ? card_register_ownerwechat : '',
+          card_register_adv: card_register_adv ? card_register_adv:'',
           card_content: card_content,
           card_image_height: card_image_height,
           card_name_name: card_name_name ? card_name_name:'',
@@ -1632,7 +1760,7 @@ Page({
       /*
       if (goodsshape==4) {
         //that.confirmcardinput()
-        //that.cardnameEditTapTag(that.data.is_buymyself)
+        //that.cardEditTapTag(that.data.is_buymyself)
       }else{
         
       }
@@ -1765,6 +1893,7 @@ Page({
       var order_voicetime = that.data.recordingTimeqwe ? that.data.recordingTimeqwe : 0 //录音文件url
       var goodsshape = that.data.goodsshape
       var current_card_color = that.data.current_card_color
+      var card_type = that.data.card_type
       if (goodsshape == 5 || goodsshape == 4) {
         order_note = that.data.card_content
         if (cur_img_id != 0) {
@@ -1823,18 +1952,26 @@ Page({
               url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
             })
           }else{
-            if(that.data.card_type==1){
-              var card_register_info = wx.getStorageSync('card_register_info')  //从缓存中读取
-              console.log('detail checkout 贺卡请柬互动卡  order_image:', share_goods_image, 'card_register_info', card_register_info)
+            if (goodsshape == 5){
+              console.log('detail checkout 贺卡请柬互动卡  order_image:', share_goods_image, ' carts:', carts)
               wx.navigateTo({
-                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&card_register_info=' + card_register_info + '&username=' + username + '&token=' + token
+                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
               })
-            } else if (that.data.card_type == 2){
-              var card_name_info = wx.getStorageSync('card_name_info')  //从缓存中读取
-              console.log('detail checkout 名片互动卡  order_image:', share_goods_image, 'card_name_info', card_name_info)
-              wx.navigateTo({
-                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&card_template=' + JSON.stringify(share_goods_template) +'&username=' + username + '&token=' + token
-              })
+            } else if (goodsshape == 4){
+              if(card_type == 1){
+                var card_register_info = wx.getStorageSync('card_register_info')  //从缓存中读取
+                console.log('detail checkout 互动卡 register card order_image:', share_goods_image, ' card_register_info:', card_register_info, ' share_goods_template:', share_goods_template)
+                wx.navigateTo({
+                  url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_register_info=' + card_register_info + '&card_template=' + JSON.stringify(share_goods_template) + '&username=' + username + '&token=' + token
+                })
+              }else if(card_type==2){
+                var card_name_info = wx.getStorageSync('card_name_info')  //从缓存中读取
+                console.log('detail checkout 互动卡 name card  order_image:', share_goods_image, ' card_name_info:', card_name_info, ' share_goods_template:', share_goods_template)
+                wx.navigateTo({
+                  url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&card_template=' + JSON.stringify(share_goods_template) + '&username=' + username + '&token=' + token
+                })
+              }
+             
             }
            
           }

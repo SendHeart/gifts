@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view  class="pagewrap" style="{{(!modalHidden||!notehidden||!cardnamehidden)?'position:fixed;':''}}">
+<view  class="pagewrap" style="{{(!modalHidden||!notehidden||!cardnamehidden||!cardregisterhidden)?'position:fixed;':''}}">
   <view class="share-goods"  >
     <view class="share-buttons" style="justify-content: flex-end">
       <!--
@@ -8,7 +8,7 @@
         上传图片
       </view>
       -->
-       <view wx:if="{{goodsshape==4 && card_type==2}}" class="btnshare" bindtap="cardnameEditTapTag">
+       <view wx:if="{{goodsshape==4}}" class="btnshare" bindtap="cardEditTapTag">
         <image class="shareto" src="../../images/u72.png"></image>
         编辑
       </view>
@@ -71,7 +71,7 @@
               </view>
               <view  bindtap="" class="card-register-addr" style="color:{{current_card_color}};">
                 <!-- view>{{card_register_addr?'活动地址:'+card_register_addr:'活动地址'}}</view -->
-                <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
+                <input value="{{card_register_addr}}" placeholder-style="text-align:center;color:#666;" type="text" placeholder="地址" bindinput='cardregisterAddrTapTag' focus="{{inputShowed4}}" maxlength='30' />
               </view>
               <view wx:if="{{goodsshape==4 && card_type==1}}" bindtap="" class="card-register-biz" style="color:{{current_card_color}}">
               <!--
@@ -331,7 +331,7 @@
 </modal>
 </view>
 <view hidden="{{cardnamehidden}}" style='z-index:999;'>
-<modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" hidden="{{cardnamehidden}}" bindconfirm="shareConfirmCardName" bindcancel="shareCandelCardName" confirm-text="确定" cancel-text="返回">
+<modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" bindconfirm="shareConfirmCardName" bindcancel="shareCandelCardName" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-80}}px;">
     <!-- name card -->
       <view class="card-name-info">
@@ -355,9 +355,10 @@
        <view class="card-name-info">
         <input hidden="{{!is_card_name_company}}" style='font-size:25rpx;' value="{{card_name_company}}" placeholder-style="text-align:center;color:#e2e2e2;" type="text" placeholder="公司名称" bindinput='card_name_companyTapTag' focus="{{inputShowed4}}" maxlength='80' />
       </view>
-      <view hidden="{{!is_card_name_logo_image}}" class="card-name-info" data-logo='1' bindtap="upimg">
+      <view hidden="{{!is_card_name_logo_image}}" class="card-name-info" >
         <image src="{{card_name_logo_image}}"></image>
-        <text style='font-size:35rpx;height:100rpx;line-height:100rpx;'>我的LOGO</text>
+        <text hidden="{{card_name_logo_image}}" style='font-size:25rpx;height:100rpx;line-height:100rpx;' data-logo='1' bindtap="upimg">添加LOGO</text>
+        <text hidden="{{!card_name_logo_image}}" bindtap="cancel_upimg"  data-logo='1' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消LOGO</text>
       </view>
        <view class="modeswitch">
         <label>
@@ -366,6 +367,30 @@
         </label>
       </view>
       
+    </view>
+</modal>
+</view>
+<view hidden="{{cardregisterhidden}}" style='z-index:999;'>
+<modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" bindconfirm="shareConfirmCardRegister" bindcancel="shareCandelCardRegister" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-80}}px;">
+    <!-- register card -->
+      <view class="card-register-info">
+        <input hidden="{{!is_card_register_title}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_register_title}}" placeholder="标题"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}"  maxlength='30' />
+      </view>
+      <view class="card-register-info">
+         <textarea style='font-size:28rpx;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
+      </view>
+      <view class="card-register-info">
+        <image src="{{card_register_adv?card_register_adv:default_image}}"></image>
+        <text hidden="{{card_register_adv}}"  data-logo='2' bindtap="upimg" style='font-size:25rpx;height:100rpx;line-height:100rpx;'>添加主题图片</text>
+        <text  hidden="{{!card_register_adv}}" bindtap="cancel_upimg"  data-logo='2' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消主题图片</text>
+      </view>
+       <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
+        </label>
+      </view>
     </view>
 </modal>
 </view>
