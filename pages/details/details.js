@@ -1284,7 +1284,7 @@ Page({
           card_register_reqid_index = card_register_info['card_register_reqid_index']
           card_register_ownername = card_register_info['card_register_ownername']
           card_register_ownerwechat = card_register_info['card_register_ownerwechat']
-          card_register_adv = card_register_info['card_register_adv'] ? card_register_info['card_register_adv']:that.data.card_register_topic_image
+          card_register_adv = card_register_info['card_register_adv'] ? card_register_info['card_register_adv']:card_register_topic_image
           has_shlogo = card_register_info['has_shlogo'] ? card_register_info['has_shlogo'] : has_shlogo
           has_registerdue = card_register_info['has_registerdue'] ? card_register_info['has_registerdue']:has_registerdue
           has_actiondue = card_register_info['has_actiondue'] ? card_register_info['has_actiondue'] : has_actiondue
