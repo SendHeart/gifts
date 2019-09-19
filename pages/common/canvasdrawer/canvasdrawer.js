@@ -142,7 +142,7 @@ Component({
     },
     drawImage (params) {
       this.ctx.save()
-      const { url, top = 0, left = 0, width = 0, height = 0, borderRadius = 0 } = params
+      const { url, top = 0, left = 0, width = 0, height = 0, borderRadius = 0, roundedRect = 0 } = params
        if (borderRadius) {
          this.ctx.beginPath()
          this.ctx.arc(left + borderRadius, top + borderRadius, borderRadius, 0, 2 * Math.PI)
@@ -150,6 +150,21 @@ Component({
          this.ctx.clip()
          this.ctx.drawImage(url, left, top, width, height)
          console.log('canvasdrawer drwImge borderRadius:', borderRadius)
+       } else if (roundedRect){
+         var r = roundedRect
+         if (width < 2 * r) r = width / 2
+         if (height < 2 * r) r = height / 2
+         this.ctx.beginPath()
+         this.ctx.moveTo(left + r, top)
+         this.ctx.arcTo(left + width, top, left + width, top + height, r)
+         this.ctx.arcTo(left + width, top + height, left, top + height, r)
+         this.ctx.arcTo(left, top + height, left, top, r)
+         this.ctx.arcTo(left, top, left + width, top, r)
+         //this.ctx.closePath();
+         this.ctx.fill()
+         this.ctx.clip()
+         this.ctx.drawImage(url, left, top, width, height)
+         console.log('canvasdrawer drwImge roundedRect:', r)
       } else {
         this.ctx.drawImage(url, left, top, width, height)
       }

@@ -25,7 +25,14 @@
              <text>{{card_name_info.card_name_addr?'地址: '+card_name_info.card_name_addr:''}}
             </text>
           </view>
+          <view wx:if="{{order_shape==4 && card_register_info}}">
+            <text>{{card_register_info.card_register_title?'名称:'+card_register_info.card_register_title:''}} 
+            </text>
+             <text>{{card_register_info.card_register_ownername?'发起人: '+card_register_info.card_register_ownername:''}}
+            </text>
         </view>
+        </view>
+         
         <view wx:if="{{order_shape!=4 && order_shape!=5}}" class="carts-subtitle">
           <view class='carts-price'>
             <view>{{item.sell_price>0?'￥'+item.sell_price:''}} {{item.num>0?'x'+item.num+' ':''}}</view>

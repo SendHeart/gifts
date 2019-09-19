@@ -402,7 +402,7 @@ Page({
           }
         
           if ((orderObjects[0]['shape'] == 5 || orderObjects[0]['shape'] == 4) && orderObjects[0]['m_desc']) {
-            console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
+            //console.log(' wishshare onload() 互动卡订单 m_desc:', orderObjects[0]['m_desc'])
             var m_desc = JSON.parse(orderObjects[0]['m_desc'])
             var voice_url = m_desc['voice']
             if (voice_url) {
@@ -882,13 +882,6 @@ Page({
       })
     } else if (share_order_shape == 4 && card_register_info && share_goods_id == 0) { //互动卡
       console.log('share_order_shape:', share_order_shape)
-      var card_addr = card_register_info['card_register_addr'] ?'地址:' + card_register_info['card_register_addr']: ''
-      var start_time = card_register_info['register_start_date'] ? '时间:' + card_register_info['register_start_date']+' ' : 
-      start_time += card_register_info['register_start_time'] ? card_register_info['register_start_time'] : ''
-      var end_time = card_register_info['register_end_date'] ? '~~' + card_register_info['register_end_date']+' ' : ''   
-      end_time += card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
-      var owner_info = card_register_info['card_register_ownername'] ? '发起人:' + card_register_info['card_register_ownername'] : ''
-      owner_info += card_register_info['card_register_ownerwechat'] ? '   微信:' + card_register_info['card_register_ownerwechat'] : ''
       var views_width = 500
       var views_height = 700 
 
@@ -914,15 +907,14 @@ Page({
           if (card_template[i]['typeId'] == 'card_register_adv') {
             view_item['type'] = 'image'
             view_item['url'] = card_register_info['card_register_adv'] ? card_register_info['card_register_adv'] : ''
-            //view_item['width'] = 50
-            //view_item['height'] = 50
+            view_item['roundedRect'] = 10
           }
-          if (card_template[i]['typeId'] == 'card_qrcode' && card_register_info['has_shlogo']) {
+          if (card_template[i]['typeId'] == 'card_register_logo' && card_register_info['has_shlogo']) {
             view_item['type'] = 'image'
             view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
-            view_item['width'] = 36
-            view_item['height'] = 36
-            view_item['borderRadius'] = 18
+            view_item['width'] = 50
+            view_item['height'] = 50
+            view_item['borderRadius'] = 25
           }
         } else {
           view_item['type'] = 'text'
@@ -935,10 +927,10 @@ Page({
             view_item['left'] = view_item['left'] 
           } else if (card_template[i]['typeId'] == 'card_register_content') {
             //console.log('share_order_shape', share_order_shape,' card_register_content:',card_register_info)
-            view_item['MaxLineNumber'] = 4 
+            view_item['MaxLineNumber'] = 6 
             view_item['breakWord'] = true
             view_item['lineHeight'] = 25
-            //view_item['width'] = 400
+            //view_item['width'] = views_width
             view_item['content'] = card_register_info['card_register_content'] ? card_register_info['card_register_content'] : ''
           } else if (card_template[i]['typeId'] == 'card_register_ownername') {
             view_item['content'] = card_register_info['card_register_ownername'] ? '发起人:'+card_register_info['card_register_ownername'] : ''
@@ -950,24 +942,24 @@ Page({
             view_item['content'] = card_register_info['card_register_lim']>0 ? '人数:'+card_register_info['card_register_lim'] : '人数:不限制'
           } else if (card_template[i]['typeId'] == 'card_register_fee') {
             view_item['content'] = card_register_info['card_register_fee']>0 ? '费用:￥'+card_register_info['card_register_fee'] : '费用:免费'
-          } else if (card_template[i]['typeId'] == 'register_start_date') {
-            view_item['content'] = card_register_info['register_start_date'] ? '注册时间：'+card_register_info['register_start_date'] : ''
-          } else if (card_template[i]['typeId'] == 'register_start_time') {
+          } else if (card_template[i]['typeId'] == 'register_start_date' && card_register_info['has_registerdue']) {
+            view_item['content'] = card_register_info['register_start_date'] ? '注册：'+card_register_info['register_start_date'] +' ': ''
+          } else if (card_template[i]['typeId'] == 'register_start_time' && card_register_info['has_registerdue']) {
             view_item['content'] = card_register_info['register_start_time'] ? card_register_info['register_start_time'] : ''
-          } else if (card_template[i]['typeId'] == 'register_end_date') {
+          } else if (card_template[i]['typeId'] == 'register_end_date' && card_register_info['has_registerdue']) {
             view_item['content'] = card_register_info['register_end_date'] ? card_register_info['register_end_date'] : ''
-          } else if (card_template[i]['typeId'] == 'register_end_time') {
+          } else if (card_template[i]['typeId'] == 'register_end_time' && card_register_info['has_registerdue']) {
             view_item['content'] = card_register_info['register_end_time'] ? card_register_info['register_end_time'] : ''
-          } else if (card_template[i]['typeId'] == 'action_start_date') {
-            view_item['content'] = card_register_info['action_start_date'] ? '活动时间:'+card_register_info['action_start_date'] : ''
-          } else if (card_template[i]['typeId'] == 'action_start_time') {
+          } else if (card_template[i]['typeId'] == 'action_start_date' && card_register_info['has_actiondue']) {
+            view_item['content'] = card_register_info['action_start_date'] ? '活动：'+card_register_info['action_start_date']+' ' : ''
+          } else if (card_template[i]['typeId'] == 'action_start_time' && card_register_info['has_actiondue']) {
             view_item['content'] = card_register_info['action_start_time'] ? card_register_info['action_start_time'] : ''
-          } else if (card_template[i]['typeId'] == 'action_end_date') {
+          } else if (card_template[i]['typeId'] == 'action_end_date' && card_register_info['has_actiondue']) {
             view_item['content'] = card_register_info['action_end_date'] ? card_register_info['action_end_date'] : ''
-          } else if (card_template[i]['typeId'] == 'action_end_time') {
+          } else if (card_template[i]['typeId'] == 'action_end_time' && card_register_info['has_actiondue']) {
             view_item['content'] = card_register_info['action_end_time'] ? card_register_info['action_end_time'] : ''
           }
-          view_item['fontSize'] = view_item['fontSize'] < 15 ? 15 : view_item['fontSize']
+          //view_item['fontSize'] = view_item['fontSize'] < 15 ? 15 : view_item['fontSize']
         }
 
         views = views.concat(view_item)

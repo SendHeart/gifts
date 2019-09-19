@@ -37,7 +37,7 @@
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{pic.id}}'>
           <swiper-item item-id="{{pic.id}}" class="swiper-item">
-            <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" data-list="{{image_pic}}" data-src="{{pic.url}}" bindtap="imgYu" />
+            <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" data-list="{{image_pic}}" data-src="{{pic.url}}" bindtap="{{card_type==0?'imgYu':'cardEditTapTag'}}" />
            <!-- 
             <view wx:if="{{goodsshape==4}}" class="share-card-register-image"> 
             <swiper class="swiper-share-box" bindchange="swiperchange_share" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}">
@@ -58,21 +58,21 @@
               </text>
                <text hidden="{{template.typeId=='card_register_addr'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_addr?card_register_addr:template.typeText}}
                 </text>
-                <text hidden="{{template.typeId=='register_start_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_start_date?'注册:'+register_start_date:template.typeText}}
+                <text hidden="{{(template.typeId=='register_start_date' && has_registerdue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_start_date?'注册:'+register_start_date:template.typeText}}
                 </text>
-                <text hidden="{{template.typeId=='register_start_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_start_time?register_start_time:template.typeText}}
+                <text hidden="{{(template.typeId=='register_start_time' && has_registerdue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_start_time?register_start_time:template.typeText}}
                 </text> 
-                <text hidden="{{template.typeId=='register_end_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_end_date?register_end_date:template.typeText}}
+                <text hidden="{{(template.typeId=='register_end_date' && has_registerdue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_end_date?register_end_date:template.typeText}}
                 </text> 
-                <text hidden="{{template.typeId=='register_end_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_end_time?register_end_time:template.typeText}}
+                <text hidden="{{(template.typeId=='register_end_time' && has_registerdue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{register_end_time?register_end_time:template.typeText}}
                 </text>  
-                <text hidden="{{template.typeId=='action_start_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_start_date?'活动:'+action_start_date:template.typeText}}
+                <text hidden="{{(template.typeId=='action_start_date' && has_actiondue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_start_date?'活动:'+action_start_date:template.typeText}}
                 </text>  
-                <text hidden="{{template.typeId=='action_start_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_start_time?action_start_time:template.typeText}}
+                <text hidden="{{(template.typeId=='action_start_time' && has_actiondue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_start_time?action_start_time:template.typeText}}
                 </text>  
-                <text hidden="{{template.typeId=='action_end_date'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_end_date?action_end_date:template.typeText}}
+                <text hidden="{{(template.typeId=='action_end_date' && has_actiondue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_end_date?action_end_date:template.typeText}}
                 </text> 
-                <text hidden="{{template.typeId=='action_end_time'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_end_time?action_end_time:template.typeText}}
+                <text hidden="{{(template.typeId=='action_end_time' && has_actiondue)?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{action_end_time?action_end_time:template.typeText}}
                 </text>  
                 <text hidden="{{(template.typeId=='card_register_lim')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_lim==0?'人数:不限':'人数:'+card_register_lim}}
                 </text>  
@@ -83,7 +83,10 @@
                 <text hidden="{{(template.typeId=='card_register_ownerwechat')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_ownerwechat?'微信:'+card_register_ownerwechat:''}}
                 </text>  
                 <view hidden="{{template.typeId=='card_register_adv'?false:true}}">
-                <image  style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_register_adv}}" />
+                <image  style=" border-radius:20rpx; {{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_register_adv}}" />
+                </view>
+                 <view hidden="{{(template.typeId=='card_register_logo' && has_shlogo)?false:true}}" style="">
+                  <image style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}} width:70rpx;height:70rpx; border-radius:50%;" src="{{share_goods_qrcode}}" />
                 </view>
               </block>
             </view>
@@ -346,6 +349,11 @@
       <view class="card-register-info">
         <input hidden="{{!is_card_register_title}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_register_title}}" placeholder="标题"  bindinput='cardregistertitleTapTag' focus="{{inputShowed}}"  maxlength='30' />
       </view>
+       <view hidden="{{!is_card_register_adv}}" class="card-register-info">
+        <image src="{{card_register_adv?card_register_adv:default_image}}"></image>
+        <text hidden="{{card_register_adv}}"  data-logo='2' bindtap="upimg" style='font-size:25rpx;height:100rpx;line-height:100rpx;'>添加主题图片</text>
+        <text  hidden="{{!card_register_adv}}" bindtap="cancel_upimg"  data-logo='2' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消主题图片</text>
+      </view>
       <view class="card-register-info">
          <textarea hidden="{{!is_card_register_content}}" style='font-size:28rpx;' bindblur="cardRegisterTextAreaBlur" value="{{card_register_content}}" placeholder="请输入说明(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
       </view>
@@ -370,7 +378,13 @@
           </view>
         </picker>
       </view>
-      <view class="card-register-info" hidden="{{!is_register_start_date}}">
+      <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>注册期限</text>
+          <switch bindchange="registerDueChange" checked='{{has_registerdue}}' color='#E34C55' style='zoom:0.6' />
+        </label>
+      </view>
+      <view class="card-register-info" hidden="{{!is_register_start_date || !has_registerdue}}">
         <text  style="width:300rpx;">注册开始:</text>
         <picker mode="date" value="{{register_start_date}}" start="register_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
         <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
@@ -384,7 +398,7 @@
         </view>
         </picker>
       </view>
-       <view hidden="{{!is_register_end_date}}" class="card-register-info" >
+       <view hidden="{{!is_register_end_date || !has_registerdue}}" class="card-register-info" >
         <text style="width:300rpx;">注册结束:</text>
         <picker mode="date" value="{{register_end_date}}" start="register_end_date" end="2999-12-12" bindchange="bindChangeEndDate">
         <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
@@ -398,7 +412,13 @@
         </view>
         </picker>
       </view>
-      <view hidden="{{!is_register_start_time}}" class="card-register-info" >
+      <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>活动期限</text>
+          <switch bindchange="actionDueChange" checked='{{has_actiondue}}' color='#E34C55' style='zoom:0.6' />
+        </label>
+      </view>
+      <view hidden="{{!is_action_start_time || !has_actiondue}}" class="card-register-info" >
         <text style="width:300rpx;">活动开始:</text>
         <picker mode="date" value="{{action_start_date}}" start="action_start_date" end="2999-12-12" bindchange="bindChangeActStartDate">
         <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
@@ -412,7 +432,7 @@
         </view>
         </picker>
       </view>
-      <view hidden="{{!is_action_end_time}}" class="card-register-info" >
+      <view hidden="{{!is_action_end_time || !has_actiondue}}" class="card-register-info" >
         <text  style="width:300rpx;">活动结束:</text>
         <picker  mode="date" value="{{action_end_date}}" start="action_end_date" end="2999-12-12" bindchange="bindChangeActEndDate">
         <view style="font-size:25rpx;background:#fff;width:160rpx;margin-top:15rpx;">
@@ -426,11 +446,7 @@
         </view>
         </picker>
       </view>
-      <view hidden="{{!is_card_register_adv}}" class="card-register-info">
-        <image src="{{card_register_adv?card_register_adv:default_image}}"></image>
-        <text hidden="{{card_register_adv}}"  data-logo='2' bindtap="upimg" style='font-size:25rpx;height:100rpx;line-height:100rpx;'>添加主题图片</text>
-        <text  hidden="{{!card_register_adv}}" bindtap="cancel_upimg"  data-logo='2' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消主题图片</text>
-      </view>
+     
        <view class="modeswitch">
         <label>
           <text style='height:50rpx;line-height:50rpx;'>送心logo</text>

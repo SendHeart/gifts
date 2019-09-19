@@ -186,7 +186,7 @@ picker {
 .carts-image {
   width: 120rpx;
   height: 120rpx; 
-  margin: 0 20rpx;
+  margin: 40rpx 20rpx;
 }
 
 /*右部描述*/

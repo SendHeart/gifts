@@ -123,8 +123,11 @@ Page({
     card_register_reqid_index: 0, 
     card_name_modal_title:'编辑内容',
     card_name_logo_image: '/images/img_upload_field.png',
+    card_register_topic_image: weburl + '/uploads/card_default_topic.png',
     default_image: '/images/img_upload_field.png',
     has_shlogo:false,
+    has_registerdue:false,
+    has_actionrdue:false,
   },
 
   bindPickerChange_card_color: function (e) {
@@ -678,6 +681,9 @@ Page({
           card_register_ownerwechat: that.data.card_register_ownerwechat,
           card_register_right_index: that.data.card_register_right_index,
           card_register_reqid_index: that.data.card_register_reqid_index,
+          has_shlogo: that.data.has_shlogo,
+          has_registerdue: that.data.has_registerdue,
+          has_actiondue: that.data.has_actiondue,
         }
       ]
       wx.setStorageSync('card_register_info', JSON.stringify(card_register_info[0]))
@@ -698,6 +704,7 @@ Page({
           card_name_logo_image: that.data.card_name_logo_image,
           card_name_note: that.data.card_name_note,
           has_shlogo:that.data.has_shlogo,
+          
         }
       ]
       wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
@@ -1242,6 +1249,8 @@ Page({
         var card_name_note = ''
         var card_name_logo_image = ''
         var has_shlogo = that.data.has_shlogo
+        var has_registerdue = that.data.has_registerdue
+        var has_actiondue = that.data.has_actiondue
         var page = that.data.page
         var scene = decodeURIComponent(options.scene)
         var goodsname = options.name
@@ -1275,8 +1284,10 @@ Page({
           card_register_reqid_index = card_register_info['card_register_reqid_index']
           card_register_ownername = card_register_info['card_register_ownername']
           card_register_ownerwechat = card_register_info['card_register_ownerwechat']
-          card_register_adv = card_register_info['card_register_adv']
-          has_shlogo = card_register_info['has_shlogo']
+          card_register_adv = card_register_info['card_register_adv'] ? card_register_info['card_register_adv']:that.data.card_register_topic_image
+          has_shlogo = card_register_info['has_shlogo'] ? card_register_info['has_shlogo'] : has_shlogo
+          has_registerdue = card_register_info['has_registerdue'] ? card_register_info['has_registerdue']:has_registerdue
+          has_actiondue = card_register_info['has_actiondue'] ? card_register_info['has_actiondue'] : has_actiondue
         }
         if (card_name_prev) {
           var card_name_info = JSON.parse(card_name_prev)
@@ -1291,7 +1302,7 @@ Page({
           card_name_company = card_name_info['card_name_company']
           card_name_note = card_name_info['card_name_note']
           card_name_logo_image = card_name_info['card_name_logo_image']
-          has_shlogo = card_name_info['has_shlogo']
+          has_shlogo = card_name_info['has_shlogo'] ? card_name_info['has_shlogo'] : has_shlogo
         }
         console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_name_prev:', card_name_prev)
         that.setData({
@@ -1310,6 +1321,8 @@ Page({
           card_register_ownername: card_register_ownername ? card_register_ownername : '',
           card_register_ownerwechat: card_register_ownerwechat ? card_register_ownerwechat : '',
           card_register_adv: card_register_adv ? card_register_adv:'',
+          has_registerdue: has_registerdue,
+          has_actiondue: has_actiondue,
           card_content: card_content,
           card_image_height: card_image_height,
           card_name_name: card_name_name ? card_name_name:'',
@@ -1324,6 +1337,7 @@ Page({
           card_name_note: card_name_note ? card_name_note:'',
           card_name_logo_image: card_name_logo_image ? card_name_logo_image:'',
           has_shlogo: has_shlogo? has_shlogo:false,
+          
         })
         
         if(scene){
@@ -1455,8 +1469,15 @@ Page({
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
-                console.log('头像图片下载缓存 card_type:', card_type)
+                
+                //console.log('头像图片下载缓存 card_type:', card_type)
               
+                setTimeout(function () {
+                  that.setData({
+                    cardnamehidden: card_type == 2 ? false : true,
+                    cardregisterhidden: card_type == 1 ? false : true,
+                  })
+                }, 1500)
               }else{
                 wx.showToast({
                   title: '商品已下架',
@@ -2157,6 +2178,26 @@ Page({
     console.log('shlogoChange：',e.detail.value)
     that.setData({
       has_shlogo: has_shlogo
+    })
+    that.confirmcardinput()
+  },
+
+  registerDueChange: function (e) {
+    var that = this
+    var has_registerdue = e.detail.value
+    console.log('registerDueChange', e.detail.value)
+    that.setData({
+      has_registerdue: has_registerdue
+    })
+    that.confirmcardinput()
+  },
+
+  actionDueChange: function (e) {
+    var that = this
+    var has_actiondue = e.detail.value
+    console.log('actionDueChange', e.detail.value)
+    that.setData({
+      has_actiondue: has_actiondue
     })
     that.confirmcardinput()
   },

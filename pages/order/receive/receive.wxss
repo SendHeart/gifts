@@ -440,108 +440,29 @@ swiper-item image {
     bottom:0;
     display:flex;
     flex-direction:row;
-    margin-bottom: 200rpx;
+    margin-bottom: 110rpx;
     margin-left:80rpx;
     font-size:25rpx;
     z-index: 1000;
 }
 
+
 .card-register-info {
-  width: 80%;
+  z-index: 1000;
+}
+.card-register-info text {
   position: absolute;
-  top: 0;
-  margin-left:10%;
-  margin-top:90rpx;
-  display: flex;
-  flex-direction:column; 
-  z-index: 2; 
-  border-radius: 20rpx;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
 }
-
-.card-register-title { 
-    width:100%;
-    height: 50rpx;
-    line-height: 50rpx;
-    font-size:35rpx;
-    margin-bottom:0rpx;
-    padding: 20rpx;
-}
-.card-register-title text {
-  display: -webkit-box;
-  
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  padding: 10rpx;
-  line-height: 30rpx;
-  height: 30rpx;
-}
-.card-register-content { 
-  width:100%;
-  height: 450rpx;
-  font-size:32rpx;
-  padding: 20rpx;
-  margin-bottom:10rpx;
-}
-.card-register-content text {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 9; 
-  width:536rpx;
-  padding: 10rpx;
-}
-
-.card-register-addr { 
-  width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  font-size:25rpx;
-  margin-bottom:10rpx;
-  padding: 10rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-}
-.card-register-addr text {
-  display: -webkit-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  line-height: 25rpx;
-  height: 25rpx;
-}
-.card-register-startend { 
-  width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-  font-size:25rpx;
-  padding: 10rpx;
-}
-.card-register-act-startend { 
-  width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-  font-size:25rpx;
-  padding: 10rpx;
-}
-.card-register-biz { 
-  width:100%;
-  height: 30rpx;
-  line-height: 30rpx;
-  display:flex;
-  flex-direction:row;
-  justify-content: flex-start;
-  font-size:25rpx;
-  padding: 10rpx;
+.card-register-info image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
 }
 
 .card-name-info {

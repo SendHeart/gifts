@@ -762,6 +762,7 @@ border: none;
   border-radius: 20rpx;
   padding: 10rpx;
 }
+
 .card-register-view {
     z-index: 1000;
 }

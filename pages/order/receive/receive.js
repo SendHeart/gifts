@@ -49,6 +49,7 @@ Page({
     is_showable:0,
     cardnameHidden: true,
     needCardnameHello: '打个招呼吧',
+    card_view_offset:100, //卡片Y位置 偏移量
   },
 
   formSubmit: function (e) {
@@ -248,7 +249,7 @@ Page({
     var card_register_name = that.data.card_register_name
     var card_register_phone = that.data.card_register_phone
     var card_register_gender = that.data.card_register_gender
-    if (!util.checkPhoneNumber(card_register_phone)) {
+    if (card_register_phone && !util.checkPhoneNumber(card_register_phone)) {
       wx.showToast({
         title: '手机号码无效',
         icon: 'none',
@@ -256,7 +257,7 @@ Page({
       })    
       return 
     }
-    if (card_register_name && card_register_gender && card_register_phone) {
+    if (card_register_name && card_register_gender) {
       that.receiveTapTag()
       that.setData({
         cardregisterHidden: !that.data.cardregisterHidden
