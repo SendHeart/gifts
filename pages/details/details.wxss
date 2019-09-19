@@ -728,7 +728,7 @@ border: none;
   -webkit-box-orient: vertical;
   -webkit-line-clamp: 3; 
   width:530rpx;
-  height:150rpx;
+  height:200rpx;
   background: #fff;
   padding: 10rpx;
 }
