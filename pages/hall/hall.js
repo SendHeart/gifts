@@ -129,22 +129,27 @@ Page({
       }
     }
     if (that.data.page < that.data.rpage_num) {
+      //将当前坐标进行保存以进行下一次计算
       that.getMoreGoodsTapTag()
     } 
     that.setData({
       floorstatus: true,
     })
+    if (!that.data.is_reloading || ty<0){
+      this.data.lastX = currentX
+      this.data.lastY = currentY
+      console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
+    }
+    
     /*
     if (currentY > scrollHeight - 100) {
      
     }
     */
-    //将当前坐标进行保存以进行下一次计算
-    this.data.lastX = currentX
-    this.data.lastY = currentY
-    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
+   
+    
   },
-  handletouchtart: function (event) {
+  handletouchstart: function (event) {
     // console.log(event)
     // 赋值
     this.data.lastX = event.touches[0].pageX
@@ -157,6 +162,46 @@ Page({
     
   },
    
+
+  getMoreGoodsTapTag: function (e) {
+    var that = this;
+    var page = that.data.page + 1;
+    var rpage_num = that.data.rpage_num
+    var is_reloading = that.data.is_reloading
+    if (is_reloading) return
+    if (page > rpage_num) {
+      wx.showToast({
+        title: '已经到底了~',
+        icon: 'none',
+        duration: 1000
+      })
+
+      that.setData({
+        loadingHidden: false,
+        loading_note: '已经到底了~'
+      })
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+      }, 1000)
+      return
+    }
+    /*
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 500
+    })
+    */
+    that.setData({
+      page: page,
+      loadingHidden: false,
+      loading_note: '加载中'
+    })
+    that.reloadData()
+  },
+
 /*
   onPageScroll: function (e) {
     var that = this
@@ -1071,45 +1116,6 @@ Page({
     }
   },
   */
-
-  getMoreGoodsTapTag: function (e) {
-    var that = this;
-    var page = that.data.page + 1;
-    var rpage_num = that.data.rpage_num
-    var is_reloading = that.data.is_reloading
-    if(is_reloading) return
-    if (page > rpage_num) {
-      wx.showToast({
-        title: '已经到底了~',
-        icon: 'none',
-        duration: 1000
-      })
-      
-      that.setData({
-        loadingHidden: false,
-        loading_note:'已经到底了~'
-      })
-      setTimeout(function () {
-        that.setData({
-          loadingHidden: true,
-        })
-      }, 1000)
-      return
-    }
-    /*
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 500
-    })
-    */
-    that.setData({
-      page: page,
-      loadingHidden: false,
-      loading_note: '加载中'
-    })
-    that.reloadData()
-  },
 
   showCart: function () {
     wx.switchTab({
