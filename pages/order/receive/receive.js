@@ -519,6 +519,7 @@ Page({
     var that = this
     var shop_type = that.data.shop_type
     var order_id = that.data.order_id
+    var order_no = that.data.order_no
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -571,6 +572,7 @@ Page({
         nickname: nickname,
         headimg: headimg,
         order_id: order_id,
+        order_no: order_no,
         status_info: 'receive',
         order_shape: order_shape,
         card_register_info: card_type==1?JSON.stringify(card_register_info[0]):'',
@@ -596,7 +598,7 @@ Page({
           title ='已接收'
         }
         if (retinfo.status == 'y') {
-          if(card_type>0){
+          if (order_shape == 5 || order_shape == 4){
             wx.showToast({
               title: title,
               icon: 'none',
@@ -614,7 +616,7 @@ Page({
               })
             }, 200)
           }
-          if (is_buymyself == 1 && order_price > 0) { //自购礼物订单抽奖
+          if (is_buymyself == 1 && order_price > 0 && order_shape!=5 && order_shape!=4 ) { //自购礼物订单抽奖
             console.log('自购礼物订单抽奖 to lottery order_id:', order_id)
             wx.navigateTo({
               url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + that.data.order_no,
@@ -827,6 +829,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var order_no = that.data.order_no
     var order_id = that.data.order_id
+    var order_shape = that.data.order_shpape
     var goods_flag = that.data.goods_flag
     var orders = that.data.orders
     var orderskus = that.data.orderskus

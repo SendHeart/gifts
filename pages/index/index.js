@@ -917,13 +917,23 @@ Page({
     });
   },
   accept: function (e) {
+    var that = this
     var order_no = e.currentTarget.dataset.objectId
     var totalFee = e.currentTarget.dataset.totalFee
     var order_id = e.currentTarget.dataset.orderId
+    var orders = that.data.orders
+    var order_accept = []
     console.log('接受礼物order_no:', order_no);
-   
+    var index  = 0 
+    for (var i = 0; i < orders.length; i++) {
+      if (orders[i]['order_no'] == order_no) {
+        index = i
+        order_accept.push(orders[i])
+        break
+      }
+    }
     wx.navigateTo({
-      url: '../order/receive/receive?order_no=' + order_no + '&order_id=' + order_id + '&receive=1' + '&goods_flag=0'
+      url: '../order/receive/receive?order_no=' + order_no + '&order_id=' + order_id + '&receive=1' + '&order_shape=' + order_accept[0]['shape'] + '&goods_flag=0'
     });
   },
   pay: function (e) {
