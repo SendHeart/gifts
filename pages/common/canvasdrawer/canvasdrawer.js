@@ -190,7 +190,7 @@ Component({
       this.ctx.setTextBaseline('top')
       this.ctx.setTextAlign(textAlign)
       this.ctx.setFillStyle(color)
-      this.ctx.setFontSize(fontSize*1.5)
+      this.ctx.setFontSize(fontSize*1.2)
       //this.ctx.setFontSize(content.font)
 
       if (!breakWord) {

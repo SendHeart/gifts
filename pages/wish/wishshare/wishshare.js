@@ -678,7 +678,7 @@ Page({
     var card_cele_info = that.data.card_cele_info //shape:5 贺卡请柬 
     var card_template = that.data.card_template //shape:4 互动卡 名片模板
     //var card_type = that.data.card_type ? that.data.card_type:0
-    var card_color = that.data.card_color //贺卡请柬文字颜色
+    //var card_color = that.data.card_color //贺卡请柬文字颜色
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id
     wx.showLoading({
@@ -920,7 +920,8 @@ Page({
           }
         } else {
           view_item['type'] = 'text'
-          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
+          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize'] 
+          view_item['fontSize'] = parseInt(view_item['fontSize']) + 8
           view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
           view_item['textAlign'] = 'left'
           view_item['breakWord'] = false
@@ -1031,6 +1032,11 @@ Page({
           }
         } else {
           view_item['type'] = 'text'
+          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
+          view_item['fontSize'] = parseInt(view_item['fontSize']) + 8
+          view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
+          view_item['textAlign'] = 'left'
+          view_item['breakWord'] = false
           if (card_template[i]['typeId'] == 'card_name') {
             view_item['content'] = card_name_info['card_name_name'] ? card_name_info['card_name_name'].trim() : ''
             view_item['left'] = view_item['left']  //+ 5 * (10 - view_item['content'].length)
@@ -1052,10 +1058,7 @@ Page({
           } else if (card_template[i]['typeId'] == 'card_addr') {
             view_item['content'] = card_name_info['card_name_addr'] ? card_name_info['card_name_addr'] : ''
           }
-          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
-          view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
-          view_item['textAlign'] = 'left'
-          view_item['breakWord'] = false
+         
         }
         views = views.concat(view_item)
       }
@@ -1120,6 +1123,7 @@ Page({
           view_item['type'] = 'text'
           view_item['textAlign'] = 'left'
           view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
+          view_item['fontSize'] = parseInt(view_item['fontSize']) + 8
           view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
           view_item['breakWord'] = false
           if (card_template[i]['typeId'] == 'card_cele_title') {
