@@ -80,6 +80,10 @@
           <text>{{item['card_name_info']['card_name_name']?item['card_name_info']['card_name_name']:''}}{{item['card_name_info']['card_name_title']?'('+item['card_name_info']['card_name_title']+')':''}}
           </text>
         </view>
+         <view hidden="{{item['card_type']==10?false:true}}" class="carts-sku">
+          <text>{{item['card_cele_info']['card_cele_title']?item['card_cele_info']['card_cele_title']:''}}
+          </text>
+        </view>
         <view hidden="{{item['card_type']==0?false:true}}" class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
           <!--<text>{{mapping.sku_sell_price_real?'单价:￥'+mapping.sku_sell_price_real:''}}</text>-->

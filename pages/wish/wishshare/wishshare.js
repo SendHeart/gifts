@@ -424,11 +424,12 @@ Page({
             that.setData({
               card_register_info: m_desc['card_register_info'] ? m_desc['card_register_info']:'',
               card_name_info: m_desc['card_name_info'] ? m_desc['card_name_info'] : '',
+              card_cele_info: m_desc['card_cele_info'] ? m_desc['card_cele_info'] : '',
               card_template: m_desc['card_template'] ? m_desc['card_template'] : '',
               card_color: m_desc['color'] ? m_desc['color']:'#333',
               card_type: m_desc['card_template']? m_desc['card_template'][0]['type']:0,
             })
-            console.log('card type:',that.data.card_type)
+            console.log('card card_template:', that.data.card_template)
             wx.setNavigationBarTitle({
               title: '互动卡分享',
             })
@@ -674,6 +675,7 @@ Page({
     var share_order_bg = that.data.share_order_bg
     var card_register_info = that.data.card_register_info //shape:4 互动卡 
     var card_name_info = that.data.card_name_info //shape:4 互动卡 名片内容
+    var card_cele_info = that.data.card_cele_info //shape:5 贺卡请柬 
     var card_template = that.data.card_template //shape:4 互动卡 名片模板
     //var card_type = that.data.card_type ? that.data.card_type:0
     var card_color = that.data.card_color //贺卡请柬文字颜色
@@ -683,7 +685,7 @@ Page({
       title: '生成中',
       //mask: true
     })
-    console.log('wishshare eventDraw share_order_shape:', share_order_shape, 'card_name_info:', card_name_info)
+    console.log('wishshare eventDraw share_order_shape:', share_order_shape, 'card_cele_info:', card_cele_info)
     
     if (activity_id>0){
       console.log('activity_id:', activity_id)
@@ -912,9 +914,9 @@ Page({
           if (card_template[i]['typeId'] == 'card_register_logo' && card_register_info['has_shlogo']) {
             view_item['type'] = 'image'
             view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
-            view_item['width'] = 50
-            view_item['height'] = 50
-            view_item['borderRadius'] = 25
+            view_item['width'] = 70
+            view_item['height'] = 70
+            view_item['borderRadius'] = 35
           }
         } else {
           view_item['type'] = 'text'
@@ -1068,89 +1070,84 @@ Page({
           views: views
         }
       })
-    } else if (share_order_shape == 5) { //贺卡请柬
-      console.log('share_order_shape:', share_order_shape)
+    } else if ((share_order_shape == 5 || card_type == 10) && share_goods_id == 0) { //贺卡请柬
+      console.log('share_order_shape:', share_order_shape, ' card_template:', card_template)
+      //var views_width = that.data.windowWidth
+      var views_width = 500
+      var views_height = 700 
+      /*
+      wx.getImageInfo({
+        src: share_order_bg,
+        success: function (res) {
+          views_width = res.width
+          views_height = res.height  
+        }
+      })  
+      */
+      var views = [
+        {
+          type: 'image',
+          url: share_order_bg,
+          top: 5,
+          left: 5,
+          width: views_width ,
+          height: views_height,
+        }
+      ]
+
+      for (var i = 0; i < card_template.length; i++) {
+        var view_item = {}
+        view_item['top'] = card_template[i]['y'] * views_height
+        view_item['left'] = card_template[i]['x'] * views_width
+        view_item['width'] = card_template[i]['width'] * views_width
+        view_item['height'] = card_template[i]['height'] * views_height
+        view_item['lineHeight'] = card_template[i]['height'] * views_height
+        
+        if (card_template[i]['viewType'] == 1) {
+          if (card_template[i]['typeId'] == 'card_cele_logo') {
+            view_item['type'] = 'image'
+            view_item['url'] = card_cele_info['card_cele_logo'] ? card_cele_info['card_cele_logo'] : ''
+            view_item['roundedRect'] = 10
+          }
+          if (card_template[i]['typeId'] == 'card_cele_qrcode' && card_cele_info['has_shlogo']) {
+            view_item['type'] = 'image'
+            view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
+            view_item['width'] = 80
+            view_item['height'] = 80
+            view_item['borderRadius'] = 40
+          }
+        } else {
+          view_item['type'] = 'text'
+          view_item['textAlign'] = 'left'
+          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
+          view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
+          view_item['breakWord'] = false
+          if (card_template[i]['typeId'] == 'card_cele_title') {
+            view_item['textAlign'] = 'right'
+            view_item['content'] = card_cele_info['card_cele_title'] ? card_cele_info['card_cele_title'].trim() : ''
+            //view_item['left'] = view_item['left']  //+ 5 * (10 - view_item['content'].length)
+            
+          } else if (card_template[i]['typeId'] == 'card_cele_content') {
+            view_item['MaxLineNumber'] = 6
+            view_item['breakWord'] = true
+            view_item['lineHeight'] = 25
+            view_item['content'] = card_cele_info['card_cele_content'] ? card_cele_info['card_cele_content'] : ''
+          }
+        
+          console.log('share_order_shape card cele card_template:', card_template[i])
+        }
+
+        views = views.concat(view_item)
+      }
       that.setData({
         painting: {
-          width: 520,
-          height: 800,
+          width: views_width,
+          height: views_height,
           windowHeight: that.data.windowHeight,
           windowWidth: that.data.windowWidth,
           clear: true,
           background: 'white',
-          views: [
-            {
-              type: 'image',
-              url: share_order_bg,
-              top: 0,
-              left: 0,
-              width: 520,
-              height: 800,
-            },
-            {
-              type: 'text',
-              content: share_order_note,
-              fontSize: 18,
-              color: card_color ? card_color : '#333',
-              textAlign: 'left',
-              top: 360,
-              left: 100,
-              lineHeight: 25,
-              MaxLineNumber: 8,
-              breakWord: true,
-              width: 400,
-            },
-            {
-              type: 'image',
-              url: share_order_wx_headimg,
-              top: 560,
-              left: 235,
-              width: 50,
-              height: 50,
-              borderRadius: 25,
-            },
-            {
-              type: 'text',
-              content: nickname,
-              fontSize: 18,
-              color: card_color ? card_color : '#333',
-              textAlign: 'left',
-              top: 620,
-              left: 210,
-              width: 50,
-              height: 50,
-              bolder: false
-            },
-            {
-              type: 'text',
-              content: '长按识别二维码听声音',
-              fontSize: 18,
-              color: card_color ? card_color : '#333',
-              textAlign: 'left',
-              top: 710,
-              left: 85,
-              breakWord: false,
-              bolder: true,
-            },
-            {
-              type: 'text',
-              content: '送心礼物，开启礼物社交时代!',
-              fontSize: 18,
-              color: card_color ? card_color : '#999',
-              textAlign: 'left',
-              top: 740,
-              left: 85,
-              breakWord: false,
-            },
-            {
-              type: 'image',
-              url: share_order_qrcode,
-              top: 690,
-              left: 380,
-              width: 80,
-              height: 80,
-            }
-          ]
+          views: views
         }
       })  
     } else if (share_art_id > 0) {

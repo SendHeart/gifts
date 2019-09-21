@@ -11,16 +11,16 @@
       </view>
     </view>
   </view>
-  <image src="{{shareImage}}" class="share-image" style="margin-top:20rpx;" mode='aspectFit'  catchtap="sharegoods"></image>
+  <image src="{{shareImage}}" class="share-image" style="margin-top:20rpx;" mode='aspectFit'  catchtap="{{(share_order_shape!=5 && share_order_shape!=4)?'sharegoods':''}}"></image>
   <view wx:if="{{share_order_shape==5||share_order_shape==4}}" class="share-play-rec" bindtap="play_rec" >
-    <image src="../../../images/notification.png" style="width:70rpx;height:70rpx;"></image>
+    <image src="../../../images/notification.png" style="width:70rpx;height:70rpx;" mode="{{(share_order_shape==5||share_order_shape==4)?'aspectFit':''}}"></image>
   </view>
   <canvasdrawer painting="{{painting}}" class="canvasdrawer" bindgetImage="eventGetImage"/>
   <!-- 
   <view  hidden="{{!notehidden}}" style='margin:10rpx;font-size:26rpx;color:#999;height:120rpx;' >{{share_goods_title?'分享语: '+share_goods_title:'分享语为空'}}</view>
   -->
   <view class="sentbtn2">
-    <button class="" wx:if ='{{share_art_id==0  && share_order_shape!=4}}' bindtap="sharegoods">{{share_order_shape==5?'修改祝词':'修改留言'}}</button>
+    <button class="" wx:if ='{{share_art_id==0  && share_order_shape!=5 && share_order_shape!=4}}' bindtap="sharegoods">修改留言</button>
   </view>
   <view class="sentbtn">
     <form bindsubmit="formSubmit" data-name='eventSave' report-submit="true" >

@@ -198,7 +198,7 @@ Page({
     var giftflag = options.giftflag ? options.giftflag:0
     var send_rcv = options.send_rcv ? options.send_rcv:0
     var wx_notes = options.wx_notes ? options.wx_notes:0 //微信通知直接进入
-
+    var order_object = options.order_object ? JSON.parse(options.order_object):[]
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -218,8 +218,7 @@ Page({
     })
     //that.setNavigation()
     console.log('orderdetail onload options:', options)
-    if (options.order_object) {
-      var order_object = options.order_object ? JSON.parse(options.order_object) : []
+    if (order_object) {
       console.log('订单详情', order_object)
       var sku_num = 0
       var status = order_object['status']
@@ -239,6 +238,9 @@ Page({
       var deliverystepinfo = order_object['deliverystepinfo']
       var order_status = order_object['status']
       var buy_num = order_object['buy_num']
+      var card_name_info = order_object['card_name_info'] ? order_object['card_name_info']:''
+      var card_cele_info = order_object['card_cele_info'] ? order_object['card_cele_info'] : ''
+      var card_register_info = order_object['card_register_info'] ? order_object['card_register_info']:''
       sku_num = order_object['order_sku'].length
       orders.push(order_object)
       that.setData({
@@ -263,7 +265,10 @@ Page({
         from_headimg: from_headimg,
         deliverycode: deliverycode ? deliverycode : '',
         deliveryname: deliveryname ? deliveryname : '',
-        deliverystepinfo: deliverystepinfo ? deliverystepinfo : ''
+        deliverystepinfo: deliverystepinfo ? deliverystepinfo : '',
+        card_name_info: card_name_info,
+        card_cele_info: card_cele_info,
+        card_register_info: card_register_info,
       })
     } else if (order_no){
       that.setData({

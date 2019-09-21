@@ -195,9 +195,14 @@ Component({
 
       if (!breakWord) {
         if (textAlign=='center'){
-          let text_left = parseInt((this.data.width - this.ctx.measureText(content).width)/2 )
+          let text_left = parseInt((left+width - this.ctx.measureText(content).width)/2 )
           this.ctx.fillText(content, text_left, top)
           this.drawTextLine(text_left, top, textDecoration, color, fontSize, content)
+        } else if (textAlign == 'right'){
+          let text_left = parseInt((left+width - this.ctx.measureText(content).width))
+          this.ctx.fillText(content, text_left, top)
+          this.drawTextLine(text_left, top, textDecoration, color, fontSize, content)
+          console.log('drawText() !breakWord content:', content, 'Width:', this.data.width, ' width:', width,' content len:', this.ctx.measureText(content).width, 'textAlign:', textAlign, 'text_left:', text_left,' left',left, 'textDecoration:', textDecoration)
         }else{
           this.ctx.fillText(content, left, top)
           this.drawTextLine(left, top, textDecoration, color, fontSize, content)
@@ -237,7 +242,6 @@ Component({
         this.drawTextLine(left, fillTop, textDecoration, color, fontSize, fillText)
       }
       this.ctx.restore()
-
       if (bolder) {
         this.drawText({
           ...params,

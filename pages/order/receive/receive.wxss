@@ -411,6 +411,8 @@ swiper-item image {
   height: 1100rpx;
   display: inline-block;
   overflow: hidden;
+  border-radius: 20rpx;
+  margin:0 auto;
   z-index:1;
 }
 
@@ -458,6 +460,25 @@ swiper-item image {
   */
 }
 .card-register-info image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
+
+
+.card-cele-info {
+    z-index: 1000;
+}
+.card-cele-info text {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
+.card-cele-info image {
   position: absolute;
   font-size:25rpx; 
   /*

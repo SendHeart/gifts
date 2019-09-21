@@ -21,11 +21,30 @@
       <view class="carts-text">
         <!-- 商品标题 -->
         <text class="carts-title">{{mapping.goods_name}}</text>
-        <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="" style="font-size:24rpx;">
+        <view wx:if="{{order_shape!=5 && order_shape!=4}}" wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="" style="font-size:24rpx;">
           <text>{{sku_value?sku_value['name']+':':''}}</text>
           <text wx:if="{{sku_value['type']==1}}">{{sku_value?sku_value['value']:''}}</text>
           <text wx:if="{{sku_value['type']==2}}">{{sku_value?sku_value['note']:''}}</text>
         </view>
+         <view wx:if="{{order_shape==4 && card_name_info}}">
+            <text class="carts-card-title">{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?'('+card_name_info.card_name_title+')':''}}{{card_name_info.card_name_phone?' 手机: '+card_name_info.card_name_phone:''}}
+            </text>
+            <text class="carts-card-title">{{card_name_info.card_name_email?'电子邮箱: '+card_name_info.card_name_email:''}}
+            </text>
+           
+             <text class="carts-card-title">{{card_name_info.card_name_addr?'地址: '+card_name_info.card_name_addr:''}}
+            </text>
+          </view>
+          <view wx:if="{{order_shape==4 && card_register_info}}">
+            <text class="carts-card-title">{{card_register_info.card_register_title?'名称:'+card_register_info.card_register_title:''}} 
+            </text>
+            <text class="carts-card-title">{{card_register_info.register_start_date}}{{card_register_info.register_start_time?'~'+card_register_info.register_start_time:''}}{{card_register_info.card_register_ownername?' 发起人: '+card_register_info.card_register_ownername:''}}
+            </text>
+          </view>
+         <view wx:if="{{order_shape==5 && card_cele_info}}">
+            <text class="carts-card-title">{{card_cele_info.card_cele_title?card_cele_info.card_cele_title:''}} 
+            </text>
+          </view>
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
         </view>
@@ -92,13 +111,15 @@
       <text class="labeltext">运单号:</text>
       <text>{{deliverycode?deliverycode:''}}</text>
     </view>
-    <!--<view class="delivery-detail-text" style='margin-bottom:15rpx;'>
+    <!--
+    <view class="delivery-detail-text" style='margin-bottom:15rpx;'>
       <text class="labeltext">当前状态:</text>
       <text>{{deliverystepinfo?deliverystepinfo:''}}</text>
       
    <text wx:if="{{deliverycode}}" bindtap="expressTapTag" style="width:20%;color:gray;text-align:center;border:1px solid; border-radius: 5px">物流详情</text>
    
-    </view>-->
+    </view>
+    -->
   </view>
   <view wx:if="{{order_shape!=5}}" class="delivery-detail-info">
     <text style='text-indent:20rpx;font-weight:bold;' bindtap="expressTapTag">物流跟踪</text>

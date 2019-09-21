@@ -536,10 +536,10 @@ Page({
     var order_object = e.currentTarget.dataset.orderObject
     var order_id = order_object['id']
     var tab2 = that.data.tab2
-    var card_type = 1
+    
     console.log('index detail 订单ID:' + order_id)
     wx.navigateTo({
-      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2 + '&card_type=' + card_type
+      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2  
     });
   },
 
@@ -766,11 +766,13 @@ Page({
                 var m_desc = JSON.parse(orderObjects[i]['m_desc'])
                 var card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
                 var card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
+                var card_cele_info = m_desc['card_cele_info'] ? m_desc['card_cele_info'] : ''
                 var card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
                 var card_type = m_desc['card_register_info'] ? 1 : 0
                 card_type = m_desc['card_template'] ? m_desc['card_template'][0]['type'] : card_type    
                 orderObjects[i]['card_type']  = card_type
                 orderObjects[i]['card_name_info'] = card_name_info
+                orderObjects[i]['card_cele_info'] = card_cele_info
                 orderObjects[i]['card_register_info'] = card_register_info
               }
             }

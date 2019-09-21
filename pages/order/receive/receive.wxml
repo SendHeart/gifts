@@ -5,10 +5,14 @@
   <text wx:if='{{receive_status==1}}'>{{(order_shape==5||order_shape==4)?'点击回赠，也给Ta送一个惊喜吧':'点击回赠，也给Ta送一个礼物吧'}}</text>
 </view>
 <view class="share-goods">
-    <view class="share-buttons" style="{{(order_shape==5)?'justify-content: flex-start;':''}}">
+    <view class="share-buttons" style="{{(order_shape==5)?'':''}}">
        <view  wx:if="{{order_shape==4||order_shape==5}}" class="btnshare" data-type="1" bindtap="returnTapTag">
         <image class="shareto" src="../../../images/icon_shopping.png"></image>
         商城
+      </view>
+      <view  wx:if="{{order_shape==5}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="animateTapTag">
+        <image class="shareto" src="../../../images/play.png"></image>
+        播放
       </view>
       <view  wx:if="{{order_shape==4 && is_showable==1}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag">
         <image class="shareto" src="../../../images/icon_normal.png"></image>
@@ -21,13 +25,14 @@
     </view>
 </view>
  <view wx:if="{{is_buymyself==0 && (order_shape==5||order_shape==4)}}" class="card-info">
-  <image src="{{order_image}}" class="card-image" style="{{card_type>0?' margin-top:'+card_view_offset+'rpx;height:'+card_image_height+'rpx;':''}}" />
+  <image src="{{order_image}}" class="card-image" style="{{card_type>0?' margin-top:'+card_view_offset+'rpx;height:'+card_image_height+'rpx;':''}}{{card_image_width>0?' width:'+card_image_width+'rpx;':''}}" />
+  <!-- 
   <text wx:if="{{order_shape==5}}" class="card-text" space="ensp">{{note}}</text>
   <view wx:if="{{order_shape==5}}" class="card-wx-info">
     <image src="{{headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
     <view style="margin-left:20rpx;line-height:100rpx;height:100rpx;">{{nickname}}</view>
   </view>
-    
+  -->
   <view wx:if="{{order_shape==4 && card_type==1}}" class="card-register-info">
     <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
       <text hidden="{{template.typeId=='card_register_title'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_info['card_register_title']?card_register_info['card_register_title']:template.typeText}}
@@ -94,6 +99,20 @@
      {{card_name_info['card_name_note']}}
     </text>
   </view>
+  <view wx:if="{{order_shape==5 || card_type==10}}" class="card-cele-info">
+    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+      <text hidden="{{template.typeId=='card_cele_title'?fale:true}}"  bindtap='textPaste' style="text-align:right;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_info['card_cele_title']}}
+      </text>
+      <text hidden="{{template.typeId=='card_cele_content'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_info['card_cele_content']?card_cele_info['card_cele_content']:template.typeText}}
+      </text>
+      <view hidden="{{template.typeId=='card_cele_logo'?false:true}}">
+        <image  style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_cele_info['card_cele_logo']}}" />
+      </view>
+      <view hidden="{{template.typeId=='card_cele_qrcode'?false:true}}" style="">
+        <image style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}} border-radius:50%;" src="{{share_goods_qrcode}}" />
+      </view>
+    </block>
+  </view>
   <view wx:if="{{(order_shape==5||order_shape==4)}}" class="share-play-rec" style="}}" bindtap="play_rec" >
     <image src="../../../images/notification.png" style="width:80rpx;height:80rpx;"></image>
   </view>
@@ -138,7 +157,7 @@
    
   </form>
   -->
-  <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:15rpx;" wx:if='{{receive_status==1 && overtime_status==0}}'>
+  <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-top:15rpx;" wx:if='{{receive_status==1 && overtime_status==0 && card_type!=4 && card_type!=5 }}'>
     <text>礼尚往来，回赠一份礼物让你们的联系更进一步</text>
   </view>
 </view>
@@ -166,6 +185,11 @@
 <modal class="modalbox" title="{{needCardnameHello}}"  hidden="{{cardnameHidden}}" confirm-text="确定"   bindconfirm="confirmCardNameInfo" cancel-text="返回" bindcancel="cancelCardNameInfo" >
   <view class="card-register-input">
     <textarea style="width:100%;" value="{{card_name_hello}}" placeholder-style="text-align:center;" placeholder="打个招呼"  bindinput='card_name_hello' focus="{{inputShowed}}" type="text" maxlength='80'></textarea>
+  </view>
+</modal>
+<modal class="modalbox" title="回复"  hidden="{{cardceleHidden}}" confirm-text="确定"   bindconfirm="confirmCardCeleInfo" cancel-text="返回" bindcancel="cancelCardCeleInfo" >
+  <view class="card-register-input">
+    <textarea style="width:100%;" value="{{card_cele_reply}}" placeholder-style="text-align:center;" placeholder="说的什么(限80个字)"  bindinput='card_cele_reply' focus="{{inputShowed}}" type="text" maxlength='80'></textarea>
   </view>
 </modal>
 </view>

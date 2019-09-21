@@ -30,7 +30,11 @@
             </text>
              <text>{{card_register_info.card_register_ownername?'发起人: '+card_register_info.card_register_ownername:''}}
             </text>
-        </view>
+          </view>
+           <view wx:if="{{order_shape==5 && card_cele_info}}">
+            <text>{{card_cele_info.card_cele_title?card_cele_info.card_cele_title:''}} 
+            </text>
+          </view>
         </view>
          
         <view wx:if="{{order_shape!=4 && order_shape!=5}}" class="carts-subtitle">

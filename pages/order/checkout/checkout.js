@@ -152,6 +152,7 @@ Page({
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
     var card_register_info = options.card_register_info? JSON.parse(options.card_register_info):'' //
     var card_name_info = options.card_name_info ? JSON.parse(options.card_name_info) : '' //
+    var card_cele_info = options.card_cele_info ? JSON.parse(options.card_cele_info) : '' //
     var card_template = options.card_template ? JSON.parse(options.card_template) : '' //
     payamount = (amount - discountpay).toFixed(2)
 
@@ -173,9 +174,10 @@ Page({
       order_color:order_color,
       card_register_info: card_register_info,
       card_name_info: card_name_info,
+      card_cele_info: card_cele_info,
       card_template: card_template,
 		})
-    console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape, 'card_template:', card_template, ' card_name_info:', card_name_info)
+    console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape, 'card_template:', card_template, ' card_name_info:', card_name_info,' card_register_info:', card_register_info,' card_cele_info:', card_cele_info)
 	},
 
   confirmOrder: function () {
@@ -219,9 +221,10 @@ Page({
     var order_num = that.data.order_num
     var card_register_info = JSON.stringify(that.data.card_register_info)
     var card_name_info = JSON.stringify(that.data.card_name_info)
+    var card_cele_info = JSON.stringify(that.data.card_cele_info)
     var card_template = JSON.stringify(that.data.card_template)
     if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
-    console.log('order_image:', order_image, 'order_shape:', order_shape, 'card_template:', card_template, ' card_name_info:', card_name_info)
+    console.log('order_image:', order_image, 'order_shape:', order_shape, 'card_template:', card_template, ' card_cele_info:', card_cele_info)
     wx.request({
       url: weburl + '/api/client/add_order',
       method: 'POST',
@@ -240,6 +243,7 @@ Page({
         order_color: order_color,
         card_register_info: card_register_info,
         card_name_info: card_name_info,
+        card_cele_info: card_cele_info,
         card_template: card_template,
         coupon_id: selectedAllStatus?selected_coupon_id:0,
         coupon_type: selectedAllStatus?selected_coupon_type:0,

@@ -14,6 +14,7 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 Page({
   data: {
     url: weburl+'/new_year_card',
+    card_url: weburl + '/card',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
   },
@@ -22,11 +23,19 @@ Page({
     var url = options.url ? options.url:that.data.url
     var type = options.type ? options.type:0
     var promid = options.promid?options.promid:0
+    var order_id = options.order_id ? options.order_id:0
+    var order_no = options.order_no ? options.order_no : 0
     var celebration = 1
+    
     if (type == 'celebration') celebration = 1
     if (type == 'blessing') celebration = 2
+    if (type == 'card_cele') {
+      celebration = 3
+    }
     if(promid>0){
       url = weburl + '/prom?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName + '&promid=' + promid
+    } else if (celebration==3){ 
+      url = that.data.card_url+'?type=1&order_id'+order_id+'&order_no='+order_no
     }else{
       url = url + '?avatarUrl=' + userInfo.avatarUrl + '&nickname=' + userInfo.nickName
     }
@@ -34,7 +43,9 @@ Page({
       url: url ,
       celebration: celebration,
       promid: promid,
-      }) 
+      order_id: order_id,
+      order_no: order_no,
+    }) 
   },
   onShareAppMessage: function (options) {
     var that = this
@@ -47,11 +58,9 @@ Page({
     var start_time = that.data.start_time
     var title = '收到' + nickname + '的祝福~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
-
     var desc = '送心祝福'
 
     console.log('开始送心祝福', options)
-
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: desc,

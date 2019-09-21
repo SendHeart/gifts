@@ -192,16 +192,16 @@ Page({
             var m_desc = orderObjects[i]['m_desc']
             if (orderObjects[i]['from_headimg'].indexOf("https://wx.qlogo.cn") >= 0) {
               orderObjects[i]['from_headimg'] = orderObjects[i]['from_headimg']? orderObjects[i]['from_headimg'].replace('https://wx.qlogo.cn', weburl + '/qlogo'):''
-              orderObjects[i]['register_time'] = orderObjects[i]['register_time'] ? util.getDateDiff(orderObjects[i]['register_time'] * 1000):''
-              orderObjects[i]['addtime'] = orderObjects[i]['addtime'] ? util.getDateDiff(orderObjects[i]['addtime'] * 1000) : ''
             }
-            orderObjects[i]['phone_enc'] = orderObjects[i]['phone_enc']? orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11):''
+            orderObjects[i]['register_time'] = orderObjects[i]['register_time'] ? util.getDateDiff(orderObjects[i]['register_time'] * 1000) : ''
+            orderObjects[i]['addtime'] = orderObjects[i]['addtime'] ? util.getDateDiff(orderObjects[i]['addtime'] * 1000) : ''
+            orderObjects[i]['phone_enc'] = orderObjects[i]['phone']? orderObjects[i]['phone'].substring(0, 3) + '****' + orderObjects[i]['phone'].substring(7,11):''
             if (m_desc){
               var desc_note = JSON.parse(m_desc)
               orderObjects[i]['note'] = desc_note['note'] 
             }
           }
-        
+          console.log('order list reloadData orderObjects:', orderObjects);
           if (page > 1 && orderObjects) {
             //向后合拼
             orderObjects = that.data.orders.concat(orderObjects);
@@ -227,6 +227,7 @@ Page({
     var shop_type = that.data.shop_type
     var card_register_info = ''
     var card_name_info = ''
+    var card_cele_info = ''
     var card_template = ''
     var card_type = 0
     var card_register_ownername = ''
@@ -288,6 +289,7 @@ Page({
             var voice_url = m_desc['voice']
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
             card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
+            card_cele_info = m_desc['card_cele_info'] ? m_desc['card_cele_info'] : ''
             card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
             card_type = m_desc['card_register_info'] ? 1 : 0
             card_type = m_desc['card_template'] ? m_desc['card_template'][0]['type'] : card_type
@@ -317,10 +319,11 @@ Page({
             order_m_id: order_m_id,
             card_register_info: card_register_info,
             card_name_info: card_name_info,
+            card_cele_info: card_cele_info,
             card_template: card_template,
             card_type: card_type,
           })
-          console.log('order list inter order  card_type:', that.data.card_type, ' card_name_info:', that.data.card_name_info)
+          console.log('order list inter order  card_type:', that.data.card_type, ' card_cele_info:', that.data.card_cele_info)
         }
       }
     })

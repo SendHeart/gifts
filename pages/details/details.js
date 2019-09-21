@@ -91,12 +91,14 @@ Page({
     cardregisterhidden: true,
     card_image_height:'1055;',
     has_cardpayed: 0,
-    cardnamehidden:true,
+  
     openRecordingdis: "block", //显示录机图标
     shutRecordingdis: "none", //隐藏停止图标
     recordingTimeqwe: 0, //录音计时
     goodsmodel_count:0, //商品属性加载计次数
     setInter: "",
+    cardnamehidden: true,
+    cardcelehidden: true,
     card_color: card_color,
     current_card_color: '#333',
     card_color_index: 0,
@@ -124,6 +126,7 @@ Page({
     card_name_modal_title:'编辑内容',
     card_name_logo_image: '/images/img_upload_field.png',
     card_register_topic_image: weburl + '/uploads/card_default_topic.png',
+    card_cele_topic_image: weburl + '/uploads/card_default_cele.png',
     default_image: '/images/img_upload_field.png',
     has_shlogo:false,
     has_registerdue:false,
@@ -238,6 +241,10 @@ Page({
       that.setData({
         card_register_adv: ''
       })
+    } else if (is_logo == 10) {
+      that.setData({
+        card_cele_logo: ''
+      })
     }
   },
   upload: function () {
@@ -271,6 +278,10 @@ Page({
             } else if (is_logo == 2){
               that.setData({
                 card_register_adv: retinfo['result']['img_url'],
+              })
+            } else if (is_logo == 10) {
+              that.setData({
+                card_cele_logo: retinfo['result']['img_url'],
               })
             }else{
               var new_image_pic = []
@@ -375,6 +386,11 @@ Page({
     var image_pic = that.data.image_pic
     var template_config = image_pic[cur_img_id] ? image_pic[cur_img_id]['template_config']:''
     var card_type = that.data.card_type
+    var is_card_cele_title = false
+    var is_card_cele_content = false
+    var is_card_cele_logo = false
+    var is_card_cele_qrcode = false
+
     var is_card_name_name = false
     var is_card_name_title = false
     var is_card_name_phone = false
@@ -505,8 +521,42 @@ Page({
         is_action_end_date: is_action_end_date,
         is_action_end_time: is_action_end_time,
       })
+    } else if (template_config && card_type == 10) {
+      for (var i = 0; i < template_config.length; i++) {
+        //console.log('detail swiperchange_cardname template_config i:', template_config[i])
+        if (template_config[i]['typeId'] == 'card_cele_title') {
+          is_card_cele_title = true
+        } else if (template_config[i]['typeId'] == 'card_cele_content') {
+          is_card_cele_content = true
+        } else if (template_config[i]['typeId'] == 'card_cele_logo') {
+          is_card_cele_logo = true
+        } else if (template_config[i]['typeId'] == 'card_cele_qrcode') {
+          is_card_cele_qrcode = true
+        }
+      }
+      that.setData({
+        is_card_cele_title: is_card_cele_title,
+        is_card_cele_content: is_card_cele_content,
+        is_card_cele_logo: is_card_cele_logo,
+        is_card_cele_qrcode: is_card_cele_qrcode,
+      })
+      console.log('detail swiperchange_cardname is_card_cele_content:', is_card_cele_content)
     }
   },
+  card_cele_titleTapTag: function (e) {
+    var that = this
+    var card_cele_title = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_cele_title: card_cele_title
+    })
+  },
+  card_cele_contentTapTag: function (e) {
+    var that = this
+    var card_cele_content = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_cele_content: card_cele_content,
+    })
+  }, 
 
   card_name_nameTapTag: function (e) {
     var that = this
@@ -579,14 +629,7 @@ Page({
     })
     that.confirmcardinput()
   }, 
-  bindCardTextAreaBlur: function (e) {
-    var that = this
-    var card_blessing = util.filterEmoji(e.detail.value)
-    that.setData({
-      card_blessing: card_blessing,
-      card_content: card_blessing,
-    })
-  }, 
+  
   cardRegisterTextAreaBlur: function (e) {
     var that = this
     var card_register_content = util.filterEmoji(e.detail.value)
@@ -638,18 +681,18 @@ Page({
     })
   }, 
   //确定按钮点击事件 
-  shareConfirmCard: function () {
+  shareConfirmCardCele: function () {
     var that = this
     that.setData({
-      notehidden: !that.data.notehidden,
-      hidden_share: !that.data.hidden_share
+      cardcelehidden: !that.data.cardcelehidden,
     })
+    that.confirmcardinput()
   },
   //取消按钮点击事件  
-  shareCandelCard: function () {
+  shareCandelCardCele: function () {
     var that = this
     that.setData({
-      notehidden: !that.data.notehidden,
+      cardcelehidden: !that.data.cardcelehidden,
     })
   },  
   //确定按钮点击事件 
@@ -709,6 +752,17 @@ Page({
       ]
       wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
       console.log('card_name_info:', wx.getStorageSync('card_name_info'))
+    } else if (card_type == 10) {
+      var card_cele_info = [
+        {
+          card_cele_title: that.data.card_cele_title,
+          card_cele_content: that.data.card_cele_content,
+          card_cele_logo: that.data.card_cele_logo,
+          has_shlogo: that.data.has_shlogo,
+        }
+      ]
+      wx.setStorageSync('card_cele_info', JSON.stringify(card_cele_info[0]))
+      console.log('card_cele_info:', wx.getStorageSync('card_cele_info'))
     }
     that.setData({
       inputShowed:false,
@@ -1019,6 +1073,11 @@ Page({
         cardnamehidden: !that.data.cardnamehidden,
         is_buymyself: is_buymyself ? is_buymyself : 0,
       })
+    } else if (card_type == 10) {
+      that.setData({
+        cardcelehidden: !that.data.cardcelehidden,
+        is_buymyself: is_buymyself ? is_buymyself : 0,
+      })
     }
    
   },
@@ -1248,6 +1307,9 @@ Page({
         var card_name_company = ''
         var card_name_note = ''
         var card_name_logo_image = ''
+        var card_cele_title = ''
+        var card_cele_content = ''
+        var card_cele_logo = ''
         var has_shlogo = that.data.has_shlogo
         var has_registerdue = that.data.has_registerdue
         var has_actiondue = that.data.has_actiondue
@@ -1272,7 +1334,7 @@ Page({
         var card_image_height = that.data.card_image_height ? that.data.card_image_height:'750'
         var card_register_prev = wx.getStorageSync('card_register_info')
         var card_name_prev = wx.getStorageSync('card_name_info')
-   
+        var card_cele_prev = wx.getStorageSync('card_cele_info')
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']
@@ -1304,7 +1366,14 @@ Page({
           card_name_logo_image = card_name_info['card_name_logo_image']
           has_shlogo = card_name_info['has_shlogo'] ? card_name_info['has_shlogo'] : has_shlogo
         }
-        console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_name_prev:', card_name_prev)
+        if (card_cele_prev) {
+          var card_cele_info = JSON.parse(card_cele_prev)
+          card_cele_title = card_cele_info['card_cele_title']
+          card_cele_content = card_cele_info['card_cele_content']
+          card_cele_logo = card_cele_info['card_cele_logo']
+          has_shlogo = card_cele_info['has_shlogo'] ? card_cele_info['has_shlogo'] : has_shlogo
+        }
+        console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_cele_prev:', card_cele_prev)
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
@@ -1322,7 +1391,7 @@ Page({
           card_register_ownerwechat: card_register_ownerwechat ? card_register_ownerwechat : '',
           card_register_adv: card_register_adv ? card_register_adv:'',
           has_registerdue: has_registerdue,
-          has_actiondue: has_actiondue,
+          has_actiondue: has_actiondue ? has_actiondue:false,
           card_content: card_content,
           card_image_height: card_image_height,
           card_name_name: card_name_name ? card_name_name:'',
@@ -1336,8 +1405,10 @@ Page({
           card_name_company: card_name_company ? card_name_company:'',
           card_name_note: card_name_note ? card_name_note:'',
           card_name_logo_image: card_name_logo_image ? card_name_logo_image:'',
+          card_cele_title : card_cele_title?card_cele_title:'',
+          card_cele_content : card_cele_content ? card_cele_content : '',
+          card_cele_logo : card_cele_logo ? card_cele_logo : '',
           has_shlogo: has_shlogo? has_shlogo:false,
-          
         })
         
         if(scene){
@@ -1476,8 +1547,9 @@ Page({
                   that.setData({
                     cardnamehidden: card_type == 2 ? false : true,
                     cardregisterhidden: card_type == 1 ? false : true,
+                    cardcelehidden: card_type == 10 ? false : true,
                   })
-                }, 1500)
+                }, 800)
               }else{
                 wx.showToast({
                   title: '商品已下架',
@@ -1973,9 +2045,10 @@ Page({
             })
           }else{
             if (goodsshape == 5){
+              var card_cele_info = wx.getStorageSync('card_cele_info')  //从缓存中读取
               console.log('detail checkout 贺卡请柬互动卡  order_image:', share_goods_image, ' carts:', carts)
               wx.navigateTo({
-                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + current_card_color + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
+                url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_image=' + share_goods_image + '&card_cele_info=' + card_cele_info + '&card_template=' + JSON.stringify(share_goods_template) + '&username=' + username + '&token=' + token
               })
             } else if (goodsshape == 4){
               if(card_type == 1){

@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view  class="pagewrap" style="{{(!modalHidden||!notehidden||!cardnamehidden||!cardregisterhidden)?'position:fixed;':''}}">
+<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden)?'position:fixed;':''}}">
   <view class="share-goods"  >
     <view class="share-buttons" style="justify-content: flex-end">
       <!--
@@ -8,7 +8,7 @@
         上传图片
       </view>
       -->
-       <view wx:if="{{goodsshape==4}}" class="btnshare" bindtap="cardEditTapTag">
+       <view wx:if="{{goodsshape==4||goodsshape==5}}" class="btnshare" bindtap="cardEditTapTag">
         <image class="shareto" src="../../images/u72.png"></image>
         编辑
       </view>
@@ -117,10 +117,22 @@
                 </view>
               </block>
             </view>
-            <view wx:if="{{goodsshape==5}}" style="" class="card-blessing" >
-              <textarea style='margin-top:10rpx;font-size:26rpx;color:{{current_card_color}}' bindblur="bindCardTextAreaBlur" placeholder="请输入祝词" placeholder-style="text-align:center;color:#e3e3e3;" maxlength="200" value="{{card_blessing}}" />
+            <view wx:if="{{goodsshape==5}}" style="" class="card-blessing-view" >
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+                <text hidden="{{template.typeId=='card_cele_title'?fale:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_title?card_cele_title:template.typeText}}
+                </text>
+                <text space='esnp' hidden="{{template.typeId=='card_cele_content'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_content?card_cele_content:template.typeText}}
+              </text>
+                <view hidden="{{template.typeId=='card_cele_logo'?false:true}}">
+                <image  style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_cele_logo}}" />
+                </view>
+                <view hidden="{{(template.typeId=='card_cele_qrcode' && has_shlogo)?false:true}}" style="">
+                  <image style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}} width:80rpx;height:80rpx; border-radius:50%;" src="{{share_goods_qrcode}}" />
+                </view>
+              </block>
             </view>
             <!-- 
+              <textarea style='margin-top:10rpx;font-size:26rpx;color:{{current_card_color}}' bindblur="bindCardTextAreaBlur" placeholder="请输入祝词" placeholder-style="text-align:center;color:#e3e3e3;" maxlength="200" value="{{card_blessing}}" />
             <view class="share-goods-wx-info">
               <image wx:if="{{goodsshape==5||goodsshape==4}}" src="{{share_goods_wx_headimg}}" style="width:100rpx;height:100rpx; border-radius:50%;item-align:right;" ></image>
               <view wx:if="{{goodsshape==5||goodsshape==4}}" style="margin-left:20rpx;line-height:100rpx;height:100rpx;color:{{current_card_color}}">{{nickname}}</view>
@@ -293,6 +305,7 @@
     </modal>
   </view>
   -->
+  <!-- 
 <view hidden="{{notehidden}}" style='z-index:999;'>
 <modal title="编辑祝词" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirmCard" bindcancel="shareCandelCard" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-330}}px;">
@@ -302,6 +315,7 @@
     </view>
 </modal>
 </view>
+-->
 <view hidden="{{cardnamehidden}}" style='z-index:999;'>
 <modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" bindconfirm="shareConfirmCardName" bindcancel="shareCandelCardName" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-80}}px;">
@@ -342,6 +356,30 @@
     </view>
 </modal>
 </view>
+<view hidden="{{cardcelehidden}}" style='z-index:999;'>
+<modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" bindconfirm="shareConfirmCardCele" bindcancel="shareCandelCardCele" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-80}}px;">
+    <!-- cele card -->
+      <view class="card-blessing-info">
+        <input hidden="{{!is_card_cele_title}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_cele_title}}" placeholder="标题"  bindinput='card_cele_titleTapTag' focus="{{inputShowed}}"  maxlength='50' />
+      </view>
+      <view   hidden="{{!is_card_cele_content}}"  class="card-blessing-info">
+         <textarea style='font-size:28rpx;' bindblur="card_cele_contentTapTag" value="{{card_cele_content}}" placeholder="请输入内容(限220个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="220" />
+      </view>
+      <view hidden="{{!is_card_cele_logo}}" class="card-blessing-info" >
+        <image src="{{card_cele_logo}}"></image>
+        <text hidden="{{card_cele_logo}}" style='font-size:25rpx;height:100rpx;line-height:100rpx;' data-logo='10' bindtap="upimg">添加LOGO</text>
+        <text hidden="{{!card_cele_logo}}" bindtap="cancel_upimg"  data-logo='10' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消LOGO</text>
+      </view>
+       <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
+        </label>
+      </view>
+    </view>
+</modal>
+</view>
 <view hidden="{{cardregisterhidden}}" style='z-index:999;'>
 <modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" bindconfirm="shareConfirmCardRegister" bindcancel="shareCandelCardRegister" confirm-text="确定" cancel-text="返回">
     <view style="height:{{dkheight-80}}px;">
@@ -378,7 +416,7 @@
           </view>
         </picker>
       </view>
-      <view class="modeswitch">
+      <view hidden="{{!is_register_start_date}}" class="modeswitch">
         <label>
           <text style='height:50rpx;line-height:50rpx;'>注册期限</text>
           <switch bindchange="registerDueChange" checked='{{has_registerdue}}' color='#E34C55' style='zoom:0.6' />
@@ -412,7 +450,7 @@
         </view>
         </picker>
       </view>
-      <view class="modeswitch">
+      <view hidden="{{!is_action_start_time}}" class="modeswitch">
         <label>
           <text style='height:50rpx;line-height:50rpx;'>活动期限</text>
           <switch bindchange="actionDueChange" checked='{{has_actiondue}}' color='#E34C55' style='zoom:0.6' />

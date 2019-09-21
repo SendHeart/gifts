@@ -133,11 +133,21 @@ page {
 	justify-content:flex-start;
   color: #999;
 }
-
-/*右上部分标题*/
+ 
 .carts-title {
 	font-size: 28rpx;
 	color: #444;
+	line-height: 38rpx;
+  display: -webkit-box ;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:1; /*显示多少行*/
+}
+.carts-card-title {
+	font-size: 28rpx;
+	color: #999;
 	line-height: 38rpx;
   display: -webkit-box ;
   overflow: hidden;
