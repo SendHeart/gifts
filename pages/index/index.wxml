@@ -80,6 +80,10 @@
           <text>{{item['card_name_info']['card_name_name']?item['card_name_info']['card_name_name']:''}}{{item['card_name_info']['card_name_title']?'('+item['card_name_info']['card_name_title']+')':''}}
           </text>
         </view>
+         <view hidden="{{item['card_type']==4?false:true}}" class="carts-sku">
+          <text>{{item['card_love_info']['card_love_related']?item['card_love_info']['card_love_related']:''}}{{item['card_love_info']['card_love_phone']?'('+item['card_love_info']['card_love_phone']+')':''}}
+          </text>
+        </view>
          <view hidden="{{item['card_type']==10?false:true}}" class="carts-sku">
           <text>{{item['card_cele_info']['card_cele_title']?item['card_cele_info']['card_cele_title']:''}}
           </text>

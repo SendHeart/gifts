@@ -458,8 +458,8 @@ border: none;
   display: flex;
   flex-direction: row;
   justify-content:flex-start;
-  line-height: 50rpx;
-  height:50rpx;
+  line-height: 35rpx;
+  height:35rpx;
   padding: 10rpx;
   font-size: 26rpx;
 }
@@ -502,8 +502,8 @@ border: none;
 .price-now {
   color: #E34C55;
   width: 35%;
-  height: 50rpx;
-  line-height: 50rpx;
+  height: 35rpx;
+  line-height: 35rpx;
   margin-left: 10rpx;
 }
 .price-now::first-letter {
@@ -659,6 +659,23 @@ border: none;
   */
 }
 
+.card-love-view {
+    z-index: 1000;
+}
+.card-love-view text {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
+.card-love-view image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
 
 .card-blessing-info {
   width: 100%;
@@ -702,6 +719,57 @@ border: none;
   padding: 10rpx;
 }
 .card-blessing-info image {
+  width: 100rpx;
+  height: 100rpx;
+  margin: 0 auto;
+  padding: 5rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.card-love-info {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.card-love-info input {
+  width: 100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin: 0 0 10rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #666;
+  background: #fff;
+  border-radius: 14rpx;
+}
+.card-love-info text {
+  width: 100%;
+  height: 30rpx;
+  line-height: 30rpx;
+  margin: 0 0 10rpx 10rpx;
+  padding: 15rpx;
+  font-size: 24rpx;
+  color: #999;
+  border-radius: 14rpx;
+}
+.card-love-info textarea {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3; 
+  width:500rpx;
+  height:150rpx;
+  background: #fff;
+  padding: 10rpx;
+  margin-bottom:10rpx;
+}
+.card-love-info image {
   width: 100rpx;
   height: 100rpx;
   margin: 0 auto;

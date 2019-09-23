@@ -503,6 +503,25 @@ swiper-item image {
   background: #fff;
   */
 }
+
+
+.card-love-info {
+    z-index: 1000;
+}
+.card-love-info text {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
+.card-love-info image {
+  position: absolute;
+  font-size:25rpx; 
+  /*
+  background: #fff;
+  */
+}
 .card-name-note{
   position: relative;
   margin-top:5rpx;

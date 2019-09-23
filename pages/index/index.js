@@ -766,12 +766,14 @@ Page({
                 var m_desc = JSON.parse(orderObjects[i]['m_desc'])
                 var card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
                 var card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
+                var card_love_info = m_desc['card_love_info'] ? m_desc['card_love_info'] : ''
                 var card_cele_info = m_desc['card_cele_info'] ? m_desc['card_cele_info'] : ''
                 var card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
                 var card_type = m_desc['card_register_info'] ? 1 : 0
                 card_type = m_desc['card_template'] ? m_desc['card_template'][0]['type'] : card_type    
                 orderObjects[i]['card_type']  = card_type
                 orderObjects[i]['card_name_info'] = card_name_info
+                orderObjects[i]['card_love_info'] = card_love_info
                 orderObjects[i]['card_cele_info'] = card_cele_info
                 orderObjects[i]['card_register_info'] = card_register_info
               }

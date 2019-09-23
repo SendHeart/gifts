@@ -365,7 +365,7 @@ Page({
         nickname: userInfo.nickName,
         card_type: card_type,
       })
-      console.log('wishshare onShow get userInfo：', userInfo)
+      console.log('wishshare onShow get userInfo：', userInfo, ' share_order_shape:', share_order_shape, ' share_order_id:', share_order_id)
     })
     if (share_order_id > 0 && (parseInt(share_order_shape) == 5 || parseInt(share_order_shape) == 4)){
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -385,8 +385,8 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          //console.log(' wishshare onload() 订单查询:', res.data.result)
           var orderObjects = res.data.result
+          console.log(' wishshare onload() 订单查询:', orderObjects)
           // 存储地址字段
           for (var i = 0; i < orderObjects.length; i++) {
             if (orderObjects[i]['logo'].indexOf("http") < 0) {
@@ -424,16 +424,18 @@ Page({
             that.setData({
               card_register_info: m_desc['card_register_info'] ? m_desc['card_register_info']:'',
               card_name_info: m_desc['card_name_info'] ? m_desc['card_name_info'] : '',
+              card_love_info: m_desc['card_love_info'] ? m_desc['card_love_info'] : '',
               card_cele_info: m_desc['card_cele_info'] ? m_desc['card_cele_info'] : '',
               card_template: m_desc['card_template'] ? m_desc['card_template'] : '',
               card_color: m_desc['color'] ? m_desc['color']:'#333',
               card_type: m_desc['card_template']? m_desc['card_template'][0]['type']:0,
             })
-            console.log('card card_template:', that.data.card_template)
+            //console.log('card card_template:', that.data.card_template, ' card_love_info:', card_love_info)
             wx.setNavigationBarTitle({
               title: '互动卡分享',
             })
           }
+          console.log('card card_template:', that.data.card_template, ' card_love_info:', that.data.card_love_info)
         }
       })
     }
@@ -675,6 +677,7 @@ Page({
     var share_order_bg = that.data.share_order_bg
     var card_register_info = that.data.card_register_info //shape:4 互动卡 
     var card_name_info = that.data.card_name_info //shape:4 互动卡 名片内容
+    var card_love_info = that.data.card_love_info //shape:4 互动卡 爱心卡内容
     var card_cele_info = that.data.card_cele_info //shape:5 贺卡请柬 
     var card_template = that.data.card_template //shape:4 互动卡 名片模板
     //var card_type = that.data.card_type ? that.data.card_type:0
@@ -685,7 +688,7 @@ Page({
       title: '生成中',
       //mask: true
     })
-    console.log('wishshare eventDraw share_order_shape:', share_order_shape, 'card_cele_info:', card_cele_info)
+    console.log('wishshare eventDraw share_order_shape:', share_order_shape, 'card_love_info:', card_love_info)
     
     if (activity_id>0){
       console.log('activity_id:', activity_id)
@@ -1017,7 +1020,7 @@ Page({
         view_item['height'] = card_template[i]['height'] * views_height
         view_item['lineHeight'] = card_template[i]['height'] * views_height
         if (card_template[i]['viewType'] == 1) {  
-          if (card_template[i]['typeId'] == 'card_logo') {
+          if (card_template[i]['typeId'] == 'card_logo' && card_name_info['card_name_logo_image'] ) {
             view_item['type'] = 'image'
             view_item['url'] = card_name_info['card_name_logo_image'] ? card_name_info['card_name_logo_image'] : ''
             view_item['width'] = 80
@@ -1063,6 +1066,82 @@ Page({
 
           }
          
+        }
+        views = views.concat(view_item)
+      }
+      that.setData({
+        painting: {
+          width: views_width,
+          height: views_height,
+          windowHeight: that.data.windowHeight,
+          windowWidth: that.data.windowWidth,
+          clear: true,
+          background: 'white',
+          views: views
+        }
+      })
+    } else if (share_order_shape == 4 && card_love_info && share_goods_id == 0) { //互动卡 爱心卡
+      var views_width = 500
+      var views_height = 700
+      console.log('share_order_shape:', share_order_shape, ' card_template:', card_template, 'share_order_bg:', share_order_bg)
+      var views = [
+        {
+          type: 'image',
+          url: share_order_bg,
+          top: 5,
+          left: 5,
+          width: views_width ,
+          height: views_height ,
+        }
+      ]
+
+      for (var i = 0; i < card_template.length; i++) {
+        var view_item = {}
+        view_item['top'] = card_template[i]['y'] * views_height
+        view_item['left'] = card_template[i]['x'] * views_width
+        view_item['width'] = card_template[i]['width'] * views_width
+        view_item['height'] = card_template[i]['height'] * views_height
+        view_item['lineHeight'] = card_template[i]['height'] * views_height
+        if (card_template[i]['viewType'] == 1) {
+          if (card_template[i]['typeId'] == 'card_love_logo' && card_love_info['card_love_logo']  ) {
+            view_item['type'] = 'image'
+            view_item['url'] = card_love_info['card_love_logo'] ? card_love_info['card_love_logo'] : ''
+            view_item['width'] = 80
+            view_item['height'] = 80
+          }
+          if (card_template[i]['typeId'] == 'card_love_qrcode' && card_love_info['has_shlogo']) {
+            view_item['type'] = 'image'
+            view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
+            view_item['width'] = 70
+            view_item['height'] = 70
+            view_item['borderRadius'] = 35
+          }
+        } else {
+          view_item['type'] = 'text'
+          view_item['fontSize'] = card_template[i]['styleSheet']['fontSize']
+          view_item['fontSize'] = parseInt(view_item['fontSize']) + 8
+          view_item['color'] = card_template[i]['color'] ? card_template[i]['color'] : '#333'
+          view_item['textAlign'] = 'left'
+          view_item['breakWord'] = false
+          if (card_template[i]['typeId'] == 'card_love_title') {
+            view_item['content'] = card_love_info['card_love_title'] ? card_love_info['card_love_title'].trim() : ''
+            view_item['left'] = view_item['left']  //+ 5 * (10 - view_item['content'].length)
+            console.log('share_order_shape length:')
+          } else if (card_template[i]['typeId'] == 'card_love_related') {
+            view_item['content'] = card_love_info['card_love_related'] ? card_love_info['card_love_related'] : ''
+          } else if (card_template[i]['typeId'] == 'card_love_phone') {
+            view_item['content'] = card_love_info['card_love_phone'] ? card_love_info['card_love_phone'] : ''
+          } else if (card_template[i]['typeId'] == 'card_love_addr') {
+            view_item['MaxLineNumber'] = 2
+            view_item['breakWord'] = true
+            view_item['lineHeight'] = 25
+            view_item['content'] = card_love_info['card_love_addr'] ? card_love_info['card_love_addr'] : ''
+          } else if (card_template[i]['typeId'] == 'card_love_content') {
+            view_item['MaxLineNumber'] = 6
+            view_item['breakWord'] = true
+            view_item['lineHeight'] = 30
+            view_item['content'] = card_love_info['card_love_content'] ? card_love_info['card_love_content'] : ''
+          }
         }
         views = views.concat(view_item)
       }

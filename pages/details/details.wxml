@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden)?'position:fixed;':''}}">
+<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden||!cardlovehidden)?'position:fixed;':''}}">
   <view class="share-goods"  >
     <view class="share-buttons" style="justify-content: flex-end">
       <!--
@@ -117,6 +117,28 @@
                 </view>
               </block>
             </view>
+             <!-- card love info view -->
+            <view wx:if="{{goodsshape==4 && card_type==4}}" class="card-love-view" >
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+                <text hidden="{{template.typeId=='card_love_title'?fale:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_title?card_love_title:template.typeText}}
+                </text>
+                <text hidden="{{template.typeId=='card_love_phone'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_phone?card_love_phone:template.typeText}}
+                </text>
+             
+                <text hidden="{{template.typeId=='card_love_addr'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_addr?card_love_addr:template.typeText}}
+                </text> 
+                <text hidden="{{template.typeId=='card_love_related'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_related?card_love_related:template.typeText}}
+                </text> 
+                <text hidden="{{template.typeId=='card_love_content'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_content?card_love_content:template.typeText}}
+              </text>
+                <view hidden="{{template.typeId=='card_love_logo'?false:true}}">
+                <image  style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_love_logo}}" />
+                </view>
+                <view hidden="{{(template.typeId=='card_love_qrcode' && has_shlogo)?false:true}}" style="">
+                  <image style="{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}} width:80rpx;height:80rpx; border-radius:50%;" src="{{share_goods_qrcode}}" />
+                </view>
+              </block>
+            </view>
             <view wx:if="{{goodsshape==5}}" style="" class="card-blessing-view" >
               <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
                 <text hidden="{{template.typeId=='card_cele_title'?fale:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_title?card_cele_title:template.typeText}}
@@ -191,7 +213,7 @@
     </view>
   </view>
 
- <view wx:if="{{goodsorg!=5}}"class="comm-text">
+  <view wx:if="{{goodsorg!=5}}"class="comm-text">
       <text class="comm-name">物流</text>
       <view class="comm-listitem">
       <image class='icon-item' src='../../images/icon-wl.png'></image>
@@ -226,11 +248,11 @@
 </view>
 <action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
       <view class='modaltitletext'>
-      <text>{{attrValueList.length>0?'':add_cart_title}}</text>
-      <view class='buy-return' bindtap="modalBindcancel">×</view>
+        <text>{{attrValueList.length>0?'':add_cart_title}}</text>
+        <view class='buy-return' bindtap="modalBindcancel">×</view>
       </view>
-      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-25}}px">
-        <view style="max-height:{{dkheight-30}}px">
+      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-5}}px">
+        <view style="max-height:{{dkheight-10}}px">
           <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
             <view class="sku_title">选择{{attrValueObj.name}}</view>
             <view class="attr_value_box">
@@ -252,8 +274,8 @@
           <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
           <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
         </view>
-        </view>
-        <view class="buy-info">
+      </view>
+      <view class="buy-info">
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view> 
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">
           <image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image>
@@ -264,7 +286,7 @@
         </view>
       </view>
   <action-sheet-cancel>确定
-<view style='height:68rpx;'></view>
+<view style='height:0rpx;'></view>
 </action-sheet-cancel>
 </action-sheet>
 
@@ -370,6 +392,37 @@
         <image src="{{card_cele_logo}}"></image>
         <text hidden="{{card_cele_logo}}" style='font-size:25rpx;height:100rpx;line-height:100rpx;' data-logo='10' bindtap="upimg">添加LOGO</text>
         <text hidden="{{!card_cele_logo}}" bindtap="cancel_upimg"  data-logo='10' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消LOGO</text>
+      </view>
+       <view class="modeswitch">
+        <label>
+          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
+        </label>
+      </view>
+    </view>
+</modal>
+</view>
+<view hidden="{{cardlovehidden}}" style='z-index:999;'>
+<modal title="{{is_buymyself==1?'请确认':card_name_modal_title}}" bindconfirm="shareConfirmCardLove" bindcancel="shareCandelCardLove" confirm-text="确定" cancel-text="返回">
+    <view style="height:{{dkheight-80}}px;">
+    <!-- cele card -->
+      <view class="card-love-info">
+        <input hidden="{{!is_card_love_title}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_love_title}}" placeholder="标题"  bindinput='card_love_titleTapTag' focus="{{inputShowed}}"  maxlength='50' />
+      </view>
+      <view hidden="{{!is_card_love_content}}"  class="card-love-info">
+         <textarea style='font-size:28rpx;' bindblur="card_love_contentTapTag" value="{{card_love_content}}" placeholder="请输入留言(限120个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="120" />
+      </view>
+      <view class="card-love-info">
+        <input hidden="{{!is_card_love_related}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_love_related}}" placeholder="联系人姓名"  bindinput='card_love_relatedTapTag' focus="{{inputShowed}}"  maxlength='50' />
+        <input hidden="{{!is_card_love_phone}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_love_phone}}" placeholder="联系人手机"  bindinput='card_love_phoneTapTag' focus="{{inputShowed}}"  maxlength='50' />
+      </view>
+      <view class="card-love-info">
+        <input hidden="{{!is_card_love_addr}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_love_addr}}" placeholder="联系地址"  bindinput='card_love_addrTapTag' focus="{{inputShowed}}"  maxlength='50' />
+      </view>
+      <view hidden="{{!is_card_love_logo}}" class="card-love-info" >
+        <image src="{{card_love_logo}}"></image>
+        <text hidden="{{card_love_logo}}" style='font-size:25rpx;height:100rpx;line-height:100rpx;' data-logo='4' bindtap="upimg">添加照片</text>
+        <text hidden="{{!card_love_logo}}" bindtap="cancel_upimg"  data-logo='4' style='font-size:25rpx;height:100rpx;line-height:100rpx;'>取消照片</text>
       </view>
        <view class="modeswitch">
         <label>

@@ -35,8 +35,13 @@
             <text>{{card_cele_info.card_cele_title?card_cele_info.card_cele_title:''}} 
             </text>
           </view>
+          <view wx:if="{{order_shape==4 && card_love_info}}">
+            <text>{{card_love_info.card_love_title?card_love_info.card_love_title:''}}
+            </text>
+            <text>{{card_love_info.card_love_related?'联系人:'+card_love_info.card_love_related:''}}{{card_love_info.card_love_phone?' 手机:'+card_love_info.card_love_phone:''}}
+            </text>
+          </view>
         </view>
-         
         <view wx:if="{{order_shape!=4 && order_shape!=5}}" class="carts-subtitle">
           <view class='carts-price'>
             <view>{{item.sell_price>0?'￥'+item.sell_price:''}} {{item.num>0?'x'+item.num+' ':''}}</view>

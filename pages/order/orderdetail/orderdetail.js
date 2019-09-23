@@ -240,6 +240,7 @@ Page({
       var buy_num = order_object['buy_num']
       var card_name_info = order_object['card_name_info'] ? order_object['card_name_info']:''
       var card_cele_info = order_object['card_cele_info'] ? order_object['card_cele_info'] : ''
+      var card_love_info = order_object['card_love_info'] ? order_object['card_love_info'] : ''
       var card_register_info = order_object['card_register_info'] ? order_object['card_register_info']:''
       sku_num = order_object['order_sku'].length
       orders.push(order_object)
@@ -267,6 +268,7 @@ Page({
         deliveryname: deliveryname ? deliveryname : '',
         deliverystepinfo: deliverystepinfo ? deliverystepinfo : '',
         card_name_info: card_name_info,
+        card_love_info: card_love_info,
         card_cele_info: card_cele_info,
         card_register_info: card_register_info,
       })

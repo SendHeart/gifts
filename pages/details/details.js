@@ -99,6 +99,7 @@ Page({
     setInter: "",
     cardnamehidden: true,
     cardcelehidden: true,
+    cardlovehidden: true,
     card_color: card_color,
     current_card_color: '#333',
     card_color_index: 0,
@@ -241,6 +242,10 @@ Page({
       that.setData({
         card_register_adv: ''
       })
+    } else if (is_logo == 4) {
+      that.setData({
+        card_love_logo: ''
+      })
     } else if (is_logo == 10) {
       that.setData({
         card_cele_logo: ''
@@ -278,6 +283,10 @@ Page({
             } else if (is_logo == 2){
               that.setData({
                 card_register_adv: retinfo['result']['img_url'],
+              })
+            } else if (is_logo == 4) {
+              that.setData({
+                card_love_logo: retinfo['result']['img_url'],
               })
             } else if (is_logo == 10) {
               that.setData({
@@ -391,6 +400,14 @@ Page({
     var is_card_cele_logo = false
     var is_card_cele_qrcode = false
 
+    var is_card_love_title = false
+    var is_card_love_related = false
+    var is_card_love_phone = false
+    var is_card_love_addr = false
+    var is_card_love_content = false
+    var is_card_love_logo = false
+    var is_card_love_qrcode = false
+
     var is_card_name_name = false
     var is_card_name_title = false
     var is_card_name_phone = false
@@ -420,7 +437,7 @@ Page({
     var is_action_start_time = false
     var is_action_end_date = false
     var is_action_end_time = false
-    console.log('detail swiperchange_cardname template_config:', template_config)
+    console.log('detail swiperchange_cardname card_type:' , card_type,'template_config:', template_config)
     if (template_config && card_type==2){
       for (var i = 0; i < template_config.length;i++){
         //console.log('detail swiperchange_cardname template_config i:', template_config[i])
@@ -521,6 +538,38 @@ Page({
         is_action_end_date: is_action_end_date,
         is_action_end_time: is_action_end_time,
       })
+      console.log('detail swiperchange_card name is_card_register_title:', is_card_register_title, ' is_card_register_logo:', is_card_register_logo)
+    } else if (template_config && card_type == 4) {
+      console.log('detail swiperchange_card name is_card_love_content:', is_card_love_content, ' is_card_love_logo:', is_card_love_logo)
+      for (var i = 0; i < template_config.length; i++) {
+        //console.log('detail swiperchange_cardname template_config i:', template_config[i])
+        if (template_config[i]['typeId'] == 'card_love_title') {
+          is_card_love_title = true
+        } else if (template_config[i]['typeId'] == 'card_love_content') {
+          is_card_love_content = true
+        } else if (template_config[i]['typeId'] == 'card_love_phone') {
+          is_card_love_phone = true
+        } else if (template_config[i]['typeId'] == 'card_love_related') {
+          is_card_love_related = true
+        } else if (template_config[i]['typeId'] == 'card_love_addr') {
+          is_card_love_addr = true
+        } else if (template_config[i]['typeId'] == 'card_love_logo') {
+          is_card_love_logo = true
+        } else if (template_config[i]['typeId'] == 'card_love_qrcode') {
+          is_card_love_qrcode = true
+        }
+      }
+    
+      that.setData({
+        is_card_love_title: is_card_love_title,
+        is_card_love_content: is_card_love_content,
+        is_card_love_phone: is_card_love_phone,
+        is_card_love_related: is_card_love_related,
+        is_card_love_addr: is_card_love_addr,
+        is_card_love_logo: is_card_love_logo,
+        is_card_love_qrcode: is_card_love_qrcode,
+      })
+     
     } else if (template_config && card_type == 10) {
       for (var i = 0; i < template_config.length; i++) {
         //console.log('detail swiperchange_cardname template_config i:', template_config[i])
@@ -557,6 +606,46 @@ Page({
       card_cele_content: card_cele_content,
     })
   }, 
+
+  card_love_titleTapTag: function (e) {
+    var that = this
+    var card_love_title = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_love_title: card_love_title
+    })
+  },
+
+  card_love_phoneTapTag: function (e) {
+    var that = this
+    var card_love_phone = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_love_phone: card_love_phone
+    })
+  },
+
+  card_love_relatedTapTag: function (e) {
+    var that = this
+    var card_love_related = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_love_related: card_love_related
+    })
+  },
+
+  card_love_addrTapTag: function (e) {
+    var that = this
+    var card_love_addr = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_love_addr: card_love_addr
+    })
+  },
+
+  card_love_contentTapTag: function (e) {
+    var that = this
+    var card_love_content = util.filterEmoji(e.detail.value)
+    that.setData({
+      card_love_content: card_love_content
+    })
+  },
 
   card_name_nameTapTag: function (e) {
     var that = this
@@ -752,6 +841,20 @@ Page({
       ]
       wx.setStorageSync('card_name_info', JSON.stringify(card_name_info[0]))
       console.log('card_name_info:', wx.getStorageSync('card_name_info'))
+    } else if (card_type == 4) {
+      var card_love_info = [
+        {
+          card_love_title: that.data.card_love_title,
+          card_love_phone: that.data.card_love_phone,
+          card_love_related: that.data.card_love_related,
+          card_love_addr: that.data.card_love_addr,
+          card_love_content: that.data.card_love_content,
+          card_love_logo: that.data.card_love_logo,
+          has_shlogo: that.data.has_shlogo,
+        }
+      ]
+      wx.setStorageSync('card_love_info', JSON.stringify(card_love_info[0]))
+      console.log('card_love_info:', wx.getStorageSync('card_love_info'))
     } else if (card_type == 10) {
       var card_cele_info = [
         {
@@ -1073,6 +1176,11 @@ Page({
         cardnamehidden: !that.data.cardnamehidden,
         is_buymyself: is_buymyself ? is_buymyself : 0,
       })
+    } else if (card_type == 4) {
+      that.setData({
+        cardlovehidden: !that.data.cardlovehidden,
+        is_buymyself: is_buymyself ? is_buymyself : 0,
+      })
     } else if (card_type == 10) {
       that.setData({
         cardcelehidden: !that.data.cardcelehidden,
@@ -1081,6 +1189,22 @@ Page({
     }
    
   },
+
+  //确定按钮点击事件 
+  shareConfirmCardLove: function () {
+    var that = this
+    that.setData({
+      cardlovehidden: !that.data.cardlovehidden,
+    })
+    that.confirmcardinput()
+  },
+  //取消按钮点击事件  
+  shareCandelCardLove: function () {
+    var that = this
+    that.setData({
+      cardlovehidden: !that.data.cardlovehidden,
+    })
+  },  
 
   //确定按钮点击事件 
   shareConfirmCardName: function () {
@@ -1310,6 +1434,12 @@ Page({
         var card_cele_title = ''
         var card_cele_content = ''
         var card_cele_logo = ''
+        var card_love_title = ''
+        var card_love_content = ''
+        var card_love_logo = ''
+        var card_love_related = ''
+        var card_love_phone = ''
+        var card_love_addr = ''
         var has_shlogo = that.data.has_shlogo
         var has_registerdue = that.data.has_registerdue
         var has_actiondue = that.data.has_actiondue
@@ -1335,6 +1465,7 @@ Page({
         var card_register_prev = wx.getStorageSync('card_register_info')
         var card_name_prev = wx.getStorageSync('card_name_info')
         var card_cele_prev = wx.getStorageSync('card_cele_info')
+        var card_love_prev = wx.getStorageSync('card_love_info')
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']
@@ -1373,7 +1504,17 @@ Page({
           card_cele_logo = card_cele_info['card_cele_logo']
           has_shlogo = card_cele_info['has_shlogo'] ? card_cele_info['has_shlogo'] : has_shlogo
         }
-        console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_cele_prev:', card_cele_prev)
+        if (card_love_prev) {
+          var card_love_info = JSON.parse(card_love_prev)
+          card_love_title = card_love_info['card_love_title']
+          card_love_phone = card_love_info['card_love_phone']
+          card_love_addr = card_love_info['card_love_addr']
+          card_love_related = card_love_info['card_love_related']
+          card_love_content = card_love_info['card_love_content']
+          card_love_logo = card_love_info['card_love_logo']
+          has_shlogo = card_love_info['has_shlogo'] ? card_love_info['has_shlogo'] : has_shlogo
+        }
+        console.log('detail options:', options, 'scene:', scene, 'card_type:', card_type, 'card_love_info:', card_love_info)
         that.setData({
           is_apple: phonemodel.indexOf("iPhone")>= 0?1:0,
           image_save_count:0,
@@ -1408,6 +1549,12 @@ Page({
           card_cele_title : card_cele_title?card_cele_title:'',
           card_cele_content : card_cele_content ? card_cele_content : '',
           card_cele_logo : card_cele_logo ? card_cele_logo : '',
+          card_love_title: card_love_title ? card_love_title : '',
+          card_love_phone: card_love_phone ? card_love_phone : '',
+          card_love_related: card_love_related ? card_love_related : '',
+          card_love_addr: card_love_addr ? card_love_addr : '',
+          card_love_content: card_love_content ? card_love_content : '',
+          card_love_logo: card_love_logo ? card_love_logo : '',
           has_shlogo: has_shlogo? has_shlogo:false,
         })
         
@@ -1547,6 +1694,7 @@ Page({
                   that.setData({
                     cardnamehidden: card_type == 2 ? false : true,
                     cardregisterhidden: card_type == 1 ? false : true,
+                    cardlovehidden: card_type == 4 ? false : true,
                     cardcelehidden: card_type == 10 ? false : true,
                   })
                 }, 800)
@@ -1670,7 +1818,6 @@ Page({
             that.setData({
               attrValueList: attrValueList
             })
-
           }
       })
   
@@ -1789,13 +1936,12 @@ Page({
               wishflag: 0,
             })
           }
-         
         }
 
       }else{
         setTimeout(function () {
           goodsmodel_count = goodsmodel_count +1
-          if (goodsmodel_count<5){
+          if (goodsmodel_count<15){
             wx.showToast({
               title: "加载中...",
               icon: 'loading',
@@ -2063,10 +2209,14 @@ Page({
                 wx.navigateTo({
                   url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_name_info=' + card_name_info + '&card_template=' + JSON.stringify(share_goods_template) + '&username=' + username + '&token=' + token
                 })
+              } else if (card_type == 4) { //爱心卡
+                var card_love_info = wx.getStorageSync('card_love_info')  //从缓存中读取
+                console.log('detail checkout 互动卡 love card  order_image:', share_goods_image, ' card_love_info:', card_love_info, ' share_goods_template:', share_goods_template)
+                wx.navigateTo({
+                  url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_voice=' + order_voice + '&order_voicetiime=' + order_voicetime + '&order_note=' + order_note + '&order_color=' + share_goods_template[0]['color'] + '&order_image=' + share_goods_image + '&card_love_info=' + card_love_info + '&card_template=' + JSON.stringify(share_goods_template) + '&username=' + username + '&token=' + token
+                })
               }
-             
             }
-           
           }
         }
       })
