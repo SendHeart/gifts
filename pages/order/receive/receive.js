@@ -717,7 +717,7 @@ Page({
       var ordidReg = new RegExp(/(?=ordid=).*?(?=\&)/)
       var scene_ordid = scene.match(ordidReg)[0]
       var tyReg = new RegExp(/\&ty=(.*)/)
-      var scene_order_shape = scene.match(tydReg)[0]
+      var scene_order_shape = scene.match(tyReg)[0]
       order_id = order_id > 0 ? order_id : scene_ordid
       order_shape = scene_order_shape
     }
