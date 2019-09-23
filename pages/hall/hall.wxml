@@ -1,4 +1,4 @@
-<view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+<view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
   <!--    bindscroll="scrolltoupper" -->
   <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
@@ -359,7 +359,7 @@
   </block>
   </view>
   --->
-    <view class="loading-show" hidden="{{loadingHidden}}">
+    <view class="loading-show" hidden="{{!is_reloading}}">
       <text>{{loading_note}}</text>
     </view>
   </view>

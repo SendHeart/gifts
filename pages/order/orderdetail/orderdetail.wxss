@@ -146,7 +146,7 @@ page {
   -webkit-line-clamp:1; /*显示多少行*/
 }
 .carts-card-title {
-	font-size: 28rpx;
+	font-size: 25rpx;
 	color: #999;
 	line-height: 38rpx;
   display: -webkit-box ;

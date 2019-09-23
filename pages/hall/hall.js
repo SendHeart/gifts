@@ -36,6 +36,7 @@ Page({
     img_service2: weburl + '/uploads/service2.png',
     default_img : weburl + '/uploads/default_goods_image.png',
     default_avatar: weburl + '/uploads/avatar.png',
+    platform:'',
     pagesize: pagesize,
     pageoffset:0,
     hidden: true,
@@ -63,7 +64,7 @@ Page({
     carts: [],
     recommentslist: [], 
     recommentslist_show: [],
-    show_max:2,
+    show_max:20,
     minusStatuses: [],
     selectedAllStatus: true,
     total: '',
@@ -122,31 +123,27 @@ Page({
 
       }
     } else { //上下方向滑动
-      if (ty < 0) {  // text = "向上滑动"
-       
+      if (ty < 0 && !that.data.is_reloading) {  // text = "向上滑动"
+        if (that.data.page < that.data.rpage_num) {
+          //将当前坐标进行保存以进行下一次计算
+          that.getMoreGoodsTapTag()
+          /*
+          if (currentY > scrollHeight - 100) {
+            
+          }
+          */
+        } 
       } else if (ty > 0) {  //text = "向下滑动"
         
       }
     }
-    if (that.data.page < that.data.rpage_num) {
-      //将当前坐标进行保存以进行下一次计算
-      that.getMoreGoodsTapTag()
-    } 
+   
     that.setData({
       floorstatus: true,
     })
-    if (!that.data.is_reloading || ty<0){
-      this.data.lastX = currentX
-      this.data.lastY = currentY
-      console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
-    }
-    
-    /*
-    if (currentY > scrollHeight - 100) {
-     
-    }
-    */
-   
+    that.data.lastX = currentX
+    that.data.lastY = currentY
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
     
   },
   handletouchstart: function (event) {
@@ -154,10 +151,16 @@ Page({
     // 赋值
     this.data.lastX = event.touches[0].pageX
     this.data.lastY = event.touches[0].pageY
+    this.setData({
+      touchstop: false,
+    })
   },
   handletouchend: function (event) {
     var that = this
     var currentY = that.data.lastY
+    this.setData({
+      touchstop: true,
+    })
     //console.log('滑动停止 currentX:', that.data.lastX, 'currentY:', that.data.lastY, that.data.scrollHeight)
     
   },
@@ -168,7 +171,11 @@ Page({
     var page = that.data.page + 1;
     var rpage_num = that.data.rpage_num
     var is_reloading = that.data.is_reloading
-    if (is_reloading) return
+    console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading, that.data.scrollHeight)
+    if (is_reloading) {
+     
+      return
+    }
     if (page > rpage_num) {
       wx.showToast({
         title: '已经到底了~',
@@ -237,14 +244,24 @@ Page({
   //回到顶部，内部调用系统API
   goTop: function () {  // 一键回到顶部
     var that = this
-     
+    var is_reloading = that.data.is_reloading
+    if (is_reloading){
+      wx.showToast({
+        title: '加载中',
+        icon: 'loading',
+        duration: 1000
+      })
+      setTimeout(function () {
+        that.goTop()
+      }, 500)
+      return
+    }
    /*
     that.setData({
       scrollTop: 0
     })
     */
-   // console.log('goTop:', that.data.scrollTop)
-   
+    console.log('goTop:', that.data.scrollTop)
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0 ,
@@ -255,29 +272,29 @@ Page({
         recommentslist_show: [],
         page:1,
         pageoffset:0,
-      })
-      that.reloadData()
-      app.globalData.hall_gotop = 0
-      const fs = wx.getFileSystemManager()
-      fs.getSavedFileList({
-        success(res) {
-          console.log('hall getSavedFileList 缓存文件列表', res)
-          for (var i = 0; i < res.fileList.length; i++) {
-
-            fs.removeSavedFile({
-              filePath: res.fileList[i]['filePath'],
-              success(res) {
-                console.log('hall image_save 缓存清除成功', res)
-              },
-              fail(res) {
-                console.log('hall image_save 缓存清除失败', res)
-              }
-            })
+      },function(){
+        that.reloadData()
+        app.globalData.hall_gotop = 0
+        const fs = wx.getFileSystemManager()
+        fs.getSavedFileList({
+          success(res) {
+            console.log('hall getSavedFileList 缓存文件列表', res)
+            for (var i = 0; i < res.fileList.length; i++) {
+              fs.removeSavedFile({
+                filePath: res.fileList[i]['filePath'],
+                success(res) {
+                  console.log('hall image_save 缓存清除成功', res)
+                },
+                fail(res) {
+                  console.log('hall image_save 缓存清除失败', res)
+                }
+              })
+            }
+          },
+          fail(res) {
+            console.log('hall getSavedFileList 缓存文件列表查询失败', res)
           }
-        },
-        fail(res) {
-          console.log('hall getSavedFileList 缓存文件列表查询失败', res)
-        }
+        })
       })
       
     } else {
@@ -997,6 +1014,11 @@ Page({
       is_reloading: true,
       loadingHidden: false,
     })
+    /*
+    wx.showLoading({
+      title: '加载中',
+    })
+    */
     wx.request({
       url: weburl + '/api/client/query_member_goods_prom',
       method: 'POST',
@@ -1045,20 +1067,27 @@ Page({
         if (recommentslist_show.length >= show_max) {
           recommentslist_show.shift()
         }
-        
+     
         that.setData({
-          is_reloading: false,
           recommentslist: recommentslist,
-          ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
           rpage_num: rpage_num,
-          pageoffset: pageoffset,
+          ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
+          pageoffset: pageoffset, 
+          }, function () {
+            that.setData({
+              is_reloading:false,
+              loadingHidden:true,
+            })
+            //wx.hideLoading()
+            //that.getScrollHeight() //获取页面实际高度
+            console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset);
         })
         /*
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
         }, 500)
         */
-        console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:',page,' pageoffset:', pageoffset);
+       
       }
     })
     
@@ -1286,6 +1315,16 @@ Page({
     var messages_num = that.data.messages_num
     var myDate = util.formatTime(new Date)
     var scene = decodeURIComponent(options.scene)
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        console.log('getSystemInfo:', res);
+        that.setData({
+          platform: res.platform,
+          dkheight: winHeight,
+        })
+      }
+    })
     app.globalData.is_task = task
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
     var message_info = {
@@ -1358,15 +1397,7 @@ Page({
     setInterval(function () {
       //that.reSend()
     }, 5000)
-    wx.getSystemInfo({
-      success: function (res) {
-        let winHeight = res.windowHeight;
-        console.log('getSystemInfo:', winHeight);
-        that.setData({
-          dkheight: winHeight,
-        })
-      }
-    })
+    
     that.reloadData()
     that.sum()
   },
@@ -1482,7 +1513,7 @@ Page({
       if (rect){
         that.setData({
           scrollHeight: rect.height,
-          loadingHidden:true
+          //loadingHidden:true
         })
         console.log('页面实际高度:', that.data.scrollHeight)
       }else{

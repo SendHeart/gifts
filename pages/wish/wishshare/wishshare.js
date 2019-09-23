@@ -979,8 +979,8 @@ Page({
         }
       })
     } else if (share_order_shape == 4 && card_name_info && share_goods_id == 0) { //互动卡 名片
-      var views_width = that.data.windowWidth
-      var views_height = 250 
+      var views_width = 720
+      var views_height = 400 
       /*
       wx.getImageInfo({
         src: share_order_bg,
@@ -1020,15 +1020,15 @@ Page({
           if (card_template[i]['typeId'] == 'card_logo') {
             view_item['type'] = 'image'
             view_item['url'] = card_name_info['card_name_logo_image'] ? card_name_info['card_name_logo_image'] : ''
-            view_item['width'] = 50
-            view_item['height'] = 50
+            view_item['width'] = 80
+            view_item['height'] = 80
           } 
           if (card_template[i]['typeId'] == 'card_qrcode' && card_name_info['has_shlogo'] ) {
             view_item['type'] = 'image'
             view_item['url'] = share_order_qrcode ? share_order_qrcode : ''
-            view_item['width'] = 36
-            view_item['height'] = 36
-            view_item['borderRadius'] = 18
+            view_item['width'] = 70
+            view_item['height'] = 70
+            view_item['borderRadius'] = 35
           }
         } else {
           view_item['type'] = 'text'
@@ -1056,7 +1056,11 @@ Page({
           } else if (card_template[i]['typeId'] == 'card_companyname') {
             view_item['content'] = card_name_info['card_name_company'] ? card_name_info['card_name_company'] : ''
           } else if (card_template[i]['typeId'] == 'card_addr') {
+            view_item['MaxLineNumber'] = 2
+            view_item['breakWord'] = true
+            view_item['lineHeight'] = 25
             view_item['content'] = card_name_info['card_name_addr'] ? card_name_info['card_name_addr'] : ''
+
           }
          
         }

@@ -29,8 +29,10 @@
          <view wx:if="{{order_shape==4 && card_name_info}}">
             <text class="carts-card-title">{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?'('+card_name_info.card_name_title+')':''}}{{card_name_info.card_name_phone?' 手机: '+card_name_info.card_name_phone:''}}
             </text>
+            <!-- 
             <text class="carts-card-title">{{card_name_info.card_name_email?'电子邮箱: '+card_name_info.card_name_email:''}}
             </text>
+            -->
            
              <text class="carts-card-title">{{card_name_info.card_name_addr?'地址: '+card_name_info.card_name_addr:''}}
             </text>

@@ -25,8 +25,8 @@ Page({
     user_name:'',
     shop_type:shop_type,
     page: 1,
-    pagesize: 10,
-    show_max:3,  //最多显示页数
+    pagesize: 20,
+    show_max:1,  //最多显示页数
     status: 0,
     navList_order: navList_order,
     tab2: 'send',
@@ -806,19 +806,20 @@ Page({
               gift_send: gift_send,
               gift_rcv: gift_rcv,
               page_num: page_num.toFixed(0),
-              scrollTop: 0,
-              hiddenmore:false,
-            })
-            wx.pageScrollTo({
-              scrollTop: 0
-            })
-            wx.hideLoading()
-            setTimeout(function () {
+             
+            },function(){
               that.setData({
+                hiddenmore: false,
+                scrollTop: 0,
                 is_loading: false,
                 loadingHidden: false,
               })
-            }, 500)
+              wx.hideLoading()
+              wx.pageScrollTo({
+                scrollTop: 0
+              })
+            })
+          
             console.log('reloadData page:' + page + ' pagesize:' + pagesize, ' current time:', currenttime, 'current scrollTop', scrollTop, ' orders', that.data.orders)
           }
           if (order_type=='send'){
