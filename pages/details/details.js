@@ -89,7 +89,8 @@ Page({
     buynum: 1,
     notehidden: true,
     cardregisterhidden: true,
-    card_image_height:'1055;',
+    card_image_height:'1055',
+    card_image_w_h:'5/7',
     has_cardpayed: 0,
   
     openRecordingdis: "block", //显示录机图标
@@ -1462,6 +1463,7 @@ Page({
         var image_video = []
         var image_pic = []
         var card_image_height = that.data.card_image_height ? that.data.card_image_height:'750'
+        var card_image_w_rate = that.data.card_image_w_rate ? that.data.card_image_w_rate:1
         var card_register_prev = wx.getStorageSync('card_register_info')
         var card_name_prev = wx.getStorageSync('card_name_info')
         var card_cele_prev = wx.getStorageSync('card_cele_info')
@@ -1657,11 +1659,16 @@ Page({
                 var goodstag = goods_info[0]['goods_tag']
                 var card_type = goods_info[0]['card_type'] ? goods_info[0]['card_type'] : 0
                 if (card_type == 1 || goods_info[0]['shape'] == 5) {
-                  card_image_height = '1055'
+                  card_image_w_rate = '5/7'
+                  card_image_height = parseFloat(that.data.winWidth*7*2/5)       
                 } else if (card_type == 2) {
-                  card_image_height = '470'
+                  //card_image_height = '470'
+                  card_image_w_rate = '9/5'
+                  card_image_height = parseFloat(that.data.winWidth*5*2/9)       
                 } else {
-                  card_image_height = '750'
+                  //card_image_height = '750'
+                  card_image_w_rate = '5/7'
+                  card_image_height = parseFloat(that.data.winWidth*7*2/5)       
                 }
                 that.setData({
                   goodsname: goods_info[0]['name'],
@@ -1684,6 +1691,7 @@ Page({
                   card_register_content: card_register_content,
                   card_register_title: card_register_title,
                   card_image_height: card_image_height,
+                  card_image_w_rate: card_image_w_rate,
                 })
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')

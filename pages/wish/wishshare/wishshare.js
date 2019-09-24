@@ -935,7 +935,7 @@ Page({
             //console.log('share_order_shape', share_order_shape,' card_register_content:',card_register_info)
             view_item['MaxLineNumber'] = 6 
             view_item['breakWord'] = true
-            view_item['lineHeight'] = 25
+            view_item['lineHeight'] = 32
             //view_item['width'] = views_width
             view_item['content'] = card_register_info['card_register_content'] ? card_register_info['card_register_content'] : ''
           } else if (card_template[i]['typeId'] == 'card_register_ownername') {
@@ -943,6 +943,9 @@ Page({
           } else if (card_template[i]['typeId'] == 'card_register_ownerwechat') {
             view_item['content'] = card_register_info['card_register_ownerwechat'] ? '微信:'+card_register_info['card_register_ownerwechat'] : ''
           } else if (card_template[i]['typeId'] == 'card_register_addr') {
+            view_item['MaxLineNumber'] = 2
+            view_item['breakWord'] = true
+            view_item['lineHeight'] = 25
             view_item['content'] = card_register_info['card_register_addr'] ? '地址:'+card_register_info['card_register_addr'] : ''
           } else if (card_template[i]['typeId'] == 'card_register_lim') {
             view_item['content'] = card_register_info['card_register_lim']>0 ? '人数:'+card_register_info['card_register_lim'] : '人数:不限制'
