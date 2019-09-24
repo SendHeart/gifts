@@ -432,7 +432,7 @@ Page({
             })
             //console.log('card card_template:', that.data.card_template, ' card_love_info:', card_love_info)
             wx.setNavigationBarTitle({
-              title: '互动卡分享',
+              title: '互动分享',
             })
           }
           console.log('card card_template:', that.data.card_template, ' card_love_info:', that.data.card_love_info)
@@ -1533,6 +1533,10 @@ Page({
           shareObj['title'] = that.data.card_register_info['card_register_title'] ? that.data.card_register_info['card_register_title'] : ''  
         } else if (that.data.card_name_info){
           shareObj['title'] = that.data.card_name_info['card_name_name'] ? that.data.card_name_info['card_name_name']+'的名片' : '' 
+        } else if (that.data.card_cele_info) {
+          shareObj['title'] = that.data.card_cele_info['card_cele_title'] ? that.data.card_cele_info['card_cele_title'] + '的祝福' : '祝福' 
+        } else if (that.data.card_love_info) {
+          shareObj['title'] = that.data.card_love_info['card_love_title'] ? that.data.card_love_info['card_love_title'] + '的爱心' : '爱心' 
         }
         shareObj['imageUrl'] = that.data.shareImage //share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id
