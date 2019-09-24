@@ -133,6 +133,19 @@ Page({
 		//
 	},
   
+  gotoMap: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var longitude = e.currentTarget.dataset.longitude
+    var latitude = e.currentTarget.dataset.latitude
+
+    console.log('order list 爱心卡 gotoMap:', e)
+    wx.navigateTo({
+      url: '/pages/member/map/map?lat=' + longitude + '&lng=' + longitude + '&title=位置详情' ,
+    })
+  },
+
   reloadData: function () {
 		var that = this;
     //var order_type= that.data.tab2;
@@ -221,12 +234,13 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-    //var order_id = that.data.order_id
+    var order_id = that.data.order_id
     var headimg = that.data.headimg
     var nickname = that.data.nickname
     var shop_type = that.data.shop_type
     var card_register_info = ''
     var card_name_info = ''
+    var card_love_info = ''
     var card_cele_info = ''
     var card_template = ''
     var card_type = 0
@@ -289,6 +303,7 @@ Page({
             var voice_url = m_desc['voice']
             card_register_info = m_desc['card_register_info'] ? m_desc['card_register_info'] : ''
             card_name_info = m_desc['card_name_info'] ? m_desc['card_name_info'] : ''
+            card_love_info = m_desc['card_love_info'] ? m_desc['card_love_info'] : ''
             card_cele_info = m_desc['card_cele_info'] ? m_desc['card_cele_info'] : ''
             card_template = m_desc['card_template'] ? m_desc['card_template'] : ''
             card_type = m_desc['card_register_info'] ? 1 : 0
@@ -319,6 +334,7 @@ Page({
             order_m_id: order_m_id,
             card_register_info: card_register_info,
             card_name_info: card_name_info,
+            card_love_info: card_love_info,
             card_cele_info: card_cele_info,
             card_template: card_template,
             card_type: card_type,

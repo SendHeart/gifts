@@ -339,6 +339,7 @@ Page({
   //请求地理位置
   requestLocation: function () {
     var that = this
+    var activity_id = that.data.activity_id
     wx.getLocation({
       type: 'gcj02',
       success: function (res) {
@@ -353,9 +354,11 @@ Page({
         
       },
     })
-    setTimeout(function () {
-      that.requestLocation()
-    }, that.data.interval)
+    if (activity_id > 0) {
+      setTimeout(function () {
+        that.requestLocation() //取消定时获取位置信息
+      }, that.data.interval)
+    }
   },
 
   //上报地理位置
@@ -393,6 +396,8 @@ Page({
   //获取成员地理位置
   getMemberLocation: function () {
     var that = this
+    var activity_id = that.data.activity_id
+    var shop_type = that.data.shop_type
     //console.log('map getMemberLocation activity_id:',that.data.activity_id)
     wx.request({
       url: weburl + '/api/client/get_member_loc',
@@ -401,8 +406,8 @@ Page({
         'username': that.data.username ? that.data.username : wx.getStorageSync('username'),
         'access_token': that.data.token ? that.data.token : wx.getStorageSync('token'),
         'm_id': that.data.m_id ? that.data.m_id : 0,
-        'activity_id':that.data.activity_id,
-        'shop_type': that.data.shop_type,
+        'activity_id': activity_id,
+        'shop_type': shop_type,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -443,11 +448,11 @@ Page({
         }
       }
     })
-    
-    setTimeout(function () {
-      that.getMemberLocation()
-    }, that.data.interval)
-    
+    if (activity_id>0){
+      setTimeout(function () {
+        that.getMemberLocation()
+      }, that.data.interval)
+    }
   },
 
 

@@ -1,12 +1,20 @@
-var app = getApp();
-var weburl = app.globalData.weburl;
+var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js')
+var qqmapsdk
+var app = getApp()
+var qqmapkey = app.globalData.mapkey
+var weburl = app.globalData.weburl
 var util = require('../../../utils/util.js')
-var now = new Date().getTime();
+var now = new Date().getTime()
 var shop_type = app.globalData.shop_type
 const myaudio = wx.createInnerAudioContext()
 
 Page({
   data: {
+    qqmapkey: qqmapkey,
+    prov: [],
+    city: [],
+    area: [],
+    town: [],
     title_name: '收到礼物',
     title_logo: '../../../images/footer-icon-05.png',
     shop_type:shop_type,
@@ -49,6 +57,7 @@ Page({
     is_showable: 0,  //查看权限
     cardnameHidden: true,
     cardceleHidden:true ,
+    cardloveHidden:true,
     needCardnameHello: '打个招呼吧',
     card_view_offset:100, //卡片Y位置 偏移量
   },
@@ -84,6 +93,11 @@ Page({
           that.setData({
             cardnameHidden: !that.data.cardnameHidden
           })
+        } else if (card_type == 4) {
+          that.setData({
+            cardloveHidden: !that.data.cardloveHidden
+          })
+         
         } else if (card_type == 10) {
           that.setData({
             cardceleHidden: !that.data.cardceleHidden
@@ -112,6 +126,75 @@ Page({
     if (formId) that.submintFromId(formId)
   },
 
+  get_mylocation: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var refer_username = that.data.refer_username
+    var activity_id = that.data.activity_id
+    var shop_type = that.data.shop_type
+    var cur_city = wx.getStorageSync('city')  //默认杭州市 1213
+    var cur_area = wx.getStorageSync('district') //默认老余杭 50142
+    var cur_prov = wx.getStorageSync('province')  //默认浙江省15
+    var prov = that.data.prov
+    var city = that.data.city
+    var area = that.data.area
+    var qqmapkey = that.data.qqmapkey
+    console.log('location cur_city:', cur_city)
+    // 实例化腾讯地图API核心类
+    qqmapsdk = new QQMapWX({
+      key: qqmapkey // 必填
+    })
+    wx.getLocation({
+      type: 'gcj02', //gcj02  wgs84
+      success: function (res) {
+        console.log('mylocation wx.getLocation:', res)
+        var latitude = res.latitude
+        var longitude = res.longitude
+        var speed = res.speed
+        var accuracy = res.accuracy
+        wx.setStorageSync('latitude', latitude);
+        wx.setStorageSync('longitude', longitude);
+        wx.setStorageSync('speed', speed);
+        wx.setStorageSync('accuracy', accuracy)
+        qqmapsdk.reverseGeocoder({
+          poi_options: 'policy=2',
+          get_poi: 1,
+          success: function (res) {
+            console.log('qqmapsdk:', res);
+            that.setData({
+              address: res.result.address
+            })
+            wx.setStorageSync('mylocation', res.result.address)
+            wx.setStorageSync('city', res.result.address_component.city)
+            wx.setStorageSync('district', res.result.address_component.district)
+            wx.setStorageSync('province', res.result.address_component.province)
+            wx.setStorageSync('street', res.result.address_component.street)
+            wx.setStorageSync('street_number', res.result.address_component.street_number)
+            console.log('位置获取成功:' + res.result.address)
+            prov.push(res.result.address_component.province)
+            city.push(res.result.address_component.city)
+            area.push(res.result.address_component.district)
+            that.setData({
+              prov: prov,
+              city: city,
+              area: area,
+              latitude: latitude,
+              longitude: longitude,
+            })
+          },
+          fail: function (res) {
+            console.log('mylocation get_mylocation()位置获取失败', res)
+          },
+          complete: function (res) {
+            console.log('mylocation get_mylocation()位置获取完成', res)
+
+          }
+        })
+      }
+    })
+  },
   //提交formId，让服务器保存到数据库里
   submintFromId: function (formId) {
     var that = this
@@ -141,15 +224,16 @@ Page({
     var that = this
     var pages = getCurrentPages()
     var order_shape = that.data.order_shape
+    if (order_shape != 5 && order_shape != 4) {
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+    /*
     if (pages.length > 1) {
       wx.navigateBack({ changed: true })//返回上一页
-    } else {
-      if (order_shape != 5 && order_shape!=4){
-        wx.switchTab({
-          url: '../../hall/hall'
-        })
-      }
-    }
+    }  
+    */
   },
   returnTapTag: function (e) {
     var that = this
@@ -388,7 +472,7 @@ Page({
     
     if (order_shape == 5 || order_shape == 4 ) { //贺卡请柬 或 互动卡 不需要设置接收地址
       that.confirm_card()
-    }else{
+    } else {
       if (is_buymyself == 1) {
         that.set_address()
       } else {
@@ -568,6 +652,10 @@ Page({
     var card_name_hello = that.data.card_name_hello ? that.data.card_name_hello : ''
     var card_love_reply = that.data.card_love_reply ? that.data.card_love_reply : ''
     var card_cele_reply = that.data.card_cele_reply ? that.data.card_cele_reply : ''
+    var latitude = that.data.latitude
+    var longitude = that.data.longitude
+    var city = that.data.city
+    var prov = that.data.prov
     if ((order_shape == 5 || order_shape == 4) && order_m_id==m_id) { //贺卡请柬 互动卡 不能自己接受
       if (order_shape == 5) {
         wx.navigateTo({
@@ -606,18 +694,22 @@ Page({
         order_shape: order_shape,
         card_register_info: card_type==1?JSON.stringify(card_register_info[0]):'',
         card_name_info: card_type==2?JSON.stringify(that.data.card_name_info):'',
+        card_name_hello: card_type == 2 ? card_name_hello : '',
         card_cele_info: card_type == 10 ? JSON.stringify(that.data.card_cele_info) : '',
-        card_name_hello: card_type==2?card_name_hello:'',
         card_cele_reply: card_type == 10 ? card_cele_reply : '',
         card_love_info: card_type == 4 ? JSON.stringify(that.data.card_love_info) : '',
         card_love_reply: card_type == 4 ? card_love_reply : '',
+        latitude: latitude,
+        longitude: longitude,
+        city:city,
+        prov:prov,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('order receive set_address()礼物已接收:', res.data, ' card_love_reply:', card_love_reply)
+        console.log('order receive set_address()礼物已接收:', res.data, ' card_love_reply:', card_love_reply, ' city:', city)
         var retinfo = res.data
         var title = ''
         if (order_shape==5){
@@ -690,7 +782,9 @@ Page({
 
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
-    var that = this;
+    var that = this
+    var is_back = options.is_back ? options.is_back:0
+    if (is_back == 1) options = wx.getStorageSync('receive_options')
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -709,6 +803,7 @@ Page({
     var note = that.data.note
     var shop_type = that.data.shop_type
     var scene = decodeURIComponent(options.scene)
+    wx.setStorageSync('receive_options', options)
     if (scene.indexOf("ordno=") >= 0) {
       var ordnoReg = new RegExp(/(?=ordno=).*?(?=\&)/)
       var scene_ordno = scene.match(ordnoReg)[0]
@@ -788,14 +883,14 @@ Page({
       })
     }  
     if (!username) {
-      /*
        wx.navigateTo({
-        url: '/pages/login/login'
+        url: '/pages/login/login?frompage=/pages/order/receive/receive'
       })
-      */
+      /*
       wx.switchTab({
         url: '/pages/my/index'
       })
+       */
     } else {
       //调用应用实例的方法获取全局数据
       app.getUserInfo(function (userInfo) {
@@ -804,6 +899,33 @@ Page({
           userInfo: userInfo
         })
       })
+      wx.getSetting({
+        success(res) {
+          var authMap = res.authSetting;
+          var length = Object.keys(authMap).length;
+          console.log("authMap info 长度:" + length, authMap)
+          if (authMap.hasOwnProperty('scope.userLocation')) {
+            if (!res.authSetting['scope.userLocation']) {
+              wx.showModal({
+                title: '用户未授权',
+                content: '请授权地理位置权限',
+                showCancel: false,
+                success: function (res) {
+                  if (res.confirm) {
+                    console.log('用户点击确定授权地理位置权限')
+                    wx.openSetting({
+                      success: function success(res) {
+                        console.log('openSetting success', res.authSetting)
+                      }
+                    })
+                  }
+                }
+              })
+            }
+          }
+        }
+      })
+      that.get_mylocation()
     }
   },
 

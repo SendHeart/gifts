@@ -45,11 +45,20 @@ Page({
   },
   
   goBack: function () {
+    var that = this
     var pages = getCurrentPages()
     var userInfo = wx.getStorageSync('userInfo') 
+    var frompage = that.data.frompage
     if (userInfo){
       if (pages.length > 1) {
-        wx.navigateBack({ changed: true });//返回上一页
+        if (frompage) {
+          wx.switchTab({
+            url: frompage
+          })
+        } else {
+          wx.navigateBack({ changed: true });//返回上一页
+        }
+       
       } else {
         wx.switchTab({
           url: '../hall/hall'
@@ -895,7 +904,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-  
+    var frompage = options.frompage ? options.frompage:''
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
@@ -910,8 +919,9 @@ Page({
       refer_id: refer_id,  
       nickname: userInfo.nickName ? userInfo.nickName : '登录',
       avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl:'', 
+      frompage: frompage,
     })
-    console.log("my index onload nickname:", that.data.nickname, 'scene:', scene, ' userInfo:', JSON.stringify(userInfo))
+    console.log("my index onload options:", options, 'scene:', scene, ' userInfo:', JSON.stringify(userInfo))
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)

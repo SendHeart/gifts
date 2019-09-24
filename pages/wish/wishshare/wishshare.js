@@ -1106,8 +1106,8 @@ Page({
           if (card_template[i]['typeId'] == 'card_love_logo' && card_love_info['card_love_logo']  ) {
             view_item['type'] = 'image'
             view_item['url'] = card_love_info['card_love_logo'] ? card_love_info['card_love_logo'] : ''
-            view_item['width'] = 80
-            view_item['height'] = 80
+            //view_item['width'] = 80
+            //view_item['height'] = 80
           }
           if (card_template[i]['typeId'] == 'card_love_qrcode' && card_love_info['has_shlogo']) {
             view_item['type'] = 'image'
@@ -1130,12 +1130,12 @@ Page({
           } else if (card_template[i]['typeId'] == 'card_love_related') {
             view_item['content'] = card_love_info['card_love_related'] ? card_love_info['card_love_related'] : ''
           } else if (card_template[i]['typeId'] == 'card_love_phone') {
-            view_item['content'] = card_love_info['card_love_phone'] ? card_love_info['card_love_phone'] : ''
+            view_item['content'] = card_love_info['card_love_phone'] ? '电话:'+card_love_info['card_love_phone'] : ''
           } else if (card_template[i]['typeId'] == 'card_love_addr') {
             view_item['MaxLineNumber'] = 2
             view_item['breakWord'] = true
             view_item['lineHeight'] = 25
-            view_item['content'] = card_love_info['card_love_addr'] ? card_love_info['card_love_addr'] : ''
+            view_item['content'] = card_love_info['card_love_addr'] ? '地址:'+card_love_info['card_love_addr'] : ''
           } else if (card_template[i]['typeId'] == 'card_love_content') {
             view_item['MaxLineNumber'] = 6
             view_item['breakWord'] = true

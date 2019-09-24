@@ -14,7 +14,7 @@
         <image class="shareto" src="../../../images/play.png"></image>
         播放
       </view>
-      <view  wx:if="{{order_shape==4 && is_showable==1}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag">
+      <view  wx:if="{{order_shape==4 && (is_showable==1)}}" class="btnshare" data-type="2" data-order-id="{{order_id}}" bindtap="returnTapTag">
         <image class="shareto" src="../../../images/icon_normal.png"></image>
         详情
       </view>
@@ -109,7 +109,7 @@
       </text>
       <text hidden="{{template.typeId=='card_love_addr'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_info['card_love_addr']}}
       </text> 
-      <text hidden="{{template.typeId=='card_love_content'?fale:true}}"  bindtap='textPaste' style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_info['card_love_content']}}
+      <text hidden="{{template.typeId=='card_love_content'?fale:true}}"  bindtap='textPaste' style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_info['card_love_content']}}
       </text>   
       <view hidden="{{template.typeId=='card_love_logo'?false:true}}">
         <image  style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_love_info['card_love_logo']}}" />

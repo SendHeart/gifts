@@ -33,19 +33,23 @@ Page({
     var pages = getCurrentPages()
     var frompage = that.data.frompage
     var userInfo = wx.getStorageSync('userInfo')
+    console.log("login go Back pages:", pages, ' frompage:', frompage)
     if (userInfo) {
-      if (pages.length > 1) {
-        if (frompage){
+      if (frompage!='') {
+        if (frompage.indexOf('index/index') >= 0 || frompage.indexOf('hall/hall') >= 0 || frompage.indexOf('wish/wish') >= 0 || frompage.indexOf('my/index') >= 0) {
           wx.switchTab({
             url: frompage
           })
-        }else{
-          wx.navigateBack({ changed: true });//返回上一页
+        } else{
+          wx.navigateTo({
+            url: frompage+'?is_back=1'
+          })
         }
-       
-      } else {
+      }else if (pages.length > 1) {
+        wx.navigateBack({ changed: true });//返回上一页
+      }else{
         wx.switchTab({
-          url: '../hall/hall'
+          url: '/pages/hall/hall'
         })
       }
     }
