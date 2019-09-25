@@ -195,6 +195,7 @@ Page({
     var orders = that.data.orders;
     var order_id = options.order_id ? options.order_id:0
     var order_no = options.order_no ? options.order_no : 0
+    var card_type = options.card_type ? options.card_type:0
     var giftflag = options.giftflag ? options.giftflag:0
     var send_rcv = options.send_rcv ? options.send_rcv:0
     var wx_notes = options.wx_notes ? options.wx_notes:0 //微信通知直接进入
@@ -271,6 +272,7 @@ Page({
         card_love_info: card_love_info,
         card_cele_info: card_cele_info,
         card_register_info: card_register_info,
+        card_type: card_type,
       })
     } else if (order_no){
       that.setData({
@@ -466,10 +468,8 @@ Page({
 
                 });
               }
-
             }
           })
-
         }
       }
     })
@@ -483,12 +483,14 @@ Page({
     var goods_name = e.currentTarget.dataset.goodsName
     var goods_shape = e.currentTarget.dataset.goodsShape
     var order_no = that.data.order_no
+    var order_id = that.data.order_id
     var order_shape = e.currentTarget.dataset.orderShape
+    var card_type = that.data.card_type
     var receive = that.data.send_rcv
-    console.log('orderdetail showGoods() 查看详情 order_no: ', order_no, ' order_shape:', order_shape, ' receive:', receive)
+    console.log('orderdetail showGoods() 查看详情 order_no: ', order_no, ' order_id:',order_id,' order_shape:', order_shape, ' receive:', receive)
     if (order_shape==5||order_shape==4){
       wx.navigateTo({
-        url: '/pages/order/receive/receive?order_no=' + order_no + '&order_shape=' + order_shape + '&receive=' + receive
+        url: '/pages/order/receive/receive?order_no=' + order_no + '&order_id=' + order_id + '&order_shape=' + order_shape + '&card_type=' + card_type+ '&receive=' + receive
       })
     }else{
       wx.navigateTo({

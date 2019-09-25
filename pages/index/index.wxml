@@ -56,8 +56,8 @@
       <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 2 && mapping.status==1)?false:true}}" class="status2">未发货</text>
     </view>
 
-    <view wx:for="{{item['order_sku']}}" wx:key="{{mapping.id}}" wx:for-item="mapping" wx:for-index="sku_idx" class="carts-item" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
-      <view bindtap="detailTapTag" data-order-object="{{item}}">
+    <view wx:for="{{item['order_sku']}}" wx:key="{{mapping.id}}" wx:for-item="mapping" wx:for-index="sku_idx" class="carts-item" >
+      <view bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
         <!-- 缩略图 -->
         <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFit" />
       </view>

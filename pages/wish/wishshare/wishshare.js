@@ -363,9 +363,8 @@ Page({
       that.setData({
         avatarUrl: userInfo.avatarUrl,
         nickname: userInfo.nickName,
-        card_type: card_type,
       })
-      console.log('wishshare onShow get userInfo：', userInfo, ' share_order_shape:', share_order_shape, ' share_order_id:', share_order_id)
+      console.log('wishshare onShow get userInfo：', userInfo)
     })
     if (share_order_id > 0 && (parseInt(share_order_shape) == 5 || parseInt(share_order_shape) == 4)){
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -428,7 +427,7 @@ Page({
               card_cele_info: m_desc['card_cele_info'] ? m_desc['card_cele_info'] : '',
               card_template: m_desc['card_template'] ? m_desc['card_template'] : '',
               card_color: m_desc['color'] ? m_desc['color']:'#333',
-              card_type: m_desc['card_template']? m_desc['card_template'][0]['type']:0,
+              card_type: m_desc['card_template']? m_desc['card_template'][0]['type']:card_type,
             })
             //console.log('card card_template:', that.data.card_template, ' card_love_info:', card_love_info)
             wx.setNavigationBarTitle({
@@ -680,7 +679,7 @@ Page({
     var card_love_info = that.data.card_love_info //shape:4 互动卡 爱心卡内容
     var card_cele_info = that.data.card_cele_info //shape:5 贺卡请柬 
     var card_template = that.data.card_template //shape:4 互动卡 名片模板
-    //var card_type = that.data.card_type ? that.data.card_type:0
+    var card_type = that.data.card_type ? that.data.card_type:0
     //var card_color = that.data.card_color //贺卡请柬文字颜色
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id

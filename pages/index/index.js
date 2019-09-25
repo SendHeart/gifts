@@ -535,11 +535,12 @@ Page({
     var that = this;
     var order_object = e.currentTarget.dataset.orderObject
     var order_id = order_object['id']
+    var card_type = that.data.card_type ? that.data.card_type:0
     var tab2 = that.data.tab2
     
     console.log('index detail 订单ID:' + order_id)
     wx.navigateTo({
-      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2  
+      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&card_type=' + card_type + '&send_rcv=' + tab2  
     });
   },
 

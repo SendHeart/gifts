@@ -251,8 +251,8 @@
         <text>{{attrValueList.length>0?'':add_cart_title}}</text>
         <view class='buy-return' bindtap="modalBindcancel">×</view>
       </view>
-      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-5}}px">
-        <view style="max-height:{{dkheight-10}}px">
+      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-70}}px">
+        <view style="max-height:{{dkheight-75}}px">
           <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
             <view class="sku_title">选择{{attrValueObj.name}}</view>
             <view class="attr_value_box">

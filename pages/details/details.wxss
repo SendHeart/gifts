@@ -374,6 +374,7 @@ border: none;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-top:20rpx;
 }
 .sku_title {
  font-size: 26rpx;

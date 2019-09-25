@@ -238,8 +238,9 @@ Page({
   returnTapTag: function (e) {
     var that = this
     var type = e.currentTarget.dataset.type ? e.currentTarget.dataset.type: 1
-    var order_id = that.data.order_id //e.currentTarget.dataset.orderId
+    var order_id = e.currentTarget.dataset.orderId ? e.currentTarget.dataset.orderId:that.data.order_id //e.currentTarget.dataset.orderId
     var order_shape = that.data.order_shape
+    var card_type = that.data.card_type ? that.data.card_type:0
     if(type==1){ //转商城
       if (order_shape == 5) {
         wx.navigateTo({
@@ -256,7 +257,7 @@ Page({
       } 
     }else if(type==2){ //转互动详情
       wx.navigateTo({
-        url: '/pages/order/list/list?order_id='+order_id+'&order_shape='+order_shape
+        url: '/pages/order/list/list?order_id=' + order_id + '&order_shape=' + order_shape + '&card_type=' + card_type
       })
     }else{
       wx.switchTab({
@@ -300,16 +301,17 @@ Page({
       }
     })
   },
-  shareorderTapTag:function(){
+  shareorderTapTag:function(e){
     var that = this
-    var order_id = that.data.order_id
+    var order_id = e.currentTarget.dataset.orderId ? e.currentTarget.dataset.orderId : that.data.order_id 
     var order_shape = that.data.order_shape
     var order_bg = that.data.order_bg
     var order_image = that.data.order_image
     var share_order_image = that.data.share_order_image
+    var card_type = that.data.card_type
 
     wx.navigateTo({
-      url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + order_shape + '&share_order_bg=' + order_image + '&share_order_image=' + share_order_image
+      url: '/pages/wish/wishshare/wishshare?share_order_id=' + order_id + '&share_order_shape=' + order_shape + '&card_type=' + card_type+ '&share_order_bg=' + order_image + '&share_order_image=' + share_order_image
     })
 
   },
@@ -803,6 +805,7 @@ Page({
     var note = that.data.note
     var shop_type = that.data.shop_type
     var scene = decodeURIComponent(options.scene)
+    console.log('order receive onLoad() options:', options)
     wx.setStorageSync('receive_options', options)
     if (scene.indexOf("ordno=") >= 0) {
       var ordnoReg = new RegExp(/(?=ordno=).*?(?=\&)/)
@@ -856,9 +859,8 @@ Page({
         })
       }
     })
-   
+    console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive, ' order shape:', order_shape, 'order id:', order_id)
     if (app.globalData.is_receive != 1 && that.data.is_buymyself != 1 && that.data.order_shape != 5 && that.data.order_shape != 4) {
-      console.log('礼品信息 order receive onLoad() order_no:', order_no + ' is_receive:' + app.globalData.is_receive, ' order shape:', order_shape,'order id:',order_id)
       wx.switchTab({
         url: '/pages/hall/hall'
       })
@@ -1158,6 +1160,7 @@ Page({
             order_image: orderskus[0]['sku_image'],
             share_order_image: orderskus[0]['sku_share_image'],
             receive_status: receive_status,
+            order_id: orderObjects[0]['id'],
             order_m_id: order_m_id,
             card_register_info: card_register_info,
             card_name_info: card_name_info,

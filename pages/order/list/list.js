@@ -120,13 +120,15 @@ Page({
     var order_id = options.order_id ? options.order_id : ''
     var receive = options.receive ? options.receive : 0
     var order_shape = options.order_shape ? options.order_shape : 4
+    var card_type = options.card_type ? options.card_type:0
     console.log('order list onLoad:', options)
     that.setData({
       order_id: order_id,
       receive: receive,
-      order_shape: order_shape,
+      order_shape: order_shape, 
+      card_type: card_type,
     })
-    that.reloadData(options)
+    that.reloadData()
     that.query_interaction_info(order_id)
 	},
 	onShow: function() {
@@ -155,6 +157,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var receive = that.data.receive ? that.data.receive : 0
     var order_shape = that.data.order_shape ? that.data.order_shape:4
+    var card_type = that.data.card_type
     var order_id = that.data.order_id ? that.data.order_id : ''
     var page = that.data.page
     var pagesize = that.data.pagesize
