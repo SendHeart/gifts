@@ -1041,7 +1041,6 @@ Page({
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
     }
     console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
-   
     if (that.data.image_save_count < 3){
       if (that.data.image_save_times > 8) { //8次不成功返回上一级
         that.has_auth()

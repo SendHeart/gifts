@@ -6,7 +6,7 @@
         <image class="shareto" src="../../../images/home-white.png"></image>
         返回
       </view>
-      <view class="btnshare" bindtap="eventDraw">
+      <view class="btnshare" bindtap="reloadData">
         <image class="shareto" src="../../../images/refresh.png"></image>
       </view>
     </view>

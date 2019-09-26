@@ -36,7 +36,7 @@ Page({
     console.log("login go Back pages:", pages, ' frompage:', frompage)
     if (userInfo) {
       if (frompage!='') {
-        if (frompage.indexOf('index/index') >= 0 || frompage.indexOf('hall/hall') >= 0 || frompage.indexOf('wish/wish') >= 0 || frompage.indexOf('my/index') >= 0) {
+        if (frompage.indexOf('index/index') >= 0 || frompage.indexOf('hall/hall') >= 0 || frompage.indexOf('my/index') >= 0) {
           wx.switchTab({
             url: frompage
           })

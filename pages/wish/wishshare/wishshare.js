@@ -53,6 +53,19 @@ Page({
     background:'#f2f2f2',
   },
 
+
+  has_auth: function () {
+    var that = this
+    wx.getSetting({
+      success: (res) => {
+        if (!res.authSetting['scope.userInfo']) {
+          wx.navigateTo({
+            url: '/pages/login/login?frompage=/pages/wish/wishshare/wishshare'
+          })
+        }
+      }
+    })
+  },
   //录音计时器
   recordingTimer: function () {
     var that = this
@@ -354,18 +367,14 @@ Page({
 
   onLoad (options) {
     var that = this
+    var is_back = options.is_back ? options.is_back : 0
+    if (is_back == 1) options = wx.getStorageSync('wishshare_options')
     var share_order_id = options.share_order_id ? options.share_order_id : 0
     var share_order_shape = options.share_order_shape ? options.share_order_shape : 1
     var card_type = options.card_type ? options.card_type:0
+    wx.setStorageSync('wishshare_options', options)
     that.get_project_gift_para()
-    app.getUserInfo(function (userInfo) {
-      //更新数据
-      that.setData({
-        avatarUrl: userInfo.avatarUrl,
-        nickname: userInfo.nickName,
-      })
-      console.log('wishshare onShow get userInfo：', userInfo)
-    })
+    
     if (share_order_id > 0 && (parseInt(share_order_shape) == 5 || parseInt(share_order_shape) == 4)){
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -464,17 +473,26 @@ Page({
     })
    
     setTimeout(function () {
-      that.reloadData(options)
+      that.reloadData()
     }, 1000)
     
   },
   onShow:function(){
    var that = this
-  
+  that.has_auth()
+    app.getUserInfo(function (userInfo) {
+      //更新数据
+      that.setData({
+        avatarUrl: userInfo?userInfo.avatarUrl:'',
+        nickname: userInfo?userInfo.nickName:'',
+      })
+      console.log('wishshare onShow get userInfo：', userInfo)
+    })
   },
 
-  reloadData: function (options){
+  reloadData: function (){
     var that = this
+    var options = wx.getStorageSync('wishshare_options')
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var task = options.task ? options.task : 0
     var task_image = options.image ? options.image : ''
