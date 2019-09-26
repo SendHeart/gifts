@@ -245,17 +245,19 @@ Page({
   goTop: function () {  // 一键回到顶部
     var that = this
     var is_reloading = that.data.is_reloading
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1000
+    })
+    /*
     if (is_reloading){
-      wx.showToast({
-        title: '加载中',
-        icon: 'loading',
-        duration: 1000
-      })
       setTimeout(function () {
         that.goTop()
       }, 500)
       return
     }
+    */
    /*
     that.setData({
       scrollTop: 0
@@ -1035,59 +1037,71 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        var recommentslist = that.data.recommentslist
-        var recommentslist_new = res.data.result
-        var rpage_num = res.data.all_rows
-        var pageoffset = res.data.pageoffset
-        var show_max = that.data.show_max
-        var recommentslist_show = that.data.recommentslist_show
-        if (!recommentslist_new) return
-        var recomm_len = recommentslist_new.length
-        for (var i = 0; i < recomm_len; i++) {
-          if (recommentslist_new[i]['activity_image'].indexOf("http") < 0 && recommentslist_new[i]['activity_image'] ) {
-            recommentslist_new[i]['activity_image'] = weburl + '/' + recommentslist_new[i]['activity_image'];
+        console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        if(res.data.status='y'){
+          var recommentslist = that.data.recommentslist
+          var recommentslist_new = res.data.result
+          var rpage_num = res.data.all_rows
+          var pageoffset = res.data.pageoffset
+          var show_max = that.data.show_max
+          var recommentslist_show = that.data.recommentslist_show
+          if (!recommentslist_new) return
+          var recomm_len = recommentslist_new.length
+          for (var i = 0; i < recomm_len; i++) {
+            if (recommentslist_new[i]['activity_image'].indexOf("http") < 0 && recommentslist_new[i]['activity_image']) {
+              recommentslist_new[i]['activity_image'] = weburl + '/' + recommentslist_new[i]['activity_image'];
+            }
+            if (recommentslist_new[i]['image'].indexOf("http") < 0 && recommentslist_new[i]['image']) {
+              recommentslist_new[i]['image'] = weburl + '/' + recommentslist_new[i]['image'];
+            }
+            recommentslist_new[i]['image'] = recommentslist_new[i]['activity_image'] ? recommentslist_new[i]['activity_image'] : recommentslist_new[i]['image']
+            //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
+            if (i > 1) {
+              recommentslist_new[i]['hidden'] = 0;  //1
+            }
           }
-          if (recommentslist_new[i]['image'].indexOf("http") < 0 && recommentslist_new[i]['image']) {
-            recommentslist_new[i]['image'] = weburl + '/' + recommentslist_new[i]['image'];
+
+          if (page > 1 && recommentslist_new) {
+            //向后合拼
+            recommentslist = recommentslist.concat(recommentslist_new);
+          } else {
+            recommentslist = recommentslist_new
           }
-          recommentslist_new[i]['image'] = recommentslist_new[i]['activity_image'] ? recommentslist_new[i]['activity_image'] : recommentslist_new[i]['image']
-          //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
-          if (i > 1) {
-            recommentslist_new[i]['hidden'] = 0;  //1
+          //更新当前显示页信息
+          if (recommentslist_show.length >= show_max) {
+            recommentslist_show.shift()
           }
-        }
-        
-        if (page > 1 && recommentslist_new) {
-          //向后合拼
-          recommentslist = recommentslist.concat(recommentslist_new);
-        }else{
-          recommentslist = recommentslist_new
-        }
-        //更新当前显示页信息
-        if (recommentslist_show.length >= show_max) {
-          recommentslist_show.shift()
-        }
-     
-        that.setData({
-          recommentslist: recommentslist,
-          rpage_num: rpage_num,
-          ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
-          pageoffset: pageoffset, 
+
+          that.setData({
+            recommentslist: recommentslist,
+            rpage_num: rpage_num,
+            ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
+            pageoffset: pageoffset,
           }, function () {
             that.setData({
-              is_reloading:false,
-              loadingHidden:true,
+              is_reloading: false,
+              loadingHidden: true,
             })
             //wx.hideLoading()
             //that.getScrollHeight() //获取页面实际高度
-            console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset);
-        })
+          
+          })
         /*
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度
         }, 500)
         */
-       
+        }else{
+          wx.showToast({
+            title: '加载完成',
+            icon: 'success',
+            duration: 2000
+          })
+          that.setData({
+            is_reloading: false,
+            loadingHidden: true,
+          })
+        }
       }
     })
     
