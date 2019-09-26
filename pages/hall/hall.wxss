@@ -62,7 +62,7 @@ page {
 	justify-content: space-between;/*子项横轴上居中对齐*/
 	align-items: center;/*子项纵轴上居中对齐*/
   padding: 0rpx 0rpx 8rpx 0rpx;
-  top:-2rpx;
+  top:-4rpx;
   position:fixed;
   background: #1d1d1d;
   z-index: 999;
@@ -935,6 +935,7 @@ modal {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   padding:10rpx auto;
+  padding-left: 10rpx;
 }
 
 .venues-item .goods_tag {
@@ -979,6 +980,7 @@ modal {
   line-height: 1.8;
   text-decoration:line-through;
   margin-right: 4rpx;
+  display: none;
 }
 .price-market::first-letter {
   font-size: 20rpx;

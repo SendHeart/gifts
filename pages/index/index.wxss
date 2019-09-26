@@ -70,7 +70,7 @@ page {
 
 
 .order-footer {
-  padding: 0 20rpx 10rpx 20rpx;
+  padding: 6rpx 20rpx 10rpx 20rpx;
   display: flex;
   flex-direction: row;
   height:50rpx;
