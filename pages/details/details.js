@@ -1044,6 +1044,7 @@ Page({
    
     if (that.data.image_save_count < 3){
       if (that.data.image_save_times > 8) { //8次不成功返回上一级
+        that.has_auth()
         return
       }
       setTimeout(function () {
@@ -1143,6 +1144,19 @@ Page({
           })
         } else {
           console.log('image_save 响应失败', res.statusCode)
+        }
+      }
+    })
+  },
+  
+  has_auth:function(){
+    var that = this
+    wx.getSetting({
+      success: (res) => {
+        if (!res.authSetting['scope.userInfo']) {
+          wx.navigateTo({
+            url: '/pages/login/login?frompage=/pages/details/details'
+          })
         }
       }
     })
@@ -1396,6 +1410,8 @@ Page({
   
   onLoad:function(options) {
         var that = this
+        var is_back = options.is_back ? options.is_back : 0
+        if (is_back == 1) options = wx.getStorageSync('details_options')
         var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
         var phonemodel = wx.getStorageSync('phonemodel') ? wx.getStorageSync('phonemodel') : 'Andriod'
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -1468,6 +1484,7 @@ Page({
         var card_name_prev = wx.getStorageSync('card_name_info')
         var card_cele_prev = wx.getStorageSync('card_cele_info')
         var card_love_prev = wx.getStorageSync('card_love_info')
+        wx.setStorageSync('details_options', options)
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']

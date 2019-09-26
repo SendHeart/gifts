@@ -410,7 +410,7 @@
         <input hidden="{{!is_card_love_title}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_love_title}}" placeholder="标题"  bindinput='card_love_titleTapTag' focus="{{inputShowed}}"  maxlength='50' />
       </view>
       <view hidden="{{!is_card_love_content}}"  class="card-love-info">
-         <textarea style='font-size:28rpx;' bindblur="card_love_contentTapTag" value="{{card_love_content}}" placeholder="请输入留言(限120个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="120" />
+         <textarea style='font-size:28rpx;' bindblur="card_love_contentTapTag" value="{{card_love_content}}" placeholder="请输入说明(限120个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="120" />
       </view>
       <view class="card-love-info">
         <input hidden="{{!is_card_love_related}}" style='font-size:30rpx;' placeholder-style="text-align:center;color:#e2e2e2;" value="{{card_love_related}}" placeholder="联系人姓名"  bindinput='card_love_relatedTapTag' focus="{{inputShowed}}"  maxlength='50' />
