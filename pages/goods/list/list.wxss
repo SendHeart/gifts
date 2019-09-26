@@ -44,14 +44,14 @@ page {
 
 .search {
 	width: 100%;
-	height: 72rpx;
+	height: 74rpx;
   display: flex;
   background: #1d1d1d;
 	flex-direction: row;
 	justify-content: space-between;/*子项横轴上居中对齐*/
 	align-items: center;/*子项纵轴上居中对齐*/
   padding: 4rpx 10rpx 8rpx 10rpx;
-  top:-4rpx;
+  top:-2rpx;
   position: fixed;
   z-index:999;
 }
@@ -160,7 +160,7 @@ page {
 .banner {
 	width: 100%;
 	height: 60rpx;
-  top:84rpx;
+  top:72rpx;
   position: fixed;
   z-index:99;
 	/*margin-left: 15rpx;*/
