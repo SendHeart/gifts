@@ -73,6 +73,18 @@ Page({
 
   },
 
+  imgYu: function (event) {
+    var src = event.currentTarget.dataset.src //获取data-src
+    var imgList = []
+    imgList.push(src)
+    console.log('image Yu imgList:', imgList)
+    //图片预览
+    wx.previewImage({
+      current: src, // 当前显示图片的http链接
+      urls: imgList // 需要预览的图片http链接列表
+    })
+  },
+
   formSubmit: function (e) {
     var that = this
     var formId = e.detail.formId;

@@ -24,8 +24,8 @@
       </view>
     </view>
 </view>
- <view wx:if="{{is_buymyself==0 && (order_shape==5||order_shape==4)}}" class="card-info">
-  <image src="{{order_image}}" class="card-image" style="{{card_type>0?' margin-top:'+card_view_offset+'rpx;height:'+card_image_height+'rpx;':''}}{{card_image_width>0?' width:'+card_image_width+'rpx;':''}}" />
+ <view wx:if="{{is_buymyself==0 && (order_shape==5||order_shape==4)}}" class="card-info"  >
+  <image src="{{order_image}}" class="card-image" style="{{card_type>0?' margin-top:'+card_view_offset+'rpx;height:'+card_image_height+'rpx;':''}}{{card_image_width>0?' width:'+card_image_width+'rpx;':''}}"  />
   <!-- 
   <text wx:if="{{order_shape==5}}" class="card-text" space="ensp">{{note}}</text>
   <view wx:if="{{order_shape==5}}" class="card-wx-info">
@@ -66,7 +66,7 @@
       <text hidden="{{(template.typeId=='card_register_ownerwechat')?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_info['card_register_ownerwechat']?'微信:'+card_register_info['card_register_ownerwechat']:''}}
       </text>  
       <view hidden="{{template.typeId=='card_register_adv'?false:true}}">
-        <image  style="border-radius:20rpx;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_register_info['card_register_adv']}}" />
+        <image  style="border-radius:20rpx;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_register_info['card_register_adv']}}" data-src="{{card_register_info['card_register_adv']}}" bindtap="imgYu" mode="aspectFit" />
       </view>
     </block>
   </view>
@@ -89,7 +89,7 @@
       <text hidden="{{template.typeId=='card_addr'?fale:true}}"  bindtap='textPaste' style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_info['card_name_addr']}}
       </text>
       <view hidden="{{template.typeId=='card_logo'?false:true}}">
-        <image  style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_name_info['card_name_logo_image']}}" />
+        <image  style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_name_info['card_name_logo_image']}}" data-src="{{card_name_info['card_name_logo_image']}}" bindtap="imgYu" mode="aspectFit"  />
       </view>
       <view hidden="{{template.typeId=='card_qrcode'?false:true}}" style="">
         <image style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}} border-radius:50%;" src="{{share_goods_qrcode}}" />
@@ -112,7 +112,7 @@
       <text hidden="{{template.typeId=='card_love_content'?fale:true}}"  bindtap='textPaste' style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_info['card_love_content']}}
       </text>   
       <view hidden="{{template.typeId=='card_love_logo'?false:true}}">
-        <image  style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_love_info['card_love_logo']}}" />
+        <image  style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}" src="{{card_love_info['card_love_logo']}}" data-src="{{card_love_info['card_love_logo']}}" bindtap="imgYu" mode="aspectFit" />
       </view>
       <view hidden="{{template.typeId=='card_love_qrcode'?false:true}}" style="">
         <image style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}} border-radius:50%;" src="{{share_goods_qrcode}}" />
