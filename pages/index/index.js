@@ -25,7 +25,7 @@ Page({
     user_name:'',
     shop_type:shop_type,
     page: 1,
-    pagesize: 20,
+    pagesize: 10,
     show_max:1,  //最多显示页数
     status: 0,
     navList_order: navList_order,
@@ -372,6 +372,11 @@ Page({
       page_num:1,
     })
     console.log('tab:' + tab, ' giftflag:', giftflag)
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1500
+    })   
     that.reloadData()
   },
 
@@ -657,6 +662,11 @@ Page({
         modalHiddenUserName: modalHiddenUserName,
       })
     } else {
+      wx.showToast({
+        title: '加载中',
+        icon: 'loading',
+        duration: 1500
+      })   
       that.reloadData()
     }
   },
@@ -817,7 +827,7 @@ Page({
                 is_loading: false,
                 loadingHidden: false,
               })
-              wx.hideLoading()
+              //wx.hideLoading()
               wx.pageScrollTo({
                 scrollTop: 0
               })

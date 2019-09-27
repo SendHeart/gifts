@@ -399,7 +399,10 @@ Page({
             all_rows: all_rows,
             pageoffset:pageoffset,
             keyword: '',
-            is_goodslist_loading: false,
+          },function(){
+            that.setData({
+              is_goodslist_loading: false,
+            })
           })
         }
       }
@@ -444,11 +447,13 @@ Page({
           tab: navList_new[navlist_toView]['id'],
           tab_value: navList_new[navlist_toView]['value'],
           venuesItems_show: [],
+        },function(){
+          that.setData({
+            loadingHidden: true,
+          })
+          that.get_goods_list()
         })
-        that.get_goods_list()
-        that.setData({
-          loadingHidden: true,
-        })
+        
       }
     })
   },
