@@ -44,7 +44,7 @@
       <view hidden="{{card_type==1?false:true}}" style="width:20%;font-size:25rpx;">{{mapping.register_time}}</view>
       <view hidden="{{card_type==2||card_type==4?false:true}}" style="width:20%;font-size:25rpx;">{{mapping.addtime}}</view>
       <view hidden="{{card_type==4?false:true}}" style="width:15%;font-size:25rpx;margin:0 auto;" bindtap="gotoMap"  data-latitude="{{mapping.latitude}}" data-longitude="{{mapping.longitude}}">
-       <image style="width:50rpx;height:50rpx;" src="/images/map.jpg" mode="aspectFill"/>
+       <image style="width:50rpx;height:50rpx;" src="/images/map.png" mode="aspectFill"/>
       </view>
       <view style="width:5%;font-size:25rpx;margin:0 auto;" bindtap="memberinfo" data-order-id="{{mapping.order_id}}" data-inter-id="{{mapping.id}}" data-phone="{{mapping.phone}}" data-sex="{{mapping.sex}}"  data-name="{{mapping.name}}" data-note="{{mapping.note}}" >
        <image style="width:35rpx;height:35rpx;" src="/images/bottom-comment.png" mode="aspectFill"/>

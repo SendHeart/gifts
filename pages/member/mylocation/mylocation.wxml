@@ -27,7 +27,7 @@
 		<!-- second row -->
 		<view class="summary"  bindtap='gotoMap' data-address="{{item.address}}" data-addrname="{{item.address_name}}" data-activityindex="{{index}}" >
       <text>{{item.address}}</text>
-      <image style='width:60rpx;height:60rpx;' src='../../../images/map.jpg'/>
+      <image style='width:60rpx;height:60rpx;' src='../../../images/map.png'/>
     </view>
    
     <text class="" style="color:{{item.is_delivery==1?'gray':'red'}}"></text>

@@ -153,6 +153,7 @@ Page({
 
   orderSearch: function () {
     var that = this
+    console.log('orderSearch keyword:', that.data.keyword)
     that.setData({
       page: 0,
     })
@@ -692,7 +693,7 @@ Page({
     var hidddensearch = that.data.hidddensearch
     var keyword = hidddensearch?'':that.data.keyword
     var userInfo = wx.getStorageSync('userInfo') 
-    console.log('reloadData userInfo:' , userInfo)
+    console.log('reloadData userInfo:', userInfo, ' keyword:', keyword)
     if (!username || !userInfo) {//登录
       /*
         wx.switchTab({

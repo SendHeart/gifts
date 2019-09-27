@@ -402,13 +402,13 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log('order send onload() image with watermark:', res.data)
           var watermark_info = res.data.result
           if (watermark_info) {
             that.setData({
-              'shareimage_url': watermark_info.image,
+              shareimage_url: watermark_info.image,
             })
           }
+          console.log('order send onload() image with watermark:', that.data.shareimage_url)
         }
       })
     }
@@ -467,7 +467,7 @@ Page({
     if (goodsshape==5){
       imageUrl = sku_share_image
     }
-    console.log('开始送礼 options:', options, 'order_no:', order_no, 'sku_share_image:', sku_share_image, ' navList2:', navList2); 
+    console.log('开始送礼 options:', options, 'order_no:', order_no, 'sku_share_image:', sku_share_image, ' shareimage_url:', shareimage_url, ' imageUrl:', imageUrl,' navList2:', navList2); 
     //console.log(options);  
     if (!order_no){
       console.log('礼品单号为空 send')
