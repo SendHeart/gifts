@@ -7,7 +7,6 @@ var util = require('../../../utils/util.js')
 var now = new Date().getTime()
 var shop_type = app.globalData.shop_type
 const myaudio = wx.createInnerAudioContext()
-
 Page({
   data: {
     qqmapkey: qqmapkey,
