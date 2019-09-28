@@ -219,7 +219,7 @@ Page({
     })
     //that.setNavigation()
     console.log('orderdetail onload options:', options)
-    if (order_object) {
+    if (order_object.length>0) {
       console.log('订单详情', order_object)
       var sku_num = 0
       var status = order_object['status']
@@ -243,7 +243,7 @@ Page({
       var card_cele_info = order_object['card_cele_info'] ? order_object['card_cele_info'] : ''
       var card_love_info = order_object['card_love_info'] ? order_object['card_love_info'] : ''
       var card_register_info = order_object['card_register_info'] ? order_object['card_register_info']:''
-      sku_num = order_object['order_sku'].length
+      sku_num = order_object['order_sku']?order_object['order_sku'].length:1
       orders.push(order_object)
       that.setData({
         order_id: order_id ? order_id : 0,
@@ -506,7 +506,7 @@ Page({
     var order_id = e.currentTarget.dataset.orderId;
     var order_shape = e.currentTarget.dataset.orderShape
     var receive = that.data.send_rcv
-    if (order_shape == 4) {
+    if (order_shape == 4 || order_shape == 5) {
       wx.navigateTo({
         url: '/pages/order/list/list?order_id=' + order_id + '&order_shape=' + order_shape + '&receive=' + receive
       })

@@ -59,7 +59,7 @@
         <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" data-received="1" class="{{(item.status==1 && item.gift_status==2  && (item.rcv_openid ||item.rcv_receivetime>0) && giftflag==0) ? '': 'hidden'}} smallbtn" style="background:#e34c55;color:#fff;">去支付</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1 ) ? '': 'hidden'}} smallbtn">确认收货</text>
          <text style="width:20%;" bindtap="showGoods" data-order-shape="{{order_shape}}" data-order-no="{{item.order_no}}"class="{{(order_shape==5 || order_shape==4) ? '': 'hidden'}} smallbtn">看内容</text>
-        <text style="width:20%;" bindtap="showinteracton" data-order-shape="{{order_shape}}" data-order-id="{{item.id}}" class="{{(order_shape==4) ? '': 'hidden'}} smallbtn">查详情</text>
+        <text style="width:20%;" bindtap="showinteracton" data-order-shape="{{order_shape}}" data-order-id="{{item.id}}" class="{{(order_shape==4||order_shape==5) ? '': 'hidden'}} smallbtn">查详情</text>
       </view>
     </view>
     <!--<view class="order-footer">
