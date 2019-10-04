@@ -199,7 +199,7 @@ Page({
     var giftflag = options.giftflag ? options.giftflag:0
     var send_rcv = options.send_rcv ? options.send_rcv:0
     var wx_notes = options.wx_notes ? options.wx_notes:0 //微信通知直接进入
-    var order_object = options.order_object ? JSON.parse(options.order_object):[]
+    var order_object = options.order_object ? JSON.parse(options.order_object):''
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -218,8 +218,8 @@ Page({
       wx_notes:wx_notes,
     })
     //that.setNavigation()
-    console.log('orderdetail onload options:', options)
-    if (order_object.length>0) {
+    console.log('orderdetail onload options:', options, 'order_object:', order_object,'length:',order_object.length)
+    if (order_object) {
       console.log('订单详情', order_object)
       var sku_num = 0
       var status = order_object['status']
@@ -274,9 +274,10 @@ Page({
         card_register_info: card_register_info,
         card_type: card_type,
       })
-    } else if (order_no){
+    } else if (order_no || order_id){
       that.setData({
         order_no: order_no,
+        order_id: order_id,
       })
       that.reloadData()
     }else{
@@ -307,7 +308,8 @@ Page({
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '0';
     var status = that.data.status
     var shop_type = that.data.shop_type
-    var order_no = that.data.order_no;
+    var order_no = that.data.order_no
+    var order_id = that.data.order_id
     //从服务器获取订单列表
     console.log('orderdetail reloadData() 从服务器获取订单 order_no: ', order_no)
     if (order_no){
@@ -320,6 +322,7 @@ Page({
           status: status,
           shop_type: shop_type,
           order_no: order_no,
+          order_id: order_id,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -352,7 +355,7 @@ Page({
                
                 if (orderObjects[i]['order_sku'][j]['sku_value']) {
                   for (var k = 0; k < orderObjects[i]['order_sku'][j]['sku_value'].length; k++) {
-                    orderObjects[i]['order_sku'][j]['sku_value'][k]['value'] = weburl + orderObjects[i]['order_sku'][j]['sku_value'][k]['value']
+                    //orderObjects[i]['order_sku'][j]['sku_value'][k]['value'] = weburl + orderObjects[i]['order_sku'][j]['sku_value'][k]['value']
                   }
                 }
               }

@@ -29,15 +29,19 @@
   </radio-group>
   </view>
 </modal>
-<scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" > <!-- bindscrolltolower="getMoreOrdersTapTag" bindscrolltoupper="getPrevOrdersTapTag"  -->
+<scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" bindscrolltolower="getMoreOrdersTapTag" > 
+<!-- bindscrolltoupper="getPrevOrdersTapTag" 
   <view wx:if="{{page>1}}"  class="prevbtn" bindtap="getPrevOrdersTapTag">
     <image src="../../images/top.png" style="width:40rpx;height:40rpx;border-radius: 50%;"></image>
   </view>
-  
+   -->
   <view  class='goTop' bindtap="goTop"  hidden='{{!floorstatus}}'> <!-- -->
     <icon style="margin-top:-40rpx;" class="Hui-iconfont iconv-uparrow" />
+    <view class='' style="margin-top:-10rpx;font-size:22rpx;">TOP</view>
+    <!-- 
     <view style="margin-top:-18rpx;">{{page==0?1:page}}</view>
     <view style="margin-top:-3rpx;border-top:1rpx solid #fff">{{page_num}}</view>
+    -->
   </view>
   <block wx:for="{{orders_show}}"  wx:key="{{order_show.id}}" wx:for-item="orders_show" wx:for-index="ordersIndex">
     <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders_show}}" wx:key="{{item.id}}" wx:for-index="order_idx">
@@ -120,15 +124,17 @@
           <text hidden="{{(giftflag==0 && item.status==2 && item.order_price>0 && item.gift_status==1 && currenttime>item.duetime && item.shape!=4 && item.shape!=5)?false:true}}" data-order-no="{{item.order_no}}" data-index="{{order_idx}}" bindtap="refundTapTag" class="smallbtn2">退款</text>
         </view>
       </view>
-      <view id = "bottom"></view>
+       
     </view>
   </block>
+  <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap=""></view>
   <!-- 
-</view>
--->
-  <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap="getMoreOrdersTapTag">
+   <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap="getMoreOrdersTapTag">
     <text >查看更多</text>
   </view>
+</view>
+-->
+ 
 </scroll-view>
 <modal class="modalbox" height="90%" hidden="{{hiddenmodalput}}" title="确定要把礼物折现回收?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
 

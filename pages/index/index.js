@@ -349,7 +349,8 @@ Page({
   },
   onOrderTapTag: function (e) {
     var that = this;
-    var tab = e.currentTarget.dataset.id;
+    var tab = e.currentTarget.dataset.id
+    var page = that.data.page
     var index = e.currentTarget.dataset.index;
     var giftflag = that.data.giftflag;
     if (tab == 'send') {
@@ -369,16 +370,18 @@ Page({
       hiddenmore: true,
       giftflag: giftflag,
       all_rows:0,
-      page:0,
+      page:1,
       page_num:1,
     })
     console.log('tab:' + tab, ' giftflag:', giftflag)
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 1500
-    })   
-    that.reloadData()
+    if (that.data.orders_show.length==0) {
+      wx.showToast({
+        title: '加载中',
+        icon: 'loading',
+        duration: 1500
+      })
+      that.reloadData()
+    }
   },
 
   // 获取滚动条当前位置
@@ -407,7 +410,7 @@ Page({
       scrollTop: 0,
     })
     console.log('goTop:',that.data.scrollTop)
-    that.getPrevOrdersTapTag()
+    //that.getPrevOrdersTapTag()
   },
 
   getMoreOrdersTapTag: function () {
@@ -426,17 +429,19 @@ Page({
         hiddenmore: true,
       })
       return
+    }else{
+      wx.showToast({
+        title: '加载中',
+        icon: 'loading',
+        duration: 2000
+      })
+      that.setData({
+        page: page + 1,
+      })
+      console.log('get More Orders page:', page, 'current scrollTop:', that.data.current_scrollTop)
+      that.reloadData()
     }
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 2000
-    })
-    that.setData({
-      page: page+1,
-    })
-    console.log('get More Orders page:',page,'current scrollTop:',that.data.current_scrollTop)
-    that.reloadData()
+  
   },
 
   sendAginTapTag: function (e) {
@@ -538,16 +543,22 @@ Page({
 
   },
   detailTapTag: function (e) {
-    var that = this;
+    var that = this
     var order_object = e.currentTarget.dataset.orderObject
+    var order_no = order_object['order_no']
     var order_id = order_object['id']
     var card_type = that.data.card_type ? that.data.card_type:0
     var tab2 = that.data.tab2
     
     console.log('index detail 订单ID:' + order_id)
+    /*
     wx.navigateTo({
       url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&card_type=' + card_type + '&send_rcv=' + tab2  
-    });
+    })
+    */
+    wx.navigateTo({
+      url: '../order/orderdetail/orderdetail?order_id=' + order_id + '&order_no=' + order_no+ '&giftflag=' + that.data.giftflag + '&card_type=' + card_type + '&send_rcv=' + tab2
+    })
   },
 
   get_project_gift_para: function () {
@@ -634,6 +645,7 @@ Page({
   },
   onShow: function () {
     var that = this
+    var orders_show = that.data.orders_show
      var username = wx.getStorageSync('username')
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
@@ -663,12 +675,14 @@ Page({
         modalHiddenUserName: modalHiddenUserName,
       })
     } else {
-      wx.showToast({
-        title: '加载中',
-        icon: 'loading',
-        duration: 1500
-      })   
-      that.reloadData()
+      if (orders_show.length==0){
+        wx.showToast({
+          title: '加载中',
+          icon: 'loading',
+          duration: 1500
+        })
+        that.reloadData()
+      }
     }
   },
 
@@ -683,6 +697,7 @@ Page({
     var status = that.data.status
     var shop_type = that.data.shop_type
     var page = that.data.page //从服务器获取页面序号
+    var page_num = that.data.page_num //从服务器获取页面数
     var show_max = that.data.show_max
     var orders_prev = that.data.orders_prev
     var orders_next = that.data.orders_next
@@ -705,6 +720,7 @@ Page({
       })
       return
     }
+    if (page > page_num && page_num>0) return
     that.setData({
       is_loading:true,
     })
@@ -712,7 +728,7 @@ Page({
       //title: tips,
     //})
     var page_show = orders_next.length 
-    var orders_show = [] 
+    var orders_show = that.data.orders_show
    
     //从服务器获取订单列表
     wx.request({
@@ -726,7 +742,7 @@ Page({
         openid:openid,
         order_type: order_type,
         keyword: keyword,
-        page: page,
+        page: page > page_num ? page_num:page,
         pagesize:pagesize
       },
       header: {
@@ -784,10 +800,11 @@ Page({
                 var card_type = m_desc['card_register_info'] ? 1 : 0
                 card_type = m_desc['card_template'] ? m_desc['card_template'][0]['type'] : card_type    
                 orderObjects[i]['card_type']  = card_type
-                orderObjects[i]['card_name_info'] = card_name_info
-                orderObjects[i]['card_love_info'] = card_love_info
-                orderObjects[i]['card_cele_info'] = card_cele_info
-                orderObjects[i]['card_register_info'] = card_register_info
+                if (card_name_info)  orderObjects[i]['card_name_info'] = card_name_info
+                if (card_love_info) orderObjects[i]['card_love_info'] = card_love_info
+                if (card_cele_info) orderObjects[i]['card_cele_info'] = card_cele_info
+                if (card_register_info) orderObjects[i]['card_register_info'] = card_register_info
+            
               }
             }
             //if (page > 1 && orderObjects) {
@@ -804,6 +821,7 @@ Page({
               gift_rcv = all_rows
             }
             //更新当前显示页信息
+            /*
             if(orders_show.length<show_max){
               orders_show.push(orderObjects)
               page_show =  page_show +1
@@ -812,10 +830,10 @@ Page({
               orders_show.push(orderObjects)
               page_show = show_max
             }
-            
+            */
             that.setData({
               orders: orders,
-              ["orders_show[" + (page_show-1) + "]"]: orderObjects,
+              ["orders_show[" + (page<1?0:page-1) + "]"]: orderObjects,
               all_rows: all_rows,
               gift_send: gift_send,
               gift_rcv: gift_rcv,
@@ -824,14 +842,15 @@ Page({
             },function(){
               that.setData({
                 hiddenmore: false,
-                scrollTop: 0,
                 is_loading: false,
                 loadingHidden: false,
               })
               //wx.hideLoading()
+              /*
               wx.pageScrollTo({
                 scrollTop: 0
               })
+              */
             })
           
             console.log('reloadData page:' + page + ' pagesize:' + pagesize, ' current time:', currenttime, 'current scrollTop', scrollTop, ' orders', that.data.orders)
