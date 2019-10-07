@@ -1,4 +1,4 @@
-<view class="container carts-list" style="{{modalHiddenCoupon?'position:fixed;':''}}">
+<scroll-view scroll-y  class="container carts-list" style="{{modalHiddenCoupon?'position:fixed;':''}}{{dkheight>0?' height:'+dkheight+'px;':''}}">
   <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" bindtap='showGoods'>
     <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}">
       <!-- 缩略图 -->
@@ -50,8 +50,7 @@
       </view>
     </view>
   </view>
-</view>
-<view class="order-item">
+  <view class="order-item">
 <view wx:if="{{order_shape!=5}}" class="order-num">
   <text>份数:</text> <!--份数，不是件数，用于群发礼物订单 -->
   <input type="number" bindinput="order_num" value="{{order_num}}" />
@@ -75,7 +74,14 @@
     <text style="margin-left:10rpx;">使用优惠券</text>
   </view>
 </view>
+<view class='confirmbtn'>
+<form bindsubmit="formSubmit"  data-name='confirmOrder' report-submit="true" >
+  <button class="submit" style="width:96%;" type="warn" formType="submit" >提交订单</button> <!-- bindtap="confirmOrder" -->
+</form>
 </view>
+</view>
+</scroll-view>
+
 
 <view hidden="{{modalHiddenCoupon}}" style='width:100%;'>
   <modal class="counpons" title="请选择" confirm-text="确定" cancel-text="取消" bindconfirm="modalBindaconfirmCoupon" bindcancel="modalBindcancelCoupon" no-cancel="">
@@ -108,11 +114,7 @@
     </view>
   </modal>
 </view>
-<view class='confirmbtn'>
-<form bindsubmit="formSubmit"  data-name='confirmOrder' report-submit="true" >
-  <button class="submit" style="width:96%;" type="warn" formType="submit" >提交订单</button> <!-- bindtap="confirmOrder" -->
-</form>
-</view>
+
 <!--
 <view wx:if="{{HiddenSelectedCoupon>0}}" class="counpon-item-banner" style='display:flex;flex-direction:column;text-align:center;align-items:center;'  data-couponid="{{selected_coupon_id}}" data-starttime="{{selected_coupon_starttime}}" data-endtime="{{selected_coupon_endtime}}" data-couponname="{{selected_coupon_name}}" data-coupontype="{{selected_coupon_type}}" data-couponimage="{{selected_couponimage}}">
 <!--

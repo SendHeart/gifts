@@ -116,7 +116,7 @@ Page({
         let winHeight = res.windowHeight;
         console.log(winHeight);
         that.setData({
-          dkheight: winHeight - winHeight * 0.05 - 120,
+          dkheight: winHeight - winHeight * 0.05 - 60,
         })
       }
     })
