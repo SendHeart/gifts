@@ -1967,7 +1967,7 @@ Page({
           goodsmodel_count = goodsmodel_count +1
           if (goodsmodel_count<15){
             wx.showToast({
-              title: "加载中1...",
+              title: "加载中...",
               icon: 'loading',
               duration: 500,
             })

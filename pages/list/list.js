@@ -269,7 +269,6 @@ Page({
       })
     })
   
-
     wx.getSystemInfo({
       success: function (res) {
         that.setData({

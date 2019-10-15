@@ -6,7 +6,7 @@
 <template is="hall_title" data="{{title_name,title_logo,navgationHeight,startBarHeight}}" />
  -->
 <view class="userinfo" hidden="{{shareflag}}" style="background-image: url({{wish_banner}});background-size:cover;">
-   <image class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover" bindtap=""></image>
+   <image class="userinfo-avatar" src="{{wish_headimg}}" background-size="cover"></image>
 	<text class="userinfo-nickname">{{wish_nickname?wish_nickname+'的心愿单':'心愿单'}}</text>
 </view>
 <view class="userinfo_my" hidden="{{!shareflag}}" style="background-image: url({{wish_banner}});background-size:cover;">
