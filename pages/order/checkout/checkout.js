@@ -272,7 +272,7 @@ Page({
             duration: 1500
           })
           */
-          if (order_data['order_pay']==0){
+          if (order_data['order_pay'] == 0 || is_buymyself == 0){
             that.delete_cart()
             that.zero_pay(order_data['order_no']) //0支付直接送出
           }else{

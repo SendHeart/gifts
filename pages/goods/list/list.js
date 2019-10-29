@@ -152,7 +152,8 @@ Page({
       activeIndex2: index,
       tab2: tab,
       page: 1,
-      updown: updown
+      updown: updown,
+      venuesItems: [],
     })
     that.get_goods_list()
   },
