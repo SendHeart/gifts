@@ -183,9 +183,9 @@ page {
   position: fixed; 
   top: 0;   
   right: 0; 
-  width:55rpx;
-  height:50rpx;
-  margin:-0 0 auto;
+  width:30rpx;
+  height:20rpx;
+  margin:10rpx auto;
   z-index:1000;
   padding-right: 15rpx;
 }
