@@ -1,6 +1,8 @@
+var md5 = require('../../../utils/md5.js')
 var app = getApp()
 var weburl = app.globalData.weburl
 var shop_type = app.globalData.shop_type
+var md5_key = app.globalData.md5_key
 var navList_order = [
   { id: "order_manager", title: "订单管理" },
   { id: "goods_manager", title: "商品管理" },
@@ -30,8 +32,128 @@ Page({
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
     buyin_rate:90,  //礼物折现率
+    modalHidden: true,
   },
+  update_goods: function (e) {
+    var that = this
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_sku_id = e.currentTarget.dataset.skuId
+    var goods_name = e.currentTarget.dataset.goodsName
+    var sell_price = e.currentTarget.dataset.goodsPrice
+    var store_nums = e.currentTarget.dataset.goodsStore
+    var goods_status = e.currentTarget.dataset.goodsStatus
+    var goods_sku_key = e.currentTarget.dataset.goodsSkukey
+    that.setData({
+      modalHidden: !that.data.modalHidden,
+      goods_sku_id: goods_sku_id,
+      goods_id: goods_id,
+      goods_name:goods_name,
+      sell_price: sell_price,
+      store_nums: store_nums,
+      goods_status: goods_status,
+      goods_sku_key: goods_sku_key,
+    })
+    //console.log('formSubmit() formID：', formId, ' form name:', form_name)
+  },
+  goodsStatusInput: function (e) {
+    var that = this;
+    var goods_status = e.detail.value
+    console.log("选中商品状态：" + goods_status);
+   
+    that.setData({
+      goods_status: goods_status
+    })
+  },
+  storeNumsInput: function (e) {
+    var that = this;
+    var store_nums = e.detail.value
+    console.log("商品库存：" + store_nums);
+
+    that.setData({
+      store_nums: store_nums
+    })
+  },
+  sellPriceInput: function (e) {
+    var that = this;
+    var sell_price = e.detail.value
+    console.log("商品价格：" + sell_price);
+    that.setData({
+      sell_price: sell_price
+    })
+  },
+
+  modalBindaconfirm: function () {
+    var that = this
+    that.setData({
+      modalHidden: !that.data.modalHidden,
+    })
+    that.update_goods_info()
+  },
+  //取消按钮点击事件  
+  modalBindcancel: function () {
+    this.setData({
+      modalHidden: !this.data.modalHidden
+    })
+  }, 
+  update_goods_info: function () {
+    var that = this
+    var shop_type = that.data.shop_type
+    var goods_id = that.data.goods_id
+    var goods_sku_id = that.data.goods_sku_id
+    var sell_price = that.data.sell_price
+    var goods_store_nums = that.data.store_nums
+    var goods_status = that.data.goods_status
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var tokenmd5 = md5.md5(username,md5_key) 
+
+    //提交商品信息更新
+    wx.request({
+      url: weburl + '/api/client/update_manager_goods_info',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        access_tokenmd5: tokenmd5,
+        goods_id: goods_id,
+        goods_sku_id: goods_sku_id,
+        sell_price: sell_price,
+        goods_store_nums: goods_store_nums,
+        goods_status: goods_status,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        var orderObjects = res.data.result;
+        if (res.data.status != 'y') {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '商品更新失败',
+            icon: 'loading',
+            duration: 1500
+          })
+        } else {
+          wx.showToast({
+            title: '商品更新完成',
+            icon: 'success',
+            duration: 1000
+          })
+          that.setData({
+            goods: [],
+            page:1,
+          },function(){
+            that.reloadData()
+          })
+        }
+      }
+    })
+
+  }, 
   
+
   goBack: function () {
     wx.switchTab({
       url: '/pages/hall/hall'
@@ -45,12 +167,15 @@ Page({
     var giftflag = that.data.giftflag;
     if (tab == 'order_manager') {
       giftflag = 0;
+      
     } else {
       giftflag = 1; //goods manager
     }
     that.setData({
       activeIndex2: index,
       tab2: tab,
+      orders: giftflag==0?that.data.orders:[],
+      goods: giftflag == 1 ? that.data.goods : [],
       page: 1,
       giftflag: giftflag,
       all_rows:0,
@@ -282,6 +407,21 @@ Page({
     //
   },
 
+  search_goodsnameTapTag: function (e) {
+    var that = this
+    var keyword = e.detail.value
+    that.setData({
+      keyword: keyword
+    })
+  },
+  orderSearch: function () {
+    var that = this
+    //console.log('orderSearch keyword:', that.data.keyword)
+    that.setData({
+      page: 1,
+    })
+    that.reloadData()
+  },
   reloadData: function () {
     var that = this;
     var order_type = that.data.tab2;
@@ -290,9 +430,15 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var status = that.data.status
     var shop_type = that.data.shop_type
-    var page = that.data.page;
-    var pagesize = that.data.pagesize;
+    var page = that.data.page
+    var pagesize = that.data.pagesize
+    var keyword = that.data.keyword ? that.data.keyword:''
     console.log('reloadData shop_type:' + shop_type + ' order_type:' + order_type)
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1500
+    })
     if (order_type=='order_manager'){
       //从服务器获取订单列表
       wx.request({
@@ -305,6 +451,7 @@ Page({
           shop_type: shop_type,
           openid: openid,
           order_type: order_type,
+          keyword: keyword,
           page: page,
           pagesize: pagesize
         },
@@ -313,7 +460,6 @@ Page({
           'Accept': 'application/json'
         },
         success: function (res) {
-          console.log(res.data);
           var orderObjects = res.data.result;
           var all_rows = res.data.all_rows;
           if (!res.data.result && page == 1) {
@@ -343,7 +489,6 @@ Page({
                   if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
                     orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
                   }
-                  
                   orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
                 }
               }
@@ -367,37 +512,26 @@ Page({
                 gift_rcv: gift_rcv,
                 page_num: page_num.toFixed(0),
               });
-              console.log('gift_send:' + gift_send + ' gift_rcv:' + gift_rcv);
+              console.log('gift_send:' + gift_send + ' gift_rcv:' + gift_rcv, ' orders:', that.data.orders);
             }
           }
         }
       })
     }else{
       //从服务器获取商品列表
-      var goods_type = that.data.goods_type;
-      var goods_type_value = that.data.goods_type_value;
-      var goods_sales = that.data.tab2;
-      var updown = that.data.updown;
-      var search_goodsname = that.data.search_goodsname;
-      var keyword = that.data.keyword;
       var shop_type = that.data.shop_type
       var shape = 1
       wx.request({
-        url: weburl + '/api/client/get_goods_list',
+        url: weburl + '/api/client/get_manager_goods_list',
         method: 'POST',
         data: {
-          goods_type: goods_type,
-          goods_type_value: goods_type_value,
           username: username,
           access_token: token,
           page: page,
           pagesize: pagesize,
-          search_goodsname: search_goodsname,
-          goods_sales: goods_sales,
-          updown: updown,
-          keyword: keyword,
           shop_type: shop_type,
-          shape: shape
+          shape: shape,
+          keyword: keyword,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -405,45 +539,45 @@ Page({
 
         },
         success: function (res) {
-          console.log('get_goods_list:', res.data.result)
-          var venuesItems = res.data.result;
+          var goods = res.data.result;
           var page = that.data.page;
           var all_rows = res.data.all_rows;
-          if (!venuesItems) {
+          if (!goods) {
             wx.showToast({
               title: '没有搜到记录',
               icon: 'loading',
               duration: 1000
             });
             that.setData({
-              venuesItems: [],
+              goods: [],
               all_rows: 0,
               keyword: ''
             })
             return;
           }
-          for (var i = 0; i < venuesItems.length; i++) {
-            venuesItems[i]['short_name'] = venuesItems[i]['name'].substring(0, 10) + '...'
-            if (!venuesItems[i]['act_info']) {
-              venuesItems[i]['act_info'] = ''
-            } else {
-              //venuesItems[i]['act_info'] = venuesItems[i]['act_info'].substring(0, 10) + '...'
+          for (var i = 0; i < goods.length; i++) {
+            goods[i]['short_name'] = goods[i]['name'].substring(0, 10) + '...'
+            if (!goods[i]['act_info']) {
+              goods[i]['act_info'] = ''
             }
-            if (!venuesItems[i]['goods_tag']) {
-              venuesItems[i]['goods_tag'] = ''
+            if (!goods[i]['goods_tag']) {
+              goods[i]['goods_tag'] = ''
             } else {
-              venuesItems[i]['goods_tag'] = venuesItems[i]['goods_tag'].substring(0, 10)
+              goods[i]['goods_tag'] = goods[i]['goods_tag'].substring(0, 10)
             }
           }
-          if (page > 1 && venuesItems) {
+          if (page > 1 && goods) {
             //向后合拼
-            venuesItems = that.data.venuesItems.concat(venuesItems);
+            goods = that.data.goods.concat(goods);
           }
+          var page_num = that.data.page_num
+          page_num = (all_rows / pagesize + 0.5)
           that.setData({
-            venuesItems: venuesItems,
+            goods: goods,
             all_rows: all_rows,
-            keyword: ''
+            page_num: page_num,
           })
+          console.log('get_manager_goods_list:', that.data.goods, ' all_rows:', all_rows)
           setTimeout(function () {
             that.setData({
               loadingHidden: true,
@@ -452,8 +586,6 @@ Page({
         }
       })
     }
-    
-
   },
   buyin: function (e) {
     var that = this

@@ -70,7 +70,7 @@
         <text class="carts-title">{{mapping.goods_name}}</text>
         <view hidden="{{item['card_type']==0?false:true}}" class="carts-sku">
           <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="{{index}}">
-            <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+            <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':(sku_value['value']?sku_value['value']+' ':'')}}
               </text>
           </view>
         </view>

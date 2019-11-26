@@ -22,10 +22,10 @@
         <!-- 商品标题 -->
         <text class="carts-title">{{mapping.goods_name}}</text>
         <view wx:if="{{order_shape!=5 && order_shape!=4}}" wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="" style="font-size:24rpx;">
-          <text>{{sku_value?sku_value['name']+':':''}}</text>
-          <text wx:if="{{sku_value['type']==1}}">{{sku_value?sku_value['value']:''}}</text>
-          <image wx:if="{{sku_value['type']==2}}" src="{{sku_value?sku_value['value']:''}}" style="width:30rpx;height:30rpx;"> </image> 
-            <text wx:if="{{sku_value['type']==2}}">{{sku_value?sku_value['note']:''}} </text>
+          <text>{{sku_value['name']?sku_value['name']+':':''}}</text>
+          <text wx:if="{{sku_value['type']==1}}">{{sku_value['value']?sku_value['value']:''}}</text>
+          <image wx:if="{{sku_value['type']==2}}" src="{{sku_value['value']?sku_value['value']:''}}" style="width:30rpx;height:30rpx;"> </image> 
+            <text wx:if="{{sku_value['type']==2}}">{{sku_value['note']?sku_value['note']:''}} </text>
         </view>
          <view wx:if="{{order_shape==4 && card_name_info}}">
             <text class="carts-card-title">{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?'('+card_name_info.card_name_title+')':''}}{{card_name_info.card_name_phone?' 手机: '+card_name_info.card_name_phone:''}}

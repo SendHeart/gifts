@@ -1,11 +1,17 @@
 <import src="/pages/common/nav_order.wxml" />
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
+<view class="search">
+		<view class="wx-input">
+    <input name="search" value="{{keyword}}" placeholder="搜索关键词"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="orderSearch"/>
+    <image bindtap='orderSearch' src="../../../images/search-btn.png"></image>
+    </view>
+</view>
 <scroll-view class="container" scroll-y bindscrolltolower="getMoreOrdersTapTag" bindscroll="scrolltoupper" scroll-top="{{scrollTop}}">
   <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-    <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow" />
-  <view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{page_num}}</view>
-</view>
-  <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}" wx:for-index="order_idx">
+    <icon style="margin-top:-45rpx;" class="Hui-iconfont iconv-uparrow" />
+    <view class='' style="margin-top:-5rpx;font-size:26rpx;">TOP</view>
+  </view>
+  <view wx:if="tab2=='order_manager'" class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="{{index}}" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
       <text>礼物号: {{item.order_no}}</text>
@@ -15,7 +21,6 @@
       <text wx:if="{{item.status==10 && giftflag ==0}}" class="status">退款中</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" class="status2">已发货</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2  && mapping.status==0}}" class="status2">未发货</text>
-      
     </view>
 
     <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:for-index="sku_idx" wx:key="" class="carts-item" bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}" >
@@ -27,11 +32,10 @@
         <!-- 商品标题 -->
         <text class="carts-title">{{mapping.goods_name}}</text>
         <view  class="carts-sku"> 
-            <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value"  wx:key="" >
-              <text  >{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
-              </text>
-            </view>
+          <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_info"  wx:key="sku_info" >
+            <text wx:if="sku_info.name!='undefined'">{{sku_info.name?sku_info.name+':':''}}{{sku_info.type==2?sku_info.note+' ':(sku_info.value?sku_info.value+' ':'')}}</text>
           </view>
+        </view>
         <view class="carts-subtitle">
           <text>x{{mapping.sku_num}}</text>
             <text wx:if="{{item.status==2 && giftflag==1 && item.gift_status==2 && mapping.status==1}}" class="recyclestatus">已回收</text>
@@ -45,4 +49,70 @@
       </view>
     </view>
   </view>
+  <view wx:if="tab2=='goods_manager'" class="order-item" style='width:{{windowWidth}}' wx:for="{{goods}}" wx:for-item="goods"  wx:key="{{index}}" wx:for-index="goods_idx">
+    <!-- 厂家logo缩略图 -->
+    <view class="shop-text" style='width:{{windowWidth}}'>
+      <text>商品ID: {{goods.id}}</text>
+      <text wx:if="{{goods.status==2 && giftflag ==1}}" class="status2">已下架</text>
+    </view>
+    <view  class="carts-item" bindtap="update_goods" data-goods-id="{{goods.id}}" data-sku-id="{{goods.sku_id}}" data-goods-store="{{goods.store_nums}}" data-goods-price="{{goods.sell_price}}" data-goods-skukey="{{goods.sku_key}}" data-goods-name="{{goods.name}}" data-goods-status="{{goods.status}}" >
+      <view >
+        <!-- 缩略图 -->
+        <image class="carts-image" src="{{goods.spec_value[0].type==2?goods.spec_value[0].value:goods.image}}" mode="aspectFill" />
+      </view>
+      <view class="carts-text">
+        <!-- 商品标题 -->
+        <text class="carts-title">{{goods.name}}</text>
+        <view  class="carts-sku"> 
+          <view wx:for="{{goods['spec_value']}}" wx:for-item="sku_value"  wx:key="sku_value" >
+            <text>{{sku_value?sku_value['name']+':':''}}</text>
+            <text wx:if="{{sku_value['type']==1}}">{{sku_value?sku_value['value']:''}}</text>
+          <image wx:if="{{sku_value['type']==2}}" src="{{sku_value?sku_value['value']:''}}" style="width:30rpx;height:30rpx;"> </image> 
+            <text wx:if="{{sku_value['type']==2}}">{{sku_value?sku_value['note']:''}} </text>
+          </view>
+        </view>
+        <view class="carts-subtitle">
+          <text>库存:{{goods.store_nums}}</text>
+          <text style="color:#e34c55;">￥{{goods.sell_price}}</text>
+        </view>
+      </view>
+    </view>
+    <view class="order-footer">
+      <view style="width:70%">
+        <text style="width:20%">销量:{{goods.sale}}</text>
+      </view>
+    </view>
+  </view>
 </scroll-view>
+<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
+  <view class='modaltitletext'>
+    <view class='buy-return' bindtap="modalBindcancel">×</view>
+  </view>
+  <view class="section">  
+    <view class="">{{goods_name}}</view>  
+  </view>
+   <view class="section">  
+    <view class="">{{goods_sku_key}}</view>  
+  </view>
+  <view class="section">  
+    <view class="section-title">价格：</view>  
+    <input type="digit" name="sell_price" value="{{sell_price}}" placeholder="请输入价格" confirm-type="done"  bindinput="sellPriceInput" style="border:1prx;" />
+  </view>
+  
+  <view class="section">  
+    <view class="section-title">库存：</view>  
+    <input type="number" name="store_nums" value="{{store_nums}}" placeholder="请输入库存" confirm-type="done"  bindinput="storeNumsInput" />
+  </view>
+  <view class="section">  
+    <view class="section-title">状态：</view>  
+      <radio-group name="goods_status" bindchange='goodsStatusInput'>  
+        <label  style="margin-left:20rpx;">  
+        <radio value="0" checked="{{goods_status==0?'checked':''}}" style="margin-left:20rpx;" />上架</label>  
+        <label style="margin-left:20rpx;">  
+        <radio value="2" checked="{{goods_status==2?'checked':''}}"  style="margin-left:20rpx;" />下架</label>  
+      </radio-group>  
+    </view>  
+    <action-sheet-cancel>确定
+      <view style='height:0rpx;'></view>
+    </action-sheet-cancel>
+</action-sheet>

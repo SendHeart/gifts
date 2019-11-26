@@ -18,6 +18,47 @@ page {
   content: '\e6d5';
 }
 
+.search {
+	width: 100%;
+	height: 90rpx;
+  display: flex;
+  background: #1d1d1d;
+	flex-direction: row;
+	justify-content: center;/*子项横轴上居中对齐*/
+	align-items: center;/*子项纵轴上居中对齐*/
+  padding: 4rpx 10rpx 8rpx 10rpx;
+  top:0rpx;
+  position: fixed;
+  z-index:999;
+}
+
+.search .wx-input {
+	display: flex;
+  flex-direction: row;
+	width: 80%;
+	height: 60rpx;
+  background: #ffffff;
+	border-radius: 120rpx;
+  text-align: left;
+  z-index: 99;
+  margin-left: 20rpx;
+}
+.wx-input input {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  height: 60rpx;
+  width: 94%;
+  font-size: 24rpx;
+  line-height: 50rpx;
+  padding-left: 20rpx;
+  min-height: 1.2rem;
+}
+.wx-input image {
+	width: 36rpx;
+	height: 36rpx;
+  margin: 12rpx 2rpx 12rpx -40rpx; 
+}
 .startBar {
   height: 75rpx;
   background: #333;
@@ -56,16 +97,17 @@ page {
   margin-left: 20rpx;
 }
 .container {
-  padding-top: 80rpx;
+  padding-top: 150rpx;
   background: #f2f2f2;
   height: 100%;
   overflow-x: hidden;
+  
 }
 
 .order-item {
   position: relative;
   width: 96%;
-  margin: 15rpx auto 0 auto;
+  margin: 15rpx auto 15rpx auto;
   background: #fff;
   border-radius: 10rpx;
   z-index: 0;
@@ -264,7 +306,7 @@ page {
   background: white;
   white-space: nowrap;
   position: fixed;
-  top: 0;
+  top: 80rpx;
   z-index: 99;
 }
 
@@ -297,7 +339,7 @@ page {
   background: #1d1d1d;
   width: 100%;
   position: fixed;
-  top: 0;
+  top: 80rpx;
   border-bottom: 1px solid #f2f2f2;
   z-index: 99;
 }
@@ -344,6 +386,14 @@ page {
   text-align: center;
 }
 
+.modaltitletext {
+  font-size: 26rpx;
+  color: #444;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top:20rpx;
+}
 .buyin_content {
   display: flex;
   flex-direction:column;
@@ -358,7 +408,33 @@ page {
   color: #999;
   height: 46rpx;
 }
+.buy-return{
+  position: relative;
+  font-size: 35rpx;
+  height:36rpx;
+  line-height:34rpx;
+  width: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #999;
+  text-align: center;
+  align-items: center;
+  color: #999;
+  margin: 10rpx;
+}
+.section{  
+  display: flex;  
+  flex-direction: row;  
+  margin: 20rpx;  
+  font-size:28rpx;
+}  
 
+.section view{  
+  margin-right: 20rpx;  
+}
+.section-title{  
+  width: 120rpx;  
+}
+.section input{border: 1rpx;background-color: #f2f2f2;color:#e34c55;  width: 120rpx; text-align: center;}
 /* 返回顶部 */
 .goTop{
   display: flex;
