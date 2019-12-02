@@ -19,6 +19,7 @@
       <text wx:if="{{item.gift_status==1 && giftflag ==0}}" class="status">对方未接受</text>
       <text wx:if="{{giftflag==0 && item.status == 8}}" class="status2">已取消</text>
       <text wx:if="{{item.status==10 && giftflag ==0}}" class="status">退款中</text>
+      <text wx:if="{{item.gift_status==2 && giftflag ==0 && item.status == 2 && item.shape == 1}}" class="status smallbtn" bindtap="update_order" data-order-id="{{item.id}}" data-goods-name="{{item['order_sku'][0].goods_name}}" data-order-price="{{item.order_price}}"  data-buy-num="{{item.buy_num}}" data-order-sku-num="{{item.order_sku_num}}" >发货</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 3}}" class="status2">已发货</text>
       <text wx:if="{{item.gift_status==2 && giftflag ==1 && item.status == 2  && mapping.status==0}}" class="status2">未发货</text>
     </view>
@@ -84,7 +85,7 @@
     </view>
   </view>
 </scroll-view>
-<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
+<action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalBindGoodsconfirm">
   <view class='modaltitletext'>
     <view class='buy-return' bindtap="modalBindcancel">×</view>
   </view>
@@ -111,6 +112,36 @@
         <label style="margin-left:20rpx;">  
         <radio value="2" checked="{{goods_status==2?'checked':''}}"  style="margin-left:20rpx;" />下架</label>  
       </radio-group>  
+    </view>  
+    <action-sheet-cancel>确定
+      <view style='height:0rpx;'></view>
+    </action-sheet-cancel>
+</action-sheet>
+<action-sheet hidden="{{modalOrderHidden}}" bindchange="modalBindOrderconfirm">
+  <view class='modaltitletext'>
+    <view class='buy-return' bindtap="modalBindOrdercancel">×</view>
+  </view>
+  <view class="section">  
+    <view class="">{{goods_name}}</view>  
+  </view>
+   <view class="section">  
+    <view class="">{{goods_sku_key}}</view>  
+  </view>
+  <view class="section">  
+    <view class="section-title">{{order_price?'价格:￥'+order_price:''}}</view>  
+  </view>
+  
+  <view class="section">  
+    <view class="section-title">{{buy_num>0?'数量：'+buy_num:''}}</view>
+    <view class="section-title">{{order_sku_num>0?'子订单：'+order_sku_num:''}}</view>    
+  </view>
+  <view class="section">  
+    <view class="section-title-delivery">物流公司：</view>  
+    <input type="digit" name="delivery_company" value="{{delivery_company}}"  placeholder-style="width:200rpx;"  placeholder="物流公司" confirm-type="done"  bindinput="deliveryCompanyInput" style="border:1prx;width:200rpx;" />
+  </view>
+  <view class="section">  
+    <view class="section-title-delivery">物流单：</view>  
+    <input type="digit" name="delivery_no" value="{{delivery_no}}" placeholder-style="width:200rpx;" placeholder="物流单号" confirm-type="done"  bindinput="deliveryNoInput" style="border:1prx;width:300rpx" />
     </view>  
     <action-sheet-cancel>确定
       <view style='height:0rpx;'></view>

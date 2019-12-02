@@ -32,7 +32,8 @@ Page({
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
     buyin_rate:90,  //礼物折现率
-    modalHidden: true,
+    modalGoodsHidden: true,
+    modalOrderHidden:true
   },
   update_goods: function (e) {
     var that = this
@@ -44,7 +45,7 @@ Page({
     var goods_status = e.currentTarget.dataset.goodsStatus
     var goods_sku_key = e.currentTarget.dataset.goodsSkukey
     that.setData({
-      modalHidden: !that.data.modalHidden,
+      modalGoodsHidden: !that.data.modalGoodsHidden,
       goods_sku_id: goods_sku_id,
       goods_id: goods_id,
       goods_name:goods_name,
@@ -82,17 +83,17 @@ Page({
     })
   },
 
-  modalBindaconfirm: function () {
+  modalBindGoodsconfirm: function () {
     var that = this
     that.setData({
-      modalHidden: !that.data.modalHidden,
+      modalGoodsHidden: !that.data.modalGoodsHidden,
     })
     that.update_goods_info()
   },
   //取消按钮点击事件  
   modalBindcancel: function () {
     this.setData({
-      modalHidden: !this.data.modalHidden
+      modalGoodsHidden: !this.data.modalGoodsHidden
     })
   }, 
   update_goods_info: function () {
@@ -152,7 +153,118 @@ Page({
     })
 
   }, 
-  
+  update_order: function (e) {
+    var that = this
+    var order_id = e.currentTarget.dataset.orderId
+    var goods_name = e.currentTarget.dataset.goodsName
+    var order_price = e.currentTarget.dataset.orderPrice
+    var buy_num = e.currentTarget.dataset.buyNum
+    var order_sku_num = e.currentTarget.dataset.orderSkuNum
+    that.setData({
+      modalOrderHidden: !that.data.modalOrderHidden,
+      order_id: order_id,
+      goods_name: goods_name,
+      order_price: order_price,
+      buy_num: buy_num,
+      order_sku_num: order_sku_num,
+    })
+    console.log('update_order() order_id', order_id, ' order_price:', order_price)
+  },
+  modalBindOrderconfirm: function () {
+    var that = this
+    that.setData({
+      modalOrderHidden: !that.data.modalOrderHidden,
+    })
+    that.update_order_info()
+  },
+  //取消按钮点击事件  
+  modalBindOrdercancel: function () {
+    this.setData({
+      modalOrderHidden: !this.data.modalOrderHidden
+    })
+  }, 
+
+  deliveryCompanyInput: function (e) {
+    var that = this;
+    var delivery_company = e.detail.value
+    console.log("物流公司：" + delivery_company);
+    that.setData({
+      delivery_company: delivery_company
+    })
+  },
+
+
+  deliveryNoInput: function (e) {
+    var that = this;
+    var delivery_no = e.detail.value
+    console.log("物流单：" + delivery_no);
+    that.setData({
+      delivery_no: delivery_no
+    })
+  },
+
+  update_order_info: function () {
+    var that = this
+    var shop_type = that.data.shop_type
+    var order_id = that.data.order_id
+    var delivery_no = that.data.delivery_no
+    var delivery_company = that.data.delivery_company
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var tokenmd5 = md5.md5(username, md5_key)
+    if (!delivery_no || !delivery_company|| !order_id) {
+      wx.showToast({
+        title: '订单信息不全',
+        icon: 'none',
+        duration: 1500
+      })
+      return
+    }
+
+    //提交商品信息更新
+    wx.request({
+      url: weburl + '/api/client/update_manager_order_info',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        access_tokenmd5: tokenmd5,
+        order_id: order_id,
+        delivery_company: delivery_company,
+        delivery_no: delivery_no,
+        type:1,  //1订单发货
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data);
+        var orderObjects = res.data.result;
+        if (res.data.status != 'y') {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '订单发货失败',
+            icon: 'loading',
+            duration: 1500
+          })
+        } else {
+          wx.showToast({
+            title: '订单发货完成',
+            icon: 'success',
+            duration: 1000
+          })
+          that.setData({
+            orders: [],
+            page: 1,
+          }, function () {
+            that.reloadData()
+          })
+        }
+      }
+    })
+
+  }, 
 
   goBack: function () {
     wx.switchTab({
@@ -570,8 +682,8 @@ Page({
             //向后合拼
             goods = that.data.goods.concat(goods);
           }
-          var page_num = that.data.page_num
-          page_num = (all_rows / pagesize + 0.5)
+          var page_num = all_rows
+          //page_num = (all_rows / pagesize + 0.5)
           that.setData({
             goods: goods,
             all_rows: all_rows,

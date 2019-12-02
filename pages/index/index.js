@@ -195,6 +195,7 @@ Page({
           type: '1', //需要后台解密 encryptedData
           shop_type: shop_type,
           encryptedData: encodeURIComponent(e.detail.encryptedData),
+          encryptedData2: e.detail.encryptedData,
           iv: e.detail.iv,
         },
         header: {
