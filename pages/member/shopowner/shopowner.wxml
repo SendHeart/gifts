@@ -133,15 +133,15 @@
   
   <view class="section">  
     <view class="section-title">{{buy_num>0?'数量：'+buy_num:''}}</view>
-    <view class="section-title">{{order_sku_num>0?'子订单：'+order_sku_num:''}}</view>    
+    <view wx:if="{{order_sku_num>1}}" class="section-title">{{order_sku_num>0?'子订单：'+order_sku_num:''}}</view>    
   </view>
   <view class="section">  
     <view class="section-title-delivery">物流公司：</view>  
-    <input type="digit" name="delivery_company" value="{{delivery_company}}"  placeholder-style="width:200rpx;"  placeholder="物流公司" confirm-type="done"  bindinput="deliveryCompanyInput" style="border:1prx;width:200rpx;" />
+    <input type="text" name="delivery_company" value="{{delivery_company}}"  placeholder-style="width:200rpx;"  placeholder="物流公司" confirm-type="done"  bindinput="deliveryCompanyInput" style="border:1prx;width:200rpx;" />
   </view>
   <view class="section">  
     <view class="section-title-delivery">物流单：</view>  
-    <input type="digit" name="delivery_no" value="{{delivery_no}}" placeholder-style="width:200rpx;" placeholder="物流单号" confirm-type="done"  bindinput="deliveryNoInput" style="border:1prx;width:300rpx" />
+    <input type="text" name="delivery_no" value="{{delivery_no}}" placeholder-style="width:200rpx;" placeholder="物流单号" confirm-type="done"  bindinput="deliveryNoInput" style="border:1prx;width:300rpx" />
     </view>  
     <action-sheet-cancel>确定
       <view style='height:0rpx;'></view>
