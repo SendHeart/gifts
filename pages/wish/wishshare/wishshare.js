@@ -250,6 +250,7 @@ Page({
     var that = this
     var goods_id = that.data.share_goods_id
     var urls = uploadurl
+    var upload_type = 'xcx_wishshare_record'
     wx.uploadFile({
       url: uploadurl,
       filePath: voice,
@@ -257,7 +258,7 @@ Page({
       formData: {
         latitude: encodeURI(0.0),
         longitude: encodeURI(0.0),
-        restaurant_id: encodeURI(0),
+        type: encodeURI(upload_type),
         city: encodeURI('杭州'),
         prov: encodeURI('浙江'),
         name: encodeURI(goods_id), // 名称

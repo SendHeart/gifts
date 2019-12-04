@@ -164,7 +164,7 @@ Page({
     var mobile = that.data.mobile
     var latitude = that.data.latitude
     var longitude = that.data.longitude
-
+    var upload_type = 'xcx_address_add'
     //保存地址到服务器
     
     for (var i = 0; i < new_img_addr.length; i++) {
@@ -177,7 +177,7 @@ Page({
         formData: {
           latitude: encodeURI(0.0),
           longitude: encodeURI(0.0),
-          restaurant_id: encodeURI(0),
+          type: encodeURI(upload_type),
           city: encodeURI('杭州'),
           prov: encodeURI('浙江'),
           name: encodeURI(goods_id), // 名称

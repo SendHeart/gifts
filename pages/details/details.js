@@ -259,6 +259,7 @@ Page({
     var new_img_arr = that.data.new_img_arr[0] //本次上传图片的手机端文件地址
     var image_pic = that.data.image_pic
     var is_logo = that.data.is_logo
+    var upload_type = 'xcx_goods_detail'
     if (new_img_arr) {
       wx.uploadFile({
         url: uploadurl,
@@ -267,7 +268,7 @@ Page({
         formData: {
           latitude: encodeURI(0.0),
           longitude: encodeURI(0.0),
-          restaurant_id: encodeURI(0),
+          type: encodeURI(upload_type),
           city: encodeURI('杭州'),
           prov: encodeURI('浙江'),
           name: encodeURI(goods_id), // 名称
@@ -1337,7 +1338,7 @@ Page({
     var that = this
     var goods_id = that.data.goods_id
     var urls = uploadurl
-   
+    var upload_type = 'xcx_goods_record'   
     wx.uploadFile({
       url: uploadurl,
       filePath: voice,
@@ -1345,7 +1346,7 @@ Page({
       formData: {
         latitude: encodeURI(0.0),
         longitude: encodeURI(0.0),
-        restaurant_id: encodeURI(0),
+        type: encodeURI(upload_type),
         city: encodeURI('杭州'),
         prov: encodeURI('浙江'),
         name: encodeURI(goods_id), // 名称

@@ -258,6 +258,7 @@ Page({
     var goods_id = that.data.goods_id;
     var new_img_addr = that.data.new_img_arr //本次上传图片的手机端文件地址
     var new_img_url = [] //本次上传图片的服务端url
+    var upload_type = 'xcx_goods_comment'
     for (var i = 0; i < new_img_addr.length; i++) {
       var count = new_img_addr.length 
       wx.uploadFile({
@@ -268,7 +269,7 @@ Page({
         formData: {
           latitude: encodeURI(0.0),
           longitude: encodeURI(0.0),
-          restaurant_id: encodeURI(0),
+          type: encodeURI(upload_type),
           city: encodeURI('杭州'),
           prov: encodeURI('浙江'),
           name: encodeURI(goods_id), // 名称
