@@ -303,6 +303,7 @@ Page({
         that.setData({
           token: res.data.result['token'],
         })
+        var userauth = JSON.parse(res.data.result['userauth'])
         wx.setStorageSync('token', res.data.result['token'])
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
         wx.setStorageSync('username', res.data.result['username'])
@@ -311,6 +312,7 @@ Page({
         wx.setStorageSync('user_name', res.data.result['user_name'])
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
+        wx.setStorageSync('userauth', userauth)
       },
     })
   },

@@ -10,6 +10,7 @@ var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
 var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+var userauth = wx.getStorageSync('userauth') ? wx.getStorageSync('userauth') : '';
 var navList2 = wx .getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 Page({
   data:{
@@ -18,6 +19,7 @@ Page({
     share_art_image: weburl+'/uploads/share_art_image.jpg',
     nickname: userInfo.nickName ? userInfo.nickName:'登录',
     avatarUrl: userInfo.avatarUrl,
+    userauth: userauth,
     default_avatar: weburl + '/uploads/avatar.png',
     hideviewagreementinfo: true,
     agreementinfoshowflag: 0,
@@ -911,6 +913,7 @@ Page({
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
     var userInfo = wx.getStorageSync('userInfo')  
+    var userauth = wx.getStorageSync('userauth')  
     that.get_project_gift_para()
     that.setData({
       art_id: art_id,
@@ -920,8 +923,9 @@ Page({
       nickname: userInfo.nickName ? userInfo.nickName : '登录',
       avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl:'', 
       frompage: frompage,
+      userauth: userauth,
     })
-    console.log("my index onload options:", options, 'scene:', scene, ' userInfo:', JSON.stringify(userInfo))
+    console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
