@@ -173,59 +173,6 @@
     </view>
   </modal>
    -->
-
-    <view class="main_message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
-      <view class="t_w">
-        <!--右上角图标开始-->
-        <view class="t_image" bindtap="messageCandel">
-          <image class="t_image1" src="/images/icon-no.png"></image>
-        </view>
-
-        <!--右上角图标结束-->
-
-        <!--弹出框开始-->
-        <!-- 红包 -->
-        <!-- 
-      <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
-          <view class="bg_view">{{resp_message.title}}</view>  
-          <text class="red-name">{{resp_message.message}}</text>
-          <text class="red-value">{{resp_message.amount_type==1?'现金￥'+resp_message.amount+'元':'积分:'+resp_message.amount}}</text>
-          <text class="red-content">{{resp_message.content}}</text>
-          <text class="red-footer">{{resp_message.footer}}</text>
-          <text class="red-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
-          -->
-        <!-- 
-          <view class="txtys">{{resp_message.message}}</view>
-          -->
-        <!--确定开始-->
-        <!-- 
-          <view class="txtsure">
-            <view class="txtsurebg" bindtap="messageCandel">
-              <text class="txtsurename">确定</text>
-            </view>        
-          </view>
-          -->
-        <!-- 确定结束-->
-        <!-- 优惠券 -->
-        <!-- 
-      <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
-        <text class="coupon-name">{{resp_message.message}}</text>
-        <text class="coupon-content">{{resp_message.content}}</text>
-        <text class="coupon-footer">{{resp_message.footer}}</text>
-        <text class="coupon-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
-      </view>
-      -->
-        <!-- 消息通知 -->
-        <view wx:if="{{main_prom_image}}" class="main_red" style="width:600rpx;height:683rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;"
-          bindtap="messageConfirm">
-          <!--
-        <text class="" style='margin-top:250rpx;font-size:40rpx;color:#fff;'>{{main_prom_note?'':''}}</text>
-      -->
-        </view>
-      </view>
-
-      <!--弹出框结束-->
-    </view>
     <view class="recomment-title" bindtap='bindPickGoods'>
       <text>精选清单<text class='title_ex'>达人推荐</text></text>
       <text class='more'>更多...</text>
@@ -368,5 +315,56 @@
  -->
 
 </view>
+<view class="main-message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
+      <view class="t_w">
+        <!--右上角图标开始-->
+        <view class="t_image" bindtap="messageCandel">
+          <image class="t_image1" src="/images/icon-no.png"></image>
+        </view>
 
+        <!--右上角图标结束-->
+
+        <!--弹出框开始-->
+        <!-- 红包 -->
+        <!-- 
+      <view wx:if="{{resp_message.message_type==1||resp_message.message_type==2}}" class="red-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+          <view class="bg_view">{{resp_message.title}}</view>  
+          <text class="red-name">{{resp_message.message}}</text>
+          <text class="red-value">{{resp_message.amount_type==1?'现金￥'+resp_message.amount+'元':'积分:'+resp_message.amount}}</text>
+          <text class="red-content">{{resp_message.content}}</text>
+          <text class="red-footer">{{resp_message.footer}}</text>
+          <text class="red-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
+          -->
+        <!-- 
+          <view class="txtys">{{resp_message.message}}</view>
+          -->
+        <!--确定开始-->
+        <!-- 
+          <view class="txtsure">
+            <view class="txtsurebg" bindtap="messageCandel">
+              <text class="txtsurename">确定</text>
+            </view>        
+          </view>
+          -->
+        <!-- 确定结束-->
+        <!-- 优惠券 -->
+        <!-- 
+      <view wx:if="{{resp_message.message_type==3}}" class="coupon-item" style="background-image:url('{{resp_message.image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
+        <text class="coupon-name">{{resp_message.message}}</text>
+        <text class="coupon-content">{{resp_message.content}}</text>
+        <text class="coupon-footer">{{resp_message.footer}}</text>
+        <text class="coupon-dueday">{{resp_message.start_time?'(有效期:'+resp_message.start_time+'至':''}}{{resp_message.end_time?resp_message.end_time+')':''}}</text>
+      </view>
+      -->
+        <!-- 消息通知 -->
+        <view wx:if="{{main_prom_image}}" class="main-red" style="width:600rpx;height:683rpx;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%; text-align: center;align-items: center;padding:20rpx;z-index:9999;"
+          bindtap="messageConfirm">
+          <!--
+        <text class="" style='margin-top:250rpx;font-size:40rpx;color:#fff;'>{{main_prom_note?'':''}}</text>
+      -->
+        </view>
+      </view>
+
+      <!--弹出框结束-->
+  </view>
 <add-tips />

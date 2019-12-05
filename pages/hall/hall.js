@@ -381,6 +381,10 @@ Page({
         var messageHidden = that.data.messageHidden
         console.log('收到服务器内容：' + res.data.trim())
         if (response.status=='y'){
+          wx.pageScrollTo({
+            scrollTop: 90,
+            duration: 300,
+          })
           var resp_message = response.result
           var messages_num = that.data.messages_num
           resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
