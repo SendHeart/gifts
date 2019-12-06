@@ -160,6 +160,7 @@ Page({
     var order_price = e.currentTarget.dataset.orderPrice
     var buy_num = e.currentTarget.dataset.buyNum
     var order_sku_num = e.currentTarget.dataset.orderSkuNum
+  
     that.setData({
       modalOrderHidden: !that.data.modalOrderHidden,
       order_id: order_id,
@@ -168,6 +169,7 @@ Page({
       buy_num: buy_num,
       order_sku_num: order_sku_num,
     })
+    that.query_order_info()
     console.log('update_order() order_id', order_id, ' order_price:', order_price)
   },
   modalBindOrderconfirm: function () {
@@ -410,7 +412,6 @@ Page({
         }
       }
     })
-
   },
   detailTapTag: function (e) {
     var that = this;
@@ -697,6 +698,107 @@ Page({
           }, 1500)
         }
       })
+    }
+  },
+  query_order_info: function () {
+    var that = this;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '0';
+    var shop_type = that.data.shop_type
+    //var order_no = that.data.order_no
+    var order_id = that.data.order_id
+    //从服务器获取订单列表
+    console.log('orderdetail query_order_info() 从服务器获取订单 order_id: ', order_id)
+    if (order_id) {
+      wx.request({
+        url: weburl + '/api/client/query_order',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          shop_type: shop_type,
+          order_id: order_id,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('orderdetail query order:', res.data.result);
+          var orderObjects = res.data.result;
+          var all_rows = res.data.all_rows;
+          if (!res.data.result) {
+            wx.showToast({
+              title: '没有该订单',
+              icon: 'none',
+              duration: 1500
+            });
+          } else {
+            // 存储地址字段
+            for (var i = 0; i < orderObjects.length; i++) {
+              if (orderObjects[i]['logo'].indexOf("http") < 0) {
+                orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
+              }
+              for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
+                if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+                  orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
+                }
+
+                if (orderObjects[i]['order_sku'][j]['sku_value']) {
+                  for (var k = 0; k < orderObjects[i]['order_sku'][j]['sku_value'].length; k++) {
+                    //orderObjects[i]['order_sku'][j]['sku_value'][k]['value'] = weburl + orderObjects[i]['order_sku'][j]['sku_value'][k]['value']
+                  }
+                }
+              }
+            }
+            console.log('orderdetail reloadData() orderObjects:', orderObjects)
+            var status = orderObjects[0]['status']
+            var gift_status = orderObjects[0]['gift_status']
+            var order_id = orderObjects[0]['id']
+            var order_no = orderObjects[0]['order_no']
+            var sendtime = orderObjects[0]['paytime']
+            var rcvtime = orderObjects[0]['rcvtime']
+            var orderprice = orderObjects[0]['order_price']
+            var orderaddress = orderObjects[0]['address']
+            var fullname = orderObjects[0]['full_name']
+            var from_nickname = orderObjects[0]['from_nickname']
+            var from_headimg = orderObjects[0]['from_headimg']
+            var tel = orderObjects[0]['tel']
+            var deliverycode = orderObjects[0]['deliverycode']
+            var deliveryname = orderObjects[0]['deliveryname']
+            var deliverystepinfo = orderObjects[0]['deliverystepinfo']
+            var order_status = orderObjects[0]['status']
+            var buy_num = orderObjects[0]['buy_num']
+            var sku_num = orderObjects[0]['order_sku'][0]['sku_num']
+            var giftflag = orderObjects[0]['m_id'] == m_id ? 0 : 1
+            var send_rcv = giftflag == 0 ? 'send' : 'receive'
+            var order_shape = orderObjects[0]['shape'] ? orderObjects[0]['shape'] : 1
+            that.setData({
+              send_rcv: send_rcv,
+              order_status: status,
+              sendtime: sendtime,
+              rcvtime: rcvtime,
+              orderaddress: orderaddress,
+              tel: tel,
+              order_shape: order_shape,
+              fullname: fullname,
+              from_nickname: from_nickname,
+              from_headimg: from_headimg,
+              delivery_no: deliverycode ? deliverycode : '',
+              delivery_company: deliveryname ? deliveryname : '',
+              deliverystepinfo: deliverystepinfo ? deliverystepinfo : ''
+            })
+          }
+        }
+      })
+    } else {
+      wx.showToast({
+        title: '订单不存在',
+        icon: 'none',
+        duration: 1500
+      })
+     
     }
   },
   buyin: function (e) {
