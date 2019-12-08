@@ -312,7 +312,7 @@ Page({
     var order_id = that.data.order_id
     //从服务器获取订单列表
     console.log('orderdetail reloadData() 从服务器获取订单 order_no: ', order_no)
-    if (order_no){
+    if (order_no||order_id){
       wx.request({
         url: weburl + '/api/client/query_order',
         method: 'POST',

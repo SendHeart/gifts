@@ -417,10 +417,11 @@ Page({
     var that = this;
     var order_object = e.currentTarget.dataset.orderObject;
     var order_id = order_object['id'];
+    var order_no = order_object['order_no'];
     var tab2 = that.data.tab2
-    console.log('订单ID:' + order_id)
+    console.log('订单ID:' + order_id, ' tab2:', tab2,' order object:', order_object)
     wx.navigateTo({
-      url: '/pages/order/orderdetail/orderdetail?order_id=' + order_id + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2
+      url: '/pages/order/orderdetail/orderdetail?order_id=' + order_id + '&order_no=' + order_no //  + '&order_object=' + JSON.stringify(order_object) + '&giftflag=' + that.data.giftflag + '&send_rcv=' + tab2
     });
   },
 
