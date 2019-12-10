@@ -307,7 +307,7 @@ swiper-item image {
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
+  white-space: wrap;
   padding:0 10rpx;
 }
 
