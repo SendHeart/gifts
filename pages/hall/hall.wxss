@@ -483,6 +483,63 @@ modal {
 }
 
 
+.top-bar-list {  
+  display: flex;
+  direction: row;
+  align-items: left;
+  text-align: left;
+} 
+
+.top-bar {
+  white-space: nowrap;
+  text-align: left;
+  width: 100%;
+  height: 150rpx;
+  overflow-y: hidden;
+  background: #1D1D1D; 
+  z-index:999;
+  padding: 15rpx;
+  margin-right:50rpx;
+}
+
+.top-bar-item {
+  display:inline-block;
+  color: #fff;
+  text-align: center;
+  font-size: 28rpx;
+  z-index:999;
+  padding: 0 20rpx;
+  margin: 0 10rpx;
+}
+
+.top-bar-active {
+  color: #fff;
+  background: #E52445;
+}
+
+.friend-image {
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: 120rpx;
+  margin: 20rpx 0;
+  border-radius: 14rpx;
+  overflow: hidden;
+}
+.friend-image text {
+  font-size: 22rpx;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+}
+.friend-image-headimg {
+  width: 85rpx;
+  height: 85rpx;
+  border-radius: 50%;
+}
 
 /*底部按钮*/
 
@@ -1219,3 +1276,54 @@ modal {
   margin-bottom:50rpx;
   z-index: 1000;
 }
+
+/* 提示窗口 */
+	.uni-tip {
+		padding: 15px;
+		width: 100%;
+		background: #fff;
+		box-sizing: border-box;
+		border-radius: 10px;
+		margin-bottom: 0rpx;
+	}
+
+	.uni-tip-title {
+		text-align: center;
+		font-weight: bold;
+		font-size: 16px;
+		color: #333;
+	}
+
+	.uni-tip-content {
+		padding: 15px;
+		font-size: 14px;
+		color: #666;
+	}
+
+	.uni-tip-group-button {
+		margin-top: 10px;
+		display: flex;
+	}
+
+	.uni-tip-button {
+		width: 100%;
+		text-align: center;
+		font-size: 14px;
+		color: #3b4144;
+	}
+	.placeholder {
+		opacity: 1;
+		transition: opacity 0.4s linear;
+	}
+	
+	.placeholder.loaded {
+		opacity: 0;
+	}
+	
+	.uni-media-list-logo {
+		position: relative;
+	}
+	
+	.uni-media-list-logo .image {
+		position: absolute;
+	}

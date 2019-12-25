@@ -61,7 +61,6 @@ Page({
     note:'',
     username: null,
     token: null,
-    carts: [],
     recommentslist: [], 
     recommentslist_show: [],
     show_max:20,
@@ -78,6 +77,13 @@ Page({
     windowHeight: 0,
     carts: [],
     cartIds: null,
+    friends: [],
+    modalFriendinfoHidden: true,
+    friend_wx_nickname: '',
+    friend_full_name: '',
+    friend_address: '',
+    friend_tel: '',
+    modalFriendHidden:true ,
     amount:0,
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
@@ -90,6 +96,8 @@ Page({
     buyhidden1: false,
     buyhidden2: true,
     page:1,
+    friends_page: 1,
+    friends_pagesize: 10,
     rpage_num:1,
     is_reloading:false,
     toView: 0,
@@ -722,6 +730,11 @@ Page({
       that.setData({
         is_buymyself: 1,
       })
+    } else if (form_name == 'pickgift') {
+      wx.navigateTo({
+        url: '/pages/list/list?username=' + username + '&token=' + token
+      });
+      return 
     }
     that.bindCheckout()
     that.submintFromId(formId, form_name)
@@ -754,6 +767,91 @@ Page({
     })
   },
 
+  query_friends: function () {
+    var that = this;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var shop_type = that.data.shop_type;
+    var weburl = getApp().globalData.weburl;
+    var friends_page = that.friends_page
+    var friends_pagesize = that.friends_pagesize
+    if (!username) {
+      return;
+    }
+    wx.request({
+      url: weburl + '/api/client/get_member_friends',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        type: 3,  // 3送心礼物好友
+        shop_type: shop_type,
+        page: friends_page,
+        pagesize: friends_pagesize,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        //console.log('3送心礼物好友 hall query_friends:', res.data);
+        if (!res.data.result) {
+          return;
+        }
+
+        var friends_list = res.data.result;
+        var index = 0;
+
+        if (friends_list) {
+          for (var i = 0; i < friends_list.length; i++) {
+            if (friends_list[i]['wx_headimg'].indexOf("http") < 0) {
+              friends_list[i]['wx_headimg'] = weburl + '/' + friends_list[i]['wx_headimg'];
+            }
+          }
+        }
+    
+        that.setData({
+          friends: friends_list,
+        })
+        console.log('3送心礼物好友 hall query_friends friends:', that.data.friends);
+      }
+    })
+  },
+  bindFriendinfo: function (e) {
+    var that = this
+    var index = e.currentTarget.dataset.index
+    var friends = that.data.friends
+    var friend_wx_nickname = friends[index].wx_nickname 
+    var friend_full_name = friends[index].full_name
+    var friend_address = friends[index].address
+    var friend_tel = friends[index].tel
+    var modalFriendHidden = that.data.modalFriendHidden
+   
+    that.setData({
+      friend_wx_nickname: friend_wx_nickname,
+      friend_full_name: friend_full_name,
+      friend_address: friend_address,
+      friend_tel: friend_tel,
+      modalFriendHidden: !modalFriendHidden,
+    })
+    console.log('bindFriendinfo() friend_full_name', friend_full_name, ' friend_address:', friend_address)
+  },
+  modalBindFriendconfirm: function () {
+    var that = this
+    var modalFriendHidden = !that.data.modalFriendHidden
+    that.setData({
+      modalFriendHidden: modalFriendHidden,
+    })
+  },
+  //定位数据
+  getleft: function (e) {
+    var that = this;
+    var scrollLeft = that.data.scrollLeft
+    that.setData({
+      scrollLeft: scrollLeft + 10,
+    })
+  },
   delete: function (e) {
     var that = this
     var shop_type = that.data.shop_type
@@ -1431,6 +1529,7 @@ Page({
     var pages = getCurrentPages()
     that.query_cart()
     that.get_project_gift_para()
+    that.query_friends()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../images/back.png'

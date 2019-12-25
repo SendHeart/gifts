@@ -154,13 +154,19 @@
           打包送出</button>
         <!--  bindtap="bindCheckout" -->
       </form>
-      <form bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='buymyself' data-type="1" report-submit="true">
+      <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='buymyself' data-type="1" report-submit="true">
         <view class='buttonwrap'>
           <button class="send-button" formType="submit">
             <image src="../../images/buynow.png"></image>
             立即自购</button>
         </view>
-        <!--  bindtap="bindCheckout" -->
+      </form>
+       <form wx:if="{{!carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='pickgift' data-type="2" report-submit="true">
+        <view class='buttonwrap'>
+          <button class="send-button" formType="submit">
+            <image src="../../images/btn_add.png"></image>
+            添加礼物</button>
+        </view>
       </form>
     </view>
 
@@ -173,12 +179,27 @@
     </view>
   </modal>
    -->
+   	<view wx:if="{{friends[0]}}" class="recomment-title" bindtap="bindPickFriends">
+			<text>我的好友<text class="title_ex"></text></text>
+			<text class="more">更多...</text>
+		</view>
+		<view wx:if="{{friends[0]}}" class="top-bar-list">
+			<scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toView}}" class="top-bar">
+				<block wx:for="{{friends}}" wx:key="{{index}}">
+					<view id="v_{{index}}"  class="top-bar-item">
+						<view class="friend-image" data-index="{{index}}" bindtap="bindFriendinfo">
+							<image class="friend-image-headimg" src="{{item.wx_headimg}}" mode="aspectFill"></image>
+						  <text>{{item.wx_nickname}}</text>
+						</view>
+					</view>
+				</block>
+			</scroll-view>
+		</view>
     <view class="recomment-title" bindtap='bindPickGoods'>
       <text>精选清单<text class='title_ex'>达人推荐</text></text>
       <text class='more'>更多...</text>
     </view>
     <view class="middle-goods">
-
       <view wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>
         <view>
           <image class="middle-goods-image" src="{{middle1_img}}"></image>
@@ -315,6 +336,27 @@
  -->
 
 </view>
+<action-sheet hidden="{{modalFriendHidden}}" bindchange="modalBindFriendconfirm">
+  <view class="uni-tip" style="z-index:9999;">
+		<view class="uni-tip-title">
+			{{friend_wx_nickname}}
+		</view>
+		<view class="uni-tip-content">
+			<view class="section">  
+				<view class="">{{friend_full_name?'姓名:'+friend_full_name:''}}</view>  
+			</view>
+			<view class="section">
+				<view class="">{{friend_tel?'联系方式:'+friend_tel:''}}</view>  
+			</view>
+			<view class="section">  
+				<view class="">{{friend_address?'地址：'+friend_address:''}}</view>  
+			</view>
+		</view>
+	</view>
+  <action-sheet-cancel>返回
+    <view style='height:0rpx;'></view>
+  </action-sheet-cancel>
+</action-sheet>
 <view class="main-message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
       <view class="t_w">
         <!--右上角图标开始-->
