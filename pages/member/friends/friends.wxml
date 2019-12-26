@@ -1,0 +1,28 @@
+ <view class="top-title">
+  <view class="top-title-item">最近新增</view>
+</view>
+<view wx:if="{{friends_latest[0]}}" class="top-bar-list">
+	<scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toViewX}}" class="top-bar">
+		<block wx:for="{{friends_latest}}" wx:key="id">
+			<view id="v_{{index}}"  class="top-bar-item">
+				<view class="friend-image" data-friendinfo="{{index}}" bindtap="friendinfo">
+					<image class="friend-image-headimg" src="{{item.wx_headimg}}" mode="aspectFill"></image>
+				  <text>{{item.wx_nickname}}</text>
+				</view>
+			</view>
+		</block>
+	</scroll-view>
+</view>
+<scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toViewY}}" scroll-top="{{scrollTop}}" >
+  <view wx:for="{{friends_show}}" wx:key="id" wx:for-item="friends_show" wx:for-index="friendsIndex">
+    <view wx:for="{{friends_show}}" wx:for-item="mapping" wx:key="id" class="friend-list" >
+      <view class="friend-list-image">
+        <image src="{{mapping.wx_headimg}}" mode="aspectFill"/>
+      </view>
+      <view class="friend-list-text">{{mapping.full_name?mapping.full_name:mapping.wx_nickname}}</view>
+      <view class="friend-list-right-image" bindtap="friendinfo"  data-friendinfo="{{index}}">
+        <image src="/images/right-arrow.png" mode="aspectFill"/>
+      </view>
+    </view>
+  </view>
+</scroll-view>

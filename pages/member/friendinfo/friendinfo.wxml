@@ -1,0 +1,38 @@
+<import src="../../../wxParse/wxParse.wxml" />
+<view class="userinfo"> 
+	<image class="userinfo-avatar" src="{{friendinfo.wx_headimg?friendinfo.wx_headimg:default_avatar}}" background-size="cover"></image>
+	<text wx:if="{{friendinfo.wx_nickname}}" class="userinfo-nickname">{{friendinfo.wx_nickname}}</text>
+  <button  class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">发起送礼</button>
+</view>
+
+<view class="menu-area">
+  <view wx:if="friendinfo.full_name" bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <text style="color:#808080;">姓名</text>
+    <text>{{friendinfo.full_name}}</text>
+  </view>
+  <view wx:if="friendinfo.tel" bindtap="navigateToAgreement" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <text style="color:#808080;">电话</text>
+	  <text style="color:#e52445;">{{friendinfo.tel}}</text>
+  </view>
+  <view wx:if="friendinfo.address" bindtap="showsendheartapp" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <text style="color:#808080;">地址</text>
+	  <text>{{friendinfo.address}}</text>
+  </view>
+  <view bindtap="showsendheartapp" class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px'>
+	  <text style="color:#fff;">记录</text>
+	  <image src="/images/icon_add_bg_red.png" />
+  </view>
+</view> 
+ <scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toViewY}}" scroll-top="{{scrollTop}}" >
+  <view wx:for="{{friends_show}}" wx:key="id" wx:for-item="friends_show" wx:for-index="friendsIndex">
+    <view wx:for="{{friends_show}}" wx:for-item="mapping" wx:key="id" class="friend-list" >
+      <view class="friend-list-image">
+        <image src="{{mapping.wx_headimg}}" mode="aspectFill"/>
+      </view>
+      <view class="friend-chat-info">
+        <view class="friend-chat-info-text"></view>
+      </view>
+    </view>
+  </view>
+</scroll-view>
+ 

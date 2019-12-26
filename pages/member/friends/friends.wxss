@@ -1,0 +1,162 @@
+@import "../../../lib/style/font.wxss";
+
+page {
+  background: #1d1d1d;
+  height: 100%;
+}
+
+.Hui-iconfont {
+  font-family: "Hui-iconfont";
+  font-size: 30rpx;
+}
+
+.iconv-uparrow:after {
+  content: '\e6d6';
+}
+
+.iconv-downarrow:after {
+  content: '\e6d5';
+}
+
+.startBar {
+  height: 75rpx;
+  background: #444;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 5rpx;
+  z-index: 99;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: scroll;
+  overflow-x: hidden;
+  margin: 0 auto;
+  box-sizing: border-box;
+  z-index: 0;
+}
+
+.top-title {
+  height: 70rpx;
+  background: #1d1d1d; 
+  width:100%;
+  position: relative;
+  margin-top: 0rpx;
+  border-top: 0px solid #F2f2f2;
+  border-bottom: 0px solid #F2f2f2;
+  z-index:99;
+}
+.top-title-item {
+  display:inline-block;
+  width: 200rpx;
+  color: #999;
+  text-align: center;
+  line-height: 70rpx;
+  font-size: 28rpx;
+}
+
+.top-bar-list {  
+  display: flex;
+  direction: row;
+  align-items: left;
+  text-align: left;
+} 
+
+.top-bar {
+  white-space: nowrap;
+  text-align: left;
+  width: 100%;
+  height: 150rpx;
+  overflow-y: hidden;
+  background: #1D1D1D; 
+  z-index:999;
+  padding: 15rpx;
+  margin-right:0rpx;
+}
+
+.top-bar-item {
+  display:inline-block;
+  color: #fff;
+  text-align: center;
+  font-size: 28rpx;
+  z-index:999;
+  padding: 0 20rpx;
+  margin: 0 10rpx;
+}
+
+.top-bar-active {
+  color: #fff;
+  background: #E52445;
+}
+
+.friend-image {
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align: center;
+  align-items: center;
+  width: 100%;
+  height: 120rpx;
+  margin: 20rpx 0;
+  border-radius: 14rpx;
+  overflow: hidden;
+}
+
+.friend-image text {
+  font-size: 22rpx;
+  color: #eee;
+  padding: 0;
+  margin: 0;
+}
+
+.friend-image-headimg {
+  width: 85rpx;
+  height: 85rpx;
+  border-radius: 50%;
+}
+
+.friend-list {
+  display: flex;
+	flex-direction: row;
+  justify-content:space-around;
+	height:100rpx;
+  line-height: 100rpx;
+	border-top: 1px solid #F2f2f2; 
+  padding: 10rpx;
+}
+/*左部图片*/
+.friend-list-image {
+  display: flex;
+  flex-direction:column;
+  justify-content:center;
+  text-align: center;
+  align-items: center;
+  margin:0 auto;
+  height:100rpx;
+  width: 15%;
+}
+
+.friend-list-image image{
+  width:60rpx;
+  height:60rpx;
+  border-radius:50%;
+}
+.friend-list-right-image{
+  width: 5%;
+}
+
+.friend-list-right-image image{
+  width:20rpx;
+  height:20rpx;
+}
+.friend-list-text{
+  font-size:28rpx;
+  display:-webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+  color: #fff;
+  width: 75%;
+}
+

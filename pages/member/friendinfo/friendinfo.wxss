@@ -1,0 +1,190 @@
+page {
+	background: #1d1d1d;
+  width: 100%;
+  height: 100%;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.Hui-iconfont {
+ font-family: "Hui-iconfont";
+ font-size:30rpx;
+}
+.iconv-uparrow:after {
+  content:'\e6d6';
+}
+
+.iconv-downarrow:after {
+  content:'\e6d5';
+}
+
+.startBar {
+  height: 75rpx;
+  background: #333;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 5rpx;
+  border-bottom: 0px solid #f2f2f2;
+  z-index: 99;
+}
+.top-title {
+  height: 75rpx;
+  background: #333;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  padding: 5rpx;
+  border-bottom: 0px solid #f2f2f2;
+  z-index: 99;
+}
+.top-title-item {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  line-height: 75rpx;
+  font-size: 48rpx;
+  padding: 10rpx;
+}
+.top-title-item .title-image {
+  width: 70rpx;
+  height: 70rpx;
+  margin-right: 1rpx;
+  margin-top: 0rpx;
+  margin-left: 20rpx;
+}
+.banner {
+	width: 100%;
+  height: 100rpx;
+	/*margin-left: 15rpx;*/
+  background-color:white;
+  background-repeat:repeat;
+  padding-top: 35rpx;
+  opacity:1;
+  /*
+  position: fixed;
+  top:0;
+  z-index:99;
+  */
+  
+}
+
+.banner image {
+	width: 100%;
+	height: 200rpx;
+}
+
+.banner .slogan{  
+  border: solid 0px black;  
+  display: flex;  
+  flex-direction: row;  
+  justify-content: center;  
+  margin:5px;
+}  
+/*user info*/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items:center;
+  height: 280rpx;
+  background: #1d1d1d;
+}
+
+.userinfo-avatar {
+  width: 120rpx;
+  height: 120rpx;
+  margin-top: 40rpx;
+  border-radius: 50%;
+}
+
+.userinfo-nickname {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.menu-area {
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: space-between;
+  background: #1d1d1d;
+  padding:0 20rpx;
+  margin-bottom: 15rpx;
+  margin-top: 15rpx;
+}
+
+.tableviewcell {
+	width:100%;
+  height: 100%;
+  padding: 20rpx;
+	color: #fff;
+	display: flex;
+  flex-direction: column;
+	align-items: left;
+}
+.linegray {
+	border-bottom: 1rpx solid #666;
+}
+/*icon*/
+.tableviewcell image {
+	width: 48rpx;
+	height: 48rpx;
+}
+
+/*text*/
+.tableviewcell text {
+	font-size: 28rpx;
+	margin-left: 20rpx;
+}
+.inlinetips {
+  color: #999;
+  font-size: 28rpx;
+}
+.tableviewcell2 {
+	width:100%;
+  height: 100%;
+  padding: 20rpx;
+	color: #fff;
+	display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+	align-items: center;
+}
+.tableviewcell2 image {
+	width: 48rpx;
+	height: 48rpx;
+  margin-right:20rpx;
+}
+/*text*/
+.tableviewcell2 text {
+	font-size: 28rpx;
+	margin-left: 20rpx;
+}
+.friend-chat-info {
+  margin-left: 10rpx;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+}
+.friend-chat-info-text {
+  color: #444;
+  font-size: 26rpx;
+  font-weight: bold;
+  text-overflow: -o-ellipsis-lastline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  padding:10rpx auto;
+  padding-left: 10rpx;
+}
+
