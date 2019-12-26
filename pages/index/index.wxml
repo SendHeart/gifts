@@ -43,8 +43,8 @@
     <view style="margin-top:-3rpx;border-top:1rpx solid #fff">{{page_num}}</view>
     -->
   </view>
-  <block wx:for="{{orders_show}}"  wx:key="{{order_show.id}}" wx:for-item="orders_show" wx:for-index="ordersIndex">
-    <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders_show}}" wx:key="{{item.id}}" wx:for-index="order_idx">
+  <block wx:for="{{orders_show}}"  wx:key="id" wx:for-item="orders_show" wx:for-index="ordersIndex">
+    <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders_show}}" wx:key="id" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
       <text>{{(item.shape!=5 && item.shape!=4)?'礼物单号:':'订单号:'}}{{item.order_no}}</text>
@@ -60,7 +60,7 @@
       <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 2 && mapping.status==1 && item.shape!=4 && item.shape!=5)?false:true}}" class="status2">未发货</text>
     </view>
 
-    <view wx:for="{{item['order_sku']}}" wx:key="{{mapping.id}}" wx:for-item="mapping" wx:for-index="sku_idx" class="carts-item" >
+    <view wx:for="{{item['order_sku']}}" wx:key="id" wx:for-item="mapping" wx:for-index="sku_idx" class="carts-item" >
       <view bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}">
         <!-- 缩略图 -->
         <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFit" />
@@ -69,7 +69,7 @@
         <!-- 商品标题 -->
         <text class="carts-title">{{mapping.goods_name}}</text>
         <view hidden="{{item['card_type']==0?false:true}}" class="carts-sku">
-          <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="{{index}}">
+          <view wx:for="{{mapping['sku_value']}}" wx:for-item="sku_value" wx:key="id">
             <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':(sku_value['value']?sku_value['value']+' ':'')}}
               </text>
           </view>

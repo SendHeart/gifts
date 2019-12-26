@@ -56,6 +56,7 @@ Page({
     goodsid: 0,
     goodsshape:0,
     goodsdiscount: 100,
+    goodstag:0,
     discountinfo: '9折优惠券',
     sku_gov_price: 0,
     sku_earnest_price: 0,

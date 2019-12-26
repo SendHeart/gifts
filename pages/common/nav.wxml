@@ -2,7 +2,7 @@
 <template name="nav">
       <view class="top-bar-list">
         <scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toView}}"  class="top-bar" style=''>
-          <block wx:for="{{navList}}" wx:key="{{item.id}}">
+          <block wx:for="{{navList}}" wx:key="id">
             <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="top-bar-item {{index == activeIndex ? 'top-bar-active' : ''}}" catchtap="onTapTag">{{item.title}}</view>
           </block>
         </scroll-view>

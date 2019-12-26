@@ -482,7 +482,6 @@ modal {
   z-index: 1;
 }
 
-
 .top-bar-list {  
   display: flex;
   direction: row;
@@ -499,7 +498,7 @@ modal {
   background: #1D1D1D; 
   z-index:999;
   padding: 15rpx;
-  margin-right:50rpx;
+  margin-right:0rpx;
 }
 
 .top-bar-item {

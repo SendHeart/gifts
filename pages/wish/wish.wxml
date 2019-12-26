@@ -34,14 +34,14 @@
 <scroll-view scroll-y="true" style="height:{{dkheight}};" bindscrolltoupper="upper" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
 <view class="container">  
     <view class="venues_box">
-            <block wx:for="{{carts}}" wx:key="">
+            <block wx:for="{{carts}}" wx:key="id">
                 <view class="venues_item">
                     <navigator url="/pages/details/details?id={{item.goods_id}}&image={{item.activity_image?item.activity_image:item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}" hover-class='none'>
                         <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"/>
                          </navigator>
                         <text class="goods_name">{{item.name}}</text>
                         <view class="goods_sku">
-        <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">
+        <view wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="id">
            <text><!--{{sku_value?sku_value['name']+':':''}}-->{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
         </view>

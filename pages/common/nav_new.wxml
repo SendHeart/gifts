@@ -2,7 +2,7 @@
 <template name="nav_new">
 <view class='headerbg'>
     <view class="top-bar2" style=''> <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
-      <block wx:for="{{navList_order}}" wx:key="">
+      <block wx:for="{{navList_order}}" wx:key="id">
         <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" class="top-bar-item2 {{index == activeIndex2 ? 'top-bar-active2' : ''}}" catchtap="onOrderTapTag">
         {{item.title}}
         

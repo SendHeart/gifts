@@ -45,6 +45,7 @@ Page({
     notehidden : false,
     dkheight: 250,
     scrollTop: 0,
+    scrollLeft:0,
     current_scrollTop: 0,
     scrollHeight: 500,
     indicatorDots: true,
@@ -103,16 +104,6 @@ Page({
     toView: 0,
   }, 
 
-  /*
-  // 定位数据  
-  getleft: function (e) {
-    var that = this
-    console.log('getleft:', e)
-    that.setData({
-      scrollLeft: that.data.scrollLeft + 10
-    })
-  },
-*/
   handletouchmove: function (event) {
     var that = this
     var currentX = event.touches[0].pageX
@@ -1262,6 +1253,12 @@ Page({
     }
   },
   */
+
+  bindPickFriends: function () {
+    wx.navigateTo({
+      url: '/pages/member/friends/friends'
+    })
+  },
 
   showCart: function () {
     wx.switchTab({

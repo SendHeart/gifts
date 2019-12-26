@@ -35,7 +35,7 @@
     </view>
   </view>
 	<view style="margin-top:180rpx;"  >
-    <view  wx:for="{{orders}}" wx:for-item="mapping" wx:key="{{mapping.id}}" class="order-list" >
+    <view  wx:for="{{orders}}" wx:for-item="mapping" wx:key="id" class="order-list" >
       <view class="order-image">
         <image src="{{mapping.from_headimg}}" mode="aspectFill"/>
       </view>

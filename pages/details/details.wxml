@@ -21,7 +21,7 @@
   <view class="banner">
     <view hidden="{{!modalHidden}}" style="{{card_type==2?'margin-top:90rpx;':''}}">
       <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="height:{{card_image_height}}rpx;">
-        <block wx:for="{{image_video}}" wx:for-item="video" wx:key="">
+        <block wx:for="{{image_video}}" wx:for-item="video" wx:key="id">
           <swiper-item>
             <video id="myVideo" class="slide-image" src="{{video.url}}"  controls poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="" objectFit="contain">
             <!-- 
@@ -51,7 +51,7 @@
             --> 
             <!-- register card  {{template.width?' width:'+(template.width*winWidth)+'px;':''}}-->
             <view wx:if="{{goodsshape==4 && card_type==1}}" class="card-register-view">
-              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='id'>
                 <text hidden="{{template.typeId=='card_register_title'?false:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_title?card_register_title:template.typeText}}
                 </text>
                 <text hidden="{{template.typeId=='card_register_content'?false:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_content?card_register_content:template.typeText}}
@@ -92,7 +92,7 @@
             </view>
             <!-- card name info view -->
             <view wx:if="{{goodsshape==4 && card_type==2}}" class="card-name-view" >
-              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='id'>
                 <text hidden="{{template.typeId=='card_name'?false:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth*100)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_name?card_name_name:template.typeText}}
                 </text>
                 <text hidden="{{template.typeId=='card_title'?false:true}}" style="text-align:right; {{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth*100)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth*100)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_title?card_name_title:template.typeText}}
@@ -119,7 +119,7 @@
             </view>
              <!-- card love info view -->
             <view wx:if="{{goodsshape==4 && card_type==4}}" class="card-love-view" >
-              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='id'>
                 <text hidden="{{template.typeId=='card_love_title'?false:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height*100)/100+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth*100)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_title?card_love_title:template.typeText}}
                 </text>
                 <text hidden="{{template.typeId=='card_love_phone'?false:true}}" style="{{template.y?' top:'+(template.y*card_image_height*100)/100+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth*100)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth*100)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_phone?'电话:'+card_love_phone:template.typeText}}
@@ -140,7 +140,7 @@
               </block>
             </view>
             <view wx:if="{{goodsshape==5}}" style="" class="card-blessing-view" >
-              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+              <block wx:for="{{pic['template_config']}}" wx:for-item="template" wx:key='id'>
                 <text hidden="{{template.typeId=='card_cele_title'?false:true}}" style="text-align:right;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth*100)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_title?card_cele_title:template.typeText}}
                 </text>
                 <text space='ensp' hidden="{{template.typeId=='card_cele_content'?false:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth*100)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_content?card_cele_content:template.typeText}}
@@ -225,7 +225,7 @@
     <text class="comm-name">礼物评论</text>
     <text  bindtap="commTapTag" class="comm-status">查看全部{{all_rows>0?'('+all_rows+')':''}}</text>
   </view>
-  <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="" class="comm-item" >
+  <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="id" class="comm-item" >
     <view  bindtap="commTapTag" class="comm-title">
       <image class="comm-image" src="{{comm.wx_headimg}}" mode="aspectFill" />
       <view>
@@ -253,10 +253,10 @@
       </view>
       <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-70}}px">
         <view style="max-height:{{dkheight-75}}px">
-          <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="" >
+          <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="id" >
             <view class="sku_title">选择{{attrValueObj.name}}</view>
             <view class="attr_value_box">
-              <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key=""  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
+              <view wx:for="{{attrValueObj.type==2?attrValueObj.note:attrValueObj.value}}" wx:for-item="value" wx:for-index="valueIndex" wx:key="id"  class="attr_value {{attrValueObj.attrValueStatus?(value==attrValueObj.selectedValue?'attr_value_active':'attr_value_disabled'):'attr_value_disabled'}}" bindtap="selectAttrValue" data-status="{{attrValueObj.attrValueStatus}}"
             data-value="{{value}}" data-valueindex="{{valueIndex}}" data-key="{{attrValueObj.name}}" data-index="{{attrIndex}}" data-selectedvalue="{{attrValueObj.selectedValue}}" >
                 <image wx:if="{{attrValueObj.type == 2}}" src="{{attrValueObj.value[valueIndex]}}"></image>
                 <text wx:elif="{{attrValueObj.type == 1}}">{{attrValueObj.value[valueIndex]}}</text>
