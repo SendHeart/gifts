@@ -37,6 +37,22 @@ Page({
     currentPages_length:2,
      
   },
+  copyorderinfo: function (e) {
+    var that = this
+    var index = e.currentTarget.dataset.index
+    var orders = that.data.orders
+    var order_info_no = orders[index]['order_no'] ? '订单号:'+orders[index]['order_no']:''
+    var order_info_num = orders[index]['order_sku'] ? ' 数量:' + orders[index]['order_sku'][0]['sku_num'] : ''
+    var order_info_goodsname = orders[index]['order_sku'] ? ' 商品:' + orders[index]['order_sku'][0]['goods_name'] : ''
+    var order_info = order_info_no + order_info_num + order_info_goodsname
+    console.log('copyorderinfo data:', order_info);
+    wx.setClipboardData({
+      data: order_info,
+      success: function () {
+        console.log('copyorderinfo success data:', order_info);
+      }
+    });
+  },
   pageScrollToBottom: function () {
     wx.createSelectorQuery().select('#j_page').boundingClientRect(function (rect) {
       // 使页面滚动到底部

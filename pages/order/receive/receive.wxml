@@ -150,7 +150,7 @@
       <!--<text>{{note_title}}</text> -->
       <text space="ensp">{{note}}</text>
     </view>
-    <view wx:for="{{orderskus}}" wx:key="" class="gifts-item">
+    <view wx:for="{{orderskus}}" wx:key="id" class="gifts-item">
       <view bindtap="showGoods" data-sku-id="{{item.sku_id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.goods_name}}">
         <image class="gifts-image" src="{{item.sku_image}}" mode="aspectFill"> </image>
       </view>

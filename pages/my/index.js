@@ -43,7 +43,8 @@ Page({
     image_save_count:0,
     needPhoneNumber:'微信授权',
     needUserName: '微信授权',
-    inputShowed: false
+    inputShowed: false,
+    sendheartappHidden: false,
   },
   
   goBack: function () {
@@ -1117,6 +1118,25 @@ Page({
     })
   },
 
+  showsendheartapp: function (e) {
+    var that = this
+    var data_info = '送心礼物APP'
+    wx.setClipboardData({
+      data: data_info,
+      success: function () {
+        console.log('copyorderinfo success data:', data_info);
+      }
+    })
+    that.setData({
+      sendheartappHidden: true,
+    })
+  },
+  closesendheartapp: function (e) {
+    var that = this
+    that.setData({
+      sendheartappHidden: false,
+    })
+  },
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

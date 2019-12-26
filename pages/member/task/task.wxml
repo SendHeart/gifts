@@ -30,7 +30,7 @@
     </swiper>
 </view>
 <scroll-view class="container" scroll-y bindscrolltolower="getMoreOrdersTapTag" bindscroll="scrolltoupper">
-  <view wx:for="{{task_list}}" wx:key="{{index}}" wx:for-index="order_idx" class="task-list">
+  <view wx:for="{{task_list}}" wx:key="id" wx:for-index="order_idx" class="task-list">
     <view class="order-item-title">{{item.title}}</view>
     <view class="order-item-message">{{item.message_info.message?'  '+item.message_info.message:''}}</view>
     <view class="sentbtn" >

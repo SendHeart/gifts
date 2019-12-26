@@ -4,7 +4,7 @@
 </view>
  
 <view class="address-list">
-	<view class="item" wx:for="{{addressObjects}}" wx:key="">
+	<view class="item" wx:for="{{addressObjects}}" wx:key="id">
     <view class="select-and-amount">
       <!-- 
       <view bindtap="bindSelectAct" data-activityindex="{{index}}" data-activityid="{{item.id}}" data-activitycity="{{item.city}}" data-activityprov="{{item.prov}}" data-activityarea="{{item.area}}" data-activitytown="{{item.town}}">

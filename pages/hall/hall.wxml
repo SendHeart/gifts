@@ -22,7 +22,7 @@
   <view class="banner">
     <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}"
       easing-function="easeInOutCubic">
-      <block wx:for="{{hall_banner}}" wx:key="" wx:for-item="banner_list">
+      <block wx:for="{{hall_banner}}" wx:key="id" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
             <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}" controls autoplay="" custom-cache="{{false}}" objectFit="contain">
@@ -105,7 +105,7 @@
             </view>
             <view class="carts-subtitle">
               <view class="carts-sku">
-                <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="">{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
+                <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="id">{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
               </view>
               <view class="carts-en-price">￥{{item.sell_price}} x{{item.num}}</view>
@@ -185,7 +185,7 @@
 		</view>
 		<view wx:if="{{friends[0]}}" class="top-bar-list">
 			<scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toView}}" class="top-bar">
-				<block wx:for="{{friends}}" wx:key="{{index}}">
+				<block wx:for="{{friends}}" wx:key="id">
 					<view id="v_{{index}}"  class="top-bar-item">
 						<view class="friend-image" data-index="{{index}}" bindtap="bindFriendinfo">
 							<image class="friend-image-headimg" src="{{item.wx_headimg}}" mode="aspectFill"></image>
@@ -248,8 +248,8 @@
     <!--瀑布流列表-->
     <view id="venues_box" class="venues-box">
       <view class="box-left">
-        <block wx:for="{{recommentslist_show}}" wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
-          <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id">
+        <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex" wx:key="id" >
+          <block wx:for="{{recommentslist_show}}" wx:key="id">
             <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
               data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==0}}">
               <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
@@ -272,8 +272,8 @@
       </view>
 
       <view class="box-right">
-        <block wx:for="{{recommentslist_show}}" wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
-          <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}">
+        <block wx:for="{{recommentslist_show}}" wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
+          <block wx:for="{{recommentslist_show}}" wx:key="id">
             <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
               data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==1}}">
               <!-- image class="mainpic" src="{{item.image}}" binderror="imageError" data-imageindex="{{index}}" -->

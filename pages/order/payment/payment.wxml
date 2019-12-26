@@ -4,7 +4,7 @@
  margin-top:{{navgationHeight+startBarHeight}}px
 -->
 
-<view wx:if="{{is_buymyself==1||received==1}}" class="order-item" style='' wx:for="{{orders}}" wx:key="">
+<view wx:if="{{is_buymyself==1||received==1}}" class="order-item" style='' wx:for="{{orders}}" wx:key="id">
 	<!-- 厂家logo缩略图 -->
  	<!--  <view class="shop-text">
 			<image class="logo-image" src="{{item.logo}}" mode="aspectFill"/>

@@ -35,7 +35,7 @@
             </video>
           </swiper-item>
         </block>
-        <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='{{pic.id}}'>
+        <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='id'>
           <swiper-item item-id="{{pic.id}}" class="swiper-item">
             <image src="{{pic.url}}" class="slide-image" style="height:{{card_image_height}}rpx;" data-list="{{image_pic}}" data-src="{{pic.url}}" bindtap="{{card_type==0?'imgYu':'cardEditTapTag'}}" mode="aspecFit" />
            <!-- 

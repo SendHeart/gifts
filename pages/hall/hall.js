@@ -1139,7 +1139,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        //console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
         if(res.data.status='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
@@ -1188,6 +1188,7 @@ Page({
             //that.getScrollHeight() //获取页面实际高度
           
           })
+          console.log('会员推荐商品列表获取:', recommentslist_show, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
         /*
         setTimeout(function () {
           that.getScrollHeight() //获取页面实际高度

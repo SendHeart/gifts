@@ -4,7 +4,6 @@ page {
   height: 100%;
 }
 
- 
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -361,4 +360,43 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   background-color: #e02e24;
   border: 1rpx solid #e02e24;
   /* 自定义样式.... */
+}
+
+.modal-bg {
+  height: 100%;
+  width: 100%;
+  position: fixed;
+  background-color:rgba(0, 0, 0, .5);
+  z-index: 2;
+  top: 0;
+  left: 0;
+}
+
+.modal-content-bg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content:center;
+  background-color:#fff;
+  margin: 45% 10%;
+  padding: 30px 10px;
+  border-radius: 20rpx;
+  border: 3rpx solid rgb(189, 236, 248);
+}
+
+.modal-text {
+  text-align: center;
+  font-size: 32rpx;
+  color: #333333; 
+}
+
+.modal-btn {
+  text-align: center;
+  font-size: 28rpx;
+  padding: 0rpx 30rpx;
+  color: #f2f2f2; 
+  border-radius: 20rpx;
+  background-color:#E34C55;
+  border: 3rpx solid #E34C55;
+  margin-top: 40rpx;
 }

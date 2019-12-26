@@ -32,7 +32,7 @@
 <!--瀑布流列表-->
 <view class="venues_box" style="{{hidddensearch?'margin-top:80rpx;':'margin-top:150rpx;'}}">
   <view class="box-left">
-      <block wx:for="{{venuesItems}}" wx:key="">
+      <block wx:for="{{venuesItems}}" wx:key="id">
         <view class="venues_item" wx:if="{{index%2==0}}"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}&keyword={{keyword}}&is_satisfy={{is_satisfy}}" hover-class="none" >
             <!-- image class="mainpic" src="{{item.image?item.image:default_image}}" -->
@@ -63,7 +63,7 @@
     </view>
 
     <view class="box-right">
-      <block wx:for="{{venuesItems}}" wx:key="">
+      <block wx:for="{{venuesItems}}" wx:key="id">
         <view class="venues_item" wx:if="{{index%2==1}}"> 
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}&keyword={{keyword}}&is_satisfy={{is_satisfy}}" hover-class="none" >
             <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>

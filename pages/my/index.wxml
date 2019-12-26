@@ -73,10 +73,13 @@
 	  <image src="../../images/u628.png" />
 	  <text>如何玩转送心</text>
   </view>
- 
   <view bindtap="navigateToAgreement" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u633.png" />
 	  <text>用户协议</text>
+  </view>
+  <view bindtap="showsendheartapp" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/icon-mobile.png" />
+	  <text>送心APP</text>
   </view>
   <view bindtap="" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u631.png" />
@@ -140,7 +143,13 @@
       </view>
     </picker>
   </view>
-</modal> 
+</modal>  
+<view class='modal-bg' wx:if="{{sendheartappHidden}}" catchtap='closesendheartapp' catchtouchmove='move'>
+  <view class='modal-content-bg' >
+    <text class='modal-text'>在客服会话中回复\n“送心礼物APP”</text>
+    <button class='modal-btn' open-type='contact'>送心礼物APP</button>
+  </view>
+</view>
 <!--  
 <modal class="modalbox" title="银行卡" hidden="{{modalHiddenBankcard}}" confirm-text="确认" cancel-text="返回" bindconfirm="modalBindconfirmBankcard" bindcancel="modalBindcancelBankcard">
   <view class="picker_box">
