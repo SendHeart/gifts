@@ -1181,6 +1181,7 @@ Page({
   cardEditTapTag: function (is_buymyself=0) {
     var that = this
     var card_type = that.data.card_type
+    console.log('cardEditTapTag card type:',card_type);
     if(card_type == 1){
       that.setData({
         cardregisterhidden: !that.data.cardregisterhidden,
@@ -1424,7 +1425,7 @@ Page({
         var rule_selected_info = options.rule_selected_info ? options.rule_selected_info:''
         var goodsorg = options.goods_org ? options.goods_org : 1
         var goodsshape = options.goods_shape ? options.goods_shape : 0
-        var goodstag = options.goods_tag ? options.goods_tag : ''
+        var goodstag = options.goods_tag ? options.goods_tag : that.data.goodstag
         var goodsorg = options.goods_org ? options.goods_org : ''
         var card_type = options.card_type ? options.card_type:0
         var card_register_title = ''

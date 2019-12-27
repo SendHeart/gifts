@@ -202,61 +202,6 @@ Page({
     })
   }, 
 
-  
-  get_project_gift_para: function () {
-    var that = this
-    var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
-    var shop_type = that.data.shop_type
-    console.log('index get_project_gift_para navList2:', navList_new)
-    if (navList2.length == 0) {
-      //项目列表
-      wx.request({
-        url: weburl + '/api/client/get_project_gift_para',
-        method: 'POST',
-        data: {
-          type: 2,  //暂定 1首页单图片 2首页轮播  
-          shop_type: shop_type,
-        },
-        header: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-          'Accept': 'application/json'
-        },
-        success: function (res) {
-          console.log('get_project_gift_para:', res.data.result)
-          navList_new = res.data.result;
-          if (!navList_new) {
-            /*
-             wx.showToast({
-               title: '没有菜单项2',
-               icon: 'loading',
-               duration: 1500
-             });
-             */
-            return
-          }else{
-            wx.setStorageSync('navList2', navList_new)
-            that.setData({
-              navList2: navList_new,
-              buyin_rate: navList_new[7]['value'] ? navList_new[7]['value'] : buyin_rate,
-            })
-          }
-        }
-      })
-    }else{
-      that.setData({
-        navList2: navList_new,
-        buyin_rate: navList_new ? navList_new[7]['value'] : buyin_rate,
-      })
-    }
- 
-    setTimeout(function () {
-      that.setData({
-        loadingHidden: true,
-      })
-    }, 1500)
-     
-  },
-
   //定位数据
   getleft: function (e) {
     var that = this;
@@ -273,7 +218,7 @@ Page({
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     //that.query_friends()
-    that.get_project_gift_para()
+   
     that.reloadData()
     // 存为全局变量，控制支付按钮是否显示
     if (status) {
@@ -324,7 +269,7 @@ Page({
     var page = that.data.page //从服务器获取页面序号
     var page_num = that.data.page_num //从服务器获取页面数
     var show_max = that.data.show_max
-    var friends_latest = []
+    var friends_latest = page==1?[]:that.data.friends_latest
     var friends_next = that.data.friends_next
     var pagesize = that.data.pagesize
     var now = new Date().getTime()
@@ -393,7 +338,7 @@ Page({
               if (friends_list[i]['wx_headimg'].indexOf("http") < 0) {
                 friends_list[i]['wx_headimg'] = weburl + '/' + friends_list[i]['wx_headimg'];
               }
-              if(i<10){
+              if(i<10 && page == 1){
                 friends_latest = friends_latest.concat(friends_list[i])
               }
             }
