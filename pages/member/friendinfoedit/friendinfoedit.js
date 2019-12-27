@@ -34,7 +34,7 @@ Page({
     sendheartappHidden: false,
     member_note_start_date: util.getDateStr(new Date, 0),
     member_note_content:'',
-    note_reminder_picker :['每天', '每周', '每月', '每年',
+    note_reminder_picker :['每天', '每周', '每月', '每年'],
     member_note_reminder_id:0,
     member_note_reminder_str:'',
     infoid:0,
