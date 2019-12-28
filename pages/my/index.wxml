@@ -1,9 +1,12 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view class="userinfo">  <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
-	<image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
-	<text wx:if="{{userInfo.nickName}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
-  <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
+ <view style="position:absolute;" bindtap="getScancode">
+  <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"></image>
 </view>
+ <view class="userinfo">
+	  <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
+	  <text wx:if="{{userInfo.nickName}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
+    <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
+  </view>
 <view class="menu-area">
   <!--<view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/corp.png" />
@@ -146,8 +149,8 @@
 </modal>  
 <view class='modal-bg' wx:if="{{sendheartappHidden}}" catchtap='closesendheartapp' catchtouchmove='move'>
   <view class='modal-content-bg' >
-    <text class='modal-text'>在客服会话中回复\n“送心礼物APP”</text>
-    <button class='modal-btn' open-type='contact'>送心礼物APP</button>
+    <text class='modal-text'>在客服会话中粘贴后点击链接\n下载APP</text>
+    <button class='modal-btn' open-type='contact'>送心APP</button>
   </view>
 </view>
 <!--  

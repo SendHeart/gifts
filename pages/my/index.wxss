@@ -92,8 +92,14 @@ page {
   display: flex;
   flex-direction: column;
   align-items:center;
-  height: 240rpx;
+  height: 300rpx;
   background: #1d1d1d;
+}
+.scanqr {
+  width: 50rpx;
+  height: 50rpx;
+  margin-left: 20rpx;
+  border-radius: 50%;
 }
 
 .userinfo-avatar {

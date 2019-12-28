@@ -180,7 +180,7 @@
   </modal>
    -->
    	<view wx:if="{{friends[0]}}" class="recomment-title" bindtap="bindPickFriends">
-			<text>我的好友<text class="title_ex"></text></text>
+			<text>我的好❤友<text class="title_ex"></text></text>
 			<text class="more">更多...</text>
 		</view>
 		<view wx:if="{{friends[0]}}" class="top-bar-list">

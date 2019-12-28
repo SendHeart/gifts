@@ -45,8 +45,29 @@ Page({
     needUserName: '微信授权',
     inputShowed: false,
     sendheartappHidden: false,
+    sendheartappurl: weburl+'/hall/appdown/index.html',
   },
-  
+  getScancode: function () {
+    var _this = this;
+    // 允许从相机和相册扫码
+    wx.scanCode({
+      success: (res) => {
+        var result = res.result;
+        if (result.indexOf('http') < 0) {
+          wx.showToast({
+            title: '无效的二维码' + result,
+            icon: 'none',
+            duration: 1500
+          })
+        } else {
+          wx.navigateTo({
+            url: '../member/aboutus/aboutus?url=' + result
+          })
+        }
+      }
+    })
+  },
+
   goBack: function () {
     var that = this
     var pages = getCurrentPages()
@@ -763,7 +784,9 @@ Page({
     })
   },
   */
-  customerService: function (e) {
+  customerService: function (url) {
+    var that = this
+    var web_view_url = url
     wx.navigateTo({
      // url: '../wechat/wechat'
       url: '../cs/cs'
@@ -1120,7 +1143,7 @@ Page({
 
   showsendheartapp: function (e) {
     var that = this
-    var data_info = '送心礼物APP'
+    var data_info = that.data.sendheartappurl
     wx.setClipboardData({
       data: data_info,
       success: function () {
