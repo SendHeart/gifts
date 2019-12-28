@@ -71,24 +71,29 @@ Page({
             wx.navigateTo({
               url: '/pages/details/details?' + scene
             })
-          }
-          if (scene.indexOf("promid=") >= 0) {
+          }else if (scene.indexOf("promid=") >= 0) {
             wx.navigateTo({
               url: '/pages/details/details?' + scene
             })
-          }
-          if (scene.indexOf("ordno=") >= 0) {
+          }else if (scene.indexOf("ordno=") >= 0) {
             wx.navigateTo({
               url: '/pages/order/receive/receive?receive=1&' + scene
             })
-          }
-
-          if (scene.indexOf("wish_id=") >= 0) {
+          }else if (scene.indexOf("wish_id=") >= 0) {
             wx.navigateTo({
               url: '/pages/wish/wish?' + scene
             })
+          }else{
+            if(path.indexOf("wish/wish")>-1 || path.indexOf("index/index")>-1||path.indexOf("my/index")>-1||path.indexOf("list/list")>-1||path.indexOf("hall/hall")>-1){
+              wx.switchTab({
+                url: path
+              })
+            }else{
+              wx.navigateTo({
+                url: path + '?' + scene
+              })
+            }
           }
-         
         } else if (result.indexOf('http') > -1){ //非小程序码
           console.log(' getScancode result:', result)
           wx.navigateTo({
