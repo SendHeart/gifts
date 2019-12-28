@@ -1,4 +1,5 @@
 var wxparse = require("../../wxParse/wxParse.js");
+var util = require('../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl
 var appid = app.globalData.appid
@@ -52,16 +53,70 @@ Page({
     // 允许从相机和相册扫码
     wx.scanCode({
       success: (res) => {
-        var result = res.result;
-        if (result.indexOf('http') < 0) {
-          wx.showToast({
-            title: '无效的二维码' + result,
-            icon: 'none',
-            duration: 1500
-          })
-        } else {
+        var result = res.result
+        var scantype = res.scanType
+        var qrcode_info = res.path
+        var pathinfo = qrcode_info.split('?')
+        var path = '/'+pathinfo[0]
+        var sceneinfo = pathinfo[1]
+        var charset = res.charSet
+        var reg = new RegExp("scene=", "g");
+        var scene = sceneinfo.replace(reg, "");
+        //手机和开放者工具不一样的地方就在这几步了
+        //var scene = decodeURIComponent(scene);   //在手机上省略这一步  开发者工具需要
+
+        if (result.indexOf('http') >-1) {
           wx.navigateTo({
             url: '../member/aboutus/aboutus?url=' + result
+          })
+        }else if(path){
+          /*
+          wx.showToast({
+            title: '内容 path:' + path + ' scene:' + scene,
+            icon: 'none',
+            duration: 5000
+          })
+          */
+          if (scene.indexOf("goodsid=") >= 0) {
+            wx.navigateTo({
+              url: '/pages/details/details?' + scene
+            })
+          }
+          if (scene.indexOf("promid=") >= 0) {
+            wx.navigateTo({
+              url: '/pages/details/details?' + scene
+            })
+          }
+          if (scene.indexOf("ordno=") >= 0) {
+            wx.navigateTo({
+              url: '/pages/order/receive/receive?receive=1&' + scene
+            })
+          }
+
+          if (scene.indexOf("wish_id=") >= 0) {
+            wx.navigateTo({
+              url: '/pages/wish/wish?' + scene
+            })
+          }
+            /*
+          setTimeout(function () {
+            if (path.indexOf('hall/hall') > -1 || path.indexOf('wish/wish') > -1 || path.indexOf('list/list') > -1 || path.indexOf('index/index') > -1 || path.indexOf('my/index') > -1) {
+              wx.switchTab({
+                url: qrcode_info
+              })
+            } else {
+              wx.navigateTo({
+                url: path + '?' + scene
+              })
+            }
+            
+          }, 3000)
+          */
+        } else {
+          wx.showToast({
+            title: '内容:result:' + result + ' scan type:' + scantype + '  charset:'+charset + ' path:'+path,
+            icon: 'none',
+            duration: 3000
           })
         }
       }

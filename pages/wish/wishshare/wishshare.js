@@ -511,7 +511,7 @@ Page({
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
     var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
     var share_goods_qrcode_cache = options.share_goods_qrcode_cache ? options.share_goods_qrcode_cache : ''
-    var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg : that.data.share_goods_avatarUrl
+    var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg :                          that.data.share_goods_avatarUrl
    
     var share_goods_default_title = ''
     if (share_goods_shape == 5) {
