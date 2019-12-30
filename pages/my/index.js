@@ -55,7 +55,7 @@ Page({
       success: (res) => {
         var result = res.result
         var scantype = res.scanType
-        var qrcode_info = res.path
+        var qrcode_info = res.path? res.path:'?'
         var pathinfo = qrcode_info.split('?')
         var path = '/'+pathinfo[0]
         var sceneinfo = pathinfo[1]
@@ -65,7 +65,7 @@ Page({
         //手机和开放者工具不一样的地方就在这几步了
         scene = decodeURIComponent(scene);   //在手机上省略这一步  开发者工具需要
 
-        if (path) { //小程序码
+        if (path.indexOf("pages")>-1) { //小程序码
           console.log(' getScancode path:', path,' scene:',scene)
           if (scene.indexOf("goodsid=") >= 0) {
             wx.navigateTo({

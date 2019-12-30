@@ -646,6 +646,11 @@ Page({
     this.sum();
 
   },
+  bindPlayer: function () {
+    wx.navigateTo({
+      url: '/pages/player/player?username=' + username + '&token=' + token
+    })
+  },
   bindPickGoods: function () {
     wx.navigateTo({
       url: '/pages/list/list?username=' + username + '&token=' + token

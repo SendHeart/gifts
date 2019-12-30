@@ -241,7 +241,7 @@ function hex_hmac_md5(k, d) {
  * @param {String}   key     加密key
  * @param {Boolean}  raw     规则 false: 返回hex_md5, true: 返回raw_md5
  */
-export default function md5(string, key, raw) {
+ function md5(string, key, raw) {
   if (!key) {
     if (!raw) {
       return hex_md5(string);
@@ -252,4 +252,7 @@ export default function md5(string, key, raw) {
     return hex_hmac_md5(key, string);
   }
   return raw_hmac_md5(key, string);
+}
+module.exports = {
+  md5: md5,
 }

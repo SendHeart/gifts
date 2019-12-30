@@ -10,8 +10,11 @@ App({
     wssurl:'wss://sendheart.dreamer-inc.com' ,
     uploadurl: weburl+'/api/upload/index4',
     httpserviceurl: weburl + '/api/upload/http_service',
+    pusherurl: 'rtmp://push.dreamer-inc.com',
+    playerurl: 'rtmp://play.dreamer-inc.com',
     mapkey: 'SSPBZ-ALR32-4BWUC-CLUXY-HAFM3-3ABQF',
     mapkey2: 'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U',
+    md5_key: '9666f44dd87410cf85949f3a053dc14a',
     openid: null,
     username: null,
     is_task:0,
@@ -142,11 +145,10 @@ App({
              duration: 1500
            });
            */
-          return;
+          return
         }
         wx.setStorageSync('navList2', navList_new)
         that.globalData.navList2 = navList_new
-        
       }
     })
   },

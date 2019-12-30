@@ -898,6 +898,18 @@ modal {
   display: none;
 }
 
+.recomment-title button {
+  line-height: 60rpx;
+  text-align: center;
+  width: 150rpx;
+  height: 60rpx;
+  background-color: #E52445;
+  color: white;
+  font-size: 30rpx;
+  margin:0 auto;
+  border-radius: 10rpx;
+  padding:0 auto;
+}
 /*推荐商品列表头*/
 
 .item {
@@ -1275,6 +1287,7 @@ modal {
   margin-bottom:50rpx;
   z-index: 1000;
 }
+
 
 /* 提示窗口 */
 	.uni-tip {
