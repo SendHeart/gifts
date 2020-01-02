@@ -235,6 +235,7 @@ Page({
     var goods_type_value = options.goods_type_value ? options.goods_type_value:0
     var goods_type = 'goods_middle_search'
     var hidddensearch = options.search==1?false:true
+    var live_goods = options.live_goods ? options.live_goods:''
     middle_title = options.search == 1 ? '搜索礼物' : middle_title
     that.setData({
       username: username,
@@ -243,6 +244,7 @@ Page({
       goods_type: goods_type,
       goods_type_value: goods_type_value,
       hidddensearch: hidddensearch,
+      live_goods: live_goods,
     })
 
     wx.setNavigationBarTitle({
@@ -264,7 +266,6 @@ Page({
           windowHeight: res.windowHeight,
           windowWidth: res.windowWidth,
           dkheight: res.windowHeight - 60,
-
         })
       }
     })
@@ -317,7 +318,8 @@ Page({
     var keyword = that.data.keyword;
     var shop_type = that.data.shop_type
     var shape = 1
-    if (!search_goodsname && !keyword && !goods_type_value){
+    var live_goods = that.data.live_goods  //视频推广商品
+    if (!search_goodsname && !keyword && !goods_type_value && !live_goods){
       wx.showToast({
         title: '搜到内容为空',
         icon: 'loading',
@@ -325,6 +327,7 @@ Page({
       })
       return
     }
+    
     that.setData({
       loadingHidden: false,
       is_loading:true,
@@ -335,6 +338,7 @@ Page({
       data: {
         goods_type: goods_type,
         goods_type_value: goods_type_value,
+        live_goods: live_goods,
         username: username,
         access_token: token,
         page: page,

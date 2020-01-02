@@ -1,3 +1,6 @@
 {
-  "navigationBarTitleText": "直播"
+  "navigationBarTitleText": "视频播放" ,
+  "usingComponents": {
+    "barrage": "miniprogram-barrage"
+  }
 }

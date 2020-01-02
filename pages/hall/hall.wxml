@@ -198,9 +198,7 @@
     <view class="recomment-title" >
       <text bindtap='bindPickGoods'>精选清单<text class='title_ex'>达人推荐</text></text>
       <text class='more'>更多...</text>
-      <!-- 
-      <button type="primary" bindtap='bindPlayer'>直播</button>
-      -->
+      <button type="primary" bindtap='videoPlayer'>视频</button>
     </view>
     <view class="middle-goods">
       <view wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>

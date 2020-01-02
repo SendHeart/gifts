@@ -1,7 +1,24 @@
 <view class="page-body">
   <view class="page-section tc">
+    <view class="goods-list">   
+      <button bindtap="goodslist" data-liveid="">看商品</button>
+       <label>
+          <text>弹幕</text>
+          <switch bindchange="danmuClose" checked='true' color='#E34C55' style='zoom:0.6' />
+        </label>
+    </view>
+       
+   <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
+      <barrage class="barrage"></barrage>
+    </video>
+    <view class="sendmessage">
+      <view class="text">   
+        <input value="{{inputValue}}" placeholder="请输入弹幕" bindblur='bindInputBlur' />
+        <button bindtap="bindSendDanmu">发送</button>
+      </view>
+    </view>
+  <!-- 
     <live-player id="player" src="{{playerurl}}" mode="RTC" autoplay bindstatechange="statechange" binderror="error" />
-
     <view class="btn-area">
       <button bindtap="bindPlay" class="page-body-button" type="primary">播放</button>
       <button bindtap="bindPause" class="page-body-button" type="primary">暂停</button>
@@ -9,5 +26,15 @@
       <button bindtap="bindResume" class="page-body-button" type="primary">恢复</button>
       <button bindtap="bindMute" class="page-body-button" type="primary">静音</button>
     </view>
+    -->
   </view>
+</view>
+<view hidden="{{errorhidden}}" style='z-index:999;'>
+  <modal title="播放错误" hidden="{{errorhidden}}" bindconfirm="errorConfirmPlay" bindcancel="errorCancelPlay" confirm-text="重试" cancel-text="退出">
+    <view style="height:{{dkheight-520}}px;">
+      <view class="note">
+        <text style='margin-top:10rpx;font-size:26rpx;color:#333;'>{{error_message}}</text>
+      </view>
+    </view>
+  </modal>
 </view>

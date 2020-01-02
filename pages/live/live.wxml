@@ -1,0 +1,96 @@
+<!--index.wxml-->
+<import src="../common/nav.wxml" />
+<view class="all-classify" hidden="{{hiddenallclassify}}">
+    <view class='catg-title' catchtap="openAllTapTag">
+      <view class='catg-titletext'>全部分类</view>
+      <view class='catg-claps'>
+       <image style="" src='../../images/bottom-close.png'></image>
+      </view>
+    </view>
+    <view class="all-classify-list" >
+    <block wx:for="{{navList}}" wx:for-item="item" wx:key="id">
+      <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="all-classify-item {{index == activeIndex ? 'all-classify-item-active' : ''}}" catchtap="onTapTag">
+        {{item.title}}
+      </view>
+    </block>
+    </view>
+</view>
+<view class="banner">
+    <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,is_all_category}}" />
+</view>
+  <!-- 
+<view class="search" style='height:30rpx;'>
+		<input value="{{keyword}}" class="wx-input" placeholder="寻找..."  bindinput='search_goodsnameTapTag'/>
+    <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
+</view>
+  -->
+
+<scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
+<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+  <icon style="margin-top:-50rpx;" class="Hui-iconfont iconv-uparrow" />
+  <view class='' style="margin-top:-5rpx;font-size:22rpx;">TOP</view>
+  <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
+</view>
+  <view class="venues_box" >
+  <view class="box-left">
+   <block wx:for="{{venuesItems_show}}"  wx:key="id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
+      <block wx:for="{{venuesItems_show}}" wx:key="id">
+        <view class="venues_item" wx:if="{{index%2==0}}"> 
+          <navigator url="/pages/player/player?liveid={{item.liveid}}&live_goods={{item.live_goods}}&live_name={{item.shop_name}}&live_poster={{item.live_poster}}&live_desc={{item.live_desc}}&live_logo={{item.logo}}" hover-class="none" >
+            <imageloader  default-image='{{default_img}}' mode='aspectFit' original-image='{{item.logo}}' width="355rpx" height="355rpx" display="block" />
+            <view class="goods-tags">
+              
+            </view>
+            <text class="goods_name">{{item.shop_name}}</text>
+            </navigator>
+            <view class="goods_prom">{{item.live_desc?item.live_desc:''}}</view>
+            <view class="goods_bottom">
+              <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
+                <text space="ensp">{{item.goods_tag}} </text>
+              </view>
+              <view class="price-list">
+                 
+              </view>
+          </view>
+        </view>
+      </block>
+    </block>
+  </view>
+  <view class="box-right">
+   <block wx:for="{{venuesItems_show}}"  wx:key="id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
+      <block wx:for="{{venuesItems_show}}" wx:key="id">
+        <view class="venues_item" wx:if="{{index%2==1}}"> 
+            <navigator url="/pages/player/player?liveid={{item.liveid}}&live_goods={{item.live_goods}}&live_name={{item.shop_name}}&live_poster={{item.live_poster}}&live_desc={{item.live_desc}}&live_logo={{item.logo}}" hover-class="none" >
+          <!--
+             <imageloader  default-image='{{default_img}}' mode='aspectFit' original-image='{{item.logo}}' width="355rpx" height="355rpx" display="block" />
+             -->
+             <image class="mainpic" src="{{item.logo?item.logo:''}}" mode="{{(item.shape==5||item.shape==4)?'aspectFit':'aspectFill'}}"></image>
+            <view class="goods-tags">
+               
+            </view>
+            <text class="goods_name">{{item.shop_name}}</text>
+          </navigator>
+            <view class="goods_prom">{{item.live_desc?item.live_desc:''}}</view>
+            <view class="goods_bottom">
+              <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
+                 
+              </view>
+              <view class="price-list">
+                 
+              </view>
+          </view>
+        </view>
+      </block>
+    </block>
+    </view>
+</view>
+<view class="loading-show" hidden="{{loadingHidden}}">
+  <text>{{loading_note}}</text>
+</view>
+  <!--使用懒加载替代
+  <button wx:if="{{page<all_rows}}" type="default" size="default" hover-class="button-hover" class="button" bindtap="getMoreGoodsTapTag" style="margin-top:10rpx; margin-bottom:60rpx;">更多</button>
+  <loading hidden="{{loadingHidden}}">
+    加载中...
+  </loading>
+-->
+</scroll-view>

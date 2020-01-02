@@ -11,7 +11,7 @@ App({
     uploadurl: weburl+'/api/upload/index4',
     httpserviceurl: weburl + '/api/upload/http_service',
     pusherurl: 'rtmp://push.dreamer-inc.com',
-    playerurl: 'rtmp://play.dreamer-inc.com',
+    playerurl: 'http://play.dreamer-inc.com/live',
     mapkey: 'SSPBZ-ALR32-4BWUC-CLUXY-HAFM3-3ABQF',
     mapkey2: 'BJFBZ-ZFTHW-Y2HRO-RL2UZ-M6EC3-GMF4U',
     md5_key: '9666f44dd87410cf85949f3a053dc14a',

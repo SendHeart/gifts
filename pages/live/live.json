@@ -1,0 +1,7 @@
+{
+    "navigationBarTitleText": "视频空间",
+    "disableScroll": true,
+    "usingComponents": {
+      "imageloader": "../common/imageloader/imageloader"
+    }
+}

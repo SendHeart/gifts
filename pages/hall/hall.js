@@ -307,6 +307,12 @@ Page({
     }
      
   },
+  videoPlayer: function (e) {
+    var that = this;
+    wx.navigateTo({
+      url: '/pages/live/live?streamaname='
+    })
+  }, 
   searchTapTag: function (e) {
     var that = this;
     //console.log('搜索关键字：' + that.data.search_goodsname)
@@ -1431,6 +1437,7 @@ Page({
     var receive = options.receive ? options.receive:0
     var refername = options.refername ? options.refername : ''
     var task = options.task ? options.task : 0
+    var liveid = options.liveid ? options.liveid : 0
     var msg_id = options.msg_id ? options.msg_id : 0
     var art_id = options.art_id ? options.art_id : 0
     var art_cat_id = options.art_cat_id ? options.art_cat_id : 0
@@ -1511,6 +1518,17 @@ Page({
         url: '/pages/wish/wish?' + scene
       })
     }
+    if (liveid > 0 ) {
+      wx.navigateTo({
+        url: '/pages/player/player?liveid=' + liveid + '&live_name=' + options.live_name + '&live_logo=' + options.live_logo + '&live_poster=' + options.live_poster + '&live_desc=' + options.live_desc + '&live_goods=' + options.live_goods
+      })
+    }
+    if (scene.indexOf("liveid=") >= 0) {
+      wx.navigateTo({
+        url: '/pages/player/player?' + scene
+      })
+    }
+
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()
