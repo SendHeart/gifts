@@ -45,6 +45,7 @@ Page({
     playerurl: playerurl,
     videourl:'',
     liveurl: '',
+    live_goods:'',
     errorhidden:true,
     error_message:'',
     poster_image: weburl+'/uploads/video_poster_image.png',
@@ -54,11 +55,22 @@ Page({
     page: 1,
     pagesize: 10,
     pageoffset:0,
+    goods_page: 1,
+    goods_pagesize: 20,
+    goods_all_rows:0,
+    venuesItems: [],
     share_title:'送心礼物视频分享',
     share_image: weburl + '/uploads/video_share_image.png',
     share_desc:'送心礼物期待您的光临',
     share_logo: weburl + '/uploads/video_share_logo.png',
     danmustatus:true,
+    tanmuHidden:true,
+    goods_num:1,
+    modalGoodsHidden:true,
+    loadingHidden: true, // loading
+    scrollTop: 0,
+    is_loading: false,
+
   },
   /*
   onReady(res) {
@@ -87,6 +99,7 @@ Page({
       liveid: liveid,
     })
     that.query_liveroom_info()
+    that.get_goods_list()
     console.log('player onLoad videourl:', that.data.videourl, ' liveid:', liveid, ' live_logo:', live_logo, ' live_name:', live_name, ' live_desc:', live_desc)
   },
   onShow: function () {
@@ -110,6 +123,7 @@ Page({
       }
     })
   },
+
   onReady: function () {
     var that = this
     that.videoContext = wx.createVideoContext('myVideo')
@@ -187,6 +201,102 @@ Page({
       url: '../goods/list/list?live_goods=' + live_goods  
     })
   },
+  get_goods_list: function (event) {
+    //venuesList
+    var that = this
+    var goods_page = that.data.goods_page
+    var goods_pagesize = that.data.goods_pagesize
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var live_goods = that.data.live_goods
+    that.setData({
+      loadingHidden: false,
+      is_loading: true,
+    })
+    wx.request({
+      url: weburl + '/api/client/get_goods_list',
+      method: 'POST',
+      data: {
+        live_goods: live_goods,
+        username: username,
+        access_token: token,
+        page: goods_page,
+        pagesize: goods_pagesize,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('get_goods_list:', res.data)
+        var venuesItems = res.data.result
+        var all_rows = res.data.all_rows
+        if (!venuesItems) {
+          wx.showToast({
+            title: '没有搜到记录',
+            icon: 'loading',
+            duration: 2000
+          })
+          that.setData({
+            venuesItems: [],
+            goods_all_rows: 0,
+          })
+          return
+        }
+
+        for (var i = 0; i < venuesItems.length; i++) {
+          if (!venuesItems[i]['act_info']) {
+            venuesItems[i]['act_info'] = ''
+          } 
+          if (!venuesItems[i]['goods_tag']) {
+            venuesItems[i]['goods_tag'] = ''
+          } else {
+            venuesItems[i]['goods_tag'] = venuesItems[i]['goods_tag'].substring(0, 10)
+          }
+          venuesItems[i]['image'] = venuesItems[i]['activity_image'] ? venuesItems[i]['activity_image'] : venuesItems[i]['image']
+        }
+        if (goods_page > 1 && venuesItems) {
+          //向后合拼
+          venuesItems = that.data.venuesItems.concat(venuesItems);
+        }
+        that.setData({
+          venuesItems: venuesItems,
+          goods_all_rows: all_rows,
+          goods_num: (all_rows - goods_page) * goods_pagesize + venuesItems.length ,
+          goods_page:goods_page ,
+          loadingHidden: true,
+          is_loading: false,
+        })
+      }
+    })
+  },
+  getMoreGoodsTapTag: function (e) {
+    var that = this;
+    var goods_page = that.data.goods_page + 1;
+    var goods_all_rows = that.data.goods_all_rows
+    var is_loading = that.data.is_loading
+    if (is_loading) return
+    if (goods_page > goods_all_rows) {
+      that.setData({
+        loadingHidden: false,
+        loading_note: '已经到底了'
+      })
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+      }, 1000)
+      return
+    }
+
+    that.setData({
+      goods_page: goods_page,
+    });
+    that.get_goods_list()
+  },
+
   addBarrage: function() {
     var that = this 
     var inputValue = that.data.inputValue
@@ -405,63 +515,38 @@ Page({
     }, 1000 * 30)
   },
  
-  statechange(e) {
-    console.log('live-player code:', e.detail.code)
+  goodsinfo(e) {
+    var that = this
+    var modalGoodsHidden = that.data.modalGoodsHidden
+    that.setData({
+      modalGoodsHidden: !modalGoodsHidden,
+    })
+  },
+  modalGoodsconfirm: function () {
+    this.setData({
+      modalGoodsHidden: !this.data.modalGoodsHidden
+    })
+  }, 
+  
+  // 获取滚动条当前位置
+  scrolltoupper: function (e) {
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true,
+        hidddensearch: false
+      })
+    } else {
+      this.setData({
+        floorstatus: false,
+        hidddensearch: true,
+      })
+    }
+    this.setData({
+      current_scrollTop: e.detail.scrollTop
+    })
+
   },
 
-  error(e) {
-    console.error('live-player error:', e.detail.errMsg)
-  },
-  bindPlay() {
-    this.ctx.play({
-      success: res => {
-        console.log('play success')
-      },
-      fail: res => {
-        console.log('play fail')
-      }
-    })
-  },
-  bindPause() {
-    this.ctx.pause({
-      success: res => {
-        console.log('pause success')
-      },
-      fail: res => {
-        console.log('pause fail')
-      }
-    })
-  },
-  bindStop() {
-    this.ctx.stop({
-      success: res => {
-        console.log('stop success')
-      },
-      fail: res => {
-        console.log('stop fail')
-      }
-    })
-  },
-  bindResume() {
-    this.ctx.resume({
-      success: res => {
-        console.log('resume success')
-      },
-      fail: res => {
-        console.log('resume fail')
-      }
-    })
-  },
-  bindMute() {
-    this.ctx.mute({
-      success: res => {
-        console.log('mute success')
-      },
-      fail: res => {
-        console.log('mute fail')
-      }
-    })
-  },
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

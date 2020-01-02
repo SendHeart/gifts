@@ -7,28 +7,46 @@
           <switch bindchange="danmuClose" checked='true' color='#E34C55' style='zoom:0.6' />
         </label>
     </view>
-       
-   <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
+    <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
       <barrage class="barrage"></barrage>
     </video>
-    <view class="sendmessage">
-      <view class="text">   
-        <input value="{{inputValue}}" placeholder="请输入弹幕" bindblur='bindInputBlur' />
-        <button bindtap="bindSendDanmu">发送</button>
-      </view>
-    </view>
-  <!-- 
-    <live-player id="player" src="{{playerurl}}" mode="RTC" autoplay bindstatechange="statechange" binderror="error" />
-    <view class="btn-area">
-      <button bindtap="bindPlay" class="page-body-button" type="primary">播放</button>
-      <button bindtap="bindPause" class="page-body-button" type="primary">暂停</button>
-      <button bindtap="bindStop" class="page-body-button" type="primary">停止</button>
-      <button bindtap="bindResume" class="page-body-button" type="primary">恢复</button>
-      <button bindtap="bindMute" class="page-body-button" type="primary">静音</button>
-    </view>
-    -->
   </view>
 </view>
+<view class="sendmessage" hidden="tanmuHidden">
+  <view class="text">   
+    <input value="{{inputValue}}" placeholder="请输入弹幕" bindblur='bindInputBlur' />
+    <button bindtap="bindSendDanmu">发送</button>
+  </view>
+</view>
+<view class="footer">
+  <view class="footer-left" hidden="">
+    <view class="footer-button" bindtap="goodsinfo"> 
+      <image class="goods-button" src="/images/1.png" ></image>
+      <text class="goods-num">{{goods_num}}</text>
+	  </view>
+    <view class="footer-button" bindtap=""> 
+      <view class="danmu-list">
+        <view class="danmu-button" ></view>
+        <image class="danmu-button-image" src="/images/u72.png" ></image>
+      </view>
+	  </view>
+  </view>
+  <view class="footer-right" style="">
+    <view class="footer-button" bindtap=""> 
+      <view class="share-list">
+        <view class="share-button" ></view>
+        <image class="share-button-image" src="/images/share.png" ></image>
+      </view>
+	  </view>
+     <view class="footer-button" bindtap=""> 
+      <view class="prize-list">
+        <view class="prize-button" ></view>
+        <image class="prize-button-image" src="/images/u8.png" ></image>
+      </view>
+	  </view>
+  </view>
+</view>
+
 <view hidden="{{errorhidden}}" style='z-index:999;'>
   <modal title="播放错误" hidden="{{errorhidden}}" bindconfirm="errorConfirmPlay" bindcancel="errorCancelPlay" confirm-text="重试" cancel-text="退出">
     <view style="height:{{dkheight-520}}px;">
@@ -38,3 +56,32 @@
     </view>
   </modal>
 </view>
+
+<action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" style="border-radius:20rpx;" style="border-radius:20rpx;" tops="40%">
+  <view class='modalGoodsTitle'>
+    <text>{{goods_num>0?'商品数:'+goods_num:''}}</text>
+    <view class='goods-return' bindtap="modalGoodsconfirm">×</view>
+  </view> 
+  <scroll-view class="goods-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" bindscrolltolower="getMoreGoodsTapTag"  >
+    <block wx:for="{{venuesItems}}"  wx:key="id" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="id">
+    <view class="goods-item">
+       <view bindtap="detailTapTag"   data-goods-id="{{goods.id}}" data-goods-name="{{goods.name}}">
+        <view class='goods-no'>{{goodsIndex+1}}</view>
+        <!-- 缩略图 -->
+        <image class="goods-image" src="{{goods.activity_image?goods.activity_image:goods.image}}" mode="aspectFit" />
+      </view>
+       <view class="goods-text" bindtap="detailTapTag" data-order-object="{{item}}">
+        <text class="goods-title">{{goods.name}}</text>
+        <view class="goods-footer">
+          <view style="width:70%">
+            <text style="color:#e34c55;">￥{{goods.sell_price}}</text>
+          </view>
+          <view style="width:30%; text-align:right;">
+            <text bindtap="sendAginTapTag" class="smallbtn2">去下单</text>
+          </view>
+        </view>
+      </view>
+    </view>
+    </block>
+  </scroll-view>  
+</action-sheet>

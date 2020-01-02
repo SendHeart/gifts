@@ -48,6 +48,7 @@ live-player {
   font-size:20rpx;
   opacity:0.6;
 }
+
 .sendmessage {
   width:100%;
   position:fixed;
@@ -100,4 +101,238 @@ live-player {
   padding-right:5px;
   padding-top: 10rpx;
 } 
+.footer{
+  width: 100%;
+  position:fixed;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  bottom: 0rpx;
+  overflow: hidden;
+  opacity:1;
+  z-index: 999;
+}
+.footer-left {
+  width:100%;
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-start;
+  border:0px solid #aaaaaa;
+  margin-left:20rpx;
+}
+.footer-button{
+		height: 120rpx;
+		width: 120rpx;
+		color: #fff;
+		position: relative;
+		text-align: center;
+}
 
+.goods-num {
+  width: 60rpx;
+	height:60rpx;
+	position: absolute;
+	text-align: center;
+	top:20rpx;
+	left:0rpx;
+  padding: 15rpx;
+  font-size:22rpx;
+  color:#fff;
+}
+
+.goods-button{
+		/* border: 6upx solid #F44336; */
+		width: 60rpx;
+		height: 60rpx;
+		background: rgb(235, 74, 63);
+		border-radius: 50%;
+		position: absolute;
+		text-align: center;
+		top:0;
+		left: 0rpx;
+    padding: 15rpx;
+		box-shadow: 0 0 28upx 0 rgb(251, 99, 24);
+    opacity: 0.8;
+}
+.danmu-list { 
+  display: flex;
+  flex-direction: row;
+  position: relative;
+	text-align: center;
+}
+.danmu-button{
+		/* border: 6upx solid #F44336; */
+		width: 90rpx;
+		height: 90rpx;
+		background:#f2f2f2;
+		border-radius: 50%;
+    margin:0 auto auto 30rpx;
+    opacity: 0.2;
+}
+
+.danmu-button-image{
+  width: 50rpx;
+  height:50rpx;
+  margin:25rpx auto auto -90rpx;
+}
+
+.footer-right {
+  width:100%;
+  position:relative;
+  display:flex;
+  flex-direction:row;
+  justify-content: flex-end;
+  border:0px solid #aaaaaa;
+  margin-right:20rpx;
+}
+
+.share-list { 
+  display: flex;
+  flex-direction: row;
+  position: relative;
+	text-align: center;
+}
+.share-button{
+		/* border: 6upx solid #F44336; */
+		width: 90rpx;
+		height: 90rpx;
+		background:#f2f2f2;
+		border-radius: 50%;
+    margin:0 30rpx auto auto;
+    opacity: 0.2;
+}
+
+.share-button-image{
+  width: 50rpx;
+  height:50rpx;
+  margin:22rpx auto auto -95rpx;
+}
+
+
+.prize-list { 
+  display: flex;
+  flex-direction: row;
+  position: relative;
+	text-align: center;
+}
+.prize-button{
+		/* border: 6upx solid #F44336; */
+		width: 90rpx;
+		height: 90rpx;
+		background:#f2f2f2;
+		border-radius: 50%;
+    margin:0 30rpx auto auto;
+    opacity: 0.2;
+}
+
+.prize-button-image{
+  width: 50rpx;
+  height:50rpx;
+  margin:22rpx auto auto -95rpx;
+}
+
+.goods-return{
+  position: relative;
+  font-size: 35rpx;
+  height:36rpx;
+  line-height:36rpx;
+  width: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #999;
+  text-align: center;
+  align-items: center;
+  color: #999;
+  margin: 10rpx;
+}
+
+.modalGoodsTitle {
+  font-size: 26rpx;
+  color: #444;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top:20rpx;
+  margin-left:20rpx;
+}
+.goods-container {
+  margin-top: 5rpx;
+  height: 100%;
+  overflow-x: hidden;
+}
+.goods-item {
+  display: flex;
+  flex-direction: row;
+  height: 140rpx;
+  /*width属性解决标题文字太短而缩略图偏移*/
+  border-bottom: 1rpx solid #f2f2f2;
+  padding: 10rpx;
+}
+
+.goods-no{
+  position: relative;
+  font-size: 22rpx;
+  height:28rpx;
+  line-height:28rpx;
+  width: 50rpx;
+  border-radius: 15rpx;
+  border: 1rpx solid #999;
+  text-align: center;
+  align-items: center;
+  color: #999;
+  margin: 10rpx;
+}
+.goods-image {
+  margin-left: 10rpx;
+  margin-bottom: 10rpx;
+  width: 100rpx;
+  height: 100rpx;
+}
+
+.goods-text {
+  margin-left: 10rpx;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+}
+
+.goods-title {
+  font-size: 28rpx;
+  color: #444;
+  line-height: 38rpx;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
+
+
+.goods-footer {
+  padding: 6rpx 20rpx 10rpx 20rpx;
+  display: flex;
+  flex-direction: row;
+  height:55rpx;
+}
+
+.goods-footer text {
+  font-size: 24rpx;
+  height: 40rpx;
+  padding: 5rpx;
+}
+.smallbtn {
+  border: 3rpx solid #e34c55;
+  color: #e34c55;
+  padding: 4rpx 10rpx;
+  border-radius: 8rpx;
+  margin-left:10rpx;
+  text-align:center;
+}
+.smallbtn2 {
+  border: 0rpx solid #999;
+  background-color:#e34c55 ; 
+  color: #fff;
+  padding-left: 8rpx;
+  padding-right: 8rpx;
+  border-radius: 15rpx;
+  margin-right: 6rpx;
+}
