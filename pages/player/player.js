@@ -74,6 +74,7 @@ Page({
     goods_scrollTop: 0,
     current_goods_scrollTop:0,
     is_goods_loading: false,
+    is_danmu_loading: false,
     danmu_scrollTop: 0,
   },
   /*
@@ -128,6 +129,34 @@ Page({
           winWidth: winWidth,
         })
       }
+    })
+  },
+
+  danmu_scroll_auto: function () {
+    // 获取scroll-view的节点信息
+    //创建节点选择器
+    var query = wx.createSelectorQuery();
+    query.select('.danmu-scroll').boundingClientRect()
+    query.select('.danmu-scroll-list').boundingClientRect()
+    query.exec((res) => {
+      var containerHeight = res[0].height;
+      var listHeight = res[1].height;
+      // 滚动条的高度增加
+       var interval = setInterval(() => {
+         if (this.data.danmu_scrollTop < listHeight - containerHeight) {
+            this.setData({
+              danmu_scrollTop: this.data.danmu_scrollTop + 30
+            })
+         } else {
+            clearInterval(interval);
+          /*
+            this.setData({
+              danmu_scrollTop: 0
+            })
+          */
+         }
+       }, 200)
+      
     })
   },
 
@@ -472,17 +501,24 @@ Page({
   
   //点击播放按钮，封面图片隐藏,播放视频
   bindPlay: function (e) {
-    console.log('detail bindPlay 响应失败', e)
-    this.setData({
-      tab_image: "none"
-    }),
-    this.videoContext.play()
+    console.log('player bindPlay 响应', e)
+    wx.onNetworkStatusChange(function (res) {
+      if (res.isConnected){
+        this.videoContext.play()
+      }else{
+        this.playerror(e)
+      }
+      //console.log(res.isConnected)
+      //console.log(res.networkType)
+    })
   },
+
 
   playerror(e) {
     var that = this 
     var error_message = '网络错误!'
     var errorhidden = that.data.errorhidden
+    console.log('player playerror 播放错误', e)
     that.setData({
       error_message: error_message,
       errorhidden: !errorhidden,
@@ -495,6 +531,7 @@ Page({
     this.videoContext.stop()
     this.videoContext = wx.createVideoContext('myVideo')
     this.videoContext.play()
+    console.log('player playwaiting 播放等待', e)
   },
   errorConfirmPlay(e) {
     var that = this
@@ -607,7 +644,8 @@ Page({
           }) 
           var tanmuHidden = that.data.tanmuHidden
           that.setData({
-            tanmuHidden: !tanmuHidden
+            tanmuHidden: !tanmuHidden,
+            inputValue:'',
           })
           console.log('弹幕信息保存完成:', that.data.inputValue)
         }
@@ -627,8 +665,15 @@ Page({
     var pagesize = that.data.pagesize
     var pageoffset = that.data.pageoffset
     var danmustatus = that.data.danmustatus
+    var is_danmu_loading = that.data.is_danmu_loading
+    if (!danmustatus || is_danmu_loading) {
+      console.log('弹幕信息正在加载 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
+      return 
+    }
 
-    if (!danmustatus) return
+    that.setData({
+      is_danmu_loading:true,
+    })
     console.log('获取服务端弹幕信息 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
     wx.request({
       url: weburl + '/api/client/query_danmu',
@@ -666,18 +711,24 @@ Page({
               danmuList.push(cur_danmu)
             }
           }
+        
           that.setData({
             danmuList: danmuList,
             pageoffset: pageoffset,
+            danmu_scrollTop: danmuServ.length*30,
           }, function() { 
-            that.addBarrage()
+            //that.addBarrage()
+            that.danmu_scroll_auto()
           })
         }  
+        that.setData({
+          is_danmu_loading: !that.data.is_danmu_loading,
+        })
       }
     })
     setTimeout(function () {
       that.queryDanmu()
-    }, 1000 * 30)
+    }, 1000 * 10)
   },
   danmuInfo(e) {
     var that = this
