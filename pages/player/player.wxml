@@ -94,8 +94,8 @@
     </view>
   </view>
 </action-sheet>
-<view hidden="{{modalDanmuHidden}}" bindchange="modalDanmuconfirm" class="danmu-info">
-  <scroll-view style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > <!-- queryDanmu -->
+<view class="danmu-info">
+  <scroll-view hidden="{{modalDanmuHidden}}" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > <!-- queryDanmu -->
   <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
     <view class="danmu-content" style="{{danmu.color?'color:'+danmu.color+';':''}}">
       <view style="display:flex;flex-direction:row;justify-content:flex-start;">
@@ -111,4 +111,5 @@
     -->
     </block>
   </scroll-view>  
+   <image bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image>  
 </view>

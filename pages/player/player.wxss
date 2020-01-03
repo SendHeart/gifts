@@ -386,7 +386,7 @@ live-player {
 } 
 .danmu-info {
   position:fixed;
-  bottom: 120rpx;
+  bottom: 105rpx;
   padding-left:5px;
   padding-bottom:10px;
   overflow-x: hidden;
@@ -396,7 +396,6 @@ live-player {
   width:100%;
   margin-top: 5rpx;
   overflow-x: hidden;
-  
 }
 .danmu-content {
   width:100%;
@@ -409,7 +408,6 @@ live-player {
   height:60rpx;
   line-height: 60rpx;
   padding: 5rpx;
-  
 }
 .danmu-content-nickname {
   color:#e34c55;

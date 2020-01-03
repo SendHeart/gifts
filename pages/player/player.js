@@ -679,7 +679,13 @@ Page({
       that.queryDanmu()
     }, 1000 * 30)
   },
- 
+  danmuInfo(e) {
+    var that = this
+    var modalDanmuHidden = that.data.modalDanmuHidden
+    that.setData({
+      modalDanmuHidden: !modalDanmuHidden,
+    })
+  },
   goodsinfo(e) {
     var that = this
     var modalGoodsHidden = that.data.modalGoodsHidden
