@@ -1,6 +1,18 @@
-<view class="actionSheet" wx:if="{{isShowSheet}}">
-  <view class="master" bindtap="__closeMaster" animation="{{masterAnimate}}"></view>
-  <view class="content" style="height: {{tops}};" animation="{{contentAnimate}}">
+<wxs module="utils">
+    var join = function(a,b) {
+        return a+b
+    };
+    var isNotSlot = function(v) {
+        return typeof v !== 'string'
+    }
+    module.exports = {
+        join: join,
+        isNotSlot: isNotSlot
+    }
+</wxs>
+
+<view wx:if="{{mask}}" class="weui-mask {{show ? '' : 'weui-mask_hidden'}} {{maskClass}}" bindtap="closeActionSheet"></view>
+<view class="weui-actionsheet {{show ? 'weui-actionsheet_toggle' : ''}} {{extClass}}">
+    <!-- 标题 -->
     <slot></slot>
-  </view>
 </view>

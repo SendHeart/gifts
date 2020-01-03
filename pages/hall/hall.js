@@ -1520,7 +1520,7 @@ Page({
     }
     if (liveid > 0 ) {
       wx.navigateTo({
-        url: '/pages/player/player?liveid=' + liveid + '&live_name=' + options.live_name + '&live_logo=' + options.live_logo + '&live_poster=' + options.live_poster + '&live_desc=' + options.live_desc + '&live_goods=' + options.live_goods
+        url: '/pages/player/player?liveid=' + liveid + '&live_name=' + options.live_name + '&live_logo=' + options.live_logo + '&live_poster=' + options.live_poster + '&live_desc=' + options.live_desc + '&live_goods=' + options.live_goods + '&refername=' + refername
       })
     }
     if (scene.indexOf("liveid=") >= 0) {

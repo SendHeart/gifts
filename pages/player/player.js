@@ -40,6 +40,7 @@ Page({
   barrage:'',
   data: {
     nickName: userInfo.nickName,
+    refername:'',
     liveid:'3954',
     streamname:'sendheart_3989.m3u8',
     playerurl: playerurl,
@@ -66,11 +67,14 @@ Page({
     danmustatus:true,
     tanmuHidden:true,
     goods_num:1,
+    live_members:1,
     modalGoodsHidden:true,
+    modalDanmuHidden: false,
     loadingHidden: true, // loading
-    scrollTop: 0,
-    is_loading: false,
-
+    goods_scrollTop: 0,
+    current_goods_scrollTop:0,
+    is_goods_loading: false,
+    danmu_scrollTop: 0,
   },
   /*
   onReady(res) {
@@ -88,6 +92,7 @@ Page({
     var live_logo = options.live_logo ? options.live_logo : that.data.share_logo
     var playerurl = that.data.playerurl
     var streamname = options.liveid ? 'sendheart_' + liveid +'.m3u8':that.data.streamname
+    var refername = options.refername ? options.refername:''
     that.setData({
       nickName: userInfo.nickName,
       liveurl: playerurl + '/' + streamname,
@@ -97,9 +102,11 @@ Page({
       live_desc: live_desc,
       live_logo: live_logo,
       liveid: liveid,
+      refername: refername,
     })
     that.query_liveroom_info()
     that.get_goods_list()
+    that.join_liveroom()
     console.log('player onLoad videourl:', that.data.videourl, ' liveid:', liveid, ' live_logo:', live_logo, ' live_name:', live_name, ' live_desc:', live_desc)
   },
   onShow: function () {
@@ -194,6 +201,101 @@ Page({
       }
     })
   },
+  join_liveroom: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var liveid = that.data.liveid
+    var refername = that.data.refername
+
+    wx.request({
+      url: weburl + '/api/client/post_join',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        liveid: liveid,
+        refername: refername,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+
+      },
+      success: function (res) {
+        console.log('join_liveroom 签到完成:', res.data)
+       
+      },
+      fail: function (e) {
+        console.log('join_liveroom 签到失败:', res.data)
+      }
+    })
+  },
+  focus_liveroom: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var liveid = that.data.liveid
+    var refername = that.data.refername
+
+    wx.request({
+      url: weburl + '/api/client/post_focus',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        liveid: liveid,
+        refername: refername,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+
+      },
+      success: function (res) {
+        console.log('join_liveroom 关注完成:', res.data)
+
+      },
+      fail: function (e) {
+        console.log('join_liveroom 关注失败:', res.data)
+      }
+    })
+  },
+  prize_liveroom: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var liveid = that.data.liveid
+    var post_type = '2' //直播点赞
+  
+    wx.request({
+      url: weburl + '/api/client/post_prize',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        post_id: liveid,
+        post_type: post_type, 
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('prize_liveroom 点赞完成:', res.data)
+
+      },
+      fail: function (e) {
+        console.log('prize_liveroom 点赞失败:', res.data)
+      }
+    })
+  },
   goodslist: function (e) {
     var that = this
     var live_goods = that.data.live_goods
@@ -201,6 +303,26 @@ Page({
       url: '../goods/list/list?live_goods=' + live_goods  
     })
   },
+  showGoods: function (e) {
+    // 点击购物车某件商品跳转到商品详情
+    var objectId = e.currentTarget.dataset.objectId
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_org = e.currentTarget.dataset.goodsOrg
+    var goods_shape = e.currentTarget.dataset.goodsShape
+    var goods_name = e.currentTarget.dataset.goodsName
+    var goods_price = e.currentTarget.dataset.goodsPrice
+    var goods_info = e.currentTarget.dataset.goodsInfo
+    var goods_sale = e.currentTarget.dataset.sale
+    var image = e.currentTarget.dataset.image ? e.currentTarget.dataset.image : ''
+
+    var sku_id = objectId
+    wx.navigateTo({
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_shape=' + goods_shape + '&goods_org=' + goods_org + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name + '&image=' + image + '&token=' + token + '&username=' + username
+    })
+  },
+
   get_goods_list: function (event) {
     //venuesList
     var that = this
@@ -212,7 +334,7 @@ Page({
     var live_goods = that.data.live_goods
     that.setData({
       loadingHidden: false,
-      is_loading: true,
+      is_goods_loading: true,
     })
     wx.request({
       url: weburl + '/api/client/get_goods_list',
@@ -247,6 +369,9 @@ Page({
         }
 
         for (var i = 0; i < venuesItems.length; i++) {
+          if (!venuesItems[i]['goodsno']) {
+            venuesItems[i]['goodsno'] = i+1
+          } 
           if (!venuesItems[i]['act_info']) {
             venuesItems[i]['act_info'] = ''
           } 
@@ -256,6 +381,9 @@ Page({
             venuesItems[i]['goods_tag'] = venuesItems[i]['goods_tag'].substring(0, 10)
           }
           venuesItems[i]['image'] = venuesItems[i]['activity_image'] ? venuesItems[i]['activity_image'] : venuesItems[i]['image']
+          if (venuesItems[i]['image'].indexOf("http") < 0) {
+            venuesItems[i]['image'] = weburl + '/' + venuesItems[i]['image'];
+          }
         }
         if (goods_page > 1 && venuesItems) {
           //向后合拼
@@ -267,7 +395,7 @@ Page({
           goods_num: (all_rows - goods_page) * goods_pagesize + venuesItems.length ,
           goods_page:goods_page ,
           loadingHidden: true,
-          is_loading: false,
+          is_goods_loading: false,
         })
       }
     })
@@ -276,8 +404,8 @@ Page({
     var that = this;
     var goods_page = that.data.goods_page + 1;
     var goods_all_rows = that.data.goods_all_rows
-    var is_loading = that.data.is_loading
-    if (is_loading) return
+    var is_goods_loading = that.data.is_goods_loading
+    if (is_goods_loading) return
     if (goods_page > goods_all_rows) {
       that.setData({
         loadingHidden: false,
@@ -296,7 +424,30 @@ Page({
     });
     that.get_goods_list()
   },
+  getMoreGoodsTapTag: function (e) {
+    var that = this;
+    var goods_page = that.data.goods_page + 1;
+    var goods_all_rows = that.data.goods_all_rows
+    var is_goods_loading = that.data.is_goods_loading
+    if (is_goods_loading) return
+    if (goods_page > goods_all_rows) {
+      that.setData({
+        loadingHidden: false,
+        loading_note: '已经到底了'
+      })
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+      }, 1000)
+      return
+    }
 
+    that.setData({
+      goods_page: goods_page,
+    });
+    that.get_goods_list()
+  },
   addBarrage: function() {
     var that = this 
     var inputValue = that.data.inputValue
@@ -304,24 +455,24 @@ Page({
     var nickName = that.data.nickName ? that.data.nickName+':':''
     if (inputValue!=''){
       var cur_danmu = {
-        content: '我:' + inputValue,
-        color: getRandomColor()
+        content: inputValue,
+        color: '#fffff'
       }
       danmuList.push(cur_danmu)
       console.log('本地弹幕:', danmuList)
     }
    
-    that.barrage.open()
-    that.barrage.addData(danmuList)
+    //that.barrage.open()
+    //that.barrage.addData(danmuList)
     that.setData({
       inputValue: '',
-      danmuList:[],
+      //danmuList:[],
     })
   },
   
   //点击播放按钮，封面图片隐藏,播放视频
-  bindplay: function (e) {
-    console.log('detail bindplay 响应失败', e)
+  bindPlay: function (e) {
+    console.log('detail bindPlay 响应失败', e)
     this.setData({
       tab_image: "none"
     }),
@@ -351,6 +502,7 @@ Page({
     that.setData({
       errorhidden: !errorhidden,
     })
+    this.videoContext.stop()
     wx.navigateTo({
       url: '/pages/player/player?liveid='+that.data.liveid+'&live_goods='+that.data.live_goods+'&live_name='+that.data.shop_name+'&live_poster='+that.data.live_poster+'&live_desc='+that.data.live_desc+'&live_logo='+that.data.live_logo 
     })
@@ -448,6 +600,15 @@ Page({
             duration: 2000
           }) 
         }else{
+          wx.showToast({
+            title: '发布成功',
+            icon: 'none',
+            duration: 1500
+          }) 
+          var tanmuHidden = that.data.tanmuHidden
+          that.setData({
+            tanmuHidden: !tanmuHidden
+          })
           console.log('弹幕信息保存完成:', that.data.inputValue)
         }
       }
@@ -468,7 +629,7 @@ Page({
     var danmustatus = that.data.danmustatus
 
     if (!danmustatus) return
-    console.log('获取服务端弹幕信息 live id:', liveid,'m_id:',m_id)
+    console.log('获取服务端弹幕信息 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
     wx.request({
       url: weburl + '/api/client/query_danmu',
       method: 'POST',
@@ -490,13 +651,17 @@ Page({
         if (res.data.status == 'y') {
           var danmuServ = res.data.result
           var pageoffset = res.data.all_rows
-          console.log('获取服务端弹幕信息完成 live id:', liveid, 'm_id:', m_id, ' result info:', danmuServ)
+          console.log('获取服务端弹幕信息完成:', res.data)
+          //console.log('获取服务端弹幕信息完成 live id:', liveid, 'pageoffset:', pageoffset, ' result info:', danmuServ)
           if (danmuServ){
             for (var i = 0; i < danmuServ.length;i++){
               var nickName = danmuServ[i]['nickname'] ? danmuServ[i]['nickname']+':':''
+              var background_color = nickName ? getRandomColor() : '#e34c55'
               var cur_danmu = {
-                content: nickName + danmuServ[i]['content'],
-                color: getRandomColor()
+                nickname:nickName,
+                content: danmuServ[i]['content'],
+                color: getRandomColor() ,
+                background_color: background_color,
               }
               danmuList.push(cur_danmu)
             }
@@ -527,9 +692,23 @@ Page({
       modalGoodsHidden: !this.data.modalGoodsHidden
     })
   }, 
-  
+
+  sendDanmu(e) {
+    var that = this
+    var tanmuHidden = that.data.tanmuHidden
+    that.setData({
+      tanmuHidden: !tanmuHidden,
+    })
+  },
+  modalMessageconfirm: function () {
+    var that = this
+    var tanmuHidden = that.data.tanmuHidden
+    that.setData({
+      tanmuHidden: !tanmuHidden,
+    })
+  }, 
   // 获取滚动条当前位置
-  scrolltoupper: function (e) {
+  goods_scrolltoupper: function (e) {
     if (e.detail.scrollTop > 100) {
       this.setData({
         floorstatus: true,
@@ -542,12 +721,30 @@ Page({
       })
     }
     this.setData({
-      current_scrollTop: e.detail.scrollTop
+      current_goods_scrollTop: e.detail.scrollTop
     })
 
   },
 
-  onShareAppMessage: function () {
+  // 获取滚动条当前位置
+  danmn_scrolltoupper: function (e) {
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true,
+        hidddensearch: false
+      })
+    } else {
+      this.setData({
+        floorstatus: false,
+        hidddensearch: true,
+      })
+    }
+    this.setData({
+      current_danmu_scrollTop: e.detail.scrollTop
+    })
+
+  },
+  onShareAppMessage: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var liveid = that.data.liveid
@@ -561,12 +758,36 @@ Page({
     var live_poster = that.data.live_poster
     var live_desc = that.data.live_desc
     console.log('onShareAppMessage live_logo:', live_logo, ' share_live_desc:', share_live_desc)
-    return {
-      title: share_live_title+'视频',
+    var shareObj = {
+      title: share_live_title + '视频',
       desc: share_live_desc,
       imageUrl: share_live_image,
-      path: '/pages/hall/hall?liveid=' + liveid + '&live_goods=' + live_goods + '&live_logo=' + live_logo + '&live_poster=' + live_poster + '&live_desc=' + live_desc +'&refername=' + username,
-      // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
+      path: '/pages/hall/hall?liveid=' + liveid + '&live_goods=' + live_goods + '&live_logo=' + live_logo + '&live_poster=' + live_poster + '&live_desc=' + live_desc + '&refername=' + username,
+      success: function (res) {
+        console.log(res)
+        if (res.errMsg == 'shareAppMessage:ok') {  // 转发成功之后的回调
+          that.setData({
+            send_status: 1,
+          })
+        }
+      },
+      fail: function (res) {
+        console.log(res)
+        if (res.errMsg == 'shareAppMessage:fail cancel') {// 转发失败之后的回调
+          // 用户取消转发
+        } else if (res.errMsg == 'shareAppMessage:fail') {
+          // 转发失败，其中 detail message 为详细失败信息
+        }
+      },
+      complete: function () { // 转发结束之后的回调（转发成不成功都会执行）
+      },
     }
+    if (options.from === 'button') {
+      console.log('送心分享', shareObj)
+     
+    }
+    return shareObj;
+    // 返回shareObj
+    
   }
 })

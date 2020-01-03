@@ -1,30 +1,27 @@
 <view class="page-body">
   <view class="page-section tc">
     <view class="goods-list">   
-      <button bindtap="goodslist" data-liveid="">看商品</button>
+      <button bindtap="focus_liveroom" data-liveid="">关注</button>
        <label>
-          <text>弹幕</text>
+          <text class="live-on">{{live_members>0?live_members:''}}</text>
+          <!-- 
           <switch bindchange="danmuClose" checked='true' color='#E34C55' style='zoom:0.6' />
+          -->
         </label>
     </view>
-    <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
+    <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
       <barrage class="barrage"></barrage>
     </video>
   </view>
 </view>
-<view class="sendmessage" hidden="tanmuHidden">
-  <view class="text">   
-    <input value="{{inputValue}}" placeholder="请输入弹幕" bindblur='bindInputBlur' />
-    <button bindtap="bindSendDanmu">发送</button>
-  </view>
-</view>
+
 <view class="footer">
   <view class="footer-left" hidden="">
     <view class="footer-button" bindtap="goodsinfo"> 
       <image class="goods-button" src="/images/1.png" ></image>
       <text class="goods-num">{{goods_num}}</text>
 	  </view>
-    <view class="footer-button" bindtap=""> 
+    <view class="footer-button" bindtap="sendDanmu"> 
       <view class="danmu-list">
         <view class="danmu-button" ></view>
         <image class="danmu-button-image" src="/images/u72.png" ></image>
@@ -32,13 +29,13 @@
 	  </view>
   </view>
   <view class="footer-right" style="">
-    <view class="footer-button" bindtap=""> 
+    <view class="footer-button" bindtap="onShareAppMessage"> 
       <view class="share-list">
-        <view class="share-button" ></view>
+        <button  class="share-button" open-type='share' formType="submit" bindtap="onShareAppMessage"></button>
         <image class="share-button-image" src="/images/share.png" ></image>
       </view>
 	  </view>
-     <view class="footer-button" bindtap=""> 
+     <view class="footer-button" bindtap="prize_liveroom"> 
       <view class="prize-list">
         <view class="prize-button" ></view>
         <image class="prize-button-image" src="/images/u8.png" ></image>
@@ -57,27 +54,28 @@
   </modal>
 </view>
 
-<action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" style="border-radius:20rpx;" style="border-radius:20rpx;" tops="40%">
+<action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" style="border-radius:20rpx;" tops="40%">
   <view class='modalGoodsTitle'>
     <text>{{goods_num>0?'商品数:'+goods_num:''}}</text>
     <view class='goods-return' bindtap="modalGoodsconfirm">×</view>
   </view> 
-  <scroll-view class="goods-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" bindscrolltolower="getMoreGoodsTapTag"  >
+  <scroll-view class="goods-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="goods_scrolltoupper" scroll-top="{{goods_scrollTop}}" bindscrolltolower="getMoreGoodsTapTag"  >
     <block wx:for="{{venuesItems}}"  wx:key="id" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="id">
-    <view class="goods-item">
-       <view bindtap="detailTapTag"   data-goods-id="{{goods.id}}" data-goods-name="{{goods.name}}">
-        <view class='goods-no'>{{goodsIndex+1}}</view>
+    <view class="goods-item" bindtap="showGoods"  data-object-id="{{goods.id}}" data-goods-name="{{goods.name}}" data-goods-org="{{goods.goods_org}}" data-goods-shape="{{goods.shape}}" data-goods-info="{{goods.act_info}}"
+        data-goods-price="{{goods.sell_price}}" data-sale="{{goods.sale}}" data-image="{{goods.activity_image?goods.activity_image:goods.image}}">
+       <view>
+        <view class='goods-no'>{{goods.goodsno}}</view>
         <!-- 缩略图 -->
         <image class="goods-image" src="{{goods.activity_image?goods.activity_image:goods.image}}" mode="aspectFit" />
       </view>
-       <view class="goods-text" bindtap="detailTapTag" data-order-object="{{item}}">
+       <view class="goods-text">
         <text class="goods-title">{{goods.name}}</text>
         <view class="goods-footer">
           <view style="width:70%">
             <text style="color:#e34c55;">￥{{goods.sell_price}}</text>
           </view>
           <view style="width:30%; text-align:right;">
-            <text bindtap="sendAginTapTag" class="smallbtn2">去下单</text>
+            <text class="smallbtn2">去下单</text>
           </view>
         </view>
       </view>
@@ -85,3 +83,32 @@
     </block>
   </scroll-view>  
 </action-sheet>
+<action-sheet hidden="{{tanmuHidden}}" bindchange="modalMessageconfirm">
+  <view class='modalMessageTitle' bindtap="modalMessageconfirm">
+    <view class='message-return' >×</view>
+  </view> 
+  <view class="sendmessage">
+    <view class="text">   
+      <input value="{{inputValue}}" placeholder="说点什么" bindblur='bindInputBlur' />
+      <button bindtap="bindSendDanmu">发布</button>
+    </view>
+  </view>
+</action-sheet>
+<view hidden="{{modalDanmuHidden}}" bindchange="modalDanmuconfirm" class="danmu-info">
+  <scroll-view style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > <!-- queryDanmu -->
+  <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
+    <view class="danmu-content" style="{{danmu.color?'color:'+danmu.color+';':''}}">
+      <view style="display:flex;flex-direction:row;justify-content:flex-start;">
+        <text class="danmu-content-nickname" style="{{danmu.background_color?'background_color:'+danmu.background_color+';':''}}">{{danmu.nickname}}</text>
+        <text class="danmu-content-text" style="{{danmu.background_color?'background_color:'+danmu.background_color+';':''}}">{{danmu.content}}</text>
+      </view>
+    </view>
+    <!-- 
+    <text class="danmu-content-text">{{danmu.content}}</text>
+    <view class="danmu-content">
+      
+    </view>
+    -->
+    </block>
+  </scroll-view>  
+</view>

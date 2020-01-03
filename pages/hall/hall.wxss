@@ -221,7 +221,7 @@ modal {
   overflow-y: hidden;
   z-index:99;
   margin-bottom: 20rpx;
-   white-space: nowrap
+  white-space: nowrap;
 }
 .banner-bar-item {
   display:inline-block;
