@@ -535,6 +535,7 @@ Page({
             live_memberList[i]['wx_headimg'] = weburl + '/' + live_memberList[i]['wx_headimg'];
           }
           if(i<live_headimg_max){
+            if (live_headimg.length > live_headimg_max-1) live_headimg.shift()
             live_headimg.push(live_memberList[i]['wx_headimg'])
           }
         }
@@ -861,6 +862,7 @@ Page({
     })
     setTimeout(function () {
       that.queryDanmu()
+      that.query_live_member()
     }, 1000 * 10)
   },
   danmuInfo(e) {
