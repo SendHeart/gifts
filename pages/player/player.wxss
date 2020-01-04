@@ -47,13 +47,31 @@ live-player {
 .goods-list label { 
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  width: 120rpx;
+  justify-content: flex-end;
+  width: 280rpx;
   height:60rpx;
   line-height: 60rpx;
   margin:0 50rpx auto;
   font-size:20rpx;
   opacity:0.6;
+}
+.live-member-image{
+  width:120rpx;
+  height: 60rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  z-index: 999;
+  opacity:1;
+}
+.live-member-image image{
+  width: 60rpx;
+  height:60rpx;
+  margin:5rpx auto;
+  position: absolute;
+  border-radius:50%;
+  z-index: 999;
+  opacity:0.8;
 }
 .live-on{
   background: #999;
@@ -272,7 +290,6 @@ live-player {
   white-space:nowrap; 
 }
 
-
 .goods-footer {
   padding: 6rpx 20rpx 10rpx 20rpx;
   display: flex;
@@ -425,7 +442,83 @@ live-player {
   border-top-right-radius:5rpx;
   border-bottom-right-radius:5rpx;
 }
+.danmu-num-show{
+  background: #333;
+  color:#fff;
+  opacity:0.8;
+  border-radius: 50rpx;
+  width: 100rpx;
+  height: 30rpx;
+  line-height: 30rpx;
+  padding: 5rpx;
+  text-align: center;
+  margin:0 auto;
+  font-size:20rpx;
+}
 
+.member-return{
+  position: relative;
+  font-size: 35rpx;
+  height:36rpx;
+  line-height:36rpx;
+  width: 36rpx;
+  border-radius: 50%;
+  border: 2rpx solid #999;
+  text-align: center;
+  align-items: center;
+  color: #999;
+  margin: 10rpx;
+}
+.member-container {
+  margin-top: 5rpx;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.modalMemberitle {
+  font-size: 26rpx;
+  color: #444;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top:20rpx;
+  margin-left:20rpx;
+}
+.member-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 100rpx;
+  border-bottom: 1rpx solid #f2f2f2;
+  padding: 10rpx;
+}
+
+.member-image {
+  margin:0 auto;
+  width: 60rpx;
+  height: 60rpx;
+  border-radius: 50%;
+}
+
+.member-text {
+  margin: 0 auto;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+}
+
+.member-title {
+  width: 80%;
+  font-size: 28rpx;
+  color: #444;
+  height:60rpx;
+  line-height: 60rpx;
+  margin:0 auto;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
 
 
 

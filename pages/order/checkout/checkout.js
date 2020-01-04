@@ -7,6 +7,7 @@ Page({
     title_name: '送出礼品',
     title_logo: '../../images/footer-icon-05.png',
     amount : 0,
+    liveid:0,
 		carts: [],
     cartIds: null,
 		addressList: [],
@@ -134,6 +135,7 @@ Page({
 	readCarts: function (options) {
 		var that = this
     console.log('order checkout from hall  readCarts options:', options)
+    var liveid = options.liveid ? options.liveid:0
 		var amount = parseFloat(options.amount)
     //var delivery_price = parseFloat(options.delivery_price)
     var payamount = that.data.payamount
@@ -161,6 +163,7 @@ Page({
 			amount: amount,
       payamount: payamount,
       delivery_price: delivery_price,
+      liveid: liveid,
       carts: carts,
       cartIds: cartIdArray,
       order_type: order_type,
@@ -179,11 +182,12 @@ Page({
       card_love_info: card_love_info,
       card_template: card_template,
 		})
-    console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape, 'card_template:', card_template, ' card_name_info:', card_name_info, ' card_register_info:', card_register_info, ' card_love_info:', card_love_info)
+    console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape, 'liveid:', liveid, ' card_name_info:', card_name_info, ' card_register_info:', card_register_info, ' card_love_info:', card_love_info)
 	},
 
   confirmOrder: function () {
     var that = this
+    var liveid = that.data.liveid ? that.data.liveid:0
     var order_num = that.data.order_num
     if (order_num ==0){
       wx.showToast({
@@ -235,6 +239,7 @@ Page({
         username: username,
         access_token: token,
         shop_type: shop_type,
+        liveid: liveid,
         sku_id: cartIds,
         buy_type: 'cart',
         order_type: order_type,

@@ -1427,6 +1427,7 @@ Page({
         var goodsshape = options.goods_shape ? options.goods_shape : 0
         var goodstag = options.goods_tag ? options.goods_tag : that.data.goodstag
         var goodsorg = options.goods_org ? options.goods_org : ''
+        var liveid = options.liveid ? options.liveid:0
         var card_type = options.card_type ? options.card_type:0
         var card_register_title = ''
         var card_register_content = ''
@@ -1632,6 +1633,7 @@ Page({
           goodsorg: goodsorg,
           goodsshape: goodsshape,
           goodstag: goodstag,
+          liveid: liveid,
           card_type: card_type,
           goodsid: goodsid ? goodsid:0,
           refer_mid: refer_mid,
@@ -1658,6 +1660,7 @@ Page({
               username: options.username ? options.username : username, 
               access_token: token, 
               goods_id: goodsid,
+              liveid:liveid,
               shop_type:shop_type,
             },
             header: {
@@ -2159,6 +2162,7 @@ Page({
       var goodsshape = that.data.goodsshape
       var current_card_color = that.data.current_card_color
       var card_type = that.data.card_type
+      var liveid = that.data.liveid ? that.data.liveid:0
       if (goodsshape == 5 || goodsshape == 4) {
         order_note = that.data.card_content
         if (cur_img_id != 0) {
@@ -2214,7 +2218,7 @@ Page({
           var amount = parseFloat(that.data.sku_sell_price) * buynum
           if(goodsshape!=5 && goodsshape!=4){
             wx.navigateTo({
-              url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_image=' + share_goods_image + '&username=' + username + '&token=' + token
+              url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_image=' + share_goods_image + '&liveid=' + liveid + '&username=' + username + '&token=' + token
             })
           }else{
             if (goodsshape == 5){

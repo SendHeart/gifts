@@ -2,12 +2,14 @@
   <view class="page-section tc">
     <view class="goods-list">   
       <button bindtap="focus_liveroom" data-liveid="">关注</button>
-       <label>
-          <text class="live-on">{{live_members>0?live_members:''}}</text>
-          <!-- 
-          <switch bindchange="danmuClose" checked='true' color='#E34C55' style='zoom:0.6' />
-          -->
-        </label>
+      <label> 
+        <view class="live-member-image"> 
+        <block wx:for="{{live_headimg}}" wx:for-item="headiimg" wx:for-index="headiimgIndex" wx:key="headiimgIndex">
+          <image src="{{headiimg}}" style="{{headiimgIndex>0?'margin-left:-'+40*headiimgIndex+'rpx;':'margin-right:-20rpx;'}}" mode="aspectFit" />
+        </block>
+        </view>
+        <text bindtap="live_member_info"  class="live-on">{{live_members>0?live_members:''}}</text>
+      </label>
     </view>
     <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
       <barrage class="barrage"></barrage>
@@ -53,15 +55,32 @@
     </view>
   </modal>
 </view>
-
+<action-sheet hidden="{{modalMemberHidden}}" bindchange="modalMemberconfirm">
+  <view class='modalMemberitle'>
+    <text>{{live_members>0?'在线人数:'+live_members:''}}</text>
+    <view class='member-return' bindtap="modalMemberconfirm">×</view>
+  </view> 
+  <scroll-view class="member-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="member_scrolltoupper" scroll-top="{{member_scrollTop}}" bindscrolltolower="getMoreMemberTapTag"  >
+    <block wx:for="{{live_memberList}}"  wx:key="id" wx:for-item="member" wx:for-index="memberIndex">
+    <view class="member-item" bindtap="showMember"  data-m_id="{{member.m_id}}" data-nickname="{{member.nickname}}" data-wx_headimg="{{member.wx_headimg}}" >
+      <view>
+        <!-- 缩略图 -->
+        <image class="member-image" src="{{member.wx_headimg}}" mode="aspectFit" />
+      </view>
+      <text class="member-title">{{member.wx_nickname}}</text>
+      
+    </view>
+    </block>
+  </scroll-view>  
+</action-sheet>
 <action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" style="border-radius:20rpx;" tops="40%">
   <view class='modalGoodsTitle'>
     <text>{{goods_num>0?'商品数:'+goods_num:''}}</text>
     <view class='goods-return' bindtap="modalGoodsconfirm">×</view>
   </view> 
   <scroll-view class="goods-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="goods_scrolltoupper" scroll-top="{{goods_scrollTop}}" bindscrolltolower="getMoreGoodsTapTag"  >
-    <block wx:for="{{venuesItems}}"  wx:key="id" wx:for-item="goods" wx:for-index="goodsIndex" wx:key="id">
-    <view class="goods-item" bindtap="showGoods"  data-object-id="{{goods.id}}" data-goods-name="{{goods.name}}" data-goods-org="{{goods.goods_org}}" data-goods-shape="{{goods.shape}}" data-goods-info="{{goods.act_info}}"
+    <block wx:for="{{venuesItems}}" wx:key="id" wx:for-item="goods" wx:for-index="goodsIndex" >
+    <view class="goods-item" bindtap="showGoods"  data-goods-id="{{goods.id}}" data-goods-name="{{goods.name}}" data-goods-org="{{goods.goods_org}}" data-goods-shape="{{goods.shape}}" data-goods-info="{{goods.act_info}}"
         data-goods-price="{{goods.sell_price}}" data-sale="{{goods.sale}}" data-image="{{goods.activity_image?goods.activity_image:goods.image}}">
        <view>
         <view class='goods-no'>{{goods.goodsno}}</view>
@@ -107,5 +126,6 @@
     </block>
   </view>
   </scroll-view>  
-   <image bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image>  
+  <image hidden="{{modalDanmuHidden}}"bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image> 
+  <text hidden="{{!modalDanmuHidden}}" bindtap="danmuInfo" class="danmu-num-show">{{danmu_num<100?' '+danmu_num+' 条新的消息':' 99+条新的消息'}}</text>  
 </view>

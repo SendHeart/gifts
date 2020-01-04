@@ -8,7 +8,7 @@
       </view>
     </view>
     <view class="all-classify-list" >
-    <block wx:for="{{navList}}" wx:for-item="item" wx:key="id">
+    <block wx:for="{{navList}}" wx:for-item="item" wx:key="index">
       <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="all-classify-item {{index == activeIndex ? 'all-classify-item-active' : ''}}" catchtap="onTapTag">
         {{item.title}}
       </view>
@@ -33,7 +33,7 @@
 </view>
   <view class="venues_box" >
   <view class="box-left">
-   <block wx:for="{{venuesItems_show}}"  wx:key="id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
+   <block wx:for="{{venuesItems_show}}"  wx:key="m_id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
       <block wx:for="{{venuesItems_show}}" wx:key="id">
         <view class="venues_item" wx:if="{{index%2==0}}"> 
           <navigator url="/pages/player/player?liveid={{item.liveid}}&live_goods={{item.live_goods}}&live_name={{item.shop_name}}&live_poster={{item.live_poster}}&live_desc={{item.live_desc}}&live_logo={{item.logo}}" hover-class="none" >
@@ -57,7 +57,7 @@
     </block>
   </view>
   <view class="box-right">
-   <block wx:for="{{venuesItems_show}}"  wx:key="id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
+   <block wx:for="{{venuesItems_show}}"  wx:key="m_id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
       <block wx:for="{{venuesItems_show}}" wx:key="id">
         <view class="venues_item" wx:if="{{index%2==1}}"> 
             <navigator url="/pages/player/player?liveid={{item.liveid}}&live_goods={{item.live_goods}}&live_name={{item.shop_name}}&live_poster={{item.live_poster}}&live_desc={{item.live_desc}}&live_logo={{item.logo}}" hover-class="none" >
