@@ -1532,14 +1532,15 @@ Page({
     socketMsgQueue.push(that.data.message)
     //that.setNavigation()
     that.initSocketMessage()
+     /*
     setTimeout(function () {
       that.initSocketMessage()
     }, 20000)
-    /*
+    */
     setInterval(function () {
       that.initSocketMessage()
     }, 20000)
-    */
+   
     /*
     setInterval(function () {
       that.reSend()

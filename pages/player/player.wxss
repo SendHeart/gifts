@@ -23,7 +23,7 @@ live-player {
   position:fixed;
   display:flex;
   flex-direction:row;
-  justify-content: space-around;
+  justify-content: space-between;
   border:0px solid #aaaaaa;
   top: 20rpx;
   padding-left:2px;
@@ -32,13 +32,54 @@ live-player {
   opacity:1;
   z-index: 999;
 }
-.goods-list button { 
-  width:18%;
-  height:60rpx;
-  line-height : 60rpx ;
-  margin-left:15px;
-  font-size : 12px ;
-  padding:2rpx auto;
+.live-title {
+  width: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  height: 80rpx;
+  line-height: 35rpx;
+  /*width属性解决标题文字太短而缩略图偏移*/
+  border-bottom: 1rpx solid #f2f2f2;
+  padding: 5rpx;
+  background: #333;
+  opacity: 0.8;
+  border-radius:50rpx;
+  margin: 0 auto; 
+}
+.live-title image{
+  width:80rpx;
+  height: 80rpx;
+  border-radius:50%;
+  margin:0 auto auto 10rpx;
+}
+.live-title-text {
+  width: 60%;
+  display: flex;
+  flex-direction: column;
+  justify-content:flex-start;
+}
+
+.live-title-text text {
+  font-size: 24rpx;
+  height: 40rpx;
+  padding: 5rpx;
+}
+.live-title-name {
+  font-size: 25rpx;
+  color: #fff;
+  overflow:hidden;  
+  text-overflow:ellipsis;  
+  white-space:nowrap; 
+}
+
+.live-title button { 
+  width:130rpx;
+  height:40rpx;
+  line-height : 40rpx ;
+  margin:20rpx auto;
+  font-size : 22rpx ;
+  padding:5rpx auto;
   background: #e34c55;
   border-radius: 50rpx;
   color: #fff;
@@ -48,16 +89,16 @@ live-player {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
-  width: 280rpx;
-  height:60rpx;
-  line-height: 60rpx;
-  margin:0 50rpx auto;
+  width: 50%;
+  height:80rpx;
+  line-height: 80rpx;
   font-size:20rpx;
   opacity:0.6;
 }
 .live-member-image{
-  width:120rpx;
+  width:75%;
   height: 60rpx;
+  margin-top:10rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -77,12 +118,12 @@ live-player {
   background: #999;
   color:#fff;
   border-radius: 50rpx;
-  width: 100rpx;
-  height: 60rpx;
-  line-height: 60rpx;
+  width: 120rpx;
+  height: 40rpx;
+  line-height: 40rpx;
   padding: 5rpx;
   text-align: center;
-  margin:0 auto;
+  margin:20rpx 20rpx auto;
 }
 
 .footer{

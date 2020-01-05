@@ -76,7 +76,8 @@ Page({
     danmu_num_max: 200, //本地最多保存200条记录
     live_members:1,
     live_starttime: 0,
-    live_focus: 0,
+    live_focus_status: false,
+    live_sub_name:'人气值1000',
     modalGoodsHidden:true,
     modalDanmuHidden: false,
     modalMemberHidden:true,
@@ -226,27 +227,32 @@ Page({
         }
         //var venuesItems = that.data.venuesItems
         var liveinfo = res.data.result
+        if (liveinfo[0]['logo'].indexOf("http") < 0) {
+          liveinfo[0]['logo'] = weburl + '/' + liveinfo[0]['logo'];
+        }
+        var live_focus_num = liveinfo[0]['focus_num'] ? liveinfo[0]['focus_num'] : 0 
+        live_focus_num = live_focus_num > 10000 ? (live_focus_num / 10000).toFixed(2) : live_focus_num
+        var live_sub_name = live_focus_num > 0 ? '人气值:' + live_focus_num : '人气值:1'
         if (liveinfo && liveinfo[0]['live_status']!=1) { //离线 取视频url
           var videourl = liveinfo[0]['videourl']
           that.setData({ 
             videourl: videourl ? videourl:that.data.liveurl,
+            live_logo: liveinfo[0]['logo'],
+            live_sub_name: live_sub_name,
           }) 
         }else{ //在线
-          if (liveinfo[0]['logo'].indexOf("http") < 0) {
-            liveinfo[0]['logo'] = weburl + '/' + liveinfo[0]['logo'];
-          }
           that.setData({
             videourl: that.data.liveurl,
             live_starttime: liveinfo[0]['endtime'],
             live_logo: liveinfo[0]['logo'],
             live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name']:'送心礼物' ,
-            live_focus: liveinfo[0]['focus_num'] ? liveinfo[0]['focus_num']:0 ,
+            live_sub_name: live_sub_name
           }, function () {
             that.join_liveroom()
             //that.query_live_member()
           }) 
         }
-        console.log('query_liveroom_info videourl:', videourl, ' live_starttime:', that.data.live_starttime, ' live_logo:', that.data.live_logo, ' live_logo:', that.data.live_logo, ' live_name:', that.data.live_name, ' live_focus:', that.data.live_focus)
+        console.log('query_liveroom_info videourl:', videourl, ' live_starttime:', that.data.live_starttime, ' live_logo:', that.data.live_logo, ' live_name:', that.data.live_name, ' live_sub_name:', that.data.live_sub_name)
       },
       fail:function(e){
         that.setData({
@@ -325,6 +331,9 @@ Page({
           icon: 'none',
           duration: 1000
         }) 
+        that.setData({
+          live_focus_status:true,
+        })
         console.log('join_liveroom 关注完成:', res.data)
 
       },

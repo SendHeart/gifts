@@ -1,14 +1,21 @@
 <view class="page-body">
   <view class="page-section tc">
-    <view class="goods-list">   
-      <button bindtap="focus_liveroom" data-liveid="">关注</button>
-      <label> 
-        <view class="live-member-image"> 
-        <block wx:for="{{live_headimg}}" wx:for-item="headiimg" wx:for-index="headiimgIndex" wx:key="headiimgIndex">
-          <image src="{{headiimg}}" style="{{headiimgIndex>0?'margin-left:-'+40*headiimgIndex+'rpx;':'margin-right:-20rpx;'}}" mode="aspectFit" />
-        </block>
+    <view class="goods-list">
+      <view class="live-title"  bindtap="focus_liveroom">
+        <image src="{{live_logo}}" mode="aspectFit" />
+        <view class="live-title-text">
+          <text class="live-title-name">{{live_name}}</text>
+          <text style="color:#e34c55;font-size:20rpx;">{{live_sub_name}}</text>
         </view>
-        <text bindtap="live_member_info"  class="live-on">{{live_members>0?live_members:''}}</text>
+        <button style="{{live_focus_status?'background-color:#1d1d1d;color:#f2f2f2':''}}">关注</button>
+      </view>   
+      <label bindtap="live_member_info"> 
+        <view class="live-member-image"> 
+          <block wx:for="{{live_headimg}}" wx:for-item="headiimg" wx:for-index="headiimgIndex" wx:key="headiimgIndex">
+            <image src="{{headiimg}}" style="{{headiimgIndex>0?'margin-left:-'+40*headiimgIndex+'rpx;':''}}" mode="aspectFit" />
+          </block>
+        </view>
+        <text   class="live-on">{{live_members>0?live_members:''}}</text>
       </label>
     </view>
     <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
@@ -68,7 +75,6 @@
         <image class="member-image" src="{{member.wx_headimg}}" mode="aspectFit" />
       </view>
       <text class="member-title">{{member.wx_nickname}}</text>
-      
     </view>
     </block>
   </scroll-view>  
