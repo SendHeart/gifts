@@ -75,6 +75,7 @@ Page({
     danmu_num:0,
     danmu_num_max: 200, //本地最多保存200条记录
     live_members:1,
+    live_members_info:'',
     live_starttime: 0,
     live_focus_status: false,
     live_sub_name:'人气值1000',
@@ -552,14 +553,18 @@ Page({
           //向后合拼
           live_memberList = that.data.live_memberList.concat(live_memberList);
         }
+        var live_members = (all_rows - member_page) * member_pagesize + live_memberList.length
+        live_members = live_members > 10000 ? (live_members / 10000).toFixed(2) : live_members
+        var live_members_info = live_members > 10000 ? live_members + '万' : live_members
         that.setData({
           live_headimg: live_headimg,
           live_memberList: live_memberList,
           member_all_rows: all_rows,
-          live_members: (all_rows - member_page) * member_pagesize + live_memberList.length,
+          live_members: live_members,
           member_page: member_page,
           loadingHidden: true,
           is_member_loading: false,
+          live_members_info:live_members_info,
         })
         console.log('query_live_member:', live_memberList, ' all_rows:', all_rows, ' live_headimg:', that.data.live_headimg)
       }

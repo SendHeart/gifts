@@ -15,7 +15,7 @@
             <image src="{{headiimg}}" style="{{headiimgIndex>0?'margin-left:-'+40*headiimgIndex+'rpx;':''}}" mode="aspectFit" />
           </block>
         </view>
-        <text   class="live-on">{{live_members>0?live_members:''}}</text>
+        <text class="live-on">{{live_members_info}}</text>
       </label>
     </view>
     <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
