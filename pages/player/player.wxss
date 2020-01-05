@@ -98,7 +98,7 @@ live-player {
 .live-member-image{
   width:75%;
   height: 60rpx;
-  margin-top:10rpx;
+  margin-top:15rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -264,10 +264,11 @@ live-player {
   line-height:36rpx;
   width: 36rpx;
   border-radius: 50%;
-  border: 2rpx solid #999;
+  border: 0rpx solid #999;
   text-align: center;
   align-items: center;
   color: #999;
+  background-color:#333; 
   margin: 10rpx;
 }
 
@@ -378,10 +379,11 @@ live-player {
   line-height:36rpx;
   width: 36rpx;
   border-radius: 50%;
-  border: 2rpx solid #999;
+  border: 0rpx solid #999;
   text-align: center;
   align-items: center;
   color: #999;
+  background-color:#333; 
   margin: 10rpx;
 }
 
@@ -504,12 +506,16 @@ live-player {
   line-height:36rpx;
   width: 36rpx;
   border-radius: 50%;
-  border: 2rpx solid #999;
+  border: 0rpx solid #999;
   text-align: center;
   align-items: center;
   color: #999;
+  background-color:#333; 
   margin: 10rpx;
 }
+
+
+
 .member-container {
   margin-top: 5rpx;
   height: 100%;
@@ -518,7 +524,7 @@ live-player {
 
 .modalMemberitle {
   font-size: 26rpx;
-  color: #444;
+  color: #fff;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -552,7 +558,7 @@ live-player {
 .member-title {
   width: 80%;
   font-size: 28rpx;
-  color: #444;
+  color: #f2f2f2;
   height:60rpx;
   line-height: 60rpx;
   margin:0 auto;

@@ -1,6 +1,6 @@
 {
     "navigationBarTitleText": "详情",
     "usingComponents": {
-      "actionsheet": "../common/actionsheet/actionsheet"
+      "action-sheet": "../common/actionsheet/actionsheet"
     }
 }

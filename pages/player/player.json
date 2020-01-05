@@ -1,6 +1,7 @@
 {
   "navigationBarTitleText": "视频播放" ,
   "usingComponents": {
-    "barrage": "miniprogram-barrage"
+    "barrage": "miniprogram-barrage",
+    "action-sheet": "../common/actionsheet/actionsheet"
   }
 }

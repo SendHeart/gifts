@@ -1,4 +1,4 @@
-<view class="page-body">
+<view class="page-body"  style="{{(!modalGoodsHidden||!modalDanmuHidden||!modalMemberHidden)?'opacity:0.8;':''}}">
   <view class="page-section tc">
     <view class="goods-list">
       <view class="live-title"  bindtap="focus_liveroom">
@@ -18,7 +18,7 @@
         <text class="live-on">{{live_members_info}}</text>
       </label>
     </view>
-    <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{poster_image}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
+    <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{live_poster}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
       <barrage class="barrage"></barrage>
     </video>
   </view>
@@ -62,10 +62,13 @@
     </view>
   </modal>
 </view>
-<action-sheet hidden="{{modalMemberHidden}}" bindchange="modalMemberconfirm">
+<action-sheet hidden="{{modalMemberHidden}}" bindchange="modalMemberconfirm" mask="{{true}}" maskClosable="{{true}}" show="{{!modalMemberHidden}}" extClass="background:#333;" tops="40%">
   <view class='modalMemberitle'>
     <text>{{live_members>0?'在线人数:'+live_members:''}}</text>
-    <view class='member-return' bindtap="modalMemberconfirm">×</view>
+    <view class='member-return' bindtap="modalMemberconfirm">
+    <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+    </view>
+    
   </view> 
   <scroll-view class="member-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="member_scrolltoupper" scroll-top="{{member_scrollTop}}" bindscrolltolower="getMoreMemberTapTag"  >
     <block wx:for="{{live_memberList}}"  wx:key="id" wx:for-item="member" wx:for-index="memberIndex">
@@ -79,10 +82,10 @@
     </block>
   </scroll-view>  
 </action-sheet>
-<action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" style="border-radius:20rpx;" tops="40%">
+<action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" mask="{{true}}" maskClosable="{{true}}" show="{{!modalGoodsHidden}}" tops="40%">
   <view class='modalGoodsTitle'>
     <text>{{goods_num>0?'商品数:'+goods_num:''}}</text>
-    <view class='goods-return' bindtap="modalGoodsconfirm">×</view>
+    <view class='goods-return' bindtap="modalGoodsconfirm"> <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" /></view>
   </view> 
   <scroll-view class="goods-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="goods_scrolltoupper" scroll-top="{{goods_scrollTop}}" bindscrolltolower="getMoreGoodsTapTag"  >
     <block wx:for="{{venuesItems}}" wx:key="id" wx:for-item="goods" wx:for-index="goodsIndex" >
@@ -108,9 +111,11 @@
     </block>
   </scroll-view>  
 </action-sheet>
-<action-sheet hidden="{{tanmuHidden}}" bindchange="modalMessageconfirm">
+<action-sheet hidden="{{tanmuHidden}}" bindchange="modalMessageconfirm" mask="{{true}}" maskClosable="{{true}}" show="{{!tanmuHidden}}" extClass="{{'background-color:#fff;'}}" tops="40%">
   <view class='modalMessageTitle' bindtap="modalMessageconfirm">
-    <view class='message-return' >×</view>
+    <view class='message-return' >
+      <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+    </view>
   </view> 
   <view class="sendmessage">
     <view class="text">   
@@ -120,7 +125,7 @@
   </view>
 </action-sheet>
 <view class="danmu-info">
-  <scroll-view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
+  <scroll-view wx:if="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
   <view class="danmu-scroll-list">
     <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
     <view class="danmu-content" style="{{danmu.color?'color:'+danmu.color+';':''}}">

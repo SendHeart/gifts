@@ -80,7 +80,7 @@ Page({
     live_focus_status: false,
     live_sub_name:'人气值1000',
     modalGoodsHidden:true,
-    modalDanmuHidden: false,
+    modalDanmuHidden: true,
     modalMemberHidden:true,
     loadingHidden: true, // loading
     goods_scrollTop: 0,
@@ -91,6 +91,7 @@ Page({
     is_member_loading: false,
     is_danmu_loading: false,
     danmu_scrollTop: 0,
+    extClass:"background-color:#333;opacity:0.8;",
   },
   /*
   onReady(res) {
@@ -122,8 +123,8 @@ Page({
     })
     that.query_liveroom_info()
     that.get_goods_list()
-  
-    console.log('player onLoad videourl:', that.data.videourl, ' liveid:', liveid, ' live_logo:', live_logo, ' live_name:', live_name, ' live_desc:', live_desc)
+    //console.log('options:',options)
+    console.log('player onLoad videourl:', that.data.videourl, ' liveid:', liveid, ' live_logo:', live_logo, ' live_name:', live_name, ' live_poster:', live_poster)
   },
   onShow: function () {
     var that = this

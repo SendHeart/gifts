@@ -54,8 +54,6 @@ module.exports =
       (function (module, exports, __webpack_require__) {
 
         "use strict";
-
-
         Component({
           options: {
             multipleSlots: true,

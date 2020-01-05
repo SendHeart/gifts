@@ -272,7 +272,6 @@ Page({
   },
   
   get_liveroom_list: function (event) {
-    //venuesList
     var that = this
     var page = that.data.page
     var pagesize = that.data.pagesize
@@ -326,9 +325,9 @@ Page({
         //var venuesItems = that.data.venuesItems
         if (venuesItems_new){
           for (var i = 0; i < venuesItems_new.length; i++) {
-            venuesItems_new[i]['poster'] = venuesItems_new[i]['poster'] ? venuesItems_new[i]['poster']:that.data.poster_image
-            if (venuesItems_new[i]['poster'].indexOf("http") < 0) {
-              venuesItems_new[i]['poster'] = weburl + '/' + venuesItems_new[i]['poster'];
+            venuesItems_new[i]['live_poster'] = venuesItems_new[i]['live_poster'] ? venuesItems_new[i]['live_poster']:that.data.poster_image
+            if (venuesItems_new[i]['live_poster'].indexOf("http") < 0) {
+              venuesItems_new[i]['live_poster'] = weburl + '/' + venuesItems_new[i]['live_poster'];
             }
             venuesItems_new[i]['logo'] = venuesItems_new[i]['logo'] ? venuesItems_new[i]['logo']:that.data.logo_image
             if (venuesItems_new[i]['logo'].indexOf("http") < 0) {

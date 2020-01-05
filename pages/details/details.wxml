@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden||!cardlovehidden)?'position:fixed;':''}}">
+<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden||!cardlovehidden)?'position:fixed;opacity:0.8;':''}}">
   <view class="share-goods"  >
     <view class="share-buttons" style="justify-content: flex-end">
       <!--
@@ -246,12 +246,15 @@
       </view>
     </view>
 </view>
-<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm">
-      <view class='modaltitletext'>
+<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm" mask="{{true}}" show="{{!modalHidden}}" extClass="{{'background-color:#fff;'}}">
+  <view class="">
+    <view class="modaltitletext">
         <text>{{attrValueList.length>0?'':add_cart_title}}</text>
-        <view class='buy-return' bindtap="modalBindcancel">×</view>
+        <view class='buy-return' bindtap="modalBindcancel">
+          <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+        </view>
       </view>
-      <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-70}}px">
+        <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-70}}px">
         <view style="max-height:{{dkheight-75}}px">
           <view wx:for="{{attrValueList}}" wx:for-item="attrValueObj" wx:for-index="attrIndex" wx:key="id" >
             <view class="sku_title">选择{{attrValueObj.name}}</view>
@@ -265,7 +268,7 @@
             </view>
           </view>
         </view>
-      </view> 
+      </view>
       <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
       <view class="buy-info">
@@ -284,9 +287,9 @@
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >
           <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image>  
         </view>
-      </view>
-  <action-sheet-cancel>确定
-<view style='height:0rpx;'></view>
+      </view> 
+  </view> 
+  <action-sheet-cancel bindtap="modalBindaconfirm">确定
 </action-sheet-cancel>
 </action-sheet>
 
