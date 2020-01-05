@@ -5,7 +5,7 @@
         <image src="{{live_logo}}" mode="aspectFit" />
         <view class="live-title-text">
           <text class="live-title-name">{{live_name}}</text>
-          <text style="color:#e34c55;font-size:20rpx;">{{live_sub_name}}</text>
+          <text style="color:#999;font-size:20rpx;">{{live_sub_name}}</text>
         </view>
         <button style="{{live_focus_status?'background-color:#1d1d1d;color:#f2f2f2':''}}">关注</button>
       </view>   
