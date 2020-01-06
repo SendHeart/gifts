@@ -597,7 +597,7 @@ live-player {
   align-items: center;
   color: #999;
   background-color:#999; 
-  margin-top: -10rpx;
+  margin-top: -5rpx;
   margin-right:5rpx;
 }
 

@@ -143,17 +143,18 @@
 <!-- 商品推荐弹窗-->
 <view hidden="{{modalAdvGoodshidden}}" class="live-adv-goods">
   <view class='live-adv-goods-title' bindtap="modalAdvGoodsconfirm">
+    <text style="margin-right:150rpx;">{{live_adv_goods.length>1?'('+live_adv_goods.length+')':''}}</text>
     <view class="live-adv-goods-return">
       <image style="width:30rpx;height:30rpx;border-radius:50%;" src="/images/icon-no.png" />
     </view>
   </view>
-  <view class="live-adv-goods-item" bindtap="showGoods"  data-goods-id="{{live_adv_goods.id}}" data-goods-name="{{live_adv_goods.name}}" data-goods-org="{{live_adv_goods.goods_org}}" data-goods-shape="{{live_adv_goods.shape}}" data-goods-info="{{live_adv_goods.act_info}}" data-goods-price="{{live_adv_goods.sell_price}}" data-sale="{{live_adv_goods.sale}}" data-image="{{live_adv_goods.activity_image?live_adv_goods.activity_image:live_adv_goods.image}}">
+  <view class="live-adv-goods-item" bindtap="showGoods"  data-goods-id="{{live_adv_goods[0].id}}" data-goods-name="{{live_adv_goods[0].name}}" data-goods-org="{{live_adv_goods[0].goods_org}}" data-goods-shape="{{live_adv_goods[0].shape}}" data-goods-info="{{live_adv_goods[0].act_info}}" data-goods-price="{{live_adv_goods[0].sell_price}}" data-sale="{{live_adv_goods[0].sale}}" data-image="{{live_adv_goods[0].activity_image?live_adv_goods[0].activity_image:live_adv_goods[0].image}}">
     <view>
-      <image class="live-adv-goods-image" src="{{live_adv_goods.activity_image?live_adv_goods.activity_image:live_adv_goods.image}}" mode="aspectFit" />
+      <image class="live-adv-goods-image" src="{{live_adv_goods[0].activity_image?live_adv_goods[0].activity_image:live_adv_goods[0].image}}" mode="aspectFit" />
     </view>
     <view class="live-adv-goods-text">
-      <text class="live-adv-goods-name">{{live_adv_goods.name}}</text>
-      <text style="color:#e34c55;font-size:22rpx;">￥{{live_adv_goods.sell_price}}</text>
+      <text class="live-adv-goods-name">{{live_adv_goods[0].name}}</text>
+      <text style="color:#e34c55;font-size:22rpx;">￥{{live_adv_goods[0].sell_price}}</text>
     </view>
   </view>
 </view>

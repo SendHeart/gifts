@@ -922,10 +922,16 @@ Page({
                 
               } else if (danmuServ[i]['type'] == 1){ //通知
                 var cur_adv_note = danmuServ[i]['content']?JSON.parse(danmuServ[i]['content']):''
+                if (cur_adv_note['image'].indexOf("http") < 0) {
+                  cur_adv_note['image'] = weburl + '/' + cur_adv_note['image'];
+                }
                 live_adv_note.push(cur_adv_note)
                 
               } else if (danmuServ[i]['type'] == 2) { //商品推荐
                 var cur_adv_goods = danmuServ[i]['content'] ? JSON.parse(danmuServ[i]['content']) : ''
+                if (cur_adv_goods['image'].indexOf("http") < 0) {
+                  cur_adv_goods['image'] = weburl + '/' + cur_adv_goods['image'];
+                }
                 live_adv_goods.push(cur_adv_goods)
                 console.log('获取服务端弹幕信息完成 live id:', liveid, 'danmuList:', danmuList, ' live_adv_goods:', live_adv_goods)
               }
@@ -940,7 +946,7 @@ Page({
             modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
             live_adv_note: live_adv_note ? live_adv_note : that.data.live_adv_note,
             modalAdvGoodshidden: live_adv_goods.length>0 ? false : that.data.modalAdvGoodshidden,
-            live_adv_goods: live_adv_goods ? live_adv_goods[0] : that.data.live_adv_goods,
+            live_adv_goods: live_adv_goods ? live_adv_goods : that.data.live_adv_goods,
           }, function() { 
             that.danmu_scroll_auto()
           })
@@ -1077,9 +1083,20 @@ Page({
     })
   },
   modalAdvGoodsconfirm: function () {
-    this.setData({
-      modalAdvGoodshidden: !this.data.modalAdvGoodshidden
-    })
+    var that = this
+    var modalAdvGoodshidden = that.data.modalAdvGoodshidden
+    var live_adv_goods = that.data.live_adv_goods
+    console.log('modalAdvGoodsconfirm:',live_adv_goods)
+    live_adv_goods.shift()
+    if (live_adv_goods.length==0){
+      that.setData({
+        modalAdvGoodshidden: !modalAdvGoodshidden
+      })
+    } else{
+      that.setData({
+        live_adv_goods: live_adv_goods
+      })
+    }
   }, 
 
   modalAdvNoteconfirm: function () {
