@@ -1,4 +1,4 @@
-<view class="page-body"  style="{{(!modalGoodsHidden||!modalDanmuHidden||!modalMemberHidden)?'opacity:0.8;':''}}">
+<view class="page-body"  style="{{(!modalGoodsHidden||!modalMemberHidden)?'opacity:0.8;':''}}">
   <view class="page-section tc">
     <view class="goods-list">
       <view class="live-title"  bindtap="focus_liveroom">
@@ -19,7 +19,6 @@
       </label>
     </view>
     <video id="myVideo" class="slide-image" style="height:{{dkheight}}px;" src="{{videourl}}" controls poster="{{live_poster}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="fill" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
-      <barrage class="barrage"></barrage>
     </video>
   </view>
 </view>
@@ -66,9 +65,8 @@
   <view class='modalMemberitle'>
     <text>{{live_members>0?'在线人数:'+live_members:''}}</text>
     <view class='member-return' bindtap="modalMemberconfirm">
-    <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+      <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
     </view>
-    
   </view> 
   <scroll-view class="member-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="member_scrolltoupper" scroll-top="{{member_scrollTop}}" bindscrolltolower="getMoreMemberTapTag"  >
     <block wx:for="{{live_memberList}}"  wx:key="id" wx:for-item="member" wx:for-index="memberIndex">
@@ -85,7 +83,9 @@
 <action-sheet hidden="{{modalGoodsHidden}}" bindchange="modalGoodsconfirm" mask="{{true}}" maskClosable="{{true}}" show="{{!modalGoodsHidden}}" tops="40%">
   <view class='modalGoodsTitle'>
     <text>{{goods_num>0?'商品数:'+goods_num:''}}</text>
-    <view class='goods-return' bindtap="modalGoodsconfirm"> <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" /></view>
+    <view class='goods-return' bindtap="modalGoodsconfirm"> 
+      <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+    </view>
   </view> 
   <scroll-view class="goods-container" style="height:{{dkheight-300}}px" scroll-y bindscroll="goods_scrolltoupper" scroll-top="{{goods_scrollTop}}" bindscrolltolower="getMoreGoodsTapTag"  >
     <block wx:for="{{venuesItems}}" wx:key="id" wx:for-item="goods" wx:for-index="goodsIndex" >
@@ -103,7 +103,7 @@
             <text style="color:#e34c55;">￥{{goods.sell_price}}</text>
           </view>
           <view style="width:30%; text-align:right;">
-            <text class="smallbtn2">去下单</text>
+            <text class="smallbtn2">{{is_hoster?'推荐':'去下单'}}</text>
           </view>
         </view>
       </view>
@@ -125,7 +125,7 @@
   </view>
 </action-sheet>
 <view class="danmu-info">
-  <scroll-view wx:if="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
+  <scroll-view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
   <view class="danmu-scroll-list">
     <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
     <view class="danmu-content" style="{{danmu.color?'color:'+danmu.color+';':''}}">
@@ -137,6 +137,50 @@
     </block>
   </view>
   </scroll-view>  
-  <image hidden="{{modalDanmuHidden}}"bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image> 
+  <image hidden="{{modalDanmuHidden}}" bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image> 
   <text hidden="{{!modalDanmuHidden}}" bindtap="danmuInfo" class="danmu-num-show">{{danmu_num<100?' '+danmu_num+' 条新的消息':' 99+条新的消息'}}</text>  
 </view>
+<!-- 商品推荐弹窗-->
+<view hidden="{{modalAdvGoodshidden}}" class="live-adv-goods">
+  <view class='live-adv-goods-title' bindtap="modalAdvGoodsconfirm">
+    <view class="live-adv-goods-return">
+      <image style="width:30rpx;height:30rpx;border-radius:50%;" src="/images/icon-no.png" />
+    </view>
+  </view>
+  <view class="live-adv-goods-item" bindtap="showGoods"  data-goods-id="{{live_adv_goods.id}}" data-goods-name="{{live_adv_goods.name}}" data-goods-org="{{live_adv_goods.goods_org}}" data-goods-shape="{{live_adv_goods.shape}}" data-goods-info="{{live_adv_goods.act_info}}" data-goods-price="{{live_adv_goods.sell_price}}" data-sale="{{live_adv_goods.sale}}" data-image="{{live_adv_goods.activity_image?live_adv_goods.activity_image:live_adv_goods.image}}">
+    <view>
+      <image class="live-adv-goods-image" src="{{live_adv_goods.activity_image?live_adv_goods.activity_image:live_adv_goods.image}}" mode="aspectFit" />
+    </view>
+    <view class="live-adv-goods-text">
+      <text class="live-adv-goods-name">{{live_adv_goods.name}}</text>
+      <text style="color:#e34c55;font-size:22rpx;">￥{{live_adv_goods.sell_price}}</text>
+    </view>
+  </view>
+</view>
+<!-- 通知弹窗 列表 -->
+<view style="width:100%;display:flex;flex-direction:row;justify-content:center">
+  <view class="live-adv-note" hidden="{{modalAdvNotehidden}}">
+    <scroll-view class="live-adv-note-container" style="height:{{live_adv_note_length*20+60+'px;'}}" scroll-y bindscroll="adv_note_scrolltoupper" scroll-top="{{adv_note_scrollTop}}" bindscrolltolower="getMoreAdvNoteTapTag" >
+    <block wx:for="{{live_adv_note}}" wx:key="id" wx:for-item="note" wx:for-index="noteIndex" >
+     <view class="live-adv-note-title" bindtap="modalAdvNoteconfirm">
+      <text style="margin-left:15rpx;font-size:28rpx;font-weight:bold;">{{live_adv_note_title?live_adv_note_title:''}}</text>
+      <view class="live-adv-note-return" >
+        <image style="width:30rpx;height:30rpx;border-radius:50%;" src="/images/icon-no.png" />
+      </view>
+    </view>
+    <text style="margin-left:15rpx;font-size: 24rpx;color:#999">{{live_adv_note_sub_title}}</text>
+      <view class="live-adv-note-item" style="max-height:{{dkheight-300+'px;'}}" data-note-id="{{note.id}}" data-note-name="{{note.content}}" >
+        <view>
+          <image class="live-adv-note-image" src="{{note.image}}" mode="aspectFit" />
+        </view>
+        <view class="live-adv-note-text">
+          <text class="live-adv-note-content">{{note.content}}</text>
+        </view>
+      </view>
+    </block>
+    </scroll-view>
+    <text style="color:#aaaaa;font-size:22rpx;">{{live_adv_note_footer}}</text>
+  </view>
+</view>
+
+

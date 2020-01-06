@@ -37,8 +37,9 @@ function getRandomColor() {
 */
 
 Page({
-  barrage:'',
   data: {
+    m_id:m_id,
+    is_hoster:false,
     nickName: userInfo.nickName,
     refername:'',
     liveid:'3954',
@@ -66,6 +67,8 @@ Page({
     member_page:1,
     member_pagesize:20,
     live_memberList:[],
+    live_adv_goods:[], //推广商品
+    live_adv_note:[], //广告通知
     share_title:'送心礼物视频分享',
     share_image: weburl + '/uploads/video_share_image.png',
     share_desc:'送心礼物期待您的光临',
@@ -78,15 +81,19 @@ Page({
     live_members_info:'',
     live_starttime: 0,
     live_focus_status: false,
-    live_sub_name:'人气值1000',
+    live_sub_name:'人气值:1',
     modalGoodsHidden:true,
-    modalDanmuHidden: true,
+    modalDanmuHidden: false,
     modalMemberHidden:true,
+    modalAdvGoodshidden:true,
+    modalAdvNotehidden:true,
     loadingHidden: true, // loading
     goods_scrollTop: 0,
     current_goods_scrollTop:0,
     member_scrollTop: 0,
     current_member_scrollTop: 0,
+    adv_note_scrollTop: 0,
+    current_adv_note_scrollTop: 0,
     is_goods_loading: false,
     is_member_loading: false,
     is_danmu_loading: false,
@@ -100,6 +107,10 @@ Page({
   */
   onLoad: function (options){
     var that = this 
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0;
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var liveid = options.liveid ? options.liveid:'3954'
     var live_goods = options.live_goods ? options.live_goods : ''
@@ -110,7 +121,9 @@ Page({
     var playerurl = that.data.playerurl
     var streamname = options.liveid ? 'sendheart_' + liveid +'.m3u8':that.data.streamname
     var refername = options.refername ? options.refername:''
+    
     that.setData({
+      m_id: m_id,
       nickName: userInfo.nickName,
       liveurl: playerurl + '/' + streamname,
       live_goods: live_goods,
@@ -179,19 +192,6 @@ Page({
   onReady: function () {
     var that = this
     that.videoContext = wx.createVideoContext('myVideo')
-    const barrageComp = that.selectComponent('.barrage')
-    that.barrage = barrageComp.getBarrageInstance({
-      font: 'bold 14px sans-serif',
-      duration: 20,
-      lineHeight: 2,
-      mode: 'separate',  // 弹幕重叠 overlap  不重叠 separate
-      padding: [10, 0, 10, 0], // 弹幕区四周留白
-      range: [0, 0.3], // 弹幕显示的垂直范围，支持两个值。[0,1]表示弹幕整个随机分布，
-      tunnelShow: false, // 显示轨道线
-      tunnelMaxNum: 50, // 隧道最大缓冲长度
-      maxLength: 50, // 弹幕最大字节长度，汉字算双字节
-      safeGap: 4, // 发送时的安全间隔
-    })
     that.query_live_member()
     setTimeout(function () {
       that.queryDanmu()
@@ -203,7 +203,9 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '';
     var liveid = that.data.liveid
+    var is_hoster = that.data.is_hoster
     
     wx.request({
       url: weburl + '/api/client/get_liveroom_list',
@@ -224,23 +226,40 @@ Page({
         if (res.data.status!='y') {
           that.setData({
             videourl: that.data.liveurl,
+            live_focus_status:true,  //视频
           }) 
           return
         }
         //var venuesItems = that.data.venuesItems
         var liveinfo = res.data.result
+        if (liveinfo[0]['live_status']==2){ //锁定状态
+          wx.showToast({
+            title: '暂无视频',
+            icon: 'none',
+            duration: 1500
+          }) 
+          return
+        }
         if (liveinfo[0]['logo'].indexOf("http") < 0) {
           liveinfo[0]['logo'] = weburl + '/' + liveinfo[0]['logo'];
         }
         var live_focus_num = liveinfo[0]['focus_num'] ? liveinfo[0]['focus_num'] : 0 
+        var live_focus_status = liveinfo[0]['focus_status'] ? liveinfo[0]['focus_status'] : that.data.live_focus_status 
         live_focus_num = live_focus_num > 10000 ? (live_focus_num / 10000).toFixed(2) : live_focus_num
         var live_sub_name = live_focus_num > 0 ? '人气值:' + live_focus_num : '人气值:1'
+        var live_hoster = liveinfo[0]['live_hoster']?liveinfo[0]['live_hoster'].split(','):[]
+        for (var i = 0; i < live_hoster.length; ++i) {
+          if (m_id==live_hoster[i]) is_hoster = true 
+        }
         if (liveinfo && liveinfo[0]['live_status']!=1) { //离线 取视频url
           var videourl = liveinfo[0]['videourl']
           that.setData({ 
             videourl: videourl ? videourl:that.data.liveurl,
             live_logo: liveinfo[0]['logo'],
             live_sub_name: live_sub_name,
+            live_focus_status: live_focus_status,
+            live_hoster: live_hoster,
+            is_hoster: is_hoster,
           }) 
         }else{ //在线
           that.setData({
@@ -248,13 +267,16 @@ Page({
             live_starttime: liveinfo[0]['endtime'],
             live_logo: liveinfo[0]['logo'],
             live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name']:'送心礼物' ,
-            live_sub_name: live_sub_name
+            live_sub_name: live_sub_name,
+            live_focus_status: live_focus_status,
+            live_hoster: live_hoster,
+            is_hoster: is_hoster,
           }, function () {
             that.join_liveroom()
             //that.query_live_member()
           }) 
         }
-        console.log('query_liveroom_info videourl:', videourl, ' live_starttime:', that.data.live_starttime, ' live_logo:', that.data.live_logo, ' live_name:', that.data.live_name, ' live_sub_name:', that.data.live_sub_name)
+        //console.log('query_liveroom_info videourl:', videourl, ' live_starttime:', that.data.live_starttime, ' live_logo:', that.data.live_logo, ' live_name:', that.data.live_name, ' live_hoster:', live_hoster, 'is_hoster:',is_hoster)
       },
       fail:function(e){
         that.setData({
@@ -311,6 +333,8 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var liveid = that.data.liveid
     var refername = that.data.refername
+    var live_focus_status = that.data.live_focus_status
+    if (live_focus_status) return 
 
     wx.request({
       url: weburl + '/api/client/post_focus',
@@ -387,12 +411,56 @@ Page({
       url: '../goods/list/list?live_goods=' + live_goods  
     })
   },
+  live_refer_goods: function (goods_id) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var liveid = that.data.liveid
+
+    if (!goods_id) return
+    wx.request({
+      url: weburl + '/api/client/live_refer_goods',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        m_id: m_id,
+        liveid: liveid,
+        access_token: token,
+        goods_id: goods_id,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.status == 'n') {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '商品推荐失败',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: '商品推荐完成',
+            icon: 'none',
+            duration: 1500
+          })
+          console.log('商品推荐完成:', goods_id)
+        }
+      }
+    })
+  },
   showGoods: function (e) {
     var that = this
+    var is_hoster = that.data.is_hoster
     // 点击购物车某件商品跳转到商品详情
     var objectId = e.currentTarget.dataset.objectId
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
     var liveid = that.data.liveid
     var goods_id = e.currentTarget.dataset.goodsId
     var goods_org = e.currentTarget.dataset.goodsOrg
@@ -404,9 +472,13 @@ Page({
     var image = e.currentTarget.dataset.image ? e.currentTarget.dataset.image : ''
 
     var sku_id = objectId
-    wx.navigateTo({
-      url: '/pages/details/details?id=' + goods_id + '&goods_shape=' + goods_shape + '&goods_org=' + goods_org + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name + '&image=' + image + '&liveid=' + liveid 
-    })
+    if(is_hoster && goods_id>0){ //商品推荐
+      that.live_refer_goods(goods_id)
+    }else{ //商品详情
+      wx.navigateTo({
+        url: '/pages/details/details?id=' + goods_id + '&goods_shape=' + goods_shape + '&goods_org=' + goods_org + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name + '&image=' + image + '&liveid=' + liveid
+      })
+    }
   },
 
   get_goods_list: function (event) {
@@ -418,6 +490,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var live_goods = that.data.live_goods
+    var live_adv_goods = {}
     that.setData({
       loadingHidden: false,
       is_goods_loading: true,
@@ -438,15 +511,17 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('get_goods_list:', res.data)
+       // console.log('get_goods_list:', res.data)
         var venuesItems = res.data.result
         var all_rows = res.data.all_rows
         if (!venuesItems) {
+          /*
           wx.showToast({
             title: '没有搜到记录',
             icon: 'loading',
             duration: 2000
           })
+          */
           that.setData({
             venuesItems: [],
             goods_all_rows: 0,
@@ -475,6 +550,7 @@ Page({
           //向后合拼
           venuesItems = that.data.venuesItems.concat(venuesItems);
         }
+        
         that.setData({
           venuesItems: venuesItems,
           goods_all_rows: all_rows,
@@ -483,6 +559,7 @@ Page({
           loadingHidden: true,
           is_goods_loading: false,
         })
+        //console.log('get_goods_list venuesItems:', that.data.venuesItems)
       }
     })
   },
@@ -527,11 +604,13 @@ Page({
         var live_memberList = res.data.result
         var all_rows = res.data.all_rows
         if (!live_memberList) {
+          /*
           wx.showToast({
             title: '没有搜到记录',
             icon: 'loading',
             duration: 2000
           })
+          */
           if(member_page==1){
             that.setData({
               live_memberList: [],
@@ -567,7 +646,7 @@ Page({
           is_member_loading: false,
           live_members_info:live_members_info,
         })
-        console.log('query_live_member:', live_memberList, ' all_rows:', all_rows, ' live_headimg:', that.data.live_headimg)
+        //console.log('query_live_member:', live_memberList, ' all_rows:', all_rows, ' live_headimg:', that.data.live_headimg)
       }
     })
   },
@@ -635,11 +714,9 @@ Page({
       console.log('本地弹幕:', danmuList)
     }
    
-    //that.barrage.open()
-    //that.barrage.addData(danmuList)
+    
     that.setData({
       inputValue: '',
-      //danmuList:[],
     })
   },
   
@@ -720,7 +797,6 @@ Page({
       }) 
     }else{
       if (inputValue) {
-        that.addBarrage()
         setTimeout(function () {
           that.saveDanmu(inputValue)
         }, 300)
@@ -729,24 +805,7 @@ Page({
       }
     }
   },
-  danmuClose: function () {
-    var that = this
-    var danmustatus = that.data.danmustatus
-    const barrageComp = this.selectComponent('.barrage')
-    this.barrage = barrageComp.getBarrageInstance({
-      font: 'bold 16px sans-serif',
-      duration: 10,
-      lineHeight: 2,
-      mode: 'separate',
-      padding: [10, 0, 10, 0],
-      tunnelShow: false
-    })
-    this.barrage.close()
-    that.setData({
-      danmustatus: !danmustatus,
-    })
-    console.log('弹幕关闭 danmuClose')
-  },
+
   saveDanmu: function (danmu) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
@@ -806,6 +865,8 @@ Page({
     var liveid = that.data.liveid
     var danmuList = that.data.danmuList
     var danmu_num_max = that.data.danmu_num_max
+    var live_adv_note = []
+    var live_adv_goods = []
     var page = that.data.page
     var pagesize = that.data.pagesize
     var pageoffset = that.data.pageoffset
@@ -842,21 +903,32 @@ Page({
           var danmuServ = res.data.result
           var pageoffset = res.data.all_rows
           //console.log('获取服务端弹幕信息完成:', res.data)
-          //console.log('获取服务端弹幕信息完成 live id:', liveid, 'pageoffset:', pageoffset, ' result info:', danmuServ)
+          console.log('获取服务端弹幕信息完成 live id:', liveid, 'pageoffset:', pageoffset, ' result info:', danmuServ)
           if (danmuServ){
             for (var i = 0; i < danmuServ.length;i++){
-              var nickName = danmuServ[i]['nickname'] ? danmuServ[i]['nickname']+':':''
-              var background_color = nickName ? getRandomColor() : '#e34c55'
-              var cur_danmu = {
-                nickname:nickName,
-                content: danmuServ[i]['content'],
-                color: getRandomColor() ,
-                background_color: background_color,
+              if (danmuServ[i]['type']==0){ //弹幕
+                var nickName = danmuServ[i]['nickname'] ? danmuServ[i]['nickname'] + ':' : ''
+                var background_color = nickName ? getRandomColor() : '#e34c55'
+                var cur_danmu = {
+                  nickname: nickName,
+                  content: danmuServ[i]['content'],
+                  color: getRandomColor(),
+                  background_color: background_color,
+                }
+                if (danmuList.length > danmu_num_max - 1) {
+                  danmuList.shift()
+                }
+                danmuList.push(cur_danmu)
+                
+              } else if (danmuServ[i]['type'] == 1){ //通知
+                var cur_adv_note = danmuServ[i]['content']?JSON.parse(danmuServ[i]['content']):''
+                live_adv_note.push(cur_adv_note)
+                
+              } else if (danmuServ[i]['type'] == 2) { //商品推荐
+                var cur_adv_goods = danmuServ[i]['content'] ? JSON.parse(danmuServ[i]['content']) : ''
+                live_adv_goods.push(cur_adv_goods)
+                console.log('获取服务端弹幕信息完成 live id:', liveid, 'danmuList:', danmuList, ' live_adv_goods:', live_adv_goods)
               }
-              if (danmuList.length > danmu_num_max - 1) {
-                danmuList.shift()
-              }
-              danmuList.push(cur_danmu)
             }
           }
           var danmu_num = that.data.danmu_num + danmuServ.length
@@ -865,11 +937,16 @@ Page({
             pageoffset: pageoffset,
             danmu_scrollTop: danmuServ.length*30,
             danmu_num:danmu_num,
+            modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
+            live_adv_note: live_adv_note ? live_adv_note : that.data.live_adv_note,
+            modalAdvGoodshidden: live_adv_goods.length>0 ? false : that.data.modalAdvGoodshidden,
+            live_adv_goods: live_adv_goods ? live_adv_goods[0] : that.data.live_adv_goods,
           }, function() { 
-            //that.addBarrage()
             that.danmu_scroll_auto()
           })
-        }  
+          
+        }
+        
         that.setData({
           is_danmu_loading: !that.data.is_danmu_loading,
         })
@@ -981,6 +1058,37 @@ Page({
     })
 
   },
+
+  // 获取滚动条当前位置 goods
+  adv_note_scrolltoupper: function (e) {
+    if (e.detail.scrollTop > 100) {
+      this.setData({
+        floorstatus: true,
+        hidddensearch: false
+      })
+    } else {
+      this.setData({
+        floorstatus: false,
+        hidddensearch: true,
+      })
+    }
+    this.setData({
+      current_adv_note_scrollTop: e.detail.scrollTop
+    })
+  },
+  modalAdvGoodsconfirm: function () {
+    this.setData({
+      modalAdvGoodshidden: !this.data.modalAdvGoodshidden
+    })
+  }, 
+
+  modalAdvNoteconfirm: function () {
+    console.log('modalAdvNoteconfirm 通知弹窗:', this.data.modalAdvNotehidden)
+    this.setData({
+      modalAdvNotehidden: !this.data.modalAdvNotehidden
+    })
+  }, 
+
   onShareAppMessage: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

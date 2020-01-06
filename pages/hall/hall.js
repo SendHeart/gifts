@@ -366,7 +366,9 @@ Page({
         })
         socketOpen = true;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-        var uid = username+'_'+shop_type
+        var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '';
+        var web_name = m_id ? m_id : username
+        var uid = web_name+'_'+shop_type
         wx.sendSocketMessage({
           data: uid
         })
@@ -417,10 +419,7 @@ Page({
           socktBtnTitle: '连接socket'
         })
       })
-    } else {
-      //wx.closeSocket()
     }
-
   },
   sendSocketMessage: function () {
     var that = this;

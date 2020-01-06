@@ -16,6 +16,7 @@ var navList2 = wx .getStorageSync('navList2') ? wx.getStorageSync('navList2') : 
 Page({
   data:{
     title_name: '我的',
+    m_id:m_id,
     title_logo: '/images/footer-icon-05.png',
     share_art_image: weburl+'/uploads/share_art_image.jpg',
     nickname: userInfo.nickName ? userInfo.nickName:'登录',
@@ -982,6 +983,7 @@ Page({
     var userauth = wx.getStorageSync('userauth')  
     that.get_project_gift_para()
     that.setData({
+      m_id: m_id,
       art_id: art_id,
       art_cat_id: art_cat_id,
       art_title: art_title,

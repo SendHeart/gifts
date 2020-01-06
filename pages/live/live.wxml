@@ -37,7 +37,7 @@
       <block wx:for="{{venuesItems_show}}" wx:key="id">
         <view class="venues_item" wx:if="{{index%2==0}}"> 
           <navigator url="/pages/player/player?liveid={{item.liveid}}&live_goods={{item.live_goods}}&live_name={{item.shop_name}}&live_poster={{item.live_poster}}&live_desc={{item.live_desc}}&live_logo={{item.logo}}" hover-class="none" >
-            <imageloader  default-image='{{default_img}}' mode='aspectFit' original-image='{{item.logo}}' width="355rpx" height="355rpx" display="block" />
+            <imageloader  default-image='{{default_img}}' mode='aspectFit' original-image='{{item.live_poster}}' width="355rpx" height="355rpx" display="block" />
             <view class="goods-tags">
               
             </view>
@@ -45,8 +45,8 @@
             </navigator>
             <view class="goods_prom">{{item.live_desc?item.live_desc:''}}</view>
             <view class="goods_bottom">
-              <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
-                <text space="ensp">{{item.goods_tag}} </text>
+              <view class="goods_tag">
+                <text space="ensp">{{item.live_focus_members>0?'人气值:'+item.live_focus_members:'人气值:1'}} </text>
               </view>
               <view class="price-list">
                  
@@ -64,7 +64,7 @@
           <!--
              <imageloader  default-image='{{default_img}}' mode='aspectFit' original-image='{{item.logo}}' width="355rpx" height="355rpx" display="block" />
              -->
-             <image class="mainpic" src="{{item.logo?item.logo:''}}" mode="{{(item.shape==5||item.shape==4)?'aspectFit':'aspectFill'}}"></image>
+             <image class="mainpic" src="{{item.live_poster?item.live_poster:''}}" mode="{{(item.shape==5||item.shape==4)?'aspectFit':'aspectFill'}}"></image>
             <view class="goods-tags">
                
             </view>
