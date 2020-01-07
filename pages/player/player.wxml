@@ -35,6 +35,11 @@
         <image class="danmu-button-image" src="/images/u72.png" ></image>
       </view>
 	  </view>
+     <view wx:if="{{is_hoster}}" class="footer-button" bindtap="hoster_action"> 
+      <view class="hoster-list">
+         <image class="hoster-button" src="/images/record.png" ></image>
+      </view>
+	  </view>
   </view>
   <view class="footer-right" style="">
     <view class="footer-button" bindtap="onShareAppMessage"> 
@@ -119,8 +124,22 @@
   </view> 
   <view class="sendmessage">
     <view class="text">   
-      <input value="{{inputValue}}" placeholder="说点什么" bindblur='bindInputBlur' />
+      <input type="text" value="{{inputValue}}" placeholder="说点什么" bindinput='bindInputDanmu' bindblur='bindInputBlur' />
       <button bindtap="bindSendDanmu">发布</button>
+    </view>
+  </view>
+</action-sheet>
+<action-sheet hidden="{{modalHosterHidden}}" mask="{{true}}" maskClosable="{{true}}" show="{{!modalHosterHidden}}" extClass="{{'background-color:#fff;'}}" tops="40%">
+  <view class='modalLotteryTitle' bindtap="modalLotteryconfirm">
+    <view class='lottery-return' >
+      <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+    </view>
+  </view> 
+  <view class="lottery-action">
+    <view class="text">
+      <text>中奖人数：</text>   
+      <input type='number' confirm-type="send" value="{{lotteryValue}}" placeholder="中奖人数" bindinput='bindInputLottery' bindblur='bindLotteryBlur' />
+      <view class="button" data-lottery-value="{{lotteryValue}}" bindtap="modalHosterconfirm">抽奖</view>
     </view>
   </view>
 </action-sheet>
@@ -148,7 +167,7 @@
       <image style="width:30rpx;height:30rpx;border-radius:50%;" src="/images/icon-no.png" />
     </view>
   </view>
-  <view class="live-adv-goods-item" bindtap="showGoods"  data-goods-id="{{live_adv_goods[0].id}}" data-goods-name="{{live_adv_goods[0].name}}" data-goods-org="{{live_adv_goods[0].goods_org}}" data-goods-shape="{{live_adv_goods[0].shape}}" data-goods-info="{{live_adv_goods[0].act_info}}" data-goods-price="{{live_adv_goods[0].sell_price}}" data-sale="{{live_adv_goods[0].sale}}" data-image="{{live_adv_goods[0].activity_image?live_adv_goods[0].activity_image:live_adv_goods[0].image}}">
+  <view class="live-adv-goods-item" bindtap="{{is_hoster?'':'showGoods'}}"  data-goods-id="{{live_adv_goods[0].id}}" data-goods-name="{{live_adv_goods[0].name}}" data-goods-org="{{live_adv_goods[0].goods_org}}" data-goods-shape="{{live_adv_goods[0].shape}}" data-goods-info="{{live_adv_goods[0].act_info}}" data-goods-price="{{live_adv_goods[0].sell_price}}" data-sale="{{live_adv_goods[0].sale}}" data-image="{{live_adv_goods[0].activity_image?live_adv_goods[0].activity_image:live_adv_goods[0].image}}">
     <view>
       <image class="live-adv-goods-image" src="{{live_adv_goods[0].activity_image?live_adv_goods[0].activity_image:live_adv_goods[0].image}}" mode="aspectFit" />
     </view>
@@ -162,14 +181,14 @@
 <view style="width:100%;display:flex;flex-direction:row;justify-content:center">
   <view class="live-adv-note" hidden="{{modalAdvNotehidden}}">
     <scroll-view class="live-adv-note-container" style="height:{{live_adv_note_length*20+60+'px;'}}" scroll-y bindscroll="adv_note_scrolltoupper" scroll-top="{{adv_note_scrollTop}}" bindscrolltolower="getMoreAdvNoteTapTag" >
-    <block wx:for="{{live_adv_note}}" wx:key="id" wx:for-item="note" wx:for-index="noteIndex" >
-     <view class="live-adv-note-title" bindtap="modalAdvNoteconfirm">
-      <text style="margin-left:15rpx;font-size:28rpx;font-weight:bold;">{{live_adv_note_title?live_adv_note_title:''}}</text>
+    <view class="live-adv-note-title" bindtap="modalAdvNoteconfirm">
+      <text style="margin-left:15rpx;font-size:28rpx;font-weight:bold;">{{live_adv_note.title?live_adv_note.title:''}}</text>
       <view class="live-adv-note-return" >
         <image style="width:30rpx;height:30rpx;border-radius:50%;" src="/images/icon-no.png" />
       </view>
     </view>
-    <text style="margin-left:15rpx;font-size: 24rpx;color:#999">{{live_adv_note_sub_title}}</text>
+    <block wx:for="{{live_adv_note.list}}" wx:key="id" wx:for-item="note" wx:for-index="noteIndex" >
+    <text style="margin-left:15rpx;font-size: 24rpx;color:#999">{{live_adv_note.sub_title}}</text>
       <view class="live-adv-note-item" style="max-height:{{dkheight-300+'px;'}}" data-note-id="{{note.id}}" data-note-name="{{note.content}}" >
         <view>
           <image class="live-adv-note-image" src="{{note.image}}" mode="aspectFit" />

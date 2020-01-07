@@ -52,6 +52,7 @@ Page({
     error_message:'',
     poster_image: weburl+'/uploads/video_poster_image.png',
     inputValue:'',
+    lotteryValue:'',
     danmuServ:[],
     danmuList:[],
     live_headimg: [],
@@ -83,10 +84,11 @@ Page({
     live_focus_status: false,
     live_sub_name:'人气值:1',
     modalGoodsHidden:true,
-    modalDanmuHidden: false,
+    modalDanmuHidden: true,
     modalMemberHidden:true,
     modalAdvGoodshidden:true,
     modalAdvNotehidden:true,
+    modalHosterHidden:true,
     loadingHidden: true, // loading
     goods_scrollTop: 0,
     current_goods_scrollTop:0,
@@ -99,6 +101,7 @@ Page({
     is_danmu_loading: false,
     danmu_scrollTop: 0,
     extClass:"background-color:#333;opacity:0.8;",
+    input_focus:true,
   },
   /*
   onReady(res) {
@@ -784,7 +787,34 @@ Page({
       inputValue: inputValue,
     })
   },
-  
+  bindInputDanmu: function (e) {
+    var that = this
+    var inputValue = e.detail.value
+    that.setData({
+      inputValue: inputValue,
+    })
+  },
+
+  bindLotteryBlur: function (e) {
+    var that = this
+    var lotteryValue = e.detail.value
+   
+    that.setData({
+      lotteryValue: lotteryValue,
+    })
+   // console.log('bindLotteryBlur:', that.data.lotteryValue)
+  },
+ 
+  bindInputLottery: function (e) {
+    var that = this
+    var lotteryValue = e.detail.value
+
+    that.setData({
+      lotteryValue: lotteryValue,
+    })
+    console.log('bindInputLottery:', that.data.lotteryValue)
+  },
+
   bindSendDanmu: function () {
     var that = this
     var inputValue = that.data.inputValue ? that.data.inputValue:''
@@ -903,41 +933,48 @@ Page({
           var danmuServ = res.data.result
           var pageoffset = res.data.all_rows
           //console.log('获取服务端弹幕信息完成:', res.data)
-          console.log('获取服务端弹幕信息完成 live id:', liveid, 'pageoffset:', pageoffset, ' result info:', danmuServ)
-          if (danmuServ){
-            for (var i = 0; i < danmuServ.length;i++){
-              if (danmuServ[i]['type']==0){ //弹幕
-                var nickName = danmuServ[i]['nickname'] ? danmuServ[i]['nickname'] + ':' : ''
-                var background_color = nickName ? getRandomColor() : '#e34c55'
-                var cur_danmu = {
-                  nickname: nickName,
-                  content: danmuServ[i]['content'],
-                  color: getRandomColor(),
-                  background_color: background_color,
-                }
-                if (danmuList.length > danmu_num_max - 1) {
-                  danmuList.shift()
-                }
-                danmuList.push(cur_danmu)
-                
-              } else if (danmuServ[i]['type'] == 1){ //通知
-                var cur_adv_note = danmuServ[i]['content']?JSON.parse(danmuServ[i]['content']):''
+         
+          if (danmuServ && danmuServ.danmu){
+            for (var i = 0; i < danmuServ.danmu.length;i++){
+              var nickName = danmuServ.danmu[i]['nickname'] ? danmuServ.danmu[i]['nickname'] + ':' : ''
+              var background_color = nickName ? getRandomColor() : '#e34c55'
+              var cur_danmu = {
+                nickname: nickName,
+                content: danmuServ.danmu[i]['content'],
+                color: getRandomColor(),
+                background_color: background_color,
+              }
+              if (danmuList.length > danmu_num_max - 1) {
+                danmuList.shift()
+              }
+              danmuList.push(cur_danmu)
+            }
+            console.log('获取服务端弹幕信息完成 live id:', liveid, 'pageoffset:', pageoffset, ' danmuList:', danmuList)
+          }
+          if (danmuServ && danmuServ.adv_note) {
+            if (danmuServ.adv_note) { //通知
+              for (var i = 0; i < danmuServ.adv_note.length; i++) {
+                var cur_adv_note = danmuServ.adv_note[i]['content'] ? JSON.parse(danmuServ.adv_note[i]['content']) : ''
                 if (cur_adv_note['image'].indexOf("http") < 0) {
                   cur_adv_note['image'] = weburl + '/' + cur_adv_note['image'];
                 }
                 live_adv_note.push(cur_adv_note)
-                
-              } else if (danmuServ[i]['type'] == 2) { //商品推荐
-                var cur_adv_goods = danmuServ[i]['content'] ? JSON.parse(danmuServ[i]['content']) : ''
+              }
+            } 
+          }
+          if (danmuServ && danmuServ.adv_goods) {
+            for (var i = 0; i < danmuServ.adv_goods.length; i++) {
+              if (danmuServ.adv_goods) { //商品推荐
+                var cur_adv_goods = danmuServ.adv_goods[i]['content'] ? JSON.parse(danmuServ.adv_goods[i]['content']) : ''
                 if (cur_adv_goods['image'].indexOf("http") < 0) {
                   cur_adv_goods['image'] = weburl + '/' + cur_adv_goods['image'];
                 }
                 live_adv_goods.push(cur_adv_goods)
-                console.log('获取服务端弹幕信息完成 live id:', liveid, 'danmuList:', danmuList, ' live_adv_goods:', live_adv_goods)
+                //console.log('获取服务端弹幕信息完成 live id:', liveid, 'danmuList:', danmuList, ' live_adv_goods:', live_adv_goods)
               }
             }
           }
-          var danmu_num = that.data.danmu_num + danmuServ.length
+          var danmu_num = that.data.danmu_num + danmuServ.danmu.length
           that.setData({
             danmuList: danmuList,
             pageoffset: pageoffset,
@@ -950,7 +987,6 @@ Page({
           }, function() { 
             that.danmu_scroll_auto()
           })
-          
         }
         
         that.setData({
@@ -1001,6 +1037,7 @@ Page({
     var tanmuHidden = that.data.tanmuHidden
     that.setData({
       tanmuHidden: !tanmuHidden,
+      input_focus:true,
     })
   },
   modalMessageconfirm: function () {
@@ -1106,6 +1143,92 @@ Page({
     })
   }, 
 
+  //抽奖
+  live_lottery: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var lottery_type = '0'  //默认按关注、在线、点赞抽奖
+    var lottery_value = that.data.lotteryValue
+    var liveid = that.data.liveid
+    //lottery_value = lottery_value.parseInt()
+    if (lottery_value==0) {
+      wx.showToast({
+        title: '中奖人数为空' + that.data.lotteryValue,
+        icon: 'none',
+        duration: 1500
+      })
+      return
+    }
+    wx.request({
+      url: weburl + '/api/client/live_lottery',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        m_id: m_id,
+        liveid: liveid,
+        access_token: token,
+        lottery_type: lottery_type,
+        lottery_value: lottery_value,
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.status == 'y') {
+          wx.showToast({
+            title: '抽奖完成',
+            icon: 'none',
+            duration: 1500
+          })
+          var live_adv_note = res.data.result
+          var modalAdvNotehidden = that.data.modalAdvNotehidden
+          that.setData({
+            modalAdvNotehidden: !modalAdvNotehidden,
+            live_adv_note: live_adv_note,
+          })
+          console.log('抽奖完成 live_adv_note:', that.data.live_adv_note) 
+        } else {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '抽奖失败,请重试',
+            icon: 'none',
+            duration: 2000
+          })
+        }
+      }
+    })
+  },
+  modalLotteryconfirm: function () {
+    var that = this
+    var modalHosterHidden = that.data.modalHosterHidden
+    that.setData({
+      modalHosterHidden: !modalHosterHidden,
+    })
+  }, 
+  hoster_action: function () {
+    var that = this
+    var modalHosterHidden = that.data.modalHosterHidden
+    that.setData({
+      modalHosterHidden: !modalHosterHidden,
+      modalAdvNotehidden:true,
+      lotteryValue:'',
+    })
+  },
+  modalHosterconfirm: function (e) {
+    var that = this
+    var modalHosterHidden = that.data.modalHosterHidden
+    var inputValue = e.currentTarget.dataset.lotteryValue
+    console.log('modalHosterconfirm inputValue:', inputValue)
+    that.setData({
+      modalHosterHidden: !modalHosterHidden,
+      modalAdvNotehidden: true,
+    })
+    that.live_lottery()
+  },
   onShareAppMessage: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

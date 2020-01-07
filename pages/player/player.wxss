@@ -131,7 +131,7 @@ live-player {
   position:fixed;
   display:flex;
   flex-direction:row;
-  justify-content: flex-start;
+  justify-content: space-around;
   bottom: 0rpx;
   overflow: hidden;
   opacity:1;
@@ -192,14 +192,30 @@ live-player {
 		height: 90rpx;
 		background:#f2f2f2;
 		border-radius: 50%;
-    margin:0 auto auto 30rpx;
+    margin:0 auto auto 0rpx;
     opacity: 0.2;
 }
 
 .danmu-button-image{
   width: 50rpx;
   height:50rpx;
-  margin:25rpx auto auto -90rpx;
+  margin:25rpx auto auto -120rpx;
+}
+.hoster-list { 
+  display: flex;
+  flex-direction: row;
+  position: relative;
+	text-align: center;
+  opacity: 0.8;
+}
+.hoster-button{
+	/* border: 6upx solid #F44336; */
+	width: 90rpx;
+	height: 90rpx;
+	background:#fff;
+	border-radius: 50%;
+  margin:0 auto auto 0rpx;
+ 
 }
 
 .footer-right {
@@ -619,7 +635,7 @@ live-player {
 .live-adv-goods-text {
   margin-left: 10rpx;
   width: 80%;
-  height: 120rpx;
+  max-height: 120rpx;
   display: flex;
   flex-direction: column;
   justify-content:space-around;
@@ -629,8 +645,11 @@ live-player {
   font-size: 22rpx;
   color: #444;
   line-height: 30rpx;
+  max-height: 60rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
+   -webkit-line-clamp: 2;
+   -webkit-box-orient: vertical;
   white-space:nowrap; 
 }
 
@@ -649,7 +668,7 @@ live-player {
 
 .live-adv-note{
   position:fixed;
-  bottom:160rpx;
+  bottom:200rpx;
   margin:0 auto;
   width: 95%;
   border-radius: 20rpx;
@@ -740,4 +759,89 @@ live-player {
   font-size: 22rpx;
   height: 30rpx;
   padding: 1rpx;
+}
+.modalLotteryTitle {
+  font-size: 26rpx;
+  color: #444;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  margin-top:10rpx;
+  margin-right:10rpx;
+}
+
+.lottery-return{
+  position: relative;
+  font-size: 35rpx;
+  height:36rpx;
+  line-height:36rpx;
+  width: 36rpx;
+  border-radius: 50%;
+  border: 0rpx solid #999;
+  text-align: center;
+  align-items: center;
+  color: #999;
+  background-color:#333; 
+  margin: 10rpx;
+}
+
+
+.lottery-action {
+  width:100%;
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  border:0px solid #aaaaaa;
+  margin: -15rpx auto 20rpx auto; 
+  padding-left:2px;
+  padding-bottom:10px;
+  overflow: hidden;
+  opacity:1;
+  z-index: 999;
+}
+
+.lottery-action .text {
+  width:90%;
+  display:flex;
+  flex-direction:row;
+  border:0px solid #aaaaaa;
+  justify-content: center;
+  text-align: center;
+  margin:0 auto;
+}
+.lottery-action text { 
+  width:10%;
+  height:30px;
+  line-height : 25px ;
+  font-size : 12px ;
+  color:#333;
+  padding-left:5px;
+  flex:1;
+}
+.lottery-action input { 
+  width:20%;
+  height:30px;
+  line-height : 25px ;
+  border:1px solid #f5e7e7;
+  background: #f2f2f2;
+  font-size : 12px ;
+  color:#333;
+  padding-left:5px;
+  flex:1;
+  border-radius: 50rpx;
+}
+
+.lottery-action .button { 
+  width:18%;
+  height:30px;
+  line-height : 25px ;
+  margin-left:15px;
+  margin-right:15rpx;
+  font-size : 12px ;
+  padding-left:11px;
+  padding-top: 8rpx;
+  color:#fff;
+  background: #e34c55;
+  border-radius: 50rpx;
+  opacity:0.4;
 }
