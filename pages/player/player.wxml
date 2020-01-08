@@ -180,29 +180,34 @@
 <!-- 通知弹窗 列表 -->
 <view style="width:100%;display:flex;flex-direction:row;justify-content:center">
   <view class="live-adv-note" hidden="{{modalAdvNotehidden}}">
-    <scroll-view class="live-adv-note-container" style="height:{{live_adv_note_length*20+60+'px;'}}" scroll-y bindscroll="adv_note_scrolltoupper" scroll-top="{{adv_note_scrollTop}}" bindscrolltolower="getMoreAdvNoteTapTag" >
-    <view class="live-adv-note-title" bindtap="modalAdvNoteconfirm">
-      <text style="margin-left:15rpx;font-size:28rpx;font-weight:bold;">{{live_adv_note.title?live_adv_note.title:''}}</text>
-      <view class="live-adv-note-return" >
-        <image style="width:30rpx;height:30rpx;border-radius:50%;" src="/images/icon-no.png" />
+    <scroll-view class="live-adv-note-container" style="max-height:{{dkheight-100}}px;" scroll-y bindscroll="adv_note_scrolltoupper" scroll-top="{{adv_note_scrollTop}}" bindscrolltolower="getMoreAdvNoteTapTag" >
+      <view class="live-adv-note-return" bindtap="modalAdvNoteconfirm">
+        <image src="/images/icon-no.png" />
       </view>
-    </view>
-    <text style="margin-left:15rpx;font-size: 24rpx;color:#999">{{live_adv_note.sub_title}}</text>
-    <block wx:for="{{live_adv_note.list}}" wx:key="id" wx:for-item="note" wx:for-index="noteIndex" >
-      <view class="live-adv-note-item" style="max-height:{{dkheight-300+'px;'}}" data-note-id="{{note.id}}" data-note-name="{{note.content}}" >
-        <view>
-          <image class="live-adv-note-image" src="{{note.image}}" mode="aspectFit" />
+      <block wx:for="{{live_adv_note}}" wx:for-item="live_adv_note" wx:for-index="advnoteIndex"  wx:key="advnoteIndex">
+        <view class="live-adv-note-title">
+          <text style="margin-left:15rpx;font-size:28rpx;font-weight:bold;">{{live_adv_note.title?live_adv_note.title:''}}</text>
         </view>
-        <view class="live-adv-note-text">
-          <text class="live-adv-note-content">{{note.content}}</text>
+        <text style="margin-left:15rpx;font-size: 24rpx;color:#999">{{live_adv_note.sub_title}}</text>
+        <view wx:if="{{live_adv_note.note}}" class="live-adv-note-item">
+          <text class="live-adv-note-note">{{live_adv_note.note}}</text>
         </view>
-      </view>
-    </block>
+        <block wx:if="{{live_adv_note.list}}" wx:for="{{live_adv_note.list}}" wx:key="id" wx:for-item="note" wx:for-index="noteIndex" >
+          <view class="live-adv-note-item" style="max-height:{{dkheight-300+'px;'}}" data-note-id="{{note.id}}" data-note-name="{{note.content}}" >
+            <view>
+              <image class="live-adv-note-image" src="{{note.image}}" mode="aspectFit" />
+            </view>
+            <view class="live-adv-note-text">
+              <text class="live-adv-note-content">{{note.content}}</text>
+            </view>
+          </view>
+        </block>
+        <text style="color:#aaaaa;font-size:22rpx;">{{live_adv_note.footer}}</text>
+        <view wx:if="{{is_hoster}}" class="live-adv-note-confirm">
+          <view class="button" data-lottery-info="{{live_adv_note.list}}" bindtap="modalLotteryresultconfirm">确认</view>
+        </view>
+      </block>
     </scroll-view>
-    <text style="color:#aaaaa;font-size:22rpx;">{{live_adv_note_footer}}</text>
-    <view wx:if="{{is_hoster}}" class="live-adv-note-confirm">
-      <view class="button" data-lottery-info="{{live_adv_note.list}}" bindtap="modalLotteryresultconfirm">确认</view>
-    </view>
   </view>
 </view>
 

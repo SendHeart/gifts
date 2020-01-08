@@ -955,7 +955,7 @@ Page({
             if (danmuServ.adv_note) { //通知
               for (var i = 0; i < danmuServ.adv_note.length; i++) {
                 var cur_adv_note = danmuServ.adv_note[i]['content'] ? JSON.parse(danmuServ.adv_note[i]['content']) : ''
-                if (cur_adv_note['list'] ){
+                if (cur_adv_note['list']){ //note通知
                   for (var k = 0; k < cur_adv_note['list'].length; k++){
                     if (cur_adv_note['list'][k]['image'].indexOf("http") < 0) {
                       cur_adv_note['list'][k]['image'] = weburl + '/' + cur_adv_note['list'][k]['image'];
@@ -966,7 +966,7 @@ Page({
                   }
                 }
                 live_adv_note.push(cur_adv_note)
-                if (!cur_adv_note['sub_title'])  cur_adv_note['sub_title'] = '很遗憾，您本次没有中奖~'
+                if (!cur_adv_note['sub_title'] && !cur_adv_note['note']) cur_adv_note['sub_title'] = '很遗憾，您本次没有中奖~'
               }
               console.log('获取服务端通知信息完成:', live_adv_note, ' pageoffset:', pageoffset)
             } 
@@ -990,7 +990,7 @@ Page({
             danmu_scrollTop: danmuServ.length*30,
             danmu_num:danmu_num,
             modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
-            live_adv_note: live_adv_note ? live_adv_note[0] : that.data.live_adv_note,
+            live_adv_note: live_adv_note ? live_adv_note : that.data.live_adv_note,
             modalAdvGoodshidden: live_adv_goods.length>0 ? false : that.data.modalAdvGoodshidden,
             live_adv_goods: live_adv_goods ? live_adv_goods : that.data.live_adv_goods,
           }, function() { 
