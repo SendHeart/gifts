@@ -760,6 +760,25 @@ live-player {
   height: 30rpx;
   padding: 1rpx;
 }
+.live-adv-note-confirm{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin: 10rpx auto 20rpx auto;
+}
+.live-adv-note-confirm .button { 
+  width:50%;
+  height:30px;
+  line-height : 30px ;
+  font-size : 12px ;
+  padding:0 auto;
+  color:#fff;
+  background: #e34c55;
+  border-radius: 50rpx;
+  text-align: center;
+  margin:0 auto;
+  opacity:1;
+}
 .modalLotteryTitle {
   font-size: 26rpx;
   color: #444;

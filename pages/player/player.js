@@ -955,11 +955,20 @@ Page({
             if (danmuServ.adv_note) { //通知
               for (var i = 0; i < danmuServ.adv_note.length; i++) {
                 var cur_adv_note = danmuServ.adv_note[i]['content'] ? JSON.parse(danmuServ.adv_note[i]['content']) : ''
-                if (cur_adv_note['image'].indexOf("http") < 0) {
-                  cur_adv_note['image'] = weburl + '/' + cur_adv_note['image'];
+                if (cur_adv_note['list'] ){
+                  for (var k = 0; k < cur_adv_note['list'].length; k++){
+                    if (cur_adv_note['list'][k]['image'].indexOf("http") < 0) {
+                      cur_adv_note['list'][k]['image'] = weburl + '/' + cur_adv_note['list'][k]['image'];
+                    }
+                    if (cur_adv_note['list'][k]['m_id']== m_id){
+                      cur_adv_note['sub_title']= '恭喜您中奖了!'
+                    }
+                  }
                 }
                 live_adv_note.push(cur_adv_note)
+                if (!cur_adv_note['sub_title'])  cur_adv_note['sub_title'] = '很遗憾，您本次没有中奖~'
               }
+              console.log('获取服务端通知信息完成:', live_adv_note, ' pageoffset:', pageoffset)
             } 
           }
           if (danmuServ && danmuServ.adv_goods) {
@@ -981,7 +990,7 @@ Page({
             danmu_scrollTop: danmuServ.length*30,
             danmu_num:danmu_num,
             modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
-            live_adv_note: live_adv_note ? live_adv_note : that.data.live_adv_note,
+            live_adv_note: live_adv_note ? live_adv_note[0] : that.data.live_adv_note,
             modalAdvGoodshidden: live_adv_goods.length>0 ? false : that.data.modalAdvGoodshidden,
             live_adv_goods: live_adv_goods ? live_adv_goods : that.data.live_adv_goods,
           }, function() { 
@@ -1228,6 +1237,54 @@ Page({
       modalAdvNotehidden: true,
     })
     that.live_lottery()
+  },
+
+  modalLotteryresultconfirm: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var liveid = that.data.liveid
+    var lottery_info = e.currentTarget.dataset.lotteryInfo
+    console.log('抽奖结果确认 lottery info:', lottery_info)
+    if (!lottery_info) return
+    wx.request({
+      url: weburl + '/api/client/confirm_lottery',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        m_id: m_id,
+        liveid: liveid,
+        access_token: token,
+        lottery_info: JSON.stringify(lottery_info),
+        shop_type: shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        if (res.data.status == 'n') {
+          wx.showToast({
+            title: res.data.info ? res.data.info : '抽奖结果确认失败',
+            icon: 'none',
+            duration: 2000
+          })
+        } else {
+          wx.showToast({
+            title: '抽奖结果确认成功',
+            icon: 'none',
+            duration: 1500
+          })
+          var modalAdvNotehidden = that.data.modalAdvNotehidden
+          that.setData({
+            modalAdvNotehidden: !modalAdvNotehidden,
+          })
+          console.log('抽奖结果确认完成:', lottery_info)
+        }
+      }
+    })
   },
   onShareAppMessage: function (options) {
     var that = this
