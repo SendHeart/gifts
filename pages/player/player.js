@@ -254,10 +254,7 @@ Page({
         if (liveinfo[0]['logo'].indexOf("http") < 0) {
           liveinfo[0]['logo'] = weburl + '/' + liveinfo[0]['logo'];
         }
-        var live_focus_num = liveinfo[0]['focus_num'] ? liveinfo[0]['focus_num'] : 0 
-        var live_focus_status = liveinfo[0]['focus_status'] ? liveinfo[0]['focus_status'] : that.data.live_focus_status 
-        live_focus_num = live_focus_num > 10000 ? (live_focus_num / 10000).toFixed(2) : live_focus_num
-        var live_sub_name = live_focus_num > 0 ? '人气值:' + live_focus_num : '人气值:1'
+        
         var live_hoster = liveinfo[0]['live_hoster']?liveinfo[0]['live_hoster'].split(','):[]
         for (var i = 0; i < live_hoster.length; ++i) {
           if (m_id==live_hoster[i]) is_hoster = true 
@@ -268,8 +265,6 @@ Page({
             videourl: videourl ? videourl:that.data.liveurl,
             live_logo: liveinfo[0]['logo'],
             live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name'] : '送心礼物',
-            live_sub_name: live_sub_name,
-            live_focus_status: live_focus_status,
             live_hoster: live_hoster,
             is_hoster: is_hoster,
           }) 
@@ -280,8 +275,6 @@ Page({
             live_starttime: liveinfo[0]['endtime'],
             live_logo: liveinfo[0]['logo'],
             live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name']:'送心礼物' ,
-            live_sub_name: live_sub_name,
-            live_focus_status: live_focus_status,
             live_hoster: live_hoster,
             is_hoster: is_hoster,
           }, function () {
@@ -356,6 +349,7 @@ Page({
     var liveid = that.data.liveid
     var refername = that.data.refername
     var live_focus_status = that.data.live_focus_status
+    var live_type = 2
     if (live_focus_status) return 
 
     wx.request({
@@ -364,7 +358,8 @@ Page({
       data: {
         username: username,
         access_token: token,
-        liveid: liveid,
+        post_id: liveid,
+        post_type:live_type,
         refername: refername,
         shop_type: shop_type,
       },
@@ -1030,7 +1025,12 @@ Page({
             }
           }
           var danmu_num = that.data.danmu_num + danmuServ.danmu.length
+          var live_focus_num = danmuServ.focus_num ? danmuServ.focus_num:0
+          var live_focus_status = danmuServ.focus_status ? danmuServ.focus_status : that.data.live_focus_status
+          var live_sub_name = live_focus_num > 10000 ? '人气值:' + (live_focus_num / 10000).toFixed(2) + '万' : '人气值:' + live_focus_num
           that.setData({
+            live_focus_num: live_focus_num,
+            live_sub_name: live_sub_name,
             danmuList: danmuList,
             pageoffset: pageoffset,
             danmu_scrollTop: danmuServ.length*30,
