@@ -267,6 +267,7 @@ Page({
           that.setData({ 
             videourl: videourl ? videourl:that.data.liveurl,
             live_logo: liveinfo[0]['logo'],
+            live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name'] : '送心礼物',
             live_sub_name: live_sub_name,
             live_focus_status: live_focus_status,
             live_hoster: live_hoster,
@@ -797,6 +798,7 @@ Page({
     var that = this
     var errorhidden = that.data.errorhidden
     var live_status = that.data.live_stauts
+    var is_live = that.data.is_live
     that.setData({
       errorhidden: !errorhidden,
     })
@@ -807,7 +809,7 @@ Page({
       })
     }else{
       wx.navigateTo({
-        url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo
+        url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo+'&is_live='+is_live
       })
     }
    

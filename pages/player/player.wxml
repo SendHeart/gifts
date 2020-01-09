@@ -1,6 +1,6 @@
 <view class="page-body"  style="{{(!modalGoodsHidden||!modalMemberHidden)?'opacity:0.8;':''}}">
   <view class="page-section tc">
-    <view class="goods-list">
+    <view class="goods-list" wx:if="{{is_live}}" >
       <view class="live-title"  bindtap="focus_liveroom">
         <image src="{{live_logo}}" mode="aspectFit" />
         <view class="live-title-text">
@@ -23,7 +23,7 @@
   </view>
 </view>
 
-<view class="footer">
+<view wx:if="{{is_live}}" class="footer">
   <view class="footer-left" hidden="">
     <view class="footer-button" bindtap="goodsinfo"> 
       <image class="goods-button" src="/images/1.png" ></image>
@@ -143,7 +143,7 @@
     </view>
   </view>
 </action-sheet>
-<view class="danmu-info">
+<view wx:if="{{is_live}}" class="danmu-info">
   <scroll-view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
   <view class="danmu-scroll-list">
     <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
