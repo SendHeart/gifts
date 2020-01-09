@@ -26,6 +26,7 @@ Page({
     all_rows: 0,
     page:page,
     pagesize:pagesize,
+    toViewY:0,
     friendinfo:'',
     friend_id:0,
     infoid:0,

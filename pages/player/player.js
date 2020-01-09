@@ -102,6 +102,8 @@ Page({
     danmu_scrollTop: 0,
     extClass:"background-color:#333;opacity:0.8;",
     input_focus:true,
+    sign_type:'0',
+    is_live:false,
   },
   /*
   onReady(res) {
@@ -121,6 +123,7 @@ Page({
     var live_poster = options.live_poster ? options.live_poster : that.data.poster_image
     var live_desc = options.live_desc ? options.live_desc : that.data.share_desc
     var live_logo = options.live_logo ? options.live_logo : that.data.share_logo
+    var is_live = options.is_live ? options.is_live : false
     var playerurl = that.data.playerurl
     var streamname = options.liveid ? 'sendheart_' + liveid +'.m3u8':that.data.streamname
     var refername = options.refername ? options.refername:''
@@ -135,6 +138,7 @@ Page({
       live_desc: live_desc,
       live_logo: live_logo,
       liveid: liveid,
+      is_live: is_live,
       refername: refername,
     })
     that.query_liveroom_info()
@@ -209,7 +213,8 @@ Page({
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '';
     var liveid = that.data.liveid
     var is_hoster = that.data.is_hoster
-    
+    var live_status = that.data.live_status
+    var is_live = that.data.is_live
     wx.request({
       url: weburl + '/api/client/get_liveroom_list',
       method: 'POST',
@@ -235,6 +240,9 @@ Page({
         }
         //var venuesItems = that.data.venuesItems
         var liveinfo = res.data.result
+        that.setData({
+          live_status: liveinfo[0]['live_status'],
+        })
         if (liveinfo[0]['live_status']==2){ //锁定状态
           wx.showToast({
             title: '暂无视频',
@@ -254,7 +262,7 @@ Page({
         for (var i = 0; i < live_hoster.length; ++i) {
           if (m_id==live_hoster[i]) is_hoster = true 
         }
-        if (liveinfo && liveinfo[0]['live_status']!=1) { //离线 取视频url
+        if (liveinfo && liveinfo[0]['live_status']==0 && !is_live) { //离线 取视频url
           var videourl = liveinfo[0]['videourl']
           that.setData({ 
             videourl: videourl ? videourl:that.data.liveurl,
@@ -267,6 +275,7 @@ Page({
         }else{ //在线
           that.setData({
             videourl: that.data.liveurl,
+            is_live:true,
             live_starttime: liveinfo[0]['endtime'],
             live_logo: liveinfo[0]['logo'],
             live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name']:'送心礼物' ,
@@ -279,6 +288,7 @@ Page({
             //that.query_live_member()
           }) 
         }
+       
         //console.log('query_liveroom_info videourl:', videourl, ' live_starttime:', that.data.live_starttime, ' live_logo:', that.data.live_logo, ' live_name:', that.data.live_name, ' live_hoster:', live_hoster, 'is_hoster:',is_hoster)
       },
       fail:function(e){
@@ -316,11 +326,19 @@ Page({
 
       },
       success: function (res) {
-        wx.showToast({
-          title: '签到完成',
-          icon: 'none',
-          duration: 1500
-        }) 
+        if(that.data.sign_type==0){
+          /*
+          wx.showToast({
+            title: '签到完成',
+            icon: 'none',
+            duration: 1500
+          })
+          */
+        }
+        
+        that.setData({
+          sign_type:sign_type,
+        })
         console.log('join_liveroom 签到完成:', res.data)
        
       },
@@ -740,14 +758,32 @@ Page({
 
   playerror(e) {
     var that = this 
-    var error_message = '网络错误!'
+    var error_message = '!'
+    var errorTitile = ''
     var errorhidden = that.data.errorhidden
     console.log('player playerror 播放错误', e)
-    that.setData({
-      error_message: error_message,
-      errorhidden: !errorhidden,
-    })
-    this.videoContext.stop()
+    //判断异常情况
+   
+    that.query_liveroom_info()
+    setTimeout(function () {
+      var live_status = that.data.live_status
+      if (live_status == 3) { //暂停
+        error_message = '暂停中'
+        errorTitile = '提示信息'
+      } else if (live_status == 0) {
+        error_message = '结束了'
+        errorTitile = '提示信息'
+      }else{
+        error_message = '网络不给力'
+        errorTitile = '提示信息'
+      }
+      that.setData({
+        errorhidden: false,
+        error_message: error_message,
+        errorTitile: errorTitile,
+      })
+    }, 2000)
+    that.playwaiting()
   },
 
   playwaiting(e) {
@@ -760,13 +796,21 @@ Page({
   errorConfirmPlay(e) {
     var that = this
     var errorhidden = that.data.errorhidden
+    var live_status = that.data.live_stauts
     that.setData({
       errorhidden: !errorhidden,
     })
     this.videoContext.stop()
-    wx.navigateTo({
-      url: '/pages/player/player?liveid='+that.data.liveid+'&live_goods='+that.data.live_goods+'&live_name='+that.data.shop_name+'&live_poster='+that.data.live_poster+'&live_desc='+that.data.live_desc+'&live_logo='+that.data.live_logo 
-    })
+    if (live_status == 0 || live_status ==2){ //播放结束
+      wx.navigateBack({
+        delta: 1,
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo
+      })
+    }
+   
   },
 
   errorCancelPlay(e) {

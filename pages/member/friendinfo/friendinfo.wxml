@@ -18,7 +18,7 @@
 	  <text style="color:#808080;">地址</text>
 	  <text>{{friendinfo.address}}</text>
   </view>
-  <view bindtap="showsendheartapp" class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px'>
+  <view class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px'>
 	  <text style="color:#fff;">记录</text>
 	  <image src="/images/icon_add_bg_red.png" bindtap="friendinfoedit" />
   </view>

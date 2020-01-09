@@ -323,15 +323,16 @@ Page({
             icon: 'none',
             duration: 1500
           });
-          setTimeout(function () {
-            wx.navigateBack();
-          }, 500)
           that.setData({
             friends: [],
             friends_show: [],
             all_rows: 0,
-            hiddenmore:true,
+            hiddenmore: true,
           })
+          setTimeout(function () {
+            wx.navigateBack();
+          }, 500)
+          
         } else {
           if (friends_list) {
             for (var i = 0; i < friends_list.length; i++) {

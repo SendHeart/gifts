@@ -827,17 +827,7 @@ Page({
     var friend_full_name = friends[index].full_name
     var friend_address = friends[index].address
     var friend_tel = friends[index].tel
-    /*
-    var modalFriendHidden = that.data.modalFriendHidden
    
-    that.setData({
-      friend_wx_nickname: friend_wx_nickname,
-      friend_full_name: friend_full_name,
-      friend_address: friend_address,
-      friend_tel: friend_tel,
-      modalFriendHidden: !modalFriendHidden,
-    })
-    */
     wx.navigateTo({
       url: '/pages/member/friendinfo/friendinfo?friendinfo=' + JSON.stringify(friends[index])
     })
