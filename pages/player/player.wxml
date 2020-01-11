@@ -18,7 +18,7 @@
         <text class="live-on">{{live_members_info}}</text>
       </label>
     </view>
-    <video id="myVideo" class="slide-image"  direction="0"  src="{{videourl}}" controls poster="{{live_poster}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="contain" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="true">
+    <video id="myVideo" class="slide-image"  direction="0"  style="{{is_live?'height:'+dkheight+'px;':''}}" src="{{videourl}}" controls poster="{{live_poster}}" custom-cache="{{true}}" autoplay="{{true}}" objectFit="{{is_live?'fill':'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" vslide-gesture="{{false}}">
     </video>
   </view>
 </view>
@@ -144,7 +144,7 @@
   </view>
 </action-sheet>
 <view wx:if="{{is_live}}" class="danmu-info">
-  <scroll-view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-400}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
+  <view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-360}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
   <view class="danmu-scroll-list">
     <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
     <view class="danmu-content" style="{{danmu.color?'color:'+danmu.color+';':''}}">
@@ -154,8 +154,8 @@
       </view>
     </view>
     </block>
-  </view>
-  </scroll-view>  
+    </view>
+  </view>  
   <image hidden="{{modalDanmuHidden}}" bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image> 
   <text hidden="{{!modalDanmuHidden}}" bindtap="danmuInfo" class="danmu-num-show">{{danmu_num<100?' '+danmu_num+' 条新的消息':' 99+条新的消息'}}</text>  
 </view>

@@ -349,7 +349,7 @@ Page({
       },
       success: function (res) {
         var venuesItems_show = that.data.venuesItems_show
-        console.log('get_goods_list:',res.data,'page:',page)
+        console.log('get_goods_list:', venuesItems_show,'page:',page)
         var venuesItems_new = res.data.result
         var all_rows = res.data.all_rows
         var pageoffset = res.data.pageoffset

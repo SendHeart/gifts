@@ -9,7 +9,7 @@
       </view>
     </view>
     <view class="all-classify-list" >
-    <block wx:for="{{navList}}" wx:for-item="item" wx:key="id">
+    <block wx:for="{{navList}}" wx:for-item="item" wx:key="index">
       <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="all-classify-item {{index == activeIndex ? 'all-classify-item-active' : ''}}" catchtap="onTapTag">
         {{item.title}}
       </view>

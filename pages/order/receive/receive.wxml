@@ -34,7 +34,7 @@
   </view>
   -->
   <view wx:if="{{order_shape==4 && card_type==1}}" class="card-register-info">
-    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='id'>
       <text hidden="{{template.typeId=='card_register_title'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_info['card_register_title']?card_register_info['card_register_title']:template.typeText}}
       </text>
       <text hidden="{{template.typeId=='card_register_content'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_register_info['card_register_content']?card_register_info['card_register_content']:template.typeText}}
@@ -71,7 +71,7 @@
     </block>
   </view>
   <view wx:if="{{order_shape==4 && card_type==2}}" class="card-name-info">
-    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='id'>
       <text hidden="{{template.typeId=='card_name'?fale:true}}"  bindtap='textPaste' style="text-align:right;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_info['card_name_name']}}
       </text>
       <text hidden="{{template.typeId=='card_title'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_name_info['card_name_title']}}
@@ -100,7 +100,7 @@
     </text>
   </view>
     <view wx:if="{{order_shape==4 && card_type==4}}" class="card-love-info">
-    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='id'>
       <text hidden="{{template.typeId=='card_love_title'?fale:true}}"  bindtap='textPaste' style="text-align:right;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_info['card_love_title']}}
       </text>
       <text hidden="{{template.typeId=='card_love_related'?fale:true}}" style="{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_love_info['card_love_related']}}
@@ -120,7 +120,7 @@
     </block>
   </view>
   <view wx:if="{{order_shape==5 || card_type==10}}" class="card-cele-info">
-    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='{{template.typeId}}'>
+    <block wx:for="{{card_template}}" wx:for-item="template" wx:key='id'>
       <text hidden="{{template.typeId=='card_cele_title'?fale:true}}"  bindtap='textPaste' style="text-align:right;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*winWidth)+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.height?' line-height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_info['card_cele_title']}}
       </text>
       <text hidden="{{template.typeId=='card_cele_content'?fale:true}}" style="text-align:left;{{template.y?' top:'+(template.y*card_image_height+card_view_offset)+'rpx;':''}}{{template.x?' margin-left:'+(template.x*100*winWidth)/100+'px;':''}}{{template.width?' width:'+(template.width*winWidth)+'px;':''}}{{template.height?' height:'+(template.height*card_image_height)+'rpx;':''}}{{template.styleSheet.fontSize?' font-size:'+(template.styleSheet.fontSize)+'px;':''}}{{template.styleSheet.fontFamily?' font-family:'+(template.styleSheet.fontFamily)+';':''}}{{template.color?' color:'+(template.color)+';':''}}">{{card_cele_info['card_cele_content']?card_cele_info['card_cele_content']:template.typeText}}
@@ -163,7 +163,7 @@
     <button class="button" style="width:200rpx;" formType="submit" >{{button_name?button_name:'拆开'}}</button> <!-- bindtap="receiveTapTag" -->
   </form>
   <form bindsubmit="formSubmit"  data-name='refresh' report-submit="true"  hidden='{{overtime_status==0?true:false}}' >  
-    <button formType="submit"  style="width:200rpx;">请刷新重试</button> <!-- bindtap="refresh"  data-isreload="1" -->
+    <button formType="submit"  style="width:200rpx;font-size:25rpx;">刷新重试</button> <!-- bindtap="refresh"  data-isreload="1" -->
   </form>
   <view style="width:100%; display: flex;flex-direction: column;text-align:center;" hidden='{{receive_status==0}}'>
     <text  hidden='{{(receive_status==1 || overtime_status==0)?true:false}}' style='margin-top:10rpx;'>填写收货地址，礼物会很快奔向您</text>

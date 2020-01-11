@@ -2118,13 +2118,14 @@ Page({
           })
           app.globalData.from_page = '/pages/details/details'
           if (wishflag == 1) {
-            wx.switchTab({
-              url: '/pages/wish/wish'
-            })
-            /*
             wx.navigateTo({
               url: '/pages/wish/wish'
             })
+            /*
+             wx.switchTab({
+              url: '/pages/wish/wish'
+            })
+          
             */
           } 
           else {

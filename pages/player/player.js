@@ -171,6 +171,9 @@ Page({
   danmu_scroll_auto: function () {
     // 获取scroll-view的节点信息
     //创建节点选择器
+    var that = this 
+    var is_live = that.data.is_live
+    if(!is_live) return 
     var query = wx.createSelectorQuery();
     query.select('.danmu-scroll').boundingClientRect()
     query.select('.danmu-scroll-list').boundingClientRect()
@@ -940,9 +943,10 @@ Page({
     var live_adv_goods = []
     var page = that.data.page
     var pagesize = that.data.pagesize
-    var pageoffset = that.data.pageoffset
+    var pageoffset = parseInt(that.data.pageoffset)
     var danmustatus = that.data.danmustatus
     var is_danmu_loading = that.data.is_danmu_loading
+    var danmu_num = that.data.danmu_num
     if (!danmustatus || is_danmu_loading) {
       console.log('弹幕信息正在加载 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
       return 
@@ -972,67 +976,62 @@ Page({
       success: function (res) {
         if (res.data.status == 'y') {
           var danmuServ = res.data.result
-          var pageoffset = res.data.all_rows
+          var all_rows = parseInt(res.data.all_rows)
           //console.log('获取服务端弹幕信息完成:', res.data)
-         
-          if (danmuServ && danmuServ.danmu){
-            for (var i = 0; i < danmuServ.danmu.length;i++){
-              var nickName = danmuServ.danmu[i]['nickname'] ? danmuServ.danmu[i]['nickname'] + ':' : ''
-              var background_color = nickName ? getRandomColor() : '#e34c55'
-              var cur_danmu = {
-                nickname: nickName,
-                content: danmuServ.danmu[i]['content'],
-                color: getRandomColor(),
-                background_color: background_color,
-              }
-              if (danmuList.length > danmu_num_max - 1) {
-                danmuList.shift()
-              }
-              danmuList.push(cur_danmu)
-            }
-            console.log('获取服务端弹幕信息完成 live id:', liveid, 'pageoffset:', pageoffset, ' danmuList:', danmuList)
-          }
-          if (danmuServ && danmuServ.adv_note) {
-            if (danmuServ.adv_note) { //通知
-              for (var i = 0; i < danmuServ.adv_note.length; i++) {
-                var cur_adv_note = danmuServ.adv_note[i]['content'] ? JSON.parse(danmuServ.adv_note[i]['content']) : ''
-                if (cur_adv_note['list']){ //note通知
-                  for (var k = 0; k < cur_adv_note['list'].length; k++){
+          if (danmuServ && danmuServ.danmu_list){
+            for (var i = 0; i < danmuServ.danmu_list.length;i++){
+              if (danmuServ.danmu_list[i].type == 0) { // 弹幕信息
+                var nickName = danmuServ.danmu_list[i]['nickname'] ? danmuServ.danmu_list[i]['nickname'] + ':' : ''
+                var background_color = nickName ? getRandomColor() : '#e34c55'
+                var cur_danmu = {
+                  nickname: nickName,
+                  content: danmuServ.danmu_list[i]['content'],
+                  color: getRandomColor(),
+                  background_color: background_color,
+                }
+                if (danmuList.length > danmu_num_max - 1) {
+                  danmuList.shift()
+                }
+                danmuList.push(cur_danmu)
+                danmu_num = danmu_num + 1 
+              } else if (danmuServ.danmu_list[i].type == 1) {  //note通知
+                var cur_adv_note = danmuServ.danmu_list[i]['content'] ? JSON.parse(danmuServ.danmu_list[i]['content']) : ''
+                if (cur_adv_note['list']) { //note通知
+                  for (var k = 0; k < cur_adv_note['list'].length; k++) {
                     if (cur_adv_note['list'][k]['image'].indexOf("http") < 0) {
                       cur_adv_note['list'][k]['image'] = weburl + '/' + cur_adv_note['list'][k]['image'];
                     }
-                    if (cur_adv_note['list'][k]['m_id']== m_id){
-                      cur_adv_note['sub_title']= '恭喜您中奖了!'
+                    if (cur_adv_note['list'][k]['m_id'] == m_id) {
+                      cur_adv_note['sub_title'] = '恭喜您中奖了!'
                     }
                   }
                 }
                 live_adv_note.push(cur_adv_note)
                 if (!cur_adv_note['sub_title'] && !cur_adv_note['note']) cur_adv_note['sub_title'] = '很遗憾，您本次没有中奖~'
+              } else if (danmuServ.danmu_list[i].type == 2) {  //商品推荐
+                  var cur_adv_goods = danmuServ.danmu_list[i]['content'] ? JSON.parse(danmuServ.danmu_list[i]['content']) : ''
+                  if (cur_adv_goods['image'].indexOf("http") < 0) {
+                    cur_adv_goods['image'] = weburl + '/' + cur_adv_goods['image'];
+                  }
+                  live_adv_goods.push(cur_adv_goods)
+             
               }
-              console.log('获取服务端通知信息完成:', live_adv_note, ' pageoffset:', pageoffset)
-            } 
-          }
-          if (danmuServ && danmuServ.adv_goods) {
-            for (var i = 0; i < danmuServ.adv_goods.length; i++) {
-              if (danmuServ.adv_goods) { //商品推荐
-                var cur_adv_goods = danmuServ.adv_goods[i]['content'] ? JSON.parse(danmuServ.adv_goods[i]['content']) : ''
-                if (cur_adv_goods['image'].indexOf("http") < 0) {
-                  cur_adv_goods['image'] = weburl + '/' + cur_adv_goods['image'];
-                }
-                live_adv_goods.push(cur_adv_goods)
-                //console.log('获取服务端弹幕信息完成 live id:', liveid, 'danmuList:', danmuList, ' live_adv_goods:', live_adv_goods)
-              }
+             
             }
           }
-          var danmu_num = that.data.danmu_num + danmuServ.danmu.length
+          
           var live_focus_num = danmuServ.focus_num ? danmuServ.focus_num:0
           var live_focus_status = danmuServ.focus_status ? danmuServ.focus_status : that.data.live_focus_status
           var live_sub_name = live_focus_num > 10000 ? '人气值:' + (live_focus_num / 10000).toFixed(2) + '万' : '人气值:' + live_focus_num
+          if (all_rows > 0) pageoffset = all_rows
+          
+          console.log('获取服务端弹幕/商品推荐/通知信息完成 all_rows:', all_rows, 'pageoffset:', pageoffset, ' danmuList:', danmuList)
+
           that.setData({
             live_focus_num: live_focus_num,
             live_sub_name: live_sub_name,
             danmuList: danmuList,
-            pageoffset: pageoffset,
+            pageoffset: all_rows > 0 ? pageoffset : that.data.pageoffset,
             danmu_scrollTop: danmuServ.length*30,
             danmu_num:danmu_num,
             modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
@@ -1042,8 +1041,8 @@ Page({
           }, function() { 
             that.danmu_scroll_auto()
           })
+          
         }
-        
         that.setData({
           is_danmu_loading: !that.data.is_danmu_loading,
         })

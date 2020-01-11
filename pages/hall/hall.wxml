@@ -148,7 +148,7 @@
     </view>
 
     <view class="btnconfirm">
-      <form bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true">
+      <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true">
         <button class="send-button" formType="submit">
           <image src="../../images/packed.png"></image>
           打包送出</button>
@@ -161,7 +161,7 @@
             立即自购</button>
         </view>
       </form>
-       <form wx:if="{{!carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='pickgift' data-type="2" report-submit="true">
+       <form wx:if="{{!carts[0]}}" bindsubmit="formSubmit"  data-name='pickgift' data-type="2" report-submit="true">
         <view class='buttonwrap'>
           <button class="send-button" formType="submit">
             <image src="../../images/btn_add.png"></image>

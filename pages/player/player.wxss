@@ -462,7 +462,7 @@ live-player {
 } 
 .danmu-info {
   position:fixed;
-  bottom: 105rpx;
+  bottom: 130rpx;
   padding-left:5px;
   padding-bottom:10px;
   overflow-x: hidden;
