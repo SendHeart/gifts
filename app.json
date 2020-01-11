@@ -62,10 +62,10 @@
         "text": "送礼"
       },
       {
-        "pagePath": "pages/wish/wish",
+        "pagePath": "pages/member/friends/friends",
         "iconPath": "images/wish.png",
         "selectedIconPath": "images/wish_s.png",
-        "text": "心愿单"
+        "text": "好友"
       },
       {
         "pagePath": "pages/member/message/message",

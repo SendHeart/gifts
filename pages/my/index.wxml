@@ -41,7 +41,10 @@
 	  <image src="../../images/red_package.png" />
 	  <text>我的红包</text>
   </view>
- 
+ <view bindtap="subscribeMessage" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/message.png" />
+	  <text>消息订阅</text>
+  </view>
   <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>
@@ -154,6 +157,7 @@
     <button class='modal-btn' open-type='contact'>送心APP</button>
   </view>
 </view>
+
 <!--  
 <modal class="modalbox" title="银行卡" hidden="{{modalHiddenBankcard}}" confirm-text="确认" cancel-text="返回" bindconfirm="modalBindconfirmBankcard" bindcancel="modalBindcancelBankcard">
   <view class="picker_box">

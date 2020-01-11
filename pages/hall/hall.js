@@ -1260,16 +1260,22 @@ Page({
   */
 
   bindPickFriends: function () {
+    /*
     wx.navigateTo({
       url: '/pages/member/friends/friends'
     })
+    */
+    wx.switchTab({
+      url: '/pages/member/friends/friends'
+    });
   },
-
+/*
   showCart: function () {
     wx.switchTab({
       url: '../../cart/cart'
     });
   },
+*/
 
   showCartToast: function (message) {
     wx.showToast({

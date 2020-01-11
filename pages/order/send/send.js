@@ -39,6 +39,7 @@ Page({
     send_status:1,
     navList2: navList2,
     is_buymyself:0, //1自购礼品
+    subscribeTmpl: ['OYCAJ8XcdiNmmWqe5yFBjYp0E0JTii6LosbJUgD3n4Q', '1kiDpUQozkmaI5doxYVIdCtjDGxqHPyEdThffgdhGcM', 'Xmn_sJb1jgk6Dhtj-j8jcspCaVCGLKbHByl1EYKNV1U']
   },
   
   goBack: function () {
@@ -54,14 +55,67 @@ Page({
   },
   returnForm:function(e){
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var message_type = 0 //0订单类消息
+    /*
     var formID = e.detail.formId
     that.setData({
       formID: formID,
     })
     console.log('send returnTapTag() fromID:', formID)
-     //微信消息通知
-    that.remindMessage()
+    */
+    
+    wx.request({
+      url: weburl + '/api/client/get_subscribe_tmpl',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        m_id: m_id,
+        shop_type: shop_type,
+        message_type: message_type
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        //console.log('订阅消息 my subscribeMessage:', res.data)
+        if (res.data.status == 'y') {
+          var subscribe_tmpl_list = res.data.result
+          var info_content = ''
+          //wx.setStorageSync('subscribe_tmpl_list', subscribe_tmpl_list)
+          if (subscribe_tmpl_list) {
+            var subscribe_tmpl = []
+            for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+              if (i % 3 == 0) {
+                subscribe_tmpl = []
+                info_content = ''
+              }
+              info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
+              subscribe_tmpl[i % 3] = subscribe_tmpl_list[i]
+              if (i % 3 == 2) {
+                console.log('订阅消息 my subscribeMessage:', subscribe_tmpl)
+                that.requestSubscribeMessage(subscribe_tmpl)
+                /*
+                wx.showToast({
+                  title: info_content + "订阅完成",
+                  icon: 'none',
+                  duration: 5000,
+                })
+                */
+              }
+            }
+          }
+        }
+      }
+    })
+   
     that.returnTapTag()
+    that.remindMessage()
   },
   returnTapTag: function () {
     var that = this
@@ -125,6 +179,7 @@ Page({
     }) 
   },
 
+
   /**
 * 触发微信提醒
 */
@@ -166,8 +221,104 @@ Page({
     })
   },
 
+  requestSubscribeMessage: function (subscribe_tmpl_list) {
+    var that = this
+    var subscribe_tmpl_id = []
+    var subscribe_tmpl_name = []
+    //var subscribe_tmpl = that.data.subscribe_tmpl
+    if (!subscribe_tmpl_list) {
+      console.log('订阅消息模板ID为空')
+      return
+    } else {
+      for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+        subscribe_tmpl_id[i] = subscribe_tmpl_list[i]['id']
+        subscribe_tmpl_name[i] = subscribe_tmpl_list[i]['name']
+      }
+    }
+    console.log('订阅消息模板IDs:', subscribe_tmpl_id)
+    return new Promise((resolve, reject) => {
+      wx.requestSubscribeMessage({
+        tmplIds: subscribe_tmpl_id,
+        success: (res) => {
+          for (let i = 0; i < subscribe_tmpl_id.length; i++) {
+            if (res[subscribe_tmpl_id[i]] === 'accept') {
+              wx.showToast({
+                title: subscribe_tmpl_name[i] + '订阅OK！',
+                duration: 1500,
+              })
+            }
+          }
+        },
+        fail(err) {//失败
+          console.error(err);
+          wx.showToast({
+            title: '订阅失败' + err ,
+            duration: 1500,
+          })
+          reject()
+        },
+        /*
+        complete: fin => {
+          console.log(fin)
+          // resolve(fin)
+          reject(fin)
+        },
+        */
+      })
+    })
+
+  },
+
+/*
+  //获取订阅模板信息
+  subscribeMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var message_type = 0 //0订单类消息
+
+    wx.request({
+      url: weburl + '/api/client/get_subscribe_tmpl',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        m_id: m_id,
+        shop_type: shop_type,
+        message_type: message_type
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('订阅消息 my subscribeMessage:', res.data)
+        if (res.data.status == 'y') {
+          var subscribe_tmpl_list = res.data.result
+          var info_content = ''
+          wx.setStorageSync('subscribe_tmpl_list', subscribe_tmpl_list)
+          if (subscribe_tmpl_list) {
+            var subscribe_tmpl = []
+            for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+              if (i % 3 == 0) {
+                subscribe_tmpl = []
+                info_content = ''
+              }
+              info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
+              subscribe_tmpl[i % 3] = subscribe_tmpl_list[i]
+              if (i % 3 == 2) {
+                that.requestSubscribeMessage(subscribe_tmpl)
+              }
+            }
+          }
+        }
+      }
+    })
+  },
+*/
   scroll: function (event) {
-    //该方法绑定了页面滚动时的事件，我这里记录了当前的position.y的值,为了请求数据之后把页面定位到这里来。
     this.setData({
       scrollTop: event.detail.scrollTop
     });

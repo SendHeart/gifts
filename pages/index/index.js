@@ -55,6 +55,7 @@ Page({
     needPhoneNumber: '微信授权',
     needUserName: '微信授权',
     inputShowed: false,
+  
   },
   /*
   //监听屏幕滚动 判断上下滚动  
@@ -145,6 +146,7 @@ Page({
     })
   },
 */
+  
   goBack: function () {
     wx.switchTab({
       url: '../hall/hall'
@@ -257,7 +259,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        if (res.data.status='y'){
+        if (res.data.status=='y'){
           wx.setStorageSync('user_name', user_name)
           that.reloadData()
         }else{
@@ -624,6 +626,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     
     that.get_project_gift_para()
+  
     //that.reloadData()
     // 存为全局变量，控制支付按钮是否显示
     if (status) {

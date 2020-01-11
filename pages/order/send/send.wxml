@@ -24,7 +24,7 @@
       <!--<text>{{note_title}}</text> -->
       <text space="ensp">{{note}}</text>
     </view>
-    <view wx:for="{{orderskus}}" wx:key="" class="gifts-item">
+    <view wx:for="{{orderskus}}" wx:key="id" class="gifts-item">
       <view bindtap="showGoods" data-sku-id="{{item.sku_id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.goods_name}}">
         <image class="gifts-image" src="{{item.sku_image}}" mode="aspectFill"> </image>
       </view>
@@ -34,9 +34,7 @@
   <view class="sentbtn">
     <button open-type="share" bindtap="onShareAppMessage" hidden='{{send_status==0?false:true}}'>选择微信好友</button>
     <view hidden='{{send_status==0?true:false}}'>
-      <form bindsubmit="returnForm" report-submit="true">
-        <button style="width:300rpx;" formType="submit">完成</button> <!--  bindtap="returnTapTag"  -->
-      </form>
+      <button style="width:300rpx;" formType="submit" bindtap="returnForm">完成</button> <!--  bindtap="returnTapTag"  -->
     </view>  
   </view>
 </view>
