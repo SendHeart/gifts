@@ -23,19 +23,19 @@
   </view>
 </view>
 
-<view wx:if="{{is_live}}" class="footer">
+<view class="footer">
   <view class="footer-left" hidden="">
     <view class="footer-button" bindtap="goodsinfo"> 
       <image class="goods-button" src="/images/1.png" ></image>
       <text class="goods-num">{{goods_num}}</text>
 	  </view>
-    <view class="footer-button" bindtap="sendDanmu"> 
+    <view  wx:if="{{is_live}}" class="footer-button" bindtap="sendDanmu"> <!--   -->
       <view class="danmu-list">
         <view class="danmu-button" ></view>
         <image class="danmu-button-image" src="/images/u72.png" ></image>
       </view>
 	  </view>
-     <view wx:if="{{is_hoster}}" class="footer-button" bindtap="hoster_action"> 
+     <view  wx:if="{{is_hoster && is_live}}" class="footer-button" bindtap="hoster_action"> 
       <view class="hoster-list">
          <image class="hoster-button" src="/images/record.png" ></image>
       </view>
@@ -143,22 +143,35 @@
     </view>
   </view>
 </action-sheet>
-<view wx:if="{{is_live}}" class="danmu-info">
-  <view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-360}}px" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower="queryDanmu"  > 
+
+<!-- 有序弹幕 
+<view class="doommview">
+    <block wx:for="{{doommData}}" wx:key="id">
+        <text wx:if="{{item.display}}" class="aon" style="animation: first {{item.time}}s linear forwards;top:{{item.top}}%;color:{{item.color}};">
+            {{item.text}}
+        </text>
+    </block>
+</view>
+
+-->
+ 
+<view wx:if="{{is_live}}" class="danmu-info"> <!-- -->
+  <scroll-view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-360}}px" catchtouchmove="true" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower=""  > 
   <view class="danmu-scroll-list">
     <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">
     <view class="danmu-content" style="{{danmu.color?'color:'+danmu.color+';':''}}">
-      <view style="display:flex;flex-direction:row;justify-content:flex-start;">
+      <view style="display:flex;flex-direction:row;justify-content:left;">
         <text class="danmu-content-nickname" style="{{danmu.background_color?'background_color:'+danmu.background_color+';':''}}">{{danmu.nickname}}</text>
         <text class="danmu-content-text" style="{{danmu.background_color?'background_color:'+danmu.background_color+';':''}}">{{danmu.content}}</text>
       </view>
     </view>
     </block>
     </view>
-  </view>  
+  </scroll-view>  
   <image hidden="{{modalDanmuHidden}}" bindtap="danmuInfo" style="margin-left:30rpx;width:30rpx;height:30rpx;" src="/images/top.png"></image> 
-  <text hidden="{{!modalDanmuHidden}}" bindtap="danmuInfo" class="danmu-num-show">{{danmu_num<100?' '+danmu_num+' 条新的消息':' 99+条新的消息'}}</text>  
+  <text hidden="{{!modalDanmuHidden}}" bindtap="danmuInfo" class="danmu-num-show">{{cur_danmu_num<100?' '+cur_danmu_num+' 条新的消息':' 99+条新的消息'}}</text>  
 </view>
+ 
 <!-- 商品推荐弹窗-->
 <view hidden="{{modalAdvGoodshidden}}" class="live-adv-goods">
   <view class='live-adv-goods-title' bindtap="modalAdvGoodsconfirm">

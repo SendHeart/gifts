@@ -14,6 +14,10 @@ var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0 ;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var userauth = wx.getStorageSync('userauth') ? wx.getStorageSync('userauth') : '';
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
+var doommList = [];
+var i = 0;
+var ids = 0;
+var cycle = null  //计时器
 
 function getRandomColor() {
   let rgb = []
@@ -24,6 +28,20 @@ function getRandomColor() {
   }
   return '#' + rgb.join('')
 }
+
+// 弹幕参数
+/*
+class Doomm {
+  constructor(text, top, time, color) {  //内容，顶部距离，运行时间，颜色（参数可自定义增加）
+    this.text = text;
+    this.top = top;
+    this.time = time;
+    this.color = color;
+    this.display = true;
+    this.id = i++;
+  }
+}
+*/
 /*
 {
   color: '#000000', // 默认黑色
@@ -76,7 +94,7 @@ Page({
     share_logo: weburl + '/uploads/video_share_logo.png',
     danmustatus:true,
     tanmuHidden:true,
-    danmu_num:0,
+    cur_danmu_num:0,
     danmu_num_max: 200, //本地最多保存200条记录
     live_members:1,
     live_members_info:'',
@@ -104,6 +122,8 @@ Page({
     input_focus:true,
     sign_type:'0',
     is_live:false,
+    doommData: [],
+    //arr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   },
   /*
   onReady(res) {
@@ -173,30 +193,50 @@ Page({
     //创建节点选择器
     var that = this 
     var is_live = that.data.is_live
+    var danmuList = that.data.danmuList
+    var cur_danmu_num = that.data.cur_danmu_num
+    var danmu_scrollTop = that.data.danmu_scrollTop + cur_danmu_num*25
+    
     if(!is_live) return 
+    /*
+    var danmuList = that.data.danmuList
+    for (let i=0; i < danmuList.length;i++){
+      var doomm = {
+        text: danmuList[i]['content'],
+        top: Math.ceil(Math.random() * 100),
+        time: 5 ,
+        color:  getRandomColor(),
+        display:  true,
+        id: i,
+      }
+      if (doommList.length > 5) {
+        doommList.splice(0, 1)
+      }
+      doommList.push(doomm);
+    }
+  
+    
+    that.setData({
+      doommData: doommList
+    })
+    */
+  
     var query = wx.createSelectorQuery();
     query.select('.danmu-scroll').boundingClientRect()
     query.select('.danmu-scroll-list').boundingClientRect()
     query.exec((res) => {
       var containerHeight = res[0].height;
       var listHeight = res[1].height;
-      // 滚动条的高度增加
-       var interval = setInterval(() => {
-         if (this.data.danmu_scrollTop < listHeight - containerHeight) {
-            this.setData({
-              danmu_scrollTop: this.data.danmu_scrollTop + 30
-            })
-         } else {
-            clearInterval(interval);
-          /*
-            this.setData({
-              danmu_scrollTop: 0
-            })
-          */
-         }
-       }, 200)
       
+      // 滚动条的高度增加
+      if (danmu_scrollTop > listHeight - containerHeight) {
+        that.setData({
+          danmu_scrollTop: danmu_scrollTop
+        })
+      }
+      console.log('containerHeight:', containerHeight, ' listHeight:', listHeight, ' danmu_scrollTop:', danmu_scrollTop, ' cur_danmu_num:', cur_danmu_num, ' danmuList:', that.data.danmuList)
     })
+   
   },
 
   onReady: function () {
@@ -946,7 +986,7 @@ Page({
     var pageoffset = parseInt(that.data.pageoffset)
     var danmustatus = that.data.danmustatus
     var is_danmu_loading = that.data.is_danmu_loading
-    var danmu_num = that.data.danmu_num
+    var cur_danmu_num = 0
     if (!danmustatus || is_danmu_loading) {
       console.log('弹幕信息正在加载 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
       return 
@@ -993,7 +1033,7 @@ Page({
                   danmuList.shift()
                 }
                 danmuList.push(cur_danmu)
-                danmu_num = danmu_num + 1 
+                cur_danmu_num = cur_danmu_num + 1 
               } else if (danmuServ.danmu_list[i].type == 1) {  //note通知
                 var cur_adv_note = danmuServ.danmu_list[i]['content'] ? JSON.parse(danmuServ.danmu_list[i]['content']) : ''
                 if (cur_adv_note['list']) { //note通知
@@ -1032,8 +1072,7 @@ Page({
             live_sub_name: live_sub_name,
             danmuList: danmuList,
             pageoffset: all_rows > 0 ? pageoffset : that.data.pageoffset,
-            danmu_scrollTop: danmuServ.length*30,
-            danmu_num:danmu_num,
+            cur_danmu_num: cur_danmu_num,
             modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
             live_adv_note: live_adv_note ? live_adv_note : that.data.live_adv_note,
             modalAdvGoodshidden: live_adv_goods.length>0 ? false : that.data.modalAdvGoodshidden,
@@ -1041,7 +1080,6 @@ Page({
           }, function() { 
             that.danmu_scroll_auto()
           })
-          
         }
         that.setData({
           is_danmu_loading: !that.data.is_danmu_loading,
@@ -1058,7 +1096,7 @@ Page({
     var modalDanmuHidden = that.data.modalDanmuHidden
     that.setData({
       modalDanmuHidden: !modalDanmuHidden,
-      danmu_num:0,
+      cur_danmu_num:0,
     })
   },
   goodsinfo(e) {

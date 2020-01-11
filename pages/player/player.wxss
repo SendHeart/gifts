@@ -1,5 +1,7 @@
 .page-body-button {
   margin-bottom: 30rpx;
+  top:0;
+  position:fixed;
 }
 ::-webkit-scrollbar{
   width: 0;
@@ -468,38 +470,38 @@ live-player {
   overflow-x: hidden;
   z-index: 999;
 }
-.danmu-container {
-  width:100%;
-  margin-top: 5rpx;
-  overflow-x: hidden;
-}
 .danmu-content {
-  width:100%;
+  width:90%;
   display:flex;
   flex-direction:column;
   justify-content: flex-start;
   margin-left: 10rpx;
   margin-right: 10rpx;
+  margin-bottom: 5rpx;
   font-size:26rpx; 
-  height:60rpx;
-  line-height: 60rpx;
-  padding: 5rpx;
+  max-height:100rpx;
+  line-height: 50rpx;
+  padding-left: 5rpx;
+  padding-right:5rpx; 
+
 }
 .danmu-content-nickname {
   color:#e34c55;
   padding-left:10rpx;
   background:#333;
   opacity:0.8;
-  border-top-left-radius:5rpx;
-  border-bottom-left-radius:5rpx;
+  border-top-left-radius:15rpx;
+  border-bottom-left-radius:15rpx;
+  white-space:nowrap;
 }
 .danmu-content-text {
   color:#fff;
   padding-right:10rpx;
   background:#333;
   opacity:0.8;
-  border-top-right-radius:5rpx;
-  border-bottom-right-radius:5rpx;
+  border-top-right-radius:15rpx;
+  border-bottom-right-radius:15rpx;
+  white-space:wrap;
 }
 .danmu-num-show{
   background: #333;
@@ -885,4 +887,29 @@ live-player {
   background: #e34c55;
   border-radius: 50rpx;
   opacity:0.4;
+}
+
+.aon{
+  position:fixed;
+  bottom: 130rpx;
+  padding-left:5px;
+  padding-bottom:10px;
+  overflow-x: hidden;
+  z-index: 999;
+  white-space:nowrap;/* 防止向下换行*/
+  animation-timing-function: linear;
+  animation-fill-mode: none;
+  font-size:25rpx; 
+}
+
+.doommview{
+  z-index: 999;
+  height: 80%;
+  width: 80%;
+  position: absolute;
+}
+
+@keyframes first{
+  from{top: 10%; }
+  to{top: -10%;}
 }
