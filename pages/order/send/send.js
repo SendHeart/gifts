@@ -244,6 +244,7 @@ Page({
             if (res[subscribe_tmpl_id[i]] === 'accept') {
               wx.showToast({
                 title: subscribe_tmpl_name[i] + '订阅OK！',
+                icon: 'none',
                 duration: 1500,
               })
             }
@@ -253,6 +254,7 @@ Page({
           console.error(err);
           wx.showToast({
             title: '订阅失败' + err ,
+            icon:'none',
             duration: 1500,
           })
           reject()

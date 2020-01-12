@@ -248,7 +248,12 @@ Page({
   },
   returnTapTag: function (e) {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var type = e.currentTarget.dataset.type ? e.currentTarget.dataset.type: 1
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var message_type = 0 //0订单类消息
     var order_id = e.currentTarget.dataset.orderId ? e.currentTarget.dataset.orderId:that.data.order_id //e.currentTarget.dataset.orderId
     var order_shape = that.data.order_shape
     var card_type = that.data.card_type ? that.data.card_type:0
@@ -262,8 +267,53 @@ Page({
           url: '/pages/list/list?navlist_title=互动卡'
         })
       } else{
-        wx.switchTab({
-          url: '../../hall/hall'
+        wx.request({
+          url: weburl + '/api/client/get_subscribe_tmpl',
+          method: 'POST',
+          data: {
+            username: username ? username : openid,
+            access_token: token,
+            m_id: m_id,
+            shop_type: shop_type,
+            message_type: message_type
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            //console.log('订阅消息 my subscribeMessage:', res.data)
+            if (res.data.status == 'y') {
+              var subscribe_tmpl_list = res.data.result
+              var info_content = ''
+              //wx.setStorageSync('subscribe_tmpl_list', subscribe_tmpl_list)
+              if (subscribe_tmpl_list) {
+                var subscribe_tmpl = []
+                for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+                  if (i % 3 == 0) {
+                    subscribe_tmpl = []
+                    info_content = ''
+                  }
+                  info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
+                  subscribe_tmpl[i % 3] = subscribe_tmpl_list[i]
+                  if (i % 3 == 2) {
+                    console.log('订阅消息 my subscribeMessage:', subscribe_tmpl)
+                    that.requestSubscribeMessage(subscribe_tmpl)
+                    /*
+                    wx.showToast({
+                      title: info_content + "订阅完成",
+                      icon: 'none',
+                      duration: 5000,
+                    })
+                    */
+                  }
+                }
+                wx.switchTab({
+                  url: '../../hall/hall'
+                })
+              }
+            }
+          }
         })
       } 
     }else if(type==2){ //转互动详情
@@ -275,6 +325,55 @@ Page({
         url: '../../hall/hall'
       })
     }
+  },
+
+  requestSubscribeMessage: function (subscribe_tmpl_list) {
+    var that = this
+    var subscribe_tmpl_id = []
+    var subscribe_tmpl_name = []
+    //var subscribe_tmpl = that.data.subscribe_tmpl
+    if (!subscribe_tmpl_list) {
+      console.log('订阅消息模板ID为空')
+      return
+    } else {
+      for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+        subscribe_tmpl_id[i] = subscribe_tmpl_list[i]['id']
+        subscribe_tmpl_name[i] = subscribe_tmpl_list[i]['name']
+      }
+    }
+    console.log('订阅消息模板IDs:', subscribe_tmpl_id)
+    return new Promise((resolve, reject) => {
+      wx.requestSubscribeMessage({
+        tmplIds: subscribe_tmpl_id,
+        success: (res) => {
+          for (let i = 0; i < subscribe_tmpl_id.length; i++) {
+            if (res[subscribe_tmpl_id[i]] === 'accept') {
+              wx.showToast({
+                title: subscribe_tmpl_name[i] + '订阅OK！',
+                icon:'none',
+                duration: 1500,
+              })
+            }
+          }
+        },
+        fail(err) {//失败
+          console.error(err);
+          wx.showToast({
+            title: '订阅失败' + err,
+            duration: 1500,
+          })
+          reject()
+        },
+        /*
+        complete: fin => {
+          console.log(fin)
+          // resolve(fin)
+          reject(fin)
+        },
+        */
+      })
+    })
+
   },
 
   radiochange: function (e) {
@@ -620,7 +719,7 @@ Page({
                   url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + that.data.order_no,
                 })
               }else{
-                that.goBack()
+                //that.goBack()
               }
             } else {
               console.log('礼物接收失败 order_no:', that.data.order_no)
