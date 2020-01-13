@@ -159,9 +159,13 @@
   </view>
 </view>
 <view wx:if="{{receive_status<=1}}" class="sentbtn" style="z-index:2;">
+ <view style="width:100%; display:flex;flex-direction:column;text-align:center;margin-bottom:25rpx;" wx:if='{{receive_status<=1 && overtime_status==0 && card_type!=4 && card_type!=5 }}' bindtap="messageAcceptTapTag">
+    <text>是否接收礼物发出通知</text>
+  </view>
   <form bindsubmit="formSubmit"  data-name='receivegift' report-submit="true" hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' >
     <button class="button" style="width:200rpx;" formType="submit" >{{button_name?button_name:'拆开'}}</button> <!-- bindtap="receiveTapTag" -->
   </form>
+   
   <form bindsubmit="formSubmit"  data-name='refresh' report-submit="true"  hidden='{{overtime_status==0?true:false}}' >  
     <button formType="submit"  style="width:200rpx;font-size:25rpx;">刷新重试</button> <!-- bindtap="refresh"  data-isreload="1" -->
   </form>
@@ -171,6 +175,7 @@
       <text hidden='{{(receive_status==1 || overtime_status==1)?true:false}}' style='color:#E34C55;font-size:28rpx;'>暂不接受，看看其他内容</text>
     </view>
   </view>
+  
   <button  hidden='{{(receive_status==0 || overtime_status==1)?true:false}}' class="button" formType="submit"  style="width:200rpx;" data-type="1" bindtap="returnTapTag">{{(order_shape==4)?'返回':'回赠'}}</button> 
    <!-- 
   <form bindsubmit="formSubmit"  data-name='resendgift' report-submit="true" >  

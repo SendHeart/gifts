@@ -102,6 +102,8 @@ Page({
     rpage_num:1,
     is_reloading:false,
     toView: 0,
+    is_video_play:0,
+    gift_para_interval:0,
   }, 
 
   handletouchmove: function (event) {
@@ -1295,8 +1297,9 @@ Page({
     var navList_new = that.data.navList2
     var shop_type = that.data.shop_type
     var hall_banner = that.data.hall_banner
+    var gift_para_interval = that.data.gift_para_interval
     console.log('hall get_project_gift_para navList2:', navList_new)
-    if (navList_new.length == 0){
+    if (navList_new.length == 0 || gift_para_interval>0){
       //项目列表
       wx.request({
         url: weburl + '/api/client/get_project_gift_para',
@@ -1324,6 +1327,7 @@ Page({
             return
           }else{
             that.setData({
+              gift_para_interval: 0,
               navList2: navList_new,
               hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
               middle1_img: navList_new[11] ? navList_new[11]['img'] : '',
@@ -1352,6 +1356,8 @@ Page({
               middle6_note: navList_new[16] ? navList_new[16]['note'] : '',
               middle7_note: navList_new[17] ? navList_new[17]['note'] : '',
               middle8_note: navList_new[18] ? navList_new[18]['note'] : '',
+
+              is_video_play: navList_new[19] ? navList_new[19]['value'] : 0,
             })
             wx.setStorageSync('navList2', navList_new)
           }
@@ -1379,7 +1385,6 @@ Page({
         middle7_title: navList_new[17] ? navList_new[17]['title'] : '',
         middle8_title: navList_new[18] ? navList_new[18]['title'] : '',
 
-
         middle1_note: navList_new[11]?navList_new[11]['note']:'',
         middle2_note: navList_new[12]?navList_new[12]['note']:'',
         middle3_note: navList_new[13]?navList_new[13]['note']:'',
@@ -1388,6 +1393,8 @@ Page({
         middle6_note: navList_new[16] ? navList_new[16]['note'] : '',
         middle7_note: navList_new[17] ? navList_new[17]['note'] : '',
         middle8_note: navList_new[18] ? navList_new[18]['note'] : '',
+
+        is_video_play: navList_new[19] ? navList_new[19]['value'] : 0,
       })
     }
     const fs = wx.getFileSystemManager()
@@ -1534,7 +1541,10 @@ Page({
     */
     setInterval(function () {
       that.initSocketMessage()
-    }, 20000)
+      that.setData({
+        gift_para_interval:1 //30秒获取一次系统参数
+      })
+    }, 30*1000)
    
     /*
     setInterval(function () {

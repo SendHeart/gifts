@@ -266,7 +266,43 @@ Page({
         wx.navigateTo({
           url: '/pages/list/list?navlist_title=互动卡'
         })
-      } else{
+      } else {
+        wx.switchTab({
+          url: '../../hall/hall'
+        })
+      } 
+    }else if(type==2){ //转互动详情
+      wx.navigateTo({
+        url: '/pages/order/list/list?order_id=' + order_id + '&order_shape=' + order_shape + '&card_type=' + card_type
+      })
+    }else{
+      wx.switchTab({
+        url: '../../hall/hall'
+      })
+    }
+  },
+
+  messageAcceptTapTag: function (e) {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var type = e.currentTarget.dataset.type ? e.currentTarget.dataset.type : 1
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var message_type = 0 //0订单类消息
+    var order_id = e.currentTarget.dataset.orderId ? e.currentTarget.dataset.orderId : that.data.order_id //e.currentTarget.dataset.orderId
+    var order_shape = that.data.order_shape
+    var card_type = that.data.card_type ? that.data.card_type : 0
+    if (type == 1) { //转商城
+      if (order_shape == 5) {
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=贺卡请柬'
+        })
+      } else if (order_shape == 4) {
+        wx.navigateTo({
+          url: '/pages/list/list?navlist_title=互动卡'
+        })
+      } else {
         wx.request({
           url: weburl + '/api/client/get_subscribe_tmpl',
           method: 'POST',
@@ -299,34 +335,28 @@ Page({
                   if (i % 3 == 2) {
                     console.log('订阅消息 my subscribeMessage:', subscribe_tmpl)
                     that.requestSubscribeMessage(subscribe_tmpl)
-                    /*
                     wx.showToast({
                       title: info_content + "订阅完成",
                       icon: 'none',
                       duration: 5000,
                     })
-                    */
                   }
                 }
-                wx.switchTab({
-                  url: '../../hall/hall'
-                })
               }
             }
           }
         })
-      } 
-    }else if(type==2){ //转互动详情
+      }
+    } else if (type == 2) { //转互动详情
       wx.navigateTo({
         url: '/pages/order/list/list?order_id=' + order_id + '&order_shape=' + order_shape + '&card_type=' + card_type
       })
-    }else{
+    } else {
       wx.switchTab({
         url: '../../hall/hall'
       })
     }
   },
-
   requestSubscribeMessage: function (subscribe_tmpl_list) {
     var that = this
     var subscribe_tmpl_id = []
