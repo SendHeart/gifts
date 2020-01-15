@@ -72,8 +72,8 @@
           </navigator>
             <view class="goods_prom">{{item.live_desc?item.live_desc:''}}</view>
             <view class="goods_bottom">
-              <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
-                 
+              <view class="goods_tag">
+                 <text space="ensp">{{item.live_focus_members>0?'人气值:'+item.live_focus_members:'人气值:1'}} </text>
               </view>
               <view class="price-list">
                  

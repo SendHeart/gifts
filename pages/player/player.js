@@ -846,9 +846,12 @@ Page({
         delta: 1,
       })
     }else{
+      this.onLoad()
+      /*
       wx.navigateTo({
         url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo+'&is_live='+is_live
       })
+      */
     }
    
   },
