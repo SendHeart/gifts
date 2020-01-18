@@ -828,6 +828,7 @@ Page({
     var error_message = '!'
     var errorTitile = ''
     var errorhidden = that.data.errorhidden
+    this.videoContext.pause()
     console.log('player playerror 播放错误', e)
     //判断异常情况
    
@@ -880,6 +881,7 @@ Page({
     this.videoContext = wx.createVideoContext('myVideo')
     this.videoContext.play()
     */
+    this.videoContext.pause()
     console.log('player playwaiting 播放等待')
     that.query_liveroom_info()
   },

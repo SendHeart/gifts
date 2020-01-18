@@ -18,9 +18,8 @@
         <text class="live-on">{{live_members_info}}</text>
       </label>
     </view>
-    <video id="myVideo" class="slide-image"  direction="0"  style="{{is_live?'height:'+dkheight+'px;':''}}" src="{{videourl}}" controls poster="{{live_poster}}" show-center-play-btn="{{is_live?true:true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{true}}" autoplay="{{true}}" objectFit="{{is_live?'fill':'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playwaiting" vslide-gesture="{{false}}">
+    <video id="myVideo" class="slide-image"  direction="0"  style="{{is_live?'height:'+dkheight+'px;':''}}" src="{{videourl}}" controls poster="{{live_poster}}" show-center-play-btn="{{is_live?true:true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="{{is_live?'fill':'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playwaiting" vslide-gesture="{{false}}">
     </video>
-    <cover-view wx:if="{{live_status!=1}}" class="video_mask"></cover-view>
   </view>
 </view>
 
@@ -59,7 +58,7 @@
 </view>
 
 <view hidden="{{errorhidden}}" style='z-index:999;'>
-  <modal title="{{errorTitile?errorTitile:'提示信息'}}" hidden="{{errorhidden}}" bindconfirm="errorCancelPlay" confirm-text="退出"  >
+  <modal title="{{errorTitile?errorTitile:'提示信息'}}" hidden="{{errorhidden}}" no-cancel="{{true}}" bindconfirm="errorCancelPlay" confirm-text="退出"  >
     <view style="height:80px;">
       <view class="error-note">
         <text style='margin-top:10rpx;font-size:26rpx;color:#333;'>{{error_message}}</text>
