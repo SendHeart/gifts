@@ -1,23 +1,24 @@
-var wxparse = require("../../wxParse/wxParse.js");
-var util = require('../../utils/util.js');
-var app = getApp();
+var wxparse = require("../../wxParse/wxParse.js")
+var util = require('../../utils/util.js')
+var app = getApp()
 var weburl = app.globalData.weburl
 var playerurl = app.globalData.playerurl
 var appid = app.globalData.appid
 var appsecret = app.globalData.secret
-var user_type = app.globalData.user_type ? app.globalData.user_type : 0;
-var shop_type = app.globalData.shop_type;
-var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+var user_type = app.globalData.user_type ? app.globalData.user_type : 0
+var shop_type = app.globalData.shop_type
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
-var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
-var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0 ;
-var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-var userauth = wx.getStorageSync('userauth') ? wx.getStorageSync('userauth') : '';
+var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0 
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var userauth = wx.getStorageSync('userauth') ? wx.getStorageSync('userauth') : ''
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
-var doommList = [];
-var i = 0;
-var ids = 0;
+var doommList = []
+var i = 0
+var ids = 0
 var cycle = null  //计时器
+var videoContext = null 
 
 function getRandomColor() {
   let rgb = []
@@ -117,6 +118,7 @@ Page({
     is_goods_loading: false,
     is_member_loading: false,
     is_danmu_loading: false,
+    is_live_loading: false,
     danmu_scrollTop: 0,
     extClass:"background-color:#333;opacity:0.8;",
     input_focus:true,
@@ -126,11 +128,7 @@ Page({
     onload_options:'',
     //arr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
   },
-  /*
-  onReady(res) {
-    this.ctx = wx.createLivePlayerContext('player')
-  },
-  */
+
   onLoad: function (options){
     var that = this 
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -264,6 +262,13 @@ Page({
     var is_hoster = that.data.is_hoster
     var live_status = that.data.live_status
     var is_live = that.data.is_live
+    var is_live_loading = that.data.is_live_loading
+    if (is_live_loading){
+      return
+    } 
+    that.setData({
+      'is_live_loading' : true ,
+    })
     wx.request({
       url: weburl + '/api/client/get_liveroom_list',
       method: 'POST',
@@ -279,7 +284,10 @@ Page({
 
       },
       success: function (res) {
-        //console.log('query_liveroom_info:', res.data)
+        console.log('query_liveroom_info:', res.data)
+        that.setData({
+          'is_live_loading': false,
+        })
         if (res.data.status!='y') {
           that.setData({
             videourl: that.data.liveurl,
@@ -289,6 +297,11 @@ Page({
         }
         //var venuesItems = that.data.venuesItems
         var liveinfo = res.data.result
+        if (is_live && live_status == 3 && liveinfo[0]['live_status']==1){ //暂停恢复
+          console.log('player rePlay 暂停恢复 重新播放')
+          that.rePlay()
+          return 
+        }
         that.setData({
           live_status: liveinfo[0]['live_status'],
         })
@@ -334,9 +347,7 @@ Page({
             icon: 'loading',
             duration: 1500
           })
-          setTimeout(function () {
-            that.playwaiting()
-          }, 1000)
+          that.playwaiting()
           return
         }else{ //在线
           that.setData({
@@ -349,7 +360,7 @@ Page({
             is_hoster: is_hoster,
           }, function () {
             that.join_liveroom()
-            that.bindPlay()
+            //that.bindPlay()
             //that.query_live_member()
           }) 
         }
@@ -372,7 +383,7 @@ Page({
     var live_starttime = that.data.live_starttime
     var sign_type = '1' //1签到
     var refername = that.data.refername
-
+    if(that.data.sign_type == '1') return 
     wx.request({
       url: weburl + '/api/client/sign_in',
       method: 'POST',
@@ -809,18 +820,59 @@ Page({
   },
   
   //点击播放按钮，封面图片隐藏,播放视频
-  bindPlay: function (e) {
+  bindPlay: function () {
     var that = this
-    console.log('player bindPlay 响应', e)
     wx.onNetworkStatusChange(function (res) {
       if (res.isConnected){
+        //
+        console.log('player bindPlay 网络正常 重新播放')
+       // console.log('player bindPlay 重新播放')
         that.videoContext.play()
+
       }else{
-        that.playerror(e)
+        console.log('player bindPlay 网络异常，播放错误')
+        that.playerror()
       }
       //console.log(res.isConnected)
       //console.log(res.networkType)
     })
+    
+   
+    /*
+     wx.redirectTo({
+      url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo + '&is_live=' + that.data.is_live
+    })
+    wx.reLaunch({
+      url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo + '&is_live=' + that.data.is_live
+    })
+    */
+  },
+
+  //重新播放视频
+  rePlay: function () {
+    var that = this
+    wx.onNetworkStatusChange(function (res) {
+      if (res.isConnected) {
+        console.log('player rePlay 网络正常 重新播放')
+      } else {
+        console.log('player bindPlay 网络异常，播放错误')
+        that.playerror()
+      }
+    })
+    that.setData({
+      live_status: '1',
+    })
+    //that.videoContext.stop()
+    setTimeout(function () {
+      //that.videoContext = wx.createVideoContext('myVideo')
+      that.videoContext.play()
+    }, 300)
+   
+    /*
+    wx.navigateTo({
+      url: '/pages/player/player?liveid=' + that.data.liveid + '&live_goods=' + that.data.live_goods + '&live_name=' + that.data.shop_name + '&live_poster=' + that.data.live_poster + '&live_desc=' + that.data.live_desc + '&live_logo=' + that.data.live_logo + '&is_live=' + that.data.is_live,
+    }) 
+    */
   },
 
   playerror(e) {
@@ -828,10 +880,9 @@ Page({
     var error_message = '!'
     var errorTitile = ''
     var errorhidden = that.data.errorhidden
-    this.videoContext.pause()
+    //this.videoContext.pause()
     console.log('player playerror 播放错误', e)
     //判断异常情况
-   
     that.query_liveroom_info()
     /*
     setTimeout(function () {
@@ -846,8 +897,7 @@ Page({
         error_message = '网络不给力'
         errorTitile = '提示信息'
       }
-    
-    
+
       wx.showModal({
         title: errorTitile,
         content: error_message,
@@ -862,7 +912,6 @@ Page({
         }
       })
        
-     
       that.setData({
         errorhidden: false,
         error_message: error_message,
@@ -877,12 +926,12 @@ Page({
   playwaiting(e) {
     var that = this
     /*
-    this.videoContext.stop()
+  
     this.videoContext = wx.createVideoContext('myVideo')
     this.videoContext.play()
     */
-    this.videoContext.pause()
     console.log('player playwaiting 播放等待')
+    //that.videoContext.stop()
     that.query_liveroom_info()
   },
   errorConfirmPlay(e) {
@@ -902,11 +951,12 @@ Page({
         delta: 1,
       })
     }else{
+      that.playwaiting()
       /*
       this.videoContext.stop()
       this.videoContext = wx.createVideoContext('myVideo')
       */
-      this.videoContext.play()
+      //this.videoContext.play()
       //this.onLoad(onload_options)
       /*
       wx.navigateTo({
