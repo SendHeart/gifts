@@ -194,8 +194,8 @@
 		</view>
     <view class="recomment-title" >
       <text bindtap='bindPickGoods'>精选清单<text class='title_ex'>达人推荐</text></text>
-      <text class='more'>更多</text>
-      <!--<button wx:if="{{is_video_play==1}}" type="primary" bindtap='videoPlayer'>视频</button>-->
+      <text wx:if="{{is_video_play!=1}}" class='more'  bindtap='bindPickGoods'>更多</text>
+      <button wx:if="{{is_video_play==1}}" type="primary" bindtap='videoPlayer'>视频</button>
     </view>
     <view class="middle-goods">
       <view wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">

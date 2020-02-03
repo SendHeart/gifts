@@ -1298,7 +1298,7 @@ Page({
     var shop_type = that.data.shop_type
     var hall_banner = that.data.hall_banner
     var gift_para_interval = that.data.gift_para_interval
-    console.log('hall get_project_gift_para navList2:', navList_new)
+    console.log('hall get_project_gift_para navList2:', navList_new, ' is_video_play', that.data.is_video_play)
     if (navList_new.length == 0 || gift_para_interval>0){
       //项目列表
       wx.request({
