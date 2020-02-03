@@ -11,7 +11,7 @@
     </view>
     <view class="wx-input" bindtap='searchTapTag'>
       <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
-      <text>好礼搜一下</text>
+      <text>搜索礼物</text>
     </view>
     <view class="messages" catchtap="messagesTapTag">
       <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
@@ -76,7 +76,7 @@
       </view>
       <view class="image-btnbuy" bindtap="bindPickGoods">
         <image class="pick-goods-image" src="../../images/menu2.png" mode="aspectFill"></image>
-        <text>全部精选</text>
+        <text>所有分类</text>
       </view>
     </view>
     <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
@@ -128,20 +128,17 @@
     </view>
     <view class="pick-goods jcleft" style="border-bottom:0;">
       <view class="pick-goods-text">
-        <text class="pick-goods-slogan">附赠留言</text>
+        <text class="pick-goods-slogan">赠言</text>
       </view>
       <view class="note" hidden='{{notehidden}}'>
-        <textarea bindblur="bindTextAreaBlur" auto-height placeholder="送你一份礼物，愿你喜欢！" maxlength="56" />
+        <input name="notetext" type="text" bindblur="bindTextAreaBlur" placeholder="送你一份礼物，愿你喜欢！" maxlength="56" />
       </view>
     </view>
     <view class="pick-goods">
-      <view style='width:60%;'>
-        <image class='serviceimg' hidden='{{buyhidden1}}' src="{{img_service?img_service:'../../images/service.png'}}" mode="aspectFill"></image>
-        <image class='serviceimg' hidden='{{buyhidden2}}' src="{{img_service?img_service2:'../../images/service.png'}}" mode="aspectFill"></image>
-      </view>
       <view class="modeswitch">
-        <label>
-          <text style='height:50rpx;line-height:50rpx;'>模式切换</text>
+        <label style="height:50rpx; line-height:50rpx;">
+          <text hidden='{{buyhidden1}}'>送朋友模式</text>
+          <text hidden='{{buyhidden2}}'>送自己模式</text>
           <switch bindchange="BuyModeChange" checked='true' color='#E34C55' style='zoom:0.6' />
         </label>
       </view>
@@ -151,14 +148,14 @@
       <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true">
         <button class="send-button" formType="submit">
           <image src="../../images/packed.png"></image>
-          打包送出</button>
+          开始打包</button>
         <!--  bindtap="bindCheckout" -->
       </form>
       <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='buymyself' data-type="1" report-submit="true">
         <view class='buttonwrap'>
           <button class="send-button" formType="submit">
             <image src="../../images/buynow.png"></image>
-            立即自购</button>
+            立即购买</button>
         </view>
       </form>
        <form wx:if="{{!carts[0]}}" bindsubmit="formSubmit"  data-name='pickgift' data-type="2" report-submit="true">
@@ -180,8 +177,8 @@
   </modal>
    -->
    	<view wx:if="{{friends[0]}}" class="recomment-title" bindtap="bindPickFriends">
-			<text>我的好❤友<text class="title_ex"></text></text>
-			<text class="more">更多...</text>
+			<text>我的好友</text>
+			<text class="more">更多</text>
 		</view>
 		<view wx:if="{{friends[0]}}" class="top-bar-list">
 			<scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toView}}" class="top-bar">
@@ -197,11 +194,11 @@
 		</view>
     <view class="recomment-title" >
       <text bindtap='bindPickGoods'>精选清单<text class='title_ex'>达人推荐</text></text>
-      <text class='more'>更多...</text>
-      <button wx:if="{{is_video_play==1}}" type="primary" bindtap='videoPlayer'>视频</button>
+      <text class='more'>更多</text>
+      <!--<button wx:if="{{is_video_play==1}}" type="primary" bindtap='videoPlayer'>视频</button>-->
     </view>
     <view class="middle-goods">
-      <view wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}" style='border-top-left-radius:14rpx;'>
+      <view wx:if="{{middle1_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">
         <view>
           <image class="middle-goods-image" src="{{middle1_img}}"></image>
         </view>
@@ -210,7 +207,7 @@
           <text class="middle-goods-btntips">{{middle1_note}}</text>
         </view>
       </view>
-      <view wx:if="{{middle2_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods" data-goods-type='2' data-middle-title="{{middle2_title}}" style='border-top-right-radius:14rpx;'>
+      <view wx:if="{{middle2_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods" data-goods-type='2' data-middle-title="{{middle2_title}}">
         <view>
           <image class="middle-goods-image" src="{{middle2_img}}"></image>
         </view>
@@ -220,7 +217,7 @@
         </view>
       </view>
 
-      <view wx:if="{{middle3_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='3' data-middle-title="{{middle3_title}}" style='border-bottom-left-radius:14rpx;'>
+      <view wx:if="{{middle3_img}}" class="image-btn" bindtap="bindMiddleGoods" data-goods-type='3' data-middle-title="{{middle3_title}}">
         <view>
           <image class="middle-goods-image" src="{{middle3_img}}"></image>
         </view>
@@ -229,7 +226,7 @@
           <text class="middle-goods-btntips">{{middle3_note}}</text>
         </view>
       </view>
-      <view wx:if="{{middle4_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods" data-goods-type='4' data-middle-title="{{middle4_title}}" style='border-bottom-right-radius:14rpx;'>
+      <view wx:if="{{middle4_img}}" class="image-btn" style='margin-right:0;' bindtap="bindMiddleGoods" data-goods-type='4' data-middle-title="{{middle4_title}}">
         <view>
           <image class="middle-goods-image" src="{{middle4_img}}"></image>
         </view>
@@ -242,8 +239,8 @@
     </view>
 
     <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
-      <text>近期热门<text class='title_ex'>大家都在送</text></text>
-      <text class='more'>更多...</text>
+      <text>热门好物<text class='title_ex'>大家都在送</text></text>
+      <text class='more'>更多</text>
     </view>
 
     <!--瀑布流列表-->
@@ -264,8 +261,8 @@
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
               </view>
               <view class="price-list">
-                <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now">￥{{item.sell_price}}</view>
+                <view class="price-market" style="display:none;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now" style="display:none;">￥{{item.sell_price}}</view>
               </view>
             </view>
           </block>
@@ -289,8 +286,8 @@
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
               </view>
               <view class="price-list">
-                <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now">￥{{item.sell_price}}</view>
+                <view class="price-market" style="display:none;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now" style="display:none;">￥{{item.sell_price}}</view>
               </view>
             </view>
           </block>

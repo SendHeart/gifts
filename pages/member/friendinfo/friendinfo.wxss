@@ -92,13 +92,13 @@ page {
   display: flex;
   flex-direction: column;
   align-items:center;
-  height: 280rpx;
+  height: 380rpx;
   background: #1d1d1d;
 }
 
 .userinfo-avatar {
-  width: 120rpx;
-  height: 120rpx;
+  width: 160rpx;
+  height: 160rpx;
   margin-top: 40rpx;
   border-radius: 50%;
 }
@@ -107,6 +107,15 @@ page {
   color: #fff;
   font-size: 32rpx;
   font-weight: bold;
+  margin-top: 15rpx;
+}
+.userinfo-action {
+margin-top:20rpx;
+line-height:50rpx;
+height:50rpx;
+font-size: 26rpx;
+color:#fff;
+background:#e02e24
 }
 
 .menu-area {
@@ -173,7 +182,6 @@ page {
   justify-content: center;
   margin:10rpx auto;
   width: 90%;
-  height: 160rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
   border-bottom: 0rpx solid #f2f2f2;
   padding: 10rpx;

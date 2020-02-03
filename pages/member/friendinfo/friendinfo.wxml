@@ -2,7 +2,7 @@
 <view class="userinfo"> 
 	<image class="userinfo-avatar" src="{{friendinfo.wx_headimg?friendinfo.wx_headimg:default_avatar}}" background-size="cover"></image>
 	<text wx:if="{{friendinfo.wx_nickname}}" class="userinfo-nickname">{{friendinfo.wx_nickname}}</text>
-  <button  class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="pickgift">发起送礼</button>
+  <button  class="userinfo-action"  hover-class='none' bindtap="pickgift">发起送礼</button>
 </view>
 
 <view class="menu-area">

@@ -5,7 +5,7 @@
  <view class="userinfo">
 	  <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
 	  <text wx:if="{{userInfo.nickName}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
-    <text wx:if="{{m_id}}" class="userinfo-nickname">{{m_id?'ID:'+m_id:''}}</text>
+    <!--<text wx:if="{{m_id}}" class="userinfo-nickname">{{m_id?'ID:'+m_id:''}}</text>-->
     <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
   </view>
 <view class="menu-area">
@@ -33,6 +33,10 @@
 	  <image src="../../images/iconfont-shouhuodizhi.png" />
 	  <text>我的位置</text>
   </view>
+  <view bindtap="navigateToWishlist" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+	  <image src="../../images/u621.png" />
+	  <text>我的心愿单</text>
+  </view>
   <view bindtap="navigateToMyCoupon" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/iconfont-card.png" />
 	  <text>我的优惠券</text>
@@ -43,29 +47,27 @@
   </view>
  <view bindtap="subscribeMessage" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/message.png" />
-	  <text>消息订阅</text>
+	  <text>消息通知</text>
   </view>
-  <view bindtap="navigateToShare" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+  <view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/barcode.png" />
 	  <text>扫码分享</text>
   </view>
-</view>
-<view class="menu-area">
-  <view bindtap="navigateToAccount" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+
+  <view bindtap="navigateToAccount" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/account.png" />
 	  <text>我的钱包</text>
+  </view>
   </view>
   <!-- <view bindtap="navigateToWishlist" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/wish_s.png" />
 	  <text>我的心愿单</text>
   </view>
-  
    <view bindtap="get_bank_info" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/mycards.png" />
 	  <text>我的银行卡</text>
   </view>
   -->
-</view>
  <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
  <view class="picker_box">
     <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
@@ -84,7 +86,7 @@
 	  <image src="../../images/u633.png" />
 	  <text>用户协议</text>
   </view>
-  <view bindtap="showsendheartapp" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+  <view wx:if="{{userauth.location == 1}}" bindtap="showsendheartapp" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/icon-mobile.png" />
 	  <text>送心APP</text>
   </view>

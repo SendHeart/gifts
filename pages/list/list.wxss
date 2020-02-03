@@ -181,10 +181,10 @@ page {
 }
 .top-bar-image {
   position: fixed; 
-  top: 0;   
+  top: 0;
   right: 0; 
   width:40rpx;
-  height:30rpx;
+  height:40rpx;
   margin:10rpx auto;
   z-index:1000;
   padding-right: 15rpx;
@@ -234,7 +234,7 @@ swiper-item image {
 
 .venues_item {
   margin-bottom:15rpx;
-  background: #ffffff;
+  background: #444;
   border-radius: 14rpx;
   padding-bottom: 10rpx;
   box-sizing: border-box;
@@ -271,9 +271,8 @@ swiper-item image {
   border-radius: 6rpx;
 }
 .venues_item .goods_name {
-  color: #444;
+  color: #fff;
   font-size: 26rpx;
-  font-weight: bold;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -285,10 +284,10 @@ swiper-item image {
 }
 
 .venues_item .goods_tag {
-  color: #999;
+  color: #fc9326;
   font-size: 20rpx;
   padding: 2rpx 5rpx;
-  border: 1px solid #f2f2f2;
+  border: 2rpx solid #fc9326;
   border-radius: 6rpx;
 }
 .venues_item .goods-tags {
@@ -331,9 +330,8 @@ swiper-item image {
 }
 .price-now {
   text-indent: 0;
-  color: #EC4844;
+  color: #eee;
   font-size: 26rpx;
-  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 20rpx;

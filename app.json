@@ -63,8 +63,8 @@
       },
       {
         "pagePath": "pages/member/friends/friends",
-        "iconPath": "images/wish.png",
-        "selectedIconPath": "images/wish_s.png",
+        "iconPath": "images/friend.png",
+        "selectedIconPath": "images/friend_s.png",
         "text": "好友"
       },
       {

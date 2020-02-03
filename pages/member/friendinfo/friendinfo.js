@@ -87,11 +87,11 @@ Page({
         var friendinfo = res.data.result 
        // console.log('friendinfo get_member_note:', friendinfo)
         if (!friendinfo) {
-          wx.showToast({
-            title: '没有搜到记录',
-            icon: 'loading',
-            duration: 1000
-          });
+          //wx.showToast({
+            //title: '没有搜到记录',
+           // icon: 'loading',
+           // duration: 1000
+         // });
           if(page == 1){
             that.setData({
               friendinfo_show: [],

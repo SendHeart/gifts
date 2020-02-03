@@ -1,5 +1,5 @@
  <view class="top-title">
-  <view class="top-title-item">最近新增</view>
+  <view class="top-title-item">最近新朋友</view>
 </view>
 <view wx:if="{{friends_latest[0]}}" class="top-bar-list">
 	<scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toViewX}}" class="top-bar">
@@ -21,7 +21,7 @@
       </view>
       <view class="friend-list-text">{{mapping.full_name?mapping.full_name:mapping.wx_nickname}}</view>
       <view class="friend-list-right-image" >
-        <image src="/images/right-arrow.png" mode="aspectFill"/>
+        <image src="/images/right_arrow.png" mode="aspectFill"/>
       </view>
     </view>
   </view>

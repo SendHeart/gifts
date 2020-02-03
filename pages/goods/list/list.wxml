@@ -1,7 +1,7 @@
 <import src="../../common/nav2.wxml" />
 <view wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="search">
 		<view class="wx-input">
-    <input name="search" value="{{keyword}}" placeholder="好礼搜一下"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="searchTapTag"/>
+    <input name="search" value="{{keyword}}" placeholder="输入礼物名称"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="searchTapTag"/>
     <image bindtap='searchTapTag' src="../../../images/search-btn.png"></image>
     </view>
     <text class='searchcancel' bindtap='goBack'>取消</text>
@@ -14,12 +14,12 @@
       <view bindtap="satisfyTagTap" data-satisfy="2" class='lable'style="{{satisfy==2?'background-color:green;color:white':'background-color:white;color:gray'}}">否</view>
     </view> 
 </view>-->
-<movable-area class='inlinetips' style="margin-left:{{windowWidth-45}}px;margin-top:{{hidddensearch?70:120}}rpx;"><!-- style="height:{{dkheight}}px"  这个组件撑满页面时部分手机无法点击进入详情页-->
+<!-- style="height:{{dkheight}}px"  这个组件撑满页面时部分手机无法点击进入详情页<movable-area class='inlinetips' style="margin-left:{{windowWidth-45}}px;margin-top:{{hidddensearch?70:120}}rpx;">
 <movable-view class='floatlayer' x="330" y="10" direction="all">
 <image src="../../../images/floatbanner.png" bindtap="gotoAITagTap"></image>
 </movable-view>
 </movable-area>
-
+-->
 <view class="banner" style="{{hidddensearch?'top:0;':'top:80rpx;'}}">
   <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
 </view>

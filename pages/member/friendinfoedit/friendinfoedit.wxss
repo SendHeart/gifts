@@ -156,6 +156,7 @@ page {
   flex-direction: row;
   justify-content: space-between;
 	align-items: center;
+  font-size: 30rpx;
 }
 .tableviewcell2 image {
 	width: 48rpx;
@@ -164,7 +165,7 @@ page {
 }
 /*text*/
 .tableviewcell2 text {
-	font-size: 28rpx;
+	color: #fff;
 	margin-left: 20rpx;
 }
 .friend-chat-info {
@@ -227,8 +228,11 @@ page {
   -webkit-line-clamp: 3; 
   width:90%;
   height:280rpx;
-  background: #fff;
+  background: #444;
   padding: 10rpx;
+  border-radius: 20rpx;
+  margin-top: 30rpx;
+  color: #f2f2f2;
 }
 .card-blessing-info image {
   width: 100rpx;

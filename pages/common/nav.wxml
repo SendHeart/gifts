@@ -8,5 +8,4 @@
         </scroll-view>
         <image  class="top-bar-image" src="../../images/icon_all.png" bindtap="openAllTapTag" ></image>
       </view>
-</template> 
-
+</template>

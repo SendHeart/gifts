@@ -14,7 +14,7 @@
       </view>
       <view wx:if="{{goodsshape==1}}" class="btnshare" bindtap="sharegoodsTapTag">
         <image class="shareto" src="../../images/shareto.png"></image>
-        求赠
+        分享
       </view>
     </view>
   </view>

@@ -307,7 +307,7 @@ border: none;
   background-color: #444;
   color: #fff;
   font-size: 28rpx;
-  border-radius: 20rpx;
+  border-radius: 14rpx;
   line-height: 80rpx;
   margin: 0 auto;
 }
@@ -317,7 +317,7 @@ border: none;
   height: 80rpx;
   background-color: #EC4844;
   color: #fff;
-  border-radius: 20rpx;
+  border-radius: 14rpx;
   font-size: 28rpx;
   line-height: 80rpx;
 }

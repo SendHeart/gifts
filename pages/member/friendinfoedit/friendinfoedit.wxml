@@ -1,22 +1,22 @@
 <import src="../../../wxParse/wxParse.wxml" />
 <view style="height:{{dkheight-350}}px;">
   <view class="card-blessing-info">
-    <textarea style='font-size:28rpx;' bindblur="note_contentTapTag" value="{{member_note_content}}" placeholder="请输入记录内容(限200个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="200" />
+    <textarea style='font-size:28rpx;' bindblur="note_contentTapTag" value="{{member_note_content}}" placeholder="请输入记录内容(限200个字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="200" />
   </view>
 </view>
 <view class="menu-area">
-  <view bindtap="" class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px'>
-	  <text style="color:#fff;">提醒</text>
+  <view bindtap="" class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px' bindchange="bindChangeStartDate">
+	  <text>提醒</text>
     <picker mode="date" value="{{member_note_start_date}}" start="member_note_start_date" end="2999-12-12" bindchange="bindChangeStartDate">
-      <view style="font-size:25rpx;text-align:center;background:#1d1d1d;width:160rpx;margin-top:15rpx;color:#808080;">
+      <view style="font-size:30rpx;text-align:center;background:#1d1d1d;width:500rpx;margin-top:15rpx;color:#666666;">
         {{member_note_start_date}}
       </view>
     </picker>
   </view>
-  <view bindtap="" class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px'>
-	  <text style="color:#fff;">重复</text>
+  <view bindtap="" class="tableviewcell2 linegray" style='width:{{windowWidth-35}}px' bindchange="bindChangeReminder">
+	  <text>重复</text>
     <picker bindchange="bindChangeReminder" value="{{member_note_reminder_id}}" range="{{note_reminder_picker}}">
-      <view style="font-size:25rpx;text-align:center;background:#1d1d1d;width:160rpx;margin-top:15rpx;color:#808080;">
+      <view style="font-size:30rpx;text-align:center;background:#1d1d1d;width:500rpx;margin-top:15rpx;color:#666666;">
         {{note_reminder_picker[member_note_reminder_id]}}  
       </view>
     </picker>

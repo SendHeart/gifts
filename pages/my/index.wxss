@@ -92,7 +92,7 @@ page {
   display: flex;
   flex-direction: column;
   align-items:center;
-  height: 300rpx;
+  height: 240rpx;
   background: #1d1d1d;
 }
 .scanqr {
@@ -122,7 +122,6 @@ page {
   flex-direction: column;
   align-items: left;
   justify-content: space-between;
-  background: #444;
   padding:0 20rpx;
   margin-bottom: 15rpx;
   margin-top: 15rpx;
@@ -139,12 +138,12 @@ page {
 	align-items: center;
 }
 .linegray {
-	border-bottom: 1rpx solid #666;
+	border-bottom: 1rpx solid #333;
 }
 /*icon*/
 .tableviewcell image {
-	width: 48rpx;
-	height: 48rpx;
+	width: 40rpx;
+	height: 40rpx;
 }
 
 /*text*/
@@ -207,7 +206,7 @@ page {
 .clickBtn{  
   font-size:28rpx;
   width: 100%;
-  background-color:#444;  
+  background-color:#1d1d1d;  
   color:#fff;  
   overflow:hidden;  
   margin-left:-4rpx;
@@ -329,8 +328,8 @@ prd-detail {
   height: 80rpx;
   line-height: 80rpx;
   font-size: 30rpx;
-  background: #444;
-  color: #fff;
+  background: #1d1d1d;
+  color: #E34C55;
 }
 
 .sentbtn text {
