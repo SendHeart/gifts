@@ -630,7 +630,7 @@ Page({
 
         for (var i = 0; i < venuesItems.length; i++) {
           if (!venuesItems[i]['goodsno']) {
-            venuesItems[i]['goodsno'] = i+1
+            venuesItems[i]['goodsno'] = i+1 + (goods_page-1)*goods_pagesize
           } 
           if (!venuesItems[i]['act_info']) {
             venuesItems[i]['act_info'] = ''
