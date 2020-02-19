@@ -745,7 +745,7 @@ Page({
           is_member_loading: false,
           live_members_info:live_members_info,
         })
-        //console.log('query_live_member:', live_memberList, ' all_rows:', all_rows, ' live_headimg:', that.data.live_headimg)
+        console.log('query_live_member:', live_memberList, ' all_rows:', all_rows, ' live_headimg:', that.data.live_headimg)
       }
     })
   },
@@ -1172,8 +1172,13 @@ Page({
                   live_adv_goods.push(cur_adv_goods)
              
               }
-             
             }
+            that.setData({
+              modalAdvGoodshidden: live_adv_goods.length > 0 ? false : that.data.modalAdvGoodshidden,
+              live_adv_goods: live_adv_goods.length > 0 ? live_adv_goods : that.data.live_adv_goods,
+              modalAdvNotehidden: live_adv_note.length > 0 ? false : that.data.modalAdvNotehidden,
+              live_adv_note: live_adv_note.length ? live_adv_note : that.data.live_adv_note,
+            })
           }
           
           var live_focus_num = danmuServ.focus_num ? danmuServ.focus_num:0
@@ -1189,10 +1194,6 @@ Page({
             danmuList: danmuList,
             pageoffset: all_rows > 0 ? pageoffset : that.data.pageoffset,
             cur_danmu_num: cur_danmu_num,
-            modalAdvNotehidden: live_adv_note.length>0 ? false : that.data.modalAdvNotehidden,
-            live_adv_note: live_adv_note ? live_adv_note : that.data.live_adv_note,
-            modalAdvGoodshidden: live_adv_goods.length>0 ? false : that.data.modalAdvGoodshidden,
-            live_adv_goods: live_adv_goods ? live_adv_goods : that.data.live_adv_goods,
           }, function() { 
             that.danmu_scroll_auto()
           })

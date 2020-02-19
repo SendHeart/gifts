@@ -592,6 +592,7 @@ live-player {
   text-overflow:ellipsis;  
   white-space:nowrap; 
 }
+
 .live-adv-goods{
   position:fixed;
   bottom:200rpx;
