@@ -146,12 +146,19 @@ Page({
     var playerurl = that.data.playerurl
     var streamname = options.liveid ? 'sendheart_' + liveid +'.m3u8':that.data.streamname
     var refername = options.refername ? options.refername:''
+    var scene = decodeURIComponent(options.scene)
     if(options) {
       that.setData({
         onload_options:options
       })
     }
-    
+    if (scene.indexOf("liveid=") >= 0) {
+      var artidReg = new RegExp(/(?=liveid=).*?(?=\&)/)
+      var scene_liveid = scene.match(artidReg)[0]
+      that.setData({
+        liveid: scene_liveid
+      })
+    }
     that.setData({
       m_id: m_id,
       nickName: userInfo.nickName,
@@ -610,7 +617,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-       // console.log('get_goods_list:', res.data)
+        console.log('get_goods_list:', res.data)
         var venuesItems = res.data.result
         var all_rows = res.data.all_rows
         if (!venuesItems) {
@@ -658,7 +665,7 @@ Page({
           loadingHidden: true,
           is_goods_loading: false,
         })
-        //console.log('get_goods_list venuesItems:', that.data.venuesItems)
+        console.log('get_goods_list venuesItems:', that.data.venuesItems)
       }
     })
   },
@@ -1203,10 +1210,13 @@ Page({
         })
       }
     })
-    setTimeout(function () {
+    var Timer_queryDanmu = setTimeout(function () {
       that.queryDanmu()
       that.query_live_member()
     }, 1000 * 10)
+    that.setData({
+      Timer_queryDanmu: Timer_queryDanmu,
+    })
   },
   danmuInfo(e) {
     var that = this
@@ -1485,6 +1495,11 @@ Page({
         }
       }
     })
+  },
+  onUnload: function () {
+    //销毁定时器
+    console.log("+++++++++onUnload++++++++++")
+    clearInterval(this.data.Timer_queryDanmu);
   },
   onShareAppMessage: function (options) {
     var that = this
