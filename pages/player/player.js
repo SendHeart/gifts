@@ -67,6 +67,17 @@ Page({
     videourl:'',
     liveurl: '',
     live_goods:'',
+    index:0,
+    videoIndex: 0,
+    videoCur: 0, //改变当前索引
+    videoList:[],
+    videoContextList:[],
+    vertical: true,
+    autoplay: false,
+    interval: 30000,
+    duration: 3000,
+    circular: true,
+   
     errorhidden:true,
     error_message:'',
     poster_image: weburl+'/uploads/video_poster_image.png',
@@ -252,11 +263,29 @@ Page({
 
   onReady: function () {
     var that = this
-    that.videoContext = wx.createVideoContext('myVideo')
+    var is_live = that.data.is_live
+  
     that.query_live_member()
     setTimeout(function () {
       that.queryDanmu()
     }, 1000)
+  },
+  swiperchange: function (e) {
+    var that = this
+    var videoCur = that.data.videoCur
+    var current = e.detail.current
+    var source = e.detail.source
+    //console.log(source);
+    // 这里的source是判断是否是手指触摸 触发的事件
+    if (source === 'touch') {
+      that.setData({
+        videoCur: current
+      })
+      if (videoCur >=0) that.data.videoContextList[videoCur].pause()
+      if (current >= 0) that.data.videoContextList[current].play()
+    }
+    
+    console.log('player swiperchange:', e.detail.current)
   },
   query_liveroom_info: function (event) {
     //venuesList
@@ -283,6 +312,7 @@ Page({
         username: username,
         access_token: token,
         liveid: liveid,
+        type:0,  
         shop_type: shop_type,
       },
       header: {
@@ -296,10 +326,20 @@ Page({
           'is_live_loading': false,
         })
         if (res.data.status!='y') {
-          that.setData({
-            videourl: that.data.liveurl,
-            live_focus_status:true,  //视频
-          }) 
+          if (is_live){
+            that.setData({
+              videourl: that.data.liveurl,
+              live_focus_status: true,  //视频
+            }) 
+          }else{
+            var video_list = [{
+              src: videourl
+            }]
+            that.setData({
+              videoList: video_list,
+              live_focus_status: true,  //视频
+            }) 
+          }
           return
         }
         //var venuesItems = that.data.venuesItems
@@ -331,13 +371,22 @@ Page({
         if (liveinfo && liveinfo[0]['live_status']==0 ) { //离线 取视频url
           if (!is_live){ //离线视频
             var videourl = liveinfo[0]['videourl']
+            var video_list = [{
+              src: videourl
+            }]
+            if (liveinfo[0]['videolist'] && liveinfo[0]['videolist'].length>0){
+              for (var i = 0; i < liveinfo[0]['videolist'].length; ++i) {
+                video_list.push(liveinfo[0]['videolist'][i])
+              }
+            }
             that.setData({
+              videoList: video_list,
               videourl: videourl ? videourl : that.data.liveurl,
               live_logo: liveinfo[0]['logo'],
               live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name'] : '送心礼物',
               live_hoster: live_hoster,
               is_hoster: is_hoster,
-            }) 
+            })
           } else { //结束了
             var error_message = '结束了'
             var errorTitile = '提示信息'
@@ -371,8 +420,19 @@ Page({
             //that.query_live_member()
           }) 
         }
-       
-        //console.log('query_liveroom_info videourl:', videourl, ' live_starttime:', that.data.live_starttime, ' live_logo:', that.data.live_logo, ' live_name:', that.data.live_name, ' live_hoster:', live_hoster, 'is_hoster:',is_hoster)
+      
+        if (that.data.videoList.length > 0) {
+          var videoContextList = []
+          for (var i = 0; i < that.data.videoList.length; i++) {
+            videoContextList.push(wx.createVideoContext('myVideo_' + i, this))
+          }
+          that.setData({
+            videoContextList: videoContextList,
+          })
+          videoContextList[that.data.videoCur].play()
+        }
+        console.log('query_liveroom_info videourl:', videourl, ' videoContextList:', that.data.videoContextList, ' is_live:', that.data.is_live, ' live_name:', that.data.live_name, ' live_hoster:', live_hoster, 'is_hoster:', is_hoster)
+
       },
       fail:function(e){
         that.setData({
@@ -596,6 +656,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var live_goods = that.data.live_goods
+    var liveid = that.data.liveid 
     var live_adv_goods = {}
     that.setData({
       loadingHidden: false,
@@ -605,6 +666,7 @@ Page({
       url: weburl + '/api/client/get_goods_list',
       method: 'POST',
       data: {
+        liveid: liveid,
         live_goods: live_goods,
         username: username,
         access_token: token,
