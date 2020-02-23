@@ -25,9 +25,9 @@
 </video>
 
 <view wx:if="{{!is_live}}">
-  <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{videoCur}}">
+  <swiper class="swiper-box" style="{{dkheight>0?'height:'+dkheight+'px':''}}" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{videoCur}}">
       <swiper-item wx:for="{{videoList}}" wx:for-item="videoitem" wx:key="id">
-        <video id="{{'myVideo_'+index}}" class="slide-image" direction="90" src="{{videoitem.src}}" controls="true" poster="{{live_poster}}" show-center-play-btn="{{true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="contain" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playwaiting" vslide-gesture="{{false}}" show-mute-btn="true" enable-play-gesture="true">
+        <video id="{{'myVideo_'+index}}" class="slide-image"  style="{{dkheight>0?'height:'+dkheight+'px':''}}"  direction="90" src="{{videoitem.src}}" controls="true" poster="{{live_poster}}" show-center-play-btn="{{true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="contain" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playwaiting" vslide-gesture="{{false}}" show-mute-btn="true" enable-play-gesture="true">
         </video>
       </swiper-item>
   </swiper>
@@ -60,7 +60,7 @@
 	  </view>
      <view class="footer-button" bindtap="prize_liveroom"> 
       <view class="prize-list">
-        <view class="prize-button" ></view>
+        <view class="prize-button"></view>
         <image class="prize-button-image" src="/images/u8.png" ></image>
       </view>
 	  </view>

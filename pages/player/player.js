@@ -74,10 +74,10 @@ Page({
     videoContextList:[],
     vertical: true,
     autoplay: false,
-    interval: 30000,
-    duration: 3000,
+    interval: 300000,
+    duration: 500,
     circular: true,
-   
+    dkheight:950,
     errorhidden:true,
     error_message:'',
     poster_image: weburl+'/uploads/video_poster_image.png',
@@ -170,6 +170,18 @@ Page({
         liveid: scene_liveid
       })
     }
+    wx.getSystemInfo({
+      success: function (res) {
+        let winHeight = res.windowHeight;
+        let winWidth = res.windowWidth;
+        console.log(winHeight);
+        that.setData({
+          dkheight: winHeight-70,
+          winHeight: winHeight,
+          winWidth: winWidth,
+        })
+      }
+    })
     that.setData({
       m_id: m_id,
       nickName: userInfo.nickName,
@@ -196,18 +208,7 @@ Page({
         title_logo: '../../images/back.png'
       })
     }
-    wx.getSystemInfo({
-      success: function (res) {
-        let winHeight = res.windowHeight;
-        let winWidth = res.windowWidth;
-        console.log(winHeight);
-        that.setData({
-          dkheight: winHeight,
-          winHeight: winHeight,
-          winWidth: winWidth,
-        })
-      }
-    })
+   
   },
 
   danmu_scroll_auto: function () {
