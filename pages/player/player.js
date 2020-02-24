@@ -944,7 +944,21 @@ Page({
     }) 
     */
   },
+  playend() {
+    var that = this
+    var videoIndex = that.data.videoCur
+    var vlist_len = that.data.videoList.length
+    var slider_index = videoIndex + 1
+    slider_index = slider_index < vlist_len ? slider_index : 0
 
+    var next_slide = {
+      "detail": {
+        "current": parseInt(slider_index),
+        "source":"touch",
+      },
+    }
+    that.swiperchange(next_slide)
+  },
   playerror(e) {
     var that = this 
     var error_message = '!'
