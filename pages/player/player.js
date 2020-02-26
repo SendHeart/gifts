@@ -20,6 +20,16 @@ var ids = 0
 var cycle = null  //计时器
 var videoContext = null 
 
+var lastFrameTime = 0;
+var ctx = null;
+var factor = {
+  speed: .008, // 运动速度，值越小越慢
+  t: 0 //  贝塞尔函数系数
+};
+var that;
+
+var timer = null; // 循环定时器
+
 function getRandomColor() {
   let rgb = []
   for (let i = 0; i < 3; ++i) {
@@ -112,6 +122,7 @@ Page({
     live_members_info:'',
     live_starttime: 0,
     live_focus_status: false,
+    live_prize_status: false,
     live_sub_name:'人气值:1',
     modalGoodsHidden:true,
     modalDanmuHidden: true,
@@ -138,6 +149,50 @@ Page({
     doommData: [],
     onload_options:'',
     //arr: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+    style_img: '',
+     //这里是贝塞尔曲线参数
+    img_path: [
+      [{
+        x: 30,
+        y: 400
+      }, {
+        x: 70,
+        y: 300
+      }, {
+        x: -50,
+        y: 150
+      }, {
+        x: 30,
+        y: 0
+      }],
+      [{
+        x: 30,
+        y: 400
+      }, {
+        x: 30,
+        y: 300
+      }, {
+        x: 80,
+        y: 150
+      }, {
+        x: 30,
+        y: 0
+      }],
+      [{
+        x: 30,
+        y: 400
+      }, {
+        x: 0,
+        y: 90
+      }, {
+        x: 80,
+        y: 100
+      }, {
+        x: 30,
+        y: 0
+      }]
+    ]
+   
   },
 
   onLoad: function (options){
@@ -265,11 +320,19 @@ Page({
   onReady: function () {
     var that = this
     var is_live = that.data.is_live
-  
+
+    ctx = wx.createCanvasContext('mycanvas')
+
     that.query_live_member()
     setTimeout(function () {
       that.queryDanmu()
     }, 1000)
+  },
+  onUnload: function () {
+    //销毁定时器
+    console.log("+++++++++onUnload++++++++++")
+    clearInterval(this.data.Timer_queryDanmu);
+    this.cancelTimer(timer, false)
   },
   swiperchange: function (e) {
     var that = this
@@ -542,7 +605,10 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var liveid = that.data.liveid
     var post_type = '2' //点赞
-  
+    var live_prize_status = that.data.live_prize_status
+
+    that.onClickImage()
+    if (live_prize_status) return 
     wx.request({
       url: weburl + '/api/client/post_prize',
       method: 'POST',
@@ -558,13 +624,16 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
+        /*
         wx.showToast({
           title: '点赞完成',
           icon: 'none',
           duration: 1500
-        }) 
+        }) */
         console.log('prize_liveroom 点赞完成:', res.data)
-
+        that.setData({
+          live_prize_status:true,
+        })
       },
       fail: function (e) {
         console.log('prize_liveroom 点赞失败:', res.data)
@@ -1573,11 +1642,121 @@ Page({
       }
     })
   },
-  onUnload: function () {
-    //销毁定时器
-    console.log("+++++++++onUnload++++++++++")
-    clearInterval(this.data.Timer_queryDanmu);
+  //不断绘制图片到cavans
+  requestAnimationFrame(callback) {
+    var that = this
+    var currTime = new Date().getTime();
+    //手机屏幕刷新率一般为60Hz，大概16ms刷新一次，这里为了使页面看上去更流畅自然,通过改变timedis的值可以控制动画的快慢
+    var timedis = 16 - (currTime - lastFrameTime)
+    var timeToCall = Math.max(0, timedis);
+    var id = setTimeout(callback, timeToCall);
+    lastFrameTime = currTime + timeToCall;
+    return id;
   },
+  drawImage: function (data) {
+    var that = this
+    var p10 = data[0][0]; // 三阶贝塞尔曲线起点坐标值
+    var p11 = data[0][1]; // 三阶贝塞尔曲线第一个控制点坐标值
+    var p12 = data[0][2]; // 三阶贝塞尔曲线第二个控制点坐标值
+    var p13 = data[0][3]; // 三阶贝塞尔曲线终点坐标值
+
+    var p20 = data[1][0];
+    var p21 = data[1][1];
+    var p22 = data[1][2];
+    var p23 = data[1][3];
+
+    var p30 = data[2][0];
+    var p31 = data[2][1];
+    var p32 = data[2][2];
+    var p33 = data[2][3];
+
+    var t = factor.t;
+
+    /*计算多项式系数*/
+    var cx1 = 3 * (p11.x - p10.x);
+    var bx1 = 3 * (p12.x - p11.x) - cx1;
+    var ax1 = p13.x - p10.x - cx1 - bx1;
+
+    var cy1 = 3 * (p11.y - p10.y);
+    var by1 = 3 * (p12.y - p11.y) - cy1;
+    var ay1 = p13.y - p10.y - cy1 - by1;
+
+    /*计算xt yt坐标值 */
+    var xt1 = ax1 * (t * t * t) + bx1 * (t * t) + cx1 * t + p10.x;
+    var yt1 = ay1 * (t * t * t) + by1 * (t * t) + cy1 * t + p10.y;
+
+    /** 计算多项式系数*/
+    var cx2 = 3 * (p21.x - p20.x);
+    var bx2 = 3 * (p22.x - p21.x) - cx2;
+    var ax2 = p23.x - p20.x - cx2 - bx2;
+
+    var cy2 = 3 * (p21.y - p20.y);
+    var by2 = 3 * (p22.y - p21.y) - cy2;
+    var ay2 = p23.y - p20.y - cy2 - by2;
+
+    /*计算xt yt坐标值*/
+    var xt2 = ax2 * (t * t * t) + bx2 * (t * t) + cx2 * t + p20.x;
+    var yt2 = ay2 * (t * t * t) + by2 * (t * t) + cy2 * t + p20.y;
+
+
+    /** 计算多项式系数*/
+    var cx3 = 3 * (p31.x - p30.x);
+    var bx3 = 3 * (p32.x - p31.x) - cx3;
+    var ax3 = p33.x - p30.x - cx3 - bx3;
+
+    var cy3 = 3 * (p31.y - p30.y);
+    var by3 = 3 * (p32.y - p31.y) - cy3;
+    var ay3 = p33.y - p30.y - cy3 - by3;
+
+    /*计算xt yt坐标值*/
+    var xt3 = ax3 * (t * t * t) + bx3 * (t * t) + cx3 * t + p30.x;
+    var yt3 = ay3 * (t * t * t) + by3 * (t * t) + cy3 * t + p30.y;
+    factor.t += factor.speed;
+    ctx.drawImage("../../images/heart1.png", xt1, yt1, 30, 30);
+    ctx.drawImage("../../images/heart2.png", xt2, yt2, 30, 30);
+    ctx.drawImage("../../images/heart3.png", xt3, yt3, 30, 30);
+    ctx.draw();
+    if (factor.t > 1) {
+      factor.t = 0;
+      that.cancelTimer(timer, false)//传入true动画重复
+    } else {
+      timer = that.requestAnimationFrame(function () {
+        that.drawImage(that.data.img_path)
+      })
+    }
+  },
+  onClickImage: function (e) {
+    var that = this
+    //点击心形的时候动画效果
+    that.setData({
+      style_img: 'transform:scale(1.3);'
+    })
+    setTimeout(function () {
+      that.setData({
+        style_img: 'transform:scale(1);'
+      })
+    }, 500)
+    that.startTimer()
+  },
+  startTimer: function () {
+    var that = this
+    that.drawImage(that.data.img_path)
+  },
+  cancelTimer(timer, isrepeat) {
+    var that = this
+    //清除定时器
+    clearTimeout(timer)
+    if (isrepeat) {
+      that.startTimer()
+    } else {
+      //如果不重复动画则将图片回到原始位置
+      ctx.drawImage("/images/heart1.png", 30, 400, 30, 30);
+      ctx.drawImage("/images/heart2.png", 30, 400, 30, 30);
+      ctx.drawImage("/images/heart3.png", 30, 400, 30, 30);
+      ctx.draw();
+    }
+  },
+
   onShareAppMessage: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

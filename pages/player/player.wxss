@@ -139,10 +139,10 @@
   display:flex;
   flex-direction:row;
   justify-content: space-around;
-  bottom: 50rpx;
+  bottom: 10rpx;
   overflow: hidden;
   opacity:1;
-  z-index: 999;
+  z-index: 1000;
 }
 .footer-left {
   width:100%;
@@ -927,3 +927,29 @@
   from{top: 10%; }
   to{top: -10%;}
 }
+
+.canvas {
+  background: transparent;
+  width: 90px;
+  height: 400px;
+  position: fixed;
+  right: 20px;
+  bottom: 60px;
+}
+/* transform下面的属性是为了让动画看上去更自然 */
+.heart {
+  position: fixed;
+  right: 45px;
+  bottom: 30px;
+  width: 40px;
+  height: 40px;
+  transform: scale(1);
+  -webkit-transform: scale(1);
+  -webkit-transition: ease all;
+  -moz-transition: ease all;
+  transition: ease all;
+  -webkit-transition-duration: 700ms;
+  -moz-transition-duration: 700ms;
+  transition-duration: 700ms;
+}
+
