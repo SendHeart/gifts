@@ -27,7 +27,7 @@
 <view wx:if="{{!is_live}}">
   <swiper class="swiper-box" style="{{dkheight>0?'height:'+dkheight+'px':''}}" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{videoCur}}">
       <swiper-item wx:for="{{videoList}}" wx:for-item="videoitem" wx:key="id">
-        <video id="{{'myVideo_'+index}}" class="slide-image"  style="{{dkheight>0?'height:'+dkheight+'px':''}}"  direction="90" src="{{videoitem.src}}" controls="true" poster="{{live_poster}}" show-center-play-btn="{{true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="{{videoitem.objectfit?videoitem.objectfit:'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playend" vslide-gesture="{{false}}" show-mute-btn="true" enable-play-gesture="true">
+        <video id="{{'myVideo_'+index}}" class="slide-image"  style="{{dkheight>0?'height:'+dkheight+'px':''}}"  direction="90" src="{{videoitem.src}}" controls="false" poster="{{live_poster}}" show-play-btn="false" show-center-play-btn="true" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="{{videoitem.objectfit?videoitem.objectfit:'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playend" vslide-gesture="false" show-mute-btn="true" enable-play-gesture="false">
         </video>
       </swiper-item>
   </swiper>
@@ -54,7 +54,7 @@
   <view class="footer-right">
     <view class="footer-button"> 
       <view class="share-list">
-        <button  class="share-button" open-type='share' formType="submit" bindtap="onShareAppMessage"></button>
+        <button class="share-button" open-type='share' bindtap="onShareAppMessage"></button>
         <image class="share-button-image" src="/images/share.png"></image>
       </view>
 	  </view>
@@ -68,11 +68,7 @@
 
   <view>
     <canvas canvas-id="mycanvas" class="canvas" />
-    <!-- 
-    <image src="../../images/heart_button.png" class="heart" bindtap="onClickImage" style="{{style_img}}"></image>
-    -->
   </view>
-
 </view>
 
 <view hidden="{{errorhidden}}" style='z-index:999;'>

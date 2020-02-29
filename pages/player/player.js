@@ -25,9 +25,7 @@ var ctx = null;
 var factor = {
   speed: .008, // 运动速度，值越小越慢
   t: 0 //  贝塞尔函数系数
-};
-var that;
-
+}
 var timer = null; // 循环定时器
 
 function getRandomColor() {
@@ -192,7 +190,6 @@ Page({
         y: 0
       }]
     ]
-   
   },
 
   onLoad: function (options){
@@ -250,7 +247,7 @@ Page({
       is_live: is_live,
       refername: refername,
     })
-    that.query_liveroom_info()
+   
     that.get_goods_list()
     //console.log('options:',options)
     console.log('player onLoad videourl:', that.data.videourl, ' liveid:', liveid, ' live_logo:', live_logo, ' live_name:', live_name, ' live_poster:', live_poster)
@@ -263,7 +260,7 @@ Page({
         title_logo: '../../images/back.png'
       })
     }
-   
+    that.query_liveroom_info()
   },
 
   danmu_scroll_auto: function () {
@@ -341,15 +338,16 @@ Page({
     var source = e.detail.source
     //console.log(source);
     // 这里的source是判断是否是手指触摸 触发的事件
+    that.setData({
+      videoCur: current
+    })
+    if (videoCur >= 0) that.data.videoContextList[videoCur].pause()
+    if (current >= 0) that.data.videoContextList[current].play()
     if (source === 'touch') {
-      that.setData({
-        videoCur: current
-      })
-      if (videoCur >=0) that.data.videoContextList[videoCur].pause()
-      if (current >= 0) that.data.videoContextList[current].play()
+     
     }
     
-    console.log('player swiperchange:', e.detail.current)
+    console.log('player swiperchange:', e.detail.current, ' videoCur:', videoCur)
   },
   query_liveroom_info: function (event) {
     //venuesList
@@ -1078,6 +1076,8 @@ Page({
 
   playwaiting(e) {
     var that = this
+    var is_live =that.data.is_live
+    
     /*
   
     this.videoContext = wx.createVideoContext('myVideo')
@@ -1085,7 +1085,7 @@ Page({
     */
     console.log('player playwaiting 播放等待')
     //that.videoContext.stop()
-    that.query_liveroom_info()
+    if (is_live) that.query_liveroom_info()
   },
   errorConfirmPlay(e) {
     var that = this

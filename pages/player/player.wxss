@@ -135,14 +135,13 @@
 
 .footer{
   width: 100%;
+  height:150rpx;
   position:fixed;
   display:flex;
   flex-direction:row;
   justify-content: space-around;
-  bottom: 10rpx;
-  overflow: hidden;
+  bottom: 50rpx;
   opacity:1;
-  z-index: 1000;
 }
 .footer-left {
   width:100%;
@@ -150,8 +149,8 @@
   display:flex;
   flex-direction:row;
   justify-content: flex-start;
-  border:0px solid #aaaaaa;
   margin-left:20rpx;
+  z-index: 1000;
 }
 .footer-button{
 		height: 120rpx;
@@ -233,6 +232,7 @@
   justify-content: flex-end;
   border:0px solid #aaaaaa;
   margin-right:20rpx;
+  z-index: 1000;
 }
 
 .share-list { 
