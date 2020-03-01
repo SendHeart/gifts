@@ -936,7 +936,8 @@
   right: 20px;
   bottom: 60px;
 }
-/* transform下面的属性是为了让动画看上去更自然 */
+
+/* transform下面的属性是为了让动画看上去更自然 
 .heart {
   position: fixed;
   right: 45px;
@@ -952,4 +953,4 @@
   -moz-transition-duration: 700ms;
   transition-duration: 700ms;
 }
-
+*/

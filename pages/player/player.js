@@ -1714,7 +1714,7 @@ Page({
     factor.t += factor.speed;
     ctx.drawImage("../../images/heart1.png", xt1, yt1, 30, 30);
     ctx.drawImage("../../images/heart2.png", xt2, yt2, 30, 30);
-    ctx.drawImage("../../images/heart3.png", xt3, yt3, 30, 30);
+    ctx.drawImage("../../images/heart4.png", xt3, yt3, 30, 30);
     ctx.draw();
     if (factor.t > 1) {
       factor.t = 0;
@@ -1752,7 +1752,7 @@ Page({
       //如果不重复动画则将图片回到原始位置
       ctx.drawImage("/images/heart1.png", 30, 400, 30, 30);
       ctx.drawImage("/images/heart2.png", 30, 400, 30, 30);
-      ctx.drawImage("/images/heart3.png", 30, 400, 30, 30);
+      ctx.drawImage("/images/heart4.png", 30, 400, 30, 30);
       ctx.draw();
     }
   },
