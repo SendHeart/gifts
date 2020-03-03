@@ -21,19 +21,19 @@
   </view>
 </view>
 
-<video wx:if="{{is_live}}" id="liveVideo" class="slide-image" direction="90"  style="{{is_live?'height:'+dkheight+'px;':''}}" src="{{(is_live && live_status == 3)?videourl:videourl}}" controls poster="{{live_poster}}" show-center-play-btn="{{is_live?true:true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="{{is_live?'cover':'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playwaiting" vslide-gesture="{{false}}">
+<video wx:if="{{is_live}}" id="liveVideo" class="slide-image" direction="90"  style="{{is_live?'height:'+dkheight+'px;':''}}" src="{{(is_live && live_status == 3)?videourl:videourl}}" controls="{{false}}" poster="{{live_poster}}" show-center-play-btn="{{is_live?true:true}}" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{true}}" objectFit="{{is_live?'cover':'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playwaiting" vslide-gesture="{{false}}">
 </video>
 
 <view wx:if="{{!is_live}}">
   <swiper class="swiper-box" style="{{dkheight>0?'height:'+dkheight+'px':''}}" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" current="{{videoCur}}">
       <swiper-item wx:for="{{videoList}}" wx:for-item="videoitem" wx:key="id">
-        <video id="{{'myVideo_'+index}}" class="slide-image"  style="{{dkheight>0?'height:'+dkheight+'px':''}}"  direction="90" src="{{videoitem.src}}" controls="false" poster="{{live_poster}}" show-play-btn="false" show-center-play-btn="true" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="{{videoitem.objectfit?videoitem.objectfit:'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playend" vslide-gesture="false" show-mute-btn="true" enable-play-gesture="false">
+        <video id="{{'myVideo_'+index}}" class="slide-image"  style="{{dkheight>0?'height:'+dkheight+'px':''}}"  direction="90" src="{{videoitem.src}}" controls="{{true}}" poster="{{live_poster}}" show-play-btn="false" show-center-play-btn="true" enable-progress-gesture="{{is_live?false:true}}" custom-cache="{{false}}" autoplay="{{false}}" objectFit="{{videoitem.objectfit?videoitem.objectfit:'contain'}}" bindplay="bindPlay" binderror="playerror" bindwaiting="playwaiting" bindpause="playwaiting" bindended="playend" vslide-gesture="{{false}}" vslide-gesture-in-fullscreen="true" show-mute-btn="true" enable-play-gesture="false">
         </video>
       </swiper-item>
   </swiper>
 </view>
 
-<view class="footer">
+<view class="footer" style="{{is_live?'bottom:10rpx;':'50rpx;'}}">
   <view class="footer-left">
     <view class="footer-button" bindtap="goodsinfo"> 
       <image class="goods-button" src="/images/1.png" ></image>
@@ -158,7 +158,7 @@
   </view>
 </action-sheet>
  
-<view wx:if="{{is_live}}" class="danmu-info"> <!-- -->
+<view wx:if="{{is_live}}" class="danmu-info" style="{{is_live?'bottom:130rpx;':'170rpx;'}}"> <!-- -->
   <scroll-view hidden="{{modalDanmuHidden}}" class="danmu-scroll" style="height:{{dkheight-360}}px" catchtouchmove="true" scroll-y bindscroll="danmn_scrolltoupper" scroll-top="{{danmu_scrollTop}}" bindscrolltolower=""  > 
   <view class="danmu-scroll-list">
     <block wx:for="{{danmuList}}" wx:key="id" wx:for-item="danmu" wx:for-index="danmuIndex" wx:key="id">

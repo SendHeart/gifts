@@ -434,7 +434,8 @@ Page({
           if (!is_live){ //离线视频
             var videourl = liveinfo[0]['videourl']
             var video_list = [{
-              src: videourl
+              src: videourl,
+              objectfit: liveinfo[0]['objectfit']
             }]
             if (liveinfo[0]['videolist'] && liveinfo[0]['videolist'].length>0){
               for (var i = 0; i < liveinfo[0]['videolist'].length; ++i) {
@@ -1264,7 +1265,7 @@ Page({
     that.setData({
       is_danmu_loading:true,
     })
-    //console.log('获取服务端弹幕信息 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
+    console.log('获取服务端弹幕信息 live id:', liveid, 'm_id:', m_id, ' pageoffset:', pageoffset)
     wx.request({
       url: weburl + '/api/client/query_danmu',
       method: 'POST',
@@ -1286,7 +1287,7 @@ Page({
         if (res.data.status == 'y') {
           var danmuServ = res.data.result
           var all_rows = parseInt(res.data.all_rows)
-          //console.log('获取服务端弹幕信息完成:', res.data)
+          console.log('获取服务端弹幕信息完成:', res.data)
           if (danmuServ && danmuServ.danmu_list){
             for (var i = 0; i < danmuServ.danmu_list.length;i++){
               if (danmuServ.danmu_list[i].type == 0) { // 弹幕信息
