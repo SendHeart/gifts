@@ -88,7 +88,7 @@ page {
 .venues-item {
   display: inline-block;
   width: 355rpx;
-  margin: 0 10rpx;
+  margin: 0 10rpx 15rpx auto;
   background: #fff;
   text-indent: 20rpx;
   padding-bottom: 10rpx;

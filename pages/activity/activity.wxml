@@ -2,7 +2,7 @@
   <image src="{{main_title_Bg}}" background-size="cover" mode="widthFix"></image>
 </view>
 <view class="wrap" style=''>
-    <view wx:for="{{activityList.goods_list}}"  wx:for-item="act_goods_list" wx:key="">
+    <view wx:for="{{activityList.goods_list}}"  wx:for-item="act_goods_list" wx:key="id">
       <view class="recomment-title" bindtap='bannerTapTag' data-bannerlink="{{act_goods_list.banner_link}}" >
         <image src="{{act_goods_list.banner_url}}" mode="widthFix"></image>
       </view>
