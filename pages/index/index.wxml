@@ -50,12 +50,12 @@
       <text>{{(item.shape!=5 && item.shape!=4)?'礼物单号:':'订单号:'}}{{item.order_no}}</text>
       <text hidden="{{(item.gift_status==2 && giftflag ==0 && item.shape!=4 && item.shape!=5 )?false:true}}" class="status2">对方已接受</text>
       <text hidden="{{(item.status==2 && item.gift_status==0 && giftflag ==0 && item.shape!=4 && item.shape!=5)?false:true}}" class="status">已支付未送出</text>
-      <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.shape!=4 && item.shape!=5)?false:true}}" class="status">对方未接受</text>
-      <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.status==2 && item.sec>=0 && item.order_price>0 && item.shape!=4 && item.shape!=5)?false:true}}" class="status">自动退</text>
-      <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.status==2 && item.sec>=0 && item.order_price>0 && item.shape!=4 && item.shape!=5)?false:true}}" class="status">{{item.hour}}:{{item.minus}}:{{item.sec}}</text>
-      <text hidden="{{(giftflag==0 && item.status == 8 && item.shape!=4 && item.shape!=5)?false:true}}" class="status2">已取消</text>
-      <text hidden="{{(item.status==10 && giftflag ==0 && item.shape!=4 && item.shape!=5)?false:true }}" class="status">退款中</text>
-      <text hidden="{{(item.status==6 && giftflag ==0 && item.shape!=4 && item.shape!=5)?false:true }}" class="status2">已退款</text>
+      <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status">对方未接受</text>
+      <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.status==2 && item.sec>=0 && item.order_price>0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status">自动退</text>
+      <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.status==2 && item.sec>=0 && item.order_price>0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status">{{item.hour}}:{{item.minus}}:{{item.sec}}</text>
+      <text hidden="{{(giftflag==0 && item.status == 8 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status2">已取消</text>
+      <text hidden="{{(item.status==10 && giftflag ==0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true }}" class="status">退款中</text>
+      <text hidden="{{(item.status==6 && giftflag ==0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true }}" class="status2">已退款</text>
       <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 3 && item.shape!=4 && item.shape!=5)?false:true}}" class="status2">已发货</text>
       <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 2 && mapping.status==1 && item.shape!=4 && item.shape!=5)?false:true}}" class="status2">未发货</text>
     </view>
@@ -108,9 +108,9 @@
         <view style="width:70%">
         <text style="width:20%">共:{{item.order_sku_num}}件{{item.buy_num>1?' (份数:'+item.buy_num+')':''}}</text>
         <text style="color:#e34c55;">￥{{item.order_price}}</text>
-        <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(((item.status==1 && item.gift_status==2) ||(item.status==2 && item.payment_status==2)) && item.rcv_openid && giftflag==0) ? '': 'hidden'}} smallbtn"  style="background:#e34c55;color:#fff;">去支付</text>
+        <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}" class="{{(((item.status==1 && item.gift_status==2)||(item.status==1 && item.gift_status==0 && item.shape == 8 ) ||(item.status==2 && item.payment_status==2)) && (item.rcv_openid || item.rcv_id) && giftflag==0) ? '': 'hidden'}} smallbtn"  style="background:#e34c55;color:#fff;">去支付</text>
         <text bindtap="cancel_order" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">取消</text>
-        <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status<=2 && item.status>0 && item.gift_status>=0 && item.gift_status<=2 && !item.rcv_openid && giftflag==0) ? '': 'hidden'}} smallbtn">重发</text>
+        <text bindtap="send" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status<=2 && item.status>0 && item.gift_status>=0 && item.gift_status<=2 && !item.rcv_openid && giftflag==0  && item.shape!=8  && item.shape!=7) ? '': 'hidden'}} smallbtn">重发</text>
         <text style="width:20%;" bindtap="receive" data-object-id="{{item.id}}" class="{{(item.status==3 && item.gift_status==2 && giftflag==1 && item.rcv_openid == username) ? '': 'hidden'}} smallbtn">确认收货</text>
         <text bindtap="accept" data-object-id="{{item.order_no}}" data-total-fee="{{item.amount}}"   data-order-id="{{item.id}}" class="{{(item.gift_status==1 && giftflag ==1) ? '': 'hidden'}} smallbtn">接受</text>
 

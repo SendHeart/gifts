@@ -11,7 +11,7 @@
     <icon style="margin-top:-45rpx;" class="Hui-iconfont iconv-uparrow" />
     <view class='' style="margin-top:-5rpx;font-size:26rpx;">TOP</view>
   </view>
-  <view wx:if="tab2=='order_manager'" class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="id" wx:for-index="order_idx">
+  <view wx:if="tab2=='order_manager'" class="order-item" style='width:{{windowWidth}}' wx:for="{{orders}}" wx:key="order_no" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
       <text>礼物号: {{item.order_no}}</text>
@@ -24,7 +24,7 @@
       <text wx:if="{{item.gift_status==2 && giftflag==1 && item.status==2  && mapping.status==0}}" class="status2">未发货</text>
     </view>
 
-    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:for-index="sku_idx" wx:key="" class="carts-item" bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}" >
+    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:for-index="sku_idx" wx:key="id" class="carts-item" bindtap="detailTapTag" data-order-object="{{item}}" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}" >
       <view>
         <!-- 缩略图 -->
         <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFill" />
@@ -50,7 +50,7 @@
       </view>
     </view>
   </view>
-  <view wx:if="tab2=='goods_manager'" class="order-item" style='width:{{windowWidth}}' wx:for="{{goods}}" wx:for-item="goods"  wx:key="id" wx:for-index="goods_idx">
+  <view wx:if="tab2=='goods_manager'" class="order-item" style='width:{{windowWidth}}' wx:for="{{goods}}" wx:for-item="goods"  wx:key="sku_id" wx:for-index="goods_idx">
     <!-- 厂家logo缩略图 -->
     <view class="shop-text" style='width:{{windowWidth}}'>
       <text>商品ID: {{goods.id}}</text>

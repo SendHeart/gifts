@@ -1012,18 +1012,19 @@ Page({
             },
             success: function (res) {
               console.log(res.data.result);
-              console.log(res.data.info);
+             
               if (!res.data.info) {
                 wx.showToast({
                   title: '取消完成',
                   icon: 'success',
                   duration: 1000
                 })
-                var orders = that.data.orders[page -1]
+                var orders = that.data.orders
+                console.log('order_index:',order_index,'orders:',orders);
                 orders[order_index]['status'] = 8  // 8 订单取消
                 that.setData({
-                  //orders: orders,
-                  ["orders[" + (page - 1) + "]"]: orders,
+                  orders: orders,
+                  //["orders[" + (page - 1) + "]"]: orders,
                 })
 
               } else {
@@ -1034,7 +1035,6 @@ Page({
 
                 });
               }
-
             }
           })
 

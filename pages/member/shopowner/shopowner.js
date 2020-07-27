@@ -600,7 +600,7 @@ Page({
                 }
                
                 for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-                  if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+                  if (orderObjects[i]['order_sku'][j]['sku_image'] && orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
                     orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
                   }
                   orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1

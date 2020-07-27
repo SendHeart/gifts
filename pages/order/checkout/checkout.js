@@ -134,7 +134,7 @@ Page({
 	},
 	readCarts: function (options) {
 		var that = this
-    console.log('order checkout from hall  readCarts options:', options)
+    console.log('order checkout readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
 		var amount = parseFloat(options.amount)
     //var delivery_price = parseFloat(options.delivery_price)
@@ -217,7 +217,7 @@ Page({
     var status = 0
     var shop_type = that.data.shop_type
     var amount = that.data.amount
-    var order_type = 'gift'
+    var order_type = that.data.order_type?that.data.order_type:'gift'
     var order_image = that.data.order_image
     var order_note = that.data.order_note
     var order_shape = that.data.order_shape

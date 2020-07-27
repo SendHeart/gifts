@@ -48,6 +48,8 @@ Page({
     inputShowed: false,
     sendheartappHidden: false,
     sendheartappurl: weburl+'/hall/appdown/index.html',
+    recharge_skuid:0,
+    recharge_price:0,
   },
   getScancode: function () {
     var _this = this;
@@ -730,6 +732,112 @@ Page({
     });
   },
   */
+  navigateToRecharge: function () {
+    var that = this
+    var is_recharge = 1
+    var recharge_type = 1
+    wx.request({
+      url: weburl + '/api/client/add_cart',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type:shop_type,
+        is_recharge: is_recharge,
+        recharge_type:recharge_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('My navigateToRecharge res data:', res.data);
+        var result =  res.data.result
+        wx.showToast({
+          title: '会员充值',
+          icon:'loading',
+          duration: 2000
+        })
+        that.setData({
+          recharge_skuid: result.recharge_skuid,
+          recharge_price: result.recharge_price,
+          recharge_image:result.recharge_image
+        })
+        app.globalData.from_page = '/pages/my/index'
+        that.queryCart()
+      }
+    })  
+  },
+
+  queryCart: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var order_type = 'recharge'
+    var order_shape = '8'
+    var order_note = '会员充值'; 
+    var recharge_image = that.data.recharge_image
+    var buynum = 1
+    var sku_sell_price = that.data.recharge_price
+    var amount = parseFloat(sku_sell_price) * buynum
+    var sku_id = that.data.recharge_skuid
+    var is_buymyself = 1
+    var goods_shape = 7 
+
+    wx.request({
+      url: weburl + '/api/client/query_cart',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        sku_id: sku_id,
+        goods_shape:goods_shape
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('my index queryCart:', res.data);
+        var carts = [];
+        if (!res.data.result) {
+          wx.showToast({
+            title: '会员充值:' + res.data.info,
+            icon: 'none',
+            duration: 1500
+          })
+          return
+        }
+        var cartlist = res.data.result.list;
+        var index = 0;
+        for (var key in cartlist) {
+          cartlist[key]['sku_list'][0]['image'] = recharge_image
+          for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
+            if (cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
+              cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image']
+            } 
+            cartlist[key]['sku_list'][i]['selected'] = true
+            cartlist[key]['sku_list'][i]['shop_id'] = key
+            cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id']
+            carts[index] = cartlist[key]['sku_list'][i]
+            index++;
+          }
+        }
+
+        that.setData({
+          carts: carts,
+          all_rows: carts.length,
+          is_buymyself:is_buymyself,
+        })
+      
+        wx.navigateTo({
+          url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + order_shape + '&order_image=' + recharge_image + '&recharge=1&username=' + username + '&token=' + token
+        })
+      }
+    })
+  },
+
   navigateToAccount: function (e) {
     wx.navigateTo({
       url: '../member/account/account?'

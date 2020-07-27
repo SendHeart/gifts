@@ -18,6 +18,7 @@ Page({
     all_rows: 0,
     shop_type: shop_type,
     is_buymyself:0,
+    order_shape:0,
 	},
   setNavigation: function () {
     let startBarHeight = 20
@@ -191,6 +192,7 @@ Page({
             sku_id:sku_id,
             is_buymyself:is_buymyself,
             received:received,
+            order_shape:orderObjects[0]['shape'],
           })
           if ((is_buymyself == 0 && received == 0) || totalFee==0 ) that.pay()
         } else {
@@ -238,6 +240,7 @@ Page({
     var shop_type = that.data.shop_type
     var is_buymyself = that.data.is_buymyself
     var received = that.data.received
+    var order_shape = that.data.order_shape
     console.log('payment openId', openId, ' totalFee:', totalFee, ' is_buymyself:', is_buymyself, ' received:', received);
 
 		//统一下单接口对接
@@ -279,7 +282,7 @@ Page({
                   icon: 'success',
                   duration: 2000,
                 })
-                if(received==1){
+                if(received==1 && order_shape!=8){
                   wx.navigateTo({
                     url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + orderNo,
                   })
@@ -430,6 +433,7 @@ Page({
     var that = this
     var shop_type = that.data.shop_type
     var order_no = that.data.orderNo
+    var order_shape = that.data.order_shape
     var goods_flag = that.data.goods_flag
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var nickname = that.data.userInfo.nickName
@@ -443,6 +447,12 @@ Page({
     var address_nationalCode = that.data.address_nationalCode
     var address_telNumber = that.data.address_telNumber
     var is_buymyself = that.data.is_buymyself
+    if(order_shape == 8 ) {
+      wx.switchTab({
+        url: '/pages/index/index',
+      })
+      return ; //充值订单无需设置收货地址
+    }
     //通讯录权限
     wx.getSetting({
       success(res) {

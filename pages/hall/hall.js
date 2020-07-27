@@ -1066,7 +1066,6 @@ Page({
         console.log('hall reloadData:', res.data);
         var carts = [];
         if (!res.data.result) {
-
           return
         }
         var cartlist = res.data.result.list;
