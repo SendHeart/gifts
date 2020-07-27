@@ -53,11 +53,11 @@
       <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status">对方未接受</text>
       <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.status==2 && item.sec>=0 && item.order_price>0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status">自动退</text>
       <text hidden="{{(item.gift_status==1 && giftflag ==0 && item.status==2 && item.sec>=0 && item.order_price>0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status">{{item.hour}}:{{item.minus}}:{{item.sec}}</text>
-      <text hidden="{{(giftflag==0 && item.status == 8 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status2">已取消</text>
-      <text hidden="{{(item.status==10 && giftflag ==0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true }}" class="status">退款中</text>
-      <text hidden="{{(item.status==6 && giftflag ==0 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true }}" class="status2">已退款</text>
-      <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 3 && item.shape!=4 && item.shape!=5)?false:true}}" class="status2">已发货</text>
-      <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 2 && mapping.status==1 && item.shape!=4 && item.shape!=5)?false:true}}" class="status2">未发货</text>
+      <text hidden="{{(giftflag==0 && item.status == 8 && item.shape!=4 && item.shape!=5 )?false:true}}" class="status2">已取消</text>
+      <text hidden="{{(item.status==10 && giftflag ==0 && item.shape!=4 && item.shape!=5)?false:true }}" class="status">退款中</text>
+      <text hidden="{{(item.status==6 && giftflag ==0 && item.shape!=4 && item.shape!=5)?false:true }}" class="status2">已退款</text>
+      <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 3 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status2">已发货</text>
+      <text hidden="{{(item.gift_status==2 && giftflag ==1 && item.status == 2 && mapping.status==1 && item.shape!=4 && item.shape!=5 && item.shape!=8)?false:true}}" class="status2">未发货</text>
     </view>
 
     <view wx:for="{{item['order_sku']}}" wx:key="id" wx:for-item="mapping" wx:for-index="sku_idx" class="carts-item" >
