@@ -302,6 +302,8 @@ Page({
         console.log('login 用户基本信息:',res.data.result)
         that.setData({
           token: res.data.result['token'],
+          user_group_id:res.data.result['member_group_id'],
+          user_group_name:res.data.result['member_group_name'],
         })
         var userauth = JSON.parse(res.data.result['userauth'])
         wx.setStorageSync('token', res.data.result['token'])
@@ -313,6 +315,8 @@ Page({
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
         wx.setStorageSync('userauth', userauth)
+        wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
+        wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
       },
     })
   },

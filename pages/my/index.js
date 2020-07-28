@@ -12,6 +12,8 @@ var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
 var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 var userauth = wx.getStorageSync('userauth') ? wx.getStorageSync('userauth') : '';
+var member_group_id = wx.getStorageSync('member_group_id') ? wx.getStorageSync('member_group_id') : 0
+var member_group_name = wx.getStorageSync('member_group_name') ? wx.getStorageSync('member_group_name') : 0
 var navList2 = wx .getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
 Page({
   data:{
@@ -22,6 +24,8 @@ Page({
     nickname: userInfo.nickName ? userInfo.nickName:'登录',
     avatarUrl: userInfo.avatarUrl,
     userauth: userauth,
+    member_group_name:member_group_name,
+    member_group_id:member_group_id,
     default_avatar: weburl + '/uploads/avatar.png',
     hideviewagreementinfo: true,
     agreementinfoshowflag: 0,
@@ -657,7 +661,6 @@ Page({
       })
       wxparse.wxParse('dkcontent1', 'html', winPage.data.agreementInfo[0]['desc'], winPage, 5)
     }
-    
   },
 
   showPlaysxinfo: function () {
@@ -1212,6 +1215,7 @@ Page({
       userauth: userauth,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
+    that.query_user_info()
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
@@ -1422,6 +1426,58 @@ Page({
       sendheartappHidden: false,
     })
   },
+
+  query_user_info:function () {
+    var that = this
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
+    var shop_type = that.data.shop_type
+    that.setData({
+      username: username,
+    })
+   
+    wx.request({
+      url: weburl + '/api/web/user/login/user_xcx_login',
+      method: 'POST',
+      data: { 
+        username: username ?username:openid, 
+        wx_nickname:that.data.wx_nickname,
+        wx_headimg:that.data.wx_headimg,
+        user_phone: user_phone,
+        user_name: user_name,
+        login_type:1,
+        type:8,
+        shop_type:shop_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('my index login 用户基本信息:',res.data.result)
+        that.setData({
+          token: res.data.result['token'],
+          user_group_id:res.data.result['member_group_id'],
+          user_group_name:res.data.result['member_group_name'],
+        })
+        var userauth = JSON.parse(res.data.result['userauth'])
+        wx.setStorageSync('token', res.data.result['token'])
+        wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
+        wx.setStorageSync('username', res.data.result['username'])
+        wx.setStorageSync('m_id', res.data.result['m_id'])
+        wx.setStorageSync('user_phone', res.data.result['user_phone'])
+        wx.setStorageSync('user_name', res.data.result['user_name'])
+        wx.setStorageSync('user_gender', res.data.result['user_gender'])
+        wx.setStorageSync('user_type', res.data.result['user_type'])
+        wx.setStorageSync('userauth', userauth)
+        wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
+        wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
+      },
+    })
+  },
+
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

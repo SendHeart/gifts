@@ -17,6 +17,7 @@ var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSync('user_group_id') : '0'
 var navList2_init = [
   { id: "gift_logo", title: "送礼logo", value: "", img: "/uploads/gift_logo3.png" },
   { id: "wishlist_logo", title: "心愿单logo", value: "", img: "/uploads/wishlist.png" },
@@ -88,14 +89,15 @@ Page({
     amount:0,
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+    user_group_id:user_group_id,
     shop_type:shop_type,
     navList2: navList2,
     socktBtnTitle: '连接socket',
     message: '',
     text: text,
     content: '',
-    buyhidden1: false,
-    buyhidden2: true,
+    buyhidden1: true,
+    buyhidden2: false,
     page:1,
     friends_page: 1,
     friends_pagesize: 10,
@@ -1431,6 +1433,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var user_group_id = wx.getStorageSync('user_group_id') ? wx.getStorageSync('user_group_id') : '0';
     var shop_type = that.data.shop_type
     var page_type = options.page_type ? options.page_type:0
     var order_no = options.order_no ? options.order_no:0
@@ -1467,6 +1470,7 @@ Page({
       message_type: 1,
     }
     that.setData({
+      user_group_id:user_group_id,
       message: JSON.stringify(message_info),
       refername: refername,
       scene: scene,

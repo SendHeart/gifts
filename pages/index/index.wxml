@@ -1,5 +1,8 @@
 <import src="../common/nav_order.wxml" />
+<!--
 <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
+-->
+
 <!--
 <view style="height:{{dkheight}}px;margin-top:80rpx;scroll-y"><!--  bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" -->
 -->

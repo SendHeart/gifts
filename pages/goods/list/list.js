@@ -13,7 +13,7 @@ var navList2 = [
 
 Page({
   data: {
-    title_name: '搜索礼物',
+    title_name: '搜索商品',
     title_logo: '../../../images/footer-icon-05.png',
     img_discount: '../../../images/discount.png',
     default_img: weburl + '/uploads/default_goods_image.png',
@@ -236,7 +236,7 @@ Page({
     var goods_type = 'goods_middle_search'
     var hidddensearch = options.search==1?false:true
     var live_goods = options.live_goods ? options.live_goods:''
-    middle_title = options.search == 1 ? '搜索礼物' : middle_title
+    middle_title = options.search == 1 ? '搜索商品' : middle_title
     that.setData({
       username: username,
       token: token,

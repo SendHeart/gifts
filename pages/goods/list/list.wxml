@@ -1,7 +1,7 @@
 <import src="../../common/nav2.wxml" />
 <view wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="search">
 		<view class="wx-input">
-    <input name="search" value="{{keyword}}" placeholder="输入礼物名称"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="searchTapTag"/>
+    <input name="search" value="{{keyword}}" placeholder="输入商品名称"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="searchTapTag"/>
     <image bindtap='searchTapTag' src="../../../images/search-btn.png"></image>
     </view>
     <text class='searchcancel' bindtap='goBack'>取消</text>

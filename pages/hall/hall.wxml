@@ -11,7 +11,7 @@
     </view>
     <view class="wx-input" bindtap='searchTapTag'>
       <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
-      <text>搜索礼物</text>
+      <text>搜索商品</text>
     </view>
     <view class="messages" catchtap="messagesTapTag">
       <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
@@ -81,13 +81,15 @@
     </view>
     <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
     <view class="user">
-      <view class='usertitle'>我的礼物包</view>
+      <view class='usertitle'>我的购物车</view>
+      <!--
       <view class="usergifts" bindtap='usergiftTapTag'>
         <text>收到</text>
         <text class='snum'>{{gifts_rcv}}</text>
         <text>送出</text>
         <text class='snum'>{{gifts_send}}</text>
       </view>
+      -->
     </view>
 
     <view class="carts-list">
@@ -126,7 +128,9 @@
         </view>
       </view>
     </view>
-    <view class="pick-goods jcleft" style="border-bottom:0;">
+   
+    <!--
+     <view class="pick-goods jcleft" style="border-bottom:0;">
       <view class="pick-goods-text">
         <text class="pick-goods-slogan">赠言</text>
       </view>
@@ -143,7 +147,7 @@
         </label>
       </view>
     </view>
-
+    -->
     <view class="btnconfirm">
       <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true">
         <button class="send-button" formType="submit">
@@ -162,7 +166,7 @@
         <view class='buttonwrap'>
           <button class="send-button" formType="submit">
             <image src="../../images/btn_add.png"></image>
-            添加礼物</button>
+            挑选商品</button>
         </view>
       </form>
     </view>

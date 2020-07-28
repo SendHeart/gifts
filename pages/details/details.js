@@ -2063,6 +2063,8 @@ Page({
       var is_buymyself = that.data.is_buymyself
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+      var user_group_id = wx.getStorageSync('user_group_id') ? wx.getStorageSync('user_group_id') : '0'
+      
       var keyword = that.data.keyword
       var is_satisfy = that.data.is_satisfy
       var rule_selected_info = that.data.rule_selected_info
@@ -2071,14 +2073,27 @@ Page({
           url: '../login/login?goods_id=' + that.data.goodsid
         })
       }else{
-        if (that.data.sku_id){
-          that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info)
-        }else{
+        if(user_group_id == '0'){
           wx.showToast({
-            title: '该产品无货',
+            title: '非会员无法购物',
             icon: 'loading',
-            duration: 1500
+            duration: 2000
           })
+          setTimeout(function () {
+            wx.switchTab({
+              url: '/pages/my/index?frompage=/pages/details/details'
+            })
+          }, 2000)
+        }else{
+          if (that.data.sku_id){
+            that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info)
+          }else{
+            wx.showToast({
+              title: '该产品无货',
+              icon: 'loading',
+              duration: 1500
+            })
+          }
         }
       }
     },
