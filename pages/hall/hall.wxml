@@ -276,7 +276,7 @@
     </view>
   -->
     <!--瀑布流列表-->
-    <view hidden="{{!is_category}}" class="venues-box">
+    <view wx:if="{{is_category}}" class="venues-box">
       <view class="box-left">
         <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex" wx:key="id" >
           <block wx:for="{{recommentslist_show}}" wx:key="id">
@@ -293,8 +293,8 @@
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
               </view>
               <view class="price-list">
-                <view class="price-market" style="display:none;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now" style="display:none;">￥{{item.sell_price}}</view>
+                <view class="price-market" style="display:block;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now" style="display:block;">￥{{item.sell_price}}</view>
               </view>
             </view>
           </block>
@@ -316,8 +316,8 @@
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
               </view>
               <view class="price-list">
-                <view class="price-market" style="display:none;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now" style="display:none;">￥{{item.sell_price}}</view>
+                <view class="price-market" style="display:block;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now" style="display:block;">￥{{item.sell_price}}</view>
               </view>
             </view>
           </block>
@@ -325,7 +325,7 @@
     </view>
   </view>
 
-  <view hidden="{{is_category}}" class="venues-box">
+  <view wx:if="{{!is_category}}" class="venues-box">
   <block wx:for="{{recommentslist_show}}"  wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
     <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id" >
       <view class="venues-item-main" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">

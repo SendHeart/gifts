@@ -1113,14 +1113,14 @@ modal {
 }
 
 .left-tag {
-  height: 32rpx;
-  line-height: 32rpx;
+  height: 28rpx;
+  line-height: 28rpx;
   color: #fc9326;
-  font-size: 24rpx;
+  font-size: 20rpx;
   text-align: center;
   border: 2rpx #fc9326 solid;
   border-radius: 6rpx;
-  padding: 2rpx 6rpx;
+  padding: 6rpx 6rpx;
 }
 
 .main-prom {
