@@ -63,6 +63,8 @@ Page({
     is_machine: current_shop_info['type'] == 2 ? 1 : 0, //是否售货机
     machine_shop_id: current_shop_info['shop_id'], //售货机 所属 shop_id
     machine_location_id: current_shop_info['id'], //售货机 所属 shop_id
+    is_buymyself:1,
+    goodsshape:1,
   },
   bindTextAreaBlur: function (e) {
     var that = this;
@@ -282,12 +284,15 @@ Page({
 
   bindCheckout: function () {
     var that = this;
-    var order_type = 'xianshe'
+    var order_type = 'gift'
     var order_note = that.data.note
     var amount = that.data.total;
     var cartIds = that.calcIds();
     cartIds = cartIds.join(',');
-
+    var is_buymyself = that.data.is_buymyself
+    var goodsshape = that.data.goodsshape
+    var share_goods_image = ''
+    var liveid = 0
     var carts = that.data.carts;
     var cartselected = [];
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -324,8 +329,13 @@ Page({
     });
     */
     wx.navigateTo({
+      url: '/pages/order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + goodsshape + '&order_image=' + share_goods_image + '&liveid=' + liveid + '&username=' + username + '&token=' + token
+    })
+    /*
+    wx.navigateTo({
       url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&order_type=' + order_type + '&order_note=' + order_note + '&username=' + username + '&token=' + token
     });
+    */
   },
 
   confirmOrder: function () {
