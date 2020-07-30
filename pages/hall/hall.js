@@ -330,7 +330,6 @@ Page({
       })
 
     }
-     
   },
   videoPlayer: function (e) {
     var that = this;
@@ -461,7 +460,7 @@ Page({
         data: message,
         success: function (res) {
           console.log("sendSocketMessage 完成", res)
-  
+          console.log("sendSocketMessage hall_banner:", that.data.hall_banner)
         },
         fail: function (res) {
           console.log("sendSocketMessage 通讯失败")
@@ -469,11 +468,10 @@ Page({
             title: '网络故障',
             icon: 'loading',
             duration: 1500
-          });
+          })
         }
       })
     }
-
   },
 
   bindMiddleGoods: function (e) {
@@ -493,7 +491,6 @@ Page({
         url: '../../hall/hall'
       })
     }
-
   },
 
   // 点击获取对应分类的数据
@@ -510,7 +507,7 @@ Page({
     } else {
       toView = 0
     }
-   
+      
     that.setData({
       activeIndex: index,
       tab: tab,
@@ -519,10 +516,17 @@ Page({
       is_category:index==0?false:true,
       hiddenallclassify: true,
       gift_para_interval:1, //更新广告轮播图
+      recommentslist:[],
+      recommentslist_show: [],
+      pageoffset:0,
+      page:1,
+      scrollTop: 0,
+    },function(){
+      that.reloadData()
+      that.get_project_gift_para()
     })
     console.log('tab:' + that.data.tab)
-    that.reloadData()
-    that.get_project_gift_para()
+    
     /*
     wx.navigateTo({
       url: '/pages/list/list?navlist_title='+navList[index]['title']
@@ -772,8 +776,7 @@ Page({
     console.log('hall bindCheckout cartIds:', cartIds, 'cartselected:', JSON.stringify(cartselected))
     wx.navigateTo({
       url: '../order/checkout/checkout?cartIds=' + cartIds + '&amount=' + amount + '&carts=' + JSON.stringify(cartselected) + '&is_buymyself='+is_buymyself +'&order_type=' + order_type + '&order_note=' + order_note +'&username=' + username + '&token=' + token
-    });
-     
+    })
   },
 
   formSubmit: function (e) {
@@ -792,7 +795,7 @@ Page({
     } else if (form_name == 'pickgift') {
       wx.navigateTo({
         url: '/pages/list/list?username=' + username + '&token=' + token
-      });
+      })
       return 
     }
     that.bindCheckout()
@@ -972,7 +975,6 @@ Page({
               that.query_cart()
             }
           })
-
         }
       }
     })
@@ -1196,7 +1198,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        //console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        console.log('会员推荐商品列表获取1:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
         if(res.data.status='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
