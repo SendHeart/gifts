@@ -1,28 +1,51 @@
+
+<import src="../common/nav.wxml" />
 <view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
   <!--    bindscroll="scrolltoupper" -->
   <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
-
   <view class="search">
+    <!--
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
-      <!--<text class="userinfo-nickname">{{userInfo.nickName}}</text>-->
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
+    -->
     <view class="wx-input" bindtap='searchTapTag'>
       <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
-      <text>搜索商品</text>
+      <text></text>
     </view>
-    <view class="messages" catchtap="messagesTapTag">
-      <view class='message-num' style='{{messages_num==0?"display:none":""}}'>{{messages_num}}</view>
-      <image class="icon-message" src="../../images/u72.png"></image>
+    <view class="page-title">
+      <text>会员制购物商城</text>
+    </view>
+    <view class="page-title2" catchtap="messagesTapTag">
+       <text>了解什么是会员制</text>
     </view>
   </view>
-
-  <view class="banner">
+  <view class="all-classify" hidden="{{hiddenallclassify}}">
+    <view class='catg-title' catchtap="openAllTapTag">
+      <view class='catg-titletext'>全部分类</view>
+      <view class='catg-claps'>
+       <image style="" src='../../images/bottom-close.png'></image>
+      </view>
+    </view>
+    <view class="all-classify-list" >
+    <block wx:for="{{navList}}" wx:for-item="item" wx:key="index">
+      <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="all-classify-item {{index == activeIndex ? 'all-classify-item-active' : ''}}" catchtap="onTapTag">
+        {{item.title}}
+      </view>
+    </block>
+    </view>
+  </view>
+  <view class="classify-banner">
+    <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,is_all_category}}" />
+  </view>
+  
+  <view wx:if="{{navList2[3] || hall_banner }}" class="banner">
     <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}"
-      easing-function="easeInOutCubic">
-      <block wx:for="{{hall_banner}}" wx:key="id" wx:for-item="banner_list">
+      easing-function="easeInOutCubic"> 
+      <block wx:for="{{hall_banner?hall_banner:navList2[3]}}" wx:key="id" wx:for-item="banner_list">
         <view bindtap='bannerTapTag' data-bannerlink="{{banner_list.link}}">
           <swiper-item>
             <video wx:if="{{banner_list.ext=='mp4'}}" id="myVideo" class="slide-image" src="{{banner_list.img}}" controls autoplay="" custom-cache="{{false}}" objectFit="contain">
@@ -36,6 +59,7 @@
       </block>
     </swiper>
   </view>
+   
   <!-- 
 <view class="banner-bar-list">
   <scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="x_{{toView}}"  class="banner-bar">
@@ -56,6 +80,7 @@
   </view>
 
   <view class="wrap">
+   <!-- 
     <view class="middle-goods">
       <view wx:if="{{middle8_img}}" class="image-btnbuy" bindtap="bindAIPickGoods" data-goods-type='8' data-middle-title="{{middle8_title}}">
         <image class="pick-goods-image" src="{{middle8_img}}" mode="aspectFill"></image>
@@ -79,28 +104,29 @@
         <text>所有分类</text>
       </view>
     </view>
+      -->
     <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
+     <!--
     <view class="user">
       <view class='usertitle'>我的购物车</view>
-      <!--
       <view class="usergifts" bindtap='usergiftTapTag'>
         <text>收到</text>
         <text class='snum'>{{gifts_rcv}}</text>
         <text>送出</text>
         <text class='snum'>{{gifts_send}}</text>
       </view>
-      -->
     </view>
-
+     -->
+    <!-- 
     <view class="carts-list">
       <view wx:for="{{carts}}" class="carts-container" wx:for-index="cart_idx" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-org="{{item.goods_org}}" data-goods-shape="{{item.shape}}" data-goods-info="{{item.act_info}}"
         data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
         <view class="carts-item" data-index="{{cart_idx}}">
-          <!-- 复选框图标 -->
+          // 复选框图标
           <icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{cart_idx}}" hidden="true" />
-          <!-- 缩略图 -->
+         // 缩略图 /
           <image class="carts-image" src="{{item.activity_image?item.activity_image:item.image}}" mode="aspectFit" />
-          <!-- 商品标题 -->
+          // 商品标题 /
           <view class="carts-text">
             <view class="carts-title">
               <text>{{item.name}}</text>
@@ -111,13 +137,13 @@
               </text>
               </view>
               <view class="carts-en-price">￥{{item.sell_price}} x{{item.num}}</view>
-              <!-- 数量加减 -->
+              // 数量加减  
               <view class="stepper">
-                <!-- 减号 -->
+                // 减号 
                 <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindMinus">-</text>
-                <!-- 数值 -->
+                // 数值 
                 <input wx:if="{{cart_idx=='99999'}}" type="number" data-index="{{cart_idx}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
-                <!-- 加号 -->
+                // 加号 
                 <text wx:if="{{cart_idx=='99999'}}" class="normal" data-index="{{cart_idx}}" catchtap="bindPlus">+</text>
               </view>
             </view>
@@ -128,7 +154,7 @@
         </view>
       </view>
     </view>
-   
+    -->
     <!--
      <view class="pick-goods jcleft" style="border-bottom:0;">
       <view class="pick-goods-text">
@@ -148,12 +174,12 @@
       </view>
     </view>
     -->
+    <!-- 
     <view class="btnconfirm">
       <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden1}}' data-name='sendgift' data-type="0" report-submit="true">
         <button class="send-button" formType="submit">
           <image src="../../images/packed.png"></image>
           开始打包</button>
-        <!--  bindtap="bindCheckout" -->
       </form>
       <form wx:if="{{carts[0]}}" bindsubmit="formSubmit" hidden='{{buyhidden2}}' data-name='buymyself' data-type="1" report-submit="true">
         <view class='buttonwrap'>
@@ -170,7 +196,7 @@
         </view>
       </form>
     </view>
-
+  -->
     <!--
   <modal title="" no-cancel="{{nocancel}}" hidden="{{messageHidden}}" bindconfirm="messageConfirm" bindcancel="messageCandel" confirm-text="开始新手任务" cancel-text="跳过">
     <view style="height:{{dkheight-200}}px;background-image:url('{{main_prom_image}}'); background-repeat:no-repeat; background-size:100% 100%;-moz-background-size:100% 100%;">
@@ -180,6 +206,7 @@
     </view>
   </modal>
    -->
+   <!--
    	<view wx:if="{{friends[0]}}" class="recomment-title" bindtap="bindPickFriends">
 			<text>我的好友</text>
 			<text class="more">更多</text>
@@ -241,20 +268,21 @@
       </view>
 
     </view>
-
+    -->
+    <!--
     <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap='bindPickGoods'>
       <text>热门好物<text class='title_ex'>大家都在送</text></text>
       <text class='more'>更多</text>
     </view>
-
+  -->
     <!--瀑布流列表-->
-    <view id="venues_box" class="venues-box">
+    <view hidden="{{!is_category}}" class="venues-box">
       <view class="box-left">
         <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex" wx:key="id" >
           <block wx:for="{{recommentslist_show}}" wx:key="id">
-            <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
+            <view class="venues-item-category" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
               data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==0}}">
-              <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+              <image class="category-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
               <view class="goods-tags">
                 <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
                 <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
@@ -272,13 +300,11 @@
           </block>
         </block>
       </view>
-
       <view class="box-right">
         <block wx:for="{{recommentslist_show}}" wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
           <block wx:for="{{recommentslist_show}}" wx:key="id">
-            <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
+            <view class="venues-item-category" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
               data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==1}}">
-              <!-- image class="mainpic" src="{{item.image}}" binderror="imageError" data-imageindex="{{index}}" -->
               <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.image}}' width="355rpx" height="355rpx" display="block" />
               <view class="goods-tags">
                 <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
@@ -296,47 +322,42 @@
             </view>
           </block>
         </block>
-      </view>
     </view>
+  </view>
 
-    <!---
-  <view id="venues_box" class="venues-box">
-  <block wx:for="{{recommentslist_show}}"  wx:key="{{index}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
+  <view hidden="{{is_category}}" class="venues-box">
+  <block wx:for="{{recommentslist_show}}"  wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
     <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id" >
-      <view class="venues-item" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
-      <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
-      <view class="goods-tags">
-      <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
-      <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
-      </view>
-      
-      <text class="goods-name">{{item.name}}</text>
-      <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
-
-<view class="goods-tags">
-     
-        <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
-      </view>
-
-      <view class="price-list">
-        
-        <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-        <view class="price-now">￥{{item.sell_price}}</view>
+      <view class="venues-item-main" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"  data-image="{{item.activity_image?item.activity_image:item.image}}"  data-goods-name="{{item.name}}" data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
+      <image class="main-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+      <view class="venues-item-text">
+         <view class="goods-tags">
+          <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
+          <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+        </view>
+        <text class="goods-name">{{item.name}}</text>
+        <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
+        <view class="goods-tags">
+          <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+        </view>
+        <view class="price-list">
+          <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+          <view class="price-now">￥{{item.sell_price}}</view>
+        </view>
       </view>
       </view>
     </block>
   </block>
   </view>
-  --->
-    <view class="loading-show" hidden="{{!is_reloading}}">
-      <text>{{loading_note}}</text>
-    </view>
+  <view class="loading-show" hidden="{{!is_reloading}}">
+    <text>{{loading_note}}</text>
+  </view>
   </view>
   <!--
  </scroll-view>
  -->
-
 </view>
+<!--
 <action-sheet hidden="{{modalFriendHidden}}" bindchange="modalBindFriendconfirm">
   <view class="uni-tip" style="z-index:9999;">
 		<view class="uni-tip-title">
@@ -358,6 +379,7 @@
     <view style='height:0rpx;'></view>
   </action-sheet-cancel>
 </action-sheet>
+-->
 <view class="main-message" hidden="{{messageHidden}}" style="height:{{dkheight}}px;">
       <view class="t_w">
         <!--右上角图标开始-->

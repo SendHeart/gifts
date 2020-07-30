@@ -3,6 +3,7 @@
     "pages/hall/hall",
     "pages/index/index",
     "pages/my/index",
+    "pages/cart/cart",
     "pages/wish/wish",
     "pages/wish/wishshare/wishshare",
     "pages/details/details",
@@ -43,7 +44,7 @@
   "window": {
     "backgroundTextStyle": "light",
     "navigationBarTextStyle": "white",
-    "navigationBarTitleText": "送心",
+    "navigationBarTitleText": "黑贝会",
     "navigationBarBackgroundColor": "#1d1d1d",
     "backgroundColor": "#1d1d1d",
     "navigationStyle": "default",
@@ -61,12 +62,7 @@
         "selectedIconPath": "images/home_s.png",
         "text": "首页"
       },
-      {
-        "pagePath": "pages/member/friends/friends",
-        "iconPath": "images/friend.png",
-        "selectedIconPath": "images/friend_s.png",
-        "text": "好友"
-      },
+
       {
         "pagePath": "pages/member/message/message",
         "iconPath": "images/logo.png",
@@ -74,10 +70,10 @@
         "text": "智能助手"
       },
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/cart/cart",
         "iconPath": "images/history.png",
         "selectedIconPath": "images/history_s.png",
-        "text": "订单"
+        "text": "储物空间"
       },
       {
         "pagePath": "pages/my/index",

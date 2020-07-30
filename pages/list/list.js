@@ -247,18 +247,20 @@ Page({
   },
 
   onLoad: function (options) {
-    console.log('onLoad',options)
+    console.log('onLoad options:',options)
     var that = this
     var username = options.username ? options.username : wx.getStorageSync('username')
     var token = options.token ? options.token : wx.getStorageSync('token')
     var navlist_toView = options.navlist ? options.navlist:0
     var navlist_title = options.navlist_title ? options.navlist_title : ''
-
+    var toView = options.activeIndex ? options.activeIndex:that.data.toView
+    
     that.setData({
       username: username,
       token: token,
       navlist_toView: navlist_toView,
       navlist_title: navlist_title,
+      toView:toView,
     })
     //that.setNavigation()
     //调用应用实例的方法获取全局数据
@@ -443,6 +445,7 @@ Page({
           navList: navList_new,
           index: navlist_toView,
           activeIndex: navlist_toView,
+          toView:navlist_toView,
           tab: navList_new[navlist_toView]['id'],
           tab_value: navList_new[navlist_toView]['value'],
           venuesItems_show: [],
@@ -452,7 +455,6 @@ Page({
           })
           that.get_goods_list()
         })
-        
       }
     })
   },

@@ -772,6 +772,13 @@ Page({
     })  
   },
 
+  navigateToOrder: function (e) {
+    var status = e.currentTarget.dataset.status
+    wx.navigateTo({
+      url: '/pages/index/index?status=' + status
+    })
+  },
+  
   queryCart: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

@@ -405,3 +405,31 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   border: 3rpx solid #E34C55;
   margin-top: 40rpx;
 }
+
+
+/*order*/
+.order-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  background: white;
+  margin: 20rpx 0;
+  padding: 20rpx 0;
+}
+
+.order {
+	width: 33.3%;
+	text-align: center;
+}
+
+.order image {
+	width: 50rpx;
+	height: 50rpx;
+}
+
+.order text{
+	display: block;
+	font-size: 30rpx;
+	color: #333;
+}

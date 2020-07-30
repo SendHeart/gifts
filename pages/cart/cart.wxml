@@ -1,0 +1,79 @@
+  <!-- 
+<view class="banner" style="background-image:url({{main_title_Bg}});" bindtap='bannerTapTag' data-bannerlink="{{banner_link}}">
+
+  <image src="{{main_title_Bg}}" background-size="cover" mode="aspectFill"></image>
+   <text class="slogan" style='color:white;margin-top:40rpx;'>用心的食物才是最美</text>
+
+ 
+</view>
+  -->
+<view class="container carts-list">
+    <view wx:for="{{carts}}" class="carts-container" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}"  data-goods-shape="{{item.shape}}" data-goods-name="{{item.name}}"  data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
+    	<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
+	    	<!-- 复选框图标 -->
+			<icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" />
+ 
+			<!-- 缩略图 -->
+				<image  class="carts-image" src="{{item.image}}" mode="aspectFill"/>
+				<!-- 商品标题 -->
+        <view class="carts-text">
+				  <view class="carts-title">{{item.name}}</view>
+				  <view class="carts-subtitle">
+            <view class=''>
+              <view class="carts-sku">
+                <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="id">
+                {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+'  '}}
+                </text>
+              </view>
+				      <!-- 价格 -->
+              <!-- 
+				  	  <view class="carts-gov-price">{{item.act_info?item.act_info:'鲜香美味'}}</view>
+              -->
+              <view class="carts-en-price">￥{{item.sell_price}}元</view>
+            </view>
+				  	<!-- 数量加减 -->
+				      <view class="stepper">
+						<!-- 减号 -->
+						<text class="{{minusStatuses[index]}}" data-index="{{index}}" catchtap="bindMinus">-</text>
+						<!-- 数值 -->
+						<input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
+						<!-- 加号 -->
+						<text class="normal" data-index="{{index}}" catchtap="bindPlus">+</text>
+				  	</view>
+				</view>
+			</view>
+    </view>
+    <button type="warn" data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><text>删除</text></button>
+    </view>
+</view>
+<view class="carts-footer">
+	<view class="select-and-amount" bindtap="bindSelectAll">
+		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18"/>
+		<text>全选</text>
+		<text>{{total}}</text>
+	</view>
+	<view class="button" bindtap="bindCheckout">立即结算</view>
+</view>
+<view class="recomment-title">
+    <text>精品推荐</text>
+</view>
+<view wx:if="{{is_machine==0}}" wx:for="{{recommentList}}" class="item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-name="{{item.name}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-goods-info="{{item.act_info}}" hidden="{{item.hidden==1?true:false}}">
+   <image class="img" src="{{item.image}}"></image>
+    <text style="font-size:12px;">{{item.name}}</text>
+    <view style="font-size:10px;color:gray;">{{item.act_info?item.act_info:''}}</view>  
+    <!--     
+    <view style="font-size:10px;color:gray;"><image class="img_tag" src="../../images/u48.png"></image>{{item.goods_tag}}</view>
+    -->    
+		<view>￥{{item.sell_price}}元</view> 
+ </view>
+ 
+ <view class="carts-more" hidden="{{rshowmorehidden}}">
+   <!-- <text bindtap="bindShowMoreR" >更多[{{page}}/{{rpage_num}}]</text> --> 
+</view>
+ 
+<!-- 
+<view class="carts-more" hidden="{{rshowmorehidden?false:true}}">
+    <text bindtap="bindShowLessR" >收起...[{{rall_rows}}]</text>
+</view>
+<button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" class="logout">获取用户信息</button>
+-->

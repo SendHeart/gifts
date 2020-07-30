@@ -1,0 +1,404 @@
+@import "../../lib/style/font.wxss";
+page{ 
+  background: #1d1d1d;
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+} 
+ 
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.Hui-iconfont {
+ font-family: "Hui-iconfont";
+ font-size:30rpx;
+}
+.iconv-uparrow:after {
+  content:'\e6d6';
+}
+
+.iconv-downarrow:after {
+  content:'\e6d5';
+}
+.banner {
+  width: 100%;
+  height: 125rpx;
+  /*margin-left: 15rpx;*/
+  background-color: #f2f2f2;
+  background-repeat: norepeat;
+  align-content: center;
+  text-align: center;
+  opacity: 1;
+  background-size: 100% 100%;
+}
+
+.banner image {
+  width: 100%;
+  height: 110rpx;
+}
+
+.banner .slogan {  
+  border: solid 0px black;  
+  display: flex;  
+  flex-direction: row;  
+  justify-content: center;  
+  margin:5px;
+}  
+
+.banner .user {
+	width: 100%;
+	/*background-color: green;	*/
+	display: flex;
+	/*flex-flow: column nowrap;*/
+	justify-content: left;/*子项横轴上居中对齐*/
+	align-items:center;/*子项纵轴上居中对齐*/
+	/*align-content: center;*/
+}
+.banner .user .userinfo { 
+  display: flex;
+	flex-direction: row;
+  position: relative; 
+  width: 60%; 
+  height: 100%; 
+  color: #939393; 
+}
+.banner .userinfo .userinfo-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  margin-top: 0rpx;
+  margin-left: 20rpx;
+  border-radius: 50%;
+}
+.banner .userinfo .userinfo-nickname {
+  color: white;
+  font-size: 16px;
+  font-family: sans-serif;
+  margin: 20rpx;
+   
+}
+
+/*外部容器*/
+.container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	box-sizing: border-box;
+} 
+
+/*整体列表*/
+.carts-list {
+	display: flex;
+	flex-direction: column;
+	padding-left: 0rpx;
+	margin-bottom: 80rpx;
+}
+
+/*每行单元格*/
+.carts-item {
+	display: flex;
+	flex-direction: row;
+	height:150rpx;
+	/*width属性解决标题文字太短而缩略图偏移*/
+	width:100%;
+	border-bottom: 1px solid #eee;
+	padding: 30rpx 0;
+	margin-right: 40rpx;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background: white;
+	z-index: 99;
+}
+
+/*item与button的容器*/
+.carts-container {
+	position: relative;
+	width: 100%;
+	height: 210rpx;
+}
+
+/*左部图片*/
+.carts-image {
+	width:160rpx;
+	height:150rpx;
+}
+
+
+/*右部描述*/
+.carts-text {
+	margin-left: 10rpx;
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+/*右上部分标题*/
+.carts-title {
+  font-size: 24rpx;
+  color: #444;
+  line-height: 1.4;
+  padding-right: 10rpx;
+  text-overflow: ellipsis;
+  overflow-x: hidden;
+  white-space: nowrap;
+}
+
+/*右下部分价格与数量*/
+.carts-subtitle {
+	font-size: 25rpx;
+	color:darkgray;
+	padding: 0 10rpx;
+	display: flex;
+	flex-direction: row;
+	justify-content:space-between;
+}
+
+/*价格*/
+.carts-gov-price {
+	display: flex;
+  flex-direction:column;
+  color: #f60;
+	font-size:10px;
+	line-height: 18px;
+}
+.carts-en-price {
+  color: #444;
+  font-size: 24rpx;
+  line-height: 2;
+  width: 150rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.carts-price {
+	display: flex;
+  flex-direction:column;
+  color: #f60;
+	font-size:10px;
+	line-height: 10px;
+}
+
+.carts-sku {
+  font-size: 20rpx;
+  color: #999;
+  line-height: 1;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+/*人民币符号*/
+.carts-price:before, .select-and-amount text:last-child:before {
+	content: '';	
+}
+
+/*商品加减按钮*/
+/*stepper容器*/
+.stepper {
+  width: 90px;
+  margin: 0 auto;
+  position: absolute;
+  right: 20rpx;
+  bottom: 20rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+/*加号与减号*/
+
+.stepper text {
+  width: 48rpx;
+  height: 48rpx;
+  line-height: 46rpx;
+  text-align: center;
+  border: 2rpx solid #ddd;
+  border-radius: 10rpx;
+  color: #999;
+}
+
+/*数值*/
+
+.stepper input {
+  color: #444;
+  float: left;
+  margin: 0 auto;
+  width: 60rpx;
+  height: 48rpx;
+  text-align: center;
+  font-size: 24rpx;
+}
+
+/*普通样式*/
+
+.stepper .normal {
+  color: #444;
+}
+
+/*禁用样式*/
+
+.stepper .disabled {
+  color: #ccc;
+}
+/*复选框样式*/
+.carts-list icon {
+	margin-top: 60rpx;
+	margin-right: 20rpx;
+}
+
+/*底部按钮*/
+.carts-footer {
+	width: 100%;
+	height: 80rpx;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	position: fixed;
+	bottom: 0;
+	border-top: 1px solid #eee;
+	background: white;
+  z-index: 99;
+}
+
+.select-and-amount {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+}
+
+/*复选框*/
+.carts-footer icon {
+	margin-left: 20rpx;
+	display: block;
+}
+
+/*全选字样*/
+.carts-footer text {
+	font-size: 30rpx;
+	margin-left: 8rpx;
+	/*line-height: 10rpx;*/
+	display: block;
+}
+
+/*立即结算按钮*/
+.carts-footer .button {
+	line-height: 80rpx;
+	text-align: center;
+	width:220rpx;
+	height: 80rpx;
+	background-color: #f60;
+	color: white;
+	font-size: 36rpx;
+	border-radius: 0;
+	border: 0;
+}
+
+/*删除按钮*/
+.carts-footer .delete {
+	height: 80rpx;
+	width: 200rpx;
+	text-align: right;
+	line-height: 80rpx;
+	color: #fc9326;
+}
+
+/*删除按钮*/
+.delete-button {
+	width: 60px;
+	font-size: 16px;
+	height: 100%;
+	line-height: 90rpx;
+	border: 0;
+	border-radius: 0;
+	position: absolute;
+  text-align: center;
+  align-items: center;
+	right: 0;
+	top: 0;
+  color: #EB602E; 
+  background-color: #fff;
+  padding: 0px;
+  display: table;
+
+}
+.delete-button text {
+  vertical-align:middle;
+  display: table-cell;
+}
+
+.delete-button:before {
+	border: 0;
+}
+
+/*推荐商品列表头*/
+.recomment-title {
+ 
+	height: 50rpx;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;/*子项横轴上居中对齐*/
+	bottom: 0;
+	border-top: 1px solid #eee;	
+  border-bottom: 1px solid #eee;
+	background: white;
+  padding:25rpx;
+  z-index: 1;
+}
+
+/*推荐商品列表头*/
+.item {
+  height: 180rpx;
+  margin-left: 0rpx;
+  margin-top: 0rpx;
+  background: white;
+  border-bottom: 1px solid #eee;
+  padding:25rpx;
+  overflow: hidden;
+}
+
+.item .img {
+  width: 180rpx;
+  height: 170rpx;
+  margin-right: 10rpx;
+  margin-top: 10rpx;
+   margin-left: 10rpx;
+  float: left;
+}
+
+.item .img_tag {
+  width: 5%;
+  height: 30rpx;
+}
+
+
+/*商品列表头*/
+.carts-more {
+	height: 40rpx;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;/*子项横轴上居中对齐*/
+	bottom: 0;
+	border-top: 1px solid #eee;	
+  border-bottom: 1px solid #eee;
+	background: white;
+  padding:25rpx;
+  margin-bottom: 80rpx;
+  z-index: 1;
+}
+
+.note {
+  height: 100rpx;
+  padding:20rpx;
+	background: white;
+}
+.note textarea {
+  width:100%;
+  height: 5em;
+  margin-top:5rpx;
+  border: 0px solid #eee;	
+}

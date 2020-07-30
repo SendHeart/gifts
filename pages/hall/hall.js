@@ -27,9 +27,20 @@ var navList2_init = [
   { id: "wechat_gb", title: "背景", value: "", img: "/uploads/wechat_share.png" },
 ]
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
-
+var navList = [
+  { id: "is_recommend", title: "推荐"  ,value:"1"},
+]
 Page({
   data: {
+    navList2: navList2,
+    navList:navList,
+    activeIndex: 0,
+    tab: 'is_recommend',
+    tab_value:"1",
+    toView:0,
+    navlist_toView:0,
+    navlist_title:'',
+    is_category:false,
     title_name:'送心',
     title_logo: '../../images/footer-icon-05.png',
     img_discount: '../../images/discount.png',
@@ -91,7 +102,8 @@ Page({
     avatarUrl: userInfo.avatarUrl,
     user_group_id:user_group_id,
     shop_type:shop_type,
-    navList2: navList2,
+    
+    hiddenallclassify:true,
     socktBtnTitle: '连接socket',
     message: '',
     text: text,
@@ -149,6 +161,16 @@ Page({
     //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
     
   },
+    
+  // 打开全部子分类
+  openAllTapTag: function () {
+      var that = this
+      var hiddenallclassify = that.data.hiddenallclassify
+      that.setData({
+        hiddenallclassify: !hiddenallclassify,
+      })
+  },
+
   handletouchstart: function (event) {
     // console.log(event)
     // 赋值
@@ -168,7 +190,6 @@ Page({
     
   },
    
-
   getMoreGoodsTapTag: function (e) {
     var that = this;
     var page = that.data.page + 1;
@@ -474,6 +495,40 @@ Page({
     }
 
   },
+
+  // 点击获取对应分类的数据
+  onTapTag: function (e) {
+    var that = this;
+    var tab = e.currentTarget.dataset.id;
+    var tab_value = e.currentTarget.dataset.value;
+    var index = e.currentTarget.dataset.index;
+    var navList = that.data.navList ;
+    var toView = index
+    
+    if (index > 2 && index < navList.length) {
+      toView = index - 2
+    } else {
+      toView = 0
+    }
+   
+    that.setData({
+      activeIndex: index,
+      tab: tab,
+      tab_value: tab_value,
+      toView: toView ? toView : 0,
+      is_category:index==0?false:true,
+      hiddenallclassify: true,
+      gift_para_interval:1, //更新广告轮播图
+    })
+    console.log('tab:' + that.data.tab)
+    that.reloadData()
+    that.get_project_gift_para()
+    /*
+    wx.navigateTo({
+      url: '/pages/list/list?navlist_title='+navList[index]['title']
+    })
+    */
+  },
   bannerTapTag: function (e) {
     var that = this
     var banner_link = e.currentTarget.dataset.bannerlink
@@ -550,7 +605,6 @@ Page({
       })
       that.delete()
     }
-
   },
   bindPlus: function (e) {
     /*
@@ -1112,6 +1166,8 @@ Page({
     var pagesize=that.data.pagesize
     var pageoffset = that.data.pageoffset
     var shop_type = that.data.shop_type
+    var goods_type = that.data.tab
+    var goods_type_value = that.data.tab_value
 
     that.setData({
       is_reloading: true,
@@ -1129,6 +1185,8 @@ Page({
         username: username ? username:openid, 
         access_token: token,
         shop_type:shop_type,
+        goods_type: goods_type, 
+        goods_type_value: goods_type_value, 
         page:page,
         pagesize:pagesize,
         pageoffset:pageoffset,
@@ -1299,7 +1357,8 @@ Page({
     var shop_type = that.data.shop_type
     var hall_banner = that.data.hall_banner
     var gift_para_interval = that.data.gift_para_interval
-    console.log('hall get_project_gift_para navList2:', navList_new, ' is_video_play', that.data.is_video_play)
+    var cat_id = that.data.tab_value>0? that.data.tab_value:1
+    console.log('hall get_project_gift_para navList2:', navList_new, ' gift_para_interval:', gift_para_interval)
     if (navList_new.length == 0 || gift_para_interval>0){
       //项目列表
       wx.request({
@@ -1308,6 +1367,7 @@ Page({
         data: {
           type: 2,  //暂定 1首页单图片 2首页轮播  
           shop_type: shop_type,
+          cat_id:cat_id,
         },
         header: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -1316,8 +1376,8 @@ Page({
         success: function (res) {
           //console.log('get_project_gift_para:', res.data)
           navList_new = res.data.result;
-          console.log('get_project_gift_para:', navList_new)
-          if (!navList_new) {
+        
+          if (!navList_new ) {
             /*
              wx.showToast({
                title: '没有菜单项2',
@@ -1325,12 +1385,13 @@ Page({
                duration: 1500
              });
              */
+            console.log('get_project_gift_para 没有菜单项2:', navList_new)
             return
           }else{
             that.setData({
               gift_para_interval: 0,
               navList2: navList_new,
-              hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
+              hall_banner: navList_new[3].length>0 ? navList_new[3]:hall_banner, //首页banner图
               middle1_img: navList_new[11] ? navList_new[11]['img'] : '',
               middle2_img: navList_new[12] ? navList_new[12]['img'] : '',
               middle3_img: navList_new[13] ? navList_new[13]['img'] : '',
@@ -1357,17 +1418,17 @@ Page({
               middle6_note: navList_new[16] ? navList_new[16]['note'] : '',
               middle7_note: navList_new[17] ? navList_new[17]['note'] : '',
               middle8_note: navList_new[18] ? navList_new[18]['note'] : '',
-
               is_video_play: navList_new[19] ? navList_new[19]['value'] : 0,
             })
             wx.setStorageSync('navList2', navList_new)
+            console.log('get_project_gift_para 菜单项2:', navList_new)
           }
         } 
       })
     } else{
       that.setData({
         //navList2: navList_new,
-        hall_banner: navList_new[3] ? navList_new[3]:hall_banner, //首页banner图
+        hall_banner: navList_new[3].length>0 ? navList_new[3]:hall_banner, //首页banner图
         middle1_img: navList_new[11]?navList_new[11]['img']:'',
         middle2_img: navList_new[12]?navList_new[12]['img']:'',
         middle3_img: navList_new[13]?navList_new[13]['img']:'',
@@ -1428,6 +1489,56 @@ Page({
     */
   },
 
+  get_menubar: function (event) { //获取菜单项
+    var that = this
+    var navlist_toView = that.data.navlist_toView
+    var navlist_title = that.data.navlist_title
+    var cat_id = that.data.tab_value?that.data.tab_value:1
+    wx.request({
+      url: weburl + '/api/client/get_menubar',
+      method: 'POST',
+      data: {
+        menu_type: 1,
+        cat_id:cat_id,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+
+      },
+      success: function (res) {
+        console.log('get_menubar:',res.data.result)
+        var navList_new = res.data.result;
+        if (!navList_new) {
+          wx.showToast({
+            title: '没有菜单项',
+            icon: 'loading',
+            duration: 1500
+          });
+          return;
+        }
+        for (var i = 0; i < navList_new.length;i++){
+          if (navList_new[i]['title'].indexOf(navlist_title)>=0){
+            navlist_toView = i
+            break
+          }
+        }
+        that.setData ({
+          navList: navList_new,
+          index: navlist_toView,
+          activeIndex: navlist_toView,
+          tab: navList_new[navlist_toView]['id'],
+          tab_value: navList_new[navlist_toView]['value'],
+          venuesItems_show: [],
+        },function(){
+          that.setData({
+            loadingHidden: true,
+          })
+        })
+      }
+    })
+  },
+
   onLoad: function (options) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -1461,6 +1572,8 @@ Page({
       }
     })
     app.globalData.is_task = task
+    that.get_menubar()
+   
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
     var message_info = {
       addtime: myDate,
@@ -1547,6 +1660,9 @@ Page({
       that.setData({
         gift_para_interval:1 //30秒获取一次系统参数
       })
+      if(that.data.hall_banner.length == 0){
+        that.get_project_gift_para()
+      }
     }, 30*1000)
    
     /*
