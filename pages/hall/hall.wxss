@@ -979,7 +979,7 @@ modal {
    /* display: inline-block; */
   display: flex;
   flex-direction: row;
-  height:260rpx;
+  height:270rpx;
   position: relative;
   color: #f2f2f2;
 }
@@ -1010,7 +1010,7 @@ modal {
 
 .main-mainpic {
   width: 35%;
-  height: 255rpx;
+  height: 265rpx;
   border-radius: 14rpx;
 }
 
