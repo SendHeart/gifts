@@ -624,16 +624,30 @@ Page({
     var status = parseInt(options.status ? options.status:0)
     var username = wx.getStorageSync('username')
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    
-    that.get_project_gift_para()
-  
+    var bar_title = ''
+   
+    that.setData({
+      status: status,
+    })
     //that.reloadData()
     // 存为全局变量，控制支付按钮是否显示
-    if (status) {
-      that.setData({
-        status: status,
-      })
+    if (status == 1) {
+      bar_title = '待付款订单'
+    } else if( status == 2){
+      bar_title = '待发货订单'
+    }else if( status == 3){
+      bar_title = '待收货订单'
+    }else if( status == 4){
+      bar_title = '待评价订单'
+    }else if( status == 5){
+      bar_title = '退换货订单'
+    } else{
+      bar_title = '全部订单'
     }
+    wx.setNavigationBarTitle({
+      title: bar_title
+    })
+    that.get_project_gift_para()
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -645,7 +659,6 @@ Page({
         })
       }
     })
-   
   },
   onShow: function () {
     var that = this
@@ -788,6 +801,7 @@ Page({
                   orderObjects[i]['order_sku_num'] = orderObjects[i]['order_sku'] ? orderObjects[i]['order_sku'].length : 1
                 }
               }
+
               var duetime = orderObjects[i]['duetime'] - currenttime
               orderObjects[i]['hour'] = parseInt(duetime / 3600)
               orderObjects[i]['minus'] = parseInt((duetime - orderObjects[i]['hour'] * 3600) / 60)
@@ -808,7 +822,6 @@ Page({
                 if (card_love_info) orderObjects[i]['card_love_info'] = card_love_info
                 if (card_cele_info) orderObjects[i]['card_cele_info'] = card_cele_info
                 if (card_register_info) orderObjects[i]['card_register_info'] = card_register_info
-            
               }
             }
             //if (page > 1 && orderObjects) {

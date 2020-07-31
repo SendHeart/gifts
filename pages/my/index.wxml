@@ -8,7 +8,12 @@
     <text wx:if="{{user_group_id>0}}" class="userinfo-nickname">{{user_group_id?user_group_name:''}}</text>
     <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
 </view>
-<view class="order-area">
+<view class="menu-area">
+ <view bindtap="navigateToOrder" class="tableviewcell linegray" style='width:{{windowWidth-35}}px' data-status="0">
+	  <image src="../../images/order.png" />
+	  <text>全部订单</text>
+  </view>
+  <view class="order-area">
 	<view bindtap="navigateToOrder" class="order" data-status="1">
 		<image src="../../images/daifukuan.png" />
 		<text>待付款</text>
@@ -19,13 +24,19 @@
 	</view>
 	<view bindtap="navigateToOrder" class="order" data-status="3">
 		<image src="../../images/daishouhuo.png" />
-		<text>已发货</text>
+		<text>待收货</text>
 	</view>
-	<view bindtap="navigateToOrder" class="order" data-status="4">
+  <view bindtap="navigateToOrder" class="order" data-status="4">
 		<image src="../../images/dpl.png" />
-		<text>已完成</text>
+		<text>待评价</text>
+	</view>
+  	<view bindtap="navigateToOrder" class="order" data-status="5">
+		<image src="../../images/iconfont-help.png" />
+		<text>退换货</text>
 	</view>
 </view>
+</view>
+
 <view class="menu-area">
   <!--<view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/corp.png" />

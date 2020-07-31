@@ -424,12 +424,12 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 }
 
 .order image {
-	width: 50rpx;
-	height: 50rpx;
+	width: 40rpx;
+	height: 40rpx;
 }
 
 .order text{
 	display: block;
-	font-size: 30rpx;
+	font-size: 28rpx;
 	color: #333;
 }
