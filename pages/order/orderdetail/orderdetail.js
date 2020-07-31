@@ -10,7 +10,7 @@ Page({
     title_name: '记录详情',
     title_logo: '../../../images/footer-icon-05.png',
     delivery_background: weburl+'/uploads/line.png',
-    share_title: '我的礼物详情单',
+    share_title: '我的详情单',
     share_desc: '送礼就是送心',
     orders: [],
     order_no:'',
