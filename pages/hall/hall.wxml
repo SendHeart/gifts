@@ -333,7 +333,7 @@
         <image class="main-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       -->
       
-      <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.activity_image?item.activity_image:item.image}}' width="265rpx" height="265rpx" display="block" />
+      <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.activity_image?item.activity_image:item.image}}' width="275rpx" height="275rpx" display="block" />
       <view class="venues-item-text">
          <view class="goods-tags">
           <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
