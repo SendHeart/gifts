@@ -548,8 +548,15 @@ Page({
     })
     app.globalData.messageflag = 1 //1系统消息
     console.log('hall messagesTapTag: messageflag:', app.globalData.messageflag)
+    /*
     wx.switchTab({
       url: '/pages/member/message/message'
+    })
+    */
+   app.globalData.my_index = 1 //1系统消息
+   app.globalData.art_id = 28 //1系统消息
+    wx.switchTab({
+      url: '/pages/my/index'
     })
   },
   userTapTag: function () {

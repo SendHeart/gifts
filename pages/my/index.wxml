@@ -113,7 +113,7 @@
 <view class="menu-area">
   <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u628.png" />
-	  <text>如何玩转送心</text>
+	  <text>什么是会员制</text>
   </view>
   <view bindtap="navigateToAgreement" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u633.png" />

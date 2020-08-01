@@ -565,7 +565,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var art_id = that.data.art_id ? that.data.art_id:'22'  //玩转送心
+    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转送心 28什么是会员制
     var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //送心协议类
     var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转送心'
     var playsxinfoshowflag = that.data.playsxinfoshowflag
@@ -1204,11 +1204,13 @@ Page({
     var frompage = options.frompage ? options.frompage:''
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
+    art_id =  art_id>0?art_id:app.globalData.art_id
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
     var userInfo = wx.getStorageSync('userInfo')  
     var userauth = wx.getStorageSync('userauth')  
+    //var my_index = app.globalData.my_index //1跳转传参
     that.get_project_gift_para()
     that.setData({
       m_id: m_id,
@@ -1239,7 +1241,6 @@ Page({
     if (art_id>0){
       that.navigateToPlaysx()
     }
-
   },
   onShow: function () {
     var that = this
