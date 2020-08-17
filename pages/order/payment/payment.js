@@ -284,7 +284,7 @@ Page({
                 })
                 if(received==1 && order_shape!=8){
                   wx.navigateTo({
-                    url: '/pages/lottery/lottery?lottery_type=0' + '&order_no=' + orderNo,
+                    url: '/pages/lottery/lottery?lotterlotteryy_type=0' + '&order_no=' + orderNo,
                   })
                 } else {
                   that.delete_cart()
