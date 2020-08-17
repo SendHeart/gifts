@@ -282,7 +282,7 @@ Page({
                   icon: 'success',
                   duration: 2000,
                 })
-                if(received==1 && order_shape!=8){
+                if(received==1 && order_shape!=8 && order_shape!=7){
                   wx.navigateTo({
                     url: '/pages/lottery/lottery?lotterlotteryy_type=0' + '&order_no=' + orderNo,
                   })

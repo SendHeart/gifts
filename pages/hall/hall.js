@@ -370,6 +370,7 @@ Page({
   initSocketMessage: function () {
     var that = this
     var remindTitle = socketOpen ? '正在关闭' : '正在连接'
+    //return 
     if (!socketOpen) {
       wx.connectSocket({
         url: wssurl + '/wss'
