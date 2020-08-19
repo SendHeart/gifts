@@ -677,7 +677,8 @@ Page({
         access_token: token,
         shop_type:shop_type,
         page: page,
-        pagesize: pagesize 
+        pagesize: pagesize,
+        query_type:'cart', //购物车推荐商品
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
