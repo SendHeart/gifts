@@ -286,6 +286,11 @@ Page({
                   wx.navigateTo({
                     url: '/pages/lottery/lottery?lotterlotteryy_type=0' + '&order_no=' + orderNo,
                   })
+                } else if(order_shape==8 || order_shape ==7){
+                  that.delete_cart()
+                  wx.switchTab({
+                    url: '/pages/my/index'
+                  })
                 } else {
                   that.delete_cart()
                   that.returnTapTag()
