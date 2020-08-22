@@ -1305,10 +1305,8 @@ Page({
             gifts_send: gifts_send,
           })
         }
-       
       }
     })
-
   },
 
   // 获取滚动条当前位置

@@ -11,6 +11,10 @@
             <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
           </view>
+          <view wx:if="{{order_shape==7 || order_shape==8}}">
+            <text>{{item.act_info}}
+              </text>
+          </view>
           <view wx:if="{{order_shape==4 && card_name_info}}">
             <text>{{card_name_info.card_name_name?'姓名:'+card_name_info.card_name_name:''}}{{card_name_info.card_name_title?'('+card_name_info.card_name_title+')':''}}{{card_name_info.card_name_phone?' 手机: '+card_name_info.card_name_phone:''}}
             </text>
