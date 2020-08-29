@@ -33,6 +33,7 @@
     "pages/order/receive/receive",
     "pages/order/transfer/transfer",
     "pages/order/checkout/checkout",
+    "pages/order/recharge/recharge",
     "pages/address/list/list",
     "pages/order/payment/payment",
     "pages/order/orderdetail/orderdetail",

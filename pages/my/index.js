@@ -55,8 +55,9 @@ Page({
     recharge_skuid:0,
     recharge_price:0,
   },
+
   getScancode: function () {
-    var _this = this;
+    var _this = this
     // 允许从相机和相册扫码
     wx.scanCode({
       success: (res) => {
@@ -67,8 +68,8 @@ Page({
         var path = '/'+pathinfo[0]
         var sceneinfo = pathinfo[1]
         var charset = res.charSet
-        var reg = new RegExp("scene=", "g");
-        var scene = sceneinfo.replace(reg, "");
+        var reg = new RegExp("scene=", "g")
+        var scene = sceneinfo.replace(reg, "")
         //手机和开放者工具不一样的地方就在这几步了
         scene = decodeURIComponent(scene);   //在手机上省略这一步  开发者工具需要
 
@@ -163,7 +164,6 @@ Page({
         */
       })
     })
-
   },
 
   //获取订阅模板信息
@@ -565,11 +565,11 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转送心 28什么是会员制
+    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转送心 28什么是会员制 29会员规则和权益协议
     var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //送心协议类
     var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转送心'
     var playsxinfoshowflag = that.data.playsxinfoshowflag
-
+    console.log('送心协议 art_id:', art_id)
     if (playsxinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -588,10 +588,10 @@ Page({
           that.setData({
             playsxInfo: res.data.result,
           })
+          app.globalData.art_id = 0
           console.log('玩转送心:', that.data.playsxInfo)
           that.showPlaysxinfo()
         }
-
       })
     } else {
       that.showPlaysxinfo()
@@ -842,7 +842,7 @@ Page({
         })
       
         wx.navigateTo({
-          url: '../order/checkout/checkout?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + order_shape + '&order_image=' + recharge_image + '&recharge=1&username=' + username + '&token=' + token
+          url: '../order/recharge/recharge?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + order_shape + '&order_image=' + recharge_image + '&recharge=1&username=' + username + '&token=' + token
         })
       }
     })
@@ -1204,7 +1204,7 @@ Page({
     var frompage = options.frompage ? options.frompage:''
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
-    art_id =  art_id>0?art_id:app.globalData.art_id
+   
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
@@ -1213,6 +1213,7 @@ Page({
     //var my_index = app.globalData.my_index //1跳转传参
     that.get_project_gift_para()
     that.setData({
+      scene:scene,
       m_id: m_id,
       art_id: art_id,
       art_cat_id: art_cat_id,
@@ -1225,22 +1226,7 @@ Page({
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
     that.query_user_info()
-    if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
-      var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
-      var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
-      var midReg = new RegExp(/\&mid=(.*)/)
-
-      var scene_artid = scene.match(artidReg)[0]
-      art_id = scene_artid ? scene_artid.substring(6, scene_artid.length) : art_id
-      var scene_artcatid = scene.match(artcatidReg)[0]
-      art_cat_id = scene_artcatid ? scene_artcatid.substring(6, scene_artcatid.length) : art_cat_id
-      var scene_mid = scene.match(midReg) ? scene.match(midReg)[0] : 0
-      refer_mid = scene_mid ? scene_mid.substring(5, scene_mid.length) : refer_mid
-      console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出  
-    }
-    if (art_id>0){
-      that.navigateToPlaysx()
-    }
+    
   },
   onShow: function () {
     var that = this
@@ -1248,12 +1234,14 @@ Page({
     var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : 0
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
+    var art_id =  that.data.art_id>0?that.data.art_id:app.globalData.art_id
+    var scene = that.data.scene
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
     var userInfo = wx.getStorageSync('userInfo') 
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
-    console.log('my index onShow() user_phone:', user_phone, 'user_name:', user_name)
+    console.log('my index onShow() user_phone:', user_phone, 'art_id:', art_id)
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
@@ -1277,6 +1265,7 @@ Page({
     }
     that.setData({
       user_type: user_type,
+      art_id:art_id,
     })
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
@@ -1285,6 +1274,23 @@ Page({
         userInfo: userInfo
       })
     })
+
+    if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
+      var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
+      var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
+      var midReg = new RegExp(/\&mid=(.*)/)
+
+      var scene_artid = scene.match(artidReg)[0]
+      art_id = scene_artid ? scene_artid.substring(6, scene_artid.length) : art_id
+      var scene_artcatid = scene.match(artcatidReg)[0]
+      art_cat_id = scene_artcatid ? scene_artcatid.substring(6, scene_artcatid.length) : art_cat_id
+      var scene_mid = scene.match(midReg) ? scene.match(midReg)[0] : 0
+      refer_mid = scene_mid ? scene_mid.substring(5, scene_mid.length) : refer_mid
+      console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出  
+    }
+    if (art_id>0){
+      that.navigateToPlaysx()
+    }
     console.log('my index user_type:',that.data.user_type)
   },
   /*

@@ -26,6 +26,8 @@ App({
     code: null,
     shop_type:2 , //礼物类应用
     messageflag:0, //0任务 1系统消息 gotop
+    my_index:0,
+    art_id:0,
     hall_gotop: 0, //1 gotop 
     from_page:null,
     user_type:0,

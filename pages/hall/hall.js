@@ -555,10 +555,12 @@ Page({
     })
     */
    app.globalData.my_index = 1 //1系统消息
-   app.globalData.art_id = 28 //1系统消息
-    wx.switchTab({
-      url: '/pages/my/index'
-    })
+   app.globalData.art_id = 28 //28会员制说明
+   setTimeout(function () {
+      wx.switchTab({
+        url: '/pages/my/index'
+      })
+    }, 500)
   },
   userTapTag: function () {
     wx.switchTab({
