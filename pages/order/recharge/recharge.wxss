@@ -238,13 +238,21 @@ picker {
   height: 100rpx;
   padding: 10rpx;
   border-radius: 20rpx;
-  background: #fff;
   border: 1rpx solid #eee;
   overflow: hidden;
 }
+
+.recharge-item-selected {
+  background: #e34c55;
+  color: #fff;
+}
+
+.recharge-item-unselected {
+  background: #fff;
+  color: #444;
+}
 .recharge-item text {
   font-size: 22rpx;
-  color: #444;
   padding: 0;
   margin: 0;
 }
@@ -252,7 +260,6 @@ picker {
 .recharge-item-amount {
   font-size: 38rpx;
   font-weight: bold;
-  color: #444;
   padding: 5rpx;
   margin-bottom: 20rpx;
 }

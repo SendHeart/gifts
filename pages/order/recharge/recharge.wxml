@@ -9,7 +9,7 @@
           <text class="carts-title">{{item.name}}</text>
           <text class="carts-recharge-title">{{item.goods_tag}}</text>
           <view class='carts-sku'>
-            <view wx:if="{{order_shape!=5 && order_shape!=4}}" wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index">
+            <view wx:if="{{order_shape==7 || order_shape==8}}" wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index">
               <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
             </view>
@@ -24,19 +24,19 @@
   </view>
 <view class="recharge-info">
   <view class="recharge-level">
-      <view class="recharge-item" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount1}}' >
+      <view class="recharge-item {{recharge_selected == '1' ? 'recharge-item-selected' : 'recharge-item-unselected'}} " bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount1}}' data-recharge-type='1' >
         <text class="recharge-item-amount">{{recharge_amount1}}</text>
         <text>{{recharge_title1}}</text>
       </view>
-      <view class="recharge-item" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount2}}' >
+      <view class="recharge-item {{recharge_selected == '2' ? 'recharge-item-selected' : 'recharge-item-unselected'}}" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount2}}' data-recharge-type='2' >
         <text class="recharge-item-amount">{{recharge_amount2}}</text>
         <text>{{recharge_title2}}</text>
       </view>
-      <view class="recharge-item" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount3}}' >
+      <view class="recharge-item {{recharge_selected == '3' ? 'recharge-item-selected' : 'recharge-item-unselected'}}" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount3}}' data-recharge-type='3' >
         <text class="recharge-item-amount">{{recharge_amount3}}</text>
         <text>{{recharge_title3}}</text>
       </view>
-      <view class="recharge-item" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount4}}' >
+      <view class="recharge-item {{recharge_selected == '4' ? 'recharge-item-selected' : 'recharge-item-unselected'}}" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount4}}' data-recharge-type='4' >
         <text class="recharge-item-amount">{{recharge_amount4}}</text>
         <text>{{recharge_title4}}</text>
       </view>

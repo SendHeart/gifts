@@ -27,6 +27,7 @@ Page({
     couponType: 1,
     selectedAllStatus: false,
     selectedAgreeStatus: false,
+    recharge_selected:'',
     discountpay:0, //折扣差额
     payamount:0, //实际支付金额
     order_num:1,//订单份数
@@ -424,8 +425,10 @@ Page({
   bindRechargeSelect: function (e) {
     var that = this
     var amount = e.currentTarget.dataset.rechargeAmount?e.currentTarget.dataset.rechargeAmount:that.data.amount
+    var recharge_selected = e.currentTarget.dataset.rechargeType?e.currentTarget.dataset.rechargeType:that.data.recharge_selected
     that.setData({
       amount: amount,
+      recharge_selected:recharge_selected,
     })
   },
 
