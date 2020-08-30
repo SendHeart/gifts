@@ -140,7 +140,7 @@ Page({
   
 	readCarts: function (options) {
 		var that = this
-    console.log('order checkout readCarts options:', options)
+    console.log('recharge readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
 		//var amount = parseFloat(options.amount)
     //var delivery_price = parseFloat(options.delivery_price)
@@ -151,7 +151,7 @@ Page({
     var delivery_price = parseFloat(carts[0].delivery_price)
     var cartIdArray = cartIds.split(',')
     var recharge_recomment_image = carts[0].activity_image
-    var recharge_note = options.recharge_note ? options.recharge_note:'点击“立即入会”按钮并购买会员资格时，即代表您已阅读、理解并接受黑贝会会员规则和权益协议特别规定'
+    var recharge_note = options.recharge_note ? options.recharge_note:'点击“立即入会”按钮并购买会员资格时，即代表您已阅读、理解并接受《黑贝会会员规则和权益协议》特别规定'
     var recharge_note2 = options.recharge_note2 ? options.recharge_note2:'注意: 电子版会员卡将在购买成功后，被同时关联至您的微信账户和个人手机号，而会员卡号将作为唯一账户识别号'
     var order_type = options.order_type ? options.order_type:''
     var order_note = options.order_note ? options.order_note:''
@@ -161,14 +161,14 @@ Page({
     var order_voicetime = options.order_voicetime ? options.order_voicetime : 0   //5贺卡请柬
     var order_color = options.order_color ? options.order_color : '#333'   //5贺卡请柬文字颜色
     var is_buymyself = options.is_buymyself?options.is_buymyself:0  //自购
-    var recharge_title1 = options.recharge_title1? recharge_title1:'6个月期' 
-    var recharge_title2 = options.recharge_title2? recharge_title2:'1年期' 
-    var recharge_title3 = options.recharge_title3? recharge_title3:'3年期' 
-    var recharge_title4 = options.recharge_title4? recharge_title4:'终身' 
-    var recharge_amount1 = options.recharge_amount1? recharge_amount1:88 
-    var recharge_amount2 = options.recharge_amount2? recharge_amount2:168 
-    var recharge_amount3 = options.recharge_amount3? recharge_amount3:358 
-    var recharge_amount4 = options.recharge_amount4? recharge_amount4:1888 
+    var recharge_title1 = options.recharge_title1 
+    var recharge_title2 = options.recharge_title2 
+    var recharge_title3 = options.recharge_title3  
+    var recharge_title4 = options.recharge_title4 
+    var recharge_amount1 = options.recharge_amount1  
+    var recharge_amount2 = options.recharge_amount2 
+    var recharge_amount3 = options.recharge_amount3  
+    var recharge_amount4 = options.recharge_amount4
     //payamount = (amount - discountpay).toFixed(2)
 
     that.setData({
@@ -436,7 +436,7 @@ Page({
     var that = this
     app.globalData.my_index = 1 //1系统消息
     app.globalData.art_id = 28 //28会员制说明
-  
+    
     setTimeout(function () {
       wx.switchTab({
         url: '/pages/my/index'
@@ -448,7 +448,7 @@ Page({
     var that = this
     app.globalData.my_index = 1 //1系统消息
     app.globalData.art_id = 29 // 29 会员规则和权益协议
-  
+    app.globalData.from_page = '/pages/my/index'
     setTimeout(function () {
       wx.switchTab({
         url: '/pages/my/index'

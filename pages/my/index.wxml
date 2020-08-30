@@ -117,11 +117,11 @@
   </view>
   <view bindtap="navigateToAgreement" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u633.png" />
-	  <text>用户协议</text>
+	  <text>会员规则和权益协议</text>
   </view>
   <view wx:if="{{userauth.location == 1}}" bindtap="showsendheartapp" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/icon-mobile.png" />
-	  <text>送心APP</text>
+	  <text>APP</text>
   </view>
   <view bindtap="" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u631.png" />

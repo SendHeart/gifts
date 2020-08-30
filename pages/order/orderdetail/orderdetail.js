@@ -503,7 +503,7 @@ Page({
     var goods_shape = e.currentTarget.dataset.goodsShape
     var order_no = that.data.order_no
     var order_id = that.data.order_id
-    var order_shape = e.currentTarget.dataset.orderShape
+    var order_shape = e.currentTarget.dataset.orderShape?e.currentTarget.dataset.orderShape:that.data.order_shape
     var card_type = that.data.card_type
     var receive = that.data.send_rcv
     console.log('orderdetail showGoods() 查看详情 order_no: ', order_no, ' order_id:',order_id,' order_shape:', order_shape, ' receive:', receive)
@@ -511,10 +511,12 @@ Page({
       wx.navigateTo({
         url: '/pages/order/receive/receive?order_no=' + order_no + '&order_id=' + order_id + '&order_shape=' + order_shape + '&card_type=' + card_type+ '&receive=' + receive
       })
+    }else if(order_shape ==7 || order_shape ==8){
+      return
     }else{
       wx.navigateTo({
         url: '../../details/details?sku_id=' + skuId + '&goods_name=' + goods_name + '&id=' + goods_id + '&token=' + token + '&username=' + username
-      })
+      }) 
     }
   },
 

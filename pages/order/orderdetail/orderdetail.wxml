@@ -17,7 +17,7 @@
       <text>{{order_no}}</text>
       <text class="smallbtn2" style="border: none;margin:0rpx auto;"  data-index="{{index}}" bindtap="copyorderinfo">复制订单信息</text>
     </view>
-    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="id" class="carts-item" bindtap="showGoods" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}" data-goods-shape="{{mapping.shape}}">
+    <view wx:for="{{item['order_sku']}}" wx:for-item="mapping" wx:key="id" class="carts-item" bindtap="showGoods" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-name="{{mapping.goods_name}}" data-goods-shape="{{item.shape}}">
       <view>
         <!-- 缩略图 -->
         <image class="carts-image" src="{{mapping.sku_image}}" mode="aspectFit" />

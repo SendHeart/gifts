@@ -548,7 +548,7 @@ Page({
       messages_num: 0
     })
     app.globalData.messageflag = 1 //1系统消息
-    console.log('hall messagesTapTag: messageflag:', app.globalData.messageflag)
+    //console.log('hall messagesTapTag: messageflag:', app.globalData.messageflag)
     /*
     wx.switchTab({
       url: '/pages/member/message/message'
@@ -556,6 +556,7 @@ Page({
     */
    app.globalData.my_index = 1 //1系统消息
    app.globalData.art_id = 28 //28会员制说明
+   console.log('hall messagesTapTag: art_id:', app.globalData.art_id)
    setTimeout(function () {
       wx.switchTab({
         url: '/pages/my/index'

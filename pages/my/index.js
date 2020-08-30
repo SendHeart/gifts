@@ -231,17 +231,19 @@ Page({
     var that = this
     var pages = getCurrentPages()
     var userInfo = wx.getStorageSync('userInfo') 
-    var frompage = that.data.frompage
+    var frompage = app.globalData.from_page?app.globalData.from_page:that.data.frompage
+    app.globalData.from_page = ''
+    app.globalData.art_id = 0
+    console.log('my/index goBack() frompage:', frompage,' userInfo:',userInfo,' pages length:',pages.length)
     if (userInfo){
-      if (pages.length > 1) {
+      if (pages.length > 0) {
         if (frompage) {
-          wx.switchTab({
-            url: frompage
+          wx.navigateTo({
+            url: frompage,
           })
         } else {
           wx.navigateBack({ changed: true });//返回上一页
         }
-       
       } else {
         wx.switchTab({
           url: '../hall/hall'
@@ -530,7 +532,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var art_id = '21'  //送心用户协议
+    var art_id = '29'  //21送心用户协议 29会员规则和权益协议
     var art_cat_id = '9'  //送心协议类
     var shop_type = that.data.shop_type
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
@@ -552,7 +554,9 @@ Page({
         success: function (res) {
           that.setData({
             agreementInfo: res.data.result,
+            art_id:0,
           })
+          app.globalData.art_id = 0
           console.log('送心协议:', that.data.agreementInfo)
           that.showAgreementinfo()
         }
@@ -761,13 +765,24 @@ Page({
           icon:'loading',
           duration: 2000
         })
+        
         that.setData({
           recharge_skuid: result.recharge_skuid,
           recharge_price: result.recharge_price,
-          recharge_image:result.recharge_image
+          recharge_image: result.recharge_image,
+          recharge_title1: result.recharge_title1?result.recharge_title1:'6个月期', 
+          recharge_title2: result.recharge_title2?result.recharge_title2:'1年期',
+          recharge_title3: result.recharge_title3?result.recharge_title3:'3年期', 
+          recharge_title4: result.recharge_title4?result.recharge_title4:'终身', 
+          recharge_amount1: result.recharge_amount1?result.recharge_amount1:'88',
+          recharge_amount2: result.recharge_amount2?result.recharge_amount2:'168', 
+          recharge_amount3: result.recharge_amount3?result.recharge_amount3:'358', 
+          recharge_amount4: result.recharge_amount4?result.recharge_amount4:'1888', 
+          recharge_note: result.recharge_note?result.recharge_note:'',
+          recharge_note2: result.recharge_note2?result.recharge_note2:'',
+        },function(){
+          that.queryCart()
         })
-        app.globalData.from_page = '/pages/my/index'
-        that.queryCart()
       }
     })  
   },
@@ -793,7 +808,16 @@ Page({
     var sku_id = that.data.recharge_skuid
     var is_buymyself = 1
     var goods_shape = 7 
-
+    var recharge_title1 = that.data.recharge_title1 
+    var recharge_title2 = that.data.recharge_title2 
+    var recharge_title3 = that.data.recharge_title3 
+    var recharge_title4 = that.data.recharge_title4 
+    var recharge_amount1 = that.data.recharge_amount1
+    var recharge_amount2 = that.data.recharge_amount2
+    var recharge_amount3 = that.data.recharge_amount3
+    var recharge_amount4 = that.data.recharge_amount4
+    var recharge_note = that.data.recharge_note
+    var recharge_note2 = that.data.recharge_note2
     wx.request({
       url: weburl + '/api/client/query_cart',
       method: 'POST',
@@ -842,7 +866,7 @@ Page({
         })
       
         wx.navigateTo({
-          url: '../order/recharge/recharge?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + order_shape + '&order_image=' + recharge_image + '&recharge=1&username=' + username + '&token=' + token
+          url: '../order/recharge/recharge?cartIds=' + sku_id + '&amount=' + amount + '&carts=' + JSON.stringify(carts) + '&is_buymyself=' + is_buymyself + '&order_type=' + order_type + '&order_shape=' + order_shape + '&order_image=' + recharge_image + '&recharge=1'+'&recharge_title1='+recharge_title1+'&recharge_amount1='+recharge_amount1+'&recharge_title2='+recharge_title2+'&recharge_amount2='+recharge_amount2+'&recharge_title3='+recharge_title3+'&recharge_amount3='+recharge_amount3+'&recharge_title4='+recharge_title4+'&recharge_amount4='+recharge_amount4+'&recharge_note='+recharge_note+'&recharge_note2='+recharge_note2+'&username=' + username + '&token=' + token
         })
       }
     })
@@ -1201,7 +1225,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var frompage = options.frompage ? options.frompage:''
+    var frompage = app.globalData.from_page ? app.globalData.from_page:options.frompage
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
    
@@ -1234,7 +1258,7 @@ Page({
     var user_type = wx.getStorageSync('user_type') ? wx.getStorageSync('user_type') : 0
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
-    var art_id =  that.data.art_id>0?that.data.art_id:app.globalData.art_id
+    var art_id =  app.globalData.art_id>0?app.globalData.art_id:that.data.art_id
     var scene = that.data.scene
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
@@ -1289,7 +1313,12 @@ Page({
       console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出  
     }
     if (art_id>0){
-      that.navigateToPlaysx()
+      if(art_id == 29){
+        that.navigateToAgreement()
+      }else{
+        that.navigateToPlaysx()
+      }
+      
     }
     console.log('my index user_type:',that.data.user_type)
   },
