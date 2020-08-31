@@ -54,7 +54,10 @@ Page({
     sendheartappurl: weburl+'/hall/appdown/index.html',
     recharge_skuid:0,
     recharge_price:0,
-    card_name:'黑贝会 Member'
+    card_name:'黑贝会 Member',
+    card_no:'100 001 00001',
+    card_due_start:'2020-08-30',
+    card_due_end:'2020-10-30',
   },
 
   getScancode: function () {
@@ -1250,7 +1253,7 @@ Page({
       userauth: userauth,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
-    that.query_user_info()
+    //that.query_user_info()
     
   },
   onShow: function () {
@@ -1273,6 +1276,7 @@ Page({
         title_logo: '../../../images/left_arrow.png',
       })
     }  
+    that.query_user_info()
     if (userInfo){
       if (!user_phone || user_phone == '') { //必须获取手机号
         modalHiddenPhone = !modalHiddenPhone
@@ -1518,6 +1522,10 @@ Page({
         wx.setStorageSync('userauth', userauth)
         wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
         wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
+        wx.setStorageSync('card_name', res.data.result['card_name'])
+        wx.setStorageSync('card_no', res.data.result['card_no'])
+        wx.setStorageSync('card_due_start', res.data.result['card_due_start'])
+        wx.setStorageSync('card_due_end', res.data.result['card_due_end'])
       },
     })
   },

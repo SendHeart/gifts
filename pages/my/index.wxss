@@ -124,12 +124,46 @@ page {
   justify-content: flex-start;
 }
 
-.userinfo-cards-item{
+.userinfo-cards-name{
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin-left: 10rpx;
   width: 70%;
+}
+
+.userinfo-cards-item{
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-left: 0rpx;
+  width: 100%;
+}
+
+.userinfo-cards-nickname{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  margin-left: 0rpx;
+  width: 100%;
+}
+.userinfo-cards-no {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: normal;
+  margin-right: 20rpx;
+}
+
+.userinfo-cards-due {
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: normal;
+  margin-right: 20rpx;
+}
+.userinfo-cards-expend {
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: normal;
 }
 
 .userinfo-cards-title {
@@ -138,6 +172,7 @@ page {
   color: #fff;
   line-height: 32rpx;
 }
+
 .userinfo-avatar {
   width: 100rpx;
   height: 100rpx;
@@ -151,7 +186,6 @@ page {
   font-size: 32rpx;
   font-weight: bold;
 }
-
 
 /*order*/
 .menu-area {
@@ -209,7 +243,7 @@ page {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
+  justify-content: space-around;
   background: #fff; 
   margin: 10rpx 0;
   padding: 20rpx 0;
