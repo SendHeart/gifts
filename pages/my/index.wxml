@@ -2,46 +2,131 @@
 <view style="position:absolute;" bindtap="getScancode">
   <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"></image>
 </view>
- <view class="userinfo">
-	  <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
+<view style="display:flex;flex-direction: row;justify-content: center;">
+<view class="userinfo">
+  <view class="userinfo-cards-info">
+    <image class="userinfo-cards-logo" src="{{userInfo.logo?userInfo.logo:default_avatar}}" mode="aspectFill" />
+    <view class="userinfo-cards-item">
+      <text class="userinfo-cards-title">{{card_name}}</text>
+    </view>
+    <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
+  </view>
 	  <text wx:if="{{userInfo.nickName}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
     <text wx:if="{{user_group_id>0}}" class="userinfo-nickname">{{user_group_id?user_group_name:''}}</text>
     <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
 </view>
+</view>
 <view class="menu-area">
- <view bindtap="navigateToOrder" class="tableviewcell linegray" style='width:{{windowWidth-35}}px' data-status="0">
+  <!-- 
+  <view bindtap="navigateToOrder" class="tableviewcell linegray" style='width:{{windowWidth-35}}px' data-status="0">
 	  <image src="../../images/order.png" />
 	  <text>全部订单</text>
   </view>
+  -->
   <view class="order-area">
-	<view bindtap="navigateToOrder" class="order" data-status="1">
-		<image src="../../images/daifukuan.png" />
-		<text>待付款</text>
-	</view>
-	<view bindtap="navigateToOrder" class="order" data-status="2">
-		<image src="../../images/daifahuo.png" />
-		<text>待发货</text>
-	</view>
-	<view bindtap="navigateToOrder" class="order" data-status="3">
-		<image src="../../images/daishouhuo.png" />
-		<text>待收货</text>
-	</view>
-  <view bindtap="navigateToOrder" class="order" data-status="4">
-		<image src="../../images/dpl.png" />
-		<text>待评价</text>
-	</view>
+    <view bindtap="navigateToOrder" class="order" data-status="0">
+		  <image src="../../images/order.png" />
+		  <text>全部订单</text>
+	  </view>
+	  <view bindtap="navigateToOrder" class="order" data-status="1">
+		  <image src="../../images/daifukuan.png" />
+		  <text>待付款</text>
+	  </view>
+	  <view bindtap="navigateToOrder" class="order" data-status="2">
+		  <image src="../../images/daifahuo.png" />
+		  <text>待发货</text>
+	  </view>
+	  <view bindtap="navigateToOrder" class="order" data-status="3">
+		  <image src="../../images/daishouhuo.png" />
+		  <text>待收货</text>
+	  </view>
+    <!-- 
+    <view bindtap="navigateToOrder" class="order" data-status="4">
+		  <image src="../../images/dpl.png" />
+		  <text>待评价</text>
+	  </view>
+    -->
   	<view bindtap="navigateToOrder" class="order" data-status="5">
-		<image src="../../images/iconfont-help.png" />
-		<text>退换货</text>
-	</view>
+		  <image src="../../images/iconfont-help.png" />
+		  <text>退换货</text>
+	  </view>
+  </view>
+  <view class="order-area">
+    <view bindtap="navigateToMyCoupon" class="order">
+		  <image src="../../images/iconfont-card.png" />
+		  <text>优惠券</text>
+	  </view>
+	  <view bindtap="navigateToAccount" class="order">
+		  <image src="../../images/account.png" />
+		  <text>我的钱包</text>
+	  </view>
+	  <view bindtap="navigateToAgreement" class="order">
+		  <image src="../../images/u633.png" />
+		  <text>会员协议</text>
+	  </view>
+	  <view bindtap="" class="order">
+		  <image src="../../images/u631.png" />
+		  <button class="clickBtn" open-type="contact" session-from="weapp">联系客服</button>
+	  </view>
+    <view bindtap="login" class="order">
+		  <image src="../../images/icon_login_name_red.png" />
+		  <text>重新登录</text>
+	  </view>
+  </view>
+  <view class="order-area">
+    <view bindtap="navigateToRecharge" class="order">
+		  <image src="../../images/icon-tk.png" />
+		  <text>会员充值</text>
+	  </view>
+     <view bindtap="subscribeMessage" class="order">
+		  <image src="../../images/message.png" />
+		  <text>消息通知</text>
+	  </view>
+	  <view wx:if="{{userauth.location == 1}}" bindtap="navigateToMyLocation" class="order">
+		  <image src="../../images/iconfont-shouhuodizhi.png" />
+		  <text>我的位置</text>
+	  </view>
+	 
+    <view wx:if="{{userauth.celebration == 1}}" bindtap="navigateToCelebration" class="order">
+		  <image src="../../images/wish.png" />
+		  <text>我的祝福</text>
+	  </view>
+    <view wx:if="{{userauth.article==1}}" bindtap="navigateToArticle" class="order">
+		  <image src="../../images/u621.png" />
+		  <text>送心文章</text>
+	  </view>
+  </view>
+  <view class="order-area">
+   <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToShopowner" class="order">
+		  <image src="../../images/u633.png" />
+		  <text>我是店长</text>
+	  </view>
+   
+	  <view wx:if="{{userauth.coupon==1}}" bindtap="navigateToCoupon" class="order">
+		  <image src="../../images/account.png" />
+		  <text>发优惠券/红包/积分奖励</text>
+	  </view>
+	  <view  bindtap="" class="order">
+		  
+		  <text></text>
+	  </view>
+    <view bindtap="" class="order">
+		 
+		  <text></text>
+	  </view>
+    <view  bindtap="" class="order">
+		 
+		  <text></text>
+	  </view>
+  </view>
 </view>
-</view>
-
+  
+<!-- 
 <view class="menu-area">
-  <!--<view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
+  <view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/corp.png" />
 	  <text>商务合作</text>
-  </view>-->
+  </view>
   <view wx:if="{{userauth.shoper!=0}}" bindtap="navigateToRecharge" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/icon-tk.png" />
 	  <text>会员充值</text>
@@ -92,7 +177,7 @@
 	  <text>我的钱包</text>
   </view>
   </view>
-  <!-- <view bindtap="navigateToWishlist" class="tableviewcell" style='width:{{windowWidth-35}}px'>
+  <view bindtap="navigateToWishlist" class="tableviewcell" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/wish_s.png" />
 	  <text>我的心愿单</text>
   </view>
@@ -100,17 +185,8 @@
 	  <image src="../../images/mycards.png" />
 	  <text>我的银行卡</text>
   </view>
-  -->
- <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
- <view class="picker_box">
-    <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
-      <view class="picker">
-         {{webviewurl[index]['title']}}
-      </view>
-    </picker>
-  </view>
-</modal> 
-<view class="menu-area">
+
+  <view class="menu-area">
   <view bindtap="navigateToPlaysx" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u628.png" />
 	  <text>什么是会员制</text>
@@ -133,6 +209,17 @@
 <view class="sentbtn">
   <button open-type="default" hover-class='none' bindtap="login">{{userInfo.nickName?'重新登录':'授权登录'}}</button>
 </view>
+  -->
+ <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
+ <view class="picker_box">
+    <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
+      <view class="picker">
+         {{webviewurl[index]['title']}}
+      </view>
+    </picker>
+  </view>
+</modal> 
+
 <!--
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->

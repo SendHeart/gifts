@@ -54,6 +54,7 @@ Page({
     sendheartappurl: weburl+'/hall/appdown/index.html',
     recharge_skuid:0,
     recharge_price:0,
+    card_name:'黑贝会 Member'
   },
 
   getScancode: function () {
