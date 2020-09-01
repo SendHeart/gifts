@@ -188,6 +188,11 @@ page {
   font-weight: bold;
 }
 
+.userinfo-cards-join {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: normal;
+}
 /*order*/
 .menu-area {
   display: flex;

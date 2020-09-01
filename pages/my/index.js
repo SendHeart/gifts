@@ -58,7 +58,8 @@ Page({
     recharge_skuid:0,
     recharge_price:0,
     card_name:'黑贝会 Member',
-    card_no:'100 001 00001',
+    card_logo:'',
+    card_no:'',
     card_due_start:'0000-00-00',
     card_due_end:'0000-00-00',
     recommentslist: [], 
@@ -1792,6 +1793,11 @@ Page({
           token: res.data.result['token'],
           user_group_id:res.data.result['member_group_id'],
           user_group_name:res.data.result['member_group_name'],
+          card_name:res.data.result['card_name'],
+          card_logo:res.data.result['card_logo'],
+          card_no:res.data.result['card_no'],
+          card_due_start:res.data.result['card_due_start'],
+          card_due_end:res.data.result['card_due_end'],
         })
         var userauth = JSON.parse(res.data.result['userauth'])
         wx.setStorageSync('token', res.data.result['token'])
@@ -1806,6 +1812,7 @@ Page({
         wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
         wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
         wx.setStorageSync('card_name', res.data.result['card_name'])
+        wx.setStorageSync('card_logo', res.data.result['card_logo'])
         wx.setStorageSync('card_no', res.data.result['card_no'])
         wx.setStorageSync('card_due_start', res.data.result['card_due_start'])
         wx.setStorageSync('card_due_end', res.data.result['card_due_end'])

@@ -7,22 +7,25 @@
   <view style="display:flex;flex-direction: row;justify-content: center;">
   <view class="userinfo">
   <view class="userinfo-cards-info">
-    <image class="userinfo-cards-logo" src="{{userInfo.logo?userInfo.logo:default_avatar}}" mode="aspectFill" />
+    <image class="userinfo-cards-logo" src="{{card_logo?card_logo:default_avatar}}" mode="aspectFill" />
     <view class="userinfo-cards-name">
       <text class="userinfo-cards-title">{{card_name}}</text>
     </view>
     <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
   </view>
-  <view class="userinfo-cards-item">
+  <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
      <text class="userinfo-cards-no">Global No.{{card_no}}</text>
   </view>
-  <view class="userinfo-cards-item">
+  <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
      <text class="userinfo-cards-due">发于:{{card_due_start}}</text>
      <text class="userinfo-cards-due">止于:{{card_due_end}}</text>
   </view>
-  <view class="userinfo-cards-nickname">
+  <view class="userinfo-cards-nickname" wx:if="{{card_no!=''}}">
      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
      <text class="userinfo-cards-expend" bindtap="navigateToRecharge">延长会员期限</text>
+  </view>
+   <view class="userinfo-cards-nickname" wx:if="{{card_no==''}}">
+      <button class="userinfo-cards-join" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#444;background:#f2f2f2" hover-class='none' bindtap="navigateToRecharge">立即入会</button>
   </view>
 	 <!--
      <text wx:if="{{user_group_id>0}}" class="userinfo-nickname">{{user_group_id?user_group_name:''}}</text>
@@ -116,8 +119,7 @@
 		  <text>我是店长</text>
 	  </view>
   </view>
-  <view class="order-area">
-  
+  <view wx:if="{{userauth.coupon==1}}" class="order-area">
 	  <view wx:if="{{userauth.coupon==1}}" bindtap="navigateToCoupon" class="order">
 		  <image src="../../images/account.png" />
 		  <text>发优惠券/红包/积分奖励</text>
@@ -135,7 +137,6 @@
 	  </view>
   </view>
 </view>
-  
 </view>
 
 <!-- 
