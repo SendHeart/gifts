@@ -96,7 +96,8 @@ Page({
       }
     } else { //上下方向滑动
       if (ty < 0 && !that.data.is_reloading) {  // text = "向上滑动"
-        if (that.data.page < that.data.rpage_num) {
+        //console.log('向上滑动 page:', page, 'rpage_num:', rpage_num)
+        if (page < rpage_num) {
           //将当前坐标进行保存以进行下一次计算
           that.getMoreGoodsTapTag()
           /*
@@ -116,26 +117,24 @@ Page({
     that.data.lastX = currentX
     that.data.lastY = currentY
     //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
-    
   },
     
   handletouchstart: function (event) {
+    var that = this
     // console.log(event)
     // 赋值
-    this.data.lastX = event.touches[0].pageX
-    this.data.lastY = event.touches[0].pageY
-    this.setData({
+    that.data.lastX = event.touches[0].pageX
+    that.data.lastY = event.touches[0].pageY
+    that.setData({
       touchstop: false,
     })
   },
   handletouchend: function (event) {
     var that = this
-    var currentY = that.data.lastY
-    this.setData({
+    that.setData({
       touchstop: true,
     })
-    //console.log('滑动停止 currentX:', that.data.lastX, 'currentY:', that.data.lastY, that.data.scrollHeight)
-    
+    //console.log('滑动停止 event:', event)
   },
    
   getMoreGoodsTapTag: function (e) {
@@ -143,8 +142,9 @@ Page({
     var page = that.data.page + 1;
     var rpage_num = that.data.rpage_num
     var is_reloading = that.data.is_reloading
-    console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading, that.data.scrollHeight)
+    //console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading, that.data.scrollHeight)
     if (is_reloading) {
+      console.log('getMoreGoodsTapTag 加载中，请稍等 page:', page, 'is_reloading:', is_reloading, that.data.scrollHeight)
       return
     }
     if (page > rpage_num) {
@@ -176,7 +176,6 @@ Page({
   //回到顶部，内部调用系统API
   goTop: function () {  // 一键回到顶部
     var that = this
-    var is_reloading = that.data.is_reloading
     wx.showToast({
       title: '加载中',
       icon: 'loading',
@@ -303,13 +302,13 @@ Page({
             recommentslist_new[i]['image'] = recommentslist_new[i]['activity_image'] ? recommentslist_new[i]['activity_image'] : recommentslist_new[i]['image']
             //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
             if (i > 1) {
-              recommentslist_new[i]['hidden'] = 0;  //1
+              recommentslist_new[i]['hidden'] = 0  //1
             }
           }
 
           if (page > 1 && recommentslist_new) {
             //向后合拼
-            recommentslist = recommentslist.concat(recommentslist_new);
+            recommentslist = recommentslist.concat(recommentslist_new)
           } else {
             recommentslist = recommentslist_new
           }
@@ -1538,6 +1537,7 @@ Page({
       userauth: userauth,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
+    that.reloadData()
     //that.query_user_info()
   },
   onShow: function () {
@@ -1608,7 +1608,7 @@ Page({
         that.navigateToPlaysx()
       }
     }
-    that.reloadData()
+    //that.reloadData()
     console.log('my index user_type:',that.data.user_type)
   },
   /*

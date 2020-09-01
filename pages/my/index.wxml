@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
+<view style="overflow:scroll;height:100%;" scroll-y scroll-x="false">
   <view style="position:absolute;" bindtap="getScancode">
     <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"></image>
   </view>
@@ -233,7 +233,7 @@
       <text>最近浏览的商品<text class='title_ex'></text></text>
   </view>
   <!--瀑布流列表-->
-    <view class="venues-box">
+    <view class="venues-box"  bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
       <view class="box-left">
         <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex" wx:key="id" >
           <block wx:for="{{recommentslist_show}}" wx:key="id">
@@ -281,10 +281,12 @@
         </block>
     </view>
 </view>
+
 <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
   <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow" />
   <view class='' style="margin-top:-10rpx;font-size:22rpx;">TOP</view>  
 </view>
+
 <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
  <view class="picker_box">
     <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
@@ -298,7 +300,7 @@
 <!--
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
- <view>
+<view>
 <modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
     <view class="prd-detail">
       <view class='wxParse'>
