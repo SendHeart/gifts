@@ -1,9 +1,11 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view style="position:absolute;" bindtap="getScancode">
-  <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"></image>
-</view>
-<view style="display:flex;flex-direction: row;justify-content: center;">
-<view class="userinfo">
+<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
+  <view style="position:absolute;" bindtap="getScancode">
+    <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"></image>
+  </view>
+  
+  <view style="display:flex;flex-direction: row;justify-content: center;">
+  <view class="userinfo">
   <view class="userinfo-cards-info">
     <image class="userinfo-cards-logo" src="{{userInfo.logo?userInfo.logo:default_avatar}}" mode="aspectFill" />
     <view class="userinfo-cards-name">
@@ -20,7 +22,7 @@
   </view>
   <view class="userinfo-cards-nickname">
      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-     <text class="userinfo-cards-expend">延长会员期限</text>
+     <text class="userinfo-cards-expend" bindtap="navigateToRecharge">延长会员期限</text>
   </view>
 	 <!--
      <text wx:if="{{user_group_id>0}}" class="userinfo-nickname">{{user_group_id?user_group_name:''}}</text>
@@ -86,10 +88,12 @@
 	  </view>
   </view>
   <view class="order-area">
-    <view bindtap="navigateToRecharge" class="order">
+  <!--
+     <view bindtap="navigateToRecharge" class="order">
 		  <image src="../../images/icon-tk.png" />
 		  <text>会员充值</text>
 	  </view>
+  -->
      <view bindtap="subscribeMessage" class="order">
 		  <image src="../../images/message.png" />
 		  <text>消息通知</text>
@@ -107,13 +111,13 @@
 		  <image src="../../images/u621.png" />
 		  <text>送心文章</text>
 	  </view>
-  </view>
-  <view class="order-area">
-   <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToShopowner" class="order">
+     <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToShopowner" class="order">
 		  <image src="../../images/u633.png" />
 		  <text>我是店长</text>
 	  </view>
-   
+  </view>
+  <view class="order-area">
+  
 	  <view wx:if="{{userauth.coupon==1}}" bindtap="navigateToCoupon" class="order">
 		  <image src="../../images/account.png" />
 		  <text>发优惠券/红包/积分奖励</text>
@@ -132,6 +136,8 @@
   </view>
 </view>
   
+</view>
+
 <!-- 
 <view class="menu-area">
   <view bindtap="navigateToShare" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
@@ -221,7 +227,64 @@
   <button open-type="default" hover-class='none' bindtap="login">{{userInfo.nickName?'重新登录':'授权登录'}}</button>
 </view>
   -->
- <modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
+ 
+  <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap=''>
+      <text>最近浏览的商品<text class='title_ex'></text></text>
+  </view>
+  <!--瀑布流列表-->
+    <view class="venues-box">
+      <view class="box-left">
+        <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex" wx:key="id" >
+          <block wx:for="{{recommentslist_show}}" wx:key="id">
+            <view class="venues-item-category" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
+              data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==0}}">
+              <image class="category-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
+              <view class="goods-tags">
+                <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
+                <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+              </view>
+              <text class="goods-name">{{item.name}}</text>
+              <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
+              <view class="goods-tags">
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+              </view>
+              <view class="price-list">
+                <view class="price-market" style="display:block;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now" style="display:block;">￥{{item.sell_price}}</view>
+              </view>
+            </view>
+          </block>
+        </block>
+      </view>
+      <view class="box-right">
+        <block wx:for="{{recommentslist_show}}" wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
+          <block wx:for="{{recommentslist_show}}" wx:key="id">
+            <view class="venues-item-category" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
+              data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==1}}">
+              <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.image}}' width="355rpx" height="355rpx" display="block" />
+              <view class="goods-tags">
+                <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
+                <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+              </view>
+              <text class="goods-name">{{item.name}}</text>
+              <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
+              <view class="goods-tags">
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已送</text>
+              </view>
+              <view class="price-list">
+                <view class="price-market" style="display:block;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now" style="display:block;">￥{{item.sell_price}}</view>
+              </view>
+            </view>
+          </block>
+        </block>
+    </view>
+</view>
+<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+  <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow" />
+  <view class='' style="margin-top:-10rpx;font-size:22rpx;">TOP</view>  
+</view>
+<modal hidden="{{modalHiddenCele}}" title="请选择" confirm-text="确定" cancel-text="返回" bindcancel="modalBindcancelCele" bindconfirm="modalBindconfirmCele">
  <view class="picker_box">
     <picker bindchange="bindCelePickerChange" value="{{webviewurl[index].id}}" data-selecthx="{{webviewurl[index].title}}" range="{{webviewurl}}" range-key="{{'title'}}">
       <view class="picker">

@@ -33,6 +33,9 @@ Page({
     artinfoshowflag: 0,
     scrollTop: 0,
     scrollTop_init: 10,
+    scrollLeft:0,
+    current_scrollTop: 0,
+    scrollHeight: 500,
     modalHiddenCele:true,
     modalHiddenAgreement:true,
     modalHiddenBankcard: true,
@@ -56,8 +59,289 @@ Page({
     recharge_price:0,
     card_name:'黑贝会 Member',
     card_no:'100 001 00001',
-    card_due_start:'2020-08-30',
-    card_due_end:'2020-10-30',
+    card_due_start:'0000-00-00',
+    card_due_end:'0000-00-00',
+    recommentslist: [], 
+    recommentslist_show: [],
+    show_max:20,
+    is_reloading:false,
+    page:1,
+    pagesize: 20,
+    pageoffset:0,
+    rpage_num:1,
+    floorstatus:false,
+    showmorehidden: true,
+    loadingHidden: true,
+    all_rows:0,
+    rall_rows:0,
+  },
+
+  handletouchmove: function (event) {
+    var that = this
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - this.data.lastX
+    var ty = currentY - this.data.lastY
+    var scrollHeight = that.data.scrollHeight
+    var page  = that.data.page
+    var rpage_num = that.data.rpage_num
+   
+    if (Math.abs(tx) > Math.abs(ty)) {
+      if (tx < 0) { // text = "向左滑动"
+
+      }
+      else if (tx > 0) {   // text = "向右滑动"
+
+      }
+    } else { //上下方向滑动
+      if (ty < 0 && !that.data.is_reloading) {  // text = "向上滑动"
+        if (that.data.page < that.data.rpage_num) {
+          //将当前坐标进行保存以进行下一次计算
+          that.getMoreGoodsTapTag()
+          /*
+          if (currentY > scrollHeight - 100) {
+            
+          }
+          */
+        } 
+      } else if (ty > 0) {  //text = "向下滑动"
+        
+      }
+    }
+   
+    that.setData({
+      floorstatus: true,
+    })
+    that.data.lastX = currentX
+    that.data.lastY = currentY
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
+    
+  },
+    
+  handletouchstart: function (event) {
+    // console.log(event)
+    // 赋值
+    this.data.lastX = event.touches[0].pageX
+    this.data.lastY = event.touches[0].pageY
+    this.setData({
+      touchstop: false,
+    })
+  },
+  handletouchend: function (event) {
+    var that = this
+    var currentY = that.data.lastY
+    this.setData({
+      touchstop: true,
+    })
+    //console.log('滑动停止 currentX:', that.data.lastX, 'currentY:', that.data.lastY, that.data.scrollHeight)
+    
+  },
+   
+  getMoreGoodsTapTag: function (e) {
+    var that = this;
+    var page = that.data.page + 1;
+    var rpage_num = that.data.rpage_num
+    var is_reloading = that.data.is_reloading
+    console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading, that.data.scrollHeight)
+    if (is_reloading) {
+      return
+    }
+    if (page > rpage_num) {
+      wx.showToast({
+        title: '已经到底了~',
+        icon: 'none',
+        duration: 1000
+      })
+
+      that.setData({
+        loadingHidden: false,
+        loading_note: '已经到底了~'
+      })
+      setTimeout(function () {
+        that.setData({
+          loadingHidden: true,
+        })
+      }, 1000)
+      return
+    }
+   
+    that.setData({
+      page: page,
+      loadingHidden: false,
+      loading_note: '加载中'
+    })
+    that.reloadData()
+  },
+  //回到顶部，内部调用系统API
+  goTop: function () {  // 一键回到顶部
+    var that = this
+    var is_reloading = that.data.is_reloading
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1000
+    })
+
+    console.log('goTop:', that.data.scrollTop)
+    if (wx.pageScrollTo) {
+      wx.pageScrollTo({
+        scrollTop: 0 ,
+        duration:300,
+      })
+      that.setData({
+        scrollTop: 0,
+        recommentslist_show: [],
+        page:1,
+        pageoffset:0,
+        floorstatus:false,
+      },function(){
+        that.reloadData()
+        app.globalData.hall_gotop = 0
+        const fs = wx.getFileSystemManager()
+        fs.getSavedFileList({
+          success(res) {
+            console.log('hall getSavedFileList 缓存文件列表', res)
+            for (var i = 0; i < res.fileList.length; i++) {
+              fs.removeSavedFile({
+                filePath: res.fileList[i]['filePath'],
+                success(res) {
+                  console.log('hall image_save 缓存清除成功', res)
+                },
+                fail(res) {
+                  console.log('hall image_save 缓存清除失败', res)
+                }
+              })
+            }
+          },
+          fail(res) {
+            console.log('hall getSavedFileList 缓存文件列表查询失败', res)
+          }
+        })
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
+      })
+    }
+  },
+
+  showGoods: function (e) {
+    // 点击购物车某件商品跳转到商品详情
+    var objectId = e.currentTarget.dataset.objectId
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_id = e.currentTarget.dataset.goodsId
+    var goods_org = e.currentTarget.dataset.goodsOrg
+    var goods_shape = e.currentTarget.dataset.goodsShape
+    var goods_name = e.currentTarget.dataset.goodsName
+    var goods_price = e.currentTarget.dataset.goodsPrice
+    var goods_info = e.currentTarget.dataset.goodsInfo
+    var goods_sale = e.currentTarget.dataset.sale
+    var image = e.currentTarget.dataset.image ? e.currentTarget.dataset.image:''
+    //var carts = this.data.carts
+    var sku_id = objectId
+    wx.navigateTo({
+      url: '/pages/details/details?sku_id=' + objectId + '&id=' + goods_id + '&goods_shape=' + goods_shape +  '&goods_org=' + goods_org + '&goods_info=' + goods_info + '&goods_price=' + goods_price + '&sale=' + goods_sale + '&name=' + goods_name+'&image=' + image+'&token=' + token + '&username=' + username
+    })
+  },
+
+  reloadData: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var page=that.data.page
+    var pagesize=that.data.pagesize
+    var pageoffset = that.data.pageoffset
+    var shop_type = that.data.shop_type
+
+    that.setData({
+      is_reloading: true,
+      loadingHidden: false,
+    })
+    /*
+    wx.showLoading({
+      title: '加载中',
+    })
+    */
+    wx.request({
+      url: weburl + '/api/client/query_member_goods_prom',
+      method: 'POST',
+      data: { 
+        username: username ? username:openid, 
+        access_token: token,
+        shop_type:shop_type,
+        is_browered:1,  //浏览过的商品列表
+        page:page,
+        pagesize:pagesize,
+        pageoffset:pageoffset,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+       // console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        if(res.data.status='y'){
+          var recommentslist = that.data.recommentslist
+          var recommentslist_new = res.data.result
+          var rpage_num = res.data.all_rows
+          var pageoffset = res.data.pageoffset
+          var show_max = that.data.show_max
+          var recommentslist_show = that.data.recommentslist_show
+          if (!recommentslist_new) return
+          var recomm_len = recommentslist_new.length
+          for (var i = 0; i < recomm_len; i++) {
+            if (recommentslist_new[i]['activity_image'].indexOf("http") < 0 && recommentslist_new[i]['activity_image']) {
+              recommentslist_new[i]['activity_image'] = weburl + '/' + recommentslist_new[i]['activity_image'];
+            }
+            if (recommentslist_new[i]['image'].indexOf("http") < 0 && recommentslist_new[i]['image']) {
+              recommentslist_new[i]['image'] = weburl + '/' + recommentslist_new[i]['image'];
+            }
+            recommentslist_new[i]['image'] = recommentslist_new[i]['activity_image'] ? recommentslist_new[i]['activity_image'] : recommentslist_new[i]['image']
+            //recommentslist[i]['name'] = recommentslist[i]['name'].substr(0, 13) + '...';
+            if (i > 1) {
+              recommentslist_new[i]['hidden'] = 0;  //1
+            }
+          }
+
+          if (page > 1 && recommentslist_new) {
+            //向后合拼
+            recommentslist = recommentslist.concat(recommentslist_new);
+          } else {
+            recommentslist = recommentslist_new
+          }
+          //更新当前显示页信息
+          if (recommentslist_show.length >= show_max) {
+            recommentslist_show.shift()
+          }
+
+          that.setData({
+            recommentslist: recommentslist,
+            rpage_num: rpage_num,
+            ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
+            pageoffset: pageoffset,
+          }, function () {
+            that.setData({
+              is_reloading: false,
+              loadingHidden: true,
+            })
+          })
+          console.log('会员浏览商品列表获取:', recommentslist_show, ' page num:', rpage_num, ' page:', page,'pageoffset:',pageoffset, ' res.data:', res.data);
+        }else{
+          wx.showToast({
+            title: '加载完成',
+            icon: 'success',
+            duration: 2000
+          })
+          that.setData({
+            is_reloading: false,
+            loadingHidden: true,
+          })
+        }
+      }
+    })
   },
 
   getScancode: function () {
@@ -1254,7 +1538,6 @@ Page({
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
     //that.query_user_info()
-    
   },
   onShow: function () {
     var that = this
@@ -1323,8 +1606,8 @@ Page({
       }else{
         that.navigateToPlaysx()
       }
-      
     }
+    that.reloadData()
     console.log('my index user_type:',that.data.user_type)
   },
   /*

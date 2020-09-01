@@ -186,8 +186,6 @@ Page({
     this.setData({
       touchstop: true,
     })
-    //console.log('滑动停止 currentX:', that.data.lastX, 'currentY:', that.data.lastY, that.data.scrollHeight)
-    
   },
    
   getMoreGoodsTapTag: function (e) {
@@ -197,7 +195,6 @@ Page({
     var is_reloading = that.data.is_reloading
     console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading, that.data.scrollHeight)
     if (is_reloading) {
-     
       return
     }
     if (page > rpage_num) {
@@ -322,13 +319,11 @@ Page({
           }
         })
       })
-      
     } else {
       wx.showModal({
         title: '提示',
         content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
       })
-
     }
   },
   videoPlayer: function (e) {
