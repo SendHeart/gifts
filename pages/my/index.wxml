@@ -1,11 +1,8 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view style="overflow:scroll;height:100%;" scroll-y scroll-x="false">
-  <view style="position:absolute;" bindtap="getScancode">
-    <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"></image>
-  </view>
-  
+<view style="overflow:scroll;height:100%;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
   <view style="display:flex;flex-direction: row;justify-content: center;">
   <view class="userinfo">
+    <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>
   <view class="userinfo-cards-info">
     <image class="userinfo-cards-logo" src="{{card_logo?card_logo:default_avatar}}" mode="aspectFill" />
     <view class="userinfo-cards-name">
@@ -122,7 +119,7 @@
   <view wx:if="{{userauth.coupon==1}}" class="order-area">
 	  <view wx:if="{{userauth.coupon==1}}" bindtap="navigateToCoupon" class="order">
 		  <image src="../../images/account.png" />
-		  <text>发优惠券/红包/积分奖励</text>
+		  <text>发行</text>
 	  </view>
 	  <view  bindtap="" class="order">
 		  
@@ -137,7 +134,7 @@
 	  </view>
   </view>
 </view>
-</view>
+
 
 <!-- 
 <view class="menu-area">
@@ -233,7 +230,7 @@
       <text>最近浏览的商品<text class='title_ex'></text></text>
   </view>
   <!--瀑布流列表-->
-    <view class="venues-box"  bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+    <view class="venues-box"  >
       <view class="box-left">
         <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex" wx:key="id" >
           <block wx:for="{{recommentslist_show}}" wx:key="id">
@@ -279,6 +276,7 @@
             </view>
           </block>
         </block>
+    </view>
     </view>
 </view>
 

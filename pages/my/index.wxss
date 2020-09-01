@@ -95,26 +95,26 @@ page {
   flex-direction: column;
   justify-content: space-around;
   align-items:left;
-  height: 340rpx;
+  height: 360rpx;
   border-bottom: 1px solid #F2F2F2;
   border-radius: 20rpx 20rpx 20rpx 20rpx;
-  padding: 20rpx 10rpx 0 10rpx;
-  margin-top:30rpx;
+  padding: 0rpx 10rpx 0 10rpx;
+  margin-top:10rpx;
   margin-bottom:20rpx;
   background: #444;
 }
 .scanqr {
   width: 50rpx;
   height: 50rpx;
-  margin-top: 35rpx;
-  margin-left: 30rpx;
+  margin-top: 0rpx;
+  margin-left: 10rpx;
   border-radius: 50%;
 }
 
 .userinfo-cards-logo {
   width: 80rpx;
   height: 80rpx;
-  margin-top: 30rpx;
+  margin-top: 0rpx;
   margin-left:20rpx;
   border-radius: 50%;
 }
@@ -177,7 +177,7 @@ page {
 .userinfo-avatar {
   width: 100rpx;
   height: 100rpx;
-  margin-top: 20rpx;
+  margin-top: 0rpx;
   margin-right:30rpx;
   border-radius: 50%;
 }
