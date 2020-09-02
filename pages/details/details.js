@@ -1038,72 +1038,71 @@ Page({
     if (that.data.cur_img_id==0){ 
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
       share_goods_image = goods_image_cache ? goods_image_cache : share_goods_image
-    }else{
+    } else {
       cur_img_id = cur_img_id - that.data.image_video.length
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
     }
-    console.log('sharegoodsTapTag share_goods_qrcode:', share_goods_qrcode, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
+    console.log('sharegoodsTapTag share_goods_image:', share_goods_image, 'share_goods_id:', share_goods_id, 'cur_img_id:', cur_img_id, 'image_save_count:',that.data.image_save_count)
     if (that.data.image_save_count < 3){
       if (that.data.image_save_times > 8) { //8次不成功返回上一级
         that.has_auth()
         return
       }
       setTimeout(function () {
+        /*
         wx.showToast({
-          title: "开始求赠" ,
+          title: "开始分享",
           icon: 'loading',
           duration: 2000,
         })
-      
+        */
         var image_save_times = that.data.image_save_times+1
          that.setData({
            image_save_times: image_save_times,
         })
+        //that.image_save(share_goods_image, 'goods_image_cache_' + goodsid)
         that.sharegoodsTapTag()
       }, 1500)
       return
     }
     if (share_goods_shape == 5 || share_goods_shape == 4) {
      //
-    }else{
+    } else {
       wx.navigateTo({
         url: '/pages/wish/wishshare/wishshare?share_goods_id=' + share_goods_id + '&share_goods_shape=' + share_goods_shape + '&share_goods_org=' + share_goods_org + '&share_goods_name=' + share_goods_name + '&share_goods_price=' + share_goods_price + '&share_goods_image=' + share_goods_image + '&share_goods_wx_headimg=' + share_goods_wx_headimg + '&share_goods_title=' + share_goods_title + '&share_goods_desc=' + share_goods_desc + '&share_goods_image2=' + that.data.image_pic[cur_img_id]['url'] + '&share_goods_qrcode_cache=' + share_goods_qrcode + '&card_type=' + card_type
       })
     }
-   
-    /*
-    wx.getStorageInfo({
-      success: function (res) {
-        console.log('detail 缓存列表 keys:', res.keys, 'currentSize:', res.currentSize, 'limitSize:', res.limitSize)
-      }
-    })
-    */
   },
 
   image_save:function(image_url,image_cache_name){
     var that = this
-    console.log('imge save image url:', image_url, 'image_cache_name:', image_cache_name)
+    //console.log('imge save image url:', image_url, 'image_cache_name:', image_cache_name)
     wx.downloadFile({
       url: image_url,
       success: function (res) {
         if (res.statusCode === 200) {
-          var img_tempFilePath = res.tempFilePath
-         // console.log('图片下载成功' + res.tempFilePath)
+          var img_tempFilePath = res.tempFilePath 
           const fs = wx.getFileSystemManager()
           fs.saveFile({
             tempFilePath: res.tempFilePath, // 传入一个临时文件路径
             success(res) {
-              console.log('detail image_save 图片缓存成功', image_cache_name,res.savedFilePath)  
+              //console.log('detail image_save 图片缓存成功', image_cache_name,res.savedFilePath)  
               wx.setStorageSync(image_cache_name, res.savedFilePath)
               if (image_cache_name == 'goods_image_cache_' + that.data.goodsid || image_cache_name == 'goods_qrcode_cache_' + that.data.goodsid || image_cache_name == 'wx_headimg_cache') {
-                console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count', that.data.image_save_count++)
+                //console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count', that.data.image_save_count++)
                 that.setData({
-                  image_save_count: that.data.image_save_count++,
+                  image_save_count: that.data.image_save_count+1,
                 })
+                console.log('图片下载成功 count:' + that.data.image_save_count)
               }
             },
             fail(res) {
-              console.log(' detail image_save 图片缓存失败', image_cache_name,res) 
+              //console.log(' detail image_save 图片缓存失败', image_cache_name,res) 
+              wx.showToast({
+                title: '图片缓存失败'+image_cache_name,
+                icon: 'none',
+                duration: 1000
+              })
               var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
               var goods_image_cache = wx.getStorageSync('goods_image_cache_' + that.data.goodsid)
               var goods_qrcode_cache = wx.getStorageSync('goods_qrcode_cache_'+that.data.goodsid)
@@ -1131,13 +1130,18 @@ Page({
                       if (image_cache_name == 'goods_image_cache_' + that.data.goodsid || image_cache_name == 'goods_qrcode_cache_' + that.data.goodsid || image_cache_name == 'wx_headimg_cache'){
                        // console.log('image_save 图片缓存成功', image_cache_name, 'image_save_count',that.data.image_save_count)
                         that.setData({
-                          image_save_count: that.data.image_save_count++,
+                          image_save_count: that.data.image_save_count+1,
                         })
                       }
                     },
                   })
                 },
                 fail(res) {
+                  wx.showToast({
+                    title: '缓存失败'+res,
+                    icon: 'none',
+                    duration: 1000
+                  })
                   console.log('detail getSavedFileList 缓存文件列表查询失败', res)
                 }
               })
@@ -1793,8 +1797,9 @@ Page({
               that.swiperchange_cardname(0)
             }
             if (!share_goods_image) {
+              //console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
               that.image_save(image_pic[0]['url'], 'goods_image_cache_' + goodsid)
-             // console.log('商品详情图片下载缓存 goods_image_cache_' + goodsid, image_pic[0]['url'])
+             
             } 
             //console.log('get_goodsdesc_list image_share:', that.data.image_share, ' image_pic:', image_pic)
             that.showGoodsinfo()

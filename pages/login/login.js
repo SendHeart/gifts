@@ -306,8 +306,8 @@ Page({
           user_group_name:res.data.result['member_group_name'],
         })
         var userauth = JSON.parse(res.data.result['userauth'])
-        wx.setStorageSync('token', res.data.result['token'])
-        wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
+        wx.setStorageSync('token', res.data.result['token']?res.data.result['token']:'')
+        wx.setStorageSync('extensionCode', res.data.result['extensionCode']?res.data.result['extensionCode']:'')
         wx.setStorageSync('username', res.data.result['username'])
         wx.setStorageSync('m_id', res.data.result['m_id'])
         wx.setStorageSync('user_phone', res.data.result['user_phone'])
