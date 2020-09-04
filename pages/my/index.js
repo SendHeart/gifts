@@ -1048,11 +1048,22 @@ Page({
       success: function (res) {
         console.log('My navigateToRecharge res data:', res.data);
         var result =  res.data.result
-        wx.showToast({
-          title: '会员充值',
-          icon:'loading',
-          duration: 2000
-        })
+        var membercard_no = result.card_no? result.card_no:''
+        if(membercard_no!=''){
+          wx.showToast({
+            title: '会员充值',
+            icon:'loading',
+            duration: 2000
+          })
+        }else{
+          wx.showToast({
+            title: '会员卡生成失败',
+            icon:'loading',
+            duration: 2000
+          })
+          return
+        }
+       
         
         that.setData({
           recharge_skuid: result.recharge_skuid,
