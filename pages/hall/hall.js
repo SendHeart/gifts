@@ -266,11 +266,7 @@ Page({
   goTop: function () {  // 一键回到顶部
     var that = this
     var is_reloading = that.data.is_reloading
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 1000
-    })
+    
     /*
     if (is_reloading){
       setTimeout(function () {
@@ -1204,12 +1200,12 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('会员推荐商品列表获取1:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        console.log('会员推荐商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
         if(res.data.status='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
-          var rpage_num = res.data.all_rows
-          var pageoffset = res.data.pageoffset
+          var rpage_num = res.data.all_rows?res.data.all_rows:1
+          var pageoffset = res.data.pageoffset?res.data.pageoffset:0
           var show_max = that.data.show_max
           var recommentslist_show = that.data.recommentslist_show
           if (!recommentslist_new) return
@@ -1241,9 +1237,9 @@ Page({
 
           that.setData({
             recommentslist: recommentslist,
-            rpage_num: rpage_num,
+            rpage_num: rpage_num?rpage_num:0,
             ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
-            pageoffset: pageoffset,
+            pageoffset: pageoffset?pageoffset:0,
           }, function () {
             that.setData({
               is_reloading: false,

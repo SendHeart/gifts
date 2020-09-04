@@ -176,18 +176,20 @@ Page({
   //回到顶部，内部调用系统API
   goTop: function () {  // 一键回到顶部
     var that = this
+    /*
     wx.showToast({
       title: '加载中',
       icon: 'loading',
       duration: 1000
     })
-
-    console.log('goTop:', that.data.scrollTop)
+    */
+    //console.log('goTop:', that.data.scrollTop)
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0 ,
         duration:300,
       })
+      
       that.setData({
         scrollTop: 0,
         recommentslist_show: [],
@@ -196,7 +198,6 @@ Page({
         floorstatus:false,
       },function(){
         that.reloadData()
-        app.globalData.hall_gotop = 0
         const fs = wx.getFileSystemManager()
         fs.getSavedFileList({
           success(res) {
@@ -286,8 +287,8 @@ Page({
         if(res.data.status='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
-          var rpage_num = res.data.all_rows
-          var pageoffset = res.data.pageoffset
+          var rpage_num = res.data.all_rows?res.data.all_rows:0
+          var pageoffset = res.data.pageoffset?res.data.pageoffset:0
           var show_max = that.data.show_max
           var recommentslist_show = that.data.recommentslist_show
           if (!recommentslist_new) return
@@ -328,7 +329,7 @@ Page({
               loadingHidden: true,
             })
           })
-          console.log('会员浏览商品列表获取:', recommentslist_show, ' page num:', rpage_num, ' page:', page,'pageoffset:',pageoffset, ' res.data:', res.data);
+          console.log('会员浏览商品列表获取:', recommentslist_show, ' page num:', rpage_num, ' page:', page,'scrollTop:',that.data.scrollTop, ' res.data:', res.data);
         }else{
           wx.showToast({
             title: '加载完成',
@@ -1548,7 +1549,7 @@ Page({
       userauth: userauth,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
-    //that.reloadData()
+    that.reloadData()
     //that.query_user_info()
   },
   onShow: function () {
@@ -1619,8 +1620,11 @@ Page({
         that.navigateToPlaysx()
       }
     }
-    that.reloadData()
+    //that.reloadData()
     console.log('my index user_type:',that.data.user_type)
+    if(that.data.scrollTop == 0){
+      that.goTop()
+    }
   },
   /*
   chooseImage: function () {

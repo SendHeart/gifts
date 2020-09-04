@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view style="overflow:scroll;height:100%;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+<view style="overflow:scroll;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
   <view style="display:flex;flex-direction: row;justify-content: center;">
   <view class="userinfo">
     <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>
