@@ -272,7 +272,7 @@ Page({
         username: username ? username:openid, 
         access_token: token,
         shop_type:shop_type,
-        is_browered:1,  //浏览过的商品列表
+        query_type:'browser',  //浏览过的商品列表
         page:page,
         pagesize:pagesize,
         pageoffset:pageoffset,
@@ -282,7 +282,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-       // console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+       //console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
         if(res.data.status='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
@@ -1548,7 +1548,7 @@ Page({
       userauth: userauth,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
-    that.reloadData()
+    //that.reloadData()
     //that.query_user_info()
   },
   onShow: function () {
@@ -1619,7 +1619,7 @@ Page({
         that.navigateToPlaysx()
       }
     }
-    //that.reloadData()
+    that.reloadData()
     console.log('my index user_type:',that.data.user_type)
   },
   /*
