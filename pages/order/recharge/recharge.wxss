@@ -310,7 +310,7 @@ picker {
 .recharge-confirm text {
   line-height: 100rpx;
   height: 100rpx;
-  width: 150rpx;
+  width: 170rpx;
   font-size: 48rpx;
   font-weight: bold;
   color: #444;
