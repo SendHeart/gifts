@@ -103,6 +103,7 @@ page {
   margin-bottom:20rpx;
   background: #444;
 }
+
 .scanqr {
   width: 50rpx;
   height: 50rpx;
@@ -110,7 +111,13 @@ page {
   margin-left: 10rpx;
   border-radius: 50%;
 }
-
+.userinfo-cards-mid{
+  color: #fff;
+  font-size: 26rpx;
+  font-weight: normal;
+  margin-top:6rpx;
+  margin-left: 40rpx;
+}
 .userinfo-cards-logo {
   width: 80rpx;
   height: 80rpx;

@@ -2,7 +2,10 @@
 <view style="overflow:scroll;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
   <view style="display:flex;flex-direction: row;justify-content: center;">
   <view class="userinfo">
-    <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>
+    <view class="userinfo-cards-info">
+      <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>
+      <text class="userinfo-cards-mid">{{m_id>0?'ID:'+m_id:''}}</text>
+    </view>
   <view class="userinfo-cards-info">
     <image class="userinfo-cards-logo" src="{{card_logo?card_logo:default_avatar}}" mode="aspectFill" />
     <view class="userinfo-cards-name">
