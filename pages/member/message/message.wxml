@@ -49,7 +49,7 @@
       <view class="opt-buttons">
       <form bindsubmit="formSubmit"  data-name='addCart' data-goods-id="{{select_goods_list.id}}" report-submit="true" >
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
-          <button class="send-button"  formType="submit" >立即送出</button> <!-- bindtap="addCart" -->
+          <button class="send-button"  formType="submit" >立即购买</button> <!-- bindtap="addCart" -->
         </view>
       </form>
       </view>
@@ -68,7 +68,7 @@
        <view class="opt-buttons">
         <form bindsubmit="formSubmit"  data-name='addCart' data-goods-id="{{select_goods_1.id}}" report-submit="true" >
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
-          <button class="send-button" type="warn" formType="submit" size="mini" hover-class="button-hover">立即送出</button>
+          <button class="send-button" type="warn" formType="submit" size="mini" hover-class="button-hover">立即购买</button>
         </view>
       </form>
       </view>
@@ -87,7 +87,7 @@
        <view class="opt-buttons">
         <form bindsubmit="formSubmit"  data-name='addCart' data-goods-id="{{select_goods_2.id}}" report-submit="true" >
         <view style='margin-top:10rpx;margin-bottom:10rpx;'>
-          <button class="send-button" type="warn" formType="submit" size="mini" hover-class="button-hover">立即送出</button>
+          <button class="send-button" type="warn" formType="submit" size="mini" hover-class="button-hover">立即购买</button>
         </view>
         </form>
       </view>
