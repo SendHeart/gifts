@@ -57,6 +57,5 @@
     <text class="amount">{{amount}}</text>
      <button bindtap="confirmOrder" >去支付</button>
   </view>
-  
 </view>
 </scroll-view>

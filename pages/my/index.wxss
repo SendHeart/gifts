@@ -254,10 +254,11 @@ page {
 }
 
 /*order*/
-
 .order {
   display:inline-block;
-	width: 20%;
+  width: 20%;
+  margin-top: 10rpx;
+  text-align: center;
 }
 
 .order image {

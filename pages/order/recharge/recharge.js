@@ -22,16 +22,12 @@ Page({
     all_rows: 0,
     all_red_rows: 0,
     shop_type: shop_type,
-    showmorehidden: false,
-    modalHiddenCoupon: true,
-    couponType: 1,
     selectedAllStatus: false,
     selectedAgreeStatus: false,
     recharge_selected:'',
     discountpay:0, //折扣差额
     payamount:0, //实际支付金额
     order_num:1,//订单份数
-    
   },
   /*
   formSubmit: function (e) {
@@ -229,7 +225,7 @@ Page({
     var cartIds = that.data.cartIds
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var selectedAgreeStatus = that.data.selectedAgreeStatus
+    // = that.data.selectedAgreeStatus
     var shop_type = that.data.shop_type
     var amount = that.data.amount
     var buy_num = amount*100 
