@@ -202,9 +202,11 @@ page {
 }
 /*order*/
 .menu-area {
+  /*
   display: flex;
   flex-direction: column;
   justify-content: center;
+  */
   padding:0 20rpx 0 20rpx;
   background: #fff;
   color:#333;
@@ -252,19 +254,10 @@ page {
 }
 
 /*order*/
-.order-area {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-  background: #fff; 
-  margin: 10rpx 0;
-  padding: 20rpx 0;
-}
 
 .order {
-	width: 120rpx;
-	text-align: center;
+  display:inline-block;
+	width: 20%;
 }
 
 .order image {
