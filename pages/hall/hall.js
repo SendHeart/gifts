@@ -1665,7 +1665,7 @@ Page({
       if(that.data.hall_banner.length == 0){
         that.get_project_gift_para()
       }
-    }, 30*1000)
+    }, 60*1000)
    
     /*
     setInterval(function () {
