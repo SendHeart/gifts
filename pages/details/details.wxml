@@ -185,7 +185,7 @@
         <text class="goods_prom">{{goodsinfo?goodsinfo:''}}</text>
       </view>
       <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="goods-info">
-        <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已送</text>
+        <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已购</text>
         <view class="right-tag">
         {{marketprice>0?'':''}} <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
         {{marketprice>0?'':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:''}}</text>

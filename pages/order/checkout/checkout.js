@@ -357,9 +357,9 @@ Page({
           return
         } else {
           if (orderObjects[0]['gift_status'] > 0) {
-            console.log('order checkout zero_pay() 该订单已送出 orderObjects:', orderObjects)
+            console.log('order checkout zero_pay() 该订单已购出 orderObjects:', orderObjects)
             wx.showToast({
-              title: '该订单已送出',
+              title: '该订单已购出',
               icon: 'none',
               duration: 1500
             })

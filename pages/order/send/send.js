@@ -462,9 +462,9 @@ Page({
           return
         } else {
           if (orderObjects[0]['rcv_openid']) { //已经有接收人
-            console.log('该订单已送出 orderObjects:', orderObjects)
+            console.log('该订单已购出 orderObjects:', orderObjects)
             wx.showToast({
-              title: '该订单已送出',
+              title: '该订单已购出',
               icon: 'none',
               duration: 1500
             })
