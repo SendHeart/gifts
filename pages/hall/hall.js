@@ -30,6 +30,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var navList = [
   { id: "is_recommend", title: "推荐"  ,value:"1"},
 ]
+const App = getApp();//设立顶部栏高度
 Page({
   data: {
     navList2: navList2,
@@ -1576,6 +1577,11 @@ Page({
     app.globalData.is_task = task
     that.get_menubar()
    
+    //自定义头部方法
+    this.setData({
+      navH: App.globalData.navHeight
+    });
+
     console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
     var message_info = {
       addtime: myDate,
