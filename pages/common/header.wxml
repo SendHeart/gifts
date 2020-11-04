@@ -1,0 +1,13 @@
+
+<view>
+  <!-- 自定义头部 -->
+  <view class='nav bg-white' style='height:70px'>
+    <view class='nav-title'>
+      <view class="INinputheader">
+        <icon class="INsearchicon" type="search" size="12"/>
+        <input class="weui-input" placeholder="搜索学习内容"/>
+      </view>
+    </view>
+  </view>
+  
+</view>

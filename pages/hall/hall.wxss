@@ -62,10 +62,7 @@ page {
 	justify-content: space-between;/*子项横轴上居中对齐*/
 	align-items: center;/*子项纵轴上居中对齐*/
   padding: 0rpx 0rpx 8rpx 0rpx;
-  top:-5rpx;
-  position:fixed;
   background: #1d1d1d;
-  z-index: 999;
   margin-bottom: 10rpx;
 }
 
@@ -160,8 +157,7 @@ modal {
 
 .banner {
   width: 100%;
-  height: 340rpx;
-  margin-top: 100rpx;
+  height: 375rpx;
   background-color: #1d1d1d;
   background-repeat: norepeat;
   align-content: center;
@@ -184,12 +180,9 @@ modal {
   margin: 5px;
 }
 .swiper-box {
-  height: 250rpx;
   width: 96%;
+  height: 100%;
   margin: 0 auto;
-  position: absolute;
-  margin-left:2%;
-  margin-top:82rpx;
   /*
   left: 2%;
   top: 82rpx;
@@ -253,9 +246,10 @@ modal {
 }
 .wrap {
   width: 100%;
-  position: absolute;
-  top: 455rpx;
-  z-index: 1
+  height: 100%;
+  z-index: 1;
+  display: flex;
+  direction: row;
 }
 
 .user {
@@ -979,7 +973,6 @@ modal {
   display: flex;
   flex-direction: row;
   height:275rpx;
-  position: relative;
   color: #f2f2f2;
 }
 .venues-item-category {
@@ -1382,8 +1375,6 @@ modal {
     align-items: center;
     text-align: center;
     white-space: wrap;
-    top:0;
-    position: fixed;
     z-index: 999;
   } 
   .catg-title {
@@ -1436,11 +1427,8 @@ modal {
   
   .classify-banner {
     width: 100%;
-    height: 90rpx;
     padding-top: 0rpx;
     background: #1d1d1d; 
-    position: fixed;
-    top:73rpx;
     z-index: 99;
   }
   

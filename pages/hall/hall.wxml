@@ -1,5 +1,6 @@
 
 <import src="../common/nav.wxml" />
+<include src="../common/header.wxml"/>
 <view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
   <!--    bindscroll="scrolltoupper" -->
   <!-- 

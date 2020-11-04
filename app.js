@@ -32,6 +32,8 @@ App({
     from_page:null,
     user_type:0,
     navList2:[],
+    userInfo: null,
+    navHeight: 0,
   },
  
   onLaunch: function() {
@@ -77,7 +79,15 @@ App({
           }
       })
     that.get_project_gift_para()
-  
+  // 获取顶部栏信息
+  wx.getSystemInfo({
+    success: res => {
+      //导航高度
+      this.globalData.navHeight = res.statusBarHeight + 46;
+    }, fail(err) {
+      console.log(err);
+    }
+  })
   },
 
   login: function (openid) {
@@ -252,4 +262,6 @@ App({
         console.log('App Hide')
   },
    
+  //全局Header
+  
 })
