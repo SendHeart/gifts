@@ -336,6 +336,51 @@ Page({
             url: '/pages/goods/list/list?search=1'
         })
     },
+    query_message:function(){
+      var that = this
+      var shop_type = that.data.shop_type; // var formid = formId?formId:that.data.formid
+      var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+      var page = 1
+      var pagesize =1
+      wx.request({
+        url: weburl + '/api/mqttservice/sh_query_message',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          message_type: 1,
+          shop_type: shop_type,
+          page:page,
+          pagesize:pagesize,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('hall query_message 收到消息：' + JSON.stringify(res.data));
+          var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+          var response = res.data;
+          var messageHidden = that.data.messageHidden
+          if (response.status=='y'){
+            wx.pageScrollTo({
+              scrollTop: 90,
+              duration: 300,
+            })
+            var resp_message = response.result[0]
+            var messages_num = that.data.messages_num
+            resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
+            resp_message['start_time'] = util.getDateStr(resp_message['start_time'] * 1000, 0)
+            resp_message['end_time'] = util.getDateStr(resp_message['end_time'] * 1000, 0)
+            that.setData({
+              resp_message: resp_message,
+              messages_num: messages_num+1,
+            })
+          }
+        }
+      })
+    },
     reSend: function () { //失败后重新发送
         var that = this;
         //失败重发
@@ -1654,17 +1699,18 @@ Page({
                 url: '/pages/player/player?' + scene
             })
         }
-
-        socketMsgQueue.push(that.data.message)
+        that.query_message()  
+        //socketMsgQueue.push(that.data.message)
         //that.setNavigation()
-        that.initSocketMessage()
+        //that.initSocketMessage()
         /*
        setTimeout(function () {
          that.initSocketMessage()
        }, 20000)
        */
         setInterval(function () {
-            that.initSocketMessage()
+            that.query_message()
+            //that.initSocketMessage()
             that.setData({
                 gift_para_interval:1 //30秒获取一次系统参数
             })
