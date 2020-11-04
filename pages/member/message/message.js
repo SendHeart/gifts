@@ -495,7 +495,7 @@ Page({
             task_list: task_list,
             page_num: page_num.toFixed(0),
           })
-          console.log('获取消息:', that.data.message_list, that.data.task_list)
+          console.log('member/messages get_member_messages() 获取消息:', that.data.message_list, that.data.task_list,page,pagesize)
         } else {
           wx.showToast({
             title: '暂无消息',
