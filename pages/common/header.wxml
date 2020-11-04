@@ -3,10 +3,13 @@
   <!-- 自定义头部 -->
   <view class='nav bg-white' style='height:45px;'>
     <view class='nav-title'>
-      <view class="INinputheader" bindtap='searchTapTag'>
+      <view class="INinputheader" >
         <icon class="INsearchicon" type="search" size="12"/>
-        <input class="weui-input" placeholder="会员制购物商城"/>
+        <input class="weui-input" placeholder="会员制购物商城" bindtap='searchTapTag'/>       
       </view>
+      <view style="margin-left:30rpx;height:35px;line-height:35px" catchtap="messagesTapTag">
+          <text style="font-size:20rpx;color:#999">了解什么是会员制</text>
+        </view>
     </view>
   </view>  
 </view>
