@@ -6,13 +6,13 @@
   <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
-  <view class="search">
-    <!--
+  <!--
+  <view class="search">  
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
     </view>
-    -->
+   
     <view class="wx-input" bindtap='searchTapTag'>
       <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
       <text></text>
@@ -24,6 +24,7 @@
        <text>了解什么是会员制</text>
     </view>
   </view>
+  -->
   <view class="all-classify" hidden="{{hiddenallclassify}}">
     <view class='catg-title' catchtap="openAllTapTag">
       <view class='catg-titletext'>全部分类</view>
