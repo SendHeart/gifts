@@ -1,7 +1,7 @@
 
 <view>
   <!-- 自定义头部 -->
-  <view class='nav bg-white' style='height:45px;'>
+  <view class='nav bg-white' style='height:{{navH}}px'>
     <view class='nav-title'>
       <view class="INinputheader" >
         <icon class="INsearchicon" type="search" size="12"/>

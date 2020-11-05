@@ -1450,8 +1450,8 @@ modal {
   .top-bar {
     white-space: nowrap;
     text-align: center;
-    width: 92%;
-    height: 70rpx;
+    width: 90.5%;
+    height: 30px;
     overflow-y: hidden;
     background: #1d1d1d; 
     z-index:99;
@@ -1461,7 +1461,7 @@ modal {
     display:inline-block;
     color: #fff;
     text-align: center;
-    line-height: 50rpx;
+    line-height: 30px;
     font-size: 28rpx;
     padding: 0 20rpx;
     margin: 0 10rpx;
@@ -1473,11 +1473,11 @@ modal {
   }
   .top-bar-image {
     position: absolute; 
-    top: 50px;
     right: 0; 
-    width:30rpx;
-    height:30rpx;
-    margin:15rpx auto;
-    z-index:1000;
+    width:20px;
+    height:20px;
+    margin-top:12px;
+    z-index:99;
     padding-right: 15rpx;
+    padding-left: 15rpx;
   }

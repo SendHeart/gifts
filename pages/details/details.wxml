@@ -1,13 +1,25 @@
 <import src="../../wxParse/wxParse.wxml" />
+<!--
+<view class='nav bg-white' style='height:{{navH}}px'>
+    <view class='nav-title'>
+      商品详情
+      <image src='../../images/back.png' mode='aspectFit' class='back' bindtap='goBack'></image> 
+    </view>
+</view>
+-->
+
 <view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden||!cardlovehidden)?'position:fixed;opacity:0.8;':''}}">
   <view class="share-goods"  >
-    <view class="share-buttons" style="justify-content: flex-end">
+    <view class="share-buttons" style="justify-content: space-between">
       <!--
        <view  wx:if="{card_type==1}}" class="btnshare" bindtap="upimg"> 
         <image class="shareto" src="../../images/image.png"></image>
         上传图片
       </view>
       -->
+      <view class="btnback" bindtap="goBack"> 
+        <image class="shareto" src="../../images/back.png"></image>
+      </view>
        <view wx:if="{{goodsshape==4||goodsshape==5}}" class="btnshare" bindtap="cardEditTapTag">
         <image class="shareto" src="../../images/u72.png"></image>
         编辑

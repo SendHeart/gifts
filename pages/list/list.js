@@ -255,6 +255,13 @@ Page({
     var navlist_title = options.navlist_title ? options.navlist_title : ''
     var toView = options.activeIndex ? options.activeIndex:that.data.toView
     
+     //自定义头部方法
+     this.setData({
+      navH: app.globalData.navHeight,
+      startBarHeight:0, //app.globalData.navHeight,
+      startBarHeight2:0, //app.globalData.navHeight
+    })
+
     that.setData({
       username: username,
       token: token,

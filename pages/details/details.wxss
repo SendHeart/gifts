@@ -262,7 +262,21 @@ font-size: 32rpx;
   padding: 6rpx 20rpx;
   line-height: 2;
   border-radius: 10rpx;
+  opacity: 0.6;
 }
+
+.share-buttons .btnback {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  font-size: 24rpx;
+  color: #fff;
+  padding: 6rpx 20rpx;
+  line-height: 2;
+  border-radius: 10rpx;
+  opacity: 0.6;
+}
+
 .share-buttons .shareto {
   width: 32rpx;
   height: 32rpx;

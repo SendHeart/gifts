@@ -1,4 +1,3 @@
-import defaultData from '../../../data';
 var util = require('../../../utils/util.js');
 
 //获取应用实例
@@ -237,6 +236,14 @@ Page({
     var hidddensearch = options.search==1?false:true
     var live_goods = options.live_goods ? options.live_goods:''
     middle_title = options.search == 1 ? '搜索商品' : middle_title
+     
+    //自定义头部方法
+     that.setData({
+      navH: app.globalData.navHeight,
+      startBarHeight:app.globalData.navHeight,
+      startBarHeight2:app.globalData.navHeight
+    });
+
     that.setData({
       username: username,
       token: token,

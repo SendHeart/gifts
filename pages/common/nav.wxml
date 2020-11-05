@@ -1,11 +1,11 @@
 <!--导航nav组件 -->
 <template name="nav">
-      <view class="top-bar-list">
+      <view class="top-bar-list" style='margin-top:{{startBarHeight}}px'>
         <scroll-view scroll-x="true" bindscroll="getleft" scroll-into-view="v_{{toView}}"  class="top-bar" style=''>
           <block wx:for="{{navList}}" wx:key="index">
             <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="top-bar-item {{index == activeIndex ? 'top-bar-active' : ''}}" catchtap="onTapTag">{{item.title}}</view>
           </block>
         </scroll-view>
-        <image  class="top-bar-image" src="../../images/icon_all.png" bindtap="openAllTapTag" ></image>
+        <image class="top-bar-image" src="../../images/icon_all.png" bindtap="openAllTapTag" />
       </view>
 </template>

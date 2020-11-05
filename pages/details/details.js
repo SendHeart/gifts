@@ -1492,6 +1492,10 @@ Page({
         var card_cele_prev = wx.getStorageSync('card_cele_info')
         var card_love_prev = wx.getStorageSync('card_love_info')
         wx.setStorageSync('details_options', options)
+         //自定义头部方法
+        this.setData({
+            navH: app.globalData.navHeight
+        });
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 
           card_register_content = card_register_info['card_register_content']
@@ -2504,6 +2508,17 @@ Page({
       tab_image: "block"
     })
   },
+  
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+        wx.navigateBack({ changed: true });//返回上一页
+    } else {
+        wx.switchTab({
+            url: '../../hall/hall'
+        })
+    }
+},
 
   onShareAppMessage: function () {
     var that = this

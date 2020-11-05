@@ -109,6 +109,9 @@ header - wxss
   width: 100%;
   height: 45px;
   line-height: 45px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
   text-align: center;
   position: absolute;
   bottom: 0;
@@ -146,7 +149,6 @@ header - wxss
   font-size: 14px;
   margin-top:7px;
   position: relative; 
-  float: left;
   margin-left:12px;
 }
 .INsearchicon{

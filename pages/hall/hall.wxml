@@ -41,7 +41,7 @@
     </view>
   </view>
   <view class="classify-banner">
-    <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,is_all_category}}" />
+    <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
   </view>
   
   <view wx:if="{{navList2[3] || hall_banner }}" class="banner">

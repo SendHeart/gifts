@@ -1,6 +1,14 @@
-<!--index.wxml-->
 <import src="../common/nav.wxml" />
 <import src="../common/nav2.wxml" />
+<!--
+<view class='nav bg-white' style='height:{{navH}}px'>
+    <view class='nav-title'>
+      商城
+      <image src='../../images/back.png' mode='aspectFit' class='back' bindtap='goBack'></image> 
+    </view>
+</view>
+-->
+
 <view class="all-classify" hidden="{{hiddenallclassify}}">
     <view class='catg-title' catchtap="openAllTapTag">
       <view class='catg-titletext'>全部分类</view>
@@ -17,8 +25,8 @@
     </view>
 </view>
 <view class="banner">
-    <template is="nav" data="{{navList, activeIndex,toView,navgationHeight,is_all_category}}" />
-    <template is="nav2" data="{{navList2, activeIndex2, updown,navgationHeight,startBarHeight}}" />
+    <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
+    <template is="nav2" data="{{navList2, activeIndex2, updown,startBarHeight2}}" />
 </view>
   <!-- 
 <view class="search" style='height:30rpx;'>
