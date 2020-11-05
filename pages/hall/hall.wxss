@@ -1472,7 +1472,7 @@ modal {
     background: #E52445;
   }
   .top-bar-image {
-    position: fixed; 
+    position: absolute; 
     top: 50px;
     right: 0; 
     width:30rpx;
