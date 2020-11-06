@@ -30,27 +30,32 @@
 		<view class="clearfix"></view>
 	</scroll-view>
 	<view class="btns">
-		<view class="weui-flex">
+		<view class="weui-flex">		
+			<view class="weui-flex__item">
+				<input type="text" bindinput="changeInput" value="{{ inputValue }}" class="weui-input" bindconfirm="getInputMessage" bindfocus="closeUse" bindblur="inputBlur" />
+			</view>
+			<view class="weui-flex__item">
+				<button type="primary" bindtap="getInputMessage" disabled="{{ disabled }}">发送</button>
+			</view>
 			<view class="weui-flex__item">
 				<image src="../../images/number_add.png" />
 			</view>
-			<view class="weui-flex__item">
-				<input type="text" bindinput="getInputMessage" value="{{ msg }}" class="weui-input" bindconfirm="sendMsg" bindfocus="closeUse" bindblur="inputBlur" />
-			</view>
-			<view class="weui-flex__item">
+			<!--
+				<view class="weui-flex__item">
 				<image src="../../images/look.png" bindtap="openLook" wx:if="{{ openLook == false }}" />
 				<image src="../../images/keyboard.png" bindtap="openLook" wx:if="{{ openLook == true }}" />
 			</view>
+			-->			
 		</view>
 		<!-- 表情区域 -->
 		<!--
 			<view class="looks" wx:if="{{ openLook }}">
-			<view class="looks-tool">
-			<block wx:for="{{ looks }}" wx:for-index="li" wx:key="index">
-				<view class="looks-item {{ activeLook == li ? 'tapHover' : '' }}" bindtap="useLookGroup" data-group="{{ li }}">
-					<image src="../../images/looks/{{ li }}/icon.png" />
-				</view>
-				</block>
+				<view class="looks-tool">
+				<block wx:for="{{ looks }}" wx:for-index="li" wx:key="index">
+					<view class="looks-item {{ activeLook == li ? 'tapHover' : '' }}" bindtap="useLookGroup" data-group="{{ li }}">
+						<image src="../../images/looks/{{ li }}/icon.png" />
+					</view>
+					</block>
 			</view>
 			<view class="looks-box">
 				<block wx:for="{{ looks[activeLook] }}" wx:for-item="lv" wx:key="index">

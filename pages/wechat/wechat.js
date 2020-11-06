@@ -177,23 +177,30 @@ Page({
 		this.cursor = e.detail.cursor;
   } , 
   
+  	// 更改Input
+	changeInput : function(e){
+    var that = this
+		var inputValue = e.detail.value;
+		that.setData({
+      inputValue: inputValue
+		})
+  } , 
+  
   // 提交文字
-  getInputMessage: function(e) {
+  getInputMessage: function() {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var is_customer = that.data.is_customer
-    var inputValue = e.detail.value;
+    var inputValue = that.data.inputValue;
     if (inputValue == "") {
       return
     }
-    that.setData({
-			inputValue : inputValue
-		})
+    
     let user = is_customer=='1'?'customer':'home'
 		var inputmessage = {
 				user:user,
 				type: 'text',
-				content: that.data.inputValue ,
+				content: inputValue ,
 				imageurl: '',
 				hasSub: false,
 				subcontent: '',
@@ -225,13 +232,15 @@ Page({
   addMessage: function (user='', content='', hasSub='false', subcontent='',type='text',imageurl='',imageaddr='') {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var m_id = that.mqtt_mid
+    var m_id = that.data.mqtt_mid
     var goods_id = that.data.mqtt_goodsid
+    var goods_owner = that.data.goods_owner
     var mqtt_pub_title = that.data.mqtt_goodsid+'_'+that.data.mqtt_mid
     var shop_type = that.data.shop_type
     var current_date = util.formatTime(new Date())
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var avatarUrl = userInfo.avatarUrl
+    var is_customer = that.data.is_customer
     if(content!='') content = util.filterEmoji(content); //去除表情符
     var message = {
       user: user,
@@ -250,8 +259,8 @@ Page({
       m_id:m_id,
       shop_type: shop_type,
       title: mqtt_pub_title,
-      goods_id:that.mqtt_goodsid,
-      goods_owner:that.goods_owner,
+      goods_id:goods_id,
+      goods_owner:goods_owner,
       content_type:type,
       content: content,
       imageurl:imageurl,
@@ -261,10 +270,10 @@ Page({
       from_username:username,
       createtime:current_date
     }
-    console.log('addMessage message:'+JSON.stringify(message))
+    //console.log('addMessage message:'+JSON.stringify(message))
     chat_messages.push(message)
     that.messages = chat_messages
-    console.log('chatroomservice addMessage messages len:'+chat_messages.length+' info:'+JSON.stringify(chat_messages))
+    //console.log('chatroomservice addMessage messages len:'+chat_messages.length+' info:'+JSON.stringify(chat_messages))
     if(!socketOpen) {
       console.log('chatroomservice addMessage() 掉线了 socketOpen: '+socketOpen)
       console.log('chatroomservice addMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
@@ -275,7 +284,7 @@ Page({
     if((user=='home' && is_customer != '1')|| (user=='customer' && is_customer == '1')){
       let socket_message = JSON.stringify(websocket_pub_message)
       socketMsgQueue.push(socket_message);
-      //console.log('chatroomservice addMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
+      console.log('chatroomservice addMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
       that.sendSocketMessage()
       that.data.inputValue = ''				
     }
@@ -309,7 +318,7 @@ Page({
       createtime:current_date
     }
     if(!socketOpen){
-      that.initSocketMessage()
+      that.webSocket_open()
       return
     }
     wx.sendSocketMessage({
@@ -326,7 +335,6 @@ Page({
           icon: 'loading',
           duration: 1500
         })	
-        that.initSocketMessage()
         return						
       }
     })
@@ -358,8 +366,9 @@ Page({
       session = null;
     })
     SocketTask.onMessage(res => {
-      let username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-			let recv_message = res.data?JSON.parse(res.data, true):'';								 
+      let username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      let is_customer = that.data.is_customer
+			let recv_message = res.data?JSON.parse(res.data, true):''							 
 			console.log('chatroomservice 收到服务器内容：' + res.data)
 			if(recv_message['d']){						
 				let reply_message = {
@@ -381,13 +390,13 @@ Page({
 
   sendSocketMessage: function () {
     var that = this;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
-    var myDate = util.formatTime(new Date())
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
    
     if (!socketOpen) {
       //console.log('chatroomservice sendSocketMessage socketOpen:'+socketOpen);
-      that.initSocketMessage();
+      that.webSocket_open()
     } else {
+      //console.log('chatroomservice sendSocketMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
       if(socketMsgQueue.length > 0){
         let resend_msg = socketMsgQueue
         for (var i = 0; i < resend_msg.length; i++) {
@@ -397,18 +406,18 @@ Page({
             data: socket_message, //自身定义一个发送消息对象
             success: function(res) {									
               socketMsgQueue.splice(i, 1)
-              //console.log('chatroomservice WebSocket发送完成！socketMsgQueue:'+JSON.stringify(socketMsgQueue))
+              console.log('chatroomservice WebSocket 发送完成！socketMsgQueue:'+JSON.stringify(socketMsgQueue))
             },
             fail: function(error) {
               socketOpen = false;
               getApp().globalData.websocketOpen = socketOpen
-              console.log('chatroomservice WebSocket发送失败！res:'+JSON.stringify(error))
+              console.log('chatroomservice WebSocket 发送失败！res:'+JSON.stringify(error))
               wx.showToast({
                 title: '网络故障',
                 icon: 'loading',
                 duration: 1500
               })
-              that.initSocketMessage()
+              that.webSocket_open()
               return
             }
           })
