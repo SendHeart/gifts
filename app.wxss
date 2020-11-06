@@ -1,4 +1,4 @@
-/**app.wxss**/
+@import 'weui.wxss';
 @import "./wxParse/wxParse.wxss";
 
 /*

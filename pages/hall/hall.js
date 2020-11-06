@@ -1,4 +1,4 @@
-var util = require('../../utils/util.js')
+import { getDateStr, formatTime } from '../../utils/util.js'
 //获取应用实例
 var app = getApp()
 var weburl = app.globalData.weburl
@@ -371,8 +371,8 @@ Page({
             var resp_message = response.result[0]
             var messages_num = that.data.messages_num
             resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
-            resp_message['start_time'] = util.getDateStr(resp_message['start_time'] * 1000, 0)
-            resp_message['end_time'] = util.getDateStr(resp_message['end_time'] * 1000, 0)
+            resp_message['start_time'] = getDateStr(resp_message['start_time'] * 1000, 0)
+            resp_message['end_time'] = getDateStr(resp_message['end_time'] * 1000, 0)
             that.setData({
               resp_message: resp_message,
               messages_num: messages_num+1,
@@ -457,8 +457,8 @@ Page({
                     var resp_message = response.result
                     var messages_num = that.data.messages_num
                     resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
-                    resp_message['start_time'] = util.getDateStr(resp_message['start_time'] * 1000, 0)
-                    resp_message['end_time'] = util.getDateStr(resp_message['end_time'] * 1000, 0)
+                    resp_message['start_time'] = getDateStr(resp_message['start_time'] * 1000, 0)
+                    resp_message['end_time'] = getDateStr(resp_message['end_time'] * 1000, 0)
                     that.setData({
                         resp_message: resp_message,
                         messages_num: messages_num+1,
@@ -486,7 +486,7 @@ Page({
     sendSocketMessage: function () {
         var that = this;
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var myDate = util.formatTime(new Date)
+        var myDate = formatTime(new Date)
         var message = that.data.message
 
         if (!socketOpen) {
@@ -1607,7 +1607,7 @@ Page({
         var art_title = options.art_title ? options.art_title : ''
         var message = '获取个人消息'
         var messages_num = that.data.messages_num
-        var myDate = util.formatTime(new Date)
+        var myDate = formatTime(new Date)
         var scene = decodeURIComponent(options.scene)
         wx.getSystemInfo({
             success: function (res) {

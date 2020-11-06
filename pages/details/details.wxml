@@ -581,23 +581,29 @@
       <text>编辑内容</text>
       </button>  
     </form -->
-    <form wx:if="{{goodsshape!=5 && goodsshape!=4}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:20%;' >
+    <form wx:if="{{goodsshape!=5 && goodsshape!=4}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:18%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/bottom-comment.png"></image>
       <text>写评论</text></button>
     </form>
-    <form wx:if="{{goodsshape!=5&&goodsshape!=4}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:24%;' >
+    <form wx:if="{{goods_is_flag == 1 || goods_is_qianggou == 1 || goods_is_recommend == 1}}" bindsubmit="formSubmit"  data-name='myqunTapTag' report-submit="true" style='width:18%;' >
+      <button class="sec-btn" formType="submit">
+      <image class='icon-detail' src="../../images/iconfont-kefu.png"></image>
+      <text>服务群</text>
+      </button>  
+    </form>
+    <form wx:if="{{goodsshape!=5&&goodsshape!=4}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:18%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/bottom-unpraise.png"></image>
       <text>+心愿单</text>
       </button>  
     </form>
-    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:28%;' >
+    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:25%;' >
       <button class="add-cart2" formType="submit">
         <text>+购物车</text>
       </button>  
     </form>
-    <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:28%;' >
+    <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:25%;' >
       <button class="add-cart"  formType="submit">{{(goodsshape==5||goodsshape==4)?'立即使用':'立即购买'}}</button>  
     </form>
     <form wx:if="{{goodsorg==5 && has_cardpayed!=0}}" bindsubmit="formSubmit"  data-name='sharecard' report-submit="true" style='width:28%;' >

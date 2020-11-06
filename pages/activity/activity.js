@@ -1,5 +1,5 @@
 
-var util = require('../../utils/util.js');
+//import util from '../../utils/util.js';
 //获取应用实例
 var app = getApp();
 var weburl = app.globalData.weburl;

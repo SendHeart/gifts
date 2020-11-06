@@ -34,6 +34,34 @@ App({
     navList2:[],
     userInfo: null,
     navHeight: 0,
+    looks : {
+			w : [
+				{name : 'wx' , url : '01.png'} , 
+				{name : 'xk' , url : '02.png'} , 
+				{name : 'xk1' , url : '03.png'} , 
+				{name : 'lh' , url : '04.png'} , 
+				{name : 'ng' , url : '05.png'} , 
+				{name : 'kx' , url : '06.png'} , 
+				{name : 'hx' , url : '07.png'} , 
+				{name : 'ng1' , url : '08.png'} , 
+			] , 
+			web : [
+				{name : 'wx' , url : '01.gif'} , 
+				{name : 'xk' , url : '02.jpg'} , 
+				{name : 'xk1' , url : '03.jpg'} , 
+				{name : 'lh' , url : '04.jpg'} , 
+				{name : 'ng' , url : '05.jpg'} , 
+				{name : 'kx' , url : '06.jpg'} , 
+				{name : 'hx' , url : '07.jpg'} , 
+				{name : 'ng1' , url : '08.jpg'} , 
+				{name : 'ng12' , url : '09.jpg'} , 
+				{name : 'ng13' , url : '10.jpg'} , 
+				{name : 'ng11' , url : '11.jpg'} , 
+				{name : 'ng11' , url : '12.gif'} , 
+				{name : 'ng14' , url : '13.jpg'} , 
+				{name : 'ng15' , url : '14.gif'} , 
+			]
+		} , 
   },
  
   onLaunch: function() {

@@ -57,6 +57,10 @@ Page({
     goodsshape:0,
     goodsdiscount: 100,
     goodstag:0,
+    goods_is_flag:0,
+	  goods_is_recommend:0,
+    goods_is_qianggou:0,
+    goods_shop_id:0,
     discountinfo: '9折优惠券',
     sku_gov_price: 0,
     sku_earnest_price: 0,
@@ -184,6 +188,8 @@ Page({
       that.myblessing()  
     } else if (form_name == 'card_register') {
       that.card_register()  
+    }else if (form_name == 'myqunTapTag') {
+      that.myqunTapTag()  
     }
     if (formId) that.submintFromId(formId)
   },
@@ -353,7 +359,6 @@ Page({
     wx.navigateTo({
       url: '../goods/commentlist/commentlist?goods_id=' + that.data.goodsid
     })
-
   },
   mycommTapTag: function () {
     var that = this
@@ -363,6 +368,22 @@ Page({
       url: '../goods/comment/comment?goods_id=' + goods_id + '&goods_skuid=' + goods_skuid +'&comm_type='+1
     })
 
+  },
+
+  myqunTapTag: function () {
+    var that = this
+		var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+		var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0;
+		var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+		var goods_id = that.data.goodsid
+		var goods_shop_id = that.data.goods_shop_id
+		var goods_name = that.data.goodsname
+		var goods_owner = that.data.goodsowner?that.data.goodsowner:that.data.goods_id
+		var from_nickname = userInfo.nickName
+		var from_headimg = userInfo.avatarUrl
+    wx.navigateTo({
+      url: '/pages/wechat/wechat?frompage=/pages/details/details&goods_id='+goods_id+'&goods_name='+goods_name+'&goods_owner='+goods_owner+ '&goods_shop_id=' + goods_shop_id+'&from_username='+username+'&from_headimg='+from_headimg+'&from_nickname='+from_nickname+'&m_id='+m_id+'&customer=1&qun_type=1&is_refresh=1'
+    })    
   },
   returnTapTag: function () {
     var that = this
@@ -1492,8 +1513,16 @@ Page({
         var card_cele_prev = wx.getStorageSync('card_cele_info')
         var card_love_prev = wx.getStorageSync('card_love_info')
         wx.setStorageSync('details_options', options)
+
+        that.setData({
+          goods_is_flag: options.is_flag?options.is_flag:0,
+          goods_is_recommend: options.is_recommend?options.is_recommend:0,
+          goods_is_qianggou: options.is_qianggou?options.is_qianggou:0,
+          goods_shop_id: options.goods_shop_id?options.goods_shop_id:0,
+        })
+
          //自定义头部方法
-        this.setData({
+        that.setData({
             navH: app.globalData.navHeight
         });
         if (card_register_prev){  
@@ -1723,6 +1752,13 @@ Page({
                   card_image_height: card_image_height,
                   card_image_w_rate: card_image_w_rate,
                 })
+                that.setData({
+                  goods_is_flag: goods_info[0]['is_flag']?goods_info[0]['is_flag']:that.data.goods_is_flag,
+                  goods_is_recommend: goods_info[0]['is_recommend']? goods_info[0]['is_recommend']:that.data.goods_is_recommend,
+                  goods_is_qianggou: goods_info[0]['is_qianggou']?goods_info[0]['is_qianggou']:that.data.goods_is_qianggou,
+                  goods_shop_id:goods_info[0]['shop_id']?goods_info[0]['shop_id']:that.data.goods_shop_id,
+                })
+               
                 //var wx_headimg_cache = wx.getStorageSync('wx_headimg_cache')
                 that.image_save(that.data.share_goods_wx_headimg, 'wx_headimg_cache')
                 

@@ -1,4 +1,4 @@
-import util from '../../utils/util.js';
+//import util from '../../utils/util.js';
 //获取应用实例
 var app = getApp();
 var shop_type = app.globalData.shop_type;

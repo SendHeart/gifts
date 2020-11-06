@@ -1,9 +1,9 @@
 var app = getApp();
 var weburl = app.globalData.weburl; 
-var QQMapWX = require('../../../utils/qqmap-wx-jssdk.min.js')
+import QQMapWX from '../../../utils/qqmap-wx-jssdk.min.js';
 var qqmapsdk
 var qqmapkey = app.globalData.mapkey
-var util = require('../../../utils/util.js')
+//import util from '../../../utils/util.js';
 var now = new Date().getTime()
 var shop_type = app.globalData.shop_type;
 var uploadurl = app.globalData.uploadurl;
