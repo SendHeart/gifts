@@ -1,71 +1,35 @@
-<view class="container">
-	<scroll-view scroll-y id="chat-content" class="scroll-view" style="height: {{ height }}px;" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
-		<block wx:for="{{ messages }}" wx:key="index">
-			<block wx:if="{{ item.type == 'system' }}">
-				<view class="system">
-					<view class="system-data">
-						{{ item.data }} 
-					</view>
+<view style="height:100%;box-sizing: border-box;">
+	<scroll-view scroll-y id="chat-content" class="scroll-view" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+		<block wx:for="{{messages}}" wx:key="index">
+			<view class="list-item {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
+				<view class="list-item-nickname">{{ item.from_nickname }} 
+					<span class="list-item-pubtime">{{ item.createtime }}</span>				
 				</view>
-			</block>
-			<block wx:else>
-				<view class="list-item {{ item.nickname == nickname ? 'pull-right' : 'pull-left' }}">
-					<view class="list-item-nickname">{{ item.nickname }} <span class="list-item-pubtime">{{ item.time }}</span></view>
-					<view class="list-item-content">
-						<view class="msg">
-							<view class="msg-box">
-								{{ item.data.msg }}
-							</view>
-							<block wx:if="{{ item.data.looks }}">
-								<view class="look-box">
-									<image wx:for="{{ item.data.looks }}" wx:for-item="lk" wx:key="index" src="{{ lk }}" class="{{ item.data.type }}"></image>
-								</view>
-							</block>
-						</view>
-						<view class="clear"></view>
+				<view id="content" class="list-item-content">
+					<view class="msg">
+						<view class="msg-box">{{ item.content }}</view>
+						<!--
+							<image class="list-item-headimg" src="{{item.from_headimg}}" mode="widthFix"></image>		
+						-->
 					</view>
+					<view class="clear"></view>
 				</view>
-			</block>
+			</view>
 		</block>
-		<view class="clearfix"></view>
+		<view class="clearfix"></view>	
 	</scroll-view>
 	<view class="btns">
-		<view class="weui-flex">		
-			<view class="weui-flex__item">
-				<input type="text" bindinput="changeInput" value="{{ inputValue }}" class="weui-input" bindconfirm="getInputMessage" bindfocus="closeUse" bindblur="inputBlur" />
-			</view>
-			<view class="weui-flex__item">
-				<button type="primary" bindtap="getInputMessage" disabled="{{ disabled }}">发送</button>
-			</view>
-			<view class="weui-flex__item">
-				<image src="../../images/number_add.png" />
-			</view>
-			<!--
+			<view class="weui-flex">
 				<view class="weui-flex__item">
-				<image src="../../images/look.png" bindtap="openLook" wx:if="{{ openLook == false }}" />
-				<image src="../../images/keyboard.png" bindtap="openLook" wx:if="{{ openLook == true }}" />
-			</view>
-			-->			
-		</view>
-		<!-- 表情区域 -->
-		<!--
-			<view class="looks" wx:if="{{ openLook }}">
-				<view class="looks-tool">
-				<block wx:for="{{ looks }}" wx:for-index="li" wx:key="index">
-					<view class="looks-item {{ activeLook == li ? 'tapHover' : '' }}" bindtap="useLookGroup" data-group="{{ li }}">
-						<image src="../../images/looks/{{ li }}/icon.png" />
-					</view>
-					</block>
-			</view>
-			<view class="looks-box">
-				<block wx:for="{{ looks[activeLook] }}" wx:for-item="lv" wx:key="index">
-					<view class="looks-item" hover-class="tapHover" data-group="{{ activeLook }}" data-key="{{ lv.name }}" bindtap="useLook">
-						<image src="{{ lv.url }}" />
-					</view>
-				</block>
-				<view class="clearfix"></view>
+						<input type="text" bindinput="changeInput" value="{{ inputValue}}" class="weui-input" bindconfirm="getInputMessage" bindfocus="closeUse" bindblur="inputBlur" />
+				</view>
+				<view class="weui-flex__item">
+					<button type="primary" bindtap="getInputMessage">发送</button>
+				</view>
+				<view class="weui-flex__item">
+					<image src="../../images/number_add.png" />
+				</view>
 			</view>
 		</view>
-		-->		
-	</view>
 </view>
+

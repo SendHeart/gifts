@@ -54,6 +54,7 @@ Page({
     goodsprice: 0,
     goodssale: 0,
     goodsid: 0,
+    goodsowner:'',
     goodsshape:0,
     goodsdiscount: 100,
     goodstag:0,
@@ -380,10 +381,17 @@ Page({
 		var goods_name = that.data.goodsname
 		var goods_owner = that.data.goodsowner?that.data.goodsowner:that.data.goods_id
 		var from_nickname = userInfo.nickName
-		var from_headimg = userInfo.avatarUrl
-    wx.navigateTo({
-      url: '/pages/wechat/wechat?frompage=/pages/details/details&goods_id='+goods_id+'&goods_name='+goods_name+'&goods_owner='+goods_owner+ '&goods_shop_id=' + goods_shop_id+'&from_username='+username+'&from_headimg='+from_headimg+'&from_nickname='+from_nickname+'&m_id='+m_id+'&customer=1&qun_type=1&is_refresh=1'
-    })    
+    var from_headimg = userInfo.avatarUrl
+    if (!username) {//登录
+      wx.navigateTo({
+        url: '../login/login?goods_id=' + that.data.goodsid
+      })
+    }else{
+      wx.navigateTo({
+        url: '/pages/wechat/wechat?frompage=/pages/details/details&goods_id='+goods_id+'&goods_name='+goods_name+'&goods_owner='+goods_owner+ '&goods_shop_id=' + goods_shop_id+'&from_username='+username+'&from_headimg='+from_headimg+'&from_nickname='+from_nickname+'&m_id='+m_id+'&customer=1&qun_type=1&is_refresh=1'
+      }) 
+    }
+      
   },
   returnTapTag: function () {
     var that = this
@@ -1730,14 +1738,15 @@ Page({
                   //card_image_height = parseFloat(that.data.winWidth*7*2/5)       
                 }
                 that.setData({
-                  goodsname: goods_info[0]['name'],
+                  goodsname: goods_info[0]['name']?goods_info[0]['name']:'',
                   goodsinfo: goods_info[0]['act_info'],
                   goodstag: goods_info[0]['goods_tag'],
                   goodsprice: goods_info[0]['sell_price'],
                   marketprice: goods_info[0]['market_price'],
                   goodssale: goods_info[0]['sale'],
                   goodsorg: goods_info[0]['goods_org'],
-                  goodsshape: goods_info[0]['shape'],
+                  goodsshape: goods_info[0]['shape']?goods_info[0]['shape']:'',
+                  goodsowner: goods_info[0]['goodsowner']?goods_info[0]['goodsowner']:'',
                   goodstag: goods_info[0]['goods_tag'],
                   card_type: card_type,
                   goodscoverimg: goods_info[0]['activity_image'],

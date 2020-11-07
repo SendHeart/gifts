@@ -1,25 +1,26 @@
-var app = getApp();
-var util = require('../../utils/util.js');
+var app = getApp()
+var util = require('../../utils/util.js')
 var weburl = app.globalData.weburl
 var shop_type = app.globalData.shop_type
 var wssurl = app.globalData.wssurl
+var uploadurl = getApp().globalData.uploadurl
+var mqtturl = getApp().globalData.mqtturl
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSync('user_group_id') : '0'
 var socketOpen = false
 var socketMsgQueue = []
-var sendMsgQueue = []
 var chat_messages = []
-var uuid = ''
-var time_ = "1"
 var recorder = wx.getRecorderManager()
-var frameBuffer_Data
-var session
-var  SocketTask
+var SocketTask
 var string_base64
-var  open_num = 0
-var  submitTo_string
-var onUnload_num = 0 
-var autoRestart
-var onHide_s = false
-var is_customer
+var session
+var onHide_s
+var open_num 
+var onUnload_num
+var autoRestart 
 var heartbeat_timer
 const innerAudioContext = wx.createInnerAudioContext() //获取播放对象
 
@@ -29,16 +30,24 @@ Page({
     is_customer:0,
     mqtt_mid:0,
     mqtt_goodsid:0,
-    messages:[],
-    height : '100%' , 
-		msg : '' , 
-		scrollTop : 0 , 
-		looks : app.globalData.looks , //表情包
-		activeLook : 'w' , // 选择的表情包分组
-		openLook : false , //打开选择表情包
-		useLook : false , //选择好后表情包
-		cursor : 0 , // 输入光标位置
-		count : 0 , // 总人数
+    scrollTop: 0,
+		message_len:0,
+		messages: [{
+			user: 'home',
+			from_headimg:userInfo.avatarUrl,
+			type: 'text',  
+			content: '你好!',
+			imageurl:'',
+			goods_id:0,
+			createtime:'',
+		}],
+    style: {
+      pageHeight: 0,
+      contentViewHeight: 0,
+      footViewHeight: 90,
+      mitemHeight: 0,
+    }, 
+		
   },
 
   onLoad: function(options) {
@@ -58,8 +67,12 @@ Page({
 		var qun_type = options.qun_type ? options.qun_type : '1'
 		var is_customer = options.customer ? options.customer : '0'
 		var bar_title = that.goods_name?that.goods_name.substring(0,12):''
-		var frompage = options.frompage ? options.frompage : ''
-      
+		var frompage = options.frompage ? options.frompage : ''      
+    var screen_para=wx.getSystemInfoSync()
+		
+    that.data.style.pageHeight = screen_para.windowHeight
+    that.data.style.contentViewHeight = screen_para.windowHeight - 80
+
     that.setData({
       mqtt_mid: mqtt_mid,
       mqtt_goodsid:mqtt_goodsid,
@@ -75,6 +88,10 @@ Page({
       frompage:frompage,
     })
     that.webSocket_open()
+    if(that.data.mqtt_goodsid || that.data.goods_owner){
+      that.data.page =  1
+      that.get_wechat_list()
+    }
     if(is_customer == '1'){
       that.update_goods_custservice()
     }
@@ -133,39 +150,7 @@ Page({
     that.initSocketMessage();
   },
  
-  // 表情分组
-	useLookGroup : function(e){
-		var group = e.currentTarget.dataset.group;
-		this.setData({
-			activeLook : group , 
-		})
-	} , 
-	// 打开表情选择
-	openLook : function(){
-		var openLook = this.data.openLook;
-		openLook = openLook ? false : true;
-		this.setData({
-			openLook : openLook
-		})
-	} , 
-	// 选中表情
-	useLook : function(e){
-		let map = e.currentTarget.dataset;
-		let value = map.key , msg = this.data.msg , group = map.group , cursor = this.cursor;
-		let lookItem = '[' + group + ':' + value + ']';
-		if(msg){
-			if (cursor > 0) {
-				let matchs = msg.substr(0 , cursor) , alldata = msg.substr(cursor , msg.length)
-				matchs += lookItem
-				msg = matchs + alldata;
-			}else{
-				msg += lookItem
-			}
-		}else{
-			msg = lookItem
-		}
-		this.setData({msg : msg});
-	} , 
+  
 	// 获取焦点时把选择框全部隐藏
 	closeUse : function(e){
 		// this.setData({
@@ -239,17 +224,20 @@ Page({
     var shop_type = that.data.shop_type
     var current_date = util.formatTime(new Date())
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
-    var avatarUrl = userInfo.avatarUrl
     var is_customer = that.data.is_customer
+    var scrollTop = that.data.scrollTop
     if(content!='') content = util.filterEmoji(content); //去除表情符
     var message = {
       user: user,
-      avatarUrl:avatarUrl,
       type:type,
       content: content,
       hasSub: hasSub,
       subcontent: subcontent,
       imageurl:imageaddr?imageaddr:imageurl,
+      from_headimg:userInfo.avatarUrl,
+      from_nickname:userInfo.nickName,
+      from_username:username,
+      createtime:current_date
     }
     
     let websocket_pub_message = {
@@ -266,13 +254,18 @@ Page({
       imageurl:imageurl,
       user:user,
       from_headimg:userInfo.avatarUrl,
-      from_nickname:userInfo.nickname,
+      from_nickname:userInfo.nickName,
       from_username:username,
       createtime:current_date
     }
-    //console.log('addMessage message:'+JSON.stringify(message))
+    console.log('addMessage userInfo:'+JSON.stringify(userInfo))
     chat_messages.push(message)
-    that.messages = chat_messages
+
+    that.setData({
+      messages:chat_messages,
+      scrollTop : scrollTop + 120		
+    })
+   
     //console.log('chatroomservice addMessage messages len:'+chat_messages.length+' info:'+JSON.stringify(chat_messages))
     if(!socketOpen) {
       console.log('chatroomservice addMessage() 掉线了 socketOpen: '+socketOpen)
@@ -286,7 +279,9 @@ Page({
       socketMsgQueue.push(socket_message);
       console.log('chatroomservice addMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
       that.sendSocketMessage()
-      that.data.inputValue = ''				
+      that.setData({
+        inputValue: ''
+      })		
     }
      
     setTimeout(function () {
@@ -313,7 +308,7 @@ Page({
       //imageurl:'',
       user:'home',
       //from_headimg:userInfo.avatarUrl,
-      //from_nickname:userInfo.nickname,
+      //from_nickname:userInfo.nickName,
       //from_username:username,
       createtime:current_date
     }
@@ -330,7 +325,7 @@ Page({
         socketOpen = false;
         getApp().globalData.websocketOpen = socketOpen
         console.log('wechat/wechat WebSocket heart beat 发送失败！res:'+JSON.stringify(error))
-        uni.showToast({
+        wx.showToast({
           title: '网络故障',
           icon: 'loading',
           duration: 1500
@@ -427,6 +422,79 @@ Page({
     }
   },
 
+  //查询历史记录
+  get_wechat_list: function () { 
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type 
+    var page = that.data.page==0?1:that.data.page
+    var pagesize = that.data.pagesize>0?that.data.pagesize:30			
+    var goods_id = that.data.mqtt_goodsid
+    var goods_owner = that.data.goods_owner
+    var m_id = that.data.mqtt_mid
+    var from_username = that.data.from_username
+    console.log('wechat/wechat get_wechat_list username:'+username)
+    wx.request({
+      url: weburl + '/api/mqttservice/get_wechat_list',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        m_id:m_id,
+        goods_id:goods_id,
+        goods_owner:goods_owner,
+        from_username:from_username,
+        page: page,
+        pagesize: pagesize,
+        shop_type: shop_type , 
+        query_type:'APP' ,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        var wechat_list = res.data.result;
+        var all_rows = res.data.all_rows
+        console.log('get_wechat_list wechat_list:'+JSON.stringify(wechat_list))
+        
+        if (wechat_list) {	
+          var len = wechat_list.length
+          if(page == 1){
+            chat_messages = [{}]
+          }
+          
+          for (var i = 0; i < len; i++) {
+             //console.log('i:'+i+' wechat info:'+ wechat_list[i])
+             if(wechat_list[i]['content'][0]['content']!='' || wechat_list[i]['content'][0]['imageurl']!=''){
+                chat_messages.unshift({
+                  user: wechat_list[i]['user'],
+                  avatarUrl:wechat_list[i]['avatarUrl'],
+                  type:wechat_list[i]['type'],
+                  content: wechat_list[i]['content'][0]['content'],
+                  hasSub: wechat_list[i]['hasSub'],
+                  subcontent: wechat_list[i]['subcontent'],
+                  imageurl:wechat_list[i]['content'][0]['imageurl'],
+                  createtime:wechat_list[i]['content'][0]['createtime'],
+                  from_nickname:wechat_list[i]['from_nickname'],
+               })	                                 
+             }
+          }
+          that.setData({
+            messages:chat_messages
+          })
+        }else{
+          page = page>1?page-1:1 
+        }
+        that.setData({
+          page:page
+        })
+        that.initSocketMessage()
+      }
+    })
+  },
+
   update_goods_custservice: function() {
 		var that = this
 		var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -497,43 +565,97 @@ Page({
       })
     }
   },
-  // 解决问题
-  is_problem: function(e) {
-    console.log('e.target.id', e.currentTarget.dataset.id)
-    console.log('item', e.currentTarget.dataset.item)
-    var id = e.currentTarget.dataset.id;
-    var item = e.currentTarget.dataset.item;
-    // id=1 已解决  0 未解决
-    var yse_problem = this.data.allContentList[item].yse_problem;
-    var no_problem = this.data.allContentList[item].no_problem;
-    if (yse_problem || no_problem) {
-      console.log(12)
-      return
-    } else {
-      if (id == 1) {
-        this.setData({
-          ['allContentList[' + item + '].yse_problem']: true
-        })
-      } else if (id == 0) {
-        this.setData({
-          ['allContentList[' + item + '].no_problem']: true
-        })
+  upimg: function () {
+    var that = this
+    var new_img_arr = that.new_img_arr
+    var img_arr = that.img_arr
+        
+    wx.chooseImage({
+      sizeType: ['original', 'compressed'],
+      success: function (res) {
+        that.new_img_arr = new_img_arr.concat(res.tempFilePaths)
+        console.log('本次上传图片:', that.new_img_arr)
+        wx.getImageInfo({
+          src: res.tempFilePaths[0],
+          success: function (image) {
+            console.log('image width:'+image.width+' heigth:'+image.height);
+            if(image.width<4096 && image.height<4096){
+              that.upload()
+            }else{
+              wx.showToast({
+                title: '图片大小超过4096*4096',
+                icon: 'loading',
+                duration: 2000
+              })
+              that.new_img_arr=[]
+            }
+          }
+        })						
       }
-      console.log(this.data.allContentList[item].yse_problem, this.data.allContentList[item].no_problem)
-      this.bottom();
+    });
+  },
+  
+  cancel_upimg: function (e) {
+    var that = this;
+    var id = e.currentTarget.dataset.id;
+    var img_tmp = [];
+    var old_img_arr = that.img_arr;
+    var j = 0;
+    console.log('cancel_upimg:', old_img_arr.length, 'id:', id);
+  
+    for (var i = 0; i < old_img_arr.length; i++) {
+      if (i != id) {
+        img_tmp[j++] = old_img_arr[i];
+      }
+    }			
+    that.img_arr = img_tmp
+  },
+  
+  upload: function () {
+    var that = this;
+    var goods_id = that.mqt_goodsid;
+    var new_img_addr = that.new_img_arr; //本次上传图片的手机端文件地址
+    var new_img_url = []; //本次上传图片的服务端url
+  
+    for (var i = 0; i < new_img_addr.length; i++) {
+      var count = new_img_addr.length;
+      var filePath = new_img_addr[i]
+      wx.uploadFile({
+        url: uploadurl,
+        filePath: filePath,
+        name: 'wechat_upimg',
+        //formData: adds,
+        formData: {
+          latitude: encodeURI(0.0),
+          longitude: encodeURI(0.0),
+          restaurant_id: encodeURI(0),
+          city: encodeURI('杭州'),
+          prov: encodeURI('浙江'),
+          name: encodeURI(goods_id) // 名称
+        },
+        // HTTP 请求中其他额外的 form data
+        success: function (res) {
+          var retinfo = JSON.parse(res.data.trim());			
+          if (retinfo['status'] == "y") {
+            new_img_url.push(retinfo['result']['img_url']);
+            that.new_img_url = new_img_url
+            that.addMessage('customer', '', false,'','image',retinfo['result']['img_url'],filePath)
+            count--;
+            console.log('图片上传完成:', that.new_img_url, ' count:', count);
+          }
+        }
+      })
     }
-    var url = app.httpUrl + '/v1/userFeedbackResult.do'
-    var data = {
-      'session': app.http_session,
-      'type': id,
-      'uuid': uuid
-    }
-    console.log('userFeedbackResult提交的数据：', data)
-    request(url, 'POST', data, '', function(res) {
-      console.log('userFeedbackResult返回的数据：', res.data)
- 
-    }, function(err) {
-      console.log(err)
+    that.new_img_arr=[]
+  },
+  
+  imgYu: function () {
+    var imgList = [];
+    var imageurl = e.currentTarget.dataset.imageurl;
+    imgList.push(imageurl);
+    wx.previewImage({
+      current: imageurl,
+      urls: imgList // 需要预览的图片http链接列表
     })
   },
   // 跳转小程
@@ -574,40 +696,7 @@ Page({
       })
     }
   },
-  // 自动添加问题答案
-  add_question: function(e) {
-    var that = this;
-    let answer = e.currentTarget.dataset.answer;
-    let messageTime = e.currentTarget.dataset.messagetime;
-    let question = e.currentTarget.dataset.question;
-    console.log('question:', question, 'answer:', answer, 'messageTime', messageTime);
-    this.data.allContentList.push({
-      is_my: true,
-      text: question
-    });
-    this.setData({
-      allContentList: this.data.allContentList,
-      if_send: false,
-      inputValue: ''
-    })
-    that.bottom();
-    setTimeout(function() {
-      that.data.allContentList.push({
-        is_ai: [{
-          answer: answer,
-          type: 1
-        }],
-        solve_show: true,
-        show_answer: true,
-        messageTime: false,
-        text: question
-      });
-      that.setData({
-        allContentList: that.data.allContentList,
-      })
-      that.bottom();
-    }, 1000)
-  },
+  
   // 拨打电话
   phone_click: function() {
     var that = this;
@@ -798,29 +887,5 @@ Page({
       voice_icon_click: !this.data.voice_icon_click
     })
   },
+
 })
-//通过 WebSocket 连接发送数据，需要先 wx.connectSocket，并在 wx.onSocketOpen 回调之后才能发送。
-function sendSocketMessage(msg) {
-  var that = this;
-  if (app.http_session != "") {
-    msg.http_session = app.http_session
-    console.log('通过 WebSocket 连接发送数据', JSON.stringify(msg))
-    SocketTask.send({
-      data: JSON.stringify(msg)
-    }, function(res) {
-      console.log('已发送', res)
-    })
-  } else {
-    app.promise.then(function(http_session) {
-      msg.http_session = http_session;
-      console.log('通过 WebSocket 连接发送数据', JSON.stringify(msg));
-      SocketTask.send({
-        data: JSON.stringify(msg)
-      }, function(res) {
-        console.log('已发送', res);
-      })
- 
-    })
- 
-  }
-}

@@ -1,6 +1,5 @@
-@import 'weui.wxss';
 @import "./wxParse/wxParse.wxss";
-
+@import 'weui.wxss';
 /*
 .container {
   height: 100%;
@@ -22,11 +21,6 @@
     box-sizing: border-box;
     align-items: center;
 }
-
-.weui-flex__item{flex:initial;}
-.pull-left{float: left;}
-.pull-right{float: right;}
-.clearfix{clear: both;}
 
 .color1{
   color: #666;
@@ -91,9 +85,6 @@
 }
 
 
-/*
-
-*/
 page {
     background-color: #1d1d1d;
 }

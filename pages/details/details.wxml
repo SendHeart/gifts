@@ -589,7 +589,7 @@
     <form wx:if="{{goods_is_flag == 1 || goods_is_qianggou == 1 || goods_is_recommend == 1}}" bindsubmit="formSubmit"  data-name='myqunTapTag' report-submit="true" style='width:18%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/iconfont-kefu.png"></image>
-      <text>服务群</text>
+      <text>客服</text>
       </button>  
     </form>
     <form wx:if="{{goodsshape!=5&&goodsshape!=4}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:18%;' >
