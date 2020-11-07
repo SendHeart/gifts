@@ -372,7 +372,7 @@ Page({
       let recv_message = res.data?JSON.parse(res.data, true):''	
       let current_date = util.formatTime(new Date())					 
 			console.log('chatroomservice 收到服务器内容：' + res.data+' rcv_message_content：'+rcv_message_content)
-			if(recv_message['d'] && recv_message['d']['content'][0]['content'] != rcv_message_content){				
+			if(recv_message['d'] ){				 //&& recv_message['d']['content'][0]['content'] != rcv_message_content
         rcv_message_content = recv_message['d']['content'][0]['content']	 //避免重复接收
 				let reply_message = {
 				  user: recv_message['d']['user'],
