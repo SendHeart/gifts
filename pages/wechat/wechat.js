@@ -265,7 +265,8 @@ Page({
       createtime:current_date
     }
     //console.log('addMessage userInfo:'+JSON.stringify(userInfo))
-    chat_messages.push(message)
+    let chat_msg_last = chat_messages.length - 1
+    if(chat_messages[chat_msg_last]['content']!=message['content']) chat_messages.push(message) //避免重复数据
 
     that.setData({
       messages:chat_messages,
