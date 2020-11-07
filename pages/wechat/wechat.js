@@ -13,6 +13,7 @@ var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSy
 var socketOpen = false
 var socketMsgQueue = []
 var chat_messages = []
+var rcv_message_content = ''
 var recorder = wx.getRecorderManager()
 var SocketTask
 var string_base64
@@ -175,6 +176,8 @@ Page({
   getInputMessage: function() {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+    var current_date = util.formatTime(new Date())
     var is_customer = that.data.is_customer
     var inputValue = that.data.inputValue;
     if (inputValue == "") {
@@ -188,7 +191,10 @@ Page({
 				content: inputValue ,
 				imageurl: '',
 				hasSub: false,
-				subcontent: '',
+        subcontent: '',
+        from_nickname:userInfo.nickName,
+        from_headimg:userInfo.avatarUrl,
+        createtime:current_date,
 		}
 		console.log('getInputMessage inputmessage:'+JSON.stringify(inputmessage))
     that.getSocketMessage(inputmessage)
@@ -202,7 +208,7 @@ Page({
     
     console.log('getSocketMessage Msginfo:'+JSON.stringify(Msginfo))
     if(socketOpen) {
-      that.addMessage(Msginfo['user'], Msginfo['content'], Msginfo['hasSub'],Msginfo['type'],Msginfo['subcontent'],Msginfo['imageurl'])	
+      that.addMessage(Msginfo)	
     } else {
       console.log('getSocketMessage 掉线了 socketOpen:'+socketOpen+' socketMsgQueue:'+JSON.stringify(socketMsgQueue));
       wx.showToast({
@@ -214,7 +220,7 @@ Page({
     }				
   },
 
-  addMessage: function (user='', content='', hasSub='false', subcontent='',type='text',imageurl='',imageaddr='') {
+  addMessage: function (msg={}) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var m_id = that.data.mqtt_mid
@@ -226,18 +232,18 @@ Page({
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var is_customer = that.data.is_customer
     var scrollTop = that.data.scrollTop
-    if(content!='') content = util.filterEmoji(content); //去除表情符
+    if(msg.content!='') msg.content = util.filterEmoji(msg.content); //去除表情符
     var message = {
-      user: user,
-      type:type,
-      content: content,
-      hasSub: hasSub,
-      subcontent: subcontent,
-      imageurl:imageaddr?imageaddr:imageurl,
-      from_headimg:userInfo.avatarUrl,
-      from_nickname:userInfo.nickName,
-      from_username:username,
-      createtime:current_date
+      user: msg.user?msg.user:'',
+      type:msg.type?msg.type:'',
+      content: msg.content?msg.content:'',
+      hasSub: msg.hasSub?msg.hasSub:'',
+      subcontent: msg.subcontent?msg.subcontent:'',
+      imageurl:msg.imageaddr?msg.imageaddr:msg.imageurl,
+      from_headimg:msg.from_headimg!=''?msg.from_headimg:'',
+      from_nickname:msg.from_nickname!=''?msg.from_nickname:'',
+      from_username:msg.from_username?msg.from_username:'',
+      createtime:msg.createtime?msg.createtime:current_date
     }
     
     let websocket_pub_message = {
@@ -249,16 +255,16 @@ Page({
       title: mqtt_pub_title,
       goods_id:goods_id,
       goods_owner:goods_owner,
-      content_type:type,
-      content: content,
-      imageurl:imageurl,
-      user:user,
+      content_type:msg.type,
+      content: msg.content,
+      imageurl:msg.imageurl,
+      user:msg.user,
       from_headimg:userInfo.avatarUrl,
       from_nickname:userInfo.nickName,
       from_username:username,
       createtime:current_date
     }
-    console.log('addMessage userInfo:'+JSON.stringify(userInfo))
+    //console.log('addMessage userInfo:'+JSON.stringify(userInfo))
     chat_messages.push(message)
 
     that.setData({
@@ -274,7 +280,7 @@ Page({
       return
     } 		
      
-    if((user=='home' && is_customer != '1')|| (user=='customer' && is_customer == '1')){
+    if((msg.user=='home' && is_customer != '1')|| (msg.user=='customer' && is_customer == '1')){
       let socket_message = JSON.stringify(websocket_pub_message)
       socketMsgQueue.push(socket_message);
       console.log('chatroomservice addMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
@@ -363,20 +369,26 @@ Page({
     SocketTask.onMessage(res => {
       let username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       let is_customer = that.data.is_customer
-			let recv_message = res.data?JSON.parse(res.data, true):''							 
-			console.log('chatroomservice 收到服务器内容：' + res.data)
-			if(recv_message['d']){						
+      let recv_message = res.data?JSON.parse(res.data, true):''	
+      let current_date = util.formatTime(new Date())					 
+			console.log('chatroomservice 收到服务器内容：' + res.data+' rcv_message_content：'+rcv_message_content)
+			if(recv_message['d'] && recv_message['d']['content'][0]['content'] != rcv_message_content){				
+        rcv_message_content = recv_message['d']['content'][0]['content']	 //避免重复接收
 				let reply_message = {
 				  user: recv_message['d']['user'],
 				  type:recv_message['d']['type']?recv_message['d']['type']:'text',
 				  content: recv_message['d']['content']?recv_message['d']['content']:'感谢您的支持',
 				  imageurl: recv_message['d']['imageurl']?recv_message['d']['imageurl']:'',
 				  hasSub: recv_message['d']['hasSub']?recv_message['d']['hasSub']:false,
-			    subcontent: recv_message?recv_message['d']['type']:'',
-			  }
-	      console.log('chatroomservice 收到来自' + reply_message['user'] + '的消息' + JSON.stringify(reply_message)+' is_customer:'+is_customer)
+          subcontent: recv_message?recv_message['d']['type']:'',
+          from_nickname:recv_message?recv_message['d']['from_nickname']:'',
+          from_headimg:recv_message?recv_message['d']['from_headimg']:'',
+          imageaddr:'',
+        }
+       
+	      console.log('chatroomservice 收到来自' + reply_message['user'] + '的消息' + JSON.stringify(reply_message)+' is_customer:'+is_customer+' current_date:'+current_date)
 			  if((reply_message['user']=='customer' && is_customer!='1') || (reply_message['user']=='home' && is_customer=='1')){
-					that.addMessage(reply_message['user'], reply_message['content'], reply_message['hasSub'],reply_message['type'],reply_message['subcontent'],reply_message['imageurl'])	
+					that.addMessage(reply_message)	
 			  } 
 			}
       that.bottom();
@@ -468,7 +480,7 @@ Page({
           for (var i = 0; i < len; i++) {
              //console.log('i:'+i+' wechat info:'+ wechat_list[i])
              if(wechat_list[i]['content'][0]['content']!='' || wechat_list[i]['content'][0]['imageurl']!=''){
-                chat_messages.unshift({
+                let message = {
                   user: wechat_list[i]['user'],
                   avatarUrl:wechat_list[i]['avatarUrl'],
                   type:wechat_list[i]['type'],
@@ -478,7 +490,9 @@ Page({
                   imageurl:wechat_list[i]['content'][0]['imageurl'],
                   createtime:wechat_list[i]['content'][0]['createtime'],
                   from_nickname:wechat_list[i]['from_nickname'],
-               })	                                 
+                  from_headimg:wechat_list[i]['from_headimg'],
+               } 
+               chat_messages.unshift(message)                                
              }
           }
           that.setData({
@@ -612,8 +626,9 @@ Page({
   },
   
   upload: function () {
-    var that = this;
-    var goods_id = that.mqt_goodsid;
+    var that = this
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+    var goods_id = that.mqt_goodsid
     var new_img_addr = that.new_img_arr; //本次上传图片的手机端文件地址
     var new_img_url = []; //本次上传图片的服务端url
   
@@ -639,7 +654,18 @@ Page({
           if (retinfo['status'] == "y") {
             new_img_url.push(retinfo['result']['img_url']);
             that.new_img_url = new_img_url
-            that.addMessage('customer', '', false,'','image',retinfo['result']['img_url'],filePath)
+            let message = {
+              user: 'customer',
+              type:'image',
+              content: '',
+              imageurl: retinfo['result']['img_url'],
+              imageaddr:filePath,
+              hasSub: false,
+              subcontent: '',
+              from_nickname:userInfo.nickName,
+              from_headimg:userInfo.avatarUrl,
+            }
+            that.addMessage(message)
             count--;
             console.log('图片上传完成:', that.new_img_url, ' count:', count);
           }

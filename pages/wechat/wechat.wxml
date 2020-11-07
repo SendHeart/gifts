@@ -3,14 +3,12 @@
 		<block wx:for="{{messages}}" wx:key="index">
 			<view class="list-item {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
 				<view class="list-item-nickname">{{ item.from_nickname }} 
-					<span class="list-item-pubtime">{{ item.createtime }}</span>				
+					<span class="list-item-pubtime">{{ item.createtime }}</span>
+					<image class="list-item-headimg" src="{{item.from_headimg}}" ></image>				
 				</view>
-				<view id="content" class="list-item-content">
+				<view id="content" class="list-item-content  {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
 					<view class="msg">
-						<view class="msg-box">{{ item.content }}</view>
-						<!--
-							<image class="list-item-headimg" src="{{item.from_headimg}}" mode="widthFix"></image>		
-						-->
+						<view class="{{ item.user == 'customer' ? 'msg-box-right' : 'msg-box-left' }} ">{{ item.content }}</view>						
 					</view>
 					<view class="clear"></view>
 				</view>

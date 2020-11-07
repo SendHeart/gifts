@@ -381,6 +381,7 @@ Page({
         }
       })
     },
+    /*
     reSend: function () { //失败后重新发送
         var that = this;
         //失败重发
@@ -448,7 +449,7 @@ Page({
                 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
                 var response = JSON.parse(res.data.trim(), true);
                 var messageHidden = that.data.messageHidden
-                console.log('收到服务器内容：' + res.data.trim())
+                console.log('hall onSocketMessage 收到服务器内容：' + res.data.trim())
                 if (response.status=='y'){
                     wx.pageScrollTo({
                         scrollTop: 90,
@@ -464,13 +465,6 @@ Page({
                         messages_num: messages_num+1,
                         //messageHidden: false
                     })
-                    /*
-                    setTimeout(function () {
-                      that.setData({
-                        messageHidden: true,
-                      })
-                    }, 9000)
-                    */
                 }
             })
             wx.onSocketClose(function (res) {
@@ -511,7 +505,7 @@ Page({
             })
         }
     },
-
+    */
     bindMiddleGoods: function (e) {
         var that = this
         var goods_type = e.currentTarget.dataset.goodsType
