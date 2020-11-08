@@ -12,6 +12,7 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSync('user_group_id') : '0'
 var socketOpen = false
 var socketMsgQueue = []
+var socketMsgLen = 0
 var chat_messages = []
 var rcv_message_content = ''
 var recorder = wx.getRecorderManager()
@@ -285,10 +286,7 @@ Page({
       let socket_message = JSON.stringify(websocket_pub_message)
       socketMsgQueue.push(socket_message);
       console.log('chatroomservice addMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
-      that.sendSocketMessage()
-      that.setData({
-        inputValue: ''
-      })		
+      that.sendSocketMessage()	
     }
      
     setTimeout(function () {
@@ -405,7 +403,8 @@ Page({
       that.webSocket_open()
     } else {
       //console.log('chatroomservice sendSocketMessage socketMsgQueue:'+JSON.stringify(socketMsgQueue))
-      if(socketMsgQueue.length > 0){
+      socketMsgLen = socketMsgQueue.length
+      if(socketMsgLen > 0){
         let resend_msg = socketMsgQueue
         for (var i = 0; i < resend_msg.length; i++) {
           let socket_message = resend_msg[i]
@@ -414,6 +413,13 @@ Page({
             data: socket_message, //自身定义一个发送消息对象
             success: function(res) {									
               socketMsgQueue.splice(i, 1)
+              socketMsgLen--
+              if(socketMsgLen == 0) {
+                socketMsgQueue = [] //发送完成清零
+                that.setData({
+                  inputValue:''
+                })
+              }
               console.log('chatroomservice WebSocket 发送完成！socketMsgQueue:'+JSON.stringify(socketMsgQueue))
             },
             fail: function(error) {
