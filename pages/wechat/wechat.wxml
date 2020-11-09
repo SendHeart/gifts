@@ -1,7 +1,26 @@
+<!--
+<view class='nav bg-white' style='height:{{navH}}px'>
+    <view class='nav-title'>
+      {{bar_title}}
+      <image src='../../images/back.png' mode='aspectFit' class='back' bindtap='goBack'></image> 
+    </view>
+</view>
+-->
 <view style="height:100%;box-sizing: border-box;">
-	<view id="chat_view" class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
+	<view class="chat-bar"  >
+    <view class="bar-buttons" style="justify-content: space-between">
+      <view class="btnback" bindtap="goBack"> 
+        <image class="shareto" src="../../images/back.png"></image>
+      </view>      
+      <view class="btnshare" bindtap="onPullDownRefresh">
+        <image class="shareto" src="../../images/top.png"></image>
+        更多
+      </view>
+    </view>
+  </view>
+	<view id="chat_view" class="" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
 		<block wx:for="{{messages}}" wx:key="index">
-			<view id="chat_message_list" class="list-item {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
+			<view id="chat_message_list" wx:if="{{item.user}}" class="list-item {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
 				<view class="list-item-nickname">
 					<image wx:if="{{item.user=='home'}}" class="list-item-headimg" style="margin-left:1px;" src="{{item.from_headimg}}" ></image>		
 					<text style="margin-left:3px;">{{ item.from_nickname }} </text>
@@ -10,13 +29,15 @@
 				</view>
 				<view class="list-item-content  {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
 					<view class="msg">
-						<view class="{{ item.user == 'customer' ? 'msg-box-right' : 'msg-box-left' }} ">{{ item.content }}</view>						
+						<view class="{{ item.user == 'customer' ? 'msg-box-right' : 'msg-box-left' }} ">
+							<text wx:if="{{item.content}}">{{ item.content }}</text>
+							<image wx:if="{{item.imageurl||item.imageaddr}}" bindtap="imgYu" data-imageurl="{{item.imageaddr?item.imageaddr:item.imageurl}}"  src="{{item.imageaddr?item.imageaddr:item.imageurl}}" />
+						</view>						
 					</view>
 					<view class="clear"></view>
 				</view>
 			</view>
-		</block>
-	
+		</block>	
 	</view>
 	<view class="clearfix"></view>	
 	<view class="btns">
@@ -27,7 +48,7 @@
 				<view class="weui-flex__item">
 					<button type="primary" bindtap="getInputMessage">发送</button>
 				</view>
-				<view class="weui-flex__item">
+				<view class="weui-flex__item" bindtap="upimg">
 					<image src="../../images/number_add.png" />
 				</view>
 		</view>

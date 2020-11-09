@@ -14,7 +14,6 @@ var socketOpen = false
 var socketMsgQueue = []
 var socketMsgLen = 0
 var chat_messages = []
-var rcv_message_content = ''
 var recorder = wx.getRecorderManager()
 var SocketTask
 var string_base64
@@ -29,6 +28,7 @@ const innerAudioContext = wx.createInnerAudioContext() //获取播放对象
 Page({
   data: {
     shop_type:shop_type,
+    is_loading:false,
     is_customer:0,
     mqtt_mid:0,
     mqtt_goodsid:0,
@@ -53,8 +53,10 @@ Page({
     lastX:0,
     lastY:0,
     page:1,
-    rpage_num:1,
     pagesize:20,
+    img_arr: [],
+		new_img_arr: [],
+		upimg_url: [],
   },
 
   onLoad: function(options) {
@@ -75,7 +77,14 @@ Page({
 		var is_customer = options.customer ? options.customer : '0'
 		var bar_title = goods_name?goods_name.substring(0,12):''
     var frompage = options.frompage ? options.frompage : ''     
-     
+   
+    //自定义头部方法
+    that.setData({
+      navH: app.globalData.navHeight,
+      startBarHeight:0, //app.globalData.navHeight,
+      startBarHeight2:30,//app.globalData.navHeight+30
+    });
+
     let screen_para=wx.getSystemInfoSync()
     let scrollHeight = screen_para.windowHeight - 80
     let style ={
@@ -107,9 +116,9 @@ Page({
     if(is_customer == '1'){
       that.update_goods_custservice()
     }
-    bar_title = is_customer=='1'?that.data.bar_title+'_用户':that.data.bar_title+'_客服'
+    that.data.bar_title = is_customer=='1'?that.data.bar_title+'_用户':that.data.bar_title+'_客服'
 		wx.setNavigationBarTitle({
-				title: bar_title
+				title: that.data.bar_title
 		})
     heartbeat_timer = setInterval(function () {
       that.heartbeat()
@@ -118,9 +127,28 @@ Page({
 
   onShow: function(e) {
     var that = this
-    onHide_s = false
   },
  
+  
+  onPullDownRefresh: function () {
+    var that = this
+    var is_loading = that.data.is_loading
+    //wx.stopPullDownRefresh()
+    if(!is_loading){
+      wx.showToast({
+        title: '加载历史记录',
+        icon: 'loading',
+        duration: 1000
+    })
+      that.setData({
+        page:that.data.page + 1
+      },function(){
+        that.get_wechat_list()
+      })
+    }   
+    console.log('wechat/wechat onPullDownRefresh() page:',that.data.page,' is_loading:',is_loading)    
+  },
+
   onHide: function() {
     var that = this
     console.log('onHide')
@@ -138,8 +166,21 @@ Page({
     that.on_recorder();
   },
 
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+        wx.navigateBack({ changed: true });//返回上一页
+    } else {
+        wx.switchTab({
+            url: '../../hall/hall'
+        })
+    }
+  },
+
   handletouchmove: function (event) {
     var that = this
+    var is_loading = that.data.is_loading
+    var page = that.data.page
     var currentX = event.touches[0].pageX
     var currentY = event.touches[0].pageY
     var tx = currentX - this.data.lastX
@@ -153,24 +194,16 @@ Page({
 
         }
     } else { //上下方向滑动
-        if (ty < 0 && !that.data.is_reloading) {  // text = "向上滑动"
-            if (that.data.page < that.data.rpage_num) {
-                //将当前坐标进行保存以进行下一次计算
-                that.getMoreGoodsTapTag()
-                /*
-                if (currentY > scrollHeight - 100) {
-
-                }
-                */
-            }
+        if (ty < 0 ) {  // text = "向上滑动"
+          
         } else if (ty > 0) {  //text = "向下滑动"
-
+          
         }
     }
    
     that.data.lastX = currentX
     that.data.lastY = currentY
-    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page,' is_loading:',is_loading)
   },
 
   handletouchstart: function (event) {
@@ -326,12 +359,10 @@ Page({
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var is_customer = that.data.is_customer
 
-    if(msg.content!='') {
-      msg.content = util.filterEmoji(msg.content); //去除表情符
-    }else{
+    if(!msg.user) {
         return
     }
-    
+    msg.content = util.filterEmoji(msg.content); //去除表情符
     var message = {
       user: msg.user?msg.user:'',
       type:msg.type?msg.type:'',
@@ -469,9 +500,8 @@ Page({
       let is_customer = that.data.is_customer
       let recv_message = res.data?JSON.parse(res.data, true):''	
       let current_date = util.formatTime(new Date())					 
-			console.log('chatroomservice 收到服务器内容：' + res.data+' rcv_message_content：'+rcv_message_content)
+			console.log('chatroomservice 收到服务器内容：' + res.data)
 			if(recv_message['d'] ){				 //&& recv_message['d']['content'][0]['content'] != rcv_message_content
-        rcv_message_content = recv_message['d']['content'][0]['content']	 //避免重复接收
 				let reply_message = {
 				  user: recv_message['d']['user'],
 				  type:recv_message['d']['type']?recv_message['d']['type']:'text',
@@ -552,6 +582,17 @@ Page({
     var m_id = that.data.mqtt_mid
     var from_username = that.data.from_username
     console.log('wechat/wechat get_wechat_list username:'+username)
+    if(that.data.is_loading){
+      that.setData({
+        page:page>1?page-1:page,
+      })
+      return
+    }else{
+      that.setData({
+        is_loading:true
+      }) 
+    }
+  
     wx.request({
       url: weburl + '/api/mqttservice/get_wechat_list',
       method: 'POST',
@@ -605,11 +646,12 @@ Page({
           })
         }else{
           page = page>1?page-1:1 
-        }
+        } 
         that.setData({
-          page:page
+          page:page,
+          is_loading:false
         })
-        that.initSocketMessage()
+        //that.initSocketMessage()
       }
     })
   },
@@ -644,7 +686,17 @@ Page({
 			}
 		})
   },
-      
+
+  imgYu: function (event) {
+    var imageurl = event.currentTarget.dataset.imageurl;//获取data-src
+    var imgList = [];
+		imgList.push(imageurl);
+		wx.previewImage({
+			current: imageurl,
+			urls: imgList // 需要预览的图片http链接列表
+		})
+  },
+ 
   // 点击轮播图
   swiper_item_click: function (e) {
     var id = e.target.id
@@ -686,14 +738,17 @@ Page({
   },
   upimg: function () {
     var that = this
-    var new_img_arr = that.new_img_arr
-    var img_arr = that.img_arr
+    var new_img_arr = that.data.new_img_arr
+    var img_arr = that.data.img_arr
         
     wx.chooseImage({
       sizeType: ['original', 'compressed'],
       success: function (res) {
-        that.new_img_arr = new_img_arr.concat(res.tempFilePaths)
-        console.log('本次上传图片:', that.new_img_arr)
+        that.setData({
+           new_img_arr : new_img_arr.concat(res.tempFilePaths)
+        })
+      
+        console.log('本次上传图片:', that.data.new_img_arr)
         wx.getImageInfo({
           src: res.tempFilePaths[0],
           success: function (image) {
@@ -706,7 +761,9 @@ Page({
                 icon: 'loading',
                 duration: 2000
               })
-              that.new_img_arr=[]
+              that.setData({
+                new_img_arr : []
+             })
             }
           }
         })						
@@ -727,14 +784,18 @@ Page({
         img_tmp[j++] = old_img_arr[i];
       }
     }			
-    that.img_arr = img_tmp
+    that.setData({
+      new_img_arr : img_tmp
+   })
   },
   
   upload: function () {
     var that = this
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
-    var goods_id = that.mqt_goodsid
-    var new_img_addr = that.new_img_arr; //本次上传图片的手机端文件地址
+    var goods_id = that.data.mqt_goodsid
+    var user = that.data.is_customer=='1'?'customer':'home'
+
+    var new_img_addr = that.data.new_img_arr; //本次上传图片的手机端文件地址
     var new_img_url = []; //本次上传图片的服务端url
   
     for (var i = 0; i < new_img_addr.length; i++) {
@@ -758,9 +819,12 @@ Page({
           var retinfo = JSON.parse(res.data.trim());			
           if (retinfo['status'] == "y") {
             new_img_url.push(retinfo['result']['img_url']);
-            that.new_img_url = new_img_url
+            that.setData({
+              new_img_url:new_img_url
+            })
+            
             let message = {
-              user: 'customer',
+              user: user,
               type:'image',
               content: '',
               imageurl: retinfo['result']['img_url'],
@@ -772,23 +836,16 @@ Page({
             }
             that.addMessage(message)
             count--;
-            console.log('图片上传完成:', that.new_img_url, ' count:', count);
+            console.log('图片上传完成:', message, ' count:', count);
           }
         }
       })
     }
-    that.new_img_arr=[]
+    that.setData({
+      new_img_arr : []
+   })
   },
   
-  imgYu: function () {
-    var imgList = [];
-    var imageurl = e.currentTarget.dataset.imageurl;
-    imgList.push(imageurl);
-    wx.previewImage({
-      current: imageurl,
-      urls: imgList // 需要预览的图片http链接列表
-    })
-  },
   // 跳转小程
   minip: function(e) {
     console.log(e)

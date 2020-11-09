@@ -1531,7 +1531,8 @@ Page({
 
          //自定义头部方法
         that.setData({
-            navH: app.globalData.navHeight
+            navH: app.globalData.navHeight,
+            bar_title:'商品详情',
         });
         if (card_register_prev){  
           var card_register_info = JSON.parse(card_register_prev) 

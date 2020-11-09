@@ -2,7 +2,7 @@
 <!--
 <view class='nav bg-white' style='height:{{navH}}px'>
     <view class='nav-title'>
-      商品详情
+      {{bar_title}}
       <image src='../../images/back.png' mode='aspectFit' class='back' bindtap='goBack'></image> 
     </view>
 </view>
