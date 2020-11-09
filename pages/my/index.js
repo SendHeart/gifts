@@ -1754,6 +1754,12 @@ Page({
     })
   },
 
+  navigateToCustomerservice: function () {
+    wx.navigateTo({
+      url: '/pages/wechat/wechatlist/wechatlist'
+    })
+  },
+
   showsendheartapp: function (e) {
     var that = this
     var data_info = that.data.sendheartappurl

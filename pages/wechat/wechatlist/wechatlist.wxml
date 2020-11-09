@@ -1,0 +1,23 @@
+<view  class="" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
+		<view wx:for="{{wechatList}}"  wx:key="index">
+			<view class="chat-info">
+				<view class="chat-title">
+					<view style="line-height: 80rpx;">{{(item.goods_id>0)?'ID:':''}}{{item.goods_id}}</view>
+					<view class="chat-userinfo" bindtap="navigateToChatroom" data-index="{{index}}">
+						<view class="chat-nickname">{{item.m_id?'ID:'+item.m_id+' ':''}}</view>
+						<view class="chat-nickname">{{item.wx_nickname?item.wx_nickname+' ':''}}</view>
+						<image class="chat-headimg" src="{{item.wx_headimg}}"></image>
+					</view>			
+				</view>
+				<view class="chat-content">
+					<image  bindtap="showGoods" data-index="{{index}}" class="chat-img" src="{{item.image}}"></image>
+					<view class="chat-item">
+						<view class="chat-goods-name">{{item.name}}</view>
+						<view class="opt-list">
+							<text bindtap="navigateToChatroom" data-index="{{index}}" class="smallbtn" style="background:#e34c55;color:#fff;">进入</text>
+						</view>
+					</view>	
+				</view>			
+			</view>	
+		</view>
+	</view>

@@ -1,0 +1,220 @@
+var app = getApp()
+var util = require('../../../utils/util.js')
+var weburl = app.globalData.weburl
+var shop_type = app.globalData.shop_type
+var wssurl = app.globalData.wssurl
+var uploadurl = getApp().globalData.uploadurl
+var mqtturl = getApp().globalData.mqtturl
+var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSync('user_group_id') : '0'
+var page = 1
+var pagesize =20
+Page({
+  data: {
+    shop_type:shop_type,  
+    scrollTop: 0,		
+    style: {
+      pageHeight: 0,
+      contentViewHeight: 0,
+      footViewHeight: 90,
+      mitemHeight: 0,
+    }, 
+    touchstop:false,
+    lastX:0,
+    lastY:0,
+    wechatList: [],
+    page:page,
+    pagesize:pagesize,
+    all_rows: 0,
+    rall_rows: 0,
+    rpage_num: 0,
+    page_num:0,   
+  },
+
+  onLoad: function(options) {
+    var that = this
+		var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var current_date = util.formatTime(new Date())
+    var bar_title = options.bar_title?options.bar_title:''
+    var frompage = options.frompage ? options.frompage : ''     
+   
+    //自定义头部方法
+    that.setData({
+      navH: app.globalData.navHeight,
+      startBarHeight:0, //app.globalData.navHeight,
+      startBarHeight2:30,//app.globalData.navHeight+30
+    });
+
+    let screen_para=wx.getSystemInfoSync()
+    let style ={
+      pageHeight : screen_para.windowHeight,
+      contentViewHeight : screen_para.windowHeight - 80
+    }
+   
+    that.setData({
+      bar_title:bar_title,
+      frompage:frompage,
+      style:style,
+    })
+    that.data.bar_title = '客服列表'
+		wx.setNavigationBarTitle({
+				title: that.data.bar_title
+		})
+    that.query_custservice()
+  },
+
+  onShow: function(e) {
+    var that = this
+  },
+ 
+  // 页面加载完成
+  onReady: function() {
+    var that = this
+  },
+
+  goBack: function () {
+    var pages = getCurrentPages();
+    if (pages.length > 1) {
+        wx.navigateBack({ changed: true });//返回上一页
+    } else {
+        wx.switchTab({
+            url: '../../hall/hall'
+        })
+    }
+  },
+
+  handletouchmove: function (event) {
+    var that = this
+    //var is_loading = that.data.is_loading
+    //var page = that.data.page
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - this.data.lastX
+    var ty = currentY - this.data.lastY
+
+    if (Math.abs(tx) > Math.abs(ty)) {
+        if (tx < 0) { // text = "向左滑动"
+
+        }
+        else if (tx > 0) {   // text = "向右滑动"
+
+        }
+    } else { //上下方向滑动
+        if (ty < 0 ) {  // text = "向上滑动"
+          
+        } else if (ty > 0) {  //text = "向下滑动"
+          
+        }
+    }
+   
+    that.data.lastX = currentX
+    that.data.lastY = currentY
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page,' is_loading:',is_loading)
+  },
+
+  handletouchstart: function (event) {
+    // console.log(event)
+    // 赋值
+    this.data.lastX = event.touches[0].pageX
+    this.data.lastY = event.touches[0].pageY
+    this.setData({
+        touchstop: false,
+    })
+  },
+
+  handletouchend: function (event) {
+    var that = this
+    this.setData({
+        touchstop: true,
+    })
+  },
+
+  showGoods: function (e) {   
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var goods_index = e.currentTarget.dataset.index;
+    let wechatlist_info = that.data.wechatList?that.data.wechatList[goods_index]:{}
+    var show_goods = {
+      goods_id:wechatlist_info['goods_id'],
+      goods_shape:wechatlist_info['goods_shape'],			 
+      goods_info:wechatlist_info['act_info'],			 
+      goods_name:wechatlist_info['name'],
+      image:wechatlist_info['activity_image']?wechatlist_info['activity_image']:wechatlist_info['image'],
+      token:token,
+      username:username
+    }
+    
+    wx.navigateTo({
+      url: '/pages/details/details?id=' + show_goods.goods_id + '&goods_shape=' + show_goods.goods_shape + '&goods_info=' + show_goods.goods_info +  '&name=' + show_goods.goods_name + '&image=' + show_goods.image + '&token=' + token + '&username=' + username
+    })
+  },	
+  
+  navigateToChatroom: function (e) {
+    var that = this
+    var goods_index = e.currentTarget.dataset.index
+    let wechatlist_info = that.data.wechatList?that.data.wechatList[goods_index]:{} 
+    console.log('wechat/wechatList showGoods() goods_index:',goods_index,' wechatlist_info:', wechatlist_info)	
+    
+    var goods_id = wechatlist_info['goods_id'] 
+    var goods_name = wechatlist_info['name'] 
+    var goods_owner = wechatlist_info['goods_owner']  
+    var from_username = wechatlist_info['username']
+    var from_nickname = wechatlist_info['wx_nickname']
+    var from_headimg = wechatlist_info['headimgurl']?wechatlist_info['headimgurl']:wechatlist_info['wx_headimg']
+    var m_id =  wechatlist_info['m_id']
+    
+    wx.navigateTo({
+      url: '/pages/wechat/wechat?frompage=/pages/customerservice/customerservice&goods_id='+goods_id+'&goods_name='+goods_name+'&goods_owner='+goods_owner+'&from_username='+from_username+'&from_headimg='+from_headimg+'&from_nickname='+from_nickname+'&m_id='+m_id+'&customer=2&is_refresh=1'
+    })
+  },
+
+  //查询客服列表
+  query_custservice: function () { 
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type 
+    var page = that.data.page==0?1:that.data.page
+    var pagesize = that.data.pagesize>0?that.data.pagesize:30			
+   
+    wx.request({
+      url: weburl + '/api/mqttservice/query_custservice',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type:shop_type,
+        query_type:'chatroom', 
+        page: page,
+        pagesize: pagesize 
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        var wechatList = res.data.result
+        console.log('wechat/wechatList query_custservice() wechatList:', wechatList)					 
+				if (wechatList) {
+						for (var i = 0; i < wechatList.length; i++) {
+							if (wechatList[i]['image'].indexOf("http") < 0) {
+								wechatList[i]['image'] = weburl + '/' + wechatList[i]['image'];
+							}
+						}
+						 
+						var rpage_num = that.data.rpage_num
+						rpage_num = (wechatList.length / pagesize + 0.5)
+						that.setData({
+              wechatList:wechatList,
+              rall_rows : wechatList.length,
+              rpage_num : rpage_num.toFixed(0)
+            })					
+				}
+      }
+    })
+  },
+})

@@ -40,7 +40,9 @@
     "pages/address/add/add",
     "pages/goods/list/list",
     "pages/goods/comment/comment",
-    "pages/goods/commentlist/commentlist"
+    "pages/goods/commentlist/commentlist",
+    "pages/wechat/wechat",
+    "pages/wechat/wechatlist/wechatlist"
   ],
   "window": {
     "backgroundTextStyle": "light",
