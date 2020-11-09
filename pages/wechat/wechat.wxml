@@ -1,14 +1,14 @@
 <view style="height:100%;box-sizing: border-box;">
-	<scroll-view scroll-y id="chat-content" class="scroll-view" bindscrolltoupper="upper" bindscrolltolower="lower" bindscroll="scroll" scroll-into-view="{{toView}}" scroll-top="{{scrollTop}}">
+	<view id="chat_view" class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
 		<block wx:for="{{messages}}" wx:key="index">
-			<view class="list-item {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
+			<view id="chat_message_list" class="list-item {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
 				<view class="list-item-nickname">
 					<image wx:if="{{item.user=='home'}}" class="list-item-headimg" style="margin-left:1px;" src="{{item.from_headimg}}" ></image>		
 					<text style="margin-left:3px;">{{ item.from_nickname }} </text>
 					<span class="list-item-pubtime">{{ item.createtime }}</span>
-					<image wx:if="{{item.user=='customer'}}" class="list-item-headimg" src="{{item.from_headimg}}" ></image>		
+					<image wx:if="{{item.user=='customer'}}" class="list-item-headimg" src="{{item.from_headimg}}" ></image>
 				</view>
-				<view id="content" class="list-item-content  {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
+				<view class="list-item-content  {{ item.user == 'customer' ? 'pull-right' : 'pull-left' }}">
 					<view class="msg">
 						<view class="{{ item.user == 'customer' ? 'msg-box-right' : 'msg-box-left' }} ">{{ item.content }}</view>						
 					</view>
@@ -16,10 +16,11 @@
 				</view>
 			</view>
 		</block>
-		<view class="clearfix"></view>	
-	</scroll-view>
+	
+	</view>
+	<view class="clearfix"></view>	
 	<view class="btns">
-			<view class="weui-flex">
+		<view class="weui-flex">
 				<view class="weui-flex__item">
 						<input type="text" bindinput="changeInput" value="{{ inputValue}}" class="weui-input" bindconfirm="getInputMessage" bindfocus="closeUse" bindblur="inputBlur" />
 				</view>
@@ -29,7 +30,7 @@
 				<view class="weui-flex__item">
 					<image src="../../images/number_add.png" />
 				</view>
-			</view>
 		</view>
+	</view>
 </view>
 

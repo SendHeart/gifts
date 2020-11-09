@@ -49,7 +49,12 @@ Page({
       footViewHeight: 90,
       mitemHeight: 0,
     }, 
-		
+    touchstop:false,
+    lastX:0,
+    lastY:0,
+    page:1,
+    rpage_num:1,
+    pagesize:20,
   },
 
   onLoad: function(options) {
@@ -68,13 +73,16 @@ Page({
 		var from_headimg = options.from_headimg ? options.from_headimg : that.from_headimg;
 		var qun_type = options.qun_type ? options.qun_type : '1'
 		var is_customer = options.customer ? options.customer : '0'
-		var bar_title = that.goods_name?that.goods_name.substring(0,12):''
-		var frompage = options.frompage ? options.frompage : ''      
-    var screen_para=wx.getSystemInfoSync()
-		
-    that.data.style.pageHeight = screen_para.windowHeight
-    that.data.style.contentViewHeight = screen_para.windowHeight - 80
-
+		var bar_title = goods_name?goods_name.substring(0,12):''
+    var frompage = options.frompage ? options.frompage : ''     
+     
+    let screen_para=wx.getSystemInfoSync()
+    let scrollHeight = screen_para.windowHeight - 80
+    let style ={
+      pageHeight : screen_para.windowHeight,
+      contentViewHeight : screen_para.windowHeight - 80
+    }
+   
     that.setData({
       mqtt_mid: mqtt_mid,
       mqtt_goodsid:mqtt_goodsid,
@@ -88,6 +96,8 @@ Page({
       qun_type:qun_type,
       bar_title:bar_title,
       frompage:frompage,
+      style:style,
+      scrollHeight:scrollHeight
     })
     that.webSocket_open()
     if(that.data.mqtt_goodsid || that.data.goods_owner){
@@ -97,6 +107,10 @@ Page({
     if(is_customer == '1'){
       that.update_goods_custservice()
     }
+    bar_title = is_customer=='1'?that.data.bar_title+'_用户':that.data.bar_title+'_客服'
+		wx.setNavigationBarTitle({
+				title: bar_title
+		})
     heartbeat_timer = setInterval(function () {
       that.heartbeat()
     }, 10*1000)
@@ -109,15 +123,11 @@ Page({
  
   onHide: function() {
     var that = this
-    autoRestart = false;
-    onHide_s = true
     console.log('onHide')
   },
 
   onUnload: function() {
     var that = this
-    onUnload_num++;
-    autoRestart = false
     clearInterval(heartbeat_timer)
     console.log('onUnload')
     that.close();
@@ -126,7 +136,90 @@ Page({
   onReady: function() {
     var that = this
     that.on_recorder();
-    that.bottom()
+  },
+
+  handletouchmove: function (event) {
+    var that = this
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - this.data.lastX
+    var ty = currentY - this.data.lastY
+
+    if (Math.abs(tx) > Math.abs(ty)) {
+        if (tx < 0) { // text = "向左滑动"
+
+        }
+        else if (tx > 0) {   // text = "向右滑动"
+
+        }
+    } else { //上下方向滑动
+        if (ty < 0 && !that.data.is_reloading) {  // text = "向上滑动"
+            if (that.data.page < that.data.rpage_num) {
+                //将当前坐标进行保存以进行下一次计算
+                that.getMoreGoodsTapTag()
+                /*
+                if (currentY > scrollHeight - 100) {
+
+                }
+                */
+            }
+        } else if (ty > 0) {  //text = "向下滑动"
+
+        }
+    }
+   
+    that.data.lastX = currentX
+    that.data.lastY = currentY
+    //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
+  },
+
+  handletouchstart: function (event) {
+    // console.log(event)
+    // 赋值
+    this.data.lastX = event.touches[0].pageX
+    this.data.lastY = event.touches[0].pageY
+    this.setData({
+        touchstop: false,
+    })
+  },
+
+  handletouchend: function (event) {
+    var that = this
+    this.setData({
+        touchstop: true,
+    })
+  },
+
+  message_scroll_auto: function () {
+    // 获取scroll-view的节点信息
+    //创建节点选择器
+    var that = this 
+    var cur_message_num = chat_messages.length
+    var message_scrollTop = that.data.lastY + (cur_message_num)*50 //避免显示空行造成的偏差 
+    var query = wx.createSelectorQuery();
+    query.select('#chat_view').boundingClientRect()
+    query.select('#chat_message_list').boundingClientRect()
+    query.exec((res) => {
+      var containerHeight = res[0].height;
+      var listHeight = res[1].height;
+      
+      // 滚动条的高度增加
+      if (message_scrollTop > listHeight - containerHeight) {
+        if (wx.pageScrollTo) {
+          wx.pageScrollTo({
+              scrollTop: message_scrollTop ,
+              duration:300,
+          })          
+        } else {
+          wx.showModal({
+              title: '提示',
+              content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
+          })
+        }
+      }
+      //console.log('wechat/wechat message_scroll_auto() containerHeight:', containerHeight, ' listHeight:', listHeight, ' message_scrollTop:', message_scrollTop, ' cur_message_num:', cur_message_num)
+    })
+   
   },
   // 创建websocket
   webSocket_open: function () {
@@ -232,8 +325,13 @@ Page({
     var current_date = util.formatTime(new Date())
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var is_customer = that.data.is_customer
-    var scrollTop = that.data.scrollTop
-    if(msg.content!='') msg.content = util.filterEmoji(msg.content); //去除表情符
+
+    if(msg.content!='') {
+      msg.content = util.filterEmoji(msg.content); //去除表情符
+    }else{
+        return
+    }
+    
     var message = {
       user: msg.user?msg.user:'',
       type:msg.type?msg.type:'',
@@ -271,9 +369,10 @@ Page({
 
     that.setData({
       messages:chat_messages,
-      scrollTop : scrollTop + 120		
+    },function(){
+      that.message_scroll_auto()
     })
-   
+ 
     //console.log('chatroomservice addMessage messages len:'+chat_messages.length+' info:'+JSON.stringify(chat_messages))
     if(!socketOpen) {
       console.log('chatroomservice addMessage() 掉线了 socketOpen: '+socketOpen)
@@ -290,7 +389,7 @@ Page({
     }
      
     setTimeout(function () {
-      that.bottom()
+      that.message_scroll_auto()
     }, 300)
   },
 
@@ -390,7 +489,6 @@ Page({
 					that.addMessage(reply_message)	
 			  } 
 			}
-      that.bottom();
     })
   },
 
@@ -787,13 +885,7 @@ Page({
       })
     }
   },
-  // 获取hei的id节点然后屏幕焦点调转到这个节点  
-  bottom: function() {
-    var that = this
-    that.setData({
-      scrollTop: 100000
-    })
-  },
+ 
   hide_bg: function() {
     var that = this
     that.setData({

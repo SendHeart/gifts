@@ -310,8 +310,7 @@ Page({
         })
       }
       console.log('containerHeight:', containerHeight, ' listHeight:', listHeight, ' danmu_scrollTop:', danmu_scrollTop, ' cur_danmu_num:', cur_danmu_num, ' danmuList:', that.data.danmuList)
-    })
-   
+    })   
   },
 
   onReady: function () {

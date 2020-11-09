@@ -2,7 +2,7 @@
 .weui-flex__item{flex:initial;}
 .pull-left{float: left;}
 .pull-right{float: right;}
-.clearfix{clear: both;}
+.clearfix{clear: both;height: 50px;}
 
 .btns .weui-flex__item:nth-child(1){width: 70%;}
 .btns .weui-flex__item:nth-child(2){width: 10%;margin: 0 2.5%;}
@@ -18,7 +18,7 @@
 .list-item-headimg{margin-left:5px;width: 20px;height: 20px;border-radius: 50%;}
 .list-item-content{font-size:1rem;}
 .list-item-content .look{width: 32px;height:32px;display: inline-block;margin-left: .2rem;}
-.list-item-content .msg .msg-box-right{margin-top: .2rem;padding-left:5px;padding-right:5px;border-radius: 5px;background: #fff;color:#666;}
+.list-item-content .msg .msg-box-right{margin-top: .2rem;padding-left:5px;padding-right:5px;border-radius: 5px;background: #fff;color:#666;text-align: left;}
 .list-item-content .msg .msg-box-left{margin-top: .2rem;padding-left:5px;padding-right:5px;border-radius: 5px;background: #1482D1;}
 
 .list-item-content .msg{float: right;display:flex;flex-direction: row; justify-content: space-around; color: #ccc; margin-right:10px; }
@@ -26,4 +26,4 @@
 .list-item.pull-left{text-align: left;}
 .list-item.pull-right{text-align: right;}
 
-.scroll-view{padding:0 .5rem;width: 100%;margin-bottom:50px;}
+.scroll-view{padding:0 .5rem;width: 100%;}
