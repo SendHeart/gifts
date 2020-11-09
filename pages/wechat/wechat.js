@@ -379,7 +379,7 @@ Page({
     let websocket_pub_message = {
       message_type: 2,  //商品服务群
       username: username,
-      to_username:that.from_username,
+      to_username:that.data.from_username,
       m_id:m_id,
       shop_type: shop_type,
       title: mqtt_pub_title,
