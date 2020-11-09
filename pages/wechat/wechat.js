@@ -308,6 +308,11 @@ Page({
     var is_customer = that.data.is_customer
     var inputValue = that.data.inputValue;
     if (inputValue == "") {
+      wx.showToast({
+        title: '不能发空消息',
+        icon: 'loading',
+        duration: 2000
+      })
       return
     }
     
@@ -330,6 +335,11 @@ Page({
   getSocketMessage: function (Msginfo = {}) { //获取子组件的输入数据
     var that = this
     if(!Msginfo) { 
+      wx.showToast({
+        title: '不能发空消息',
+        icon: 'loading',
+        duration: 2000
+      })
       return
     } 
     
@@ -360,9 +370,14 @@ Page({
     var is_customer = that.data.is_customer
 
     if(!msg.user) {
+      wx.showToast({
+        title: '消息类型为空:'+msg.user,
+        icon: 'loading',
+        duration: 2000
+      })
         return
     }
-    msg.content = util.filterEmoji(msg.content); //去除表情符
+    msg.content = util.filterEmoji(msg.content) //去除表情符
     var message = {
       user: msg.user?msg.user:'',
       type:msg.type?msg.type:'',
@@ -394,10 +409,14 @@ Page({
       from_username:username,
       createtime:current_date
     }
-    //console.log('addMessage userInfo:'+JSON.stringify(userInfo))
+    console.log('addMessage websocket_pub_message:'+JSON.stringify(websocket_pub_message))
     let chat_msg_last = chat_messages.length - 1
-    if(chat_messages[chat_msg_last]['content']!=message['content']) chat_messages.push(message) //避免重复数据
-
+    if(chat_msg_last>0){
+      if(chat_messages[chat_msg_last]['content']!=message['content']) chat_messages.push(message) //避免重复数据
+    }else{
+      chat_messages.push(message)
+    }
+    
     that.setData({
       messages:chat_messages,
     },function(){
