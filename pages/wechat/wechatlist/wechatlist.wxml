@@ -1,3 +1,22 @@
+<view class="weui-search-bar">
+  <view class="weui-search-bar__cancel-btn" style="width:50px;margin-right:10px;display:flex;flex-direction:column;justify-content:center;" bindtap="goBack">
+    <image style="margin:0 auto;width:20px;height:20px;bord-radius:50%;" src="../../../images/back.png"></image>
+  </view>
+  <view class="weui-search-bar__form">
+    <view class="weui-search-bar__box" style="text-align:center;">
+      <input type="text" class="weui-search-bar__input" placeholder="商品ID" value="{{search_goodsid}}" focus="{{inputShowed}}" bindinput="search_goodsidTapTag"  />
+    </view>
+  </view>
+  <view class="weui-search-bar__form">
+    <view class="weui-search-bar__box" style="text-align:center;">
+      <input type="text" class="weui-search-bar__input" placeholder="商品名称" value="{{search_goodsname}}" focus="{{inputShowed}}" bindinput="search_goodsnameTapTag"  />
+      <view class="weui-icon-clear" wx:if="{{search_goodsname.length > 0}}" bindtap="clearInput">
+        <icon type="clear" size="14"></icon>
+      </view>
+    </view>
+  </view>
+  <view class="weui-search-bar__cancel-btn" style="width:50px;" bindtap="searchTapTag">搜索</view>
+</view>
 <view  class="" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="">
 		<view wx:for="{{wechatList}}"  wx:key="index">
 			<view class="chat-info">

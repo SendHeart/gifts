@@ -409,7 +409,7 @@ Page({
       from_username:username,
       createtime:current_date
     }
-    console.log('addMessage websocket_pub_message:'+JSON.stringify(websocket_pub_message))
+    //console.log('addMessage websocket_pub_message:'+JSON.stringify(websocket_pub_message))
     let chat_msg_last = chat_messages.length - 1
     if(chat_msg_last>0){
       if(chat_messages[chat_msg_last]['content']!=message['content']) chat_messages.push(message) //避免重复数据
@@ -665,6 +665,11 @@ Page({
           })
         }else{
           page = page>1?page-1:1 
+          wx.showToast({
+            title: res.data.info?res.data.info:'到顶了!',
+            icon: 'loading',
+            duration: 2000
+          })
         } 
         that.setData({
           page:page,

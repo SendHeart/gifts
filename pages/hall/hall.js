@@ -156,9 +156,10 @@ Page({
 
         that.setData({
             floorstatus: true,
+            lastX:currentX,
+            lastY:currentY
         })
-        that.data.lastX = currentX
-        that.data.lastY = currentY
+    
         //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
 
     },
@@ -174,11 +175,10 @@ Page({
 
     handletouchstart: function (event) {
         // console.log(event)
-        // 赋值
-        this.data.lastX = event.touches[0].pageX
-        this.data.lastY = event.touches[0].pageY
         this.setData({
             touchstop: false,
+            lastX:event.touches[0].pageX,
+            lastY:event.touches[0].pageY
         })
     },
     handletouchend: function (event) {

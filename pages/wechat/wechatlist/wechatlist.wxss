@@ -80,7 +80,7 @@ page {
 	flex-direction: row;
 	justify-content: flex-start;
 	background: #F2F2F2;
-	height: 220rpx;
+	height: 258rpx;
 	padding: 0rpx;
 	border-bottom: 1px solid #FFFFFF;
 }

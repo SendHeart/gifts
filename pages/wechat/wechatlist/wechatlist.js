@@ -12,6 +12,7 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSync('user_group_id') : '0'
 var page = 1
 var pagesize =20
+var is_loading = false
 Page({
   data: {
     shop_type:shop_type,  
@@ -32,6 +33,42 @@ Page({
     rall_rows: 0,
     rpage_num: 0,
     page_num:0,   
+    inputShowed: true,  // 搜索框值
+    search_goodsname:'',
+    search_goodsid:'',
+  },
+
+  clearInput: function (e) {
+    var that = this
+    that.setData({
+      search_goodsname: '',
+      search_goodsid:'',
+    })
+  },
+
+  search_goodsidTapTag: function (e) {
+    var that = this;
+    var search_goodsid = e.detail.value
+    that.setData({
+      search_goodsid: search_goodsid
+    })
+  },
+
+  search_goodsnameTapTag: function (e) {
+    var that = this;
+    var search_goodsname = e.detail.value
+    that.setData({
+      search_goodsname: search_goodsname
+    })
+  },
+
+  searchTapTag: function (e) {
+    var that = this
+    console.log('搜索关键字：' + that.data.search_goodsname)
+    that.setData({
+      page: 1,
+    })
+    that.query_custservice()
   },
 
   onLoad: function(options) {
@@ -47,7 +84,7 @@ Page({
       startBarHeight:0, //app.globalData.navHeight,
       startBarHeight2:30,//app.globalData.navHeight+30
     });
-
+    is_loading = false
     let screen_para=wx.getSystemInfoSync()
     let style ={
       pageHeight : screen_para.windowHeight,
@@ -58,8 +95,9 @@ Page({
       bar_title:bar_title,
       frompage:frompage,
       style:style,
+      bar_title:'客服列表'
     })
-    that.data.bar_title = '客服列表'
+ 
 		wx.setNavigationBarTitle({
 				title: that.data.bar_title
 		})
@@ -86,6 +124,37 @@ Page({
     }
   },
 
+  getMoreGoodsTapTag: function (e) {
+    var that = this;
+    var page = that.data.page + 1;
+    var rpage_num = that.data.rpage_num
+    var is_reloading = that.data.is_reloading
+    console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading)
+    if (is_reloading) {
+        return
+    }
+
+    if (page > rpage_num) {
+        wx.showToast({
+            title: '已经到底了~',
+            icon: 'none',
+            duration: 1000
+        })
+        return
+    }
+    
+    wx.showToast({
+      title: '加载中',
+      icon: 'loading',
+      duration: 1000
+    })
+    
+    that.setData({
+        page: page,
+    })
+    that.query_custservice()
+  },
+
   handletouchmove: function (event) {
     var that = this
     //var is_loading = that.data.is_loading
@@ -104,24 +173,29 @@ Page({
         }
     } else { //上下方向滑动
         if (ty < 0 ) {  // text = "向上滑动"
-          
+        if (that.data.page < that.data.rpage_num) {
+          that.getMoreGoodsTapTag()
+      }
         } else if (ty > 0) {  //text = "向下滑动"
           
         }
     }
+    that.setData({
+      lastX : currentX,
+      lastY : currentY
+    })
    
-    that.data.lastX = currentX
-    that.data.lastY = currentY
+   
     //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page,' is_loading:',is_loading)
   },
 
   handletouchstart: function (event) {
     // console.log(event)
-    // 赋值
-    this.data.lastX = event.touches[0].pageX
-    this.data.lastY = event.touches[0].pageY
+  
     this.setData({
         touchstop: false,
+        lastX : event.touches[0].pageX,
+        lastY : event.touches[0].pageY
     })
   },
 
@@ -180,7 +254,13 @@ Page({
     var shop_type = that.data.shop_type 
     var page = that.data.page==0?1:that.data.page
     var pagesize = that.data.pagesize>0?that.data.pagesize:30			
-   
+    var search_goodsname = that.data.search_goodsname
+    var search_goodsid = that.data.search_goodsid
+    if(!is_loading){
+      is_loading = true
+    }else{
+      return
+    }
     wx.request({
       url: weburl + '/api/mqttservice/query_custservice',
       method: 'POST',
@@ -190,15 +270,16 @@ Page({
         shop_type:shop_type,
         query_type:'chatroom', 
         page: page,
-        pagesize: pagesize 
+        pagesize: pagesize,
+        search_goodsname:search_goodsname,
+        search_goodsid:search_goodsid,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
-        var wechatList = res.data.result
-        console.log('wechat/wechatList query_custservice() wechatList:', wechatList)					 
+        var wechatList = res.data.result				 
 				if (wechatList) {
 						for (var i = 0; i < wechatList.length; i++) {
 							if (wechatList[i]['image'].indexOf("http") < 0) {
@@ -212,8 +293,17 @@ Page({
               wechatList:wechatList,
               rall_rows : wechatList.length,
               rpage_num : rpage_num.toFixed(0)
-            })					
-				}
+            },function(){
+              is_loading = false
+            })
+            console.log('wechat/wechatList query_custservice() wechatList:', wechatList,' rpage_num:',that.data.rpage_num)						
+				}else{
+          wx.showToast({
+            title: res.data.info?res.data.info:'没有数据',
+            icon: 'loading',
+            duration: 2000
+          })
+        }
       }
     })
   },

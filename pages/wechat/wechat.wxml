@@ -12,9 +12,9 @@
       <view class="btnback" bindtap="goBack"> 
         <image class="shareto" src="../../images/back.png"></image>
       </view>      
-      <view class="btnshare" bindtap="onPullDownRefresh">
-        <image class="shareto" src="../../images/top.png"></image>
-        更多
+      <view class="btnshare" bindtap="onPullDownRefresh">			 
+				<image class="shareto" src="../../images/top.png"></image>
+        <text>更多</text>       
       </view>
     </view>
   </view>

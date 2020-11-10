@@ -1,5 +1,5 @@
 {
 	"navigationBarTitleText":"商品客服",
 	"backgroundTextStyle": "dark",
-	"enablePullDownRefresh": true
+	"enablePullDownRefresh": false
 }

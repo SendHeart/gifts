@@ -22,7 +22,7 @@ Page({
     images: [],
     all_rows: 0,
     venuesItems: [],
-    hidddensearch: true,
+    hidddensearch: false,
     search_goodsname: null,
     keyword: '',
     satisfy:true,
@@ -183,15 +183,30 @@ Page({
       scrollTop: 0
     })
   },
+  clearInput: function (e) {
+    var that = this
+    that.setData({
+      keyword: '',
+    })
+  },
+
   searchTapTag: function (e) {
     var that = this
-    console.log('搜索关键字：' + that.data.search_goodsname)
+    console.log('搜索关键字：' + that.data.keyword)
     that.setData({
       page: 1,
     })
     that.get_goods_list()
   },
 
+  search_goodsnameTapTag: function (e) {
+    var that = this;
+    var keyword = e.detail.value
+    that.setData({
+      keyword: keyword
+    })
+  },
+  
   getMoreGoodsTapTag: function (e) {
     var that = this;
     var page = that.data.page + 1;
@@ -240,8 +255,8 @@ Page({
     //自定义头部方法
      that.setData({
       navH: app.globalData.navHeight,
-      startBarHeight:app.globalData.navHeight,
-      startBarHeight2:app.globalData.navHeight
+      startBarHeight:0,//app.globalData.navHeight,
+      startBarHeight2:0,//app.globalData.navHeight
     });
 
     that.setData({
@@ -288,12 +303,7 @@ Page({
     }
 
   },
-  search_goodsnameTapTag: function (e) {
-    var that = this;
-    var keyword = e.detail.value
-    that.setData({
-      keyword: keyword
-    })},
+
   gotoAITagTap: function (e) {
     var that = this
     app.globalData.messageflag =2
