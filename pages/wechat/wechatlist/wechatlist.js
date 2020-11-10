@@ -27,6 +27,8 @@ Page({
     lastX:0,
     lastY:0,
     wechatList: [],
+    wechatList_show:[],
+    show_max:20,
     page:page,
     pagesize:pagesize,
     all_rows: 0,
@@ -127,14 +129,14 @@ Page({
   getMoreGoodsTapTag: function (e) {
     var that = this;
     var page = that.data.page + 1;
-    var rpage_num = that.data.rpage_num
-    var is_reloading = that.data.is_reloading
-    console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_reloading:', is_reloading)
-    if (is_reloading) {
+    var page_num = that.data.page_num
+    var is_loading = that.data.is_loading
+    console.log('getMoreGoodsTapTag 加载更多中，请稍等 page:', page, 'is_loading:', is_loading)
+    if (is_loading) {
         return
     }
 
-    if (page > rpage_num) {
+    if (page > page_num) {
         wx.showToast({
             title: '已经到底了~',
             icon: 'none',
@@ -142,13 +144,6 @@ Page({
         })
         return
     }
-    
-    wx.showToast({
-      title: '加载中',
-      icon: 'loading',
-      duration: 1000
-    })
-    
     that.setData({
         page: page,
     })
@@ -173,9 +168,9 @@ Page({
         }
     } else { //上下方向滑动
         if (ty < 0 ) {  // text = "向上滑动"
-        if (that.data.page < that.data.rpage_num) {
-          that.getMoreGoodsTapTag()
-      }
+          if (that.data.page < that.data.page_num) {
+            that.getMoreGoodsTapTag()
+          }
         } else if (ty > 0) {  //text = "向下滑动"
           
         }
@@ -253,13 +248,15 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type 
     var page = that.data.page==0?1:that.data.page
-    var pagesize = that.data.pagesize>0?that.data.pagesize:30			
+    var pagesize = that.data.pagesize>0?that.data.pagesize:20			
+    var page_num = that.data.page_num
     var search_goodsname = that.data.search_goodsname
     var search_goodsid = that.data.search_goodsid
-    if(!is_loading){
-      is_loading = true
-    }else{
+    if(is_loading || (page > page_num && page>1)){
+      console.log('wechat/wechatList query_custservice() page:', page,' page_num:',page_num,' is_loading:',is_loading)
       return
+    }else{
+      is_loading = true
     }
     wx.request({
       url: weburl + '/api/mqttservice/query_custservice',
@@ -279,24 +276,23 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        var wechatList = res.data.result				 
+        var wechatList = res.data.result	
+        var page_num = res.data.all_rows
+     
 				if (wechatList) {
 						for (var i = 0; i < wechatList.length; i++) {
 							if (wechatList[i]['image'].indexOf("http") < 0) {
 								wechatList[i]['image'] = weburl + '/' + wechatList[i]['image'];
 							}
-						}
-						 
-						var rpage_num = that.data.rpage_num
-						rpage_num = (wechatList.length / pagesize + 0.5)
+						}	
+           
 						that.setData({
-              wechatList:wechatList,
-              rall_rows : wechatList.length,
-              rpage_num : rpage_num.toFixed(0)
+              wechatList:that.data.wechatList.concat(wechatList),
+              page_num : page_num,          
             },function(){
               is_loading = false
             })
-            console.log('wechat/wechatList query_custservice() wechatList:', wechatList,' rpage_num:',that.data.rpage_num)						
+            console.log('wechat/wechatList query_custservice() wechatList:', wechatList,' page_num:',that.data.page_num)						
 				}else{
           wx.showToast({
             title: res.data.info?res.data.info:'没有数据',
