@@ -663,13 +663,15 @@ Page({
           that.setData({
             messages:chat_messages
           })
-        }else{
+        }else{         
+          if(page > 1){
+            wx.showToast({
+              title: res.data.info?res.data.info:'到顶了!',
+              icon: 'loading',
+              duration: 2000
+            })
+          }
           page = page>1?page-1:1 
-          wx.showToast({
-            title: res.data.info?res.data.info:'到顶了!',
-            icon: 'loading',
-            duration: 2000
-          })
         } 
         that.setData({
           page:page,
