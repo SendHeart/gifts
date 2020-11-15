@@ -35,7 +35,7 @@ Page({
     rall_rows: 0,
     rpage_num: 0,
     page_num:0,   
-    inputShowed: true,  // 搜索框值
+    inputShowed: false,  // 搜索框值
     search_goodsname:'',
     search_goodsid:'',
   },
@@ -285,8 +285,13 @@ Page({
 								wechatList[i]['image'] = weburl + '/' + wechatList[i]['image'];
 							}
 						}	
-           
-						that.setData({
+           if(page == 1){
+              that.setData({
+                wechatList:[],
+              })
+           }
+            
+           that.setData({
               wechatList:that.data.wechatList.concat(wechatList),
               page_num : page_num,          
             },function(){

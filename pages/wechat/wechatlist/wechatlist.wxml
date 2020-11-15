@@ -1,8 +1,8 @@
 <view class="weui-search-bar">
-  <view class="weui-search-bar__cancel-btn" style="width:50px;margin-right:10px;display:flex;flex-direction:column;justify-content:center;" bindtap="goBack">
+  <view class="weui-search-bar__text" style="width:50px;margin-right:5px;display:flex;flex-direction:column;justify-content:center;" bindtap="goBack">
     <image style="margin:0 auto;width:20px;height:20px;bord-radius:50%;" src="../../../images/back.png"></image>
   </view>
-  <view class="weui-search-bar__form">
+  <view class="weui-search-bar__form" style="width:45%;">
     <view class="weui-search-bar__box" style="text-align:center;">
       <input type="text" class="weui-search-bar__input" placeholder="商品ID" value="{{search_goodsid}}" focus="{{inputShowed}}" bindinput="search_goodsidTapTag"  />
     </view>
