@@ -115,6 +115,8 @@ Page({
     }
     if(is_customer == '1'){
       that.update_goods_custservice()
+    }else{
+      that.update_home_custservice()
     }
     that.data.bar_title = is_customer=='1'?that.data.bar_title+'_用户':that.data.bar_title+'_客服'
 		wx.setNavigationBarTitle({
@@ -702,6 +704,39 @@ Page({
 				goods_id: goods_id,
 				goods_owner:goods_owner,
 				goods_shop_id:goods_shop_id,
+			},
+			header: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Accept': 'application/json'
+			},
+			success: function (res) {
+				console.log('wechat/wechat update_goods_custservice：'+ JSON.stringify(res.data.result))
+			}
+		})
+  },
+
+  update_home_custservice: function() {
+		var that = this
+		var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+		var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+		var shop_type = that.data.shop_type; 	
+		var goods_id = that.data.mqtt_goodsid?that.data.mqtt_goodsid:0
+    var goods_owner = that.data.goods_owner?that.data.goods_owner:''
+    var m_id = that.data.mqtt_mid
+		var from_username = that.data.from_username
+    var is_customer = that.data.is_customer
+		if(is_customer =='1') return 
+		wx.request({
+			url: weburl + '/api/mqttservice/update_home_custservice',
+			method: 'POST',
+			data: {
+				username: username,
+				access_token: token,
+				shop_type: shop_type,
+				goods_id: goods_id,
+				goods_owner:goods_owner,
+        from_mid:m_id,
+        from_username:from_username,
 			},
 			header: {
 				'Content-Type': 'application/x-www-form-urlencoded',

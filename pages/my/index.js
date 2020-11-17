@@ -463,14 +463,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
     var message_type = 0 //0订单类消息
-    /*
-    wx.getSetting({
-      withSubscriptions: true, //这句怎么无效
-      success(e) {
-        console.log('订单类消息订阅授权:',e)
-      }
-    })
-    */
+   
     wx.request({
       url: weburl + '/api/client/get_subscribe_tmpl',
       method: 'POST',

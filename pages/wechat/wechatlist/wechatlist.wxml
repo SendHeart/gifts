@@ -21,7 +21,13 @@
 		<view wx:for="{{wechatList}}"  wx:key="index">
 			<view class="chat-info">
 				<view class="chat-title">
-					<view style="line-height: 80rpx;">{{(item.goods_id>0)?'ID:':''}}{{item.goods_id}}</view>
+					<view style="height:80rpx;line-height: 80rpx;">
+						<text style="margin-right:20rpx;">{{(item.goods_id>0)?'ID:':''}}{{item.goods_id}}</text>						
+					</view>
+					<view wx:if="{{item.msg_num>0}}" class="msg-num-icon">
+						<icon style="margin-top:0rpx;color:#e34c55" class="Hui-iconfont iconv-message" />	
+						<text class="msg-num-text">{{item.msg_num}}</text>
+					</view>									
 					<view class="chat-userinfo" bindtap="navigateToChatroom" data-index="{{index}}">
 						<view class="chat-nickname">{{item.m_id?'ID:'+item.m_id+' ':''}}</view>
 						<view class="chat-nickname">{{item.wx_nickname?item.wx_nickname+' ':''}}</view>

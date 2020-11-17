@@ -113,8 +113,7 @@
 		  
 		  <text style="color:#fff">.</text>
 	  </view>
-    <view bindtap="" class="order">
-		 
+    <view bindtap="" class="order">		 
 		  <text style="color:#fff">.</text>
 	  </view>
     <view  bindtap="" class="order">
