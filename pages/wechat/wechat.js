@@ -125,6 +125,7 @@ Page({
     heartbeat_timer = setInterval(function () {
       that.heartbeat()
     }, 10*1000)
+    that.subscribeMessage()
   },
 
   onShow: function(e) {
@@ -445,6 +446,100 @@ Page({
     }, 300)
   },
 
+  
+  //获取订阅模板信息
+  subscribeMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var message_type = 1 //0订单类消息 1客户类 2客服类
+   
+    wx.request({
+      url: weburl + '/api/client/get_subscribe_tmpl',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        m_id: m_id,
+        shop_type: shop_type,
+        message_type: message_type
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('订阅消息 my subscribeMessage:',res.data)
+        if (res.data.status == 'y') {
+          var subscribe_tmpl_list = res.data.result
+          var info_content=''
+          wx.setStorageSync('subscribe_tmpl_list', subscribe_tmpl_list)
+          if (subscribe_tmpl_list) {
+            var subscribe_tmpl = []
+            for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+              if (i % 2 == 0) {
+                subscribe_tmpl = []
+                info_content = ''
+              }
+              info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
+              subscribe_tmpl[i%2] = subscribe_tmpl_list[i]
+              if (i%2 == 1) {
+                that.requestSubscribeMessage(subscribe_tmpl)
+                wx.showToast({
+                  title: info_content + "订阅完成" ,
+                  icon: 'none',
+                  duration: 5000,
+                })
+              }
+            }
+          }
+        }
+      }
+    })
+  },
+
+  requestSubscribeMessage: function (subscribe_tmpl_list) {
+    var that = this
+    var subscribe_tmpl_id = []
+    var subscribe_tmpl_name = []
+    //var subscribe_tmpl = that.data.subscribe_tmpl
+    if (!subscribe_tmpl_list) {
+      console.log('订阅消息模板ID为空')
+      return
+    }else{
+      for (let i = 0; i < subscribe_tmpl_list.length;i++){
+        subscribe_tmpl_id[i] = subscribe_tmpl_list[i]['id']
+        subscribe_tmpl_name[i] = subscribe_tmpl_list[i]['name']
+      }
+    }
+    console.log('订阅消息模板列表:', subscribe_tmpl_list)
+    return new Promise((resolve, reject) => {
+      wx.requestSubscribeMessage({
+        tmplIds: subscribe_tmpl_id,
+        success: (res) => {
+          for (let i = 0; i < subscribe_tmpl_id.length;i++){
+            if (res[subscribe_tmpl_id[i]] === 'accept') {
+              wx.showToast({
+                title: subscribe_tmpl_name[i]+'订阅OK！',
+                icon:'none',
+                duration: 1500,
+                success(data) {
+                  //成功
+                  resolve()
+                }
+              })
+            }
+          }
+        },
+        fail(err) {//失败
+          console.error(err);
+          reject()
+        },
+      })
+    })
+  },
   heartbeat: function () {
     //心跳信息
     var that = this

@@ -26,6 +26,7 @@ Page({
     userauth: userauth,
     member_group_name:member_group_name,
     member_group_id:member_group_id,
+    message_type:0,
     default_avatar: weburl + '/uploads/avatar.png',
     hideviewagreementinfo: true,
     agreementinfoshowflag: 0,
@@ -462,7 +463,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
-    var message_type = 0 //0订单类消息
+    var message_type = that.data.message_type?that.data.message_type:0 //0订单类消息
    
     wx.request({
       url: weburl + '/api/client/get_subscribe_tmpl',
@@ -488,13 +489,13 @@ Page({
 
             var subscribe_tmpl = []
             for (let i = 0; i < subscribe_tmpl_list.length; i++) {
-              if (i % 3 == 0) {
+              if (i % 4 == 0) {
                 subscribe_tmpl = []
                 info_content = ''
               }
               info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
-              subscribe_tmpl[i%3] = subscribe_tmpl_list[i]
-              if (i%3 == 2) {
+              subscribe_tmpl[i%4] = subscribe_tmpl_list[i]
+              if (i%4 == 3) {
                 that.requestSubscribeMessage(subscribe_tmpl)
                 wx.showToast({
                   title: info_content + "订阅完成" ,
