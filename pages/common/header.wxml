@@ -1,15 +1,19 @@
 
 <view>
   <!-- 自定义头部 -->
-  <view class='nav bg-white' style='height:{{navH}}px'>
+  <view class='nav' style='height:{{navH}}rpx'>
     <view class='nav-title'>
+      <view class="userinfo" bindtap='userTapTag'>
+      <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </view>
       <view class="INinputheader" >
         <icon class="INsearchicon" type="search" size="12"/>
         <input class="weui-input" placeholder="会员制购物商城" bindtap='searchTapTag' disabled="disable" />       
       </view>
       <view style="margin-left:30rpx;height:35px;line-height:35px" catchtap="messagesTapTag">
           <text style="font-size:20rpx;color:#999">了解什么是会员制</text>
-        </view>
+        </view> 
     </view>
-  </view>  
+  </view> 
 </view>

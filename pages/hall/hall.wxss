@@ -76,7 +76,7 @@ page {
 .userinfo-avatar {
   width: 64rpx;
   height: 64rpx;
-  margin: 5rpx 10rpx 0 10rpx;
+  margin: 13rpx 10rpx;
   border-radius: 50%;
 }
 
