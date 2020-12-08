@@ -1402,7 +1402,9 @@ Page({
     var that = this
     that.setData({
       modalHiddenAgreement: !that.data.modalHiddenAgreement,
+      art_id:0,
     })
+    app.globalData.art_id = 0
     wx.setStorageSync('isReadAgreement', 1) //协议阅读标志
     that.goBack()
 
