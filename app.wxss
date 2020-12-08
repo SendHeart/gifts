@@ -100,6 +100,7 @@ header - wxss
   top: 0;
   left: 0;
   z-index: 10;
+  background: #1d1d1d;
 }
 .nav-title{
   width: 100%;
@@ -139,22 +140,25 @@ header - wxss
 }
 .INinputheader{
   width:60%;
-  height:60rpx;
-  background:rgba(255,255,255,1);
+  height:30px;
+  background:rgb(0, 0, 0);
   border-radius:30px;
   font-size: 14px;
   position: relative; 
-  margin:13rpx 10rpx;
+  margin:7px 5px;
   
 }
 .INsearchicon{
-  
+  position: absolute;
+  left:12px;
 }
 .weui-input{
   height: 30px;
-  line-height: 30px;
+  line-height: 20px;
   text-align: left; 
   letter-spacing:0px;
+  padding-left: 30px;
+  display: block;
 }
 .INtab{
   text-align: left;
