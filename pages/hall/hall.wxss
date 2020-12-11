@@ -194,7 +194,7 @@ modal {
   z-index: 1000
 }
 .slide-image {
-  border-radius: 15rpx;
+  border-radius: 8rpx;
   display: block;
   height: auto;
 }
@@ -944,12 +944,12 @@ modal {
   padding-bottom: 60rpx;
   overflow: hidden;
   z-index: 1;
+  border-radius: 8rpx;
+  background: #FFFFFF;
 }
 
 .venues-item-main {
-  margin-bottom:15rpx;
-  border-radius: 14rpx;
-  background: #FFFFFF;
+  margin-bottom:20rpx;
   box-sizing: border-box;
    /* display: inline-block; */
   display: flex;
@@ -1352,7 +1352,7 @@ modal {
   .all-classify{ 
     width: 100%;
     position: absolute;
-    top:0;
+    top:50px;
     left:0;
     background: rgba(1, 1, 1, 0.9); 
     display: flex;
@@ -1371,19 +1371,20 @@ modal {
   
   }
   .catg-titletext {
-    font-size:32rpx;
-    width:95%;
+    font-size:26rpx;
+    width:93%;
     align-items:right;
+    line-height: 37px;
   }
   .catg-claps {
-    width:5%;
+    width:7%;
     align-items:right;
   }
   .catg-claps image {
     width:20rpx;
     height:20rpx;
-    padding:20rpx;
-    margin-left:-20rpx;
+    padding:26rpx 20rpx 20rpx 14rpx;
+    margin-left:-30rpx;
   }
   .all-classify-list{ 
     display:flex;
@@ -1401,14 +1402,14 @@ modal {
     text-align: center;
     /* line-height: 72rpx; */
     font-size: 26rpx;
-    border-radius: 10rpx;
+    border-radius: 6rpx;
     margin:10rpx 15rpx;
     line-height: 50rpx;
   }
   .all-classify-item-active{
-    color: #fff;
+    color: #1d1d1d;
     font-size: 26rpx;
-    background: #E52445;
+    background: #FFFFFF;
   }
   
   .classify-banner {
