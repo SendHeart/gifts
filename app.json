@@ -54,10 +54,10 @@
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#fff",
-    "selectedColor": "#EC4844",
+    "color": "#EEEEEE",
+    "selectedColor": "#FFFFFF",
     "borderStyle": "black",
-    "backgroundColor": "#444444",
+    "backgroundColor": "#1d1d1d",
     "list": [
       {
         "pagePath": "pages/hall/hall",

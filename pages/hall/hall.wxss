@@ -11,7 +11,7 @@
   content:'\e6d5';
 }
 page {
-  background: #1d1d1d;
+  background: #f2f2f2;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
@@ -76,7 +76,7 @@ page {
 .userinfo-avatar {
   width: 64rpx;
   height: 64rpx;
-  margin: 5rpx 10rpx 0 10rpx;
+  margin: 13rpx 10rpx;
   border-radius: 50%;
 }
 
@@ -163,13 +163,11 @@ modal {
 
 .banner {
   width: 100%;
-  height: 160px;
-  background-color: #1d1d1d;
-  background-repeat: norepeat;
+  height: 130px;
+  background: linear-gradient(0deg, #f2f2f2 50%, #1d1d1d 50%);
   align-content: center;
-  opacity: 1;
-  background-size: 100% 80%;
   z-index: 9;
+  margin-bottom: 10px;
 }
 
 .banner image {
@@ -196,7 +194,7 @@ modal {
   z-index: 1000
 }
 .slide-image {
-  border-radius: 15rpx;
+  border-radius: 8rpx;
   display: block;
   height: auto;
 }
@@ -502,31 +500,9 @@ modal {
   text-align: left;
 } 
 
-.top-bar {
-  white-space: nowrap;
-  text-align: left;
-  width: 100%;
-  height: 150rpx;
-  overflow-y: hidden;
-  background: #1D1D1D; 
-  z-index:99;
-  padding: 15rpx;
-  margin-right:0rpx;
-}
-
-.top-bar-item {
-  display:inline-block;
-  color: #fff;
-  text-align: center;
-  font-size: 28rpx;
-  z-index:99;
-  padding: 0 20rpx;
-  margin: 0 10rpx;
-}
-
 .top-bar-active {
   color: #fff;
-  background: #E52445;
+  background: linear-gradient(180deg, #1d1d1d 95%, #eeeeee 5%);
 }
 
 .friend-image {
@@ -968,18 +944,18 @@ modal {
   padding-bottom: 60rpx;
   overflow: hidden;
   z-index: 1;
+  border-radius: 8rpx;
+  background: #FFFFFF;
 }
 
 .venues-item-main {
-  margin-bottom:15rpx;
-  border-radius: 14rpx;
-  background: #444;
+  margin-bottom:20rpx;
   box-sizing: border-box;
    /* display: inline-block; */
   display: flex;
   flex-direction: row;
   height:275rpx;
-  color: #f2f2f2;
+  color: #111111;
 }
 .venues-item-category {
   margin-bottom:15rpx;
@@ -1038,13 +1014,13 @@ modal {
 }
 
 .goods-name {
-  color: #fff;
+  color: #111111;
   font-size: 26rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   padding:10rpx auto;
   padding-left: 10rpx;
@@ -1088,10 +1064,11 @@ modal {
 }
 .price-now {
   text-indent: 0;
-  color: #eee;
-  font-size: 26rpx;
+  color: #e34c55;
+  font-size: 30rpx;
   margin-right: 24rpx;
   line-height: 1.8;
+  font-weight: 600;
 }
 
 .price-now::first-letter {
@@ -1375,7 +1352,7 @@ modal {
   .all-classify{ 
     width: 100%;
     position: absolute;
-    top:0;
+    top:50px;
     left:0;
     background: rgba(1, 1, 1, 0.9); 
     display: flex;
@@ -1394,19 +1371,20 @@ modal {
   
   }
   .catg-titletext {
-    font-size:32rpx;
-    width:95%;
+    font-size:26rpx;
+    width:93%;
     align-items:right;
+    line-height: 37px;
   }
   .catg-claps {
-    width:5%;
+    width:7%;
     align-items:right;
   }
   .catg-claps image {
     width:20rpx;
     height:20rpx;
-    padding:20rpx;
-    margin-left:-20rpx;
+    padding:26rpx 20rpx 20rpx 14rpx;
+    margin-left:-30rpx;
   }
   .all-classify-list{ 
     display:flex;
@@ -1424,14 +1402,14 @@ modal {
     text-align: center;
     /* line-height: 72rpx; */
     font-size: 26rpx;
-    border-radius: 10rpx;
+    border-radius: 6rpx;
     margin:10rpx 15rpx;
     line-height: 50rpx;
   }
   .all-classify-item-active{
-    color: #fff;
+    color: #1d1d1d;
     font-size: 26rpx;
-    background: #E52445;
+    background: #FFFFFF;
   }
   
   .classify-banner {
@@ -1447,37 +1425,35 @@ modal {
     align-items: left;
     text-align: left;
   } 
+ 
+
   .top-bar {
     white-space: nowrap;
     text-align: center;
-    width: 90.5%;
+    width: 100%;
     height: 30px;
     overflow-y: hidden;
-    background: #1d1d1d; 
+    background: #1D1D1D; 
     z-index:99;
-    margin-bottom: 10rpx;
+    margin: 4px 30px 10px 10px;
   }
+
   .top-bar-item {
     display:inline-block;
-    color: #fff;
+    color: #eeeeee;
     text-align: center;
     line-height: 30px;
-    font-size: 28rpx;
-    padding: 0 20rpx;
-    margin: 0 10rpx;
-    border-radius: 10rpx;
+    font-size: 30rpx;
+    padding: 0rpx;
+    margin: 0 10px;
   }
-  .top-bar-active {
-    color: #fff;
-    background: #E52445;
-  }
+  
   .top-bar-image {
     position: absolute; 
     right: 0; 
-    width:20px;
-    height:20px;
+    width:16px;
+    height:16px;
     margin-top:12px;
     z-index:99;
-    padding-right: 15rpx;
-    padding-left: 15rpx;
+    padding:0 7px;
   }
