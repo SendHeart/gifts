@@ -564,11 +564,7 @@
 </view>
 <view class="footer">
   <view class="opt-buttons">
-    <view wx:if="{{goodsshape==5||goodsshape==4}}" style='width:30%;' >
-      <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
-      <image class='icon-detail' src="../../images/record.png"></image>
-      <text>长按说话</text></button>
-    </view>
+   
     <!-- form wx:if="{{goodsshape==5}}" bindsubmit="formSubmit"  data-name='myblessing' report-submit="true" style='width:30%;' >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/u621.png"></image>
@@ -581,23 +577,31 @@
       <text>编辑内容</text>
       </button>  
     </form -->
-    <form wx:if="{{goodsshape!=5 && goodsshape!=4}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true" style='width:18%;' >
+    <view style="display:flex;flex-direction:row;justify-content:center; width:50%;">
+      <view wx:if="{{goodsshape==5||goodsshape==4}}" style='width:30%;' >
+        <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
+        <image class='icon-detail' src="../../images/record.png"></image>
+        <text>长按说话</text></button>
+      </view>
+      <form wx:if="{{goodsshape!=5 && goodsshape!=4}}" bindsubmit="formSubmit"  data-name='mycommTapTag' report-submit="true"  >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/bottom-comment.png"></image>
       <text>写评论</text></button>
     </form>
-    <form wx:if="{{goods_is_flag == 1 || goods_is_qianggou == 1 || goods_is_recommend == 1}}" bindsubmit="formSubmit"  data-name='myqunTapTag' report-submit="true" style='width:18%;' >
+    <form wx:if="{{goods_is_flag == 1 || goods_is_qianggou == 1 || goods_is_recommend == 1}}" bindsubmit="formSubmit"  data-name='myqunTapTag' report-submit="true"  >
       <button class="sec-btn" formType="submit">
       <image class='icon-detail' src="../../images/iconfont-kefu.png"></image>
       <text>客服</text>
       </button>  
     </form>
-    <form wx:if="{{goodsshape!=5&&goodsshape!=4}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" style='width:18%;' >
-      <button class="sec-btn" formType="submit">
+    <form wx:if="{{goodsshape!=5&&goodsshape!=4}}" bindsubmit="formSubmit"  data-name='wishcart' report-submit="true" >
+      <button class="sec-btn" formType="submit" style="border-right: 0rpx solid #eee;">
       <image class='icon-detail' src="../../images/bottom-unpraise.png"></image>
       <text>+心愿单</text>
       </button>  
     </form>
+    </view>
+    
     <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:25%;' >
       <button class="add-cart2" formType="submit">
         <text>+购物车</text>

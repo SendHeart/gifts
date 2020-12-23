@@ -346,7 +346,7 @@ border: none;
   color: #444444;
   font-size: 20rpx;
   border-radius: 0;
-  border-right: 1rpx solid #eee;
+  border-right: 0rpx solid #eee;
   display: flex;
   flex-direction: column;
 }
