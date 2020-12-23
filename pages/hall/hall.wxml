@@ -289,7 +289,7 @@
                 <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
                 <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
               </view>
-              <text class="goods-name">{{item.name}}</text>
+              <text class="goods-name2">{{item.name}}</text>
               <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
               <view class="goods-tags">
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
@@ -312,7 +312,7 @@
                 <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
                 <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
               </view>
-              <text class="goods-name">{{item.name}}</text>
+              <text class="goods-name2">{{item.name}}</text>
               <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
               <view class="goods-tags">
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
@@ -335,8 +335,8 @@
         <image class="main-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       -->
       
-      <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.activity_image?item.activity_image:item.image}}' width="275rpx" height="275rpx" display="block" />
-      <view class="venues-item-text">
+        <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.activity_image?item.activity_image:item.image}}' width="275rpx" height="275rpx" display="block" />
+        <view class="venues-item-text">
          <view class="goods-tags">
           <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
           <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>

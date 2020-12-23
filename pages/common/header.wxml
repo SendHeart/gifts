@@ -1,19 +1,24 @@
 
 <view>
   <!-- 自定义头部 -->
-  <view class='nav' style='height:{{navH}}rpx'>
+  <view class='nav' style='height:{{navH}}px;'>
     <view class='nav-title'>
-      <view class="userinfo" bindtap='userTapTag'>
-      <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
-      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-    </view>
+      <view class="userinfo">
+        <view style="height:{{navH}}px;display:flex;justify-content: center;align-items: center;">
+          <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover" />
+        </view>
+        <view style="height:{{navH}}px;line-height:{{navH}}px;">
+          <text class="userinfo-nickname" bindtap='userTapTag'>{{userInfo.nickName}}</text> 
+        </view>
+        
+      </view>
       <view class="INinputheader" >
-        <icon class="INsearchicon" type="search" size="12"/>
+        <icon class="INsearchicon" style="height:45px;line-height:45px;" type="search" size="12" />
         <input class="weui-input" placeholder="我的自由 我的生活" bindtap='searchTapTag' disabled="disable" />       
       </view>
-      <view style="height:35px;line-height:35px" catchtap="messagesTapTag">
-          <text style="font-size:20rpx;color:#999">了解会员制</text>
-        </view> 
+      <view style="height:35px;line-height:35px;width:20%;" catchtap="messagesTapTag">
+        <text style="font-size:20rpx;color:#999">了解会员制</text>
+      </view> 
     </view>
   </view> 
 </view>
