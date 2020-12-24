@@ -6,6 +6,6 @@
             <view id="v_{{index}}" data-index="{{index}}" data-id="{{item.id}}" data-title="{{item.title}}" data-value="{{item.value}}" class="top-bar-item {{index == activeIndex ? 'top-bar-active' : ''}}" catchtap="onTapTag">{{item.title}}</view>
           </block>
         </scroll-view>
-        <image class="top-bar-image" src="../../images/icon_all.png" bindtap="openAllTapTag" />
+       <!-- <image class="top-bar-image" src="../../images/icon_all.png" bindtap="openAllTapTag" />-->
       </view>
 </template>

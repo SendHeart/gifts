@@ -1,15 +1,15 @@
 
 <view>
   <!-- 自定义头部 -->
-  <view class='nav' style='height:{{navH}}px;'>
+  <view class='nav' style='height:{{navH/2}}px;'>
     <view class='nav-title'>
       <view class="userinfo">
-        <view style="height:{{navH}}px;display:flex;justify-content: center;align-items: center;">
+        <view style="height:{{navH/2}}px;display:flex;justify-content: center;align-items: center;">
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover" />
         </view>
-        <view style="height:{{navH}}px;line-height:{{navH}}px;">
+        <!-- <view style="height:{{navH/2}}px;line-height:{{navH/2}}px;">
           <text class="userinfo-nickname" bindtap='userTapTag'>{{userInfo.nickName}}</text> 
-        </view>
+        </view>-->
         
       </view>
       <view class="INinputheader" >

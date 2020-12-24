@@ -24,7 +24,7 @@
        <text>了解什么是会员制</text>
     </view>
   </view>
-  -->
+ 
   <view class="all-classify" hidden="{{hiddenallclassify}}">
     <view class='catg-title' catchtap="openAllTapTag">
       <view class='catg-titletext'>全部分类</view>
@@ -40,6 +40,7 @@
     </block>
     </view>
   </view>
+   -->
   <view class="classify-banner">
     <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
   </view>
@@ -285,18 +286,18 @@
             <view class="venues-item-category" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
               data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==0}}">
               <image class="category-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
-              <view class="goods-tags">
-                <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
-                <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+              <view class="goods-titletext">
+                <text wx:if="{{item.goods_org==4}}" class="goods-tags">京东物流</text>
+                <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
+                <text class="goods-name">{{item.name}}</text>
               </view>
-              <text class="goods-name2">{{item.name}}</text>
               <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
-              <view class="goods-tags">
+              <view class="goods-tags2">
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
               </view>
               <view class="price-list">
-                <view class="price-market" style="display:block;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now" style="display:block;">￥{{item.sell_price}}</view>
+                <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
               </view>
             </view>
           </block>
@@ -308,18 +309,18 @@
             <view class="venues-item-category" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}" data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
               data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}" wx:if="{{index%2==1}}">
               <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.image}}' width="355rpx" height="355rpx" display="block" />
-              <view class="goods-tags">
-                <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
-                <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+              <view class="goods-titletext">
+                <text wx:if="{{item.goods_org==4}}" class="goods-tags">京东物流</text>
+                <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
+                <text class="goods-name">{{item.name}}</text>
               </view>
-              <text class="goods-name2">{{item.name}}</text>
               <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
-              <view class="goods-tags">
+              <view class="goods-tags2">
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
               </view>
               <view class="price-list">
-                <view class="price-market" style="display:block;">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now" style="display:block;">￥{{item.sell_price}}</view>
+                <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
+                <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
               </view>
             </view>
           </block>
@@ -337,18 +338,20 @@
       
         <imageloader  default-image='{{default_img}}' mode='aspectFill' original-image='{{item.activity_image?item.activity_image:item.image}}' width="275rpx" height="275rpx" display="block" />
         <view class="venues-item-text">
-         <view class="goods-tags">
-          <text wx:if="{{item.goods_org==4}}" class="goods-org">京东物流</text>
-          <text wx:if="{{item.discount<100}}" class="img-discount">可用券</text>
+
+        <view class="goods-titletext">
+          <text wx:if="{{item.goods_org==4}}" class="goods-tags">京东物流</text>
+          <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
+          <text class="goods-name">{{item.name}}</text>
         </view>
-        <text class="goods-name">{{item.name}}</text>
+        
         <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
-        <view class="goods-tags">
+        <view class="goods-tags2">
           <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
         </view>
         <view class="price-list">
           <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-          <view class="price-now">￥{{item.sell_price}}</view>
+          <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
         </view>
       </view>
       </view>

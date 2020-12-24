@@ -1,6 +1,7 @@
 <view class="box" wx:if="{{SHOW_TOP}}">
   <view class='arrow'></view>
-  <view class='body' bindtap='showModal'>
+  <!--<view class='body' bindtap='showModal'>-->
+    <view class='body'>
     <text>{{text}}</text>
   </view>
 </view>

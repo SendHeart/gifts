@@ -70,13 +70,13 @@
         "pagePath": "pages/member/message/message",
         "iconPath": "images/logo.png",
         "selectedIconPath": "images/logo_s.png",
-        "text": "智能助手"
+        "text": "我想买"
       },
       {
         "pagePath": "pages/cart/cart",
         "iconPath": "images/history.png",
         "selectedIconPath": "images/history_s.png",
-        "text": "储物空间"
+        "text": "购物袋"
       },
       {
         "pagePath": "pages/my/index",

@@ -165,13 +165,13 @@ Page({
     },
 
     // 打开全部子分类
-    openAllTapTag: function () {
-        var that = this
-        var hiddenallclassify = that.data.hiddenallclassify
-        that.setData({
-            hiddenallclassify: !hiddenallclassify,
-        })
-    },
+    // openAllTapTag: function () {
+     //    var that = this
+    //     var hiddenallclassify = that.data.hiddenallclassify
+     //    that.setData({
+      //       hiddenallclassify: !hiddenallclassify,
+      //   })
+    // },
 
     handletouchstart: function (event) {
         // console.log(event)
@@ -1850,8 +1850,8 @@ Page({
 
     onShareAppMessage: function () {
         return {
-            title: '开启礼物电商时代,200万人都在用的礼物小程序',
-            desc: '送心礼物欢迎您',
+            title: '黑贝会是一家高端会员制购物平台',
+            desc: '加入黑贝会，可随时获得独家提供全球158个国家地区最流行和优惠的商品，并获得最贴心和专业服务.',
             path: '/pages/hall/hall?refername='+username+'&mainpage=1'
         }
     },
