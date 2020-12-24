@@ -171,7 +171,7 @@ modal {
   background: linear-gradient(0deg, #f2f2f2 50%, #1d1d1d 50%);
   align-content: center;
   z-index: 9;
-  padding: 10rpx 0;
+  padding: 16rpx 0;
 }
 
 .banner image {
@@ -952,7 +952,7 @@ modal {
 }
 
 .venues-item-main {
-  margin-bottom:20rpx;
+  margin-bottom:16rpx;
   box-sizing: border-box;
    /* display: inline-block; */
   display: flex;
@@ -967,7 +967,7 @@ modal {
   background: #ffffff;
   box-sizing: border-box;
   display: inline-block;
-  margin-bottom: 20rpx;
+  margin-bottom: 16rpx;
 }
 /*商品信息描述*/
 .venues-item-text {
