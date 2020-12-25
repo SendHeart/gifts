@@ -45,6 +45,7 @@
               </cover-view>
               -->
             </video>
+            
           </swiper-item>
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='id'>
@@ -186,6 +187,13 @@
           </swiper-item>
         </block>
       </swiper>
+      <!---数字指示器-->
+      <view class="indexShow" wx:if="image_pic.length>1">
+        {{swiperIndex}} / {{image_pic.length}}
+      </view> 
+      <view class="indexShow" wx:else>
+        {{swiperIndex}} / {{image_pic.length}}
+      </view>
     </view>
   </view>
   <view wx:if="{{goodsshape==4 && card_type==2}}" hidden="{{!cardnamehidden}}" class="card-name-note">
@@ -194,26 +202,25 @@
   <view class="shopping_container">
       <view class="goods-name">
         <text>{{goodsname?goodsname:''}}</text>
-        <text class="goods_prom">{{goodsinfo?goodsinfo:''}}</text>
+        <text class="goods_prom"><text class="icontags">推荐理由</text> {{goodsinfo?goodsinfo:''}}</text>
       </view>
       <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="goods-info">
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已购</text>
         <view class="right-tag">
         {{marketprice>0?'':''}} <text class="price-market">{{marketprice>0?'￥'+marketprice:''}}</text>
-        {{marketprice>0?'':''}} <text class="price-real">{{goodsprice>0?'￥'+goodsprice:''}}</text>
+        {{marketprice>0?'':''}} 会员价 <text class="price-real">{{goodsprice>0?'￥'+goodsprice:''}}</text>
         </view>
       </view>
-      <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="fitfor">
+      <!--<view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="fitfor">
         <text>适合送</text>
         <text class="goods_tag">{{goodstag?goodstag:''}}</text>
-      </view>
+      </view>-->
     </view>
     <view wx:if="{{goodsdiscount<100}}" class="prd-prom"><image src='../../images/discount.png' style='width:75rpx;height:32rpx;'></image> {{goodsdiscount<100?discountinfo:''}}</view>
     <view wx:if="{{goodsorg!=5}}"class="comm-text">
-      <text class="comm-name">服务</text>
-      <view class="comm-listitem">
+    <view class="comm-listitem">
       <image class='icon-item' src='../../images/icon-zp.png'></image>
-      <text>假一赔十</text>
+      <text>放心正品</text>
     </view>
     <view class="comm-listitem">
       <image class='icon-item' src='../../images/icon-by.png'></image>
@@ -221,20 +228,23 @@
     </view>
     <view class="comm-listitem">
     <image class='icon-item' src='../../images/icon-tk.png'></image>
-    <text>送礼对方接受后付款</text>
+    <text>7天无理由退货</text>
+    </view>
+    <view class="comm-listitem">
+    <image class='icon-item' src='../../images/icon-tq.png'></image>
+    <text>特权保障</text>
     </view>
   </view>
 
   <view wx:if="{{goodsorg!=5}}"class="comm-text">
-      <text class="comm-name">物流</text>
-      <view class="comm-listitem">
+      <view wx:if="{{(goodsshape!=5&&goodsshape!=4&&goodsorg==4)}}" class="comm-listitem">
       <image class='icon-item' src='../../images/icon-wl.png'></image>
-      <text wx:if="{{(goodsshape!=5&&goodsshape!=4&&goodsorg==4)}}" class="goods-org">京东物流</text>
+      <text class="goods-org">京东物流</text>
     </view>
   </view>
 
   <view  wx:if="{{(goodsshape!=5&&goodsshape!=4)}}" class="comm-text2">
-    <text class="comm-name">礼物评论</text>
+    <text class="comm-name">会员评论</text>
     <text  bindtap="commTapTag" class="comm-status">查看全部{{all_rows>0?'('+all_rows+')':''}}</text>
   </view>
   <view wx:for="{{comm_list}}" wx:for-item="comm" wx:key="id" class="comm-item" >
@@ -250,7 +260,7 @@
   </view>
   
   <view>
-    <view class="prd-title">{{(goodsshape==5||goodsshape==4)?'说明':'商品详情'}}</view>
+    <view class="prd-title">{{(goodsshape==5||goodsshape==4)?'说明':'详情'}}</view>
       <view class="prd-detail">
         <view class="wxParse" hidden="{{hideviewgoodsinfo}}">
           <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
@@ -259,11 +269,11 @@
     </view>
 </view>
 <action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm" mask="{{true}}" show="{{!modalHidden}}" extClass="{{'background-color:#fff;'}}">
-  <view class="">
+  <view class="selectSku">
     <view class="modaltitletext">
         <text>{{attrValueList.length>0?'':add_cart_title}}</text>
         <view class='buy-return' bindtap="modalBindcancel">
-          <image style="width:36rpx;height:36rpx;border-radius:50%;" src="/images/icon-no.png" />
+          <image src="/images/icon-shut.png" />
         </view>
       </view>
         <view wx-if="{{attrValueList.length>0}}" class="commodity_attr_list"  style="max-height:{{dkheight-70}}px">
@@ -284,24 +294,20 @@
       <view wx:if="{{sku_id}}" class="sku-code">编号:{{sku_id}} 名称:{{goodsname}}</view>
       <view wx:if="{{!sku_id}}" class="sku-code">未选中商品</view>
       <view class="buy-info">
-        <text style="margin-left:20rpx;">{{sku_sell_price>0?'单价:':''}} </text>
+        <text>{{sku_sell_price>0?'单价':''}} </text>
         <view class="price-now">
           <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
           <text wx:if="{{sku_delivery_price}}" style='font-size:28rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
         </view>
       </view>
       <view class="buy-info">
-        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量:</view> 
-        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">
-          <image style="width:30rpx;height:30rpx;margin-left:20rpx;" src="../../images/setting-small.png"></image>
-        </view> 
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num'>数量</view> 
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-minus' catchtap="bindMinus">-</view> 
         <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-count'>{{buynum}}</view>  
-        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >
-          <image style="width:30rpx;height:30rpx;" src="../../images/setting-plus.png"></image>  
-        </view>
+        <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class='buy-num-plus' catchtap="bindPlus" >+</view>
       </view> 
   </view> 
-  <action-sheet-cancel bindtap="modalBindaconfirm">确定
+  <action-sheet-cancel bindtap="modalBindaconfirm" class="btnconfirm">确定
 </action-sheet-cancel>
 </action-sheet>
 
@@ -385,7 +391,7 @@
       </view>
        <view class="modeswitch">
         <label>
-          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <text style='height:50rpx;line-height:50rpx;'>logo</text>
           <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
         </label>
       </view>
@@ -441,7 +447,7 @@
       </view>
        <view class="modeswitch">
         <label>
-          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <text style='height:50rpx;line-height:50rpx;'>logo</text>
           <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
         </label>
       </view>
@@ -555,7 +561,7 @@
      
        <view class="modeswitch">
         <label>
-          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <text style='height:50rpx;line-height:50rpx;'>logo</text>
           <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
         </label>
       </view>
@@ -577,7 +583,7 @@
       <text>编辑内容</text>
       </button>  
     </form -->
-    <view style="display:flex;flex-direction:row;justify-content:center; width:30%;">
+    <view style="display:flex;flex-direction:row;justify-content:center; width:34%;">
       <view wx:if="{{goodsshape==5||goodsshape==4}}" style='width:30%;' >
         <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode"  class="sec-btn">
         <image class='icon-detail' src="../../images/record.png"></image>
@@ -603,7 +609,7 @@
   -->
     </view>
     
-    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:35%;' >
+    <form wx:if="{{goodsorg!=5}}" bindsubmit="formSubmit"  data-name='buyGift' report-submit="true" style='width:33%;' >
       <button class="add-cart2" formType="submit">
         <text>+购物袋</text>
       </button>  
@@ -611,7 +617,7 @@
     <form wx:if="{{has_cardpayed==0}}" bindsubmit="formSubmit"  data-name='buyMyself' report-submit="true" style='width:35%;' >
       <button class="add-cart"  formType="submit">{{(goodsshape==5||goodsshape==4)?'立即使用':'立即购买'}}</button>  
     </form>
-    <form wx:if="{{goodsorg==5 && has_cardpayed!=0}}" bindsubmit="formSubmit"  data-name='sharecard' report-submit="true" style='width:28%;' >
+    <form wx:if="{{goodsorg==5 && has_cardpayed!=0}}" bindsubmit="formSubmit"  data-name='sharecard' report-submit="true" style='width:26%;' >
       <button class="add-cart" formType="submit">
       <text>预览</text>
       </button>  

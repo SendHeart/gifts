@@ -202,7 +202,25 @@ modal {
   display: block;
   height: auto;
 }
-
+.swiper-box .wx-swiper-dots.wx-swiper-dots-horizontal{
+  margin-bottom: 2rpx;
+}
+.swiper-box .wx-swiper-dot{
+ width:30rpx;
+ display: inline-flex;
+ height: 6rpx;
+ margin-left: 8rpx;
+ justify-content:space-between;
+}
+.swiper-box .wx-swiper-dot::before{
+ content: '';
+ flex-grow: 1; 
+ background: rgba(255,255,255,0.35);
+ border-radius: 8rpx
+}
+.swiper-box .wx-swiper-dot-active::before{
+ background:rgba(0,0,0,0.35);   
+}
 
 .banner-bar-list{  
   background-color: #1d1d1d;
@@ -210,7 +228,6 @@ modal {
   align-content: center;
   opacity: 1;
   background-size: 100% 80%;
- 
 } 
 .banner-bar { 
   display: flex;

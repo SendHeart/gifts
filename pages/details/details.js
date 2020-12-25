@@ -29,12 +29,12 @@ var card_color = [
 
 Page({
   data: {
-    title_name: '详情',
+    title_name: '商品详情',
     title_logo: '../../images/footer-icon-05.png',
-    share_title: '这个礼物真不错，来看看吧，要是你能送我就更好了~',
+    share_title: '黑贝会高端会员制电商平台',
     card_blessing: '',
     card_content: '',
-    share_desc: '送心礼物，开启礼物社交时代！',
+    share_desc: '加入黑贝会，可随时获得独家提供全球158个国家地区最流行和优惠的商品，并获得最专业的服务.',
     share_avatarUrl: weburl + '/uploads/avatar.png',
     share_goods_avatarUrl: weburl + '/uploads/avatar.png',
     nickname: userInfo.nickName,
@@ -42,13 +42,14 @@ Page({
     user: null,
     userInfo: {},
     username: null,
-    indicatorDots: true,
+    indicatorDots: false,
     vertical: false,
     autoplay: false,
     page: 1,
     interval: 3000,
     duration: 300,
     circular: true,
+    swiperIndex:1,
     goodsname: '',
     goodsinfo: [],
     goodsprice: 0,
@@ -140,6 +141,7 @@ Page({
     has_registerdue:false,
     has_actionrdue:false,
   },
+
 
   bindPickerChange_card_color: function (e) {
     var that = this
@@ -406,9 +408,11 @@ Page({
     //console.log(e)
     that.setData({
       cur_img_id: cur_img_id,
+      swiperIndex:e.detail.current +1, //数字指示器事件处理函数
     })
     that.swiperchange_cardname(cur_img_id)
     //console.log('detail swiperchange:', e.detail.current, 'cur_img_id:',cur_img_id)
+    
   },
 
   swiperchange_share: function (e) {

@@ -11,7 +11,7 @@
     <view wx:for="{{carts}}" class="carts-container" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}"  data-goods-shape="{{item.shape}}" data-goods-name="{{item.name}}"  data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
     	<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
 	    	<!-- 复选框图标 -->
-			<icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" />
+			<icon style="margin-left:20rpx;" type="{{item.selected ? 'success_circle' : 'circle'}}" size="18" catchtap="bindCheckbox" data-index="{{index}}" color="#1d1d1d" />
  
 			<!-- 缩略图 -->
 				<image  class="carts-image" src="{{item.image}}" mode="aspectFill"/>
@@ -48,14 +48,14 @@
 </view>
 <view class="carts-footer">
 	<view class="select-and-amount" bindtap="bindSelectAll">
-		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18"/>
-		<text>全选</text>
-		<text>{{total}}</text>
+		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" color="#1d1d1d"/>
+		<text style="font-size: 24rpx; color: #999;">全选</text>
+		<text style="margin-left:40rpx;">合计: ￥{{total}}</text>
 	</view>
 	<view class="button" bindtap="bindCheckout">立即结算</view>
 </view>
 <view class="recomment-title">
-    <text>精品推荐</text>
+    <text>更多推荐</text>
 </view>
 <view wx:if="{{is_machine==0}}" wx:for="{{recommentList}}" class="item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-name="{{item.name}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-goods-info="{{item.act_info}}" hidden="{{item.hidden==1?true:false}}">
    <image class="img" src="{{item.image}}"></image>
