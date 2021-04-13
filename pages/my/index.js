@@ -58,7 +58,7 @@ Page({
     sendheartappurl: weburl+'/hall/appdown/index.html',
     recharge_skuid:0,
     recharge_price:0,
-    card_name:'黑贝会 Member',
+    card_name:'黑贝会全球Member',
     card_logo:'',
     card_no:'',
     card_due_start:'0000-00-00',

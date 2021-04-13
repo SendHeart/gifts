@@ -87,23 +87,82 @@ page {
   justify-content: center;  
   margin:5px;
 }  
+.memcard {
+  display:flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items:left;
+  width: 96%;
+  border-radius: 20rpx;
+  margin:10rpx auto;
+  padding-bottom: 30rpx;
+  background: linear-gradient(30deg,#222 25%,#1d1d1d 0,#1d1d1d 50%,#222 0,#222 75%,#1d1d1d 0);
+  background-size: 500px 1200px;
+}
 
 /*user info*/
 .userinfo {
-  width: 93%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items:left;
-  height: 360rpx;
-  border-bottom: 1px solid #F2F2F2;
-  border-radius: 20rpx 20rpx 20rpx 20rpx;
-  padding: 0rpx 10rpx 0 10rpx;
-  margin-top:10rpx;
-  margin-bottom:20rpx;
-  background: #444;
+  flex-direction:row;
+  justify-content:center;
+  margin: 20rpx auto;
+  height: 90rpx;
+}
+.userinfo-avatar {
+  width: 90rpx;
+  height: 90rpx;
+  border-radius: 40%;
 }
 
+.userinfo-nickname {
+  color: rgb(219, 190, 95);
+  font-size: 30rpx;
+  font-weight: bold;
+  margin: 0 20rpx;
+  line-height: 90rpx;
+  display: flex;
+  flex-direction: column;
+  justify-items: center;
+  align-items: center;
+}
+.userinfo-cards-info{
+  display:flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 100rpx;
+}
+.userinfo-cards-logo {
+  width: 80rpx;
+  height: 80rpx;
+  margin: 20rpx 10rpx 0 20rpx;
+  border-radius: 40%;
+}
+.userinfo-cards-name{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10rpx;
+  width: 45%;
+}
+.userinfo-cards-title {
+  font-size: 26rpx;
+  color: rgb(219, 190, 95);
+  line-height: 26rpx;
+}
+.userinfo-cards-mid{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10rpx;
+  margin-right: 20rpx;
+  width: 30%;
+}
+.cards-id{
+  color: rgb(219, 190, 95);
+  font-size: 22rpx;
+  font-weight: normal;
+  line-height: 22rpx;
+}
 .scanqr {
   width: 50rpx;
   height: 50rpx;
@@ -111,40 +170,12 @@ page {
   margin-left: 10rpx;
   border-radius: 50%;
 }
-.userinfo-cards-mid{
-  color: #fff;
-  font-size: 26rpx;
-  font-weight: normal;
-  margin-top:6rpx;
-  margin-left: 40rpx;
-}
-.userinfo-cards-logo {
-  width: 80rpx;
-  height: 80rpx;
-  margin-top: 0rpx;
-  margin-left:20rpx;
-  border-radius: 50%;
-}
-
-.userinfo-cards-info{
-  display:flex;
-  flex-direction: row;
-  justify-content: flex-start;
-}
-
-.userinfo-cards-name{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  margin-left: 10rpx;
-  width: 70%;
-}
 
 .userinfo-cards-item{
   display: flex;
   flex-direction: row;
   justify-content: center;
-  margin-left: 0rpx;
+  margin:10rpx auto;
   width: 100%;
 }
 
@@ -156,50 +187,44 @@ page {
   width: 100%;
 }
 .userinfo-cards-no {
-  color: #fff;
-  font-size: 32rpx;
+  color: rgb(219, 190, 95);
+  font-size: 30rpx;
   font-weight: normal;
   margin-right: 20rpx;
 }
 
 .userinfo-cards-due {
-  color: #fff;
-  font-size: 28rpx;
+  color: rgb(235, 235, 235);
+  font-size: 22rpx;
   font-weight: normal;
   margin-right: 20rpx;
 }
 .userinfo-cards-expend {
-  color: #fff;
-  font-size: 28rpx;
+  color: rgb(235, 235, 235);
+  font-size: 22rpx;
   font-weight: normal;
 }
 
-.userinfo-cards-title {
-  font-size: 32rpx;
-  font-weight: bold;
-  color: #fff;
-  line-height: 32rpx;
+
+.cardrenew {
+  width: 100%;
+  height: 80rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.cardrenew_btn {
+  height: 60rpx;
+  width: 48%;
+  background: rgb(219, 190, 95);
+  color:rgb(128, 101, 12);
+  font-size: 26rpx;
+  margin: 0 20rpx 20rpx 20rpx;
+  text-align: center;
+  line-height: 60rpx;
+  border-radius: 10rpx;
 }
 
-.userinfo-avatar {
-  width: 100rpx;
-  height: 100rpx;
-  margin-top: 0rpx;
-  margin-right:30rpx;
-  border-radius: 50%;
-}
-
-.userinfo-nickname {
-  color: #fff;
-  font-size: 32rpx;
-  font-weight: bold;
-}
-
-.userinfo-cards-join {
-  color: #fff;
-  font-size: 32rpx;
-  font-weight: normal;
-}
 /*order*/
 .menu-area {
   /*
@@ -207,9 +232,11 @@ page {
   flex-direction: column;
   justify-content: center;
   */
-  padding:0 20rpx 0 20rpx;
+  width: 96%;
   background: #fff;
-  color:#333;
+  color:#444;
+  border-radius: 10rpx;
+  margin: 0 auto;
 }
 
 /*menu list*/
@@ -266,7 +293,7 @@ page {
   width: 60rpx;
   height: 60rpx;
   background: #f2f2f2;
-  border-radius: 50%;
+  border-radius: 40%;
 }
 
 .order text{
@@ -501,8 +528,7 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 .recomment-title text{
   width: 350rpx;
   color: #444;
-  font-size: 32rpx;
-  font-weight: bold;
+  font-size: 22rpx;
 }
 .recomment-title text.title_ex{
   color: #ccc;
@@ -541,24 +567,24 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 }
 
 .venues-item-main {
-  margin-bottom:15rpx;
-  border-radius: 14rpx;
-  background: #444;
+  margin-bottom:10rpx;
+  border-radius: 10rpx;
+  background: #fff;
   box-sizing: border-box;
    /* display: inline-block; */
   display: flex;
   flex-direction: row;
   height:275rpx;
   position: relative;
-  color: #f2f2f2;
+  color: #444444;
 }
 .venues-item-category {
   margin-bottom:15rpx;
   border-radius: 14rpx;
-  background: #444;
+  background: #fff;
   box-sizing: border-box;
   display: inline-block;
-  color: #f2f2f2;
+  color: #444444;
 }
 
 
@@ -592,7 +618,7 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 }
 
 .goods-name {
-  color: #fff;
+  color: #444444;
   font-size: 26rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;
@@ -643,7 +669,7 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 }
 .price-now {
   text-indent: 0;
-  color: #eee;
+  color: #bb7e0c;
   font-size: 26rpx;
   margin-right: 24rpx;
   line-height: 1.8;
@@ -659,7 +685,6 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   color: #fc9326;
   font-size: 20rpx;
   text-align: center;
-  border: 2rpx #fc9326 solid;
   border-radius: 6rpx;
   padding: 6rpx 6rpx;
 }

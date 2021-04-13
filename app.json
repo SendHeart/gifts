@@ -68,9 +68,9 @@
 
       {
         "pagePath": "pages/member/message/message",
-        "iconPath": "images/logo.png",
-        "selectedIconPath": "images/logo_s.png",
-        "text": "我想买"
+        "iconPath": "images/mess.png",
+        "selectedIconPath": "images/mess_s.png",
+        "text": "消息"
       },
       {
         "pagePath": "pages/cart/cart",

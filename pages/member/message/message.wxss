@@ -1,25 +1,25 @@
 page {
-  background: #1d1d1d;
+  background: #f5f5f5;
 }
 .headerbg {
   height: 90rpx;
-  background: #1d1d1d;
+  background: #f5f5f5;
   position: fixed;
   top: 0;
-  left: 2%;
+  left: 0;
   z-index: 999;
-  width: 96%;
+  width: 100%;
 }
 .top-bar2 {
   display: flex;
   flex-direction:row;
   justify-content: space-between;
   height: 70rpx;
-  background: #444;
+  background: #fff;
   z-index: 988;
-  border-radius: 20rpx;
-  box-shadow: 0rpx 3rpx 6rpx rgba(100, 100, 100, 0.3);
   margin: 10rpx auto;
+  border-radius: 10rpx;
+  width: 96%;
 }
 
 .top-bar-item2 {
@@ -28,22 +28,21 @@ page {
   justify-content: center;
   width: 350rpx;
   height: 70rpx;
-  color: #fff;
+  color: #444;
   text-align: center;
   line-height: 70rpx;
-  font-size: 28rpx;
-}
-.top-bar-item2 image {
- width: 32rpx;
- height: 32rpx;
- margin: 30rpx 6rpx 0 0;
-}
-.top-bar-active2 {
-  font-weight: bold;
-  color: #fff;
-  background: #EC4844;
+  font-size: 26rpx;
 }
 
+.top-bar-active2 {
+  color: #444;
+  background: #eee;
+}
+.top-bar-item2 image {
+  width: 32rpx;
+  height: 32rpx;
+  margin: 30rpx 6rpx 0 0;
+ }
 .container{
   margin-bottom: 50rpx;
   margin-top: 110rpx;
@@ -64,11 +63,10 @@ page {
  	display: flex;
 	flex-direction: column;
 	width:96%;
-	border-bottom: 1px solid #f2f2f2;
   text-align: left;
   align-items: left;
   background-color: #fff;
-  border-radius: 20rpx;
+  border-radius: 10rpx;
   padding-bottom: 20rpx;
   margin-bottom: 15rpx;
 }

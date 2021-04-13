@@ -1,38 +1,46 @@
 <import src="../../wxParse/wxParse.wxml" />
 <view style="overflow:scroll;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
-  <view style="display:flex;flex-direction: row;justify-content: center;">
-  <view class="userinfo">
+  <view class="memcard">
     <view class="userinfo-cards-info">
-      <image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>
-      <text class="userinfo-cards-mid">{{m_id>0?'ID:'+m_id:''}}</text>
+      <image class="userinfo-cards-logo" src="{{card_logo?card_logo:default_avatar}}" mode="aspectFill" />
+      <view class="userinfo-cards-name">
+        <text class="userinfo-cards-title">{{card_name}}</text>
+      </view>
+      <view class="userinfo-cards-mid"><text class="cards-id">{{m_id>0?'MEMBER ID:'+m_id:''}}</text></view>
     </view>
-  <view class="userinfo-cards-info">
-    <image class="userinfo-cards-logo" src="{{card_logo?card_logo:default_avatar}}" mode="aspectFill" />
-    <view class="userinfo-cards-name">
-      <text class="userinfo-cards-title">{{card_name}}</text>
+  
+    <view class="userinfo">
+      <!--<image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>-->
+      <view><image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image></view>
+      <view><text class="userinfo-nickname">{{userInfo.nickName}}</text></view>
     </view>
-    <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
-  </view>
+  
   <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
-     <text class="userinfo-cards-no">Global No.{{card_no}}</text>
+     <text class="userinfo-cards-no">CARD No. {{card_no}}</text>
   </view>
-  <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
-     <text class="userinfo-cards-due">发于:{{card_due_start}}</text>
-     <text class="userinfo-cards-due">止于:{{card_due_end}}</text>
+  <view class="userinfo-cards-item" style="margin:40rpx 0 0 20rpx; justify-content: left;" wx:if="{{card_no!=''}}">
+     <text class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
+     <text class="userinfo-cards-due">VALID THRU:{{card_due_end}}</text>
   </view>
-  <view class="userinfo-cards-nickname" wx:if="{{card_no!=''}}">
-     <text class="userinfo-nickname">{{userInfo.nickName}}</text>
-     <text class="userinfo-cards-expend" bindtap="navigateToRecharge">延长会员期限</text>
-  </view>
-   <view class="userinfo-cards-nickname" wx:if="{{card_no==''}}">
-      <button class="userinfo-cards-join" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#444;background:#f2f2f2" hover-class='none' bindtap="navigateToRecharge">立即入会</button>
-  </view>
+  
 	 <!--
      <text wx:if="{{user_group_id>0}}" class="userinfo-nickname">{{user_group_id?user_group_name:''}}</text>
     <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
    -->
 </view>
+
+<view class="cardrenew">
+  <view class="cardrenew_btn" wx:if="{{card_no!=''}}">
+     
+     <text bindtap="navigateToRecharge">延长会员期限</text>
+  </view>
+   <view class="cardrenew_btn" wx:if="{{card_no==''}}">
+      <button style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#444;background:#f2f2f2" hover-class='none' bindtap="navigateToRecharge">立即入会</button>
+  </view>
+
 </view>
+
+
 <view class="menu-area">
   <view bindtap="navigateToOrder" class="order" data-status="0">
 		  <image src="../../images/order.png" />
@@ -57,33 +65,34 @@
 	  </view>
     -->
   	<view bindtap="navigateToOrder" class="order" data-status="5">
-		  <image src="../../images/iconfont-help.png" />
+		  <image src="../../images/tuihuanhuo.png" />
 		  <text>退换货</text>
     </view>
+    <view bindtap="subscribeMessage" class="order">
+		  <image src="../../images/message.png" />
+		  <text>消息</text>
+	  </view>
     <view bindtap="navigateToMyCoupon" class="order">
-		  <image src="../../images/iconfont-card.png" />
+		  <image src="../../images/youhuiquan.png" />
 		  <text>优惠券</text>
 	  </view>
 	  <view bindtap="navigateToAccount" class="order">
 		  <image src="../../images/account.png" />
-		  <text>我的钱包</text>
+		  <text>钱包</text>
 	  </view>
 	  <view bindtap="navigateToAgreement" class="order">
-		  <image src="../../images/u633.png" />
+		  <image src="../../images/xieyi.png" />
 		  <text>会员协议</text>
 	  </view>
 	  <view bindtap="" class="order">
-		  <image src="../../images/u631.png" />
-		  <button class="clickBtn" open-type="contact" session-from="weapp">联系客服</button>
+		  <image src="../../images/kefu.png" />
+		  <button class="clickBtn" open-type="contact" session-from="weapp">客服</button>
 	  </view>
     <view bindtap="login" class="order">
-		  <image src="../../images/icon_login_name_red.png" />
+		  <image src="../../images/reset.png" />
 		  <text>重新登录</text>
     </view>
-    <view bindtap="subscribeMessage" class="order">
-		  <image src="../../images/message.png" />
-		  <text>消息通知</text>
-	  </view>
+    
 	  <view wx:if="{{userauth.location == 1}}" bindtap="navigateToMyLocation" class="order">
 		  <image src="../../images/iconfont-shouhuodizhi.png" />
 		  <text>我的位置</text>
@@ -219,7 +228,7 @@
   -->
  
   <view wx:if="{{recommentslist.length>0}}" class="recomment-title" bindtap=''>
-      <text>最近浏览的商品<text class='title_ex'></text></text>
+      <text>最近浏览<text class='title_ex'></text></text>
   </view>
   <!--瀑布流列表-->
     <view class="venues-box"  >
