@@ -1710,7 +1710,7 @@ Page({
             that.setData({
                 gift_para_interval:1 //30秒获取一次系统参数
             })
-            if(that.data.hall_banner.length == 0){
+            if(that.data.hall_banner.length == 0||that.data.gift_para_interval==1){
                 that.get_project_gift_para()
             }
         }, 60*1000)
