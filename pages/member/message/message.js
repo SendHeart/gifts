@@ -3,6 +3,7 @@ var app = getApp();
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
 var messageflag = app.globalData.messageflag;
+app.globalData.messageflag = 1;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
 var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
@@ -169,6 +170,7 @@ Page({
       message_type: message_type,
       message_list:[],
     });
+    console.log('onOrderTapTag:'+JSON.stringify(e)) ;
     console.log('tab:' + tab, ' messageflag:', messageflag,'activeIndex2:',that.data.activeIndex2)
     //that.reloadData()
     if (that.data.activeIndex2 == 0) {
@@ -394,6 +396,16 @@ Page({
         })
       }
     })
+    var default_para = {
+      currentTarget:{
+        dataset:{
+          id:'message',
+          index:2,
+          title:'消息'
+        }
+      }
+    }
+    that.onOrderTapTag(default_para) ;
   },
   onShow: function(){
     var that = this
@@ -410,12 +422,16 @@ Page({
       activeIndex2: activeIndex2,
       messageflag: app.globalData.messageflag,
     })
+
+    that.get_member_messages()
+
+    /*
     if (activeIndex2==0){
       that.get_ai_rules()
     } else  {
       that.get_member_messages()
     }
-
+    */
   },
   //获取消息
   get_member_messages: function () {

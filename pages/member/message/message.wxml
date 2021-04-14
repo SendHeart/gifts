@@ -1,6 +1,10 @@
 <import src="../../common/nav_new.wxml" />
-<template is="nav_new" data="{{navList_order, activeIndex2,navgationHeight,startBarHeight}}" />
-<view class='container'> 
+<!-- 
+  <template is="nav_new" data="{{navList_order, activeIndex2,navgationHeight,startBarHeight}}" />
+-->
+
+<view class='container'>
+  <!--  
   <view wx:if="{{messageflag==2}}" wx:for="{{rule_list}}" wx:for-item="rlist" wx:key="rkey" wx:for-index="rindex" class="ai-goods">
     <view class="goods-item" hidden="{{rindex==selected_num?false:true}}"> 
       <view class="ai-goods-title">{{rlist.title}}</view>
@@ -11,21 +15,22 @@
       </view>
     </view>
   </view>
- 
+  --> 
+  <!--   
   <view wx:if="{{messageflag==2}}" class="opt-buttons">
     <form bindsubmit="formSubmit"  data-name='selectBtn_last' report-submit="true" hidden="{{selected_start}}">
-      <button class="opt-button2" formType="submit"  >返回上一项</button> <!-- bindtap="selectBtnTap" -->
+      <button class="opt-button2" formType="submit"  >返回上一项</button> 
     </form>
     <form bindsubmit="formSubmit"  data-name='selectBtn_next' report-submit="true" hidden="{{selected_all}}">
       <button class="opt-button" style="width:300rpx;margin-left:50rpx;" formType="submit"  >继续</button>
     </form>
      <form bindsubmit="formSubmit"  data-name='selectBtn' report-submit="true" hidden="{{!selected_all}}">
-      <button class="opt-button"  style="width:300rpx;margin-left:50rpx;" formType="submit"  >开始推荐</button> <!-- bindtap="selectBtnTap" -->
+      <button class="opt-button"  style="width:300rpx;margin-left:50rpx;" formType="submit"  >开始推荐</button>  
     </form>
   </view>
-
-  <view wx:if="{{messageflag==3}}" class="loadingshow {{isLoadingTrue?'isLoadingShow':'isLoadingHide'}}" style="height:{{dkheight}}px;" catchtouchmove="move">
-    
+  -->
+  <!-- -->
+  <view wx:if="{{messageflag==3}}" class="loadingshow {{isLoadingTrue?'isLoadingShow':'isLoadingHide'}}" style="height:{{dkheight}}px;" catchtouchmove="move">    
     <view class="select-goods-list">
     <view class="select-goods" style="height:{{dkheight-80}}px;">
       <image class="img-loading" src="{{loading_img}}"></image> <!-- ../../../images/loading.gif-->
