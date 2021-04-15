@@ -9,14 +9,14 @@
   <text class="logininfo-authinfo">获得保存到您系统和相册的权限</text>-->
 </view>
 <view>
-  <button wx:if="{{!userInfo}}" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo" type="warn" style="margin-top:200rpx;width:50%">授权登录
+  <button wx:if="{{!userInfo}}" open-type="getUserInfo" bindtap="onGotUserInfo" lang="zh_CN" type="warn" style="margin-top:200rpx;width:50%">授权登录
   </button>
   <view class="logininfo" style='margin:20rpx;'> 
     <view class="logininfo_row"> 
       <view class="logininfo-authinfo">授权后表明您已同意</view>
-      <view bindtap="navigateToMyAgreement" class='linegray' style='color:#fff;font-size:22rpx;'>用户协议</view>
+      <view bindtap="navigateToMyAgreement" class='linegray' style='color:#e02e24;font-size:22rpx;'>用户协议</view>
     </view>
-     <view bindtap="returnTapTag" class='logininfo-authinfo' style="color:#fff;">暂不授权</view>
+     <view bindtap="returnTapTag" class='logininfo-authinfo' style="color:#BBBBBB;">暂不授权</view>
   </view>
 </view>
 <import src="../../toast/toast.wxml"/>

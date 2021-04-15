@@ -56,21 +56,27 @@ Page({
   },
   onGotUserInfo: function (e) {
     var that = this
-    var userInfo = e.detail.userInfo
-    var rawData = e.detail.rawData
-    if (userInfo){
-      wx.setStorageSync('userInfo', userInfo)
-      that.setData({
-        wx_nickname: userInfo ? userInfo.nickName : '',
-        wx_headimg: userInfo ? userInfo.avatarUrl : '',
-      })
-      that.login()
-      setTimeout(function () {
-        that.goBack()
-      }, 500)
-      console.log('获取用户公开信息授权 userInfo:', e.detail.userInfo, ' errMsg:', e.detail.errMsg, 'rawData:', e.detail.rawData)
-      //权限
-      wx.getSetting({
+    //var userInfo = e.detail.userInfo?e.detail.userInfo:''
+    //var rawData = e.detail.rawData     
+    console.log('wx.getUserProfile',wx.canIUse('getUserProfile'));
+    wx.getUserProfile({
+      lang:'zh_CN',
+      desc: '需要完善您的个人信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
+      success: (res) => {
+        console.log('onGotUserInfo success：'+JSON.stringify(res));        
+        wx.setStorageSync('userInfo', res.userInfo)
+        that.setData({
+          wx_nickname: res.userInfo ? res.userInfo.nickName : '',
+          wx_headimg: res.userInfo ? res.userInfo.avatarUrl : '',
+        })
+        
+        that.login()
+        setTimeout(function () {
+          that.goBack()
+        }, 500)
+        console.log('获取用户公开信息授权 userInfo:', res.userInfo)
+        //权限
+        wx.getSetting({
         success(res) {
           var authMap = res.authSetting;
           var length = Object.keys(authMap).length;
@@ -126,10 +132,12 @@ Page({
           }
           */
         }
-      })
-    }else{
-      console.log('获取用户公开信息授权失败 userInfo:', e.detail.userInfo, ' errMsg:', e.detail.errMsg, 'rawData:', e.detail.rawData)
-    }
+        })      
+      },
+      fail(err){
+        console.log('onGotUserInfo error:'+JSON.stringify(err));
+      }
+    })
   
     //console.log(e.detail.errMsg)
     //console.log(e.detail.userInfo)

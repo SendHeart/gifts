@@ -11,7 +11,9 @@
   
     <view class="userinfo">
       <!--<image class="scanqr" src="/images/scanqr_s.png" background-size="cover"  bindtap="getScancode"></image>-->
-      <view><image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image></view>
+      <view>
+        <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
+      </view>
       <view><text class="userinfo-nickname">{{userInfo.nickName}}</text></view>
     </view>
   
@@ -30,14 +32,12 @@
 </view>
 
 <view class="cardrenew">
-  <view class="cardrenew_btn" wx:if="{{card_no!=''}}">
-     
-     <text bindtap="navigateToRecharge">延长会员期限</text>
+  <view class="cardrenew_btn" wx:if="{{card_no!=''}}" bindtap="navigateToRecharge">     
+     <text>延长会员期限</text>
   </view>
    <view class="cardrenew_btn" wx:if="{{card_no==''}}">
       <button style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#444;background:#f2f2f2" hover-class='none' bindtap="navigateToRecharge">立即入会</button>
   </view>
-
 </view>
 
 

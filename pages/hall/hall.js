@@ -1730,12 +1730,16 @@ Page({
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
         var username = wx.getStorageSync('username')
         var refername = that.data.refername
+        var userInfo = wx.getStorageSync('userInfo') 
         var msg_id = that.data.msg_id
         var page_type = that.data.page_type
         var pages = getCurrentPages()
         that.query_cart()
         that.get_project_gift_para()
         that.query_friends()
+        that.setData({
+            userInfo: userInfo
+        })
         if (pages.length > 1) {
             that.setData({
                 title_logo: '../../images/back.png'
@@ -1806,14 +1810,14 @@ Page({
         if(app.globalData.hall_gotop == 1){
             that.goTop()
         }
-
+        /*
         app.getUserInfo(function (userInfo) {
             //更新数据
             that.setData({
                 userInfo: userInfo
             })
         })
-
+        */
         console.log('onShow get_project_gift_para:', wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}])
         //app.globalData.messageflag = 0
     },

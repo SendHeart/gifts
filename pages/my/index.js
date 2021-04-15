@@ -1561,7 +1561,7 @@ Page({
     var userInfo = wx.getStorageSync('userInfo') 
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
-    console.log('my index onShow() user_phone:', user_phone, 'art_id:', art_id)
+    console.log('my index onShow() user info:', userInfo, 'art_id:', art_id)
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
@@ -1587,6 +1587,7 @@ Page({
     that.setData({
       user_type: user_type,
       art_id:art_id,
+      userInfo:userInfo,
     })
     //调用应用实例的方法获取全局数据
     app.getUserInfo(function (userInfo) {
