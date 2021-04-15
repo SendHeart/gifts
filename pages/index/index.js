@@ -654,7 +654,8 @@ Page({
         that.setData({
           windowWidth: res.windowWidth,
           windowHeight: res.windowHeight,
-          dkheight: winHeight,
+          dkheight: winHeight
+          
           //scrollTop: that.data.scrollTop + 10
         })
       }

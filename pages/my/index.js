@@ -1415,7 +1415,7 @@ Page({
       modalHiddenAgreement: !this.data.modalHiddenAgreement
     })
   },  
-  //确定按钮点击事件  玩转送心
+  //确定按钮点击事件 会员制说明
   modalBindconfirmPlaysx: function () {
     this.setData({
       modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
@@ -1425,7 +1425,7 @@ Page({
     })
     
   },
-  //取消按钮点击事件  玩转送心
+  //取消按钮点击事件 会员制说明
   modalBindcancelPlaysx: function () {
     this.setData({
       modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
@@ -1524,7 +1524,7 @@ Page({
     var frompage = app.globalData.from_page ? app.globalData.from_page:options.frompage
     var scene = decodeURIComponent(options.scene)
     var art_id = options.art_id ? options.art_id:0
-   
+    
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
     var art_title = options.art_title ? options.art_title:''
     var refer_id = options.mid ? options.mid : 0
@@ -1540,7 +1540,7 @@ Page({
       art_title: art_title,
       refer_id: refer_id,  
       nickname: userInfo.nickName ? userInfo.nickName : '登录',
-      avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl:'', 
+      avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl : '', 
       frompage: frompage,
       userauth: userauth,
     })

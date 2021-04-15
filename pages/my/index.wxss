@@ -115,7 +115,7 @@ page {
 }
 
 .userinfo-nickname {
-  color: rgb(219, 190, 95);
+  color: #FFCA4B;
   font-size: 30rpx;
   font-weight: bold;
   margin: 0 20rpx;
@@ -146,7 +146,7 @@ page {
 }
 .userinfo-cards-title {
   font-size: 26rpx;
-  color: rgb(219, 190, 95);
+  color: #FFCA4B;
   line-height: 26rpx;
 }
 .userinfo-cards-mid{
@@ -158,7 +158,7 @@ page {
   width: 30%;
 }
 .cards-id{
-  color: rgb(219, 190, 95);
+  color: #FFCA4B;
   font-size: 22rpx;
   font-weight: normal;
   line-height: 22rpx;
@@ -187,7 +187,7 @@ page {
   width: 100%;
 }
 .userinfo-cards-no {
-  color: rgb(219, 190, 95);
+  color: #FFCA4B;
   font-size: 30rpx;
   font-weight: normal;
   margin-right: 20rpx;
@@ -216,8 +216,8 @@ page {
 .cardrenew_btn {
   height: 60rpx;
   width: 48%;
-  background: rgb(219, 190, 95);
-  color:rgb(128, 101, 12);
+  background: #FF952D;
+  color:#fff;
   font-size: 26rpx;
   margin: 0 20rpx 20rpx 20rpx;
   text-align: center;
@@ -376,7 +376,8 @@ page {
   font-size: 32rpx;
 }
 prd-detail {
-  margin: 5rpx 0 15rpx 0;
+  margin: 0;
+  padding: 0;
   color: #999;
 }
 .prd-detail text {
@@ -384,14 +385,15 @@ prd-detail {
 }
 .modalbox {
   background: #ffffff;
-  margin-top: 10px;
+}
+modal {
+  width: 100% !important;
 }
 .wxParse {
   line-height: 1.8;
   font-size: 24rpx;
   height: 600rpx;
   }
- 
  
 .picker_box{
   background: #fff;

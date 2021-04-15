@@ -17,7 +17,7 @@
         <input class="weui-input" placeholder="我的高端品质生活" bindtap='searchTapTag' disabled="disable" />       
       </view>
       <view style="height:35px;line-height:35px;width:20%;" catchtap="messagesTapTag">
-        <text style="font-size:20rpx;color:#999">了解会员制</text>
+        <text style="font-size:20rpx;color:#FFCA4B">了解会员制</text>
       </view> 
     </view>
   </view> 

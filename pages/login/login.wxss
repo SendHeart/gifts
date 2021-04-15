@@ -81,13 +81,12 @@ background-color:#fff;
 
 .subject .toptitle {
   font-size: 42rpx;
-  font-weight: bold;
-  color: #fff;
+  color: #444;
   width: 90%;
   padding: 20rpx;
 }
 .linegray {
-	border-bottom: 1rpx solid #444;
+	border-bottom: 1rpx solid #eeeeee;
 }
 
 /*user info*/
@@ -108,14 +107,14 @@ background-color:#fff;
 }
 
 .logininfo-auth {
-  color: #fff;
+  color: #444444;
   font-size: 32rpx;
   font-weight: normal;
 }
 
 .logininfo-authinfo {
-  color: #ABABAB;
-  font-size: 25rpx;
+  color: #444444;
+  font-size: 24rpx;
   font-weight: normal;
 }
 .logininfo_row {
@@ -124,6 +123,7 @@ background-color:#fff;
   align-items:center;
   text-align: center;
   align-content: center;
+  font-size: 24rpx;
   
 }
 .return {

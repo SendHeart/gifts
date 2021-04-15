@@ -46,8 +46,8 @@
   </view>
   <view class="recharge-note">
     <view class="select-and-amount" >
-      <icon bindtap="bindAgree" style="margin:10rpx;" type="{{selectedAgreeStatus ? 'success' : 'circle'}}" size="18" color='#e34c55'  />
-      <text bindtap="bindRechargeRule" style="margin-right:20rpx;">{{recharge_note}}</text>
+      <icon bindtap="bindAgree" style="margin-right:10rpx;" type="{{selectedAgreeStatus ? 'success' : 'circle'}}" size="18" color='#FF952D'  />
+      <text bindtap="bindRechargeRule" style="margin-right:20rpx; font-size:24rpx;">{{recharge_note}}</text>
     </view>
     <view class="select-and-amount">
       <text style="margin-left:20rpx;margin-right:20rpx;color:#eeeee;">{{recharge_note2}}</text>

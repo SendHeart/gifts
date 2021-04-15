@@ -576,7 +576,7 @@ Page({
     messagesTapTag: function () {
         var that = this
         that.setData({
-            messages_num: 0
+            messages_num: 0,
         })
         app.globalData.messageflag = 1 //1系统消息
         //console.log('hall messagesTapTag: messageflag:', app.globalData.messageflag)
@@ -593,6 +593,7 @@ Page({
                 url: '/pages/my/index'
             })
         }, 500)
+        
     },
     userTapTag: function () {
         wx.switchTab({
@@ -889,7 +890,7 @@ Page({
             data: {
                 username: username ? username : openid,
                 access_token: token,
-                type: 3,  // 3送心礼物好友
+                type: 3,  // 3黑贝会好友
                 shop_type: shop_type,
                 page: friends_page,
                 pagesize: friends_pagesize,
@@ -899,7 +900,7 @@ Page({
                 'Accept': 'application/json'
             },
             success: function (res) {
-                //console.log('3送心礼物好友 hall query_friends:', res.data);
+                //console.log('3黑贝会好友 hall query_friends:', res.data);
                 if (!res.data.result) {
                     return;
                 }
@@ -918,7 +919,7 @@ Page({
                 that.setData({
                     friends: friends_list,
                 })
-                console.log('3送心礼物好友 hall query_friends friends:', that.data.friends);
+                console.log('3黑贝会好友 hall query_friends friends:', that.data.friends);
             }
         })
     },
@@ -1800,8 +1801,8 @@ Page({
                 that.setData({
                     messageHidden: !that.data.messageHidden,
                     main_prom_image: that.data.navList2[10]['img'],
-                    main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title'] : '送心礼物',
-                    main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '送心礼物欢迎您！',
+                    main_prom_title: that.data.navList2[10]['title'] ? that.data.navList2[10]['title'] : '黑贝会',
+                    main_prom_note: that.data.navList2[10]['note'] ? that.data.navList2[10]['note'] : '黑贝会欢迎您！',
                     notehidden: !that.data.notehidden,
                 })
             }

@@ -304,7 +304,7 @@ Page({
         access_token: token,
         status: status,
         shop_type:shop_type,
-        type: 3,  // 3送心礼物好友
+        type: 3,  // 3黑贝会好友
         keyword: keyword,
         page: page > page_num ? page_num:page,
         pagesize:pagesize
@@ -364,7 +364,7 @@ Page({
             })
           })
 
-          console.log('送心礼物好友 hall reloadData friends:', that.data.friends);
+          console.log('黑贝会好友 hall reloadData friends:', that.data.friends);
         }
       }
     })

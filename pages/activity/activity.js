@@ -451,7 +451,7 @@ Page({
   },
   onShareAppMessage: function () {
     return {
-      title: '送心礼物',
+      title: '黑贝会',
       desc: '开启礼物电商时代，200万人都在用的礼物小程序！',
       path: '/pages/hall/hall?refername='+username
     }

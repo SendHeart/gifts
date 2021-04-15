@@ -19,7 +19,7 @@ const options = {
   frameSize: 50,//指定帧大小，单位 KB
 }
 var card_color = [
-  { id: "gray", title: "灰色", value: "#f2f2f2" },
+  { id: "gray", title: "灰色", value: "#FDFEFE" },
   { id: "red", title: "红色", value: "#e34c55" },
   { id: "white", title: "白色", value: "#fff"},
   { id: "black", title: "黑色", value: "#333" },

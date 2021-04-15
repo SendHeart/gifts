@@ -17,10 +17,10 @@
   margin-top: -10rpx;
   border-width: 16rpx;
   border-style: solid;
-  border-color:  transparent transparent #EC4844 transparent;
+  border-color:  transparent transparent #FFCA4B transparent;
 }
 .body {
-  background-color: #EC4844;
+  background-color: #FFCA4B;
   box-shadow: 0 10rpx 20rpx -10rpx #333333;
   border-radius: 12rpx;
   display: flex;
@@ -31,7 +31,7 @@
   margin-right: 40rpx;
 }
 .body > text {
-  color: #FFF;
+  color: #444444;
   font-size: 24rpx;
   font-weight: 400;
 }

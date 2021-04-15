@@ -595,7 +595,7 @@ Page({
     var currenttime = that.data.currenttime
     var desc = '新手任务免费得大礼'
     var imageUrl = that.data.navList2.length == 0 ? that.data.new_task_image:that.data.navList2[9]['img']
-    var title = '好友' + nickname + '邀请你一起参与送心礼物任务~'
+    var title = '好友' + nickname + '邀请你一起参与黑贝会任务~'
    
     console.log('开始分享送礼任务', options, ' task:', task, ' msg_id', msg_id)
     var shareObj = {

@@ -8,12 +8,12 @@ Component({
     // 提示文字
     text: {
       type: String,
-      value: '点击「添加小程序」，下次访问更便捷'
+      value: '点击「添加到我的小程序」，保持收藏'
     },
     // 多少秒后关闭
     duration: {
       type: Number,
-      value: 10
+      value: 4
     }
   },
 

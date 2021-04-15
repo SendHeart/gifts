@@ -108,9 +108,9 @@ Page({
     live_memberList:[],
     live_adv_goods:[], //推广商品
     live_adv_note:[], //广告通知
-    share_title:'送心礼物视频分享',
+    share_title:'黑贝会视频分享',
     share_image: weburl + '/uploads/video_share_image.png',
-    share_desc:'送心礼物期待您的光临',
+    share_desc:'黑贝会期待您的光临',
     share_logo: weburl + '/uploads/video_share_logo.png',
     danmustatus:true,
     tanmuHidden:true,
@@ -201,7 +201,7 @@ Page({
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var liveid = options.liveid ? options.liveid:'3954'
     var live_goods = options.live_goods ? options.live_goods : ''
-    var live_name = options.live_name ? options.live_name : '送心礼物'
+    var live_name = options.live_name ? options.live_name : '黑贝会'
     var live_poster = options.live_poster ? options.live_poster : that.data.poster_image
     var live_desc = options.live_desc ? options.live_desc : that.data.share_desc
     var live_logo = options.live_logo ? options.live_logo : that.data.share_logo
@@ -445,7 +445,7 @@ Page({
               videoList: video_list,
               videourl: videourl ? videourl : that.data.liveurl,
               live_logo: liveinfo[0]['logo'],
-              live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name'] : '送心礼物',
+              live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name'] : '黑贝会',
               live_hoster: live_hoster,
               is_hoster: is_hoster,
             })
@@ -473,7 +473,7 @@ Page({
             is_live:true,
             live_starttime: liveinfo[0]['endtime'],
             live_logo: liveinfo[0]['logo'],
-            live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name']:'送心礼物' ,
+            live_name: liveinfo[0]['shop_name'] ? liveinfo[0]['shop_name']:'黑贝会' ,
             live_hoster: live_hoster,
             is_hoster: is_hoster,
           }, function () {

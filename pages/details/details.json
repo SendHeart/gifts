@@ -1,5 +1,5 @@
 {
-    "navigationBarTitleText": "商品详情",
+    "navigationBarTitleText": "会员商品",
     "usingComponents": {
       "action-sheet": "../common/actionsheet/actionsheet"
     }

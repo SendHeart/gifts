@@ -116,7 +116,7 @@ page {
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #e34c55;
+  color: #444;
 }
 .msg-item-text2{
   margin-left:20rpx;

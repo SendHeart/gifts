@@ -157,7 +157,7 @@ picker {
 /*每行单元格*/
 
 .carts-item {
-  width: 98%;
+  width: 96%;
   display: flex;
   flex-direction: row;
   height: 250rpx;
@@ -166,7 +166,7 @@ picker {
   border-radius: 20rpx 20rpx 20rpx 20rpx;
   padding: 20rpx 0;
   margin-top:10rpx;
-  background: #444;
+  background: #1d1d1d;
   z-index: 1;
 }
 
@@ -175,7 +175,7 @@ picker {
 .carts-image {
   width: 120rpx;
   height: 120rpx; 
-  margin: 40rpx 20rpx;
+  margin: 0 20rpx;
 }
 
 /*右部描述*/
@@ -209,7 +209,7 @@ picker {
   flex-direction: row;
   justify-content: flex-end;
   font-size: 25rpx;
-  color: #F2F2F2;
+  color: #FFCA4B;
   line-height: 32rpx;
   margin-right: 20rpx;
 }
@@ -243,7 +243,7 @@ picker {
 }
 
 .recharge-item-selected {
-  background: #e34c55;
+  background: #FF952D;
   color: #fff;
 }
 
@@ -260,7 +260,6 @@ picker {
 .recharge-item-amount {
   font-size: 38rpx;
   font-weight: bold;
-  padding: 5rpx;
   margin-bottom: 20rpx;
 }
 
@@ -328,9 +327,9 @@ picker {
 }
 .carts-sku {
 font-size:24rpx;
-color:#999;
+color:#fff;
 height:110rpx;
- 
+margin-right: 20rpx;
 }
 .carts-sku text{
 font-size:24rpx;

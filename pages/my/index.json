@@ -1,6 +1,6 @@
 {
   "navigationBarTitleText": "我的",
-  "backgroundColor": "#1d1d1d",
+  "backgroundColor": "#FDFEFE",
   "usingComponents": {
     "imageloader": "../common/imageloader/imageloader"
   }

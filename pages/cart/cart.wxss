@@ -131,7 +131,7 @@ page{
 /*右部描述*/
 .carts-text {
 	margin-left: 10rpx;
-	width: 100%;
+	width: 70%;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
@@ -292,16 +292,16 @@ page{
 
 /*立即结算按钮*/
 .carts-footer .button {
-	line-height: 70rpx;
+	line-height: 64rpx;
 	text-align: center;
 	width:200rpx;
-	height: 70rpx;
-	background-color: #f40;
+	height: 64rpx;
+	background-color: #FF952D;
 	color: #fff;
-	font-size: 32rpx;
-	border-radius: 20rpx;
+	font-size: 30rpx;
+	border-radius: 10rpx;
   border: 0;
-  margin: 5rpx;
+  margin: 10rpx;
 }
 
 /*删除按钮*/
@@ -343,8 +343,8 @@ page{
 
 /*推荐商品列表头*/
 .recomment-title {
- 
-	height: 50rpx;
+  color: #999;
+	height: 40rpx;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;/*子项横轴上居中对齐*/
@@ -352,9 +352,9 @@ page{
 	border-top: 1px solid #eee;	
   border-bottom: 1px solid #eee;
 	background: white;
-  padding:25rpx;
+  padding:10rpx;
   z-index: 1;
-  font-size: 28rpx;
+  font-size: 24rpx;
 }
 
 /*推荐商品列表头*/

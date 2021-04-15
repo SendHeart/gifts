@@ -50,9 +50,9 @@
 	<view class="select-and-amount" bindtap="bindSelectAll">
 		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" color="#1d1d1d"/>
 		<text style="font-size: 24rpx; color: #999;">全选</text>
-		<text style="margin-left:40rpx;">合计: ￥{{total}}</text>
+		<text style="margin-left:40rpx;">￥{{total}}</text>
 	</view>
-	<view class="button" bindtap="bindCheckout">立即结算</view>
+	<view class="button" bindtap="bindCheckout">去结算</view>
 </view>
 <view class="recomment-title">
     <text>更多推荐</text>

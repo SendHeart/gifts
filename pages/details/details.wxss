@@ -183,7 +183,7 @@ page {
   text-align: right;
 }
 .goods-info .price-real {
-  color: #f40;
+  color: #FF952D;
   font-weight: 600;
   font-size: 36rpx;
 } 
@@ -340,7 +340,7 @@ border: none;
   background-color: #444;
   color: #fff;
   font-size: 28rpx;
-  border-radius: 40rpx;
+  border-radius: 10rpx;
   line-height: 80rpx;
   margin: 0 auto;
 }
@@ -348,9 +348,9 @@ border: none;
   text-align: center;
   width: 90%;
   height: 80rpx;
-  background-color: #f40;
+  background-color: #FF952D;
   color: #fff;
-  border-radius: 40rpx;
+  border-radius: 10rpx;
   font-size: 28rpx;
   line-height: 80rpx;
 }
@@ -484,9 +484,8 @@ border: none;
 /*每个属性选中的当前样式*/
 
 .attr_value_active {
-  color: #EC4844;
-  background:rgb(253, 234, 234);
-  border: 2rpx #EC4844 solid;
+  color: #00191A;
+  border: 2rpx #00191A solid;
   /* background: #fff;   */
 }
 

@@ -50,7 +50,7 @@ Page({
     hidden_share:true,
     windowHeight:900,
     windowWidth:500,
-    background:'#f2f2f2',
+    background:'#FDFEFE',
   },
 
 
@@ -884,7 +884,7 @@ Page({
             },
             {
               type: 'text',
-              content: '送心礼物，开启礼物社交时代!',
+              content: '黑贝会，高端会员制购物!',
               fontSize: 18,
               color: '#999',
               textAlign: 'left',
@@ -1476,7 +1476,7 @@ Page({
     var activity_name = that.data.activity_name ? that.data.activity_name : '我的位置'
     var title = '收到' + nickname + '的送礼分享~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
-    var desc = '送心礼物分享'
+    var desc = '黑贝会分享'
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
     var share_goods_image = that.data.share_goods_image2 ? that.data.share_goods_image2 : ''
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_goods_avatarUrl
