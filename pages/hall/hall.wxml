@@ -58,7 +58,7 @@
                 <cover-image class="img" src="{{banner_list.pic}}" mode="aspectFill" />
               </cover-view>
             </video>
-            <image wx:else src="{{banner_list.img}}" class="slide-image" mode="aspectFill" />
+            <image wx:else src="{{banner_list.img}}" class="slide-image" mode="Widthfix" />
           </swiper-item>
         </view>
       </block>
