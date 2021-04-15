@@ -196,15 +196,24 @@ Page({
     wx.hideLoading();
     that.sum();
   },
-  bindSelectAll: function () {
+
+  bindUnSelectAll: function () {
+    var that = this
+    var selectedAllStatus = this.data.selectedAllStatus;
+    // 取反操作
+    selectedAllStatus = !selectedAllStatus;
+    that.bindSelectAll(selectedAllStatus)
+  },
+
+  bindSelectAll: function (selectedAllStatus=true) {
     wx.showLoading({
       title: '操作中',
       mask: true
     });
     // 环境中目前已选状态
-    var selectedAllStatus = this.data.selectedAllStatus;
+    //var selectedAllStatus = this.data.selectedAllStatus;
     // 取反操作
-    selectedAllStatus = !selectedAllStatus;
+    //selectedAllStatus = !selectedAllStatus;
     // 购物车数据，关键是处理selected值
     var carts = this.data.carts;
     // 遍历
@@ -664,7 +673,8 @@ Page({
           minusStatuses: minusStatuses,
           showmorehidden: showmorehidden,
           all_rows: carts.length
-        });
+        })
+        that.bindSelectAll()
       }
     })
 
