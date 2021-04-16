@@ -25,7 +25,7 @@ Page({
     m_id:null,
     token:null,
     shop_type:shop_type,
-    logininfo_logo:weburl+'/uploads/songxin_logo.png'
+    logininfo_logo:weburl+'/uploads/songxin_logo.png?rand='+Math.random()*100
   },
 
   goBack: function () {
