@@ -1057,8 +1057,7 @@ Page({
             duration: 2000
           })
           return
-        }
-       
+        }       
         
         that.setData({
           recharge_skuid: result.recharge_skuid,

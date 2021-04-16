@@ -285,12 +285,29 @@ Page({
               url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself
             })
           }
-        } else {
-          wx.showToast({
-            title: res.data.info,
-            icon: 'none',
-            duration: 2000
-          })
+        } else {          
+          let ret_info = res.data.info
+          if(ret_info.indexOf("会员卡过期") >= 0){
+            wx.showModal({
+              title: ret_info,         
+              content: '延长会员期限?',         
+              success: function (res) {         
+                if (res.confirm) {         
+                  wx.switchTab({
+                    url: '../../my/index'
+                  })     
+                } else {         
+                  console.log('用户点击取消')         
+                }         
+              }         
+            })           
+          }else{
+            wx.showToast({
+              title: res.data.info,
+              icon: 'none',
+              duration: 2000
+            })
+          }
         }
       }
     })
