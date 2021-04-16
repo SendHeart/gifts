@@ -1796,7 +1796,7 @@ Page({
       },
     }
     if (options.from === 'button') {
-      console.log('送心分享', shareObj)
+      console.log('黑贝会分享', shareObj)
      
     }
     return shareObj;

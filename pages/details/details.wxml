@@ -416,7 +416,7 @@
       </view>
        <view class="modeswitch">
         <label>
-          <text style='height:50rpx;line-height:50rpx;'>送心logo</text>
+          <text style='height:50rpx;line-height:50rpx;'>黑贝会logo</text>
           <switch bindchange="shlogoChange" checked='{{has_shlogo}}' color='#E34C55' style='zoom:0.6' />
         </label>
       </view>

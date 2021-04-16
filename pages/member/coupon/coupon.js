@@ -133,7 +133,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var amount = 0   //优惠券面额 
     var nums = 1   //优惠券面额 
-    var quan_type = 1 //送心打折券
+    var quan_type = 1 //黑贝会打折券
     //that.setNavigation()
     console.log('优惠券信息')
   

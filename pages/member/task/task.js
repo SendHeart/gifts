@@ -167,7 +167,7 @@ Page({
     var that = this
     var qr_type = 'activityshare'  //
     var act_id = that.data.act_id
-    var act_title = that.data.act_title ? that.data.act_title : '送心活动'
+    var act_title = that.data.act_title ? that.data.act_title : '黑贝会活动'
     var page_type = '4'  //
     that.setData({
       qr_type: qr_type,

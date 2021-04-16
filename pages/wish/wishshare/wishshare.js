@@ -522,7 +522,7 @@ Page({
       share_goods_default_title = '这个礼物真不错，来看看吧，要是你能送我就更好了~'
     }
     var share_goods_title = options.share_goods_title ? options.share_goods_title : share_goods_default_title
-    var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是送心~'
+    var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是黑贝会~'
     var share_art_id = options.share_art_id ? options.share_art_id : 0
     var share_art_cat_id = options.share_art_cat_id ? options.share_art_cat_id : 0
     var share_art_title = options.share_art_title ? options.share_art_title : ''
@@ -1391,7 +1391,7 @@ Page({
             },
             {
               type: 'text',
-              content: '长按识别二维码，进入送心小程序',
+              content: '长按识别二维码，进入黑贝会小程序',
               fontSize: 12,
               color: '#FFF',
               textAlign: 'left',
@@ -1492,7 +1492,7 @@ Page({
     }
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : share_goods_default_title
     
-    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是送心~'
+    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是黑贝会~'
     var share_art_id = that.data.share_art_id
     var share_art_cat_id = that.data.share_art_cat_id
     var share_art_image = that.data.share_art_image
@@ -1564,7 +1564,7 @@ Page({
         shareObj['imageUrl'] = that.data.shareImage //share_order_image
         shareObj['path'] = '/pages/order/receive/receive?receive=1&order_id=' + share_order_id + '&order_shape=' + share_order_shape + '&mid=' + m_id
       }
-      console.log('送心分享', shareObj)
+      console.log('黑贝会分享', shareObj)
     }
     // 返回shareObj
     return shareObj;

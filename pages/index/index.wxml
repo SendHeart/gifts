@@ -154,7 +154,7 @@
     <text class="buyin_text" style="font-size:28rpx; font-weight:bold;">礼物回收怎么玩？</text>
     <text class="buyin_text">1. 仅限于接受礼物后，尚未发货时可以申请折现。</text>
     <text class="buyin_text">2. 回收会收取该订单金额<text style="color:#e34c55;">{{100-buyin_rate}}%</text>的手续费。</text>
-    <text class="buyin_text">3. 折现后的金额会全部自动转到您的[送心钱包]账户中，您可以在“我的-钱包”中查询并提现到微信钱包。</text>
+    <text class="buyin_text">3. 折现后的金额会全部自动转到您的[黑贝会钱包]账户中，您可以在“我的-钱包”中查询并提现到微信钱包。</text>
   </view>
 </modal>
 <!--

@@ -42,7 +42,7 @@ Page({
         navlist_toView:0,
         navlist_title:'',
         is_category:false,
-        title_name:'送心',
+        title_name:'黑贝会',
         title_logo: '../../images/footer-icon-05.png',
         img_discount: '../../images/discount.png',
         img_service: weburl+'/uploads/service.png',

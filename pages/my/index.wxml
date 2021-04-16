@@ -74,7 +74,7 @@
 	  </view>
     <view bindtap="navigateToMyCoupon" class="order">
 		  <image src="../../images/youhuiquan.png" />
-		  <text>优惠券</text>
+		  <text>贝金券</text>
 	  </view>
 	  <view bindtap="navigateToAccount" class="order">
 		  <image src="../../images/account.png" />
@@ -104,7 +104,7 @@
 	  </view>
     <view wx:if="{{userauth.article==1}}" bindtap="navigateToArticle" class="order">
 		  <image src="../../images/u621.png" />
-		  <text>送心文章</text>
+		  <text>黑贝会文章</text>
 	  </view>
      <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToShopowner" class="order">
 		  <image src="../../images/u633.png" />
@@ -161,7 +161,7 @@
   </view>
   <view wx:if="{{userauth.article==1}}" bindtap="navigateToArticle" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/u621.png" />
-	  <text>送心文章</text>
+	  <text>黑贝会文章</text>
   </view>
   <view wx:if="{{userauth.location == 1}}" bindtap="navigateToMyLocation" class="tableviewcell linegray" style='width:{{windowWidth-35}}px'>
 	  <image src="../../images/iconfont-shouhuodizhi.png" />
@@ -353,7 +353,7 @@
 <view class='modal-bg' wx:if="{{sendheartappHidden}}" catchtap='closesendheartapp' catchtouchmove='move'>
   <view class='modal-content-bg' >
     <text class='modal-text'>在客服会话中粘贴后点击链接\n下载APP</text>
-    <button class='modal-btn' open-type='contact'>送心APP</button>
+    <button class='modal-btn' open-type='contact'>黑贝会APP</button>
   </view>
 </view>
 

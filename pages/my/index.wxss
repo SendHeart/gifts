@@ -292,7 +292,7 @@ page {
   padding: 10rpx;
   width: 60rpx;
   height: 60rpx;
-  background: #fdfefe;
+  background: #F2F2F2;
   border-radius: 40%;
 }
 
@@ -300,8 +300,8 @@ page {
 	display: block;
 	font-size: 24rpx;
   color: #333;
-  line-height: 50rpx;
-  height: 50rpx;
+  line-height: 40rpx;
+  height: 40rpx;
 }
 
 /** 修改button默认的点击态样式类**/

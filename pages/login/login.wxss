@@ -95,8 +95,8 @@ background-color:#fff;
   flex-direction: column;
   align-items:center;
   line-height: 200%;
-  height: 480rpx;
-  
+  height: 400rpx;
+  margin-top: 200rpx;
 }
 
 .logininfo-logo {

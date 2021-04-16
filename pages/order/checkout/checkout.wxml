@@ -147,6 +147,6 @@
           <text class="coupon-content">{{selected_coupon_content}}</text>
           <text class="coupon-dueday">{{selected_coupon_starttime?'(有效期:'+selected_coupon_starttime+'至':''}}{{selected_coupon_endtime?selected_coupon_endtime+')':''}}</text>
           <text class="coupon-footer">{{selected_coupon_footer}}</text>
-          <text class="coupon-footer">本优惠券最终解释权归送心所有</text>
+          <text class="coupon-footer">本优惠券最终解释权归黑贝会所有</text>
         </view>
 </view> -->

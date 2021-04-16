@@ -58,9 +58,9 @@ Page({
     var start_time = that.data.start_time
     var title = '收到' + nickname + '的祝福~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
-    var desc = '送心祝福'
+    var desc = '黑贝会祝福'
 
-    console.log('开始送心祝福', options)
+    console.log('开始黑贝会祝福', options)
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)
       desc: desc,

@@ -19,7 +19,7 @@
       <view bindtap="showGoods" data-coupon-id="{{item.password}}">
         <image class="gifts-image" src="{{navList2[6]['img']}}" mode="aspectFill"></image>
       </view>
-      <text class="carts-title">送心优惠券({{item.password}})</text>
+      <text class="carts-title">黑贝会优惠券({{item.password}})</text>
     </view>
    
     <view class="sentbtn">

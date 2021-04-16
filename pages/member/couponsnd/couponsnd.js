@@ -430,7 +430,7 @@ Page({
     var nums = that.data.nums   //优惠券数量
     var start_time = that.data.start_time   //优惠券有效期
     var end_time = that.data.end_time   //优惠券有效期
-    var quan_type = that.data.coupon_type ? that.data.coupon_type:1 //1送心打折券 2红包 3积分奖励
+    var quan_type = that.data.coupon_type ? that.data.coupon_type:1 //1黑贝会打折券 2红包 3积分奖励
     var coupon_img = that.data.coupon_img
     var coupon_footer = that.data.coupon_footer
     var coupon_content = that.data.coupon_content

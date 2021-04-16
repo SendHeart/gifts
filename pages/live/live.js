@@ -12,7 +12,7 @@ var navList = [
 
 Page({
   data: {
-    title_name: '送心视频',
+    title_name: '黑贝会视频',
     title_logo: '../../images/footer-icon-05.png',
     img_discount:'../../images/discount.png',
     default_img: weburl + '/uploads/default_goods_image.png',

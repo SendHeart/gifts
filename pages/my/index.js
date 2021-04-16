@@ -815,8 +815,8 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var art_id = '29'  //21送心用户协议 29会员规则和权益协议
-    var art_cat_id = '9'  //送心协议类
+    var art_id = '29'  //21黑贝会用户协议 29会员规则和权益协议
+    var art_cat_id = '9'  //黑贝会协议类
     var shop_type = that.data.shop_type
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
     if (agreementinfoshowflag == 0) {
@@ -840,7 +840,7 @@ Page({
             art_id:0,
           })
           app.globalData.art_id = 0
-          console.log('送心协议:', that.data.agreementInfo)
+          console.log('黑贝会协议:', that.data.agreementInfo)
           that.showAgreementinfo()
         }
       })
@@ -852,11 +852,11 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转送心 28什么是会员制 29会员规则和权益协议
-    var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //送心协议类
-    var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转送心'
+    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议
+    var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //黑贝会协议类
+    var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转黑贝会'
     var playsxinfoshowflag = that.data.playsxinfoshowflag
-    console.log('送心协议 art_id:', art_id)
+    console.log('黑贝会协议 art_id:', art_id)
     if (playsxinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -876,7 +876,7 @@ Page({
             playsxInfo: res.data.result,
           })
           app.globalData.art_id = 0
-          console.log('玩转送心:', that.data.playsxInfo)
+          console.log('玩转黑贝会:', that.data.playsxInfo)
           that.showPlaysxinfo()
         }
       })

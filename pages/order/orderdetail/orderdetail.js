@@ -11,7 +11,7 @@ Page({
     title_logo: '../../../images/footer-icon-05.png',
     delivery_background: weburl+'/uploads/line.png',
     share_title: '我的详情单',
-    share_desc: '送礼就是送心',
+    share_desc: '送礼就是黑贝会',
     orders: [],
     order_no:'',
     sendtime:'',

@@ -27,7 +27,7 @@ var navList2 = [
 
 Page({
   data: {
-    title_name:'送心活动',
+    title_name:'黑贝会活动',
     title_logo: '../../images/footer-icon-05.png',
     img_discount: '../../images/discount.png',
     hidden: true,
@@ -194,7 +194,7 @@ Page({
     var that = this
     var qr_type = 'activityshare'  //
     var act_id = that.data.act_id
-    var act_title = that.data.act_title ? that.data.act_title:'送心活动'
+    var act_title = that.data.act_title ? that.data.act_title:'黑贝会活动'
     var page_type = '4'  //
     var share_activity_qrcode_cache = wx.getStorageSync('activity_qrcode_cache_' + act_id)
     that.setData({

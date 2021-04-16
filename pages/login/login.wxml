@@ -3,18 +3,18 @@
 </view>
 <view class="logininfo" style=''> 
 	<image class="logininfo-logo" src="{{logininfo_logo}}" background-size="cover"></image>
-	<text class="logininfo-auth">黑贝会</text>
+	<text class="logininfo-auth">黑贝会 购享全球</text>
   <text class="logininfo-authinfo">申请获取您部分公开信息的权限</text>
   <!--<text class="logininfo-authinfo">获得调用您通信地址的权限</text>
   <text class="logininfo-authinfo">获得保存到您系统和相册的权限</text>-->
 </view>
 <view>
-  <button wx:if="{{!userInfo}}" open-type="getUserInfo" bindtap="onGotUserInfo" lang="zh_CN" type="warn" style="margin-top:200rpx;width:50%">授权登录
+  <button wx:if="{{!userInfo}}" open-type="getUserInfo" bindtap="onGotUserInfo" lang="zh_CN" type="default" style="width:50%;background:#FF952D!important;color:#ffffff!important;">授权登录
   </button>
   <view class="logininfo" style='margin:20rpx;'> 
     <view class="logininfo_row"> 
       <view class="logininfo-authinfo">授权后表明您已同意</view>
-      <view bindtap="navigateToMyAgreement" style='color:#e02e24;'>用户协议</view>
+      <view bindtap="navigateToMyAgreement" style='color:#FF952D;'>用户协议</view>
     </view>
      <view bindtap="returnTapTag" class='logininfo-authinfo' style="color:#BBBBBB;">暂不授权</view>
   </view>
