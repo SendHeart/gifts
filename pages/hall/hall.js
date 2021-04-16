@@ -587,6 +587,7 @@ Page({
         */
         app.globalData.my_index = 1 //1系统消息
         app.globalData.art_id = 28 //28会员制说明
+        app.globalData.from_page = '/pages/hall/hall'
         console.log('hall messagesTapTag: art_id:', app.globalData.art_id)
         setTimeout(function () {
             wx.switchTab({

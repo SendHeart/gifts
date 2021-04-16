@@ -110,8 +110,18 @@ Page({
   },
 	addressObjects: [],
 	onLoad: function (options) {
-    var that = this  
-    that.readCarts(options)
+    var that = this
+    var recharge_options
+    if(options.recharge_options){
+      recharge_options = JSON.parse(options.recharge_options)
+    }else{
+      recharge_options = options
+    }
+    that.setData({
+      recharge_options: recharge_options,
+    })  
+    //console.log('order/recharge onLoad() options:',options)
+    that.readCarts(recharge_options)
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -436,7 +446,7 @@ Page({
     var that = this
     app.globalData.my_index = 1 //1系统消息
     app.globalData.art_id = 28 //28会员制说明
-    
+    app.globalData.from_page = '/pages/order/recharge/recharge?recharge_options='+ JSON.stringify(that.data.recharge_options)
     setTimeout(function () {
       wx.switchTab({
         url: '/pages/my/index'
@@ -448,7 +458,8 @@ Page({
     var that = this
     app.globalData.my_index = 1 //1系统消息
     app.globalData.art_id = 29 // 29 会员规则和权益协议
-    app.globalData.from_page = '/pages/my/index'
+    app.globalData.from_page = '/pages/order/recharge/recharge?recharge_options='+ JSON.stringify(that.data.recharge_options)
+   
     setTimeout(function () {
       wx.switchTab({
         url: '/pages/my/index'

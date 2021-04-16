@@ -58,7 +58,7 @@
       <view class="select-and-amount">
         <icon bindtap="bindAgree" style="margin-right:10rpx;" type="{{selectedAgreeStatus ? 'success' : 'circle'}}"
           size="18" color='#FF952D' />
-        <text style="font-size:22rpx;">{{recharge_note}}《<text bindtap="bindRechargeRule" style="color:#FFCA4B">黑贝会会籍规则和权益协议</text>》特别规定</text>
+        <text style="font-size:22rpx;" bindtap="bindRechargeRule">{{recharge_note}}《<text  style="color:#FFCA4B">黑贝会会籍规则和权益协议</text>》特别规定</text>
       </view>
       <view class="select-and-amount">
         <text style="margin-left:44rpx;font-size:22rpx;">{{recharge_note2}}</text>

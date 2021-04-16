@@ -512,7 +512,7 @@ Page({
 
   goBack: function () {
     var that = this
-    var pages = getCurrentPages()
+    var pages = getCurrentPages()    
     var userInfo = wx.getStorageSync('userInfo') 
     var frompage = app.globalData.from_page?app.globalData.from_page:that.data.frompage
     app.globalData.from_page = ''
@@ -521,12 +521,20 @@ Page({
     if (userInfo){
       if (pages.length > 0) {
         if (frompage) {
-          wx.navigateTo({
-            url: frompage,
-          })
-        } else {
+          if(frompage.indexOf('/pages/hall')>=0||frompage.indexOf('/pages/cart/cart')>=0||frompage.indexOf('/pages/member/message')>=0||frompage.indexOf('/pages/my/index')>=0){
+            wx.switchTab({
+              url: frompage
+            })
+          }else{
+            wx.navigateTo({
+              url: frompage,
+            })
+          }          
+        } 
+        /*else if(pages.length > 1){
           wx.navigateBack({ changed: true });//返回上一页
         }
+        */
       } else {
         wx.switchTab({
           url: '../hall/hall'
@@ -1406,7 +1414,6 @@ Page({
     app.globalData.art_id = 0
     wx.setStorageSync('isReadAgreement', 1) //协议阅读标志
     that.goBack()
-
   },
   //取消按钮点击事件  用户协议
   modalBindcancelAgreement: function () {
@@ -1416,13 +1423,14 @@ Page({
   },  
   //确定按钮点击事件 会员制说明
   modalBindconfirmPlaysx: function () {
-    this.setData({
+    var that = this
+    that.setData({
       modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
       art_id: 0,
       art_cat_id: 0,
       playsxinfoshowflag: 0,
     })
-    
+    that.goBack()
   },
   //取消按钮点击事件 会员制说明
   modalBindcancelPlaysx: function () {
@@ -1589,13 +1597,14 @@ Page({
       userInfo:userInfo,
     })
     //调用应用实例的方法获取全局数据
+    /*
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         userInfo: userInfo
       })
     })
-
+    */
     if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
       var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
       var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
