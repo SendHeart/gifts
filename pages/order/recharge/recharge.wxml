@@ -1,15 +1,20 @@
-<scroll-view scroll-y  class="container carts-list" style="{{modalHiddenCoupon?'position:fixed;':''}}{{dkheight>0?' height:'+dkheight+'px;':''}}">
-  <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" bindtap=''>
+<scroll-view scroll-y class="container carts-list"
+  style="{{modalHiddenCoupon?'position:fixed;':''}}{{dkheight>0?' height:'+dkheight+'px;':''}}" scroll-top='{{scrolltop}}'>
+  <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}"
+    data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}"
+    data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}"
+    data-image="{{item.activity_image?item.activity_image:item.image}}" bindtap=''>
     <view class="carts-info">
       <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}">
         <!-- 缩略图 -->
         <image class="carts-image" src="{{item.image?item.image:item.activity_image}}" mode="aspectFill" />
-      <!-- 商品标题 -->
+        <!-- 商品标题 -->
         <view class="carts-text">
           <text class="carts-title">{{item.name}}</text>
           <text class="carts-recharge-title">{{item.goods_tag}}</text>
           <view class='carts-sku'>
-            <view wx:if="{{order_shape==7 || order_shape==8}}" wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="index">
+            <view wx:if="{{order_shape==7 || order_shape==8}}" wx:for="{{item['value']}}" wx:for-item="sku_value"
+              wx:key="index">
               <text>{{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+' '}}
               </text>
             </view>
@@ -22,40 +27,48 @@
       </view>
     </view>
   </view>
-<view class="recharge-info">
-  <view class="recharge-level">
-      <view class="recharge-item {{recharge_selected == '1' ? 'recharge-item-selected' : 'recharge-item-unselected'}} " bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount1}}' data-recharge-type='1' >
+  <view class="recharge-info">
+    <view class="recharge-level">
+      <view class="recharge-item {{recharge_selected == '1' ? 'recharge-item-selected' : 'recharge-item-unselected'}} "
+        bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount1}}' data-recharge-type='1'>
         <text class="recharge-item-amount">{{recharge_amount1}}</text>
         <text>{{recharge_title1}}</text>
       </view>
-      <view class="recharge-item {{recharge_selected == '2' ? 'recharge-item-selected' : 'recharge-item-unselected'}}" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount2}}' data-recharge-type='2' >
+      <view class="recharge-item {{recharge_selected == '2' ? 'recharge-item-selected' : 'recharge-item-unselected'}}"
+        bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount2}}' data-recharge-type='2'>
         <text class="recharge-item-amount">{{recharge_amount2}}</text>
         <text>{{recharge_title2}}</text>
       </view>
-      <view class="recharge-item {{recharge_selected == '3' ? 'recharge-item-selected' : 'recharge-item-unselected'}}" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount3}}' data-recharge-type='3' >
+      <view class="recharge-item {{recharge_selected == '3' ? 'recharge-item-selected' : 'recharge-item-unselected'}}"
+        bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount3}}' data-recharge-type='3'>
         <text class="recharge-item-amount">{{recharge_amount3}}</text>
         <text>{{recharge_title3}}</text>
       </view>
-      <view class="recharge-item {{recharge_selected == '4' ? 'recharge-item-selected' : 'recharge-item-unselected'}}" bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount4}}' data-recharge-type='4' >
+      <view class="recharge-item {{recharge_selected == '4' ? 'recharge-item-selected' : 'recharge-item-unselected'}}"
+        bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount4}}' data-recharge-type='4'>
         <text class="recharge-item-amount">{{recharge_amount4}}</text>
         <text>{{recharge_title4}}</text>
       </view>
-  </view>
-  <view class="recharge_recomment" style='margin-top:10rpx;'>
-   <image src="{{recharge_recomment_image}}" background-size="cover" mode="widthFix"></image>
-  </view>
-  <view class="recharge-note">
-    <view class="select-and-amount" >
-      <icon bindtap="bindAgree" style="margin-right:10rpx;" type="{{selectedAgreeStatus ? 'success' : 'circle'}}" size="18" color='#FF952D'  />
-      <text bindtap="bindRechargeRule" style="margin-right:20rpx; font-size:24rpx;">{{recharge_note}}</text>
     </view>
-    <view class="select-and-amount">
-      <text style="margin-left:20rpx;margin-right:20rpx;color:#eeeee;">{{recharge_note2}}</text>
+    <view class="recharge_recomment">
+      <image src="{{recharge_recomment_image}}" background-size="cover" mode="widthFix"></image>
+    </view>
+    
+    <view class="recharge-note">
+      <view class="select-and-amount">
+        <icon bindtap="bindAgree" style="margin-right:10rpx;" type="{{selectedAgreeStatus ? 'success' : 'circle'}}"
+          size="18" color='#FF952D' />
+        <text style="font-size:22rpx;">{{recharge_note}}《<text bindtap="bindRechargeRule" style="color:#FFCA4B">黑贝会会籍规则和权益协议</text>》特别规定</text>
+      </view>
+      <view class="select-and-amount">
+        <text style="margin-left:44rpx;font-size:22rpx;">{{recharge_note2}}</text>
+      </view>
     </view>
   </view>
-  <view class="recharge-confirm" >
-    <text class="amount">{{amount}}</text>
-     <button bindtap="confirmOrder" >去支付</button>
-  </view>
-</view>
 </scroll-view>
+
+<view class="recharge-confirm">
+  <text>充值会籍费: </text>
+  <text class="amount">{{amount}}</text>
+  <button bindtap="confirmOrder">去支付</button>
+</view>

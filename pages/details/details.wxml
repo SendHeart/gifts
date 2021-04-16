@@ -239,7 +239,7 @@
   <view wx:if="{{goodsorg!=5}}"class="comm-text">
       <view wx:if="{{(goodsshape!=5&&goodsshape!=4&&goodsorg==4)}}" class="comm-listitem">
       <image class='icon-item' src='../../images/icon-wl.png'></image>
-      <text class="goods-org">京东物流</text>
+      <text class="goods-org">极速达</text>
     </view>
   </view>
 

@@ -1056,7 +1056,7 @@ modal {
 .goods-tags {
   color: #fff;
   font-size: 22rpx;
-  background: #EC4844;
+  background: #ff952d;
   text-align: center;
   padding: 4rpx 8rpx;
   border-radius: 6rpx;

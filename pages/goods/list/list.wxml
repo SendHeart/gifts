@@ -59,7 +59,7 @@
             <!-- image class="mainpic" src="{{item.image?item.image:default_image}}" -->
              <imageloader  default-image='{{default_img}}' mode="{{(item.shape==5||item.shape==4)?'aspectFit':'aspectFill'}}"  original-image='{{item.image}}' width="355rpx" height="355rpx" display="block" />
              <view class="goods-titletext">
-              <text wx:if="{{item.shape!=5 && item.shape!=4 && item.goods_org==4}}" class="goods-tags">京东物流</text>
+              <text wx:if="{{item.shape!=5 && item.shape!=4 && item.goods_org==4}}" class="goods-tags">极速达</text>
               <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
               <text class="goods-name">{{item.name}}</text>
             </view>
@@ -89,7 +89,7 @@
           <navigator url="/pages/details/details?id={{item.id}}&activity_image={{item.activity_image}}&image={{item.image}}&info={{item.act_info}}&name={{item.name}}&gov_price={{item.gov_price}}&goods_price={{item.sell_price}}&sale={{item.sale}}&keyword={{keyword}}&is_satisfy={{is_satisfy}}" hover-class="none" >
             <image class="mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
             <view class="goods-titletext">
-              <text wx:if="{{item.shape!=5 && item.shape!=4 && item.goods_org==4}}" class="goods-tags">京东物流</text>
+              <text wx:if="{{item.shape!=5 && item.shape!=4 && item.goods_org==4}}" class="goods-tags">极速达</text>
               <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
               <text class="goods-name">{{item.name}}</text>
             </view>

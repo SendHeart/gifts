@@ -147,7 +147,7 @@ Page({
     var delivery_price = parseFloat(carts[0].delivery_price)
     var cartIdArray = cartIds.split(',')
     var recharge_recomment_image = carts[0].activity_image
-    var recharge_note = options.recharge_note ? options.recharge_note:'点击“立即入会”按钮并购买会员资格时，即代表您已阅读、理解并接受《黑贝会会员规则和权益协议》特别规定'
+    var recharge_note = options.recharge_note ? options.recharge_note:'勾选此选项并购买会籍资格时，即代表您已阅读、理解并接受'
     var recharge_note2 = options.recharge_note2 ? options.recharge_note2:'注意: 电子版会员卡将在购买成功后，被同时关联至您的微信账户和个人手机号，而会员卡号将作为唯一账户识别号'
     var order_type = options.order_type ? options.order_type:''
     var order_note = options.order_note ? options.order_note:''
@@ -205,17 +205,21 @@ Page({
     var order_num = that.data.order_num
     var selectedAgreeStatus = that.data.selectedAgreeStatus
     var amount = that.data.amount
+    var dtheight = wx.getSystemInfoSync().windowHeight;
     if (!selectedAgreeStatus){
       wx.showToast({
-        title: '请确认会员规则和权益协议',
-        icon: 'loading',
+        title: '请先勾选会籍规则和权益协议',
+        icon: 'none',
         duration: 2500
-      })
+      }),
+      that.setData({
+        scrolltop: dtheight *10
+      }) 
       return
     }else if(amount == 0){
       wx.showToast({
-        title: '请选择充值金额',
-        icon: 'loading',
+        title: '请先选择充值金额',
+        icon: 'none',
         duration: 2500
       })
       return

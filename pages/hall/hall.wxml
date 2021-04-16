@@ -321,7 +321,7 @@
               <imageloader default-image='{{default_img}}' mode='aspectFill' original-image='{{item.image}}'
                 width="355rpx" height="355rpx" display="block" />
               <view class="goods-titletext">
-                <text wx:if="{{item.goods_org==4}}" class="goods-tags">京东物流</text>
+                <text wx:if="{{item.goods_org==4}}" class="goods-tags">极速达</text>
                 <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
                 <text class="goods-name">{{item.name}}</text>
               </view>
@@ -356,7 +356,7 @@
             <view class="venues-item-text">
 
               <view class="goods-titletext">
-                <text wx:if="{{item.goods_org==4}}" class="goods-tags">京东物流</text>
+                <text wx:if="{{item.goods_org==4}}" class="goods-tags">极速达</text>
                 <text wx:if="{{item.discount<100}}" class="goods-tags">可用券</text>
                 <text class="goods-name">{{item.name}}</text>
               </view>

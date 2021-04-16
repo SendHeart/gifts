@@ -33,10 +33,10 @@
 
 <view class="cardrenew">
   <view class="cardrenew_btn" wx:if="{{card_no!=''}}" bindtap="navigateToRecharge">     
-     <text>延长会员期限</text>
+     <text>您的会员卡已过期，继续使用请延长会籍期限</text>
   </view>
-   <view class="cardrenew_btn" wx:if="{{card_no==''}}">
-      <button style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#444;background:#f2f2f2" hover-class='none' bindtap="navigateToRecharge">立即入会</button>
+  <view class="cardrenew_btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge">     
+     <text>立即入会</text>
   </view>
 </view>
 
@@ -82,11 +82,11 @@
 	  </view>
 	  <view bindtap="navigateToAgreement" class="order">
 		  <image src="../../images/xieyi.png" />
-		  <text>会员协议</text>
+		  <text>会籍协议</text>
 	  </view>
 	  <view bindtap="" class="order">
 		  <image src="../../images/kefu.png" />
-		  <button class="clickBtn" open-type="contact" session-from="weapp">客服</button>
+		  <button class="clickBtn" open-type="contact" session-from="weapp">VIP客服</button>
 	  </view>
     <view bindtap="login" class="order">
 		  <image src="../../images/reset.png" />
