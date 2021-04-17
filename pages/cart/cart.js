@@ -490,20 +490,32 @@ Page({
     return cartIds;
   },
   sum: function () {
-    var carts = this.data.carts;
+    var that = this
+    var carts = that.data.carts
+    var selected_num = 0 
     // 计算总金额
-    var total = 0;
+    var total = 0
     for (var i = 0; i < carts.length; i++) {
       if (carts[i]['selected']) {
-        total += carts[i]['num'] * carts[i]['sell_price'];
+        total += carts[i]['num'] * carts[i]['sell_price']
+        selected_num++ 
       }
     }
     total = total.toFixed(2);
     // 写回经点击修改后的数组
-    this.setData({
+    that.setData({
       carts: carts,
       total: total
-    });
+    })
+    if(selected_num>0){
+      that.setData({
+        selectedAllStatus: true,        
+      })      
+    }else{
+      that.setData({
+        selectedAllStatus: false,        
+      }) 
+    }
   },
   showGoods: function (e) {
     // 点击购物车某件商品跳转到商品详情
