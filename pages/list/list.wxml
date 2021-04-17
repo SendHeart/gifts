@@ -56,13 +56,18 @@
             <text class="goods_name">{{item.name}}</text>
             </navigator>
             <view class="goods_prom">{{item.act_info?item.act_info:''}}</view>
+            <view class="goods-tags2">
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
+            </view>
             <view class="goods_bottom">
+              <!--
               <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
                 <text space="ensp">{{item.goods_tag}} </text>
               </view>
+              -->
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now">￥{{item.sell_price}}</view>
+                <view class="price-now"><text class="sfont">会员价</text>￥{{item.sell_price}}</view>
               </view>
           </view>
         </view>
@@ -83,13 +88,18 @@
             <text class="goods_name">{{item.name}}</text>
             </navigator>
             <view class="goods_prom">{{item.act_info?item.act_info:''}}</view>
+            <view class="goods-tags2">
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
+            </view>
             <view class="goods_bottom">
-              <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
+              <!--
+                <view wx:if="{{item.shape!=4&&item.shape!=5}}" class="goods_tag">
                 <text space="ensp">{{item.goods_tag}} </text>
               </view>
+              -->              
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now">￥{{item.sell_price}}</view>
+                <view class="price-now"><text class="sfont">会员价</text>￥{{item.sell_price}}</view>
               </view>
           </view>
         </view>
