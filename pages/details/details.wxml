@@ -44,8 +44,7 @@
               <cover-image bindtap="bindplay" src="../../images/play.png" style="width:160rpx;" />
               </cover-view>
               -->
-            </video>
-            
+            </video>            
           </swiper-item>
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='id'>
