@@ -525,7 +525,7 @@ Page({
         }
     },
 
-    // 点击获取对应分类的数据
+    // 点击获取对应分类的数据onta
     onTapTag: function (e) {
         var that = this;
         var tab = e.currentTarget.dataset.id;
@@ -1574,10 +1574,12 @@ Page({
                     tab: navList_new[navlist_toView]['id'],
                     tab_value: navList_new[navlist_toView]['value'],
                     venuesItems_show: [],
+                    gift_para_interval:1,
                 },function(){
                     that.setData({
                         loadingHidden: true,
                     })
+                    that.get_project_gift_para()
                 })
             }
         })
@@ -1710,7 +1712,7 @@ Page({
             that.query_message()
             //that.initSocketMessage()
             that.setData({
-                gift_para_interval:1 //30秒获取一次系统参数
+                gift_para_interval:1 //60秒获取一次系统参数
             })
             if(that.data.hall_banner.length == 0||that.data.gift_para_interval==1){
                 that.get_project_gift_para()
@@ -1723,7 +1725,7 @@ Page({
         }, 5000)
         */
         that.reloadData()
-        that.sum()
+        //that.sum()
     },
     //事件处理函数
 
