@@ -205,7 +205,6 @@ page {
   font-weight: normal;
 }
 
-
 .cardrenew {
   width: 100%;
   height: 80rpx;
@@ -213,7 +212,7 @@ page {
   flex-direction: row;
   justify-content: space-between;
 }
-.cardrenew_btn {
+.cardrenew-btn {
   height: 60rpx;
   width: 80%;
   background: #FF952D;

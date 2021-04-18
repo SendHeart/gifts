@@ -17,32 +17,32 @@
       <view><text class="userinfo-nickname">{{userInfo.nickName}}</text></view>
     </view>
   
-  <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
-     <text class="userinfo-cards-no">CARD No. {{card_no}}</text>
-  </view>
-  <view class="userinfo-cards-item" style="margin:40rpx 0 0 20rpx; justify-content: left;" wx:if="{{card_no!=''}}">
-     <text class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
-     <text class="userinfo-cards-due">VALID THRU:{{card_due_end}}</text>
-  </view>
+    <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
+      <text class="userinfo-cards-no">CARD No. {{card_no}}</text>
+    </view>
+    <view class="userinfo-cards-item" style="margin:40rpx 0 0 20rpx; justify-content: left;" wx:if="{{card_no!=''}}">
+      <text class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
+      <text class="userinfo-cards-due">VALID THRU:{{card_due_end}}</text>
+    </view>
   
 	 <!--
      <text wx:if="{{user_group_id>0}}" class="userinfo-nickname">{{user_group_id?user_group_name:''}}</text>
     <button wx:if="{{!userInfo.nickName}}" class="userinfo-nickname" style="margin-top:10rpx;line-height:50rpx;height:50rpx;font-size: 26rpx;color:#fff;background:#e02e24"  hover-class='none' bindtap="login">登录</button>
    -->
-</view>
-
-<view class="cardrenew">
-  <view class="cardrenew_btn" wx:if="{{card_no!=''}}" bindtap="navigateToRecharge">     
-     <text>您的会员卡已过期，继续使用请延长会籍期限</text>
   </view>
-  <view class="cardrenew_btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge">     
-     <text>立即入会</text>
+
+  <view class="cardrenew">
+    <view class="cardrenew-btn" wx:if="{{card_no!=''}}" bindtap="navigateToRecharge">     
+      <text>您的会员卡已过期，继续使用请延长会籍期限</text>
+    </view>
+    <view class="cardrenew-btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge">     
+      <text>立即入会</text>
+    </view>
   </view>
-</view>
 
 
-<view class="menu-area">
-  <view bindtap="navigateToOrder" class="order" data-status="0">
+  <view class="menu-area">
+    <view bindtap="navigateToOrder" class="order" data-status="0">
 		  <image src="../../images/order.png" />
 		  <text>全部订单</text>
 	  </view>
