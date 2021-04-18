@@ -105,7 +105,7 @@ page {
   height: 300rpx;
 }
 
-.shopping_container {
+.shopping-container {
   display: flex;
   flex-direction: column;
   justify-content: center; /*子项横轴上居中对齐*/
@@ -117,7 +117,7 @@ page {
   z-index: 1;
 }
 
-.shopping_container .img_tag {
+.shopping-container .img-tag {
   width: 10%;
   height: 30rpx;
   margin: 10px;
@@ -129,7 +129,7 @@ page {
   border-radius: 10rpx;
   color: #fff;
 }
-.shopping_container .goods-name {
+.shopping-container .goods-name {
   display: flex;
   flex-direction: column;
   align-content: left;
@@ -139,13 +139,13 @@ page {
   font-weight: 600;
   color: #444;
 }
-.shopping_container .goods-org {
+.shopping-container .goods-org {
   color: #f40c;
   font-size: 24rpx;
   margin-left:10rpx;
 }
 
-.shopping_container .goods_prom {
+.shopping-container .goods-prom {
   display: block;
   color: #999999;
   font-size: 28rpx;
@@ -154,7 +154,7 @@ page {
   overflow-x: hidden;
 }
 
-.shopping_container .goods-info {
+.shopping-container .goods-info {
   display: flex;
   flex-direction: row;
   justify-content: space-between;

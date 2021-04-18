@@ -198,10 +198,10 @@
   <view wx:if="{{goodsshape==4 && card_type==2}}" hidden="{{!cardnamehidden}}" class="card-name-note">
     <textarea style='font-size:28rpx;' bindblur="cardnameNoteTextAreaBlur" value="{{card_name_note}}" placeholder="请输入简介(限80个汉字)" placeholder-style="text-align:center;color:#e2e2e2;" maxlength="80" />
   </view>
-  <view class="shopping_container">
+  <view class="shopping-container">
       <view class="goods-name">
         <text>{{goodsname?goodsname:''}}</text>
-        <text class="goods_prom"><text class="icontags">推荐理由</text> {{goodsinfo?goodsinfo:''}}</text>
+        <text class="goods-prom"><text class="icontags">推荐理由</text> {{goodsinfo?goodsinfo:''}}</text>
       </view>
       <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="goods-info">
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已购</text>
