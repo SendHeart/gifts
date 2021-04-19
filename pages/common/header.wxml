@@ -13,7 +13,7 @@
         
       </view>
       <view class="INinputheader" >
-        <icon class="INsearchicon" style="height:45px;line-height:45px;" type="search" size="12" />
+        <icon class="INsearchicon" type="search" size="12" />
         <input class="weui-input" placeholder="搜索我的品质生活" bindtap='searchTapTag' disabled="disable" />       
       </view>
       <view style="height:35px;line-height:35px;width:20%;" catchtap="messagesTapTag">

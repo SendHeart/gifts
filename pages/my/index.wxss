@@ -145,9 +145,10 @@ page {
   width: 45%;
 }
 .userinfo-cards-title {
-  font-size: 26rpx;
+  font-size: 28rpx;
   color: #FFCA4B;
   line-height: 26rpx;
+  font-weight: bold;
 }
 .userinfo-cards-mid{
   display: flex;
@@ -288,10 +289,9 @@ page {
 }
 
 .order image {
-  padding: 10rpx;
+  padding: 10rpx 10rpx 0 10rpx;
   width: 60rpx;
   height: 60rpx;
-  background: #F2F2F2;
   border-radius: 40%;
 }
 
@@ -314,8 +314,8 @@ page {
 
 .order .clickBtn{
   width: 150rpx;  
-  line-height: 50rpx;
-  height: 50rpx;
+  line-height: 40rpx;
+  height: 40rpx;
   display: block;
   font-size:24rpx;
   background-color:#fff;  
@@ -524,6 +524,7 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   justify-content: space-between; /*子项横轴上对齐*/
   padding:10rpx 4%;
   margin-top: 20rpx;
+  font-weight: bold;
   
 }
 .recomment-title text{
@@ -703,7 +704,7 @@ radio .wx-radio-input.wx-radio-input-checked::before{
 .goods-org {
   color: #fff;
   font-size: 22rpx;
-  background: #EC4844;
+  background: #FF952D;
   text-align: center;
   padding: 0 8rpx;
   border-radius: 6rpx;

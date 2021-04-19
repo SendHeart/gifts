@@ -149,7 +149,7 @@ picker {
 .carts-container {
   position: relative;
   width: 100%;
-  height: 380rpx;
+  height: 360rpx;
 }
 
 .carts-info{
@@ -165,11 +165,9 @@ picker {
   flex-direction: row;
   height: 300rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
-  border-bottom: 1px solid #F2F2F2;
-  border-radius: 20rpx 20rpx 20rpx 20rpx;
+  border-radius: 20rpx 20rpx 0rpx 0rpx;
   padding: 20rpx 0;
-  margin-top:10rpx;
-  margin-bottom:10rpx;
+  margin-top:20rpx;
   background: #1d1d1d;
   z-index: 1;
 }
@@ -215,7 +213,7 @@ picker {
   font-size: 25rpx;
   color: #FFCA4B;
   line-height: 32rpx;
-  width: 96%;
+  width: 90%;
   margin: 0 auto;
 }
 
@@ -231,7 +229,7 @@ picker {
   justify-content:space-around; 
   padding: 10rpx;
   z-index: 1;
-  background-color: #FF952D;
+  background-color: #fff;
 }
 
 .recharge-level .recharge-item {
