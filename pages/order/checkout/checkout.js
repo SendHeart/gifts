@@ -287,12 +287,10 @@ Page({
           }
         } else {          
           let ret_info = res.data.info
-          if(ret_info.indexOf("您还未加入黑贝会") >= 0){
+          if(ret_info.indexOf("会员卡过期") >= 0){
             wx.showModal({
-              title: ret_info,
-              confirmText: '好的',    
-              confirmColor: '#ff952d',
-              content: '所有商品需要会员才能购买，现在立即加入续费会籍?', 
+              title: ret_info,         
+              content: '延长会员期限?',         
               success: function (res) {         
                 if (res.confirm) {         
                   wx.switchTab({

@@ -378,9 +378,8 @@ line-height: 40rpx;
   left: 0;
   bottom: 0;
   width: 100%;
-  background: #fff;
-  z-index: 9999;
-  border-top: 1rpx solid #eee;
+  height: 300rpx;
+  background-color: #fff;
 }
 
 
@@ -390,21 +389,17 @@ line-height: 40rpx;
   justify-content: center;
   width: 100%;
   position: relative;
-  bottom: 0;
   /*
   top:590rpx;
   */
 }
 .confirmbtn button {
+  border-radius: 10rpx;
   background-color: #FF952D !important;
   color: #fff !important;
-  margin: 0 !important;
-  border-radius: 0 !important;
-  line-height: 3;
 }
 .confirmbtn button::after {
   border: 0;
-  margin: 0;
 }
 .confirmbtn form {
   width: 100%;
