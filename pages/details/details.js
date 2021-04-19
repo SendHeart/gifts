@@ -2181,8 +2181,8 @@ Page({
         },
         success: function (res) {
           console.log('details insertCart res data:', res.data, ' wishflag：', wishflag);
-          var title = wishflag == 1 ? '已加入心愿单' : '已加入礼物包'
-          title = is_buymyself==1?'自购礼品':title
+          var title = wishflag == 1 ? '已加入心愿单' : '已加入购物袋'
+          title = is_buymyself==1?'立即购买':title
           title = that.data.card_type>0?'加载中':title
           title = (order_shape == 5 || order_shape==4) ? '处理中' : title
           wx.showToast({
