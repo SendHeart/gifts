@@ -293,6 +293,8 @@ page {
   width: 60rpx;
   height: 60rpx;
   border-radius: 40%;
+  /* background: #F2F2F2;
+  border-radius: 40%; */
 }
 
 .order text{
@@ -525,7 +527,6 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   padding:10rpx 4%;
   margin-top: 20rpx;
   font-weight: bold;
-  
 }
 .recomment-title text{
   width: 350rpx;

@@ -170,12 +170,12 @@ page {
 }
 
 .goods-info .left-tag {
-  background: #eeeeee;
+  background: #fff;
   border-radius: 10rpx;
-  color: #999;
+  color: #ff952d;
   font-size: 24rpx;
-  text-align: center;
-  padding: 6rpx 20rpx;
+  text-align: left;
+  padding: 6rpx 0rpx;
   width: 30%;
   line-height: 20px;
   height: 20px;
@@ -290,8 +290,8 @@ page {
   border-radius: 30rpx;
 }
 .share-buttons .shareto {
-  width: 40rpx;
-  height: 40rpx;
+  width: 30rpx;
+  height: 30rpx;
   margin:4rpx 4rpx 0 0;
 }
 .share-buttons .btnback {
@@ -1107,7 +1107,7 @@ border: none;
 
 .btnconfirm {
   margin-bottom: 80rpx;
-  background: #1d1d1d;
+  background: #ff952d;
   color: #fff;
 }
 .selectSku {

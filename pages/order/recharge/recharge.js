@@ -4,7 +4,7 @@ var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type; 
 Page({
 	data: {
-    title_name: '送出礼品',
+    title_name: '加入黑贝会',
     title_logo: '../../images/footer-icon-05.png',
     amount : 0,
     liveid:0,
