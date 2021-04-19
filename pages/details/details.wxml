@@ -259,7 +259,7 @@
   </view>
   
   <view>
-    <view class="prd-title">{{(goodsshape==5||goodsshape==4)?'说明':'详情'}}</view>
+    <view class="prd-title">{{(goodsshape==5||goodsshape==4)?'说明':'商品细节'}}</view>
       <view class="prd-detail">
         <view class="wxParse" hidden="{{hideviewgoodsinfo}}">
           <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />

@@ -372,6 +372,17 @@ line-height: 40rpx;
   font-size: 28rpx;
   padding: 15rpx 30rpx;
 }
+
+.action-panel {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 300rpx;
+  background-color: #fff;
+}
+
+
 .confirmbtn {
   display:flex;
   flex-direction: row;
