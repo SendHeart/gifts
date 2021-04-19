@@ -36,7 +36,7 @@
       <text>您的会员卡已过期，继续使用请延长会籍期限</text>
     </view>
     <view class="cardrenew-btn" wx:if="{{card_no!='' && !is_card_overdue}}" bindtap="navigateToRecharge">     
-      <text>延长会籍期限</text>
+      <text>您的会员卡已过期，继续使用请延长会籍期限</text>
     </view>
     <view class="cardrenew-btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge">     
       <text>立即入会</text>

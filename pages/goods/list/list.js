@@ -339,8 +339,8 @@ Page({
     var live_goods = that.data.live_goods  //视频推广商品
     if (!search_goodsname && !keyword && !goods_type_value && !live_goods){
       wx.showToast({
-        title: '搜到内容为空',
-        icon: 'loading',
+        title: '暂时没有搜到您要的商品',
+        icon: 'none',
         duration: 2000
       })
       return
@@ -382,9 +382,9 @@ Page({
         var pageoffset = res.data.pageoffset
         if (!venuesItems) {
           wx.showToast({
-            title: '没有搜到记录',
-            icon: 'loading',
-            duration: 1000
+            title: '暂时没有搜到您要的商品',
+            icon: 'none',
+            duration: 2000
           })
           that.setData({
             loadingHidden: true,

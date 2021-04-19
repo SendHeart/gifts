@@ -177,7 +177,7 @@ page {
   flex-direction: row;
   justify-content: center;
   height: 60rpx;
-  background: #444; 
+  background: #F2F2F2; 
   width:100%;
 }
 .top-bar-item2 {
@@ -185,14 +185,14 @@ page {
   flex-direction: row;
   justify-content: center;
   width: 33.3%;
-  color: #ccc;
+  color: #444444;
   text-align: center;
   height: 60rpx;
   line-height: 60rpx;
   font-size: 24rpx;
 }
 .top-bar-active2 {
-  color: #fff;
+  color: #FF952D;
 }
 
 swiper-item image {
@@ -251,7 +251,7 @@ swiper-item image {
 .goods-tags {
   color: #fff;
   font-size: 22rpx;
-  background: #EC4844;
+  background: #FF952D;
   text-align: center;
   padding: 4rpx 8rpx;
   border-radius: 6rpx;

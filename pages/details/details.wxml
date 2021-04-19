@@ -31,7 +31,7 @@
     </view>
   </view>
   <view class="banner">
-    <view hidden="{{!modalHidden}}" style="{{card_type==2?'margin-top:90rpx;':''}}">
+    <view style="{{card_type==2?'margin-top:90rpx;':''}}">
       <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="height:{{card_image_height}}rpx;">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="id">
           <swiper-item>
