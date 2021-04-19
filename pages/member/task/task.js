@@ -522,12 +522,14 @@ Page({
         }
       }
       that.get_member_messages()
+      /*
       app.getUserInfo(function (userInfo) {
         //更新数据
         that.setData({
           userInfo: userInfo
         })
       })
+      */
       wx.getSystemInfo({
         success: function (res) {
           let winHeight = res.windowHeight;

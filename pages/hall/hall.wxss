@@ -67,15 +67,19 @@ page {
 
 .userinfo {
   display: flex;
-  flex-direction: row;
-  color: #fff;
-  width: 10%;
-  margin-left: 30rpx;
+  flex-direction: column;
+  align-items: center;
+  width:10%;
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  position: relative; 
+  margin:7px 5px;
 }
 
 .userinfo-avatar {
-  width: 50rpx;
-  height: 50rpx;
+  width: 45rpx;
+  height: 45rpx;
   margin-right:10rpx;
   border-radius: 50%;
 }

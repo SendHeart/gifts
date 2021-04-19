@@ -308,13 +308,15 @@ Page({
       that.setData({
         title_logo: '../../../images/back.png'
       })
-    }  
+    }
+    /*  
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         userInfo: userInfo
       })
     })
+    */
   },
 
   reloadData: function () {

@@ -128,6 +128,8 @@ page {
   padding: 4rpx 12rpx;
   border-radius: 10rpx;
   color: #fff;
+  line-height: 20px;
+  height: 20px;
 }
 .shopping-container .goods-name {
   display: flex;
@@ -152,6 +154,8 @@ page {
   font-weight: normal;
   white-space: nowrap;
   overflow-x: hidden;
+  line-height: 20px;
+  height: 20px;
 }
 
 .shopping-container .goods-info {
@@ -173,6 +177,8 @@ page {
   text-align: center;
   padding: 6rpx 20rpx;
   width: 30%;
+  line-height: 20px;
+  height: 20px;
 }
 
 .goods-info .right-tag {

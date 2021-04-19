@@ -936,13 +936,14 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var username = wx.getStorageSync('username');
 
+    /*
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
         userInfo: userInfo
       })
     })
-
+    */
     if (!username) {//登录
       wx.navigateTo({
         url: '../login/login?wechat=1'

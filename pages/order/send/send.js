@@ -389,6 +389,7 @@ Page({
   onLoad: function (options) {
     // 订单状态，已下单为1，已付为2，已发货为3，已收货为4 5已经评价 6退款 7部分退款 8用户取消订单 9作废订单 10退款中
     var that = this
+    /*
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
@@ -397,6 +398,7 @@ Page({
       })
       console.log('wishshare onShow get userInfo：', userInfo)
     })
+    */
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var order_no = options.order_no;

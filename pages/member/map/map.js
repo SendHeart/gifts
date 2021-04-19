@@ -157,7 +157,7 @@ Page({
       })
     } else {
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
-     
+     /*
       app.getUserInfo(function (userInfo) {
         //更新数据
         that.setData({
@@ -165,6 +165,7 @@ Page({
           hasUserInfo: true
         })
       })
+      */
     }
      /*
     setInterval(function () {

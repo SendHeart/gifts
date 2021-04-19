@@ -597,6 +597,7 @@ Page({
         
     },
     userTapTag: function () {
+        app.globalData.from_page = '/pages/hall/hall'
         wx.switchTab({
             url: '../my/index'
         })

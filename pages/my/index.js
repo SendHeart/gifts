@@ -63,6 +63,7 @@ Page({
     card_no:'',
     card_due_start:'0000-00-00',
     card_due_end:'0000-00-00',
+    is_card_overdue:false,
     recommentslist: [], 
     recommentslist_show: [],
     show_max:20,
@@ -1813,8 +1814,12 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
-      success: function (res) {
-        console.log('my index login 用户基本信息:',res.data.result)
+      success: function (res) {      
+        let card_due_end_str = res.data.result['card_due_end'] +' 23:59:59'
+				let time_due_end = new Date(card_due_end_str).getTime()
+        let time_now = new Date().getTime()
+        let is_card_overdue = Math.floor((time_now - parseInt(time_due_end)) / 1000)>0?true:false 
+        console.log('my index login 用户基本信息:',res.data.result,is_card_overdue,time_due_end,time_now)      
         that.setData({
           token: res.data.result['token'],
           user_group_id:res.data.result['member_group_id'],
@@ -1824,7 +1829,10 @@ Page({
           card_no:res.data.result['card_no'],
           card_due_start:res.data.result['card_due_start'],
           card_due_end:res.data.result['card_due_end'],
+          is_card_overdue:is_card_overdue
         })
+
+          
         var userauth = JSON.parse(res.data.result['userauth'])
         wx.setStorageSync('token', res.data.result['token'])
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])

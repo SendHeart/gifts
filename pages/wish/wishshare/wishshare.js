@@ -480,7 +480,8 @@ Page({
   },
   onShow:function(){
    var that = this
-  that.has_auth()
+    that.has_auth()
+    /*
     app.getUserInfo(function (userInfo) {
       //更新数据
       that.setData({
@@ -489,6 +490,7 @@ Page({
       })
       console.log('wishshare onShow get userInfo：', userInfo)
     })
+    */
   },
 
   reloadData: function (){
