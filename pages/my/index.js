@@ -20,7 +20,7 @@ Page({
     title_name: '我的',
     m_id:m_id,
     title_logo: '/images/footer-icon-05.png',
-    share_art_image: weburl+'/uploads/share_art_image.jpg',
+    share_art_image: weburl+'/uploads/share_art_image.jpg?rand='+Math.random()*100,
     nickname: userInfo.nickName ? userInfo.nickName:'登录',
     avatarUrl: userInfo.avatarUrl,
     userauth: userauth,
