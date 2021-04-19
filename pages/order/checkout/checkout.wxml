@@ -53,6 +53,9 @@
       </view>
     </view>
   </view>
+
+</scroll-view>
+<view class="action-panel">
   <view class="order-item">
 <!--份数，不是件数 <view wx:if="{{order_shape!=5 && order_shape!=7 && order_shape!=8}}" class="order-num">
   <text>份数:</text> 
@@ -68,31 +71,27 @@
     <view>{{order_shape==8||order_shape==7?'金额':'实付金额'}}:</view>
     <view class="amount">{{(payamount)}}<text wx:if="{{delivery_price>0}}"> {{(delivery_price>0?'+'+delivery_price:'')}}(运费)</text></view>
   </view>
-  
-  
-  
 </view>
 <view class="carts-more" hidden="{{showmorehidden}}">
-  <view class="select-and-amount" bindtap="bindSelectRedAll">
+  <!-- <view class="select-and-amount" bindtap="bindSelectRedAll">
     <icon style="margin:10rpx;" type="{{selectedRedAllStatus ? 'success' : 'circle'}}" size="18" color='#FF952D' />
     <text style="margin-left:10rpx;">使用红包</text>
-  </view>
+  </view> -->
   <view class="select-and-amount" bindtap="bindSelectAll">
     <icon style="margin:10rpx;" type="{{selectedAllStatus ? 'success' : 'circle'}}" size="18" color='#FF952D' />
     <text style="margin-left:10rpx;">使用优惠券</text>
   </view>
 </view>
 
-
-
-</view>
-</scroll-view>
-<view class="action-panel" style="position:fixed; bottom:0;">
-  <view class='confirmbtn'>
+<view class='confirmbtn'>
   <form bindsubmit="formSubmit"  data-name='confirmOrder' report-submit="true" >
-    <button class="submit" style="width:96%;" type="" formType="submit" >确认订单</button> <!-- bindtap="confirmOrder" -->
+    <button class="submit" type="" formType="submit" >确认订单</button> <!-- bindtap="confirmOrder" -->
   </form>
   </view>
+
+</view>
+  
+  
 
 </view>
 
