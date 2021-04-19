@@ -57,7 +57,7 @@ Page({
         messageHidden : true,
         notehidden : false,
         dkheight: 250,
-        scrollTop: 0, 
+        scrollTop: 0,  
         scrollLeft:0,
         current_scrollTop: 0,
         scrollHeight: 500,
