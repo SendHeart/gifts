@@ -33,11 +33,7 @@
     <text style='font-size:22rpx; color:red;margin-left:-20rpx;'>{{item.buy_num>1?'份数:'+item.buy_num:''}}</text>
 </view>
 -->
-
 	<view class="order-footer">
-	
-	<image class="wxpay" src='../../../images/wxpay.png'></image>
-
 		<text class='paytips'>实付金额</text><text>￥{{item.order_price}}</text>
 	</view>
 </view>
