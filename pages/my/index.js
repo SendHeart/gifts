@@ -27,7 +27,7 @@ Page({
     member_group_name:member_group_name,
     member_group_id:member_group_id,
     message_type:0,
-    default_avatar: weburl + '/uploads/avatar.png',
+    default_avatar: weburl + '/uploads/avatar.png?rand='+Math.random()*100,
     hideviewagreementinfo: true,
     agreementinfoshowflag: 0,
     playsxinfoshowflag: 0,
