@@ -219,13 +219,9 @@ picker {
   height: 40rpx;
 }
 .carts-sku {
-font-size:22rpx;
-color:#999;
-background: #F2F2F2;
-border-radius: 20rpx;
-padding: 0 16rpx;
-width: fit-content;
-height: 40rpx;
+font-size:26rpx;
+color:#444;
+ 
 }
 .carts-sku text{
 height:40rpx;
