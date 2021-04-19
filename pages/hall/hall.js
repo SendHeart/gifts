@@ -43,12 +43,12 @@ Page({
         navlist_title:'',
         is_category:false,
         title_name:'黑贝会',
-        title_logo: '../../images/footer-icon-05.png',
-        img_discount: '../../images/discount.png',
-        img_service: weburl+'/uploads/service.png',
-        img_service2: weburl + '/uploads/service2.png',
-        default_img : weburl + '/uploads/default_goods_image.png',
-        default_avatar: weburl + '/uploads/avatar.png',
+        title_logo: '../../images/footer-icon-05.png?rand='+Math.random()*100,
+        img_discount: '../../images/discount.png?rand='+Math.random()*100,
+        img_service: weburl+'/uploads/service.png?rand='+Math.random()*100,
+        img_service2: weburl + '/uploads/service2.png?rand='+Math.random()*100,
+        default_img : weburl + '/uploads/default_goods_image.png?rand='+Math.random()*100,
+        default_avatar: weburl + '/uploads/avatar.png?rand='+Math.random()*100,
         platform:'',
         pagesize: pagesize,
         pageoffset:0,
@@ -67,7 +67,7 @@ Page({
         interval: 7000,
         duration: 300,
         circular:true,
-        hall_banner: weburl+"/uploads/songxin_banner.png", //默认的banner图
+        hall_banner: weburl+"/uploads/songxin_banner.png?rand="+Math.random()*100, //默认的banner图
         banner_link: "/pages/list/list?navlist=1", //默认的banner图 跳转链接
         gifts_rcv:0,
         gifts_send:0,
