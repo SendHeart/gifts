@@ -149,14 +149,14 @@ picker {
 .carts-container {
   position: relative;
   width: 100%;
-  height: 360rpx;
+  height: 350rpx;
 }
 
 .carts-info{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #444444;
+  background-color: #f2f2f2;
 }
 /*每行单元格*/
 .carts-item {

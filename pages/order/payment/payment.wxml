@@ -34,6 +34,7 @@
 </view>
 -->
 	<view class="order-footer">
+		<image class="wxpay" src='../../../images/wxpay.png'></image>
 		<text class='paytips'>实付金额</text><text>￥{{item.order_price}}</text>
 	</view>
 </view>

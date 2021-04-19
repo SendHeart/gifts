@@ -206,3 +206,8 @@ page {
   height: 300rpx;
 }
  
+.wxpay {
+  width: 100rpx;
+  height: 90rpx;
+  margin: 60rpx auto;
+}

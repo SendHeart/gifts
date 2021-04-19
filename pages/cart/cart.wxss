@@ -259,7 +259,6 @@ page{
 /*底部按钮*/
 .carts-footer {
 	width: 100%;
-	height: 80rpx;
 	display: flex;
 	flex-direction: row;
 	justify-content: space-between;
@@ -292,10 +291,9 @@ page{
 
 /*立即结算按钮*/
 .carts-footer .button {
-	line-height: 64rpx;
+	line-height: 2.5;
 	text-align: center;
 	width:200rpx;
-	height: 64rpx;
 	background-color: #FF952D;
 	color: #fff;
 	font-size: 30rpx;
