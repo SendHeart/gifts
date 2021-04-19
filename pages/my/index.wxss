@@ -292,12 +292,9 @@ page {
   padding: 10rpx 10rpx 0 10rpx;
   width: 60rpx;
   height: 60rpx;
-<<<<<<< Updated upstream
   border-radius: 40%;
-=======
   /* background: #F2F2F2;
   border-radius: 40%; */
->>>>>>> Stashed changes
 }
 
 .order text{
@@ -530,10 +527,6 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   padding:10rpx 4%;
   margin-top: 20rpx;
   font-weight: bold;
-<<<<<<< Updated upstream
-  
-=======
->>>>>>> Stashed changes
 }
 .recomment-title text{
   width: 350rpx;

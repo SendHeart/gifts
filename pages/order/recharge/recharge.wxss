@@ -149,11 +149,7 @@ picker {
 .carts-container {
   position: relative;
   width: 100%;
-<<<<<<< Updated upstream
   height: 360rpx;
-=======
-  height: 350rpx;
->>>>>>> Stashed changes
 }
 
 .carts-info{
@@ -169,15 +165,9 @@ picker {
   flex-direction: row;
   height: 300rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
-<<<<<<< Updated upstream
-  border-radius: 20rpx 20rpx 0rpx 0rpx;
-  padding: 20rpx 0;
-  margin-top:20rpx;
-=======
   border-radius: 20rpx 20rpx 0 0;
   padding: 20rpx 0;
   margin-top:10rpx;
->>>>>>> Stashed changes
   background: #1d1d1d;
   z-index: 1;
 }
@@ -240,11 +230,7 @@ picker {
   justify-content:space-around; 
   padding: 10rpx;
   z-index: 1;
-<<<<<<< Updated upstream
-  background-color: #fff;
-=======
   background-color: #FFFFFF;
->>>>>>> Stashed changes
 }
 
 .recharge-level .recharge-item {

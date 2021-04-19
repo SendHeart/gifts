@@ -80,11 +80,7 @@ page {
 .userinfo-avatar {
   width: 60rpx;
   height: 60rpx;
-<<<<<<< Updated upstream
   margin-right:0rpx;
-=======
-  margin-right:0;
->>>>>>> Stashed changes
   border-radius: 50%;
 }
 
