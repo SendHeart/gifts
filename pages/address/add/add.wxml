@@ -1,7 +1,9 @@
 <form bindsubmit="formSubmit">
 	<view class="cell">
 	    <text style="width:15%;">区域</text><text bindtap="cascadePopup" class="area_select">{{areaSelectedStr}}</text>
-	    <text bindtap="fetchPOI" class="poi">自动获取</text>       
+			<!-- 自动获取地址库和后台不一致
+	    <text bindtap="fetchPOI" class="poi">自动获取</text>
+			-->       
 	</view>
 	<view class="cell">
 		<text style="width:15%;">地址</text><input name="detail" placeholder="请输入详情地址" value="{{address.address}}" style="width:80%;" />
