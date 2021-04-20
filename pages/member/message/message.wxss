@@ -91,12 +91,11 @@ page {
   text-align: left;
   align-items: left;
   background-color: #fff;
-  border-top: 1rpx solid #eee;
   margin: 0 auto;
 }
 .msg-item-image {
-	width:140rpx;
-  height:140rpx;
+	width:100rpx;
+  height:100rpx;
   text-align: center;
   align-items: center;
 }
@@ -111,7 +110,7 @@ page {
 }
  
 .msg-item-text{
-  margin:20rpx 20rpx 0 20rpx;
+  margin:0rpx 20rpx;
   font-size:28rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  

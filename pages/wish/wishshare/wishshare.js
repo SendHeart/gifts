@@ -517,14 +517,14 @@ Page({
    
     var share_goods_default_title = ''
     if (share_goods_shape == 5) {
-      share_goods_default_title = '平安是福'
+      share_goods_default_title = '高端购物'
     } else if (share_goods_shape == 4) {
-      share_goods_default_title = '一起来吧'
+      share_goods_default_title = '探索购物之道'
     } else {
-      share_goods_default_title = '这个礼物真不错，来看看吧，要是你能送我就更好了~'
+      share_goods_default_title = '这个价格真不错，来看看吧~'
     }
     var share_goods_title = options.share_goods_title ? options.share_goods_title : share_goods_default_title
-    var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '送礼就是黑贝会~'
+    var share_goods_desc = options.share_goods_desc ? options.share_goods_desc : '高端购物就是黑贝会~'
     var share_art_id = options.share_art_id ? options.share_art_id : 0
     var share_art_cat_id = options.share_art_cat_id ? options.share_art_cat_id : 0
     var share_art_title = options.share_art_title ? options.share_art_title : ''
@@ -822,25 +822,25 @@ Page({
               type: 'text',
               content: share_goods_name,
               fontSize: 20,
-              color: '#333',
+              color: '#333333',
               textAlign: 'left',
               top: share_goods_price>0?490:620,
               left: 85,
               bolder: true,
-              lineHeight: 25,
+              lineHeight: 30,
               MaxLineNumber: 2,
               breakWord: true,
               width: 350,
             },
             {
               type: 'text',
-              content: share_goods_price>0?'￥' + share_goods_price:'',
+              content: share_goods_price>0?'会员价 ￥' + share_goods_price:'',
               fontSize: 20,
-              color: '#444444',
+              color: '#FF952D',
               textAlign: 'left',
-              top: share_goods_price > 0 ? 550 : 670,
+              top: share_goods_price > 0 ? 570 : 670,
               left: 85,
-              lineHeight: 25,
+              lineHeight: 35,
             },
             {
               type: 'text',
@@ -860,7 +860,7 @@ Page({
               textAlign: 'left',
               top: share_goods_price > 0 ? 660 :720 ,
               left: 85,
-              lineHeight: 25,
+              lineHeight: 35,
               MaxLineNumber: 2,
               breakWord: true,
               width:350,
@@ -875,7 +875,7 @@ Page({
             },
             {
               type: 'text',
-              content: '长按识别二维码查看详情',
+              content: '长按识别二维码',
               fontSize: 18,
               color: '#333',
               textAlign: 'left',
@@ -886,7 +886,7 @@ Page({
             },
             {
               type: 'text',
-              content: '黑贝会，高端会员制购物!',
+              content: '黑贝会，高端会员制商店',
               fontSize: 18,
               color: '#999',
               textAlign: 'left',
@@ -1486,15 +1486,15 @@ Page({
     var share_goods_org = that.data.share_goods_org ? that.data.share_goods_org : '1' //5虚拟商品 1自营商品
     var share_goods_default_title = ''
     if (share_goods_shape==5){
-      share_goods_default_title = '平安是福' 
+      share_goods_default_title = '高端购物' 
     } else if (share_goods_shape==4){
-      share_goods_default_title = '一起来吧' 
+      share_goods_default_title = '探索购物之道' 
     }else{
-      share_goods_default_title = '这个礼物真不错，来看看吧，要是你能送我就更好了~' 
+      share_goods_default_title = '这个价格真不错，来看看吧~' 
     }
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : share_goods_default_title
     
-    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '送礼就是黑贝会~'
+    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '高端购物就是黑贝会~'
     var share_art_id = that.data.share_art_id
     var share_art_cat_id = that.data.share_art_cat_id
     var share_art_image = that.data.share_art_image
@@ -1504,7 +1504,7 @@ Page({
     var share_order_shape = that.data.share_order_shape
     var share_order_note = that.data.share_order_note
    
-    console.log('开始分享送礼任务', options)
+    console.log('开始分享任务', options)
 
     var shareObj = {
       title: title,        // 默认是小程序的名称(可以写slogan等)

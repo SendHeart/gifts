@@ -773,9 +773,9 @@ Page({
         var all_rows = res.data.all_rows
         if (!res.data.result && page==1) {
           wx.showToast({
-            title:"空空如也,快去送礼吧！",
+            title:"暂无该类订单",
             icon: 'none',
-            duration: 1500
+            duration: 2500
           });
           setTimeout(function () {
             wx.navigateBack();

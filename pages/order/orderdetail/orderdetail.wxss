@@ -135,7 +135,7 @@ page {
 }
  
 .carts-title {
-	font-size: 28rpx;
+	font-size: 26rpx;
 	color: #444;
 	line-height: 38rpx;
   display: -webkit-box ;
@@ -143,7 +143,7 @@ page {
   text-overflow: ellipsis;
   word-break: break-all;
   -webkit-box-orient: vertical;
-  -webkit-line-clamp:1; /*显示多少行*/
+  -webkit-line-clamp:2; /*显示多少行*/
 }
 .carts-card-title {
 	font-size: 25rpx;
@@ -166,18 +166,15 @@ page {
 	justify-content:space-between;
 }
 .smallbtn {
-  border: 3rpx solid #e34c55;
-  color: #e34c55;
-  padding: 4rpx 10rpx;
-  border-radius: 8rpx;
-  margin-left:10rpx;
-}
-.smallbtn2 {
-  border: 3rpx solid #999;
-  color: #999;
+  color: #ffffff;
   padding: 4rpx 10rpx;
   border-radius: 8rpx;
   margin-right:10rpx;
+  background-color: #FF952D;
+}
+.smallbtn2 {
+  margin-right:10rpx;
+  color: #FF952D;
 }
 /*地址*/
 .order-address {
@@ -192,9 +189,9 @@ page {
 
 /*价格*/
 .order-price {
-	color: #f60;
-	font-size:14px;
-	line-height: 22px;
+	color: #FF952D;
+	font-size:16px;
+	line-height: 26px;
 }
 
 /*隐藏元素*/
@@ -264,12 +261,12 @@ background-color: #E34C55;
 .order-detail-text {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   line-height: 2.5;
   font-size: 24rpx;
   text-align: left;
-  color: #444;
-  padding: 0 20rpx;
+  color: #999999;
+  padding: 10rpx 20rpx;
 }
 
 .labeltext {
@@ -296,6 +293,7 @@ background-color: #E34C55;
   background-color:#fff; 
   border-radius: 10rpx;
   overflow-x: hidden;
+  padding: 10rpx 0;
 }
 
 .delivery-detail-text {
@@ -372,10 +370,11 @@ background-color: #E34C55;
   text-align: center;
   width: 250rpx;
   height: 60rpx;
-  font-size: 28rpx;
-  border-radius: 14rpx;
-  border: 2rpx solid #E34C55;
-  color: #e34c55;
+  font-size: 26rpx;
+  border-radius: 10rpx;
+  border: 1px solid #666666;
+  color: #444444;
+  background-color: #fff;
 }
 
 .button-image {

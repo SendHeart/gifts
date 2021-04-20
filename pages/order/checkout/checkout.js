@@ -117,7 +117,7 @@ Page({
         let winHeight = res.windowHeight;
         console.log(winHeight);
         that.setData({
-          dkheight: winHeight - 60,
+          dkheight: winHeight - 160, //列表滚动高度
         })
       }
     })

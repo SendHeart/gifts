@@ -1,7 +1,7 @@
 <!--index.wxml-->
 <view class="container" style='height:{{dkheight}}px;'>
-  <view class="share-goods" >
-    <view class="share-buttons" >
+
+    <view class="share-buttons" hidden="ture" >
       <view wx:if="{{share_order_shape==5||share_order_shape==4}}" class="btncard" bindtap="goBack">
         <image class="shareto" src="../../../images/home-white.png"></image>
         返回
@@ -10,7 +10,8 @@
         <image class="shareto" src="../../../images/refresh.png"></image>
       </view>
     </view>
-  </view>
+
+
   <image src="{{shareImage}}" class="share-image" style="margin-top:20rpx;" mode='aspectFit'  catchtap="{{(share_order_shape!=5 && share_order_shape!=4)?'sharegoods':''}}"></image>
   <view wx:if="{{share_order_shape==5||share_order_shape==4}}" class="share-play-rec" bindtap="play_rec" >
     <image src="../../../images/notification.png" style="width:70rpx;height:70rpx;" mode="{{(share_order_shape==5||share_order_shape==4)?'aspectFit':''}}"></image>
@@ -20,11 +21,11 @@
   <view  hidden="{{!notehidden}}" style='margin:10rpx;font-size:26rpx;color:#999;height:120rpx;' >{{share_goods_title?'分享语: '+share_goods_title:'分享语为空'}}</view>
   -->
   <view class="sentbtn2">
-    <button class="" wx:if ='{{share_art_id==0  && share_order_shape!=5 && share_order_shape!=4}}' bindtap="sharegoods">修改留言</button>
+    <button class="" wx:if ='{{share_art_id==0  && share_order_shape!=5 && share_order_shape!=4}}' bindtap="sharegoods">说点什么</button>
   </view>
   <view class="sentbtn">
     <form bindsubmit="formSubmit" data-name='eventSave' report-submit="true" >
-      <button formType="submit"  style="width:200rpx;" type='warn'>保存到相册</button> <!-- bindtap="eventSave"  -->
+      <button formType="submit"  style="width:200rpx;" type='default'>保存到相册</button> <!-- bindtap="eventSave"  -->
     </form>
     <view wx:if="{{share_order_shape==5}}" style='width:100%;' >
       <button type="primary" bindtouchstart="startRecode" bindtouchend="endRecode" class="sec-btn" style="background: #fff;">
@@ -32,11 +33,11 @@
     </button>
   </view>
     <form bindsubmit="formSubmit" data-name='onShare' report-submit="true" >
-      <button open-type='share' style="width:200rpx;" formType="submit" bindtap="onShareAppMessage">立即分享</button>
+      <button open-type='share' style="width:200rpx;" formType="submit" type="primary" bindtap="onShareAppMessage">微信分享</button>
     </form>
   </view>
 </view>
-<modal title="编辑分享语" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">
+<modal title="写分享语" no-cancel="{{nocancel}}" hidden="{{notehidden}}" bindconfirm="shareConfirm" bindcancel="shareCandel" confirm-text="确定" cancel-text="返回">
     <view style="height:{{share_order_shape==5?dkheight-330:dkheight-430}}px;">
      <view class="note">
       <textarea style='margin-top:10rpx;font-size:26rpx;color:#333;' bindblur="bindTextAreaBlur" placeholder="{{share_order_shape==5?share_order_note:share_goods_title}}" maxlength="{{share_order_shape==5?200:100}}" />

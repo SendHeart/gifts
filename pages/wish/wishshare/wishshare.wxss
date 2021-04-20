@@ -152,10 +152,10 @@ page {
   width: 40%;
   height: 70rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
-  background: #e34c55;
+  background: #ff952d;
   color: white;
   font-size: 26rpx;
-  border-radius: 15rpx;
+  border-radius: 10rpx;
 }
 .sentbtn button::after {
   border: 0;

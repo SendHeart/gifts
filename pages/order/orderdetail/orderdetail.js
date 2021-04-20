@@ -7,11 +7,11 @@ var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '
 var shop_type = app.globalData.shop_type;
 Page({
   data: {
-    title_name: '记录详情',
+    title_name: '订单详情',
     title_logo: '../../../images/footer-icon-05.png',
     delivery_background: weburl+'/uploads/line.png',
-    share_title: '我的详情单',
-    share_desc: '送礼就是黑贝会',
+    share_title: '我的订单详情',
+    share_desc: '黑贝会，高端会员制商店',
     orders: [],
     order_no:'',
     sendtime:'',
