@@ -293,7 +293,7 @@ Page({
 
   bindCheckout: function () {
     var that = this;
-    var order_type = 'gift'
+    var order_type = that.data.is_buymyself==1?'':'gift' // gift 
     var order_note = that.data.note
     var amount = that.data.total;
     var cartIds = that.calcIds();
@@ -356,7 +356,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var status = 0;
     var amount = that.data.amount;
-    var order_type = 'gift';
+    var order_type = that.data.is_buymyself==1?'':'gift';
     var order_note = that.data.note;
     if (!order_note) order_note = '送你一份心意，愿美好长存!'; //默认祝福
     console.log('附言:' + order_note)
