@@ -10,21 +10,22 @@ var uploadurl = app.globalData.uploadurl;
 Page({
   isDefault: false,
 	formSubmit: function(e) {
-    var that = this
-		// user 
-    var username = this.data.username;
-    var token = this.data.token
+    var that = this	 
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var areaSelectedStr = that.data.areaSelectedStr
 		// detail
 		var detail = e.detail.value.detail;
 		// activity_name
     var activity_name = e.detail.value.activity_name;
+    var full_name = e.detail.value.full_name; 
 		// mobile
 		var mobile = e.detail.value.mobile;
    
     // endtime
     var waitting = e.detail.value.waitting
     var endtime = that.data.currenttime +  waitting*60*60   //秒
+    var is_activity = that.data.is_activity 
 		// 表单验证
     if (areaSelectedStr == '请选择省市区' || areaSelectedStr =='') {
 			wx.showToast({
@@ -33,18 +34,26 @@ Page({
 			return
 		}
     
+    
 		if (detail == '') {
 			wx.showToast({
 				title: '请填写详情地址'
 			})
 			return
 		}
-    if (activity_name == '') {
+    if (activity_name == '' && is_activity==1) {
 			wx.showToast({
 				title: '请填写备注'
 			})
 			return
 		}
+    
+    if (full_name == '' && is_activity==0) {
+			wx.showToast({
+				title: '请填写收货人信息'
+			})
+			return
+    }
     
 		if(!(/^1[34578]\d{9}$/.test(mobile))){ 
 			wx.showToast({
@@ -57,26 +66,29 @@ Page({
       token: token,
       endtime:endtime,
       //activity_image: activity_image,
-      activity_name: activity_name,
+      //activity_name: activity_name,
       detail: detail,
       mobile: mobile,
-
+      full_name:full_name,
     })
-    that.upload()
+    //that.upload()
+    that.update_member_address()
 	},
 	data: {
 		current: 0,
     username:null,
     token:null,
+    is_activity:0,
     addressId:null,
+    full_name: '', //收件人
 		province: [],
 		city: [],
 		region: [],
 		town: [],
-    provinceId: [],
-    cityId: [],
-    regionId: [],
-    townId: [],
+    provinceId: 0,
+    cityId: 0,
+    regionId: 0,
+    townId: 0,
 		provinceObjects: [],
 		cityObjects: [],
 		regionObjects: [],
@@ -109,15 +121,16 @@ Page({
         url: '../login/login?is_permission=1'
       })
     }
-    that.setData({
-      username: username,
-      token: token,
-    });
 		// load province
     wx.request({
       url: weburl + '/api/client/get_area_list',
       method: 'POST',
-      data: { parent_id: 0 },
+      data: { 
+        username:username,
+        access_token:token,
+        shop_type:shop_type,
+        parent_id: 0 
+      },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
@@ -133,16 +146,16 @@ Page({
           province: array,
           provinceObjects: area
         })
+        console.log('onload() get_area_list province:',that.data.provinceObjects);
       }
     })
 
 		// if isDefault, address is empty
 		// this.setDefault();
 	
-		that.loadAddress(options)
+		that.loadAddress_member(options)
     	that.cascadePopup();
 		// TODO:load default city...
-   
 	},
   upload: function () {
     var that = this
@@ -150,20 +163,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var goods_id = that.data.goods_id;
     var new_img_addr = that.data.new_img_arr //本次上传图片的手机端文件地址
-    var new_img_url = [] //本次上传图片的服务端url
-    var province = that.data.provinceObjects[that.data.provinceIndex];
-    var city = that.data.cityObjects[that.data.cityIndex];
-    var region = that.data.regionObjects[that.data.regionIndex];
-    var town = that.data.townObjects[that.data.townIndex];
-    var addressId = that.data.addressId;
-    var endtime = that.data.endtime
-    var activity_image = that.data.activity_image
-    var activity_name  = that.data.activity_name
-    var address_name = that.data.detail
-    var detail = that.data.areaSelectedStr + that.data.detail
-    var mobile = that.data.mobile
-    var latitude = that.data.latitude
-    var longitude = that.data.longitude
+    var new_img_url = [] //本次上传图片的服务端url     
     var upload_type = 'xcx_address_add'
     //保存地址到服务器
     
@@ -192,53 +192,127 @@ Page({
             count--
             console.log('图片上传完成:', that.data.new_img_url, ' count:', count)
             if (count == 0) {
-              wx.request({
-                url: weburl + '/api/client/update_activity_address',
-                method: 'POST',
-                data: {
-                  'username': username,
-                  'access_token': token,
-                  'id': addressId,
-                  'activity_name': activity_name,
-                  'prov': province ? province.area_id : '',
-                  'city': city ? city.area_id : '',
-                  'area': region ? region.area_id : '',
-                  'town': town ? town.area_id : '',
-                  'address': detail,
-                  'address_name': address_name,
-                  'tel': mobile,
-                  'image': new_img_url[0] ? new_img_url[0]:'',
-                  'image2': new_img_url[1] ? new_img_url[1] : '',
-                  'image3': new_img_url[2] ? new_img_url[2] : '',
-                  'endtime': endtime,
-                  'latitude': that.data.latitude,
-                  'longitude' : that.data.longitude,
-                },
-                header: {
-                  'Content-Type': 'application/x-www-form-urlencoded',
-                  'Accept': 'application/json'
-                },
-                success: function (res) {
-                  console.log(res.data.result);
-                  console.log(res.data.info);
-                  wx.showToast({
-                    title: '保存成功',
-                    duration: 500
-                  });
-                  // 等待半秒，toast消失后返回上一页
-                  setTimeout(function () {
-                    wx.navigateBack();
-                  }, 500);
-                }, function(error) {
-                  console.log(error);
-                }
-              })
+              that.update_activity_address()
             }
           }
         },
       })
     }
   },
+
+  update_activity_address:function(){
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';     
+    var new_img_url = that.data.new_img_url //本次上传图片的服务端url
+    var province = that.data.provinceObjects[that.data.provinceIndex];
+    var city = that.data.cityObjects[that.data.cityIndex];
+    var region = that.data.regionObjects[that.data.regionIndex];
+    var town = that.data.townObjects[that.data.townIndex];
+    var addressId = that.data.addressId;
+    var endtime = that.data.endtime
+    //var activity_image = that.data.activity_image
+    var activity_name  = that.data.activity_name
+    var address_name = that.data.detail
+    var detail = that.data.areaSelectedStr + that.data.detail
+    var mobile = that.data.mobile
+    var latitude = that.data.latitude
+    var longitude = that.data.longitude
+    wx.request({
+      url: weburl + '/api/client/update_activity_address',
+      method: 'POST',
+      data: {
+        'username': username,
+        'access_token': token,
+        'id': addressId,
+        'activity_name': activity_name,
+        'prov': province ? province.area_id : '',
+        'city': city ? city.area_id : '',
+        'area': region ? region.area_id : '',
+        'town': town ? town.area_id : '',
+        'address': detail,
+        'address_name': address_name,
+        'tel': mobile,
+        'image': new_img_url ? new_img_url[0]:'',
+        'image2': new_img_url ? new_img_url[1] : '',
+        'image3': new_img_url ? new_img_url[2] : '',
+        'endtime': endtime,
+        'latitude': latitude,
+        'longitude' : longitude,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data.result);
+        console.log(res.data.info);
+        wx.showToast({
+          title: '保存成功',
+          duration: 500
+        });
+        // 等待半秒，toast消失后返回上一页
+        setTimeout(function () {
+          wx.navigateBack();
+        }, 500);
+      }, function(error) {
+        console.log(error);
+      }
+    })
+  },
+
+  update_member_address:function(){
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';     
+    var provinceId = that.data.provinceId;
+    var cityId = that.data.cityId;
+    var regionId = that.data.regionId;
+    var townId = that.data.townId;
+    var addressId = that.data.addressId?that.data.addressId:0;
+    var address_name = that.data.detail?that.data.detail:that.data.address['address_name']    
+    var full_name = that.data.full_name?that.data.full_name:that.data.address['full_name'];
+    var detail = that.data.detail?that.data.detail:that.data.address['address'];
+    var mobile = that.data.mobile
+     
+    wx.request({
+      url: weburl + '/api/client/update_member_address',
+      method: 'POST',
+      data: {
+        'username': username,
+        'access_token': token,
+        'shop_type':shop_type,
+        'id': addressId,        
+        'prov': provinceId,
+        'city': cityId,
+        'area': regionId ,
+        'town': townId,
+        'address': detail,
+        'address_name': address_name,
+        'tel': mobile,   
+        'full_name': full_name,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log(res.data.result);
+        console.log(res.data.info);
+        wx.showToast({
+          title: '保存成功',
+          duration: 500
+        });
+        // 等待半秒，toast消失后返回上一页
+        setTimeout(function () {
+          wx.navigateBack();
+        }, 500);
+      }, function(error) {
+        console.log(error);
+      }
+    })
+  },
+
   upimg: function () {
     var that = this
     var new_img_arr = that.data.new_img_arr
@@ -298,9 +372,52 @@ Page({
     that.setData({
       new_img_arr: img_tmp
     })
-
   },
-  loadAddress: function (options) {
+  loadAddress_member: function (options) {
+	  var that = this;
+	  var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+	  var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+	  //var shop_type = that.data.shop_type;
+	  var addressId = options.objectId;
+	  
+	  console.log('loadAddress_member addressId:', addressId);
+	
+	  if (addressId != undefined) {
+	    that.setData({
+	      addressId: addressId
+	    });
+	    wx.request({
+	      url: weburl + '/api/client/get_member_address',
+	      method: 'POST',
+	      data: {
+	        username: options.username ? options.username : username,
+	        access_token: token,
+	        shop_type: shop_type,
+	        address_id: addressId
+	      },
+	      header: {
+	        'Content-Type': 'application/x-www-form-urlencoded',
+	        'Accept': 'application/json'
+	      },
+	      success: function (res) {
+	        console.log('loadAddress:', res.data.result);
+	        var address = res.data.result;
+	        var array = [];
+	
+	        for (var i = 0; i < address.length; i++) {
+	          array[i] = address[i]['address'];
+	        }
+	
+	        that.setData({
+	          address: address[0],
+	          areaSelectedStr: address[0]['prov_str'] + address[0]['city_str'] + address[0]['area_str'] + address[0]['town_str']
+	        });
+	        console.log('load member address:',that.data.address,' areaSelectedStr:',that.data.areaSelectedStr);
+	      }
+	    });
+	  }
+	},
+  loadAddress_activity: function (options) {
     var that = this;
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -345,6 +462,7 @@ Page({
       })
     }
   },
+
 	setDefault: function () {
 		var that = this;
     console.log(that.data.provinceObjects);
@@ -375,12 +493,12 @@ Page({
     	var index = e.currentTarget.dataset.index;
     	// current为1，使得页面向左滑动一页至市级列表
     	// provinceIndex是市区数据的标识
-      console.log('provinceTapped');
-      console.log('');
+      //     
     	this.setData({
     		provinceName: this.data.province[index],
     		regionName: '',
-    		townName: '',
+        townName: '',
+        provinceId:this.data.provinceObjects[index]['area_id'],
     		provinceIndex: index,
     		cityIndex: -1,
     		regionIndex: -1,
@@ -388,7 +506,8 @@ Page({
     		region: [],
     		town: []
     	});
-    	var that = this;
+      var that = this;
+      console.log('provinceTapped provinceId:',that.data.provinceId);  
       // load city
       var parent_id = this.data.provinceObjects[index]['area_id']
       wx.request({
@@ -431,12 +550,14 @@ Page({
     		cityIndex: index,
     		regionIndex: -1,
     		townIndex: -1,
-    		cityName: this.data.city[index],
+        cityName: this.data.city[index],
+        cityId:this.data.cityObjects[index]['area_id'],
     		regionName: '',
     		townName: '',
     		town: []
     	});
-    	var that = this;
+      var that = this;
+      console.log('cityTapped cityId:',that.data.cityId);  
       var parent_id = this.data.cityObjects[index]['area_id']
       wx.request({
         url: weburl + '/api/client/get_area_list',
@@ -477,10 +598,12 @@ Page({
     	this.setData({
     		regionIndex: index,
     		townIndex: -1,
-    		regionName: this.data.region[index],
+        regionName: this.data.region[index],
+        regionId:this.data.regionObjects[index]['area_id'],
     		townName: ''
     	});
-    	var that = this;
+      var that = this;
+      console.log('regionTapped regionId:',that.data.regionId);  
       var parent_id = this.data.regionObjects[index]['area_id']
       wx.request({
         url: weburl + '/api/client/get_area_list',
@@ -522,32 +645,37 @@ Page({
   
     },
     townTapped: function (e) {
+      var that = this
     	// 标识当前点击镇级，记录其名称与主键id都依赖它
     	var index = e.currentTarget.dataset.index;
     	// townIndex是镇级数据的标识
-    	this.setData({
+    	that.setData({
     		townIndex: index,
-    		townName: this.data.town[index]
-    	});
-    	var areaSelectedStr = this.data.provinceName + this.data.cityName + this.data.regionName + this.data.townName;
-    	this.setData({
+        townName: that.data.town[index],
+        townId:that.data.townObjects[index]['area_id'],
+      });
+      console.log('townTapped townId:',that.data.townId);  
+    	var areaSelectedStr = that.data.provinceName + that.data.cityName + that.data.regionName + that.data.townName;
+    	that.setData({
     		areaSelectedStr: areaSelectedStr
     	})
-    	this.cascadeDismiss();
+    	that.cascadeDismiss();
     },
     currentChanged: function (e) {
     	// swiper滚动使得current值被动变化，用于高亮标记
     	var current = e.detail.current;
     	this.setData({
     		current: current
-    	});
+      })
+      console.log('address add currentChanged() current:',this.data.current)
     },
     changeCurrent: function (e) {
     	// 记录点击的标题所在的区级级别
     	var current = e.currentTarget.dataset.current;
     	this.setData({
     		current: current
-    	});
+      })
+      console.log('address add changeCurrent() current:',this.data.current)
     },
     fetchPOI: function () {
     	var that = this;
@@ -569,6 +697,6 @@ Page({
 		    complete: function(res) {
 		//         console.log(res);
 		    }
-    	});
-    }
+    	})
+    },
 })

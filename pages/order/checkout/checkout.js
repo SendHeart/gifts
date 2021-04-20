@@ -11,7 +11,8 @@ Page({
 		carts: [],
     cartIds: null,
 		addressList: [],
-		addressIndex: 0,
+    addressIndex: 0,
+    address_default: null,
     username:null,
     token:null,
     page: 1,
@@ -108,7 +109,7 @@ Page({
     }
 
   },
-	addressObjects: [],
+
 	onLoad: function (options) {
     var that = this  
     that.readCarts(options)
@@ -130,7 +131,7 @@ Page({
         title_logo: '../../../images/back.png'
       })
     }  
-    //that.loadAddress()
+    that.loadAddress()
 	},
 	readCarts: function (options) {
 		var that = this
@@ -188,15 +189,8 @@ Page({
   confirmOrder: function () {
     var that = this
     var liveid = that.data.liveid ? that.data.liveid:0
-    var order_num = that.data.order_num
-    if (order_num ==0){
-      wx.showToast({
-        title: '请输入份数',
-        icon: 'loading',
-        duration: 2000
-      })
-      return
-    }
+    var order_num = that.data.order_num>0?that.data.order_num:1
+    
     var is_buymyself = that.data.is_buymyself //自购
     var carts = that.data.carts
     var cartIds = that.data.cartIds
@@ -213,7 +207,7 @@ Page({
     var selected_coupon_red_amount = selectedRedAllStatus?that.data.coupons_red_list[selected_coupon_red_index]['amount'] : 0
     var selected_coupon_red_id = selectedRedAllStatus?that.data.coupons_red_list[selected_coupon_red_index]['id']:0
     var selected_coupon_red_type = selectedRedAllStatus?that.data.coupons_red_list[selected_coupon_red_index]['type']:1
-
+    var address_id = that.data.address_default['id']
     var status = 0
     var shop_type = that.data.shop_type
     var amount = that.data.amount
@@ -261,7 +255,9 @@ Page({
         coupon_red_type: selectedRedAllStatus ? selected_coupon_red_type : 0,
         coupon_red_amount: selectedRedAllStatus ? selected_coupon_red_amount : 0,
         order_num:order_num?order_num:1,
-        is_buymyself: is_buymyself ? is_buymyself : 0  //1自购礼品
+        is_buymyself: is_buymyself ? is_buymyself : 0 , //1自购礼品
+        address_id:address_id,
+        amount:amount,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
@@ -537,38 +533,50 @@ Page({
     })
   },
 	loadAddress: function () {
-		var that = this;
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = that.data.shop_type
     var addressList = [];
-    var addressObjects = null;
     var address = [];
-    var token = that.data.token;
-    var username = that.data.username;
+   
     //取送货地址
     wx.request({
       url: weburl + '/api/client/get_member_address',
       method: 'POST',
-      data: { username: username, token: token },
+      data: { 
+        username: username, 
+        token: token,
+        shop_type:shop_type 
+      },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
       success: function (res) {
         //console.log(res.data.result);
-        address = res.data.result;
-        for (var i = 0; i < address.length; i++) {
-          // find the default address
-          if (address[i]['isDefault'] == 1) {
-            that.setData({
-              addressIndex: i
-            });
+        address = res.data.result
+        if(address && address.length>0){
+          for (var i = 0; i < address.length; i++) {
+            // find the default address
+            if (address[i]['isDefault'] == 1) {
+              that.setData({
+                addressIndex: i
+              })             
+            }
+            addressList[i] = address[i];
+            console.log('checkout loadAddress() i:',i,' address info:',address[that.data.addressIndex]);
           }
-          addressList[i] = address[i];
-          //console.log(addressList[i]);
-        }
-        that.setData({
-          addressList: addressList
-        });
-        that.addressObjects = address;
+          that.setData({
+            addressList: addressList,
+            address_default: address[that.data.addressIndex]
+          })
+        }else{
+          console.log('checkout loadAddress() 没有收货地址')
+          wx.navigateTo({
+            url: '/pages/address/list/list'
+          })
+        }               
       }
     })
 

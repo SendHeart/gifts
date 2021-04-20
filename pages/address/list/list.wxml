@@ -1,5 +1,5 @@
 <view class="address-list">
-	<view class="item" wx:for="{{addressObjects}}" wx:key="">
+	<view class="item" wx:for="{{addressObjects}}" wx:key="id">
 		<!-- first row -->
 		<view class="header">
 			<text class="realname">{{item.full_name}}</text>

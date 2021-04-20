@@ -1,33 +1,37 @@
 <form bindsubmit="formSubmit">
 	<view class="cell">
-	    <text>区域</text><text bindtap="cascadePopup" class="area_select">{{areaSelectedStr}}</text>
+	    <text style="width:15%;">区域</text><text bindtap="cascadePopup" class="area_select">{{areaSelectedStr}}</text>
 	    <text bindtap="fetchPOI" class="poi">自动获取</text>       
 	</view>
 	<view class="cell">
-		<text>地址</text><input name="detail" placeholder="请输入详情地址" value="{{address.address}}" />
+		<text style="width:15%;">地址</text><input name="detail" placeholder="请输入详情地址" value="{{address.address}}" style="width:80%;" />
 	</view>
-	<view class="cell">
+	<view class="cell" wx:if="{{is_activity==1}}">
 		<text>备注</text>
 		<input name="activity_name" placeholder="请输入备注" value="{{address.name}}" />
 	</view>
-	<view class="cell">
-		<text>联系人</text>
+	<view class="cell" wx:if="{{is_activity==0}}">
+		<text style="width:15%;">收货人</text>
+		<input name="full_name" placeholder="请输入收货人姓名" value="{{address.full_name}}" type="text" style="width:80%;"></input>
+	</view>
+	<view class="cell" >
+		<text style="width:15%;">手机号</text>
 		<input name="mobile" placeholder="请输入手机号码" value="{{address.tel}}" type="number"/>
 	</view>
-  <view class="cell">
-		<text>侯时</text>
+  <view class="cell" wx:if="{{is_activity==1}}">
+		<text style="width:15%;">侯时</text>
 		<input name="waitting" placeholder="请输入等候时长(小时)" value="{{address.waitting}}" type="digit"/>
 	</view>
-   <view class="upimage" >
-      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="" >      
+   <view class="upimage" wx:if="{{is_activity==1}}">
+      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="id" >      
          <image data-id="{{index}}" bindtap="cancel_upimg"  src="{{upimg}}" mode='aspectFit'></image>       
       </block>
       
-      <block wx:for="{{new_img_arr}}" wx:for-item="upimg_new" wx:key="" >      
+      <block wx:for="{{new_img_arr}}" wx:for-item="upimg_new" wx:key="id" >      
          <image data-id="{{index}}" bindtap="cancel_new_upimg"  src="{{upimg_new}}" mode='aspectFit'></image>       
       </block>
     </view>
-  <view bindtap="upimg" class='upimg'>
+  <view bindtap="upimg" class='upimg' wx:if="{{is_activity==1}}">
     <image class='btnjia' src='../../../images/jia.png'></image>
   </view>
 	<button class="save" formType="submit" type="primary">保存</button>
@@ -40,7 +44,6 @@
 	        <text class="modal-close" bindtap="cascadeDismiss">X</text>
 	    </view>
 	    <view class="modal-body">
-
 	    	<text class="viewpager-title {{current == 0 ? 'area-selected' : ''}}" bindtap="changeCurrent" data-current="0">{{provinceName}}</text>
 	    	<text class="viewpager-title {{current == 1 ? 'area-selected' : ''}}" bindtap="changeCurrent" data-current="1">{{cityName}}</text>
 	    	<text class="viewpager-title {{current == 2 ? 'area-selected' : ''}}" bindtap="changeCurrent" data-current="2">{{regionName}}</text>

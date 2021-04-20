@@ -422,7 +422,8 @@ Page({
     var title = is_buymyself == 1 ? '收货地址' : '请确认'
     var content = is_buymyself == 1 ? '详细地址' : '确认接受吗'
     if (is_buymyself == 1) {
-      that.set_address()
+      //that.set_address()
+      console.log('order/payment receiveTapTag() 订单完成 is_buymyself:',is_buymyself)
     } else {
       wx.showModal({
         title: title,

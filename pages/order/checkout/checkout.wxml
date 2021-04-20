@@ -1,4 +1,18 @@
 <scroll-view scroll-y  class="container carts-list" style="{{modalHiddenCoupon?'position:fixed;':''}}{{dkheight>0?' height:'+dkheight+'px;':''}}">
+  <!-- 地址 -->
+	<navigator wx:if="is_buymyself==1 && order_shape!=8 && order_shape!=7" url="/pages/address/list/list" class="address-section">
+  	<view class="address-content">
+  		<image style="width:50rpx;height:50rpx;" src="../../../images/iconfont-shouhuodizhi.png"></image>
+  		<view class="address-info">
+  			<view>
+  				<text class="name">{{address_default.full_name}}</text>
+  				<text class="mobile">{{address_default.tel}}</text>
+  			</view>
+  			<text class="address">{{address_default.address}}</text>
+  		</view>
+  		<image style="width:15rpx;height:30rpx;margin-right:20rpx;" src="../../../images/right-arrow.png"></image>
+  	</view>
+	</navigator>
   <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" bindtap='showGoods'>
     <view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}">
       <!-- 缩略图 -->
@@ -86,7 +100,7 @@
   <form bindsubmit="formSubmit"  data-name='confirmOrder' report-submit="true" >
     <button class="submit" type="" formType="submit" >确认订单</button> <!-- bindtap="confirmOrder" -->
   </form>
-  </view>
+</view>
 
 </view>
 </view>
