@@ -142,12 +142,20 @@ Page({
               'Accept': 'application/json'
             },
             success: function (res) {
-              console.log(res.data.result);        
-              wx.showToast({
-                title: '订单地址修改完成',
-                icon: 'success',
-                duration: 2000
-              });
+              console.log('订单地址修改:',res.data)
+              if(res.data.status=='y'){
+                wx.showToast({
+                  title: '订单地址修改完成',
+                  icon: 'success',
+                  duration: 2000
+                });
+              }else{
+                wx.showToast({
+                  title: res.data.info?res.data.info:'订单地址修改失败',
+                  icon: 'loading',
+                  duration: 2000
+                });
+              }      
             }
           })          
 				}
