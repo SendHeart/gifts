@@ -301,7 +301,7 @@ Page({
     }
   },
   onShow: function () {
-    //this.reloadData();
+    this.reloadData();
     var that = this
     var CurrentPages = getCurrentPages()
     if (CurrentPages.length > 1) {
@@ -534,6 +534,18 @@ Page({
         url: '/pages/order/list/list?order_id=' + order_id + '&order_shape=' + order_shape + '&receive=' + receive
       })
     } 
+  },
+
+  
+  address_update: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var order_no = that.data.order_no
+    var order_id = that.data.order_id
+    wx.navigateTo({
+      url: '/pages/address/list/list?order_id=' + order_id+'&order_no='+order_no 
+    })
   },
 
   onShareAppMessage: function () {

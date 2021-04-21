@@ -13,7 +13,7 @@
 			<view class="set-default" data-index="{{index}}" bindtap="setDefault">
 				<!-- circle or success type -->
 				<icon type="{{item.is_default == 1 ? 'success_circle' : 'circle'}}"/>
-				<text>默认地址</text>
+				<text>默认地址<text>{{order_id>0?'(更新订单地址)':''}}</text></text>				
 			</view>
 			<!-- edit and delete button -->
 			<view class="operation">

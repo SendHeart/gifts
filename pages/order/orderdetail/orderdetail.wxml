@@ -77,7 +77,7 @@
      
 	</view>-->
   </view>
-  <view class="order-detail">
+  <view class="order-detail" wx:if="{{order_shape!=5 && order_shape!=7 && order_shape!=8}}">
     <view class="order-detail-text">
       <text class="labeltext">配送:</text>
       <text>{{sku_num}}件{{buy_num>1?' (份数:'+buy_num+')':''}}</text>
@@ -96,16 +96,16 @@
       <text>{{rcvtime?rcvtime:'对方未接受'}}{{gift_status=='1'?'':''}}</text>
     </view>
   </view>
-  <view wx:if="{{order_shape!=5}}" class="delivery-detail">
-    <view class="delivery-detail-text">
+  <view wx:if="{{order_shape!=5 && order_shape!=7 && order_shape!=8}}" class="delivery-detail">
+    <view class="delivery-detail-text" bindtap="address_update">
       <text class="labeltext">收货人:</text>
       <text>{{fullname?fullname:''}}</text>
     </view>
-    <view class="delivery-detail-text">
+    <view class="delivery-detail-text" bindtap="address_update">
       <text class="labeltext">手机:</text>
       <text>{{tel?tel:''}}</text>
     </view>
-    <view class="delivery-detail-text">
+    <view class="delivery-detail-text" bindtap="address_update">
       <text class="labeltext">收货地址:</text>
       <text>{{orderaddress?orderaddress:''}}</text>
     </view>
