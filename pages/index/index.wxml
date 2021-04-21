@@ -130,8 +130,7 @@
         -->
           <text hidden="{{(giftflag==0 && item.status==2 && item.order_price>0 && item.gift_status==1 && currenttime>item.duetime && item.shape!=4 && item.shape!=5)?false:true}}" data-order-no="{{item.order_no}}" data-index="{{order_idx}}" bindtap="refundTapTag" class="smallbtn2">退款</text>
         </view>
-      </view>
-       
+      </view>       
     </view>
   </block>
   <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap=""></view>

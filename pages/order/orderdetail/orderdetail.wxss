@@ -90,7 +90,7 @@ page {
 .carts-item {
 	display: flex;
 	flex-direction: row;
-	height:140rpx;
+	height:190rpx;
 	/*width属性解决标题文字太短而缩略图偏移*/
 	width:100%;
 	border-bottom: 1rpx solid #F2f2f2;
@@ -127,15 +127,24 @@ page {
 /*右部描述*/
 .carts-text {
 	margin-left: 10rpx;
-	width: 100%;
+	width: 90%;
 	display: flex;
 	flex-direction: column;
 	justify-content:flex-start;
   color: #999;
 }
- 
+
+.carts-sku-text {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content:flex-start;
+  color: #999;
+  font-size:24rpx;
+}
+
 .carts-title {
-	font-size: 26rpx;
+	font-size: 24rpx;
 	color: #444;
 	line-height: 38rpx;
   display: -webkit-box ;
@@ -159,7 +168,7 @@ page {
 
 /*右下部分价格与数量*/
 .carts-subtitle {
-	font-size: 25rpx;
+	font-size: 24rpx;
 	color:#999;
 	display: flex;
 	flex-direction: row;
@@ -175,6 +184,10 @@ page {
 .smallbtn2 {
   margin-right:10rpx;
   color: #FF952D;
+}
+.smallbtn3 {
+  margin-right:10rpx;
+  color: #bbbbbb;
 }
 /*地址*/
 .order-address {
@@ -275,6 +288,18 @@ background-color: #E34C55;
   color: #999;
 }
 
+.labeltext2 {
+  display: inline-block;
+  width: 70%;
+  color: #666;
+}
+
+.labeltext3 {
+  display: inline-block;
+  width: 80%;
+  color: #666;
+}
+
 /**/
 .order-detail image {
 	width:60rpx;
@@ -339,7 +364,6 @@ background-color: #E34C55;
   display: inline-block;
   
 }
-
 
 .footer {
   background: #f9f9f9;
