@@ -295,7 +295,7 @@ Page({
         order_no: order_no,
         order_id: order_id,
       })
-      that.reloadData()
+      //that.reloadData()
     }else{
       wx.navigateBack()
     }
