@@ -8,7 +8,7 @@
   				<text class="name">{{address_default.full_name}}</text>
   				<text class="mobile">{{address_default.tel}}</text>
   			</view>
-  			<text class="address">{{address_default.address}}</text>
+  			<text class="address">{{address_default.prov_str}}{{address_default.city_str}}{{address_default.area_str}}{{address_default.town_str}}{{address_default.address}}</text>
   		</view>
   		<image style="width:15rpx;height:30rpx;margin-right:20rpx;" src="../../../images/right-arrow.png"></image>
   	</view>
