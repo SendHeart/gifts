@@ -1,25 +1,28 @@
-<form bindsubmit="formSubmit">
+<form bindsubmit="formSubmit" class="addrlist">
 	<view class="cell">
-	    <text style="width:15%;">区域</text><text bindtap="cascadePopup" class="area_select">{{areaSelectedStr}}</text>
+	    <text style="width:20%;">所在地区</text><text bindtap="cascadePopup" class="area_select">{{areaSelectedStr}}</text>
 			<!-- 自动获取地址库和后台不一致
 	    <text bindtap="fetchPOI" class="poi">自动获取</text>
 			-->       
 	</view>
+	
+		<view class="cell" wx:if="{{is_activity==0}}">
+		<text style="width:20%;">收货人</text>
+		<input name="full_name" placeholder="请填写收货人姓名" value="{{address.full_name}}" type="text" style="width:80%;"></input>
+	</view>
+	<view class="cell" >
+		<text style="width:20%;">手机号</text>
+		<input name="mobile" placeholder="请填写收货人手机号" value="{{address.tel}}" type="number"/>
+	</view>
 	<view class="cell">
-		<text style="width:15%;">地址</text><input name="detail" placeholder="请输入详情地址" value="{{address.address}}" style="width:80%;" />
+		<text style="width:20%;">详细地址</text><input name="detail" placeholder="街道、小区、楼牌号等" value="{{address.address}}" style="width:80%;" />
 	</view>
 	<view class="cell" wx:if="{{is_activity==1}}">
 		<text>备注</text>
 		<input name="activity_name" placeholder="请输入备注" value="{{address.name}}" />
 	</view>
-	<view class="cell" wx:if="{{is_activity==0}}">
-		<text style="width:15%;">收货人</text>
-		<input name="full_name" placeholder="请输入收货人姓名" value="{{address.full_name}}" type="text" style="width:80%;"></input>
-	</view>
-	<view class="cell" >
-		<text style="width:15%;">手机号</text>
-		<input name="mobile" placeholder="请输入手机号码" value="{{address.tel}}" type="number"/>
-	</view>
+	
+	
   <view class="cell" wx:if="{{is_activity==1}}">
 		<text style="width:15%;">侯时</text>
 		<input name="waitting" placeholder="请输入等候时长(小时)" value="{{address.waitting}}" type="digit"/>
@@ -42,8 +45,8 @@
 	<view class="modal-mask {{maskVisual}}" bindtap="cascadeDismiss"></view>
 	<view animation="{{animationData}}" class="modal-content">
 	    <view class="modal-header">
-	        <text class="modal-title">所在地区</text>
-	        <text class="modal-close" bindtap="cascadeDismiss">X</text>
+	        <text class="modal-title">请选择所在地区</text>
+	        <view class="modal-close" bindtap="cascadeDismiss"><image src="../../../images/icon-shut.png" mode="aspectFit"></image></view>
 	    </view>
 	    <view class="modal-body">
 	    	<text class="viewpager-title {{current == 0 ? 'area-selected' : ''}}" bindtap="changeCurrent" data-current="0">{{provinceName}}</text>

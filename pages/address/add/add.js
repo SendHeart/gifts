@@ -93,9 +93,9 @@ Page({
 		cityObjects: [],
 		regionObjects: [],
 		townObjects: [],
-		areaSelectedStr: '请选择省市区',
+		areaSelectedStr: '省市区县、乡镇等',
 		maskVisual: 'hidden',
-		provinceName: '请选择',
+		provinceName: '中国大陆',
     shop_type: shop_type,
     uploadurl: uploadurl,
     img_arr: [],
@@ -471,18 +471,18 @@ Page({
 	},
 	cascadePopup: function() {
 		var animation = wx.createAnimation({
-			duration: 500,
+			duration: 300,
 			timingFunction: 'ease-in-out',
 		});
 		this.animation = animation;
-		animation.translateY(-285).step();
+		animation.translateY(124).step();
 		this.setData({
 			animationData: this.animation.export(),
 			maskVisual: 'show'
 		});
 	},
 	cascadeDismiss: function () {
-		this.animation.translateY(285).step();
+		this.animation.translateY(600).step();
 		this.setData({
 			animationData: this.animation.export(),
 			maskVisual: 'hidden'

@@ -2,15 +2,15 @@
   <!-- 地址 -->
 	<navigator wx:if="is_buymyself==1 && order_shape!=8 && order_shape!=7" url="/pages/address/list/list" class="address-section">
   	<view class="address-content">
-  		<image style="width:50rpx;height:50rpx;" src="../../../images/iconfont-shouhuodizhi.png"></image>
+  		<image style="width:60rpx;height:60rpx;margin-left:20rpx" src="../../../images/icon_address.png"></image>
   		<view class="address-info">
-  			<view>
+  			<view class="addr-name">
   				<text class="name">{{address_default.full_name}}</text>
   				<text class="mobile">{{address_default.tel}}</text>
   			</view>
   			<text class="address">{{address_default.prov_str}}{{address_default.city_str}}{{address_default.area_str}}{{address_default.town_str}}{{address_default.address}}</text>
   		</view>
-  		<image style="width:15rpx;height:30rpx;margin-right:20rpx;" src="../../../images/right-arrow.png"></image>
+  		<view style="width:5%"><image style="width:15rpx;height:30rpx;margin-right:20rpx;" src="../../../images/right-arrow.png"></image></view>
   	</view>
 	</navigator>
   <view class="carts-container" wx:for="{{carts}}" wx:key="index" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}" data-goods-name="{{item.name}}" data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-image="{{item.activity_image?item.activity_image:item.image}}" bindtap='showGoods'>

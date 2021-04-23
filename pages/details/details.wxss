@@ -250,17 +250,21 @@ page {
   font-size: 28rpx;
 }
 
-.indexShow{
+.indexShow {
   position: absolute;
   right: 20rpx;
   bottom: 20rpx;
-  background:rgba(0,0,0,0.35);
-  color: #FFF;
-  font-size: 24rpx;
+  /* background:rgba(0,0,0,0.35);
+  border-radius: 30rpx; */
+  color: #333333;
+  font-size: 26rpx;
   padding: 5rpx 30rpx;
-  border-radius: 30rpx;
+  font-weight: bold;
 }
-
+.indexShow-total {
+  color: #666666;
+  font-size: 22rpx;
+}
 .share-goods {
   width: 100%;
   padding-bottom: 20rpx;
@@ -597,7 +601,6 @@ border: none;
   justify-content: flex-start;
   background-color: #fff;
   padding: 10rpx 20rpx;
-  margin-top: 1rpx;
   flex-wrap: wrap;
 }
 .comm-text2 {

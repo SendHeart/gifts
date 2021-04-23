@@ -188,10 +188,10 @@
       </swiper>
       <!---数字指示器-->
       <view class="indexShow" wx:if="image_pic.length>1">
-        {{swiperIndex}} / {{image_pic.length}}
+        {{swiperIndex}}<text class="indexShow-total">/{{image_pic.length}}</text>
       </view> 
       <view class="indexShow" wx:else>
-        {{swiperIndex}} / {{image_pic.length}}
+        {{swiperIndex}}<text class="indexShow-total">/{{image_pic.length}}</text>
       </view>
     </view>
   </view>

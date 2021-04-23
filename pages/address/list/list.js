@@ -185,8 +185,8 @@ Page({
 		var address = that.data.addressObjects[index];
 		// 给出确认提示框
 		wx.showModal({
-			title: '确认',
-			content: '要删除这个地址吗？',
+			title: '确认要删除这个地址吗？',
+			content: '删除后不可恢复',
 			success: function(res) {
 				if (res.confirm) {
 					// 真正删除对象

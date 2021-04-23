@@ -1,4 +1,5 @@
 <view class="address-list">
+	<view wx:if="{{addressObjects == 0}}" class="noresult">请先添加您的收货信息</view>
 	<view class="item" wx:for="{{addressObjects}}" wx:key="id">
 		<!-- first row -->
 		<view class="header">
@@ -12,13 +13,13 @@
 			<!-- is default switch -->
 			<view class="set-default" data-index="{{index}}" bindtap="setDefault">
 				<!-- circle or success type -->
-				<icon type="{{item.is_default == 1 ? 'success_circle' : 'circle'}}"/>
-				<text>默认地址<text>{{order_id>0?'(更新订单地址)':''}}</text></text>				
+				<icon type="{{item.is_default == 1 ? 'success_circle' : 'circle'}}" color="#ff952d" size="18"/>
+				<text class="de-addr">默认地址<text>{{order_id>0?'(更新订单地址)':''}}</text></text>				
 			</view>
 			<!-- edit and delete button -->
 			<view class="operation">
-				<view class="container" data-index="{{index}}" bindtap="edit"><image src="../../../images/icon_edit.png" /><text>编辑</text></view>
-				<view class="container" data-index="{{index}}" bindtap="delete"><image src="../../../images/icon_delete.png" /><text>删除</text></view>
+				<view class="container" data-index="{{index}}" bindtap="edit"><image src="../../../images/icon_edit.png" /></view>
+				<view class="container" data-index="{{index}}" bindtap="delete"><image src="../../../images/icon_delete.png" /></view>
 			</view>
 		</view>
 	</view>
