@@ -978,7 +978,7 @@ modal {
    /* display: inline-block; */
   display: flex;
   flex-direction: row;
-  height:275rpx;
+  height:300rpx;
   color: #111111;
   border-radius: 8rpx;
   background: #fff;
@@ -1041,7 +1041,7 @@ modal {
 .goods-name {
   color: #111111;
   font-size: 28rpx;
-  padding-top:10rpx;
+  padding-top:5rpx;
 }
 
 .goods-name2 {
