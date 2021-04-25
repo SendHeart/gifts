@@ -52,7 +52,7 @@ Page({
     web_id: '',
     image_save_count:0,
     needPhoneNumber:'微信授权',
-    needUserName: '需要您的姓名和性别',
+    needUserName: '',
     inputShowed: false,
     sendheartappHidden: false,
     sendheartappurl: weburl+'/hall/appdown/index.html',
@@ -60,10 +60,12 @@ Page({
     recharge_price:0,
     card_name:'Black Shell Club',
     card_logo:'',
+    default_card_logo: '', //weburl + '/uploads/default_card_logo.png?rand='+Math.random()*100
     card_no:'',
     card_due_start:'0000-00-00',
     card_due_end:'0000-00-00',
     is_card_overdue:false,
+    recharge_type:0,
     recommentslist: [], 
     recommentslist_show: [],
     show_max:20,
@@ -755,9 +757,11 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    /*
     if (!user_name || !user_gender) {
       return
     }
+    */
     wx.request({
       url: weburl + '/api/client/update_name',
       method: 'POST',
@@ -798,17 +802,18 @@ Page({
     var that = this
     var user_name = that.data.user_name
     var user_gender = that.data.user_gender
-    if (user_name && user_gender) {
-      that.setData({
-        modalHiddenUserName: !that.data.modalHiddenUserName
-      })
+    var needUserName = ''
+    that.setData({
+      modalHiddenUserName: !that.data.modalHiddenUserName
+    })
+    if (user_name && user_gender) {   
       that.getUserName(user_name, user_gender)
     } else {
-      var needUserName = '需要您的姓名和性别'
-      that.setData({
-        needUserName: needUserName
-      })
+      needUserName = '需要您的姓名和性别'      
     }
+    that.setData({
+      needUserName: needUserName
+    })
   },
 
   radiochange: function (e) {
@@ -1031,10 +1036,12 @@ Page({
     });
   },
   */
-  navigateToRecharge: function () {
+  navigateToRecharge: function (e) {
     var that = this
     var is_recharge = 1
-    var recharge_type = 1
+    var recharge_level = 1
+    var recharge_type =  e.currentTarget.dataset.recharge?e.currentTarget.dataset.recharge:0
+   
     wx.request({
       url: weburl + '/api/client/add_cart',
       method: 'POST',
@@ -1043,6 +1050,7 @@ Page({
         access_token: token,
         shop_type:shop_type,
         is_recharge: is_recharge,
+        recharge_level:recharge_level,
         recharge_type:recharge_type,
       },
       header: {
@@ -1053,12 +1061,22 @@ Page({
         console.log('My navigateToRecharge res data:', res.data);
         var result =  res.data.result
         var membercard_no = result.card_no? result.card_no:''
+        var membercard_logo = result.card_logo? result.card_logo:''
         if(membercard_no!=''){
-          wx.showToast({
-            title: '会员充值',
-            icon:'loading',
-            duration: 2000
+          that.setData({
+            card_no:membercard_no,
+            card_logo:membercard_logo,
+            recharge_type:recharge_type
           })
+          if(recharge_type==1 || recharge_type==0) { 
+            return // 立即入会 暂时不转充值       
+          }else{
+            wx.showToast({
+              title: '会员充值',
+              icon:'loading',
+              duration: 2000
+            })
+          }   
         }else{
           wx.showToast({
             title: '会员卡生成失败',
@@ -1252,6 +1270,7 @@ Page({
   modalBindconfirmPhone: function () {
     var that = this
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
+    /*
     if (user_phone){
       that.setData({
         modalHiddenPhone: !that.data.modalHiddenPhone
@@ -1262,6 +1281,7 @@ Page({
         needPhoneNumber: needPhoneNumber
       })
     }
+    */
   },  
 
   bindArtPickerChange: function (e) {
@@ -1596,6 +1616,7 @@ Page({
       user_type: user_type,
       art_id:art_id,
       userInfo:userInfo,
+      user_name:user_name,
     })
     //调用应用实例的方法获取全局数据
     /*
@@ -1825,8 +1846,8 @@ Page({
           user_group_id:res.data.result['member_group_id'],
           user_group_name:res.data.result['member_group_name'],
           card_name:res.data.result['card_name'],
-          card_logo:res.data.result['card_logo'],
-          card_no:res.data.result['card_no'],
+          card_logo:res.data.result['card_logo']?res.data.result['card_logo']:that.data.default_card_logo,
+          card_no:res.data.result['card_no']?res.data.result['card_no']:'',
           card_due_start:res.data.result['card_due_start'],
           card_due_end:res.data.result['card_due_end'],
           is_card_overdue:is_card_overdue

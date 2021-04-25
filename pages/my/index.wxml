@@ -2,7 +2,7 @@
 <view style="overflow:scroll;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
   <view class="memcard">
     <view class="userinfo-cards-info">
-      <image class="userinfo-cards-logo" src="{{card_logo?card_logo:default_avatar}}" mode="aspectFill" />
+      <image class="userinfo-cards-logo" src="{{card_logo!=''?card_logo:default_card_logo}}" mode="aspectFill" />
       <!-- <view class="userinfo-cards-name">
         <text class="userinfo-cards-title">{{card_name}}</text>
       </view> -->
@@ -14,7 +14,10 @@
       <view>
         <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
       </view>
-      <view><text class="userinfo-nickname">{{userInfo.nickName}}</text></view>
+      <view>
+        <text class="userinfo-nickname" bindtap="modalBindconfirmUsername" >{{user_name?user_name:userInfo.nickName}}      
+        </text>
+      </view>
     </view>
   
     <view class="userinfo-cards-item" wx:if="{{card_no!=''}}">
@@ -23,9 +26,9 @@
     <view class="userinfo-cards-item" wx:if="{{card_no ==''}}">
       <text class="userinfo-cards-no">您还不是会员无法购买商品</text>
     </view>
-    <view class="userinfo-cards-item" style="margin:40rpx 0 0 20rpx; justify-content: left;" wx:if="{{card_no!=''}}">
-      <text class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
-      <text class="userinfo-cards-due">VALID THRU:{{card_due_end}}</text>
+    <view class="userinfo-cards-item" style="margin:40rpx 0 0 20rpx; justify-content: left;" wx:if="{{card_no!='' && recharge_type!=1}}">
+      <text wx:if="{{card_due_start!=''}}" class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
+      <text wx:if="{{card_due_end!=''}}" class="userinfo-cards-due">VALID THRU:{{card_due_end}}</text>
     </view>
   
 	 <!--
@@ -35,17 +38,19 @@
   </view>
 
   <view class="cardrenew">
-    <view class="cardrenew-btn redbtn" wx:if="{{card_no!='' && is_card_overdue}}" bindtap="navigateToRecharge">     
-      <text>您的会员卡已过期，继续使用请充值</text>
-    </view>
-    <view class="cardrenew-btn redbtn" wx:if="{{card_no!='' && !is_card_overdue}}" bindtap="navigateToRecharge">     
-      <text>您的会员卡已过期，继续使用请充值</text>
-    </view>
-    <view class="cardrenew-btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge">     
+    <view class="cardrenew-btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge" data-recharge="1">     
       <text>我要入会</text>
     </view>
+    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && is_card_overdue && recharge_type!=1}}" bindtap="navigateToRecharge" data-recharge="3" >     
+      <text>您的会员卡已过期，继续使用请充值</text>
+    </view>
+    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type!=1}}" bindtap="navigateToRecharge" data-recharge="2" >     
+      <text>您的会员卡已过期，继续使用请充值</text>
+    </view>
+    <view class="cardrenew-btn redbtn" wx:else="{{card_no!='' && !is_card_overdue && recharge_type==1}}" bindtap="navigateToRecharge" data-recharge="2" >     
+      <text>您的会员卡待充值</text>
+    </view>   
   </view>
-
 
   <view class="menu-area">
     <view bindtap="navigateToOrder" class="order" data-status="0">
