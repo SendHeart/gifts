@@ -1850,7 +1850,9 @@ Page({
           card_no:res.data.result['card_no']?res.data.result['card_no']:'',
           card_due_start:res.data.result['card_due_start'],
           card_due_end:res.data.result['card_due_end'],
-          is_card_overdue:is_card_overdue
+          is_card_overdue:is_card_overdue,
+          user_name:res.data.result['user_name'],
+          user_gender:res.data.result['user_gender'],
         })
 
           

@@ -347,8 +347,8 @@
   <view class="modalbox-text">您的性别</view>
   <view class="radiog">
   <radio-group bindchange="radiochange">
-    <radio value='1'>男</radio>
-    <radio value='2' style="margin-left:30rpx;">女</radio>
+    <radio value='1' checked="{{user_gender=='1'?true:false}}" >男</radio>
+    <radio value='2' checked="{{user_gender=='2'?true:false}}" style="margin-left:30rpx;">女</radio>
   </radio-group>
   </view>
 </modal>
