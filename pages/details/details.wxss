@@ -296,7 +296,7 @@ page {
 .share-buttons .shareto {
   width: 30rpx;
   height: 30rpx;
-  margin:4rpx 4rpx 0 0;
+  margin:10rpx 4rpx 0 0;
 }
 .share-buttons .btnback {
   display: flex;

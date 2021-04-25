@@ -30,6 +30,7 @@
   </view>
   -->
   <!-- -->
+  
   <view wx:if="{{messageflag==3}}" class="loadingshow {{isLoadingTrue?'isLoadingShow':'isLoadingHide'}}" style="height:{{dkheight}}px;" catchtouchmove="move">    
     <view class="select-goods-list">
     <view class="select-goods" style="height:{{dkheight-80}}px;">
@@ -114,6 +115,7 @@
       </view>
     </view>
   </view>
+  
   <view wx:if="{{messageflag==0}}" wx:for="{{task_list}}" wx:for-item="blist" wx:key="id" class="msg-list">
     <view class="msg-title">
       <text>{{blist.addtime}}</text> 

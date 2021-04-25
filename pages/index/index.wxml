@@ -43,10 +43,11 @@
     <view style="margin-top:-3rpx;border-top:1rpx solid #fff">{{page_num}}</view>
     -->
   </view>
+  
   <block wx:for="{{orders_show}}"  wx:key="id" wx:for-item="orders_show" wx:for-index="ordersIndex">
-    <view class="order-item" style='width:{{windowWidth}}' wx:for="{{orders_show}}" wx:key="id" wx:for-index="order_idx">
+    <view class="order-item" style='width:{{windowWidth}}px' wx:for="{{orders_show}}" wx:key="id" wx:for-index="order_idx">
     <!-- 厂家logo缩略图 -->
-    <view class="shop-text" style='width:{{windowWidth}}'>
+    <view class="shop-text" style='width:{{windowWidth}}px'>
       <text>{{(item.shape!=5 && item.shape!=4)?'订单号:':'订单号:'}}{{item.order_no}}</text>
       <!--
       <text hidden="{{(item.gift_status==2 && giftflag ==0 && item.shape!=4 && item.shape!=5 )?false:true}}" class="status2">对方已接受</text>
@@ -133,6 +134,10 @@
       </view>       
     </view>
   </block>
+  <view wx:if="{{all_rows == 0}}" class="noneresult">
+<text>您当前还没有该类订单</text>
+<button type="default" bindtap="goBack">返回首页选购</button>
+  </view>
   <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap=""></view>
   <!-- 
    <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap="getMoreOrdersTapTag">

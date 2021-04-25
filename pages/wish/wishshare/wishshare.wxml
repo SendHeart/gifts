@@ -12,7 +12,7 @@
     </view>
 
 
-  <image src="{{shareImage}}" class="share-image" style="margin-top:20rpx;" mode='aspectFit'  catchtap="{{(share_order_shape!=5 && share_order_shape!=4)?'sharegoods':''}}"></image>
+  <image src="{{shareImage}}" class="share-image" style="margin-top:20rpx;" mode='aspectFit'></image>
   <view wx:if="{{share_order_shape==5||share_order_shape==4}}" class="share-play-rec" bindtap="play_rec" >
     <image src="../../../images/notification.png" style="width:70rpx;height:70rpx;" mode="{{(share_order_shape==5||share_order_shape==4)?'aspectFit':''}}"></image>
   </view>

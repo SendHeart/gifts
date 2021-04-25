@@ -54,6 +54,7 @@ font-weight: bold;
 .amount:before {
   content: '￥';	
   font-size: 22rpx;
+  font-style: normal;
 }
 
 .submit {

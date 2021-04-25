@@ -52,7 +52,7 @@ Page({
     web_id: '',
     image_save_count:0,
     needPhoneNumber:'微信授权',
-    needUserName: '微信授权',
+    needUserName: '需要您的姓名和性别',
     inputShowed: false,
     sendheartappHidden: false,
     sendheartappurl: weburl+'/hall/appdown/index.html',

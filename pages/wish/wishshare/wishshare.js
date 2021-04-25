@@ -705,7 +705,7 @@ Page({
     var share_order_wx_headimg = that.data.share_order_wx_headimg
     var share_order_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type + '&share_order_id=' + share_order_id + '&share_order_shape=' + share_order_shape + '&m_id=' + m_id
     wx.showLoading({
-      title: '生成中',
+      title: '',
       //mask: true
     })
     console.log('wishshare eventDraw share_order_shape:', share_order_shape, 'card_love_info:', card_love_info)
@@ -1476,7 +1476,7 @@ Page({
     var activity_id = that.data.activity_id ? that.data.activity_id : 0
     var activity_image = that.data.activity_image ? that.data.activity_image : that.data.activity_share_image
     var activity_name = that.data.activity_name ? that.data.activity_name : '我的位置'
-    var title = '收到' + nickname + '的送礼分享~';
+    var title = '收到' + nickname + '的分享~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
     var desc = '黑贝会分享'
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
@@ -1494,7 +1494,7 @@ Page({
     }
     var share_goods_title = that.data.share_goods_title ? that.data.share_goods_title : share_goods_default_title
     
-    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '高端购物就是黑贝会~'
+    var share_goods_desc = that.data.share_goods_desc ? that.data.share_goods_desc : '高端购物就在黑贝会~'
     var share_art_id = that.data.share_art_id
     var share_art_cat_id = that.data.share_art_cat_id
     var share_art_image = that.data.share_art_image

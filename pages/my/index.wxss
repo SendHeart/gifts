@@ -132,10 +132,9 @@ page {
   height: 100rpx;
 }
 .userinfo-cards-logo {
-  width: 80rpx;
+  width: 261rpx;
   height: 80rpx;
-  margin: 20rpx 10rpx 0 20rpx;
-  border-radius: 40%;
+  margin: 20rpx 20rpx 0 20rpx;
 }
 .userinfo-cards-name{
   display: flex;
@@ -224,7 +223,9 @@ page {
   line-height: 60rpx;
   border-radius: 10rpx;
 }
-
+.redbtn {
+  background: #E34C55!important;
+}
 /*order*/
 .menu-area {
   /*
@@ -442,8 +443,6 @@ modal {
   height: 80rpx;
   line-height: 80rpx;
   font-size: 30rpx;
-  background: #1d1d1d;
-  color: #E34C55;
 }
 
 .sentbtn text {
@@ -470,16 +469,16 @@ modal {
 .radiog {
   text-align: center;
 }
-radio .wx-radio-input{
-  height: 26rpx;
-  width: 26rpx;
+radio .wx-radio-input {
+  height: 30rpx;
+  width: 30rpx;
   /* 自定义样式.... */
 } 
-radio .wx-radio-input.wx-radio-input-checked::before{
-  background-color: #e02e24;
-  border: 1rpx solid #e02e24;
-  /* 自定义样式.... */
-}
+/* radio .wx-radio-input.wx-radio-input-checked::before{
+  background-color: #FF952D;
+  border: 1rpx solid #FF952D;
+  /* 自定义样式.... 
+} */
 
 .modal-bg {
   height: 100%;

@@ -6,6 +6,10 @@
 </view>
   -->
 <view class="container carts-list">
+  <view wx:if="{{carts == 0}}" class="noneresult">
+<text>购物袋中还没有商品</text>
+<button type="default" bindtap="goBack">返回首页选购</button>
+  </view>
     <view wx:for="{{carts}}" class="carts-container" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}"  data-goods-shape="{{item.shape}}" data-goods-name="{{item.name}}"  data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?false:false}}" >
     	<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
 	    	<!-- 复选框图标 -->
@@ -47,11 +51,11 @@
 	<view class="select-and-amount" >
 		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" color="#1d1d1d"  bindtap="bindUnSelectAll" />
 		<text style="font-size: 24rpx; color: #999;margin-left:30rpx"  bindtap="bindSelectAll">全选</text>
-		<text style="margin-left:40rpx;">￥{{total}}</text>
+		<text style="margin-left:40rpx;color:#E34C55">￥{{total}}</text>
 	</view>
 	<view class="button" bindtap="bindCheckout">去结算</view>
 </view>
-<view class="recomment-title">
+<view class="recomment-title" style="display:none;">
     <text>更多推荐</text>
 </view>
 <view wx:if="{{is_machine==0}}" wx:for="{{recommentList}}" class="item" wx:key="index" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}" data-goods-name="{{item.name}}" data-goods-price="{{item.sell_price}}" data-sale="{{item.sale}}" data-goods-info="{{item.act_info}}" hidden="{{item.hidden==1?true:false}}">

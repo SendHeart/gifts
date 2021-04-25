@@ -162,7 +162,7 @@ picker {
 .carts-item {
   width: 96%;
   display: flex;
-  flex-direction: row;
+  flex-direction:column;
   height: 300rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
   border-radius: 20rpx 20rpx 0 0;
@@ -175,18 +175,19 @@ picker {
 /*左部图片*/
 
 .carts-image {
-  width: 120rpx;
-  height: 120rpx; 
+  width: 261rpx;
+  height: 80rpx; 
   margin: 0 20rpx;
 }
 
 /*右部描述*/
 
 .carts-text {
-  width: 80%;
+  width: 96%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  padding: 40rpx;
 }
 
 /*右上部分标题*/
@@ -195,6 +196,7 @@ picker {
   font-size: 26rpx;
   color: #FFCA4B;
   line-height: 32rpx;
+  font-weight: bold;
 }
 
 
@@ -228,9 +230,9 @@ picker {
   display: flex;
   flex-direction: row;
   justify-content:space-around; 
-  padding: 10rpx;
+  padding: 20rpx 10rpx;
   z-index: 1;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 }
 
 .recharge-level .recharge-item {
@@ -240,21 +242,26 @@ picker {
   text-align: center;
   align-items: center;
   width: 130rpx;
-  height: 100rpx;
+  height: 160rpx;
   padding: 10rpx;
   border-radius: 20rpx;
   overflow: hidden;
-  background-color: #FFCA4B;
 }
-
+.recharge-type {
+  font-size: 28rpx!important;
+  font-weight: bold;
+  color: #9c4e00;
+}
 .recharge-item-selected {
-  background: #fff4e3!important;
-  color: #000000!important;
+  background: #fff4d9!important;
+  color: #9c4e00!important;
+  border: 2px solid #FF952D !important;
 }
 
 .recharge-item-unselected {
-  background: #fff;
-  color: #444;
+  background-color: rgb(255, 250, 240);
+  color: #111111;
+  border: 2px solid #FFCA4B;
 }
 .recharge-item text {
   font-size: 22rpx;

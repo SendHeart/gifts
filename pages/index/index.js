@@ -12,7 +12,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 Page({
   data: {
-    title_name: '礼物袋',
+    title_name: '购物袋',
     title_logo: '../../images/history_s.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
@@ -152,7 +152,6 @@ Page({
       url: '../hall/hall'
     })
   },
-
   orderSearch: function () {
     var that = this
     console.log('orderSearch keyword:', that.data.keyword)
@@ -379,9 +378,9 @@ Page({
     console.log('tab:' + tab, ' giftflag:', giftflag)
     if (that.data.orders_show.length==0) {
       wx.showToast({
-        title: '加载中',
+        title: '',
         icon: 'loading',
-        duration: 1500
+        duration: 600
       })
       that.reloadData()
     }
@@ -434,9 +433,9 @@ Page({
       return
     }else{
       wx.showToast({
-        title: '加载中',
+        title: '',
         icon: 'loading',
-        duration: 2000
+        duration: 600
       })
       that.setData({
         page: page + 1,
@@ -695,9 +694,9 @@ Page({
     } else {
       if (orders_show.length==0){
         wx.showToast({
-          title: '加载中',
+          title: '',
           icon: 'loading',
-          duration: 1500
+          duration: 600
         })
         that.reloadData()
       }
@@ -772,19 +771,20 @@ Page({
         var orderObjects = res.data.result;
         var all_rows = res.data.all_rows
         if (!res.data.result && page==1) {
-          wx.showToast({
+          /* wx.showToast({
             title:"暂无该类订单",
             icon: 'none',
-            duration: 2500
+            duration: 2500,
           });
           setTimeout(function () {
             wx.navigateBack();
-          }, 500)
+          }, 500)  */
           that.setData({
             orders: [],
             orders_show: [],
             all_rows: 0,
             hiddenmore:true,
+            
           })
         } else {
           // 存储地址字段
