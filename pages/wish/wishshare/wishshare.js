@@ -1478,7 +1478,7 @@ Page({
     var activity_name = that.data.activity_name ? that.data.activity_name : '我的位置'
     var title = '收到' + nickname + '的分享~';
     var imageUrl = that.data.task_image ? that.data.task_image : that.data.wechat_share
-    var desc = '黑贝会分享'
+    var desc = '黑贝会，高端会员制购物'
     var share_goods_id = that.data.share_goods_id ? that.data.share_goods_id : 0
     var share_goods_image = that.data.share_goods_image2 ? that.data.share_goods_image2 : ''
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_goods_avatarUrl
@@ -1486,7 +1486,7 @@ Page({
     var share_goods_org = that.data.share_goods_org ? that.data.share_goods_org : '1' //5虚拟商品 1自营商品
     var share_goods_default_title = ''
     if (share_goods_shape==5){
-      share_goods_default_title = '高端购物' 
+      share_goods_default_title = '购享全球，品质生活' 
     } else if (share_goods_shape==4){
       share_goods_default_title = '探索购物之道' 
     }else{
@@ -1507,7 +1507,7 @@ Page({
     console.log('开始分享任务', options)
 
     var shareObj = {
-      title: title,        // 默认是小程序的名称(可以写slogan等)
+      title: '黑贝会，高端会员制购物商店',        // 默认是小程序的名称(可以写slogan等)
       desc: desc,
       path: '/pages/hall/hall?task=' + task + '&msg_id=' + msg_id + '&refername=' + username + '&sharetime=' + start_time,   // 默认是当前页面，必须是以‘/’开头的完整路径
       imageUrl: activity_id > 0 ?activity_image:imageUrl,     //自定义图片路径，可以是本地文件路径、代码包文件路径或者网络图片路径，支持PNG及JPG，不传入 imageUrl 则使用默认截图。显示图片长宽比是 5:4

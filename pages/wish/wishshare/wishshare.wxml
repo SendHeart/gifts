@@ -33,7 +33,7 @@
     </button>
   </view>
     <form bindsubmit="formSubmit" data-name='onShare' report-submit="true" >
-      <button open-type='share' style="width:200rpx;" formType="submit" type="primary" bindtap="onShareAppMessage">微信分享</button>
+      <button open-type='share' style="width:200rpx;background: #00B26A;" formType="submit" type="primary" bindtap="onShareAppMessage">微信分享</button>
     </form>
   </view>
 </view>
