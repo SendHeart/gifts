@@ -347,7 +347,7 @@ border: none;
   text-align: center;
   width: 90%;
   height: 80rpx;
-  background-color: #444;
+  background-color: #111111;
   color: #fff;
   font-size: 28rpx;
   border-radius: 10rpx;

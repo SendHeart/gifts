@@ -18,7 +18,7 @@
       </view>
       -->
       <view class="btnback" bindtap="goBack"> 
-        <image class="shareto" src="../../images/back.png"></image>
+        <!-- <image class="shareto" src="../../images/back.png"></image> -->
       </view>
        <view wx:if="{{goodsshape==4||goodsshape==5}}" class="btnshare" bindtap="cardEditTapTag">
         <image class="shareto" src="../../images/u72.png"></image>
