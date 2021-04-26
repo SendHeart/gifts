@@ -89,9 +89,9 @@ Page({
   order_num: function (e) {
     var that = this
     var order_num = parseInt(e.detail.value ? e.detail.value:0)
-    var amount = that.data.amount
+    var amount = parseFloat(that.data.amount).toFixed(2)
     var discountpay = that.data.discountpay ? that.data.discountpay:0
-    var payamount = (amount*order_num - discountpay).toFixed(2)
+    var payamount = parseFloat(amount*order_num - discountpay).toFixed(2)
     console.log('order_num amount:', amount, ' discountpay:', discountpay,' order_num:',order_num,' payamount:',payamount)
     that.setData({
       order_num: order_num,
@@ -137,13 +137,13 @@ Page({
 		var that = this
     console.log('order checkout readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
-		var amount = parseFloat(options.amount)
-    //var delivery_price = parseFloat(options.delivery_price)
-    var payamount = that.data.payamount
-    var discountpay = that.data.discountpay
+		var amount = parseFloat(options.amount).toFixed(2)
+    //var delivery_price = parseFloat(options.delivery_price).toFixed(2)
+    var payamount = parseFloat(that.data.payamount).toFixed(2)
+    var discountpay = parseFloat(that.data.discountpay).toFixed(2)
     var carts = JSON.parse(options.carts)
     var cartIds = options.cartIds
-    var delivery_price = parseFloat(carts[0].delivery_price)
+    var delivery_price = parseFloat(carts[0].delivery_price).toFixed(2)
     var cartIdArray = cartIds.split(',')
     var order_type = options.order_type ? options.order_type:''
     var order_note = options.order_note ? options.order_note:''
@@ -158,7 +158,7 @@ Page({
     var card_cele_info = options.card_cele_info ? JSON.parse(options.card_cele_info) : '' //
     var card_love_info = options.card_love_info ? JSON.parse(options.card_love_info) : '' //
     var card_template = options.card_template ? JSON.parse(options.card_template) : '' //
-    payamount = (amount - discountpay).toFixed(2)
+    payamount = parseFloat(amount - discountpay).toFixed(2)
 
     that.setData({
 			amount: amount,
@@ -210,7 +210,7 @@ Page({
     var address_id = that.data.address_default['id']
     var status = 0
     var shop_type = that.data.shop_type
-    var amount = that.data.amount
+    var amount = parseFloat(that.data.amount).toFixed(2)
     var order_type = that.data.order_type?that.data.order_type:''
     var order_image = that.data.order_image
     var order_note = that.data.order_note

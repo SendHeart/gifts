@@ -164,6 +164,7 @@ Page({
         url: '../../hall/hall'
       })
     }
+
   },
 	showCartToast: function () {
 		wx.showToast({

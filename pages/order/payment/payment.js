@@ -179,6 +179,7 @@ Page({
               }
             }
             order_price = order_price + orderObjects[i]['order_price']
+            orderObjects[i]['order_price'] = parseFloat(orderObjects[i]['order_price']).toFixed(2)
           }
           totalFee = order_price.toFixed(2)*100
           //totalFee = totalFee.toFixed(0)

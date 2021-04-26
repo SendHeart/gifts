@@ -128,7 +128,7 @@ page {
 .userinfo-cards-info{
   display:flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: 100rpx;
 }
 .userinfo-cards-logo {

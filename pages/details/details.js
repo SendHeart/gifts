@@ -1984,8 +1984,8 @@ Page({
       if (that.data.commodityAttr.length>0){
         var sku_id = that.data.commodityAttr[0].id
         var attrValueList = that.data.attrValueList
-        var sku_sell_price = that.data.commodityAttr[0].sell_price
-        var sku_delivery_price = that.data.commodityAttr[0].delivery_price
+        var sku_sell_price =  parseFloat(that.data.commodityAttr[0].sell_price).toFixed(2)
+        var sku_delivery_price = parseFloat(that.data.commodityAttr[0].delivery_price).toFixed(2)
         var is_buymyself = that.data.is_buymyself
         var goodsshape = that.data.goodsshape
         var card_type = that.data.card_type

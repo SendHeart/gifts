@@ -26,7 +26,7 @@
     <view class="userinfo-cards-item" wx:if="{{card_no ==''}}">
       <text class="userinfo-cards-no">您还不是会员无法购买商品</text>
     </view>
-    <view class="userinfo-cards-item" style="margin-top:40rpx; justify-content: center;" wx:if="{{card_no!='' && recharge_type!=1}}">
+    <view class="userinfo-cards-item" style="margin:40rpx 0 0 20rpx; justify-content: left;" wx:if="{{card_no!='' && recharge_type!=1}}">
       <text wx:if="{{card_due_start!=''}}" class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
       <text wx:if="{{card_due_end!=''}}" class="userinfo-cards-due">VALID THRU:{{card_due_end}}</text>
     </view>

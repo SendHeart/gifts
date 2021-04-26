@@ -223,8 +223,8 @@ Page({
         title: '请先勾选会籍规则和权益协议',
         icon: 'none',
         duration: 2500
-      }),
-     query_cart
+      })
+      
       return
     }else if(amount == 0){
       wx.showToast({
@@ -241,7 +241,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     // = that.data.selectedAgreeStatus
     var shop_type = that.data.shop_type
-    var amount = that.data.amount
+    var amount = parseFloat(that.data.amount).toFixed(2)
     var buy_num = amount*100 
     var order_type = that.data.order_type?that.data.order_type:'gift'
     var order_image = that.data.order_image

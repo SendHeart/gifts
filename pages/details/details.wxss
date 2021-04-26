@@ -236,11 +236,11 @@ page {
 .prd-title {
   display: flex;
   flex-direction: row;
-  justify-content: start;
-  font-size: 26rpx;
+  justify-content: center;
+  font-size: 28rpx;
   color: #999;
   background: #ffffff;
-  padding: 10rpx 0 0 20rpx;
+  padding: 10rpx 0;
   margin-top: 10rpx;
 }
 .prd-detail {
@@ -561,7 +561,7 @@ border: none;
 }
 .price-now {
   color: #E34C55;
-  width: 35%;
+  width: 40%;
   height: 35rpx;
   line-height: 35rpx;
   margin-left: 10rpx;

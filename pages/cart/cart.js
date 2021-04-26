@@ -66,12 +66,6 @@ Page({
     is_buymyself:1,
     goodsshape:1,
   },
-  goBack: function () {
-      wx.switchTab({
-        url: '../hall/hall'
-      })
-  },
-  
   bindTextAreaBlur: function (e) {
     var that = this;
     that.setData({
