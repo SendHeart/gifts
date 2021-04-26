@@ -24,7 +24,7 @@ Page({
     shop_type: shop_type,
     selectedAllStatus: false,
     selectedAgreeStatus: false,
-    recharge_selected:'',
+    recharge_selected:'2',
     discountpay:0, //折扣差额
     payamount:0, //实际支付金额
     order_num:1,//订单份数
@@ -148,7 +148,8 @@ Page({
 		var that = this
     console.log('recharge readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
-		//var amount = parseFloat(options.amount)
+    var amount = options.amount?parseFloat(options.amount):that.data.amount
+    var recharge_selected = options.recharge_selected?options.recharge_selected:that.data.recharge_selected
     //var delivery_price = parseFloat(options.delivery_price)
     //var payamount = that.data.payamount
     var discountpay = that.data.discountpay
@@ -178,7 +179,8 @@ Page({
     //payamount = (amount - discountpay).toFixed(2)
 
     that.setData({
-			//amount: amount,
+      amount: amount,
+      recharge_selected:recharge_selected,
       //payamount: payamount,
       delivery_price: delivery_price,
       liveid: liveid,
@@ -222,9 +224,7 @@ Page({
         icon: 'none',
         duration: 2500
       }),
-      that.setData({
-        scrolltop: dtheight *10
-      }) 
+     query_cart
       return
     }else if(amount == 0){
       wx.showToast({

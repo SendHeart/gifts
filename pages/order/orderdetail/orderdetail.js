@@ -362,6 +362,7 @@ Page({
           } else {
             // 存储地址字段
             for (var i = 0; i < orderObjects.length; i++) {
+              orderObjects[i]['order_price'] = orderObjects[i]['order_price'].toFixed(2)
               if (orderObjects[i]['logo'].indexOf("http") < 0) {
                 orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
               }

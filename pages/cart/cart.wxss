@@ -87,7 +87,6 @@ page{
 	align-items: center;
 	justify-content: space-between;
   box-sizing: border-box;
-  height: 100%;
 } 
 
 /*整体列表*/
@@ -95,7 +94,7 @@ page{
 	display: flex;
 	flex-direction: column;
 	padding-left: 0rpx;
-	margin-bottom: 20rpx;
+  margin-bottom: 20rpx;
 }
 
 /*每行单元格*/
@@ -108,9 +107,7 @@ page{
 	border-bottom: 1px solid #eee;
 	padding: 30rpx 0;
 	margin-right: 40rpx;
-	position: absolute;
-	top: 0;
-	left: 0;
+	position: relative;
 	background: #fff;
 	z-index: 99;
 }

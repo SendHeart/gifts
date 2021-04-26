@@ -1039,9 +1039,9 @@ Page({
   navigateToRecharge: function (e) {
     var that = this
     var is_recharge = 1
-    var recharge_level = 1
+    var recharge_level = 2
     var recharge_type =  e.currentTarget.dataset.recharge?e.currentTarget.dataset.recharge:0
-   
+    var recharge_selected = 2  //默认的充值档次 2:一年会员
     wx.request({
       url: weburl + '/api/client/add_cart',
       method: 'POST',
@@ -1089,6 +1089,7 @@ Page({
         that.setData({
           recharge_skuid: result.recharge_skuid,
           recharge_price: result.recharge_price,
+          recharge_selected:result.recharge_selected?result.recharge_selected:recharge_selected,
           recharge_image: result.recharge_image,
           recharge_title1: result.recharge_title1?result.recharge_title1:'6个月期', 
           recharge_title2: result.recharge_title2?result.recharge_title2:'1年期',
