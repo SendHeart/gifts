@@ -527,8 +527,9 @@ modal {
 } 
 
 .top-bar-active {
-  color: #fff;
-  background: linear-gradient(180deg, #1d1d1d 95%, #eeeeee 5%);
+  color: #fff!important;
+  font-size: 36rpx!important;
+  background: linear-gradient(180deg, #1d1d1d 94%, #FFFFFF 6%);
 }
 
 .friend-image {
@@ -1117,7 +1118,7 @@ modal {
   font-size: 30rpx;
   margin-right: 24rpx;
   line-height: 1.8;
-  font-weight: 400;
+  font-weight:bold;
 }
 
 .price-now .sfont {
@@ -1488,10 +1489,11 @@ modal {
 
   .top-bar-item {
     display:inline-block;
-    color: #eeeeee;
+    color: #dddddd;
     text-align: center;
     line-height: 30px;
     font-size: 30rpx;
+    font-weight: bold;
     padding: 0rpx;
     margin: 0 10px;
   }

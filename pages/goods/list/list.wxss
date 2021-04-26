@@ -327,7 +327,7 @@ swiper-item image {
   font-size: 30rpx;
   margin-right: 24rpx;
   line-height: 1.8;
-  font-weight: 600;
+  font-weight: bold;
 }
 .price-now .sfont {
   font-size: 20rpx;

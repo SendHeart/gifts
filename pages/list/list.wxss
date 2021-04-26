@@ -309,6 +309,7 @@ swiper-item image {
   text-indent: 0;
   color: #eee;
   font-size: 26rpx;
+  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 20rpx;
