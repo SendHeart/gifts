@@ -94,7 +94,7 @@ page {
   align-items:left;
   width: 96%;
   border-radius: 20rpx;
-  margin:10rpx auto;
+  margin:10rpx auto 0 auto;
   padding-bottom: 30rpx;
   background: linear-gradient(30deg,#222 25%,#1d1d1d 0,#1d1d1d 50%,#222 0,#222 75%,#1d1d1d 0);
   background-size: 500px 1200px;
@@ -207,7 +207,7 @@ page {
 
 .cardrenew {
   width: 100%;
-  height: 80rpx;
+  height: 100rpx;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -218,7 +218,7 @@ page {
   background: #FF952D;
   color:#fff;
   font-size: 26rpx;
-  margin: 0 auto;
+  margin: 20rpx auto;
   text-align: center;
   line-height: 60rpx;
   border-radius: 10rpx;

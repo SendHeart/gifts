@@ -224,7 +224,9 @@ Page({
         icon: 'none',
         duration: 2500
       })
-      
+      that.setData({
+      scrolltop: dtheight *10
+      }) 
       return
     }else if(amount == 0){
       wx.showToast({

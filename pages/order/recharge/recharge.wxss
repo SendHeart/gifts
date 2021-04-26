@@ -1,5 +1,5 @@
 page {
-	background: #F2F2F2;
+	background: #fff;
   overflow-x: hidden;
   width: 100%;
 }
@@ -156,7 +156,7 @@ picker {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #333333;
+  background-color: #fff;
 }
 /*每行单元格*/
 .carts-item {
@@ -224,6 +224,7 @@ picker {
   width: 100%;
   background: #F2F2F2;
   z-index: 1;
+  margin-top: -2rpx;
 }
 
 .recharge-level {
@@ -231,7 +232,6 @@ picker {
   flex-direction: row;
   justify-content:space-around; 
   padding: 20rpx 10rpx;
-  z-index: 1;
   background-color: #333333;
 }
 
