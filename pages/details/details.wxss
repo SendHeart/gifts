@@ -236,11 +236,11 @@ page {
 .prd-title {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  font-size: 28rpx;
+  justify-content: start;
+  font-size: 26rpx;
   color: #999;
   background: #ffffff;
-  padding: 10rpx 0;
+  padding: 10rpx 0 0 20rpx;
   margin-top: 10rpx;
 }
 .prd-detail {

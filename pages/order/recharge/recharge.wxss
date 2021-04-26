@@ -156,7 +156,7 @@ picker {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #f2f2f2;
+  background-color: #333333;
 }
 /*每行单元格*/
 .carts-item {
@@ -232,7 +232,7 @@ picker {
   justify-content:space-around; 
   padding: 20rpx 10rpx;
   z-index: 1;
-  background-color: #ffffff;
+  background-color: #333333;
 }
 
 .recharge-level .recharge-item {
@@ -259,9 +259,9 @@ picker {
 }
 
 .recharge-item-unselected {
-  background-color: rgb(255, 250, 240);
+  background-color: #f2f2f2;
   color: #111111;
-  border: 2px solid #FFCA4B;
+  border: 2px solid #999999;
 }
 .recharge-item text {
   font-size: 22rpx;
@@ -303,10 +303,11 @@ picker {
   align-content: center;
   width: 100%;
   margin:0 auto ;
-  padding:20rpx 0;
+  padding:10rpx 0;
   z-index: 1;
   background-color: #fff;
-  border-top: 2rpx solid #eee;
+  border-top: 1px solid #eee;
+  line-height: 50px;
 }
 
 
@@ -320,6 +321,7 @@ picker {
   font-size: 32rpx;
   border-radius: 20rpx;
   margin-right:50rpx;
+  margin-top: 10rpx;
 }
 
 
