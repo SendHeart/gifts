@@ -1493,7 +1493,7 @@ modal {
     text-align: center;
     line-height: 30px;
     font-size: 30rpx;
-    font-weight: bold;
+    font-weight: 500;
     padding: 0rpx;
     margin: 0 10px;
   }
