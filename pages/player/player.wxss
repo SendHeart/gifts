@@ -660,7 +660,7 @@
 
 .live-adv-goods-name {
   font-size: 22rpx;
-  color: #444;
+  color: #111111;
   line-height: 30rpx;
   max-height: 60rpx;
   overflow:hidden;  

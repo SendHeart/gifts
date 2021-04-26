@@ -110,7 +110,7 @@ page {
 	font-size:10px;
 	width: 80%;
 	overflow: hidden;
-	color: #444;
+	color: #111111;
 	font-size: 22rpx;
 	font-weight: bold;
 	text-overflow: -o-ellipsis-lastline;

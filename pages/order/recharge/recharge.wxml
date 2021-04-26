@@ -73,7 +73,7 @@
 </scroll-view>
 
 <view class="recharge-confirm">
-  <text>充值会籍费: </text>
+  <text>充值会籍费:</text>
   <text class="amount">{{amount}}</text>
   <button bindtap="confirmOrder">去支付</button>
 </view>

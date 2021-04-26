@@ -139,7 +139,7 @@ page {
   margin: 0 auto;
   font-size: 34rpx;
   font-weight: 600;
-  color: #444;
+  color: #111111;
 }
 .shopping-container .goods-org {
   color: #f40c;
@@ -236,11 +236,11 @@ page {
 .prd-title {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  font-size: 28rpx;
+  justify-content: start;
+  font-size: 26rpx;
   color: #999;
   background: #ffffff;
-  padding: 10rpx 0;
+  padding: 10rpx 0 0 20rpx;
   margin-top: 10rpx;
 }
 .prd-detail {

@@ -128,7 +128,7 @@ page {
 .userinfo-cards-info{
   display:flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
   height: 100rpx;
 }
 .userinfo-cards-logo {
@@ -302,7 +302,7 @@ page {
 .order text{
 	display: block;
 	font-size: 24rpx;
-  color: #333;
+  color: #111111;
   line-height: 40rpx;
   height: 40rpx;
 }
@@ -358,7 +358,7 @@ page {
   width: 100%;
   font-size: 36rpx;
   font-weight: bold;
-  color: #444;
+  color: #111111;
 }
 
 .shopping_container .goods_prom {
@@ -621,7 +621,7 @@ radio .wx-radio-input {
 }
 
 .goods-name {
-  color: #444444;
+  color: #111111;
   font-size: 26rpx;
   text-overflow: -o-ellipsis-lastline;
   overflow: hidden;

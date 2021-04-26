@@ -73,6 +73,11 @@ Page({
     })
 
   },
+  goBack: function () {
+    wx.switchTab({
+      url: '../hall/hall'
+    })
+},
   bindMinus: function (e) {
     // loading提示
     /*
