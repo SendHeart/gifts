@@ -127,7 +127,7 @@ Page({
   },
   bindPlus: function (e) {
     wx.showLoading({
-      title: '操作中',
+      title: '',
       mask: true
     });
     var index = parseInt(e.currentTarget.dataset.index);
