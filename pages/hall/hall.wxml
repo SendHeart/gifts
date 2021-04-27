@@ -305,6 +305,7 @@
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
                 <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
+                
               </view>
             </view>
           </block>
@@ -333,13 +334,14 @@
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
                 <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
+                
               </view>
             </view>
           </block>
         </block>
       </view>
     </view>
-
+<!-- 单列表 -->
     <view wx:if="{{!is_category}}" class="venues-box">
       <block wx:for="{{recommentslist_show}}" wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
         <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id">
@@ -351,7 +353,7 @@
         <image class="main-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
       -->
             <imageloader default-image='{{default_img}}' mode='aspectFill'
-              original-image='{{item.activity_image?item.activity_image:item.image}}' width="275rpx" height="275rpx"
+              original-image='{{item.activity_image?item.activity_image:item.image}}' width="300rpx" height="300rpx"
               display="block" />
             <view class="venues-item-text">
               <view class="goods-titletext">
@@ -360,12 +362,11 @@
                 <text class="goods-name">{{item.name}}</text>
               </view>
               <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
-              <view class="goods-tags2">
-                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
-              </view>
+              
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
                 <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
+                <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
               </view>
             </view>
           </view>

@@ -214,17 +214,18 @@ page {
 }
 .cardrenew-btn {
   height: 60rpx;
-  width: 80%;
+  width: auto;
   background: #FF952D;
   color:#fff;
   font-size: 26rpx;
   margin: 20rpx auto;
   text-align: center;
   line-height: 60rpx;
-  border-radius: 10rpx;
+  border-radius: 20rpx;
+  padding: 0 26rpx;
 }
 .redbtn {
-  background: #E34C55!important;
+  background:#E34C55!important;
 }
 /*order*/
 .menu-area {
