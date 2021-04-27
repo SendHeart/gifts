@@ -45,7 +45,7 @@
       <text>您的会员卡已过期，请续费</text>
     </view>
     <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type!=1}}" bindtap="navigateToRecharge" data-recharge="2" >     
-      <text>您的会员卡已过期，请续费</text>
+      <text>延期请续费</text>
     </view>
     <view class="cardrenew-btn redbtn" wx:else="{{card_no!='' && !is_card_overdue && recharge_type==1}}" bindtap="navigateToRecharge" data-recharge="2" >     
       <text>您的会员卡待付费开通</text>

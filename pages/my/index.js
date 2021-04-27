@@ -287,8 +287,8 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-       //console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
-        if(res.data.status='y'){
+       console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        if(res.data.status=='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
           var rpage_num = res.data.all_rows?res.data.all_rows:0
@@ -297,6 +297,7 @@ Page({
           var recommentslist_show = that.data.recommentslist_show
           if (!recommentslist_new) return
           var recomm_len = recommentslist_new.length
+        
           for (var i = 0; i < recomm_len; i++) {
             if (recommentslist_new[i]['activity_image'].indexOf("http") < 0 && recommentslist_new[i]['activity_image']) {
               recommentslist_new[i]['activity_image'] = weburl + '/' + recommentslist_new[i]['activity_image'];
@@ -1836,12 +1837,14 @@ Page({
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'
       },
-      success: function (res) {      
+      success: function (res) {
+        /*      
         let card_due_end_str = res.data.result['card_due_end'] +' 23:59:59'
 				let time_due_end = new Date(card_due_end_str).getTime()
         let time_now = new Date().getTime()
         let is_card_overdue = Math.floor((time_now - parseInt(time_due_end)) / 1000)>0?true:false 
-        console.log('my index login 用户基本信息:',res.data.result,is_card_overdue,time_due_end,time_now)      
+        */
+        console.log('my index login 用户基本信息:',res.data.result)      
         that.setData({
           token: res.data.result['token'],
           user_group_id:res.data.result['member_group_id'],
@@ -1851,7 +1854,7 @@ Page({
           card_no:res.data.result['card_no']?res.data.result['card_no']:'',
           card_due_start:res.data.result['card_due_start'],
           card_due_end:res.data.result['card_due_end'],
-          is_card_overdue:is_card_overdue,
+          is_card_overdue:res.data.result['is_card_overdue']?res.data.result['is_card_overdue']:false,
           user_name:res.data.result['user_name'],
           user_gender:res.data.result['user_gender'],
         })
