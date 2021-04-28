@@ -1070,6 +1070,9 @@ Page({
             recharge_type:recharge_type
           })
           if(recharge_type==1 || recharge_type==0) { 
+            that.setData({
+              is_card_overdue:false            
+            })
             return // 立即入会 暂时不转充值       
           }else{
             wx.showToast({
