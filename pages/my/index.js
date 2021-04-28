@@ -518,7 +518,7 @@ Page({
     var that = this
     var pages = getCurrentPages()    
     var userInfo = wx.getStorageSync('userInfo') 
-    var frompage = that.data.frompage
+    var frompage = that.data.frompage?that.data.frompage: app.globalData.from_page
     app.globalData.from_page = ''
     app.globalData.art_id = 0
     that.setData({
@@ -1632,11 +1632,11 @@ Page({
         that.setData({
           modalHiddenUserName: modalHiddenUserName,
         })
-      } else if (isReadAgreement == 0 && username && userInfo) { //已登录未阅读用户购买协议
+      } else if (isReadAgreement == 0 && username && userInfo && art_id == 0) { //已登录未阅读用户购买协议
         that.setData({
           frompage: '/pages/my/index',
         })
-        
+        app.globalData.from_page = ''        
         that.navigateToAgreement()
       }
       that.setData({
