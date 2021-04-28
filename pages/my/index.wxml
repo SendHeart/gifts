@@ -38,7 +38,7 @@
   </view>
 
   <view class="cardrenew">
-    <view class="cardrenew-btn" wx:if="{{card_no=='' && recharge_type==1}}" bindtap="navigateToRecharge" data-recharge="1">     
+    <view class="cardrenew-btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge" data-recharge="1">     
       <text>我要入会</text>
     </view>
     <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && is_card_overdue}}" bindtap="navigateToRecharge" data-recharge="3" >     
