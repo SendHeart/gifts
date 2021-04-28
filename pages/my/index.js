@@ -1040,7 +1040,7 @@ Page({
   navigateToRecharge: function (e) {
     var that = this
     var is_recharge = 1
-    var recharge_level = 2
+    var recharge_level = 2 //默认第二档
     var recharge_type =  e.currentTarget.dataset.recharge?e.currentTarget.dataset.recharge:0
     var recharge_selected = 2  //默认的充值档次 2:一年会员
     wx.request({
@@ -1844,7 +1844,8 @@ Page({
         let time_now = new Date().getTime()
         let is_card_overdue = Math.floor((time_now - parseInt(time_due_end)) / 1000)>0?true:false 
         */
-        console.log('my index login 用户基本信息:',res.data.result)      
+        console.log('my index login 用户基本信息:',res.data.result) 
+        let recharge_type = res.data.result['card_no']?2:1    
         that.setData({
           token: res.data.result['token'],
           user_group_id:res.data.result['member_group_id'],
@@ -1854,6 +1855,7 @@ Page({
           card_no:res.data.result['card_no']?res.data.result['card_no']:'',
           card_due_start:res.data.result['card_due_start'],
           card_due_end:res.data.result['card_due_end'],
+          recharge_type:res.data.result['card_due_end']=='终身'?0:recharge_type,
           is_card_overdue:res.data.result['is_card_overdue']?res.data.result['is_card_overdue']:false,
           user_name:res.data.result['user_name'],
           user_gender:res.data.result['user_gender'],

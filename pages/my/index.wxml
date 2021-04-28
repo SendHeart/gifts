@@ -38,17 +38,17 @@
   </view>
 
   <view class="cardrenew">
-    <view class="cardrenew-btn" wx:if="{{card_no==''}}" bindtap="navigateToRecharge" data-recharge="1">     
+    <view class="cardrenew-btn" wx:if="{{card_no=='' && recharge_type==1}}" bindtap="navigateToRecharge" data-recharge="1">     
       <text>我要入会</text>
     </view>
-    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && is_card_overdue && recharge_type!=1}}" bindtap="navigateToRecharge" data-recharge="3" >     
+    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && is_card_overdue}}" bindtap="navigateToRecharge" data-recharge="3" >     
       <text>您的会员卡已过期，请续费</text>
     </view>
-    <!--
-    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type!=1}}" bindtap="navigateToRecharge" data-recharge="2" >     
+  
+    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type==2}}" bindtap="navigateToRecharge" data-recharge="2" >     
       <text>延期请续费</text>
     </view>
-    -->
+
     <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type==1}}" bindtap="navigateToRecharge" data-recharge="2" >     
       <text>您的会员卡待付费开通</text>
     </view>   
