@@ -8,7 +8,7 @@
 </view>
 -->
 
-<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden||!cardlovehidden)?'position:fixed;opacity:0.8;':''}}">
+<view  class="pagewrap" style="{{(!modalHidden||!cardcelehidden||!cardnamehidden||!cardregisterhidden||!cardlovehidden)?'position:fixed;opacity:0.7;':''}}">
   <view class="share-goods"  >
     <view class="share-buttons" style="justify-content: space-between">
       <!--
@@ -296,7 +296,7 @@
         <text>{{sku_sell_price>0?'单价':''}} </text>
         <view class="price-now">
           <text wx:if="{{sku_sell_price}}">￥{{sku_sell_price}}</text>
-          <text wx:if="{{sku_delivery_price}}" style='font-size:24rpx;margin-left:10rpx;color:#333'>(运费:￥{{sku_delivery_price}})</text>
+          <text wx:if="{{sku_delivery_price}}" style='font-size:24rpx;margin-left:10rpx;color:#333;font-weight:normal'>(运费:￥{{sku_delivery_price}})</text>
         </view>
       </view>
       <view class="buy-info">

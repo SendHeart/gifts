@@ -2134,8 +2134,8 @@ Page({
       }else{
         if(user_group_id == '0'){
           wx.showToast({
-            title: '非会员无法购物',
-            icon: 'loading',
+            title: '非会员无法购物,请先加入会员',
+            icon: 'error',
             duration: 2000
           })
           setTimeout(function () {
@@ -2148,9 +2148,9 @@ Page({
             that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info)
           }else{
             wx.showToast({
-              title: '该产品无货',
-              icon: 'loading',
-              duration: 1500
+              title: '该产品无货，或选择规格有误',
+              icon: 'error',
+              duration: 2000
             })
           }
         }

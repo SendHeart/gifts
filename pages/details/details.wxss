@@ -28,11 +28,12 @@ page {
 }
 .pagewrap {
   width: 100%;
-  background: #f2f2f2;
+  background: #ffffff;
   /*
   height: 100%;
   */
 }
+
 .wxParse {
   background: #fff;
 }
@@ -565,6 +566,7 @@ border: none;
   height: 35rpx;
   line-height: 35rpx;
   margin-left: 10rpx;
+  font-weight: bold;
 }
 .price-now::first-letter {
   font-size: 24rpx;

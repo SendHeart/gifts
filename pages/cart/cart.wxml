@@ -10,6 +10,7 @@
     <text>购物袋中还没有商品</text>
     <button type="default" bindtap="goBack">返回首页选购</button>
   </view>
+<view class="carts-wrap">
   <view wx:for="{{carts}}" class="carts-container" wx:key="id" data-object-id="{{item.id}}" data-goods-id="{{item.goods_id}}"  data-goods-shape="{{item.shape}}" data-goods-name="{{item.name}}"  data-goods-info="{{item.act_info}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?false:false}}" bindtap="showGoods">
     	<view class="carts-item" style="left: {{itemLefts[index]}}px;" data-index="{{index}}" bindtouchstart="touchStart" bindtouchmove="touchMove" bindtouchend="touchEnd">
 	    	<!-- 复选框图标 -->
@@ -45,7 +46,8 @@
 			</view>
     </view>
     <button type="warn" data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><text>删除</text></button>
-    </view>
+  </view>
+</view>
 </view>
 <view class="carts-footer">
 	<view class="select-and-amount" >
