@@ -42,7 +42,7 @@
     </view>
   </view>
    -->
-  <view class="classify-banner">
+  <view class="{{scrollTop>1280 ? 'classify-banner-fix' : 'classify-banner'}}">
     <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
   </view>
 

@@ -21,6 +21,7 @@ page {
   width: 0;
   height: 0;
   color: transparent;
+  display: none;
 }
 
 .startBar {
@@ -97,7 +98,7 @@ page {
   margin:10rpx auto 0 auto;
   padding-bottom: 30rpx;
   background: linear-gradient(30deg,#222 25%,#1d1d1d 0,#1d1d1d 50%,#222 0,#222 75%,#1d1d1d 0);
-  background-size: 500px 1200px;
+  background-size: 500px 500px;
 }
 
 /*user info*/
@@ -192,7 +193,11 @@ page {
   font-weight: normal;
   margin-right: 20rpx;
 }
-
+.userinfo-nocards {
+  color: #ffca4b;
+  font-size: 26rpx;
+  font-weight: normal;
+}
 .userinfo-cards-due {
   color: rgb(235, 235, 235);
   font-size: 22rpx;
@@ -207,10 +212,11 @@ page {
 
 .cardrenew {
   width: 100%;
-  height: 100rpx;
+  height: auto;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  padding: 10rpx 0;
 }
 .cardrenew-btn {
   height: 60rpx;
@@ -226,6 +232,10 @@ page {
 }
 .redbtn {
   background:#E34C55!important;
+}
+.graybtn {
+  background:#fff!important;
+  color: #FF952D!important;
 }
 /*order*/
 .menu-area {

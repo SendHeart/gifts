@@ -51,7 +51,7 @@
 	<view class="select-and-amount" >
 		<icon type="{{selectedAllStatus ? 'success_circle' : 'circle'}}" size="18" color="#1d1d1d"  bindtap="bindUnSelectAll" />
 		<text style="font-size: 24rpx; color: #999;margin-left:30rpx"  bindtap="bindSelectAll">全选</text>
-		<text style="margin-left:40rpx;color:#E34C55">￥{{total}}</text>
+		<text style="margin-left:40rpx;color:#111;">￥{{total}}</text>
 	</view>
 	<view class="button" bindtap="bindCheckout">去结算</view>
 </view>

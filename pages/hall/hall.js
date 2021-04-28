@@ -231,6 +231,13 @@ Page({
         that.reloadData()
     },
 
+onPageScroll: function (t) {
+    var a = this;
+    // console.log(t.scrollTop)
+    a.setData({
+    scrollTop:t.scrollTop
+    })
+},
     /*
       onPageScroll: function (e) {
         var that = this
@@ -284,7 +291,7 @@ Page({
         console.log('goTop:', that.data.scrollTop)
         if (wx.pageScrollTo) {
             wx.pageScrollTo({
-                scrollTop: 0 ,
+                scrollTop:0,
                 duration:300,
             })
             that.setData({
@@ -323,7 +330,8 @@ Page({
             })
         }
     },
-    videoPlayer: function (e) {
+
+videoPlayer: function (e) {
         var that = this;
         wx.navigateTo({
             url: '/pages/live/live?streamaname='

@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view style="overflow:scroll;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
   <view class="memcard">
     <view class="userinfo-cards-info">
       <image class="userinfo-cards-logo" src="{{card_logo!=''?card_logo:default_card_logo}}" mode="aspectFill" />
@@ -24,7 +24,7 @@
       <text class="userinfo-cards-no">CARD No. {{card_no}}</text>
     </view>
     <view class="userinfo-cards-item" wx:if="{{card_no ==''}}">
-      <text class="userinfo-cards-no">您还不是会员无法购买商品</text>
+      <text class="userinfo-nocards">您还不是会员无法购物，请先加入会员</text>
     </view>
     <view class="userinfo-cards-item" style="margin-top:40rpx; justify-content: center;" wx:if="{{card_no!='' && recharge_type!=1}}">
       <text wx:if="{{card_due_start!=''}}" class="userinfo-cards-due">VALID FROM:{{card_due_start}}</text>
@@ -45,8 +45,8 @@
       <text>您的会员卡已过期，请续费</text>
     </view>
   
-    <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type==2}}" bindtap="navigateToRecharge" data-recharge="2" >     
-      <text>延期请续费</text>
+    <view class="cardrenew-btn graybtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type==2}}" bindtap="navigateToRecharge" data-recharge="2" >
+      <text>续费延期</text>
     </view>
 
     <view class="cardrenew-btn redbtn" wx:elif="{{card_no!='' && !is_card_overdue && recharge_type==1}}" bindtap="navigateToRecharge" data-recharge="2" >     
@@ -131,16 +131,10 @@
 				 <image src="../../images/iconfont-kefu.png"></image>
 				 <text>我是客服</text>
 			</view>
-	  <view  bindtap="" class="order">
-		  
+	  <view  bindtap="" class="order">	  
 		  <text style="color:#fff">.</text>
 	  </view>
-    <view bindtap="" class="order">		 
-		  <text style="color:#fff">.</text>
-	  </view>
-    <view  bindtap="" class="order">
-		  <text style="color:#fff">.</text>
-	  </view>
+
   <!-- 
   <view bindtap="navigateToOrder" class="tableviewcell linegray" style='width:{{windowWidth-35}}px' data-status="0">
 	  <image src="../../images/order.png" />

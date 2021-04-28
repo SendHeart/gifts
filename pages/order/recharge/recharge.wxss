@@ -168,7 +168,8 @@ picker {
   border-radius: 20rpx 20rpx 0 0;
   padding: 20rpx 0;
   margin-top:10rpx;
-  background: #1d1d1d;
+  background: linear-gradient(30deg,#222 25%,#1d1d1d 0,#1d1d1d 50%,#222 0,#222 75%,#1d1d1d 0);
+  background-size: 500px 500px;
   z-index: 1;
 }
 
@@ -188,6 +189,7 @@ picker {
   flex-direction: column;
   justify-content: space-around;
   padding: 40rpx;
+  line-height: 1.8;
 }
 
 /*右上部分标题*/

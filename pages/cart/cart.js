@@ -176,7 +176,7 @@ Page({
   },
   bindCheckbox: function (e) {
     wx.showLoading({
-      title: '操作中',
+      title: '加载中',
       mask: true
     });
     var that = this;
@@ -212,7 +212,7 @@ Page({
 
   bindSelectAll: function (selectedAllStatus=true) {
     wx.showLoading({
-      title: '操作中',
+      title: '加载中',
       mask: true
     });
     // 环境中目前已选状态
