@@ -1039,6 +1039,9 @@ Page({
   */
   navigateToRecharge: function (e) {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    
     var is_recharge = 1
     var recharge_level = 2 //默认第二档
     var recharge_type =  e.currentTarget.dataset.recharge?e.currentTarget.dataset.recharge:0
@@ -1576,6 +1579,9 @@ Page({
       avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl : '', 
       frompage: frompage,
       userauth: userauth,
+      username:username,
+      token:token,
+      openid:openid,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
     that.reloadData()
