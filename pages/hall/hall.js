@@ -119,6 +119,7 @@ Page({
         toView: 0,
         is_video_play:0,
         gift_para_interval:0,
+        floorstatus:false,
     },
 
     handletouchmove: function (event) {
@@ -237,6 +238,15 @@ onPageScroll: function (t) {
     a.setData({
     scrollTop:t.scrollTop
     })
+    if (t.scrollTop > 760) {
+        this.setData({
+          floorstatus: true
+        });
+      } else {
+        this.setData({
+          floorstatus: false
+        });
+      }
 },
     /*
       onPageScroll: function (e) {
@@ -271,65 +281,21 @@ onPageScroll: function (t) {
       },
       */
     //回到顶部，内部调用系统API
-    goTop: function () {  // 一键回到顶部
-        var that = this
-        var is_reloading = that.data.is_reloading
-
-        /*
-        if (is_reloading){
-          setTimeout(function () {
-            that.goTop()
-          }, 500)
-          return
-        }
-        */
-        /*
-         that.setData({
-           scrollTop: 0
-         })
-         */
-        console.log('goTop:', that.data.scrollTop)
-        if (wx.pageScrollTo) {
-            wx.pageScrollTo({
-                scrollTop:0,
-                duration:300,
-            })
-            that.setData({
-                scrollTop: 0,
-                recommentslist_show: [],
-                page:1,
-                pageoffset:0,
-            },function(){
-                that.reloadData()
-                app.globalData.hall_gotop = 0
-                const fs = wx.getFileSystemManager()
-                fs.getSavedFileList({
-                    success(res) {
-                        console.log('hall getSavedFileList 缓存文件列表', res)
-                        for (var i = 0; i < res.fileList.length; i++) {
-                            fs.removeSavedFile({
-                                filePath: res.fileList[i]['filePath'],
-                                success(res) {
-                                    console.log('hall image_save 缓存清除成功', res)
-                                },
-                                fail(res) {
-                                    console.log('hall image_save 缓存清除失败', res)
-                                }
-                            })
-                        }
-                    },
-                    fail(res) {
-                        console.log('hall getSavedFileList 缓存文件列表查询失败', res)
-                    }
-                })
-            })
-        } else {
-            wx.showModal({
-                title: '提示',
-                content: '当前微信版本过低，暂无法使用该功能，请升级后重试。'
-            })
-        }
-    },
+//回到顶部
+goTop: function (e) {  // 一键回到顶部
+    if (wx.pageScrollTo) {
+      wx.pageScrollTo({
+        scrollTop: 0,  // 滚动到页面的目标位置，单位 px
+        duration: 500 // 滚动动画的时长，单位 ms
+      })
+    } else {
+      wx.showModal({
+        title: '提示',
+        content: '当前微信版本过低，无法使用该功能，请升级到最新微信版本后重试。'
+      })
+    }
+  },
+  
 
 videoPlayer: function (e) {
         var that = this;
