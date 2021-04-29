@@ -254,12 +254,15 @@ Page({
   reloadData: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+
     var page=that.data.page
     var pagesize=that.data.pagesize
     var pageoffset = that.data.pageoffset
-    var shop_type = that.data.shop_type
+
+   
 
     that.setData({
       is_reloading: true,
@@ -468,6 +471,7 @@ Page({
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
     var message_type = that.data.message_type?that.data.message_type:0 //0订单类消息
+    var shop_type = app.globalData.shop_type;
    
     wx.request({
       url: weburl + '/api/client/get_subscribe_tmpl',
@@ -585,7 +589,7 @@ Page({
     var that = this 
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = that.data.shop_type
+    var shop_type = app.globalData.shop_type;
    //获取银行列表
     wx.request({
       url: weburl + '/api/client/get_bankinfo',
@@ -721,7 +725,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var session_key = wx.getStorageSync('session_key') ? wx.getStorageSync('session_key') : ''
-
+    var shop_type = app.globalData.shop_type;
     console.log('my getPhoneNumber:',e.detail.errMsg == "getPhoneNumber:ok");
     if (e.detail.errMsg == "getPhoneNumber:ok") {
       wx.request({
@@ -761,6 +765,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var shop_type = app.globalData.shop_type;
     /*
     if (!user_name || !user_gender) {
       return
@@ -833,10 +838,12 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var art_id = '29'  //21黑贝会用户协议 29会员规则和权益协议
     var art_cat_id = '9'  //黑贝会协议类
     var shop_type = that.data.shop_type
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
+    
     if (agreementinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -870,6 +877,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议
     var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //黑贝会协议类
     var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转黑贝会'
@@ -907,7 +915,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = that.data.shop_type
+    var shop_type = app.globalData.shop_type;
     wx.request({
       url: weburl + '/api/client/query_art',
       method: 'POST',
@@ -1044,6 +1052,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var is_recharge = 1
     var recharge_level = 2 //默认第二档
@@ -1133,6 +1142,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var order_type = 'recharge'
     var order_shape = '8'
     var order_note = '会员充值'; 
@@ -1224,7 +1234,9 @@ Page({
   },
   navigateToCelebration: function (e) {
     var that = this
-    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     wx.request({
       url: weburl + '/api/client/get_project_gift_para',
       method: 'POST',
@@ -1482,7 +1494,9 @@ Page({
   get_project_gift_para: function () {
     var that = this
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
-    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var hall_banner = that.data.hall_banner
     console.log('hall get_project_gift_para navList2:', navList_new)
     if (navList2.length == 0) {
@@ -1832,9 +1846,11 @@ Page({
     var that = this
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
-    var shop_type = that.data.shop_type
+    
     that.setData({
       username: username,
     })
