@@ -185,7 +185,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('My navigateToRecharge res data:', res.data);
+        console.log('order recharge getRechargeInfo() res data:', res.data);
         var result =  res.data.result
         var membercard_no = result.card_no? result.card_no:''
         if(membercard_no==''){        
@@ -296,7 +296,7 @@ Page({
         that.setData({              
           carts: carts,
           cartIds: cartIds,
-          recharge_recomment_image:carts[0].activity_image?carts[0].activity_image:'',                  
+          recharge_recomment_image:carts[0]?carts[0].activity_image:'',                  
         })
         console.log('order/recharge getRechargeInfo() carts:', that.data.carts, 'cartIds:', that.data.cartIds)
       }
