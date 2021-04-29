@@ -230,13 +230,18 @@ Page({
     }
     console.log(this.data.phoneNo)
     var that= this
-    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     this.getVerificationCode()
     
     wx.request({
       url: weburl + '/api/web/user/login/login_sms_send',
       method: 'POST',
-      data: { 
+      data: {
+        username: username, 
+        access_token: token,
+        shop_type:shop_type,
         phoneNo: this.data.phoneNo, 
         extensionCode: "09016" ,
         shop_type:shop_type,
@@ -257,13 +262,17 @@ Page({
   login:function () {
     //console.log(this.data.scode)
     let that = this
+     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+     var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+  
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
-    var shop_type = that.data.shop_type
+   
     that.setData({
       username: username,
+      token:token,
     })
     /*
     if (!that.data.phoneNo) {
