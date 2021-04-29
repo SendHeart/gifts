@@ -201,7 +201,10 @@
   <view class="shopping-container">
       <view class="goods-name">
         <text>{{goodsname?goodsname:''}}</text>
-        <text class="goods-prom"><text class="icontags">推荐理由</text> {{goodsinfo?goodsinfo:''}}</text>
+        <view class="goods-prom">
+        <text class="icontags">推荐理由</text>
+        <text>{{goodsinfo?goodsinfo:''}}</text>
+        </view>
       </view>
       <view wx:if="{{goodsshape!=5 && goodsshape!=4}}" class="goods-info">
         <text class="left-tag">{{goodssale>0?goodssale:'0'}}人已购</text>
