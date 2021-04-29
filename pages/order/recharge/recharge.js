@@ -242,7 +242,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     // = that.data.selectedAgreeStatus
-    var shop_type = app.globalData.shop_type;
+    var shop_type = that.data.shop_type
     var amount = parseFloat(that.data.amount).toFixed(2)
     var buy_num = amount*100 
     var order_type = that.data.order_type?that.data.order_type:'gift'
@@ -307,7 +307,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var sku_id = that.data.cartIds
-    var shop_type = app.globalData.shop_type;
+    var shop_type = that.data.shop_type
     console.log('payment delete_cart sku_id:', sku_id);
     // 购物车单个删除
     wx.request({
@@ -332,8 +332,6 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-
     var is_buymyself = that.data.is_buymyself
 
     //再次确认订单状态
@@ -386,23 +384,17 @@ Page({
     })
   },
 	loadAddress: function () {
-    var that = this;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
+		var that = this;
     var addressList = [];
     var addressObjects = null;
     var address = [];
-   
+    var token = that.data.token;
+    var username = that.data.username;
     //取送货地址
     wx.request({
       url: weburl + '/api/client/get_member_address',
       method: 'POST',
-      data: { 
-        username: username, 
-        token: token,
-        shop_type 
-      },
+      data: { username: username, token: token },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
         'Accept': 'application/json'

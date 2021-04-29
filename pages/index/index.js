@@ -180,7 +180,6 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var session_key = wx.getStorageSync('session_key') ? wx.getStorageSync('session_key') : ''
 
@@ -240,7 +239,6 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     if(!user_name || !user_gender){
         return
@@ -505,12 +503,11 @@ Page({
   },
   refundTapTag: function (e) {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var order_no = e.currentTarget.dataset.orderNo
     var index = e.currentTarget.dataset.index
-   
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var shop_type = that.data.shop_type
 
     //提交退款申请
     wx.request({
@@ -568,11 +565,8 @@ Page({
 
   get_project_gift_para: function () {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
-  
+    var shop_type = that.data.shop_type
     console.log('index get_project_gift_para navList2:', navList_new)
     if (navList2.length == 0) {
       //项目列表
@@ -580,8 +574,6 @@ Page({
         url: weburl + '/api/client/get_project_gift_para',
         method: 'POST',
         data: {
-          username:username,
-          access_token:token,
           type: 2,  //暂定 1首页单图片 2首页轮播  
           shop_type: shop_type,
         },
@@ -713,15 +705,14 @@ Page({
 
   reloadData: function () {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var scrollTop = that.data.scrollTop //保留当前位置
     var current_scrollTop = that.data.current_scrollTop ? that.data.current_scrollTop:0//保留当前位置
-    var order_type = that.data.tab2  
+    var order_type = that.data.tab2
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var status = that.data.status
-    
+    var shop_type = that.data.shop_type
     var page = that.data.page //从服务器获取页面序号
     var page_num = that.data.page_num //从服务器获取页面数
     var show_max = that.data.show_max
@@ -918,15 +909,12 @@ Page({
   buyin: function (e) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
-   
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_id = that.data.goods_id //e.currentTarget.dataset.goodsId
     var goods_skuid = that.data.goods_skuid //e.currentTarget.dataset.goodsSkuid
     var order_skuid = that.data.order_skuid //e.currentTarget.dataset.skuId
-   
+    var shop_type = that.data.shop_type
     var order_index = that.data.order_index
     var sku_index = that.data.sku_index
     console.log('礼物回收 goods_id:', goods_id, 'goods skuid:', goods_skuid, 'order skuid:', order_skuid, ' order_index:', order_index)
@@ -1012,13 +1000,12 @@ Page({
   },
   cancel_order: function (e) {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-    var page = that.data.page    
+    var page = that.data.page
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var order_no = e.currentTarget.dataset.objectId;
     var order_index = e.currentTarget.dataset.index;
-    
+    var shop_type = that.data.shop_type
     wx.showModal({
       title: '请确认',
       content: '确认要取消吗',
@@ -1072,9 +1059,9 @@ Page({
   },
   receive: function (e) {
     var that = this;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
+    var shop_type = that.data.shop_type
     wx.showModal({
       title: '请确认',
       content: '确认要收货吗',

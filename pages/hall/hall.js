@@ -345,50 +345,50 @@ videoPlayer: function (e) {
         })
     },
     query_message:function(){
-        var that = this
-        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
-        var page = 1
-        var pagesize =1
-        wx.request({
-            url: weburl + '/api/mqttservice/sh_query_message',
-            method: 'POST',
-            data: {
-                username: username,
-                access_token: token,
-                message_type: 1,
-                shop_type: shop_type,
-                page:page,
-                pagesize:pagesize,
-            },
-            header: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Accept': 'application/json'
-            },
-            success: function (res) {
-                 console.log('hall query_message 收到消息：' + JSON.stringify(res.data));
-                 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-                var response = res.data;
-                var messageHidden = that.data.messageHidden
-                if (response.status=='y'){
-                    wx.pageScrollTo({
-                        scrollTop: 90,
-                        duration: 300,
-                    })
-                    var resp_message = response.result[0]
-                    var messages_num = that.data.messages_num
-                    resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
-                    resp_message['start_time'] = getDateStr(resp_message['start_time'] * 1000, 0)
-                    resp_message['end_time'] = getDateStr(resp_message['end_time'] * 1000, 0)
-                    that.setData({
-                        resp_message: resp_message,
-                        messages_num: messages_num+1,
-                    })
-                }
-                }
-            })
+      var that = this
+      var shop_type = that.data.shop_type; // var formid = formId?formId:that.data.formid
+      var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+      var page = 1
+      var pagesize =1
+      wx.request({
+        url: weburl + '/api/mqttservice/sh_query_message',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          message_type: 1,
+          shop_type: shop_type,
+          page:page,
+          pagesize:pagesize,
         },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          console.log('hall query_message 收到消息：' + JSON.stringify(res.data));
+          var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+          var response = res.data;
+          var messageHidden = that.data.messageHidden
+          if (response.status=='y'){
+            wx.pageScrollTo({
+              scrollTop: 90,
+              duration: 300,
+            })
+            var resp_message = response.result[0]
+            var messages_num = that.data.messages_num
+            resp_message['title'] = resp_message['title'] ? resp_message['title']:'我的消息'
+            resp_message['start_time'] = getDateStr(resp_message['start_time'] * 1000, 0)
+            resp_message['end_time'] = getDateStr(resp_message['end_time'] * 1000, 0)
+            that.setData({
+              resp_message: resp_message,
+              messages_num: messages_num+1,
+            })
+          }
+        }
+      })
+    },
     /*
     reSend: function () { //失败后重新发送
         var that = this;
@@ -858,11 +858,10 @@ videoPlayer: function (e) {
     //提交formId，让服务器保存到数据库里
     submintFromId: function (formId = 0, form_name='') {
         var that = this
+        var shop_type=that.data.shop_type
+        // var formid = formId?formId:that.data.formid
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
-        // var formid = formId?formId:that.data.formid
-       
         console.log('submintFromId() formID：', formId, ' form name:', form_name)
         wx.request({
             url: weburl + '/api/client/save_member_formid',
@@ -1088,9 +1087,8 @@ videoPlayer: function (e) {
 
     updateCart: function (username, sku_id, buy_num, token) {
         var that = this
-        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
+        var shop_type = that.data.shop_type
+        var token = that.data.token;
 
         // 加入购物车
         wx.request({
@@ -1146,11 +1144,10 @@ videoPlayer: function (e) {
     query_cart:function(){
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+        var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
-        var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''        
         var minusStatuses = []
-        
+        var shop_type = that.data.shop_type
         if (!openid && !username){
             wx.showToast({
                 title: '加载中', /* 文案修改 */
@@ -1217,14 +1214,13 @@ videoPlayer: function (e) {
     reloadData: function () {
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
         var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-      
+        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
         var minusStatuses = []
         var page=that.data.page
         var pagesize=that.data.pagesize
-        var pageoffset = that.data.pageoffset       
+        var pageoffset = that.data.pageoffset
+        var shop_type = that.data.shop_type
         var goods_type = that.data.tab
         var goods_type_value = that.data.tab_value
 
@@ -1410,10 +1406,8 @@ videoPlayer: function (e) {
     },
     get_project_gift_para: function () {
         var that = this
-        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
-        var navList_new = that.data.navList2        
+        var navList_new = that.data.navList2
+        var shop_type = that.data.shop_type
         var hall_banner = that.data.hall_banner
         var gift_para_interval = that.data.gift_para_interval
         var cat_id = that.data.tab_value>0? that.data.tab_value:1
@@ -1550,10 +1544,6 @@ videoPlayer: function (e) {
 
     get_menubar: function (event) { //获取菜单项
         var that = this
-        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
-       
         var navlist_toView = that.data.navlist_toView
         var navlist_title = that.data.navlist_title
         var cat_id = that.data.tab_value?that.data.tab_value:1
@@ -1561,9 +1551,6 @@ videoPlayer: function (e) {
             url: weburl + '/api/client/get_menubar',
             method: 'POST',
             data: {
-                username:username,
-                access_token:token,
-                shop_type:shop_type,
                 menu_type: 1,
                 cat_id:cat_id,
             },
@@ -1753,9 +1740,8 @@ videoPlayer: function (e) {
 
     onShow: function () {
         var that = this;
-        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;
+        var username = wx.getStorageSync('username')
         var refername = that.data.refername
         var userInfo = wx.getStorageSync('userInfo') 
         var msg_id = that.data.msg_id

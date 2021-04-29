@@ -106,7 +106,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
+    var shop_type = that.data.shop_type
     var withdrawNum = that.data.withdrawNum ? parseFloat(that.data.withdrawNum):0
     var withdrawWx = that.data.withdrawWx ? withdrawWx : ''
     var withdraw_selected = that.data.withdraw_selected

@@ -50,10 +50,9 @@ Page({
   submintFromId: function (formId) {
     var that = this
     var formId = formId
+    var shop_type = that.data.shop_type
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-
     wx.request({
       url: weburl + '/api/client/save_member_formid',
       method: 'POST',
@@ -189,15 +188,14 @@ Page({
 
   confirmOrder: function () {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var liveid = that.data.liveid ? that.data.liveid:0
-    var order_num = that.data.order_num>0?that.data.order_num:1    
+    var order_num = that.data.order_num>0?that.data.order_num:1
+    
     var is_buymyself = that.data.is_buymyself //自购
     var carts = that.data.carts
     var cartIds = that.data.cartIds
-  
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var selectedAllStatus = that.data.selectedAllStatus
     var selectedRedAllStatus = that.data.selectedRedAllStatus
     var selected_coupon_quan_index = that.data.selected_coupon_quan_index ? that.data.selected_coupon_quan_index:0
@@ -211,7 +209,7 @@ Page({
     var selected_coupon_red_type = selectedRedAllStatus?that.data.coupons_red_list[selected_coupon_red_index]['type']:1
     var address_id = that.data.address_default['id']
     var status = 0
-   
+    var shop_type = that.data.shop_type
     var amount = parseFloat(that.data.amount).toFixed(2)
     var order_type = that.data.order_type?that.data.order_type:''
     var order_image = that.data.order_image
@@ -318,7 +316,6 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var is_recharge = 1
     var recharge_type = 1
     wx.request({
@@ -377,9 +374,8 @@ Page({
 
   queryCart: function () {
     var that = this
-     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var order_type = 'recharge'
     var order_shape = '8'
     var order_note = '会员充值'; 
@@ -459,9 +455,8 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var sku_id = that.data.cartIds
-   
+    var shop_type = that.data.shop_type
     console.log('payment delete_cart sku_id:', sku_id);
     // 购物车单个删除
     wx.request({
@@ -486,7 +481,6 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var is_buymyself = that.data.is_buymyself
 
     //再次确认订单状态
@@ -542,7 +536,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
+    var shop_type = that.data.shop_type
     var addressList = [];
     var address = [];
    
@@ -722,7 +716,6 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var page = that.data.page
     var page_red = that.data.page_red
@@ -730,7 +723,7 @@ Page({
     var all_rows = that.data.all_rows
     var page_num = that.data.page_num    
     var page_red_num = that.data.page_red_num
-    
+    var shop_type = that.data.shop_type
     var coupons_status = 'avaliable'
     var coupons_type = that.data.couponType
     console.log('query_coupon coupons_type:', coupons_type)

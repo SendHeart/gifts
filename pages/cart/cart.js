@@ -355,11 +355,10 @@ Page({
   confirmOrder: function () {
     // submit order
     var that = this;
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var carts = that.data.carts;
-    var cartIds = that.data.cartIds    
+    var cartIds = that.data.cartIds
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var status = 0;
     var amount = that.data.amount;
     var order_type = that.data.is_buymyself==1?'':'gift';
@@ -410,10 +409,10 @@ Page({
   },
 
   delete: function (e) {
-    var that = this   
+    var that = this
+    var shop_type = that.data.shop_type
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var index = 0
     var objectId = 0
     if (e) {
@@ -582,9 +581,8 @@ Page({
   },
   updateCart: function (username, sku_id, buy_num, token) {
     var that = this
-    //var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
+    var shop_type = that.data.shop_type
+    var token = that.data.token;
 
     // 加入购物车
     wx.request({
@@ -616,11 +614,8 @@ Page({
   reloadData: function (username, token) {
     // auto login
     var that = this;
-    //var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var minusStatuses = []
-   
+    var shop_type = that.data.shop_type
     var page = that.data.page
     var pagesize = that.data.pagesize
     // cart info
@@ -776,11 +771,8 @@ Page({
   },
   get_project_gift_para: function () {
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var navList_new = that.data.navList2
- 
+    var shop_type = that.data.shop_type
     var hall_banner = that.data.hall_banner
     var gift_para_interval = that.data.gift_para_interval
     console.log('hall get_project_gift_para navList2:', navList_new, ' is_video_play', that.data.is_video_play)
@@ -790,8 +782,6 @@ Page({
         url: weburl + '/api/client/get_project_gift_para',
         method: 'POST',
         data: {
-          username:username,
-          access_token:token,
           type: 2,  //暂定 1首页单图片 2首页轮播  
           shop_type: shop_type,
         },

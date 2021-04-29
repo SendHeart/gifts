@@ -315,20 +315,18 @@ Page({
   get_goods_list: function (event) {
     //venuesList
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var page = that.data.page
     var pagesize = that.data.pagesize
     var pageoffset = that.data.pageoffset
-   
+    var username = that.data.username 
+    var token = that.data.token
     var goods_type = that.data.tab
     var goods_type_value = that.data.tab_value
     var goods_sales = that.data.tab2
     var updown = that.data.updown
     var search_goodsname = that.data.search_goodsname
     var keyword=that.data.keyword
-    
+    var shop_type=that.data.shop_type
     //var shape = 1
     var show_max = that.data.show_max
   
@@ -421,18 +419,12 @@ Page({
   },
   get_menubar: function (event) { //获取菜单项
     var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
     var navlist_toView = that.data.navlist_toView
     var navlist_title = that.data.navlist_title
     wx.request({
       url: weburl + '/api/client/get_menubar',
       method: 'POST',
       data: {
-        username:username,
-        access_token:token,
-        shop_type:shop_type,
         menu_type: 1,
       },
       header: {
