@@ -166,6 +166,7 @@ Page({
     var shop_type = app.globalData.shop_type;
     var is_recharge = 1
     var recharge_type = 1
+    var recharge_level = 2 //默认第二档
     var is_buymyself = 1
     var recharge_selected = that.data.recharge_selected
     var buy_num = that.data.buy_num
@@ -179,6 +180,7 @@ Page({
         shop_type:shop_type,
         is_recharge: is_recharge,
         recharge_type:recharge_type,
+        recharge_level:recharge_level,
       },
       header: {
         'Content-Type': 'application/x-www-form-urlencoded',
