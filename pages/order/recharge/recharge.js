@@ -166,7 +166,7 @@ Page({
     var shop_type = app.globalData.shop_type;
     var is_recharge = 1
     var recharge_type = 1
-    var recharge_level = 2 //默认第二档
+    var recharge_level = that.data.recharge_selected //默认第二档
     var is_buymyself = 1
     var recharge_selected = that.data.recharge_selected
     var buy_num = that.data.buy_num
