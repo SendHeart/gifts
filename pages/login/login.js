@@ -33,7 +33,7 @@ Page({
     var pages = getCurrentPages()
     var frompage = that.data.frompage
     var userInfo = wx.getStorageSync('userInfo')
-    console.log("login go Back pages:", pages, ' frompage:', frompage)
+    console.log("login goBack() pages:", pages, ' frompage:', frompage)
     if (userInfo) {
       if (frompage!='') {
         if (frompage.indexOf('index/index') >= 0 || frompage.indexOf('hall/hall') >= 0 || frompage.indexOf('my/index') >= 0) {
@@ -69,11 +69,7 @@ Page({
           wx_nickname: res.userInfo ? res.userInfo.nickName : '',
           wx_headimg: res.userInfo ? res.userInfo.avatarUrl : '',
         })
-        
         that.login()
-        setTimeout(function () {
-          that.goBack()
-        }, 500)
         console.log('获取用户公开信息授权 userInfo:', res.userInfo)
         //权限
         wx.getSetting({
@@ -234,13 +230,18 @@ Page({
     }
     console.log(this.data.phoneNo)
     var that= this
-    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     this.getVerificationCode()
     
     wx.request({
       url: weburl + '/api/web/user/login/login_sms_send',
       method: 'POST',
-      data: { 
+      data: {
+        username: username, 
+        access_token: token,
+        shop_type:shop_type,
         phoneNo: this.data.phoneNo, 
         extensionCode: "09016" ,
         shop_type:shop_type,
@@ -261,13 +262,17 @@ Page({
   login:function () {
     //console.log(this.data.scode)
     let that = this
+     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+     var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+  
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
-    var shop_type = that.data.shop_type
+   
     that.setData({
       username: username,
+      token:token,
     })
     /*
     if (!that.data.phoneNo) {
@@ -307,7 +312,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('login 用户基本信息:',res.data.result)
+        console.log('login login() 用户基本信息:',res.data.result)
         that.setData({
           token: res.data.result['token'],
           user_group_id:res.data.result['member_group_id'],
@@ -325,6 +330,9 @@ Page({
         wx.setStorageSync('userauth', userauth)
         wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
         wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
+        setTimeout(function () {
+          that.goBack()
+        }, 500)
       },
     })
   },
@@ -354,7 +362,6 @@ Page({
     that.setData({
       frompage: frompage,
     })
-    that.login()
   },
 
   /**

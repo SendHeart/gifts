@@ -34,13 +34,13 @@
               <view class="carts-en-price">￥{{item.sell_price}}元</view>
             </view>
 				  	<!-- 数量加减 -->
-				      <view class="stepper">
+				    <view class="stepper">
 						<!-- 减号 -->
-						<text class="{{minusStatuses[index]}}" data-index="{{index}}" catchtap="bindMinus">-</text>
+						  <text class="{{minusStatuses[index]}}" data-index="{{index}}" catchtap="bindMinus">-</text>
 						<!-- 数值 -->
-						<input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
+						  <input type="number" data-index="{{index}}" catchchange="bindManual" catchtap="bindManualTapped" value="{{item.num}}" />
 						<!-- 加号 -->
-						<text class="normal" data-index="{{index}}" catchtap="bindPlus">+</text>
+						  <text class="normal" data-index="{{index}}" catchtap="bindPlus">+</text>
 				  	</view>
 				</view>
 			</view>

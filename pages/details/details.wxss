@@ -131,7 +131,6 @@ page {
   color: #fff;
   line-height: 20px;
   height: 20px;
-  width: fit-content;
 }
 .shopping-container .goods-name {
   display: flex;
@@ -150,14 +149,14 @@ page {
 }
 
 .shopping-container .goods-prom {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: block;
   color: #999999;
   font-size: 28rpx;
   font-weight: normal;
-  line-height: 1.8;
-  margin-top: 10rpx;
+  white-space: nowrap;
+  overflow-x: hidden;
+  line-height: 20px;
+  height: 20px;
 }
 
 .shopping-container .goods-info {
