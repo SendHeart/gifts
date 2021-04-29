@@ -468,10 +468,11 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
     var message_type = that.data.message_type?that.data.message_type:0 //0订单类消息
-    var shop_type = app.globalData.shop_type;
+    
    
     wx.request({
       url: weburl + '/api/client/get_subscribe_tmpl',
