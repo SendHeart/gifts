@@ -281,7 +281,7 @@
       <text class='more'>更多</text>
     </view>
   -->
-    <!--瀑布流列表-->
+<!--瀑布流列表-->
     <view wx:if="{{is_category}}" class="venues-box">
       <view class="box-left">
         <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex"
@@ -373,10 +373,15 @@
         </block>
       </block>
     </view>
+   
+<!-- loading -->
     <view class="loading-show" hidden="{{!is_reloading}}">
       <text>{{loading_note}}</text>
     </view>
   </view>
+  <view class="bottomshow">
+      <text> - 已经到底了 - </text>
+    </view>
   <!--
  </scroll-view>
  -->

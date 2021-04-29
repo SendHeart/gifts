@@ -93,6 +93,8 @@ page{
 .carts-wrap {
   height: auto;
   margin-bottom: 80rpx;
+  width: 100%;
+  background: #fff;
 }
 /*整体列表*/
 .carts-list {
@@ -122,8 +124,8 @@ page{
 .carts-container {
 	position: relative;
 	width: 100%;
-  height: 210rpx;
-  margin: 1px auto;
+  height: 208rpx;
+  border-bottom: 1rpx solid #eee;
   overflow-y: hidden;
 }
 

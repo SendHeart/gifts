@@ -890,7 +890,7 @@ Page({
               fontSize: 18,
               color: '#999',
               textAlign: 'left',
-              top: 820,
+              top: 830,
               left: 85,
               breakWord: false,
             },

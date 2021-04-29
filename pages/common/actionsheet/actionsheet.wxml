@@ -11,7 +11,7 @@
     }
 </wxs>
 
-<view wx:if="{{mask}}" class="weui-mask {{show ? '' : 'weui-mask_hidden'}} {{maskClass}}" bindtap="closeActionSheet"></view>
+<!-- <view wx:if="{{mask}}" class="weui-mask {{show ? '' : 'weui-mask_hidden'}} {{maskClass}}" bindtap="closeActionSheet"></view> -->
 
 <view class="weui-actionsheet {{show ? 'weui-actionsheet_toggle' : ''}} " style="{{extClass?extClass:''}}">
     <!-- 标题 -->

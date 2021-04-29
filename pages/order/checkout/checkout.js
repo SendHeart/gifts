@@ -287,10 +287,10 @@ Page({
           let ret_info = res.data.info
           if(ret_info.indexOf("已过期") >= 0){
             wx.showModal({
-              title: ret_info,
+              title: '抱歉',
               confirmText: '好的',    
               confirmColor: '#ff952d',
-              content: '所有商品需要会员才能购买，现在立即加入续费会籍?', 
+              content: '购买商品需要成为会员，现在立即入会?', 
               success: function (res) {         
                 if (res.confirm) {         
                  /*  wx.switchTab({
@@ -343,7 +343,7 @@ Page({
           wx.showToast({
             title: '会员充值',
             icon:'loading',
-            duration: 2000
+            duration: 1000
           })
         }else{
           wx.showToast({
@@ -362,9 +362,9 @@ Page({
           recharge_title2: result.recharge_title2?result.recharge_title2:'1年期',
           recharge_title3: result.recharge_title3?result.recharge_title3:'3年期', 
           recharge_title4: result.recharge_title4?result.recharge_title4:'终身', 
-          recharge_amount1: result.recharge_amount1?result.recharge_amount1:'88',
-          recharge_amount2: result.recharge_amount2?result.recharge_amount2:'168', 
-          recharge_amount3: result.recharge_amount3?result.recharge_amount3:'358', 
+          recharge_amount1: result.recharge_amount1?result.recharge_amount1:'68',
+          recharge_amount2: result.recharge_amount2?result.recharge_amount2:'108', 
+          recharge_amount3: result.recharge_amount3?result.recharge_amount3:'368', 
           recharge_amount4: result.recharge_amount4?result.recharge_amount4:'1888', 
           recharge_note: result.recharge_note?result.recharge_note:'',
           recharge_note2: result.recharge_note2?result.recharge_note2:'',
@@ -384,7 +384,7 @@ Page({
     var order_shape = '8'
     var order_note = '会员充值'; 
     var recharge_image = that.data.recharge_image
-    var buynum = 1
+    var buynum = that.data.recharge_amount2 //默认充值会员金额
     var sku_sell_price = that.data.recharge_price
     var amount = parseFloat(sku_sell_price) * buynum
     var sku_id = that.data.recharge_skuid

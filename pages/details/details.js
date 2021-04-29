@@ -2139,15 +2139,17 @@ Page({
       }else{
         if(user_group_id == '0'){
           wx.showToast({
-            title: '非会员无法购物,请先加入会员',
+            title: '抱歉',
+            content: '非会员无法购物,请先加入会员',
             icon: 'error',
-            duration: 2000
+            duration: 2000 
           })
           setTimeout(function () {
             wx.switchTab({
-              url: '/pages/my/index?frompage=/pages/details/details'
+              /* url: '/pages/my/index?frompage=/pages/details/details' */
+              url: '/pages/order/recharge/recharge'
             })
-          }, 2000)
+          }, 1000)
         }else{
           if (that.data.sku_id){
             that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info)
