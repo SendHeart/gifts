@@ -127,7 +127,7 @@ Page({
     }
     var recharge_selected = recharge_options.recharge_selected?recharge_options.recharge_selected:that.data.recharge_selected
     var recharge_note = recharge_options.recharge_note ? recharge_options.recharge_note:that.data.recharge_note
-    var recharge_note2 = recharge_options.recharge_note2 ? recharge_options.recharge_note2:that.data.recharge_note
+    var recharge_note2 = recharge_options.recharge_note2 ? recharge_options.recharge_note2:that.data.recharge_note2
     that.setData({
       recharge_options: recharge_options,
       recharge_selected:recharge_selected,
@@ -228,8 +228,8 @@ Page({
           recharge_amount2: recharge_amount2, 
           recharge_amount3: recharge_amount3, 
           recharge_amount4: recharge_amount4, 
-          recharge_note: result.recharge_note?result.recharge_note:'',
-          recharge_note2: result.recharge_note2?result.recharge_note2:'',
+          recharge_note: result.recharge_note?result.recharge_note:that.data.recharge_note,
+          recharge_note2: result.recharge_note2?result.recharge_note2:that.data.recharge_note2,
           order_voice: result.order_voice?result.order_voice:'',
           order_voicetime: result.order_voicetime?result.order_voicetime:'',
           order_color:result.order_color?result.order_color:'',
