@@ -25,9 +25,14 @@ Page({
     selectedAllStatus: false,
     selectedAgreeStatus: false,
     recharge_selected:'2',
+    recharge_note:'勾选此选项并购买会籍资格时，即代表您已阅读、理解并接受',
+    recharge_note2 :'注意: 电子版会员卡将在购买成功后，被同时关联至您的微信账户和个人手机号，而会员卡号将作为唯一账户识别号',
     discountpay:0, //折扣差额
     payamount:0, //实际支付金额
     order_num:1,//订单份数
+    order_voice :'',
+    order_voicetime : '',
+    order_color : '',
   },
   /*
   formSubmit: function (e) {
@@ -117,11 +122,18 @@ Page({
     }else{
       recharge_options = options
     }
+    var recharge_selected = recharge_options.recharge_selected?recharge_options.recharge_selected:that.data.recharge_selected
+    var recharge_note = recharge_options.recharge_note ? recharge_options.recharge_note:that.data.recharge_note
+    var recharge_note2 = recharge_options.recharge_note2 ? recharge_options.recharge_note2:that.data.recharge_note
     that.setData({
       recharge_options: recharge_options,
+      recharge_selected:recharge_selected,
+      recharge_note:recharge_note,
+      recharge_note2:recharge_note2,
     })  
     //console.log('order/recharge onLoad() options:',options)
-    that.readCarts(recharge_options)
+    that.getRechargeInfo()
+    //that.readCarts(recharge_options)
     wx.getSystemInfo({
       success: function (res) {
         let winHeight = res.windowHeight;
@@ -144,20 +156,177 @@ Page({
     //that.loadAddress()
   },
   
+  getRechargeInfo: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var is_recharge = 1
+    var recharge_type = 1
+    var is_buymyself = 1
+    var recharge_selected = that.data.recharge_selected
+    var buy_num = that.data.buy_num
+   
+    wx.request({
+      url: weburl + '/api/client/add_cart',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type:shop_type,
+        is_recharge: is_recharge,
+        recharge_type:recharge_type,
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('My navigateToRecharge res data:', res.data);
+        var result =  res.data.result
+        var membercard_no = result.card_no? result.card_no:''
+        if(membercard_no==''){        
+          wx.showToast({
+            title: '会员卡生成失败',
+            icon:'error',
+            duration: 2000
+          })
+          return
+        }  
+        let recharge_amount1 =  result.recharge_amount1?result.recharge_amount1:'68'
+        let recharge_amount2 =  result.recharge_amount2?result.recharge_amount2:'108'
+        let recharge_amount3 =  result.recharge_amount3?result.recharge_amount3:'368'
+        let recharge_amount4 =  result.recharge_amount4?result.recharge_amount4:'1888'
+        if(recharge_selected == 1){
+          buy_num = recharge_amount1
+        }else if(recharge_selected == 2){
+          buy_num = recharge_amount2
+        }else if(recharge_selected == 3){
+          buy_num = recharge_amount3
+        }else if(recharge_selected == 4){
+          buy_num = recharge_amount4
+        }else{
+          buy_num = recharge_amount2
+        }
+        var sku_sell_price = result.recharge_price
+        var amount = parseFloat(sku_sell_price) * buy_num
+        that.setData({
+          buy_num:buy_num,
+          amount:amount,
+          is_buymyself:is_buymyself,
+          recharge_skuid: result.recharge_skuid,
+          recharge_price: result.recharge_price,
+          recharge_image: result.recharge_image,
+          recharge_title1: result.recharge_title1?result.recharge_title1:'6个月期', 
+          recharge_title2: result.recharge_title2?result.recharge_title2:'1年期',
+          recharge_title3: result.recharge_title3?result.recharge_title3:'3年期', 
+          recharge_title4: result.recharge_title4?result.recharge_title4:'终身', 
+          recharge_amount1: recharge_amount1,
+          recharge_amount2: recharge_amount2, 
+          recharge_amount3: recharge_amount3, 
+          recharge_amount4: recharge_amount4, 
+          recharge_note: result.recharge_note?result.recharge_note:'',
+          recharge_note2: result.recharge_note2?result.recharge_note2:'',
+          order_voice: result.order_voice?result.order_voice:'',
+          order_voicetime: result.order_voicetime?result.order_voicetime:'',
+          order_color:result.order_color?result.order_color:'',
+        },function(){
+          that.queryCart()
+        })
+      }
+    })  
+  },
+
+  queryCart: function () {
+    var that = this
+     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type
+    var recharge_selected = that.data.recharge_selected
+    var order_type = 'recharge'
+    var order_shape = '8'
+    var order_note = '会员充值'; 
+    var recharge_image = that.data.recharge_image
+
+    var sku_id = that.data.recharge_skuid   
+    
+    var goods_shape = 7 
+    var recharge_title1 = that.data.recharge_title1 
+    var recharge_title2 = that.data.recharge_title2 
+    var recharge_title3 = that.data.recharge_title3 
+    var recharge_title4 = that.data.recharge_title4 
+    var recharge_amount1 = that.data.recharge_amount1
+    var recharge_amount2 = that.data.recharge_amount2
+    var recharge_amount3 = that.data.recharge_amount3
+    var recharge_amount4 = that.data.recharge_amount4
+    var recharge_note = that.data.recharge_note
+    var recharge_note2 = that.data.recharge_note2
+    wx.request({
+      url: weburl + '/api/client/query_cart',
+      method: 'POST',
+      data: {
+        username: username,
+        access_token: token,
+        shop_type: shop_type,
+        sku_id: sku_id,
+        goods_shape:goods_shape
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('my index queryCart:', res.data);
+        var carts = []
+        var cartIds = []
+        if (!res.data.result) {
+          wx.showToast({
+            title: '会员充值:' + res.data.info,
+            icon: 'none',
+            duration: 1500
+          })
+          return
+        }
+        var cartlist = res.data.result.list;
+        var index = 0;
+        for (var key in cartlist) {
+          cartlist[key]['sku_list'][0]['image'] = recharge_image
+          for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
+            if (cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
+              cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image']
+            } 
+            cartlist[key]['sku_list'][i]['selected'] = true
+            cartlist[key]['sku_list'][i]['shop_id'] = key
+            cartlist[key]['sku_list'][i]['objectId'] = cartlist[key]['sku_list'][i]['id']
+            carts[index] = cartlist[key]['sku_list'][i]
+            cartIds[index] = cartlist[key]['sku_list'][i]['objectId']
+            index++;
+          }
+        }
+        
+        that.setData({              
+          carts: carts,
+          cartIds: cartIds,
+          recharge_recomment_image:carts[0].activity_image?carts[0].activity_image:'',                  
+        })
+        console.log('order/recharge getRechargeInfo() carts:', carts, 'order_shape:', order_shape)
+      }
+    })
+  },
+
+  /*
 	readCarts: function (options) {
 		var that = this
     console.log('recharge readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
     var amount = options.amount?parseFloat(options.amount):that.data.amount
     var recharge_selected = options.recharge_selected?options.recharge_selected:that.data.recharge_selected
-    //var delivery_price = parseFloat(options.delivery_price)
-    //var payamount = that.data.payamount
+    var payamount = that.data.payamount
     var discountpay = that.data.discountpay
     var carts = JSON.parse(options.carts)
-    var cartIds = options.cartIds
-    var delivery_price = parseFloat(carts[0].delivery_price)
+    var cartIds = options.cartIds    
     var cartIdArray = cartIds.split(',')
-    var recharge_recomment_image = carts[0].activity_image
+    var recharge_recomment_image = carts[0].activity_image?carts[0].activity_image:''
     var recharge_note = options.recharge_note ? options.recharge_note:'勾选此选项并购买会籍资格时，即代表您已阅读、理解并接受'
     var recharge_note2 = options.recharge_note2 ? options.recharge_note2:'注意: 电子版会员卡将在购买成功后，被同时关联至您的微信账户和个人手机号，而会员卡号将作为唯一账户识别号'
     var order_type = options.order_type ? options.order_type:''
@@ -181,9 +350,7 @@ Page({
     that.setData({
       amount: amount,
       recharge_selected:recharge_selected,
-      //payamount: payamount,
-      delivery_price: delivery_price,
-      liveid: liveid,
+      //payamount: payamount,      
       carts: carts,
       cartIds: cartIdArray,
       recharge_recomment_image:recharge_recomment_image,
@@ -210,6 +377,7 @@ Page({
 		})
     console.log('checkouts readCarts() order_image:', order_image, 'order_shape:', order_shape)
 	},
+  */
 
   confirmOrder: function () {
     var that = this

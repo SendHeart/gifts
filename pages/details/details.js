@@ -2137,19 +2137,23 @@ Page({
           url: '../login/login?frompage='+frompage
         })        
       }else{
-        if(user_group_id == '0'){
-          wx.showToast({
-            title: '抱歉',
-            content: '非会员无法购物,请先加入会员',
-            icon: 'error',
-            duration: 2000 
+        if(user_group_id == '0'){         
+          wx.showModal({
+            title: '抱歉',       
+            content: '非会员无法购物,请先加入会员', 
+            cancelText:'取消', 
+            confirmText:'加入',     
+            success: function (res) {       
+              if (res.confirm) {       
+                wx.navigateTo({
+                  /* url: '/pages/my/index?frompage=/pages/details/details' */
+                  url: '/pages/order/recharge/recharge?recharge_selected=2'
+                })      
+              } else {    
+                console.log('用户不加入会员')       
+              }
+            }       
           })
-          setTimeout(function () {
-            wx.switchTab({
-              /* url: '/pages/my/index?frompage=/pages/details/details' */
-              url: '/pages/order/recharge/recharge'
-            })
-          }, 1000)
         }else{
           if (that.data.sku_id){
             that.insertCart(that.data.sku_id, that.data.buynum, username, token, that.data.shop_type, that.data.wishflag, is_buymyself, keyword, is_satisfy, rule_selected_info)

@@ -1055,6 +1055,11 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+    wx.navigateTo({     
+      url: '/pages/order/recharge/recharge?recharge_selected=2'
+    })   
+    return
+    /*
     var is_recharge = 1
     var recharge_level = 2 //默认第二档
     var recharge_type =  e.currentTarget.dataset.recharge?e.currentTarget.dataset.recharge:0
@@ -1130,6 +1135,7 @@ Page({
         })
       }
     })  
+    */
   },
 
   navigateToOrder: function (e) {

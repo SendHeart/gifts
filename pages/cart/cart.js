@@ -761,7 +761,6 @@ Page({
   },
 
   showCartToast: function (message) {
-
     wx.showToast({
       title: message ? message : '已完成',
       icon: 'success',

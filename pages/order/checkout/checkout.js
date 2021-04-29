@@ -138,8 +138,7 @@ Page({
 		var that = this
     console.log('order checkout readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
-		var amount = parseFloat(options.amount).toFixed(2)
-    //var delivery_price = parseFloat(options.delivery_price).toFixed(2)
+		var amount = parseFloat(options.amount).toFixed(2)   
     var payamount = parseFloat(that.data.payamount).toFixed(2)
     var discountpay = parseFloat(that.data.discountpay).toFixed(2)
     var carts = JSON.parse(options.carts)
@@ -319,6 +318,12 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
+
+    wx.navigateTo({     
+      url: '/pages/order/recharge/recharge?recharge_selected=2'
+    }) 
+    return
+    /*
     var is_recharge = 1
     var recharge_type = 1
     wx.request({
@@ -373,6 +378,7 @@ Page({
         })
       }
     })  
+    */
   },
 
   queryCart: function () {
