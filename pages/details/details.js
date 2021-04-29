@@ -385,7 +385,7 @@ Page({
 		var from_nickname = userInfo.nickName
     var from_headimg = userInfo.avatarUrl
     if (!username || !userInfo) {//登录
-      let frompage='/pages/details/details&goods_id='+that.data.goods_id
+      let frompage='/pages/details/details?id='+goods_id
       wx.navigateTo({
         url: '../login/login?frompage='+frompage
       })
@@ -1193,7 +1193,7 @@ Page({
     wx.getSetting({
       success: (res) => {
         if (!res.authSetting['scope.userInfo']) {
-          let frompage='/pages/details/details&goods_id='+that.data.goods_id
+          let frompage='/pages/details/details?id='+that.data.goodsid
           wx.navigateTo({
             url: '/pages/login/login?frompage='+frompage
           })         
@@ -2132,7 +2132,7 @@ Page({
       var is_satisfy = that.data.is_satisfy
       var rule_selected_info = that.data.rule_selected_info
       if (!username || !userInfo) {//登录
-        let frompage='/pages/details/details&goods_id='+that.data.goods_id
+        let frompage='/pages/details/details?id='+that.data.goodsid
         wx.navigateTo({
           url: '../login/login?frompage='+frompage
         })        
