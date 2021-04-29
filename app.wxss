@@ -147,8 +147,7 @@ header - wxss
   border-radius:30px;
   font-size: 14px;
   position: relative; 
-  margin:7px 5px;
-  
+  margin:7px 0px;
 }
 .INsearchicon{
   position: absolute;
