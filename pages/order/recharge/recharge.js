@@ -33,6 +33,9 @@ Page({
     order_voice :'',
     order_voicetime : '',
     order_color : '',
+    order_shape:'8',
+    order_type : 'recharge',  
+    order_note : '会员充值' ,
   },
   /*
   formSubmit: function (e) {
@@ -243,24 +246,10 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type
     var recharge_selected = that.data.recharge_selected
-    var order_type = 'recharge'
-    var order_shape = '8'
-    var order_note = '会员充值'; 
+  
     var recharge_image = that.data.recharge_image
-
-    var sku_id = that.data.recharge_skuid   
-    
+    var sku_id = that.data.recharge_skuid  
     var goods_shape = 7 
-    var recharge_title1 = that.data.recharge_title1 
-    var recharge_title2 = that.data.recharge_title2 
-    var recharge_title3 = that.data.recharge_title3 
-    var recharge_title4 = that.data.recharge_title4 
-    var recharge_amount1 = that.data.recharge_amount1
-    var recharge_amount2 = that.data.recharge_amount2
-    var recharge_amount3 = that.data.recharge_amount3
-    var recharge_amount4 = that.data.recharge_amount4
-    var recharge_note = that.data.recharge_note
-    var recharge_note2 = that.data.recharge_note2
     wx.request({
       url: weburl + '/api/client/query_cart',
       method: 'POST',
@@ -276,7 +265,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('my index queryCart:', res.data);
+        console.log('order/recharge queryCart():', res.data);
         var carts = []
         var cartIds = []
         if (!res.data.result) {
@@ -309,7 +298,7 @@ Page({
           cartIds: cartIds,
           recharge_recomment_image:carts[0].activity_image?carts[0].activity_image:'',                  
         })
-        console.log('order/recharge getRechargeInfo() carts:', carts, 'order_shape:', order_shape)
+        console.log('order/recharge getRechargeInfo() carts:', that.data.carts, 'cartIds:', that.data.cartIds)
       }
     })
   },

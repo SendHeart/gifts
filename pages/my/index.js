@@ -1053,8 +1053,8 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
+    var shop_type = app.globalData.shop_type
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
     wx.navigateTo({     
       url: '/pages/order/recharge/recharge?recharge_selected=2'
     })   

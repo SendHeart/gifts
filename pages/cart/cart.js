@@ -469,8 +469,7 @@ Page({
               that.setData({
                 carts: new_carts,
                 all_rows: all_rows,
-                showmorehidden: showmorehidden,
-                itemLefts: 0
+                showmorehidden: showmorehidden
               })
               that.sum()
             }

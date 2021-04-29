@@ -2,13 +2,13 @@
 <import src="../common/nav.wxml" />
 
 <view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove"
-  bindtouchend="handletouchend">
+  bindtouchend="handletouchend" style="">
   <!--    bindscroll="scrolltoupper" -->
   <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
   <!--
-  <view class="search">
+  <view class="search">  
     <view class="userinfo" bindtap='userTapTag'>
       <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
@@ -79,7 +79,11 @@
   </scroll-view>
 </view>
 -->
-  
+  <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+    <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow" />
+    <view class='' style="margin-top:-10rpx;font-size:22rpx;">TOP</view>
+    <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
+  </view>
 
   <view class="wrap">
     <!-- 
@@ -374,20 +378,14 @@
     <view class="loading-show" hidden="{{!is_reloading}}">
       <text>{{loading_note}}</text>
     </view>
-
   </view>
-      
-
+  <view class="bottomshow">
+      <text> - 已经到底了 - </text>
+    </view>
   <!--
  </scroll-view>
  -->
 </view>
-
-<view class="goTop" hidden="{{!floorstatus}}" bindtap="goTop">
-    <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow" />
-    <view class="" style="margin-top:-10rpx;font-size:22rpx;">TOP</view>
-    <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
-  </view>
 <!--
 <action-sheet hidden="{{modalFriendHidden}}" bindchange="modalBindFriendconfirm">
   <view class="uni-tip" style="z-index:9999;">
