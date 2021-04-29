@@ -254,12 +254,15 @@ Page({
   reloadData: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+
     var page=that.data.page
     var pagesize=that.data.pagesize
     var pageoffset = that.data.pageoffset
-    var shop_type = that.data.shop_type
+
+   
 
     that.setData({
       is_reloading: true,
@@ -465,9 +468,11 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
     var message_type = that.data.message_type?that.data.message_type:0 //0订单类消息
+    
    
     wx.request({
       url: weburl + '/api/client/get_subscribe_tmpl',
@@ -518,9 +523,12 @@ Page({
     var that = this
     var pages = getCurrentPages()    
     var userInfo = wx.getStorageSync('userInfo') 
-    var frompage = app.globalData.from_page?app.globalData.from_page:that.data.frompage
+    var frompage = that.data.frompage?that.data.frompage: app.globalData.from_page
     app.globalData.from_page = ''
     app.globalData.art_id = 0
+    that.setData({
+      frompage: '',            
+    })
     console.log('my/index goBack() frompage:', frompage,' userInfo:',userInfo,' pages length:',pages.length)
     if (userInfo){
       if (pages.length > 0) {
@@ -529,7 +537,7 @@ Page({
             wx.switchTab({
               url: frompage
             })
-          }else{
+          }else{            
             wx.navigateTo({
               url: frompage,
             })
@@ -582,7 +590,7 @@ Page({
     var that = this 
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = that.data.shop_type
+    var shop_type = app.globalData.shop_type;
    //获取银行列表
     wx.request({
       url: weburl + '/api/client/get_bankinfo',
@@ -718,7 +726,7 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var session_key = wx.getStorageSync('session_key') ? wx.getStorageSync('session_key') : ''
-
+    var shop_type = app.globalData.shop_type;
     console.log('my getPhoneNumber:',e.detail.errMsg == "getPhoneNumber:ok");
     if (e.detail.errMsg == "getPhoneNumber:ok") {
       wx.request({
@@ -758,6 +766,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var shop_type = app.globalData.shop_type;
     /*
     if (!user_name || !user_gender) {
       return
@@ -830,10 +839,12 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var art_id = '29'  //21黑贝会用户协议 29会员规则和权益协议
     var art_cat_id = '9'  //黑贝会协议类
     var shop_type = that.data.shop_type
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
+    
     if (agreementinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -867,6 +878,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议
     var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //黑贝会协议类
     var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转黑贝会'
@@ -904,7 +916,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = that.data.shop_type
+    var shop_type = app.globalData.shop_type;
     wx.request({
       url: weburl + '/api/client/query_art',
       method: 'POST',
@@ -1039,10 +1051,18 @@ Page({
   */
   navigateToRecharge: function (e) {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var is_recharge = 1
     var recharge_level = 2 //默认第二档
     var recharge_type =  e.currentTarget.dataset.recharge?e.currentTarget.dataset.recharge:0
     var recharge_selected = 2  //默认的充值档次 2:一年会员
+    if(!userInfo){
+      that.login()
+      return
+    }
     wx.request({
       url: weburl + '/api/client/add_cart',
       method: 'POST',
@@ -1123,6 +1143,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var order_type = 'recharge'
     var order_shape = '8'
     var order_note = '会员充值'; 
@@ -1214,7 +1235,9 @@ Page({
   },
   navigateToCelebration: function (e) {
     var that = this
-    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     wx.request({
       url: weburl + '/api/client/get_project_gift_para',
       method: 'POST',
@@ -1472,7 +1495,9 @@ Page({
   get_project_gift_para: function () {
     var that = this
     var navList_new = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [{}]
-    var shop_type = that.data.shop_type
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var hall_banner = that.data.hall_banner
     console.log('hall get_project_gift_para navList2:', navList_new)
     if (navList2.length == 0) {
@@ -1552,10 +1577,11 @@ Page({
     var gifts_send = that.data.gifts_send
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var frompage = app.globalData.from_page ? app.globalData.from_page:options.frompage
-    var scene = decodeURIComponent(options.scene)
+    var scene = options.scene?decodeURIComponent(options.scene):''
     var art_id = options.art_id ? options.art_id:0
     
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
@@ -1564,22 +1590,28 @@ Page({
     var userInfo = wx.getStorageSync('userInfo')  
     var userauth = wx.getStorageSync('userauth')  
     //var my_index = app.globalData.my_index //1跳转传参
+
     that.get_project_gift_para()
     that.setData({
-      scene:scene,
-      m_id: m_id,
-      art_id: art_id,
-      art_cat_id: art_cat_id,
-      art_title: art_title,
-      refer_id: refer_id,  
-      nickname: userInfo.nickName ? userInfo.nickName : '登录',
-      avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl : '', 
-      frompage: frompage,
-      userauth: userauth,
+        scene:scene,
+        m_id: m_id,
+        art_id: art_id,
+        art_cat_id: art_cat_id,
+        art_title: art_title,
+        refer_id: refer_id,  
+        nickname: userInfo.nickName ? userInfo.nickName : '登录',
+        avatarUrl: userInfo.avatarUrl ? userInfo.avatarUrl : '', 
+        frompage: frompage,
+        userauth: userauth,
+        username:username,
+        token:token,
+        openid:openid,
     })
     console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
-    that.reloadData()
-    //that.query_user_info()
+          
+    if(!username || !userInfo){   
+      that.login()
+    }    
   },
   onShow: function () {
     var that = this
@@ -1600,62 +1632,61 @@ Page({
       that.setData({
         title_logo: '../../../images/left_arrow.png',
       })
-    }  
-    that.query_user_info()
+    }
+ 
     if (userInfo){
       if (!user_phone || user_phone == '') { //必须获取手机号
+        /*
         modalHiddenPhone = !modalHiddenPhone
         that.setData({
           modalHiddenPhone: modalHiddenPhone,
         })
+        */
       } else if (!user_name || user_name == '') {
         modalHiddenUserName = !modalHiddenUserName
         that.setData({
           modalHiddenUserName: modalHiddenUserName,
         })
-      } else if (isReadAgreement == 0 && username) { //已登录未阅读用户购买协议
+      } else if (isReadAgreement == 0 && username && userInfo && art_id == 0) { //已登录未阅读用户购买协议
+        that.setData({
+          frompage: '/pages/my/index',
+        })
+        app.globalData.from_page = ''        
         that.navigateToAgreement()
       }
-    }
-    that.setData({
-      user_type: user_type,
-      art_id:art_id,
-      userInfo:userInfo,
-      user_name:user_name,
-    })
-    //调用应用实例的方法获取全局数据
-    /*
-    app.getUserInfo(function (userInfo) {
-      //更新数据
       that.setData({
-        userInfo: userInfo
+        user_type: user_type,
+        art_id:art_id,
+        userInfo:userInfo,
+        user_name:user_name,
       })
-    })
-    */
-    if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
-      var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
-      var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
-      var midReg = new RegExp(/\&mid=(.*)/)
-
-      var scene_artid = scene.match(artidReg)[0]
-      art_id = scene_artid ? scene_artid.substring(6, scene_artid.length) : art_id
-      var scene_artcatid = scene.match(artcatidReg)[0]
-      art_cat_id = scene_artcatid ? scene_artcatid.substring(6, scene_artcatid.length) : art_cat_id
-      var scene_mid = scene.match(midReg) ? scene.match(midReg)[0] : 0
-      refer_mid = scene_mid ? scene_mid.substring(5, scene_mid.length) : refer_mid
-      console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出  
-    }
-    if (art_id>0){
-      if(art_id == 29){
-        that.navigateToAgreement()
-      }else{
-        that.navigateToPlaysx()
+      if (scene.indexOf("artid=") >= 0 || scene.indexOf("&catid=") >= 0) {
+        var artidReg = new RegExp(/(?=artid=).*?(?=\&)/)
+        var artcatidReg = new RegExp(/(?=catid=).*?(?=\&)/)
+        var midReg = new RegExp(/\&mid=(.*)/)
+  
+        var scene_artid = scene.match(artidReg)[0]
+        art_id = scene_artid ? scene_artid.substring(6, scene_artid.length) : art_id
+        var scene_artcatid = scene.match(artcatidReg)[0]
+        art_cat_id = scene_artcatid ? scene_artcatid.substring(6, scene_artcatid.length) : art_cat_id
+        var scene_mid = scene.match(midReg) ? scene.match(midReg)[0] : 0
+        refer_mid = scene_mid ? scene_mid.substring(5, scene_mid.length) : refer_mid
+        console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出  
       }
-    }
-    //that.reloadData()
-    console.log('my index user_type:',that.data.user_type)
-    if(that.data.scrollTop == 0){
-      that.goTop()
+      if (art_id>0){
+        if(art_id == 29){
+          that.navigateToAgreement()
+        }else{
+          that.navigateToPlaysx()
+        }
+      }
+      
+      console.log('my index user_type:',that.data.user_type)
+      if(that.data.scrollTop == 0){
+        that.goTop()
+      }
+      that.query_user_info()
+      that.reloadData() 
     }
   },
   /*
@@ -1816,9 +1847,11 @@ Page({
     var that = this
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
-    var shop_type = that.data.shop_type
+    
     that.setData({
       username: username,
     })

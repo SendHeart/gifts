@@ -3,7 +3,7 @@ var app = getApp();
 var wxparse = require("../../wxParse/wxParse.js")
 var weburl = app.globalData.weburl;
 var shop_type = app.globalData.shop_type;
-var from_page = app.globalData.from_page;
+//var from_page = app.globalData.from_page;
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var appid = app.globalData.appid
 var secret = app.globalData.secret
@@ -384,9 +384,10 @@ Page({
 		var goods_owner = that.data.goodsowner?that.data.goodsowner:that.data.goods_id
 		var from_nickname = userInfo.nickName
     var from_headimg = userInfo.avatarUrl
-    if (!username) {//登录
+    if (!username || !userInfo) {//登录
+      let frompage='/pages/details/details?id='+goods_id
       wx.navigateTo({
-        url: '../login/login?goods_id=' + that.data.goodsid
+        url: '../login/login?frompage='+frompage
       })
     }else{
       wx.navigateTo({
@@ -1192,9 +1193,10 @@ Page({
     wx.getSetting({
       success: (res) => {
         if (!res.authSetting['scope.userInfo']) {
+          let frompage='/pages/details/details?id='+that.data.goodsid
           wx.navigateTo({
-            url: '/pages/login/login?frompage=/pages/details/details'
-          })
+            url: '/pages/login/login?frompage='+frompage
+          })         
         }
       }
     })
@@ -1800,6 +1802,7 @@ Page({
           })
         }else{
           console.log('单个产品名称为空',goodsid);
+          that.goBack()
           return
         }
 
@@ -2121,16 +2124,18 @@ Page({
       var that = this
       var is_buymyself = that.data.is_buymyself
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+      var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
       var user_group_id = wx.getStorageSync('user_group_id') ? wx.getStorageSync('user_group_id') : '0'
       
       var keyword = that.data.keyword
       var is_satisfy = that.data.is_satisfy
       var rule_selected_info = that.data.rule_selected_info
-      if (!username) {//登录
+      if (!username || !userInfo) {//登录
+        let frompage='/pages/details/details?id='+that.data.goodsid
         wx.navigateTo({
-          url: '../login/login?goods_id=' + that.data.goodsid
-        })
+          url: '../login/login?frompage='+frompage
+        })        
       }else{
         if(user_group_id == '0'){
           wx.showToast({

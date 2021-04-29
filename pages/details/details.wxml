@@ -44,7 +44,7 @@
               <cover-image bindtap="bindplay" src="../../images/play.png" style="width:160rpx;" />
               </cover-view>
               -->
-            </video>            
+            </video>           
           </swiper-item>
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='id'>
@@ -270,7 +270,7 @@
       </view>
     </view>
 </view>
-<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm" mask="{{true}}" show="{{!modalHidden}}" extClass="{{'background-color:#fff;'}}">
+<action-sheet hidden="{{modalHidden}}" bindchange="modalBindaconfirm" mask="{{false}}" show="{{!modalHidden}}" extClass="{{'background-color:#fff;'}}">
   <view class="selectSku">
     <view class="modaltitletext">
         <text>{{attrValueList.length>0?'':add_cart_title}}</text>
