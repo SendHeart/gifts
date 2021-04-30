@@ -1047,6 +1047,10 @@ Page({
   },
   sharegoodsTapTag: function () {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
     var share_goods_id = that.data.goodsid
     var share_goods_org = that.data.goodsorg
     var share_goods_shape = that.data.goodsshape ? that.data.goodsshape:1
@@ -1055,6 +1059,13 @@ Page({
     share_goods_name = share_goods_name.replace(/\&/g, ' ')
     var cur_img_id = that.data.cur_img_id
     var share_goods_wx_headimg = that.data.share_goods_wx_headimg ? that.data.share_goods_wx_headimg : that.data.share_avatarUrl
+    if(!userInfo || !username){
+      let frompage='/pages/details/details?id='+share_goods_id
+      wx.navigateTo({
+        url: '../login/login?frompage='+frompage
+      })
+      return
+    }
     var share_goods_title = ''
     if (share_goods_shape == 5 || share_goods_shape==4){
       share_goods_title = that.data.card_content 

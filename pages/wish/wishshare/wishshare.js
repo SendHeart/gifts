@@ -368,6 +368,10 @@ Page({
 
   onLoad (options) {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
     var is_back = options.is_back ? options.is_back : 0
     if (is_back == 1) options = wx.getStorageSync('wishshare_options')
     var share_order_id = options.share_order_id ? options.share_order_id : 0
@@ -377,9 +381,6 @@ Page({
     that.get_project_gift_para()
     
     if (share_order_id > 0 && (parseInt(share_order_shape) == 5 || parseInt(share_order_shape) == 4)){
-      var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-      var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-      var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
       wx.request({
         url: weburl + '/api/client/query_order',
         method: 'POST',
@@ -398,12 +399,12 @@ Page({
           console.log(' wishshare onload() 订单查询:', orderObjects)
           // 存储地址字段
           for (var i = 0; i < orderObjects.length; i++) {
-            if (orderObjects[i]['logo'].indexOf("http") < 0) {
+            if (orderObjects[i]['logo'] && orderObjects[i]['logo'].indexOf("http") < 0) {
               orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
             }
             orderObjects[i]['logo'] = orderObjects[i]['logo'].replace('http:','https:')
             for (var j = 0; j < orderObjects[i]['order_sku'].length; j++) {
-              if (orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
+              if (orderObjects[i]['order_sku'][j]['sku_image'] && orderObjects[i]['order_sku'][j]['sku_image'].indexOf("http") < 0) {
                 orderObjects[i]['order_sku'][j]['sku_image'] = weburl + orderObjects[i]['order_sku'][j]['sku_image']
               }
               orderObjects[i]['order_sku'][j]['sku_image'] = orderObjects[i]['order_sku'][j]['sku_image'].replace('http:', 'https:')
@@ -537,7 +538,7 @@ Page({
     var share_order_image = options.share_order_image ? options.share_order_image : ''
     var share_order_wx_headimg = options.share_order_wx_headimg ? options.share_order_wx_headimg : that.data.avatarUrl
     console.log('wishshare reloadData options:', options, 'share_order_wx_headimg:', share_order_wx_headimg, ' avatarUrl:', that.data.avatarUrl, 'share_goods_id:', share_goods_id,'')
-    if (share_order_wx_headimg.indexOf("https://wx.qlogo.cn") >= 0) {
+    if (share_order_wx_headimg && share_order_wx_headimg.indexOf("https://wx.qlogo.cn") >= 0) {
       share_order_wx_headimg = share_order_wx_headimg.replace('https://wx.qlogo.cn', weburl + '/qlogo')
     }
     //var cardvoice = wx.getStorageSync('cardvoice')

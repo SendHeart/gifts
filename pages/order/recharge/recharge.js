@@ -190,6 +190,7 @@ Page({
         console.log('order recharge getRechargeInfo() res data:', res.data);
         var result =  res.data.result
         var membercard_no = result.card_no? result.card_no:''
+        /*
         if(membercard_no==''){        
           wx.showToast({
             title: '会员卡生成失败',
@@ -197,7 +198,8 @@ Page({
             duration: 2000
           })
           return
-        }  
+        } 
+        */ 
         let recharge_amount1 =  result.recharge_amount1?result.recharge_amount1:'68'
         let recharge_amount2 =  result.recharge_amount2?result.recharge_amount2:'108'
         let recharge_amount3 =  result.recharge_amount3?result.recharge_amount3:'368'
