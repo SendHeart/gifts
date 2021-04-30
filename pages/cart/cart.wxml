@@ -6,7 +6,7 @@
 </view>
   -->
 <view class="container carts-list">
-  <view wx:if="{{carts == 0}}" class="noneresult">
+  <view wx:if="{{carts.length==0}}" class="noneresult">
     <text>购物袋中还没有商品</text>
     <button type="default" bindtap="goBack">返回首页选购</button>
   </view>
