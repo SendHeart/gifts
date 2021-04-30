@@ -1846,7 +1846,7 @@ Page({
               if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
                 image_video.push(goodsPicsInfo.image[i])
               }else{
-                if (goodsPicsInfo.image[i]['url'].indexOf("http") < 0) {
+                if (goodsPicsInfo.image[i]['url'] && goodsPicsInfo.image[i]['url'].indexOf("http") < 0) {
                   goodsPicsInfo.image[i]['url'] = weburl + '/' + goodsPicsInfo.image[i]['url']
                 }
                 goodsPicsInfo.image[i]['url'] = goodsPicsInfo.image[i]['url'].replace("http:", "https:")
@@ -1912,7 +1912,7 @@ Page({
               }
               if (attrValueList[i].type==2){
                 for (var k = 0; k < attrValueList[i].value.length; k++) {
-                  if (attrValueList[i].value[k].indexOf("http") < 0) {
+                  if (attrValueList[i].value[k] && attrValueList[i].value[k].indexOf("http") < 0) {
                     attrValueList[i].value[k] = weburl + '/' + attrValueList[i].value[k]
                   }
                 }
@@ -2296,7 +2296,7 @@ Page({
           for (var key in cartlist) {
             cartlist[key]['sku_list'][0]['image'] = share_goods_image
             for (var i = 0; i < cartlist[key]['sku_list'].length; i++) {
-              if (cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
+              if (cartlist[key]['sku_list'][i]['image'] && cartlist[key]['sku_list'][i]['image'].indexOf("http") < 0) {
                 cartlist[key]['sku_list'][i]['image'] = weburl + '/' + cartlist[key]['sku_list'][i]['image']
               } 
               cartlist[key]['sku_list'][i]['selected'] = true
@@ -2484,7 +2484,7 @@ Page({
       }
       
       for (var i = 0; i < that.data.commodityAttr.length; i++) {
-        if (selectValueInfo.indexOf(that.data.commodityAttr[i].sku_key)>=0) {
+        if (selectValueInfo!='' && selectValueInfo.indexOf(that.data.commodityAttr[i].sku_key)>=0) {
           that.setData({
             sku_id: that.data.commodityAttr[i].id,
             sku_gov_price: that.data.commodityAttr[i].gov_price,
