@@ -149,7 +149,7 @@ page{
 /*右上部分标题*/
 .carts-title {
   font-size: 24rpx;
-  color: #444;
+  color: #111111;
   line-height: 1.4;
   padding-right: 10rpx;
   text-overflow: ellipsis;
@@ -176,7 +176,7 @@ page{
 	line-height: 18px;
 }
 .carts-en-price {
-  color: #444;
+  color: #111111;
   font-size: 26rpx;
   line-height: 2;
   overflow: hidden;

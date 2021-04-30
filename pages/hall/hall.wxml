@@ -2,7 +2,7 @@
 <import src="../common/nav.wxml" />
 
 <view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove"
-  bindtouchend="handletouchend" style="">
+  bindtouchend="handletouchend">
   <!--    bindscroll="scrolltoupper" -->
   <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
@@ -79,11 +79,7 @@
   </scroll-view>
 </view>
 -->
-  <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-    <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow" />
-    <view class='' style="margin-top:-10rpx;font-size:22rpx;">TOP</view>
-    <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
-  </view>
+  
 
   <view class="wrap">
     <!-- 
@@ -379,12 +375,15 @@
       <text>{{loading_note}}</text>
     </view>
   </view>
-  <view class="bottomshow">
-      <text> - 已经到底了 - </text>
-    </view>
+
   <!--
  </scroll-view>
  -->
+</view>
+<view class="goTop" hidden="{{!floorstatus}}" bindtap="goTop">
+    <icon style="margin-top:-35rpx;" class="Hui-iconfont iconv-uparrow"></icon>
+    <view class="" style="margin-top:-10rpx;font-size:22rpx;">TOP</view>
+    <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
 </view>
 <!--
 <action-sheet hidden="{{modalFriendHidden}}" bindchange="modalBindFriendconfirm">

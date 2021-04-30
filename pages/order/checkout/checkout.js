@@ -305,7 +305,7 @@ Page({
             wx.showToast({
               title: res.data.info,
               icon: 'none',
-              duration: 2000
+              duration: 1000
             })
           }
         }

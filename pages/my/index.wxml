@@ -315,7 +315,7 @@
     </view>
 </modal>
 
-  <modal class="modalbox" title="什么是会员制" hidden="{{modalHiddenPlaysx}}" confirm-text="了解了" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
+  <modal class="modalbox" title="什么是会员制" hidden="{{modalHiddenPlaysx}}" confirm-text="已了解" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
     <view class="prd-detail">
       <view class='wxParse' style="height:{{dkheight-40}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
