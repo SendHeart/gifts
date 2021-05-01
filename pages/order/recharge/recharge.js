@@ -374,11 +374,23 @@ Page({
 
   confirmOrder: function () {
     var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
     var liveid = that.data.liveid ? that.data.liveid:0
     var order_num = that.data.order_num
     var selectedAgreeStatus = that.data.selectedAgreeStatus
     var amount = that.data.amount
-    var dtheight = wx.getSystemInfoSync().windowHeight;
+    var dtheight = wx.getSystemInfoSync().windowHeight
+
+    if(!username || !userInfo){   
+      wx.navigateTo({
+        url: '/pages/login/login?frompage=/pages/order/recharge/recharge?recharge_selected=2'
+      })
+      return
+    }
+
     if (!selectedAgreeStatus){
       wx.showToast({
         title: '请先勾选会籍规则和权益协议',
