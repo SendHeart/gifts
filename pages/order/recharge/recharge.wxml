@@ -31,13 +31,14 @@
     <view class="recharge-level">
       <view class="recharge-item {{recharge_selected == '2' ? 'recharge-item-selected' : 'recharge-item-unselected'}}"
         bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount2}}' data-recharge-type='2'>
-        <text class="recharge-type">一年会员</text>
+        <text class="recharge-type">年费会员</text>
         <text class="recharge-item-amount">{{recharge_amount2}}</text>
+        <text style="text-decoration: line-through;">原价:136</text>
         <text>{{recharge_title2}}(推荐)</text>
       </view>
       <view class="recharge-item {{recharge_selected == '1' ? 'recharge-item-selected' : 'recharge-item-unselected'}} "
         bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount1}}' data-recharge-type='1'>
-        <text class="recharge-type">半年会员</text>
+        <text class="recharge-type">体验会员</text>
         <text class="recharge-item-amount">{{recharge_amount1}}</text>
         <text>{{recharge_title1}}</text>
       </view>
@@ -46,6 +47,7 @@
         bindtap="bindRechargeSelect" data-recharge-amount='{{recharge_amount3}}' data-recharge-type='3'>
         <text class="recharge-type">三年会员</text>
         <text class="recharge-item-amount">{{recharge_amount3}}</text>
+        <text style="text-decoration: line-through;">原价:408</text>
         <text>{{recharge_title3}}</text>
       </view>
       <view class="recharge-item {{recharge_selected == '4' ? 'recharge-item-selected' : 'recharge-item-unselected'}}"
