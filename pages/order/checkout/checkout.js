@@ -126,6 +126,16 @@ Page({
 	},
 	onShow: function () {
     var that = this 
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+    if(!username || !userInfo){   
+      wx.navigateTo({
+        url: '/pages/login/login?frompage=/pages/hall/hall'
+      })
+      return
+    } 
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
@@ -314,11 +324,7 @@ Page({
   },
 
   navigateToRecharge: function () {
-    var that = this
-    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
-
+    var that = this   
     wx.navigateTo({     
       url: '/pages/order/recharge/recharge?recharge_selected=2'
     }) 
