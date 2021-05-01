@@ -40,6 +40,12 @@ Page({
     share_goods_avatarUrl: '../../../images/my.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
+    card_love_info:'',
+    card_register_info:'',
+    card_cele_info:'',
+    card_template:'',
+    card_color:'#333',
+    card_type:0,
     painting: {},
     shareImage: '',
     shop_type:shop_type,
@@ -496,6 +502,7 @@ Page({
 
   reloadData: function (){
     var that = this
+    var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
     var options = wx.getStorageSync('wishshare_options')
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     var task = options.task ? options.task : 0
@@ -514,7 +521,7 @@ Page({
     var share_goods_image = options.share_goods_image ? options.share_goods_image : ''
     var share_goods_image2 = options.share_goods_image2 ? options.share_goods_image2 : ''
     var share_goods_qrcode_cache = options.share_goods_qrcode_cache ? options.share_goods_qrcode_cache : ''
-    var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg :                          that.data.share_goods_avatarUrl
+    var share_goods_wx_headimg = options.share_goods_wx_headimg ? options.share_goods_wx_headimg :that.data.share_goods_avatarUrl
    
     var share_goods_default_title = ''
     if (share_goods_shape == 5) {
@@ -536,8 +543,8 @@ Page({
     var share_order_shape = options.share_order_shape ? options.share_order_shape : '1'
     var share_order_bg = options.share_order_bg ? options.share_order_bg : ''
     var share_order_image = options.share_order_image ? options.share_order_image : ''
-    var share_order_wx_headimg = options.share_order_wx_headimg ? options.share_order_wx_headimg : that.data.avatarUrl
-    console.log('wishshare reloadData options:', options, 'share_order_wx_headimg:', share_order_wx_headimg, ' avatarUrl:', that.data.avatarUrl, 'share_goods_id:', share_goods_id,'')
+    var share_order_wx_headimg = options.share_order_wx_headimg ? options.share_order_wx_headimg : userInfo.avatarUrl
+    console.log('wishshare reloadData options:', options, 'share_order_wx_headimg:', share_order_wx_headimg, ' avatarUrl:', userInfo.avatarUrl, 'share_goods_id:', share_goods_id,'')
     if (share_order_wx_headimg && share_order_wx_headimg.indexOf("https://wx.qlogo.cn") >= 0) {
       share_order_wx_headimg = share_order_wx_headimg.replace('https://wx.qlogo.cn', weburl + '/qlogo')
     }
