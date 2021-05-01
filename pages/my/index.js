@@ -1055,6 +1055,10 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type
     var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
+    if(!username || !userInfo){   
+      that.login()
+      return
+    }  
     wx.navigateTo({     
       url: '/pages/order/recharge/recharge?recharge_selected=2'
     })   
