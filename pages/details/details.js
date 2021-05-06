@@ -2243,7 +2243,7 @@ Page({
       var that = this
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-      var order_type = 'gift'
+      var order_type = ''
       var order_note = '送你一份礼物，希望你喜欢!'; //默认祝福
       var order_image = that.data.order_image
       var buynum = that.data.buynum
