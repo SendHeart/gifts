@@ -208,7 +208,7 @@ Page({
         formId: formId,
         order_no: order_no,
         appid: app.globalData.appid,
-        appsecret: app.globalData.secret,
+        app_secret: app.globalData.secret,
         shop_type: shop_type,
         msg_type: msg_type,
       },

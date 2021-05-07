@@ -3,7 +3,7 @@ var interval = null; //倒计时函数
 var app = getApp();
 var weburl = app.globalData.weburl;
 var appid = app.globalData.appid;
-var appsecret = app.globalData.secret;
+var app_secret = app.globalData.secret;
 var shop_type = app.globalData.shop_type;
 
 Page({
@@ -147,8 +147,6 @@ Page({
             url: weburl + '/api/WXPay/getOpenidAction',
             data: {
               js_code: res.code,
-              appid: appid,
-              appsecret: appsecret
             },
             method: 'POST',
             header: {

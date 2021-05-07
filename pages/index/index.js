@@ -1,7 +1,7 @@
 var app = getApp()
 var weburl = app.globalData.weburl
 var appid = app.globalData.appid
-var appsecret = app.globalData.secret
+var app_secret = app.globalData.secret
 var shop_type = app.globalData.shop_type
 var navList_order = [
   { id: "send", title: "我送出的" },

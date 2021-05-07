@@ -3,7 +3,7 @@ var util = require('../../utils/util.js');
 var app = getApp();
 var weburl = app.globalData.weburl
 var appid = app.globalData.appid
-var appsecret = app.globalData.secret
+var app_secret = app.globalData.secret
 var user_type = app.globalData.user_type ? app.globalData.user_type:0;
 var shop_type = app.globalData.shop_type;
 var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -1409,8 +1409,6 @@ Page({
             url: weburl + '/api/WXPay/getOpenidAction',
             data: {
               js_code: res.code,
-              appid: appid,
-              appsecret: appsecret
             },
             method: 'POST',
             header: {
@@ -1791,7 +1789,7 @@ Page({
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : 0
     //var share_member_qrcode = wx.getStorageSync('member_qrcode_cache_' + m_id)
     var qr_type = 'membershare'
-   // var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + appsecret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
+   // var share_member_qrcode = weburl + '/api/WXPay/getQRCode?username=' + username + '&appid=' + appid + '&secret=' + app_secret + '&shop_type=' + shop_type + '&qr_type=' + qr_type
     //that.image_save(share_member_qrcode, 'member_qrcode_cache_' + m_id)
     /*
     wx.showToast({
