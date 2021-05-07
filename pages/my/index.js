@@ -1714,7 +1714,7 @@ Page({
   login: function () { 
     var that = this
     wx.navigateTo({
-      url: '/pages/login/login?frompage=/pages/index'
+      url: '/pages/login/login?frompage=/pages/my/index'
     })
   },
 
