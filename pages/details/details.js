@@ -2243,14 +2243,14 @@ Page({
       var that = this
       var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
       var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-      var order_type = ''
+      var is_buymyself = that.data.is_buymyself
+      var order_type = that.data.is_buymyself==1?'':'gift' // gift 
       var order_note = '送你一份礼物，希望你喜欢!'; //默认祝福
       var order_image = that.data.order_image
       var buynum = that.data.buynum
       var sku_sell_price = that.data.sku_sell_price
       var amount = parseFloat(sku_sell_price) * buynum
-      var sku_id = that.data.sku_id
-      var is_buymyself = that.data.is_buymyself
+      var sku_id = that.data.sku_id      
       var cur_img_id = that.data.cur_img_id
       var share_goods_image = that.data.image_pic[cur_img_id]['url']
       var share_goods_template = that.data.image_pic[cur_img_id]['template_config']
