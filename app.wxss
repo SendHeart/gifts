@@ -1,6 +1,5 @@
 @import "./wxParse/wxParse.wxss";
 @import 'weui.wxss';
-
 /*
 .container {
   height: 100%;
@@ -13,89 +12,44 @@
   background-size: 100%;
 } 
 */
-page {
-  height: 100vh;
-  overflow-y: auto;
-}
-
 .container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  widows: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  box-sizing: border-box;
-  align-items: center;
-  overflow-y: auto;
+    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+    widows: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    align-items: center;
 }
 
-.color1 {
+.color1{
   color: #666;
 }
-
-.color2 {
+.color2{
   color: #cd3830;
 }
 
 .font1 {
-  color: #666;
-  font-family: Microsoft YaHei Hiragino Sans GB;
-  font-weight: 600;
+    color: #666;
+    font-family: Microsoft YaHei Hiragino Sans GB;
+    font-weight: 600;
 }
-
 .weui-tit {
-  font-size: 12px;
-  background-color: #f7f7f7;
-  margin: 0;
-  padding: .8em 0 .4em 15px;
+    font-size: 12px;
+    background-color: #f7f7f7;
+    margin: 0;
+    padding: .8em 0 .4em 15px;
 }
 
-.wxToast_mask {
-  width: 100%;
-  height: 100%;
-  position: fixed;
-  left: 0px;
-  top: 0px;
-  z-index: 10000;
-  background: rgba(0, 0, 0, 0);
-  opacity: 0;
-  display: none
-}
+.wxToast_mask{width:100%;height:100%;position:fixed;left:0px;top:0px;z-index:10000;background:rgba(0,0,0,0);opacity:0;display:none}.wxToast_show{display:block}.wxToast_content{max-width:80%;min-width:90px;position:absolute;left:50%;top:20%;transform:translate3d(-50%,0,0);padding:15px;color:#fff;font-size:17px;text-align:center;border-radius:5px;background:rgba(0,0,0,.8)}.wxToast_img{width:55px;height:55px;display:block;margin:0 auto 8px auto}
 
-.wxToast_show {
-  display: block
-}
-
-.wxToast_content {
-  max-width: 80%;
-  min-width: 90px;
-  position: absolute;
-  left: 50%;
-  top: 20%;
-  transform: translate3d(-50%, 0, 0);
-  padding: 15px;
-  color: #fff;
-  font-size: 17px;
-  text-align: center;
-  border-radius: 5px;
-  background: rgba(0, 0, 0, .8)
-}
-
-.wxToast_img {
-  width: 55px;
-  height: 55px;
-  display: block;
-  margin: 0 auto 8px auto
-}
-
-.citypickers {
+.citypickers{
   position: fixed;
   height: 100%;
   width: 100%;
   min-height: 100%;
   background-color: red;
 }
-
 .citybody {
 
   position: fixed;
@@ -106,7 +60,7 @@ page {
 
 .cityheader {
   position: absolute;
-  top: 0px;
+  top:0px;
   width: 100%;
   z-index: 4;
 }
@@ -126,8 +80,8 @@ page {
 .section .picker {
   background-color: #fff;
   border-bottom: 1px #d9d9d9 solid;
-  border-top: 1px #d9d9d9 solid;
-  padding: 20rpx;
+  border-top: 1px #d9d9d9 solid; 
+  padding: 20rpx; 
 }
 
 
@@ -137,7 +91,7 @@ page {
 header - wxss
 */
 /* 自定义顶部栏高度 */
-.nav {
+.nav{
   width: 100%;
   overflow: hidden;
   position: relative;
@@ -146,8 +100,7 @@ header - wxss
   z-index: 999;
   background: #1d1d1d;
 }
-
-.nav-title {
+.nav-title{
   width: 100%;
   height: 45px;
   line-height: 45px;
@@ -158,12 +111,11 @@ header - wxss
   position: fixed;
   top: 0;
   left: 0;
-  font-size: 36rpx;
-  letter-spacing: 2px;
+  font-size:36rpx;
+  letter-spacing:2px;
   background: #1d1d1d;
 }
-
-.nav .back {
+.nav .back{
   width: 22px;
   height: 22px;
   position: absolute;
@@ -171,57 +123,42 @@ header - wxss
   left: 0;
   padding: 10px 15px;
 }
-
-.bg-white {
-  background-color: #FFCE58;
+.bg-white{
+  background-color:#FFCE58;
 }
-
-.bg-gray {
+.bg-gray{
   background-color: #f7f7f7;
 }
-
-.overflow {
+.overflow{
   overflow: auto;
 }
-
-.hidden {
+.hidden{
   overflow: hidden;
 }
-
-.INinputheader {
-  width: 69%;
-  height: 30px;
-  background: rgb(0, 0, 0);
-  border-radius: 30px;
+.INinputheader{
+  width:69%;
+  height:30px;
+  background:rgb(0, 0, 0);
+  border-radius:30px;
   font-size: 14px;
-  position: relative;
-  margin: 7px 0px;
+  position: relative; 
+  margin:7px 5px;
+  
 }
-
-.INsearchicon {
+.INsearchicon{
   position: absolute;
-  left: 12px;
+  left:12px;
 }
-
-.weui-input {
+.weui-input{
   height: 30px;
   line-height: 20px;
-  text-align: left;
-  letter-spacing: 0px;
+  text-align: left; 
+  letter-spacing:0px;
   padding-left: 30px;
   display: block;
 }
-
-.INtab {
+.INtab{
   text-align: left;
   margin-left: 12px;
   color: #fff;
-}
-
-/* 隐藏滚动条 */
-::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-  color: transparent
 }

@@ -4,8 +4,8 @@ var weburl = 'https://sendheart.dreamer-inc.com'
 var wssurl = 'wss://sendheart.dreamer-inc.com'
 App({
   globalData: {
-    appid: 'wx986f630cc3d1a7fc',//  小程序开发账号  wxe59fb5712b45adb7
-    secret: 'add3c71b7907a7ce99722d0e9cbac7f1',//   9666f44dd87410cf85949f3a053dc14a
+    appid: 'wx986f630cc3d1a7fc',//  小程序开发账号   
+    secret: '',// 
     weburl:'https://sendheart.dreamer-inc.com', //https://xcx.itoldfarmer.com
     wssurl:'wss://sendheart.dreamer-inc.com' ,
     uploadurl: weburl+'/api/upload/index4',
@@ -69,9 +69,9 @@ App({
         var that = this;
             //调用API从本地缓存中获取数据
         var appid = that.globalData.appid;
-        var appsecret = that.globalData.secret
+        var app_secret = that.globalData.secret
         wx.setStorageSync('appid', appid);
-        wx.setStorageSync('appsecret', appsecret);
+        wx.setStorageSync('app_secret', app_secret);
         
         wx.login({
           success: function (res) {
@@ -81,8 +81,6 @@ App({
                 url: weburl + '/api/WXPay/getOpenidAction',
                 data: {
                   js_code: res.code,
-                  appid: appid,
-                  appsecret: appsecret
                 },
                 method: 'POST',
                 header: {
@@ -91,8 +89,8 @@ App({
                 },
                 success: function (res) {
                   var user = res.data//返回openid
-                  wx.setStorageSync('openid', user.openid);
-                  wx.setStorageSync('session_key', user.session_key);
+                  wx.setStorageSync('openid', user.openid)
+                  wx.setStorageSync('session_key', user.session_key)
                   //wx.setStorageSync('username', user.openid); //用openid代替用户手机号登录
                   //wx.setStorageSync('username', ''); //测试
                   console.log('获取用户OpenId:', user);
@@ -153,7 +151,6 @@ App({
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
       },
-
     })
   },  
 
