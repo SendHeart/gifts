@@ -300,7 +300,7 @@
               </view>
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
+                <view class="price-now"><text class="membericon">会员价</text><text class="sfont">￥</text>{{item.sell_price}}</view>
                 
               </view>
             </view>
@@ -329,7 +329,7 @@
               </view>
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
+                <view class="price-now"><text class="membericon">会员价</text><text class="sfont">￥</text>{{item.sell_price}}</view>
                 
               </view>
             </view>
@@ -361,7 +361,7 @@
               
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now"><text class="sfont">会员价￥</text>{{item.sell_price}}</view>
+                <view class="price-now"><text class="membericon">会员价</text><text class="sfont">￥</text><text class="price-num">{{item.sell_price}}</text></view>
                 <text class="left-tag">{{item.sale>0?item.sale:'0'}}人已购</text>
               </view>
             </view>

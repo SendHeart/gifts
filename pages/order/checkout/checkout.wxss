@@ -47,11 +47,12 @@ page {
   margin-left: 20rpx;
 }
 .amount {
-color:#c34;
-font-size:26rpx;
+color:#e34c55;
+font-size:28rpx;
 font-weight: bold;
+font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-.amount:before {
+.amount::before {
   content: '￥';	
   font-size: 22rpx;
   font-style: normal;
@@ -241,8 +242,12 @@ line-height: 40rpx;
   height:30rpx;
   line-height: 30rpx;
   font-size: 26rpx;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
-
+.carts-price::before {
+  content: '¥';
+  font-size: 22rpx;
+}
 .carts-gov-price {
   color: #999;
   font-size: 24rpx;
@@ -284,9 +289,6 @@ line-height: 40rpx;
 
 /*人民币符号*/
 
-.carts-price:before, .select-and-amount text:last-child:before {
-  content: '';
-}
 
 .select-and-amount {
   display: flex;
@@ -420,7 +422,7 @@ line-height: 40rpx;
 
 .address-section {
   width: 95%;
-  height: 60px;
+  height: 80px;
   padding: 30rpx;
   background: #ffffff;
   position: relative;

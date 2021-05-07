@@ -12,7 +12,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : '';
 Page({
   data: {
-    title_name: '购物袋',
+    title_name: '我的订单',
     title_logo: '../../images/history_s.png',
     nickname: userInfo.nickName,
     avatarUrl: userInfo.avatarUrl,
@@ -57,6 +57,7 @@ Page({
     inputShowed: false,
   
   },
+
   /*
   //监听屏幕滚动 判断上下滚动  
   onPageScroll: function (ev) {
@@ -390,7 +391,7 @@ Page({
 
   // 获取滚动条当前位置
   scrolltoupper: function (e) {
-    if (e.detail.scrollTop > 100) {
+    if (e.detail.scrollTop >760) {
       this.setData({
         floorstatus: true,
         hidddensearch:false
@@ -407,15 +408,14 @@ Page({
   
   },
 
-  //回到顶部
-  goTop: function (e) {  // 一键回到顶部
-    var that = this
-    that.setData({
-      scrollTop: 0,
-    })
-    console.log('goTop:',that.data.scrollTop)
-    //that.getPrevOrdersTapTag()
-  },
+//回到顶部
+goTop: function (e) {  // 一键回到顶部
+  var that = this
+  that.setData({
+    scrollTop: 0,
+  })
+  console.log('goTop:',that.data.scrollTop)
+},
 
   getMoreOrdersTapTag: function () {
     var that = this
@@ -537,11 +537,29 @@ Page({
           })
           
         } else {
-          wx.showToast({
-            title: '退款申请完成',
-            icon: 'success',
-            duration: 1500
+
+          wx.showModal({
+            title: '退款申请已提交',
+            content: '请等待客服审核操作...',
+            confirmColor: '#FF952D',
+            showCancel: false,
+            confirmText: '好的',
+            success (res) {
+              if (res.confirm) {
+                console.log('用户点击确定')
+                that.onLoad()
+              } else if (res.cancel) {
+                console.log('用户点击取消')
+                return
+              }
+            }
           })
+
+          /* wx.showToast({
+            title: '退款申请已提交，请等待客服审核操作...',
+            icon: 'none',
+            duration: 2000
+          }) */
         }
       }
     })

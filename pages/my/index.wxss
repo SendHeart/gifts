@@ -216,7 +216,7 @@ page {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  padding: 10rpx 0;
+  padding: 0 0 10rpx 0;
 }
 .cardrenew-btn {
   height: 60rpx;
@@ -224,11 +224,12 @@ page {
   background: #FF952D;
   color:#fff;
   font-size: 26rpx;
-  margin: 20rpx auto;
+  margin: 0 auto 10rpx auto;
   text-align: center;
   line-height: 60rpx;
-  border-radius: 20rpx;
+  border-radius: 0 0 14rpx 14rpx;
   padding: 0 26rpx;
+  box-shadow:0px 2px 3px 2px #ededed;
 }
 .redbtn {
   background:#E34C55!important;
@@ -248,7 +249,7 @@ page {
   background: #fff;
   color:#444;
   border-radius: 10rpx;
-  margin: 0 auto;
+  margin: 0 auto 20rpx auto;
   padding: 20rpx 0;
 }
 
@@ -334,7 +335,7 @@ page {
   display: block;
   font-size:24rpx;
   background-color:#fff;  
-  color:#444;  
+  columns: #111111;  
   overflow:hidden;  
   border: 0;
 }  
@@ -542,7 +543,7 @@ radio .wx-radio-input {
 .recomment-title text{
   width: 350rpx;
   color: #444;
-  font-size: 22rpx;
+  font-size: 24rpx;
 }
 .recomment-title text.title_ex{
   color: #ccc;
@@ -640,7 +641,7 @@ radio .wx-radio-input {
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  padding:10rpx;
+  padding:10rpx 10rpx 0 10rpx;
 }
 
 

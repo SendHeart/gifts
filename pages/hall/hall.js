@@ -254,7 +254,7 @@ goTop: function (e) {  // 一键回到顶部
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0,  // 滚动到页面的目标位置，单位 px
-        duration: 500 // 滚动动画的时长，单位 ms
+        duration: 300 // 滚动动画的时长，单位 ms
       })
     } else {
       wx.showModal({
@@ -270,14 +270,14 @@ videoPlayer: function (e) {
             url: '/pages/live/live?streamaname='
         })
     },
-    searchTapTag: function (e) {
+searchTapTag: function (e) {
         var that = this;
         //console.log('搜索关键字：' + that.data.search_goodsname)
         wx.navigateTo({
             url: '/pages/goods/list/list?search=1'
         })
     },
-    query_message:function(){
+query_message:function(){
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'

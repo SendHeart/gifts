@@ -88,10 +88,7 @@ page {
   text-align:center;
 }
 .smallbtn2 {
-  border: 3rpx solid #999;
-  color: #999;
-  padding: 4rpx 10rpx;
-  border-radius: 8rpx;
+  color: #ff952d;
   margin-right: 6rpx;
 }
 .recyclebtn {
@@ -172,6 +169,7 @@ page {
   font-size: 24rpx;
   color: #999;
   justify-content: space-between;
+  width: 94%;
 }
 
 .status {
@@ -203,7 +201,7 @@ page {
 
 .carts-title {
   font-size: 26rpx;
-  color: #444;
+  color: #111111;
   line-height: 38rpx;
   overflow:hidden;  
   text-overflow:ellipsis;  
@@ -361,20 +359,20 @@ page {
 
 /* 返回顶部 */
 .goTop{
-   display: flex;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;  
   height: 80rpx;
   width: 80rpx;
   position: fixed;
-  bottom: 30rpx;
+  bottom: 70rpx;
   background: rgba(0,0,0,.3);
   right: 30rpx;
   border-radius: 50%;
   color:#fff;
-  font-size: 22rpx;
-  z-index: 999;
+  font-size: 8;
+  z-index: 9999;
 }
 .prevbtn {
   display: flex;

@@ -5,7 +5,7 @@ var shop_type = app.globalData.shop_type;
 var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : []
 Page({
 	data: {
-    title_name: '送出礼物',
+    title_name: '支付',
     title_logo: '../../../images/footer-icon-05.png',
     orderNo: '',
     orders: [],
@@ -367,14 +367,32 @@ Page({
         } else {
           if (orderObjects[0]['gift_status'] > 0) {
             console.log('order payment returnTapTag() 该订单已购出 orderObjects:', orderObjects)
-            wx.showToast({
-              title: '该订单已购出',
-              icon: 'none',
-              duration: 1500
+            wx.showModal({
+              title: '支付完成',
+              content: '您的订单已确认，请等待快递配送',
+              confirmColor: '#FF952D',
+              showCancel: false,
+              confirmText: '返回',
+              success (res) {
+                if (res.confirm) {
+                  console.log('用户点击确定')
+                  wx.navigateBack();
+                } else if (res.cancel) {
+                  console.log('用户点击取消')
+                  return
+                }
+              }
             })
+            /* wx.showToast({
+              title: '支付完成',
+              content: '您的订单已确认，请等待快递配送',
+              icon: 'success',
+              duration: 2000
+            }) 
             setTimeout(function () {
               wx.navigateBack();
-            }, 1500)
+            }, 2000)
+            */
             return
           } else {
             that.setData({

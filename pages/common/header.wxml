@@ -1,10 +1,9 @@
 
-<view>
   <!-- 自定义头部 -->
-  <view class='nav'  style='height:{{navH/2}}px;'>
-    <view class='nav-title' >
+  <view class="nav"  style='height:45px;'>
+    <view class="nav-title" >
       <view class="userinfo">
-        <view style="height:{{navH/2}}px;display:flex;text-align:center;align-items:center;">
+        <view style="height:45px;display:flex;text-align:center;align-items:center;">
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover" bindtap="userTapTag" />
         </view>
         <!-- <view style="height:{{navH/2}}px;line-height:{{navH/2}}px;">
@@ -20,5 +19,4 @@
         <text class="toptips">了解会员制</text>
       </view> 
     </view>
-  </view> 
-</view>
+  </view>

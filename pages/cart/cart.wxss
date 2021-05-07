@@ -109,7 +109,7 @@ page{
 	display: flex;
   flex-direction: row;
   justify-content: center;
-	height:150rpx;
+	height:160rpx;
 	/*width属性解决标题文字太短而缩略图偏移*/
 	width:100%;
 	border-bottom: 1px solid #eee;
@@ -182,7 +182,8 @@ page{
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
-  font-weight: 600;
+  font-weight: normal;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .carts-price {
@@ -204,12 +205,23 @@ page{
   background-color: #f2f2f2;
   border-radius: 20rpx;
   padding: 0rpx 16rpx;
+  margin: 10rpx 0;
 }
 /*人民币符号*/
-.carts-price:before, .select-and-amount text:last-child:before {
-	content: '';	
+.carts-price::before, .carts-en-price::before {
+  content: '¥';	
+  font-size: 22rpx;
 }
-
+.amount {
+  margin-left:60rpx;
+  color: #111111;
+  font-weight: bold;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+.amount::before {
+  content: '¥';
+  font-size: 22rpx;
+}
 /*商品加减按钮*/
 /*stepper容器*/
 .stepper {

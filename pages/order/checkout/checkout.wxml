@@ -60,9 +60,7 @@
           </view>
         </view>
         <view wx:if="{{order_shape!=4 && order_shape!=5 && order_shape!=7 && order_shape!=8}}" class="carts-subtitle">
-          <view class='carts-price'>
-            <view>{{item.sell_price>0?'￥'+item.sell_price:''}} {{item.num>0?'x'+item.num+' ':''}}件</view>
-          </view>
+          <text class="carts-price">{{item.sell_price>0?item.sell_price:''}} {{item.num>0?'x'+item.num+' ':''}}件</text>
         </view>
       </view>
     </view>

@@ -1093,7 +1093,7 @@ modal {
   display: -webkit-box;
   flex-wrap:wrap;
   text-overflow: -o-ellipsis-lastline;
-  color: #999;
+  color: #ff952d;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -1133,11 +1133,12 @@ modal {
 
 .price-now .sfont {
   font-size: 20rpx;
+  font-weight: normal;
 }
 
 .left-tag {
   line-height: 27px;
-  color: #fc9326;
+  color: #999999;
   font-size: 20rpx;
   text-align: right;
   margin-right: 20rpx;
@@ -1539,4 +1540,17 @@ modal {
   line-height: 2;
   background:#1d1d1d;
   padding-bottom: 40rpx;
+}
+
+.membericon {
+  padding: 2rpx 6rpx;
+  background: #444444;
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: normal;
+  border-radius: 8rpx;
+  margin-right: 4rpx;
+}
+.price-num {
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
