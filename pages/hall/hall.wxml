@@ -42,10 +42,10 @@
     </view>
   </view>
    -->
-  <view class="{{scrollTop>1280 ? 'classify-banner-fix' : 'classify-banner'}}">
+  <view class="{{_fixed ? 'classify-banner-fix' : 'classify-banner'}}">
     <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
   </view>
-
+<!-- banner开始 -->
   <view wx:if="{{navList2[3] || hall_banner }}" class="banner">
     <swiper class="swiper-box" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)"
       indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}"
@@ -79,11 +79,19 @@
   </scroll-view>
 </view>
 -->
-  
+<view class="middle-banner">
+  <view wx:if="{{middle1_img}}" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">
+        
+          <image class="middle-banner-image" src="{{middle1_img}}"></image>
+       
+        
+          <text class="middle-banner-title">{{middle1_title}}</text>
+          <text class="middle-banner-note">{{middle1_note}}</text>
+        
+      </view>
+</view>
 
-  <view class="wrap">
-    <!-- 
-    <view class="middle-goods">
+<!-- <view class="middle-goods">
       <view wx:if="{{middle8_img}}" class="image-btnbuy" bindtap="bindAIPickGoods" data-goods-type='8' data-middle-title="{{middle8_title}}">
         <image class="pick-goods-image" src="{{middle8_img}}" mode="aspectFill"></image>
         <text>{{middle8_title}}</text>
@@ -107,6 +115,8 @@
       </view>
     </view>
       -->
+  <view class="wrap">
+    
     <!-- margin-top:{{navgationHeight+startBarHeight}}px -->
     <!--
     <view class="user">
@@ -350,7 +360,7 @@
       -->
             <imageloader default-image='{{default_img}}' mode='aspectFill'
               original-image='{{item.activity_image?item.activity_image:item.image}}' width="300rpx" height="300rpx"
-              display="block" />
+              display="block" class="prd-img" />
             <view class="venues-item-text">
               <view class="goods-titletext">
                 <text wx:if="{{item.goods_org==4}}" class="goods-tags">极速达</text>

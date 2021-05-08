@@ -21,7 +21,7 @@
         <view class="carts-text">
 				  <view class="carts-title">{{item.name}}</view>
 				  <view class="carts-subtitle">
-            <view class=''>
+            <view class="carts-subcontent">
               <view class="carts-sku">
                 <text wx:for="{{item['value']}}" wx:for-item="sku_value" wx:key="id">
                 {{sku_value?sku_value['name']+':':''}}{{sku_value['type']==2?sku_value['note']+' ':sku_value['value']+'  '}}
@@ -45,7 +45,7 @@
 				</view>
 			</view>
     </view>
-    <button type="warn" data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><text>删除</text></button>
+    <button type="warn" data-index="{{index}}" class="delete-button" catchtap="delete" data-object-id="{{item.objectId}}"><text>移除</text></button>
   </view>
 </view>
 </view>

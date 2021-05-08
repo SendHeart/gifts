@@ -76,7 +76,7 @@
   <!-- margin-top:{{navgationHeight+startBarHeight}}px-->
   <view class="amount_item">
     <view>优惠扣除:</view>
-    <view class="amount">{{discountpay>0?'-'+discountpay:'0'}}</view>
+    <view class="amount cost">{{discountpay>0?'-'+discountpay:'0'}}</view>
   </view>
   <view class="amount_item">
     <view>{{order_shape==8||order_shape==7?'金额':'实付金额'}}:</view>

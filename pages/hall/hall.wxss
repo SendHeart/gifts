@@ -989,16 +989,19 @@ modal {
   flex-direction: row;
   height:300rpx;
   color: #111111;
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   background: #fff;
 }
 .venues-item-category {
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   background: #ffffff;
   box-sizing: border-box;
   display: inline-block;
 }
 /*商品信息描述*/
+.prd-img image {
+  border-radius: 10rpx;
+}
 .venues-item-text {
 	margin-left: 10rpx;
 	width: 65%;
@@ -1553,4 +1556,42 @@ modal {
 }
 .price-num {
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+}
+.middle-banner {
+  display: flex;
+  flex-direction: row;
+  width: 96%;
+  height: auto;
+  margin: 0 auto;
+  position: relative;
+  top: 0;
+  left: 0;
+}
+.middle-banner-image {
+  width:720rpx;
+  height:231rpx;
+}
+.middle-banner-title {
+  position: absolute;
+  left:0;
+  top: 4rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  font-size: 26rpx;
+  font-weight:800;
+  color: #fff;
+}
+.middle-banner-note {
+  position: absolute;
+  left:0;
+  top: 64rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  font-size: 28rpx;
+  font-weight:800;
+  color: #111111;
 }

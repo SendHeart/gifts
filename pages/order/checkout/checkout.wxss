@@ -57,7 +57,11 @@ font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida San
   font-size: 22rpx;
   font-style: normal;
 }
-
+.cost::before {
+  content: '- ￥';
+  font-size: 22rpx;
+  font-style: normal;
+}
 .submit {
 	margin: 8px;
 }
@@ -167,8 +171,10 @@ picker {
 
 .carts-container {
   position: relative;
-  width: 100%;
+  width: 96%;
   height: 241rpx;
+  margin: 0 auto 10rpx auto;
+  border-radius: 10rpx;
 }
 
 /*每行单元格*/
