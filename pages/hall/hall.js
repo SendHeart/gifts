@@ -1816,7 +1816,7 @@ query_message:function(){
 
     onShareAppMessage: function () {
         return {
-            title: '黑贝会是一家高端会员制购物平台',
+            title: '黑贝会是一家高端会员制购物平台，100%正品保证，全网最低价！',
             desc: '加入黑贝会，可随时获得独家提供全球158个国家地区最流行和优惠的商品，并获得最贴心和专业服务.',
             path: '/pages/hall/hall?refername='+username+'&mainpage=1'
         }
