@@ -1,7 +1,7 @@
-{
- 
+{ "navigationBarTitleText": "黑贝会 · 会员制商店",
   "usingComponents": {
     "add-tips": "../common/weplug-add-tips-master/index",
     "imageloader": "../common/imageloader/imageloader"
   }
+  
 }

@@ -149,7 +149,7 @@ page {
 }
 
 .shopping-container .goods-prom {
-  color: #FF952D;
+  color: #666666;
   font-size: 28rpx;
   font-weight: normal;
   line-height: 1.8;
@@ -254,12 +254,12 @@ page {
 .indexShow {
   position: absolute;
   right: 20rpx;
-  bottom: 20rpx;
+  bottom: 10rpx;
   /* background:rgba(0,0,0,0.35);
   border-radius: 30rpx; */
   color: #333333;
   font-size: 26rpx;
-  padding: 5rpx 30rpx;
+  padding: 2rpx 4rpx;
   font-weight: bold;
 }
 .indexShow-total {
