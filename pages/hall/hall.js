@@ -238,13 +238,15 @@ onPageScroll: function (t) {
     a.setData({
     scrollTop:t.scrollTop
     })
-    if (t.scrollTop > 760) {
+    if (t.scrollTop > 1280) { //滚动显示高度
     a.setData({
         floorstatus: true,
+        _fixed: true,
     });
     } else {
     a.setData({
-    floorstatus: false,
+        floorstatus: false,
+        _fixed: false,
     });
     }
 },

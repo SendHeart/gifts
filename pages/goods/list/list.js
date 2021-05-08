@@ -477,7 +477,7 @@ Page({
   onShareAppMessage: function () {
     return {
       title: '黑贝会',
-      desc: '开启礼物电商时代，200万人都在用的礼物小程序！',
+      desc: '高端会员制电商，100%正品保证，全网最低价！',
       path: '/pages/list/list?refername=' + username
     }
   }

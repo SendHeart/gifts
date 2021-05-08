@@ -212,7 +212,7 @@ swiper-item image {
 .venues_item {
   margin-bottom:20rpx;
   background: #ffffff;
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   padding-bottom: 10rpx;
   box-sizing: border-box;
   display: inline-block;
@@ -295,7 +295,7 @@ swiper-item image {
 }
 .venues_item .goods_prom {
   display: block;
-  color: #999;
+  color: #ff952d;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -331,17 +331,24 @@ swiper-item image {
 }
 .price-now .sfont {
   font-size: 20rpx;
+  font-weight: normal;
 }
 
-
+.membericon {
+  padding: 2rpx 6rpx;
+  background: #444444;
+  color: #fff;
+  font-size: 22rpx;
+  font-weight: normal;
+  border-radius: 8rpx;
+  margin-right: 4rpx;
+}
 .left-tag {
   height: 32rpx;
   line-height: 32rpx;
-  color: #FC9326;
+  color: #999999;
   font-size: 24rpx;
   text-align: center;
-  border: 2rpx #FC9326 solid;
-  border-radius: 6rpx;
   padding: 2rpx 6rpx;
 }
 
