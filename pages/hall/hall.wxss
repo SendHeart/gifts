@@ -217,7 +217,7 @@ modal {
   z-index: 1000
 }
 .slide-image {
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   display: block;
   height: auto;
 }
@@ -225,17 +225,21 @@ modal {
   margin-bottom: 2rpx;
 }
 .swiper-box .wx-swiper-dot{
- width:20rpx;
+ width:24rpx;
  display: inline-flex;
  height: 6rpx;
- margin-left: 4rpx;
+ margin-left: 0rpx;
  justify-content:space-around;
+}
+/* 修改dot之间的间距 */
+.wx-swiper-dots .wx-swiper-dot:nth-of-type(n+2) {
+  margin-left: -6rpx;
 }
 .swiper-box .wx-swiper-dot::before{
  content: '';
  flex-grow: 1; 
  background: rgba(255,255,255,0.25);
- border-radius: 8rpx
+ border-radius: 6rpx
 }
 .swiper-box .wx-swiper-dot-active::before{
  background:rgba(0,0,0,0.25);   
