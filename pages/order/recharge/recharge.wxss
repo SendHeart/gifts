@@ -156,7 +156,7 @@ picker {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #fff;
+  background-color: #999;
 }
 /*每行单元格*/
 .carts-item {
@@ -252,11 +252,10 @@ picker {
 .recharge-type {
   font-size: 28rpx!important;
   font-weight: bold;
-  color: #9c4e00;
 }
 .recharge-item-selected {
-  background: #fff4d9!important;
-  color: #9c4e00!important;
+  background: #1d1d1d!important;
+  color: #fff!important;
   border: 2px solid #FF952D !important;
 }
 

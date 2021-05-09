@@ -116,7 +116,7 @@ page {
 }
 
 .userinfo-nickname {
-  color: #FFCA4B;
+  color: #ffffff;
   font-size: 30rpx;
   font-weight: bold;
   margin: 0 20rpx;
@@ -159,7 +159,7 @@ page {
   width: 30%;
 }
 .cards-id{
-  color: #FFCA4B;
+  color: #ffffff;
   font-size: 22rpx;
   font-weight: normal;
   line-height: 22rpx;
@@ -236,7 +236,7 @@ page {
 }
 .graybtn {
   background:#fff!important;
-  color: #FF952D!important;
+  color: #111111!important;
 }
 /*order*/
 .menu-area {
@@ -327,21 +327,29 @@ page {
 .other-button-hover {
   background-color: blue;
 }
-
+.releat {
+  position: relative;
+  top: 0;
+  left: 0;
+}
 .order .clickBtn{
-  width: 150rpx;  
-  line-height: 40rpx;
-  height: 40rpx;
+  width: 140rpx;  
+  line-height: 100rpx;
+  height: 120rpx;
   display: block;
   font-size:24rpx;
-  background-color:#fff;  
-  columns: #111111;  
+  background:transparent;
   overflow:hidden;  
   border: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: 0!important;
+  margin: 0!important;
 }  
 
 .clickBtn::after {
-  border: 0;
+  border: none!important;
 } 
 
 

@@ -35,7 +35,7 @@
       <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="height:{{card_image_height}}rpx;">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="id">
           <swiper-item>
-            <video id="myVideo" class="slide-image" src="{{video.url}}"  controls="true" poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="true" muted="false"  objectFit="contain">
+            <video id="myVideo" class="slide-image" src="{{video.url}}"  controls="true" poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="true" muted="{{false}}" show-mute-btn="{{true}}" objectFit="contain">
             <!-- 
               <cover-view wx:if="{{!is_apple}}" class="controls" mode="aspecFit" style="display:{{tab_image}};z-index:2">
               <cover-image class="" style="height:90%;" src="{{video.activity_image}}" />

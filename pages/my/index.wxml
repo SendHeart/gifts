@@ -100,9 +100,10 @@
 		  <image src="../../images/xieyi.png" />
 		  <text>会籍协议</text>
 	  </view>
-	  <view bindtap="" class="order">
-		  <image src="../../images/kefu.png" />
-		  <button class="clickBtn" open-type="contact" session-from="weapp">VIP客服</button>
+	  <view bindtap="" class="order releat">
+      <image src="../../images/kefu.png" />
+      <text>VIP客服</text>
+		  <button class="clickBtn" open-type="contact" session-from="weapp"></button>
 	  </view>
     <view bindtap="login" class="order">
 		  <image src="../../images/reset.png" />
