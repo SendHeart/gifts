@@ -145,7 +145,14 @@ Page({
     that.loadAddress()
 	},
 	readCarts: function (options) {
-		var that = this
+    var that = this    
+    if(options.is_checkout==1){
+      var check_options = wx.getStorageSync('checkout_option') ? wx.getStorageSync('checkout_option') : ''
+      options = check_options?JSON.parse(check_options):''
+    }
+    if(options=='') return 
+    //保留现场
+    wx.setStorageSync('checkout_option',options?JSON.stringify(options):'')  
     console.log('order checkout readCarts options:', options)
     var liveid = options.liveid ? options.liveid:0
 		var amount = parseFloat(options.amount).toFixed(2)   
@@ -289,7 +296,7 @@ Page({
             that.zero_pay(order_data['order_no']) //0支付直接送出
           }else{
             wx.navigateTo({
-              url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself
+              url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself+'&is_checkout=0'
             })
           }
         } else {          
@@ -324,9 +331,9 @@ Page({
   },
 
   navigateToRecharge: function () {
-    var that = this   
+    var that = this    
     wx.navigateTo({     
-      url: '/pages/order/recharge/recharge?recharge_selected=2'
+      url: '/pages/order/recharge/recharge?recharge_selected=2&is_checkout=1'
     }) 
     return
     /*

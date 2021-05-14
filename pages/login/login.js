@@ -22,6 +22,10 @@ Page({
     username:null,
     wx_nickname:null,
     wx_headimg:null,
+    user_gender:0,
+    user_province:'',
+    user_city:'',
+    user_country:'',
     m_id:null,
     token:null,
     shop_type:shop_type,
@@ -65,9 +69,14 @@ Page({
       success: (res) => {
         console.log('onGotUserInfo success：'+JSON.stringify(res));        
         wx.setStorageSync('userInfo', res.userInfo)
+      
         that.setData({
           wx_nickname: res.userInfo ? res.userInfo.nickName : '',
           wx_headimg: res.userInfo ? res.userInfo.avatarUrl : '',
+          user_gender:res.userInfo ? res.userInfo.gender:0,
+          user_province:res.userInfo ? res.userInfo.province:'',
+          user_city:res.userInfo ? res.userInfo.city:'',
+          user_country:res.userInfo ? res.userInfo.country:'',
         })
         that.login()
         console.log('获取用户公开信息授权 userInfo:', res.userInfo)
@@ -90,6 +99,7 @@ Page({
             })
           }
           //保存到相册权限
+          /* 
           if (!res.authSetting['scope.writePhotosAlbum']) {
             wx.authorize({
               scope: 'scope.writePhotosAlbum',
@@ -101,7 +111,9 @@ Page({
               }
             })
           }
+          */
           //位置权限
+          /* 
           if (!res.authSetting['scope.userLocation']) {
             wx.authorize({
               scope: 'scope.userLocation',
@@ -113,6 +125,7 @@ Page({
               }
             })
           }
+          */
           //录音权限
           /*
           if (!res.authSetting['scope.record']) {
@@ -240,7 +253,7 @@ Page({
         username: username, 
         access_token: token,
         shop_type:shop_type,
-        phoneNo: this.data.phoneNo, 
+        phoneNo: that.data.phoneNo, 
         extensionCode: "09016" ,
         shop_type:shop_type,
       },
@@ -260,11 +273,10 @@ Page({
   login:function () {
     //console.log(this.data.scode)
     let that = this
-     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
-     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-     var shop_type = app.globalData.shop_type;
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
-  
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
    
@@ -292,6 +304,7 @@ Page({
       return;
     }
     */
+   //console.log('user_province:',that.data.user_province)
     wx.request({
       url: weburl + '/api/web/user/login/user_xcx_login',
       method: 'POST',
@@ -300,6 +313,9 @@ Page({
         wx_nickname:that.data.wx_nickname,
         wx_headimg:that.data.wx_headimg,
         user_phone: user_phone,
+        user_gender:that.data.user_gender,
+        user_city:that.data.user_city,
+        user_prov:that.data.user_province,
         user_name: user_name,
         login_type:1,
         type:8,

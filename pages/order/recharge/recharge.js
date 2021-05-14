@@ -36,6 +36,7 @@ Page({
     order_shape:'8',
     order_type : 'recharge',  
     order_note : '会员充值' ,
+    is_checkout:0, //订单转充值情况
   },
   /*
   formSubmit: function (e) {
@@ -125,6 +126,7 @@ Page({
     }else{
       recharge_options = options
     }
+    var is_checkout = recharge_options.is_checkout?recharge_options.is_checkout:that.data.is_checkout
     var recharge_selected = recharge_options.recharge_selected?recharge_options.recharge_selected:that.data.recharge_selected
     var recharge_note = recharge_options.recharge_note ? recharge_options.recharge_note:that.data.recharge_note
     var recharge_note2 = recharge_options.recharge_note2 ? recharge_options.recharge_note2:that.data.recharge_note2
@@ -133,8 +135,9 @@ Page({
       recharge_selected:recharge_selected,
       recharge_note:recharge_note,
       recharge_note2:recharge_note2,
+      is_checkout:is_checkout,
     })  
-    //console.log('order/recharge onLoad() options:',options)
+    console.log('order/recharge onLoad() options:',options)
     that.getRechargeInfo()
     //that.readCarts(recharge_options)
     wx.getSystemInfo({
@@ -383,7 +386,7 @@ Page({
     var selectedAgreeStatus = that.data.selectedAgreeStatus
     var amount = that.data.amount
     var dtheight = wx.getSystemInfoSync().windowHeight
-
+    var is_checkout = that.data.is_checkout
     if(!username || !userInfo){   
       wx.navigateTo({
         url: '/pages/login/login?frompage=/pages/order/recharge/recharge?recharge_selected=2'
@@ -462,7 +465,7 @@ Page({
             that.zero_pay(order_data['order_no']) //0支付直接送出
           }else{
             wx.navigateTo({
-              url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself
+              url: '../../order/payment/payment?orderNo=' + order_data['order_no'] + '&totalFee=' + order_data['order_pay'] + '&is_buymyself=' + is_buymyself+ '&is_checkout=' + is_checkout
             })
           }
         } else {

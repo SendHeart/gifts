@@ -19,6 +19,7 @@ Page({
     shop_type: shop_type,
     is_buymyself:0,
     order_shape:0,
+    is_checkout:0,
 	},
   setNavigation: function () {
     let startBarHeight = 20
@@ -139,6 +140,7 @@ Page({
     var totalFee = options.totalFee ? options.totalFee:0
     var is_buymyself = options.is_buymyself ? options.is_buymyself:0 //自购礼品
     var received = options.received ? options.received : 0 //未支付礼物订单支付
+    var is_checkout =  options.is_checkout ? options.is_checkout : 0
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = that.data.shop_type
@@ -194,6 +196,7 @@ Page({
             is_buymyself:is_buymyself,
             received:received,
             order_shape:orderObjects[0]['shape'],
+            is_checkout:is_checkout,
           })
           if ((is_buymyself == 0 && received == 0) || totalFee==0 ) that.pay()
         } else {
@@ -244,6 +247,7 @@ Page({
     var is_buymyself = that.data.is_buymyself
     var received = that.data.received
     var order_shape = that.data.order_shape
+    var is_checkout = that.data.is_checkout
     console.log('payment openId', openId, ' totalFee:', totalFee, ' is_buymyself:', is_buymyself, ' received:', received);
 
 		//统一下单接口对接
@@ -291,9 +295,15 @@ Page({
                   })
                 } else if(order_shape==8 || order_shape ==7){
                   that.delete_cart()
-                  wx.switchTab({
-                    url: '/pages/my/index'
-                  })
+                  if(is_checkout=='1'){
+                    wx.navigateTo({
+                      url: '/pages/order/checkout/checkout?is_checkout=1',
+                    })
+                  }else{
+                    wx.switchTab({
+                      url: '/pages/my/index'
+                    })
+                  }                  
                 } else {
                   that.delete_cart()
                   that.returnTapTag()
@@ -332,6 +342,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var goods_flag = that.data.goods_flag
+    var is_checkout = that.data.is_checkout
     var order_no = that.data.orderNo
     var is_buymyself = that.data.is_buymyself
     //再次确认订单状态
@@ -360,9 +371,8 @@ Page({
             duration: 1500
           })
           setTimeout(function () {
-            wx.navigateBack()
-          }, 1500);
-
+            wx.navigateBack()         
+          }, 1500)
           return
         } else {
           if (orderObjects[0]['gift_status'] > 0) {

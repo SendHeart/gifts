@@ -260,9 +260,7 @@ Page({
 
     var page=that.data.page
     var pagesize=that.data.pagesize
-    var pageoffset = that.data.pageoffset
-
-   
+    var pageoffset = that.data.pageoffset   
 
     that.setData({
       is_reloading: true,
@@ -290,7 +288,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-       console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
+        console.log('会员浏览商品列表获取:', recommentslist, ' page num:', rpage_num, ' page:', page, ' pageoffset:', pageoffset, ' res.data:', res.data);
         if(res.data.status=='y'){
           var recommentslist = that.data.recommentslist
           var recommentslist_new = res.data.result
@@ -1308,7 +1306,7 @@ Page({
   modalBindconfirmPhone: function () {
     var that = this
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
-    /*
+ 
     if (user_phone){
       that.setData({
         modalHiddenPhone: !that.data.modalHiddenPhone
@@ -1319,7 +1317,7 @@ Page({
         needPhoneNumber: needPhoneNumber
       })
     }
-    */
+   
   },  
 
   bindArtPickerChange: function (e) {
@@ -1643,13 +1641,11 @@ Page({
     }
  
     if (userInfo){
-      if (!user_phone || user_phone == '') { //必须获取手机号
-        /*
+      if (!user_phone || user_phone == '') { //必须获取手机号       
         modalHiddenPhone = !modalHiddenPhone
         that.setData({
           modalHiddenPhone: modalHiddenPhone,
-        })
-        */
+        })         
       } else if (!user_name || user_name == '') {
         modalHiddenUserName = !modalHiddenUserName
         that.setData({

@@ -236,7 +236,7 @@ onPageScroll: function (t) {
     var a = this;
     // console.log(t.scrollTop)
     a.setData({
-    scrollTop:t.scrollTop
+        scrollTop:t.scrollTop
     })
     if (t.scrollTop > 1280) { //滚动显示高度
     a.setData({
