@@ -140,29 +140,32 @@ Page({
 
             }
         } else { //上下方向滑动
-            if (ty < 0 && !that.data.is_reloading) {  // text = "向上滑动"
-                if (that.data.page < that.data.rpage_num) {
+            if (ty < 0 ) {  // text = "向上拉"
+                if (that.data.page < that.data.rpage_num && !that.data.is_reloading) {
                     //将当前坐标进行保存以进行下一次计算
-                    that.getMoreGoodsTapTag()
-                    /*
-                    if (currentY > scrollHeight - 100) {
-
-                    }
-                    */
-                }
-            } else if (ty > 0) {  //text = "向下滑动"
-
+                    that.getMoreGoodsTapTag()                   
+                }                
+            } else if (ty > 0) {  //text = "向下拉"
+                 
             }
         }
-
+        if (currentY > scrollHeight - 100) {
+            that.setData({
+               floorstatus: true,
+               _fixed: true,
+           })
+        } else {                   
+            that.setData({
+               floorstatus: false,
+               _fixed: false,
+            });
+        }      
         that.setData({
-            floorstatus: true,
+            //floorstatus: true,
             lastX:currentX,
             lastY:currentY
         })
-    
-        //console.log('currentX:', currentX, 'currentY:', currentY, 'ty:', ty, ' page:', page, ' rpage_num:', rpage_num)
-
+        //console.log('hall/hall handletouchmove()  ty:'+ty)      
     },
 
     // 打开全部子分类
@@ -231,7 +234,7 @@ Page({
         })
         that.reloadData()
     },
-
+/* 
 onPageScroll: function (t) {
     var a = this;
     // console.log(t.scrollTop)
@@ -250,14 +253,18 @@ onPageScroll: function (t) {
     });
     }
 },
-
+*/
 //回到顶部
 goTop: function (e) {  // 一键回到顶部
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0,  // 滚动到页面的目标位置，单位 px
-        duration: 300 // 滚动动画的时长，单位 ms
+        duration: 30, // 滚动动画的时长，单位 ms       
       })
+      this.setData({
+        floorstatus:false,
+        _fixed:false,
+    });
     } else {
       wx.showModal({
         title: '提示',
@@ -1294,22 +1301,24 @@ query_message:function(){
     },
 
     // 获取滚动条当前位置
+    scrolltoupper: function (e) {
+        //console.log('获取滚动条当前位置:', e.detail.scrollTop)
+        if (e.detail.scrollTop > 1280) {
+          this.setData({
+            floorstatus: true,
+            scrollTop:e.detail.scrollTop,
+            _fixed: true,
+          })
+        } else {
+          this.setData({
+            floorstatus: false,
+            scrollTop: e.detail.scrollTop,
+            _fixed: false,
+          })
+        }
+    },
     /*
-   scrolltoupper: function (e) {
-     console.log('获取滚动条当前位置:', e.detail.scrollTop)
-     if (e.detail.scrollTop > 10) {
-       this.setData({
-         floorstatus: true,
-         scrollTop:e.detail.scrollTop,
-       })
-
-     } else {
-       this.setData({
-         floorstatus: false,
-         scrollTop: e.detail.scrollTop,
-       })
-     }
-   },
+   
    */
 
     bindPickFriends: function () {

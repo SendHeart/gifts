@@ -1479,6 +1479,7 @@ modal {
   
   .classify-banner {
     width: 100%;
+    position: relative;
     padding-top: 0rpx;
     background: #1d1d1d; 
     z-index: 99;

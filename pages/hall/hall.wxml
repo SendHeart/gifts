@@ -1,9 +1,8 @@
 <include src="../common/header.wxml" />
 <import src="../common/nav.wxml" />
 
-<view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove"
-  bindtouchend="handletouchend">
-  <!--    bindscroll="scrolltoupper" -->
+<view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+  <!--    -->
   <!-- 
 <scroll-view scroll-y class="prom-goods-list" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" enable-back-to-to="true" >
 -->
