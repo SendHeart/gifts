@@ -1,6 +1,6 @@
 <include src="../common/header.wxml" />
 <import src="../common/nav.wxml" />
-
+<import src="../common/loading.wxml" />
 <view class="container" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
   <!--    -->
   <!-- 
@@ -379,12 +379,13 @@
       </block>
     </view>
    
-<!-- loading -->
-    <view class="loading-show" hidden="{{!is_reloading}}">
-      <text>{{loading_note}}</text>
-    </view>
-  </view>
 
+  </view>
+  <!-- loading -->
+  <view class="loading-show" hidden="{{!is_reloading}}">
+    <view style="margin-right:20rpx;">{{loading_note}}</view>
+    <template is="loading" />
+  </view>
   <!--
  </scroll-view>
  -->

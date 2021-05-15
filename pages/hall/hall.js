@@ -103,7 +103,7 @@ Page({
         avatarUrl: userInfo.avatarUrl,
         user_group_id:user_group_id,
         shop_type:shop_type,
-
+        loading_note:'加载中',
         hiddenallclassify:true,
         socktBtnTitle: '连接socket',
         message: '',
