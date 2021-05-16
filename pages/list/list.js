@@ -38,12 +38,11 @@ Page({
     autoplay: true,
     interval: 3000,
     duration: 1000,
-    loadingHidden: true, // loading
     is_goodslist_loading:false,
     msgList: [],
     hidden: true,
     scrollTop: 0,
-    scrollHeight: 0,
+    scrollHeight: 500,
     tab: 'is_recommend',
     tab_value:"1",
     tab2: 'default',
@@ -54,6 +53,7 @@ Page({
     hiddenallclassify: true,
     shop_type:shop_type,
     animationData: "",
+    loading_note:"加载中",
   },
   //定位数据  
   getleft: function (e) {
@@ -91,7 +91,7 @@ Page({
 
   touchStart(e) {
     var that = this
-    // console.log(e)
+    console.log('list/list touchStart() e:'+e)
     that.setData({
       "startX": e.changedTouches[0].clientX,
       "startY": e.changedTouches[0].clientY
@@ -119,6 +119,39 @@ Page({
     })
   },
   
+  // 获取滚动条当前位置
+  scrolltoupper:function(e){
+    var that = this
+    var currentY = e.detail.scrollTop
+    var lastY = that.data.lastY?that.data.lastY:0  
+    var ty = currentY - lastY
+    var scrollHeight = that.data.scrollHeight
+    var page  = that.data.page
+    var page_num = that.data.all_rows?that.data.all_rows:1 
+    var is_goodslist_loading = that.data.is_goodslist_loading
+    if (currentY > scrollHeight - 100) {
+      that.setData({
+        floorstatus: true,       
+      })
+    } else {                   
+      that.setData({
+        floorstatus: false,         
+      })
+    }
+    if (ty < 0 ) { 
+                   
+    } else if (ty > 0) { 
+      if (page < page_num && !is_goodslist_loading) {
+        //将当前坐标进行保存以进行下一次计算
+          that.getMoreGoodsTapTag()                   
+      }         
+    }      
+    that.setData({
+      lastY:currentY
+    })  
+    //console.log('list scrolltoupper():', e.detail.scrollTop,' ty:',ty)
+  },
+ 
   // 点击获取对应分类的数据
   onTapTag: function (e) {
     var that = this;
@@ -175,25 +208,7 @@ Page({
     that.get_goods_list()
   },
 
-// 获取滚动条当前位置
-  scrolltoupper:function(e){
-    var that = this
-    if (e.detail.scrollTop > 100) {
-      this.setData({
-        floorstatus: true
-      })
-      if (that.data.platform == 'ios') {
-        //that.getMoreGoodsTapTag() //苹果手机渲染更快，多给记录
-        //console.log('list scrolltoupper():', e.detail.scrollTop, that.data.platform)
-      }
-    } else {
-      this.setData({
-        floorstatus: false
-      })
-    }
-    //console.log('list scrolltoupper():', e.detail.scrollTop)
-  },
- 
+
   //回到顶部
   goTop: function (e) {  // 一键回到顶部
     var that = this
@@ -219,24 +234,13 @@ Page({
     var page = that.data.page + 1;
     var all_rows = that.data.all_rows
     var is_goodslist_loading = that.data.is_goodslist_loading
-    if (is_goodslist_loading) return
+    if (is_goodslist_loading) {
+      return
+    }
     if (page > all_rows){
-      /*
-      wx.showToast({
-        title: '已经到底了~',
-        icon: 'none',
-        duration: 1000
-      })
-      */
       that.setData({
-        loadingHidden: false,
-        loading_note: '已经到底了'
+        is_goodslist_loading: false,
       })
-      setTimeout(function () {
-        that.setData({
-          loadingHidden: true,
-        })
-      }, 1000)
       return
     }
 
@@ -334,7 +338,6 @@ Page({
   
     that.setData({
       is_goodslist_loading: true,
-      loadingHidden:false,
     })
     wx.request({
       url: weburl + '/api/client/get_goods_list',
@@ -375,9 +378,9 @@ Page({
             venuesItems_show: [],
             all_rows: 0,
             is_goodslist_loading: false,
-            keyword: ''
+            keyword: '',
           })
-          return;
+          return
         }
         //var venuesItems = that.data.venuesItems
         if (venuesItems_new){
@@ -409,11 +412,13 @@ Page({
             page: page ,
             all_rows: all_rows,
             pageoffset:pageoffset,
-            keyword: '',
+            keyword: '',            
           },function(){
-            that.setData({
-              is_goodslist_loading: false,
-            })
+            setTimeout(function () {
+              that.setData({
+                is_goodslist_loading: false,
+              })
+            }, 600)             
           })
         }
       }
@@ -467,7 +472,7 @@ Page({
           venuesItems_show: [],
         },function(){
           that.setData({
-            loadingHidden: true,
+            is_goodslist_loading: false,
           })
           that.get_goods_list()
         })

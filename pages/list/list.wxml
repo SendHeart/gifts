@@ -1,5 +1,6 @@
 <import src="../common/nav.wxml" />
 <import src="../common/nav2.wxml" />
+<import src="../common/loading.wxml" />
 <!--
 <view class='nav bg-white' style='height:{{navH}}px'>
     <view class='nav-title'>
@@ -34,13 +35,7 @@
     <image bindtap='searchTapTag' src="../../images/search-btn.png"></image>
 </view>
   -->
-
-<scroll-view scroll-y class="container" bindscrolltolower="getMoreGoodsTapTag" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > <!--  catchtouchstart='touchStart' catchtouchend="touchEnd"-->
-<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
-  <icon style="margin-top:-50rpx;" class="Hui-iconfont iconv-uparrow" />
-  <view class='' style="margin-top:-5rpx;font-size:22rpx;">TOP</view>
-  <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
-</view>
+<scroll-view scroll-y class="container" bindscrolltolower="" bindscroll="scrolltoupper" scroll-into-view="v_{{toView}}" scroll-top="{{scrollTop}}" > 
   <view class="venues_box" >
   <view class="box-left">
    <block wx:for="{{venuesItems_show}}"  wx:key="id" wx:for-item="venuesItems_show" wx:for-index="ordersIndex">
@@ -106,15 +101,19 @@
       </block>
     </block>
     </view>
-
   </view>
-<view class="loading-show" hidden="{{loadingHidden}}">
-  <text>{{loading_note}}</text>
-</view>
-  <!--使用懒加载替代
-  <button wx:if="{{page<all_rows}}" type="default" size="default" hover-class="button-hover" class="button" bindtap="getMoreGoodsTapTag" style="margin-top:10rpx; margin-bottom:60rpx;">更多</button>
-  <loading hidden="{{loadingHidden}}">
-    加载中...
-  </loading>
--->
+
+  <!-- loading -->
+  <view class="loading-show" hidden="{{!is_goodslist_loading}}">
+    <view style="margin-right:2em;">{{loading_note}}</view>   
+    <template is="loading" />
+  </view>
 </scroll-view>
+<view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">
+  <icon style="margin-top:-50rpx;" class="Hui-iconfont iconv-uparrow" />
+  <view class='' style="margin-top:-5rpx;font-size:22rpx;">TOP</view>
+  <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
+</view>
+
+
+

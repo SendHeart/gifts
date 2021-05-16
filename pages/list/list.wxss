@@ -16,6 +16,15 @@ page {
   width: 100%;
   height: 100%;
 }
+
+.container {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  margin: 10rpx 0 0 0;
+  padding-bottom: 100rpx;
+}
+
 ::-webkit-scrollbar {
   width: 0;
   height: 0;
@@ -48,13 +57,6 @@ page {
   margin-right: 1rpx;
   margin-top: 0rpx;
   margin-left: 20rpx;
-}
-.container {
-    width: 100%;
-    height: 100%;
-    overflow-x: hidden;
-    margin: 45rpx 0 0 0;
-    padding-bottom: 100rpx;
 }
 
 .all-classify{ 
@@ -138,7 +140,7 @@ page {
 .top-bar {
     white-space: nowrap;
     text-align: center;
-    width: 90.5%;
+    width: 98%;
     height: 30px;
     overflow-y: hidden;
     background: #1d1d1d; 
@@ -386,18 +388,15 @@ swiper-item image {
 
 .loading-show {
   width: 100%;
-  /* 
-  position: fixed; 
-  bottom:0; 
-  */
-  height: 50rpx;
-  line-height: 50rpx;
-  display:none;
+  height: 2em;
+  line-height: 2em;
+  display: flex;
   flex-direction: row;
   justify-content: center;
   font-size: 30rpx;
-  color: #f2f2f2;
-  margin-bottom:50rpx;
-  z-index: 1000;
+  color: #bbbbbb;
+  margin-bottom:70rpx;
+  z-index: 1001;
 }
+
 
