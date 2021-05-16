@@ -79,14 +79,10 @@
 </view>
 -->
 <view class="middle-banner">
-  <view wx:if="{{middle1_img}}" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">
-        
-          <image class="middle-banner-image" src="{{middle1_img}}"></image>
-       
-        
+  <view wx:if="{{middle1_img}}" bindtap="bindMiddleGoods" data-goods-type='1' data-middle-title="{{middle1_title}}">        
+          <image class="middle-banner-image" src="{{middle1_img}}"></image>        
           <text class="middle-banner-title">{{middle1_title}}</text>
-          <text class="middle-banner-note">{{middle1_note}}</text>
-        
+          <text class="middle-banner-note">{{middle1_note}}</text>        
       </view>
 </view>
 
@@ -338,8 +334,7 @@
               </view>
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
-                <view class="price-now"><text class="membericon">会员价</text><text class="sfont">￥</text>{{item.sell_price}}</view>
-                
+                <view class="price-now"><text class="membericon">会员价</text><text class="sfont">￥</text>{{item.sell_price}}</view>                
               </view>
             </view>
           </block>
@@ -367,7 +362,6 @@
                 <text class="goods-name">{{item.name}}</text>
               </view>
               <view class="goods-prom">{{item.act_info?item.act_info:''}}</view>
-              
               <view class="price-list">
                 <view class="price-market">{{item.market_price>0?'￥'+item.market_price:''}}</view>
                 <view class="price-now"><text class="membericon">会员价</text><text class="sfont">￥</text><text class="price-num">{{item.sell_price}}</text></view>
@@ -378,8 +372,6 @@
         </block>
       </block>
     </view>
-   
-
   </view>
   <!-- loading -->
   <view class="loading-show" hidden="{{!is_reloading}}">
