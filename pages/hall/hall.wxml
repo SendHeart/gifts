@@ -383,7 +383,7 @@
   </view>
   <!-- loading -->
   <view class="loading-show" hidden="{{!is_reloading}}">
-    <view style="margin-right:20rpx;">{{loading_note}}</view>
+    <view style="margin-right:2em;">{{loading_note}}</view>   
     <template is="loading" />
   </view>
   <!--
