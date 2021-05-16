@@ -1220,20 +1220,21 @@ query_message:function(){
                             recommentslist_new[i]['hidden'] = 0;  //1
                         }
                     }
-
+                    /*
                     if (page > 1 && recommentslist_new) {
                         //向后合拼
                         recommentslist = recommentslist.concat(recommentslist_new);
                     } else {
                         recommentslist = recommentslist_new
                     }
+                    */
                     //更新当前显示页信息
                     if (recommentslist_show.length >= show_max) {
                         recommentslist_show.shift()
                     }
 
                     that.setData({
-                        recommentslist: recommentslist,
+                        //recommentslist: recommentslist,
                         rpage_num: rpage_num?rpage_num:0,
                         ["recommentslist_show[" + (page - 1) + "]"]: recommentslist_new,
                         pageoffset: pageoffset?pageoffset:0,
