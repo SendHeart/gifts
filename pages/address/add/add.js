@@ -471,7 +471,7 @@ Page({
 	},
 	cascadePopup: function() {
 		var animation = wx.createAnimation({
-			duration: 300,
+			duration: 100,
 			timingFunction: 'ease-in-out',
 		});
 		this.animation = animation;

@@ -149,7 +149,8 @@ Page({
                  
             }
         }
-        if (currentY > scrollHeight - 100) {
+        console.log('currentY:'+ currentY + 'scrollHeight:' + scrollHeight)
+        if (currentY > scrollHeight * 2) {
             that.setData({
                floorstatus: true,
                _fixed: true,
@@ -159,12 +160,14 @@ Page({
                floorstatus: false,
                _fixed: false,
             });
-        }      
+        }  
         that.setData({
             //floorstatus: true,
             lastX:currentX,
             lastY:currentY
         })
+
+        
         //console.log('hall/hall handletouchmove()  ty:'+ty)      
     },
 
@@ -234,8 +237,8 @@ Page({
         })
         that.reloadData()
     },
-/* 
-onPageScroll: function (t) {
+
+/* onPageScroll: function (t) {
     var a = this;
     // console.log(t.scrollTop)
     a.setData({
@@ -252,14 +255,14 @@ onPageScroll: function (t) {
         _fixed: false,
     });
     }
-},
-*/
+}, */
+
 //回到顶部
 goTop: function (e) {  // 一键回到顶部
     if (wx.pageScrollTo) {
       wx.pageScrollTo({
         scrollTop: 0,  // 滚动到页面的目标位置，单位 px
-        duration: 30, // 滚动动画的时长，单位 ms       
+        duration: 300, // 滚动动画的时长，单位 ms       
       })
       this.setData({
         floorstatus:false,
@@ -1308,14 +1311,14 @@ query_message:function(){
         if (e.detail.scrollTop > 1280) {
           this.setData({
             floorstatus: true,
-            scrollTop:e.detail.scrollTop,
             _fixed: true,
+            scrollTop:e.detail.scrollTop,
           })
         } else {
           this.setData({
             floorstatus: false,
-            scrollTop: e.detail.scrollTop,
             _fixed: false,
+            scrollTop: e.detail.scrollTop,
           })
         }
     },

@@ -1,5 +1,5 @@
 page {
-	background: #fff;
+	background: #1d1d1d;
   overflow-x: hidden;
   width: 100%;
 }
@@ -47,7 +47,7 @@ page {
   margin-left: 20rpx;
 }
 .amount {
-font-size:30rpx !important;
+font-size:24rpx !important;
 font-weight: bold;
 margin: 0 !important;
 text-align: left !important;
@@ -149,21 +149,20 @@ picker {
 .carts-container {
   position: relative;
   width: 100%;
-  height: 350rpx;
+  height: 380rpx;
 }
 
 .carts-info{
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  background-color: #999;
 }
 /*每行单元格*/
 .carts-item {
   width: 96%;
   display: flex;
   flex-direction:column;
-  height: 300rpx;
+  height: 340rpx;
   /*width属性解决标题文字太短而缩略图偏移*/
   border-radius: 20rpx 20rpx 0 0;
   padding: 20rpx 0;
@@ -176,20 +175,20 @@ picker {
 /*左部图片*/
 
 .carts-image {
-  width: 261rpx;
-  height: 80rpx; 
-  margin: 0 20rpx;
+  width: 400rpx;
+  height: 120rpx; 
+  margin: 20rpx auto;
 }
 
 /*右部描述*/
 
 .carts-text {
-  width: 96%;
+  width: 90%;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 40rpx;
   line-height: 1.8;
+  margin: 30rpx auto;
 }
 
 /*右上部分标题*/
@@ -224,7 +223,6 @@ picker {
 
 .recharge-info {
   width: 100%;
-  background: #F2F2F2;
   z-index: 1;
   margin-top: -2rpx;
 }
@@ -234,7 +232,6 @@ picker {
   flex-direction: row;
   justify-content:space-around; 
   padding: 20rpx 10rpx;
-  background-color: #333333;
 }
 
 .recharge-level .recharge-item {
@@ -245,19 +242,26 @@ picker {
   align-items: center;
   width: 130rpx;
   height: 160rpx;
-  padding: 10rpx;
   border-radius: 20rpx;
   overflow: hidden;
 }
 .recharge-type {
   font-size: 28rpx!important;
   font-weight: bold;
+  
 }
 .recharge-item-selected {
   background: #1d1d1d!important;
   color: #fff!important;
   border: 2px solid #FF952D !important;
 }
+.recharge-item-selected .recharge-type {
+  width: 100%;
+  background: #FF952D;
+  line-height: 42rpx;
+
+}
+
 
 .recharge-item-unselected {
   background-color: #ffffff;
@@ -282,46 +286,44 @@ picker {
 }
 
 .recharge_recomment {
-  width: 100%;
-  background-color: #f2f2f2;
-  background-repeat: norepeat;
+  width: 96%;
   align-content: center;
-  opacity: 1;
-  background-size: 100% 80%;
+  margin: 0 auto;
 }
 
 .recharge_recomment image {
-  width: 100%;
-  height: 300rpx;
+  width: 360px;
+  height: 486px;
 }
 /*右下部分价格与数量*/
 
 .recharge-confirm {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   justify-content:center; 
   text-align: center;
   align-content: center;
   width: 100%;
   margin:0 auto ;
-  padding:10rpx 0;
   z-index: 1;
-  background-color: #fff;
-  border-top: 1px solid #eee;
-  line-height: 50px;
+  background-color: #1d1d1d;
+  border-top: 1px solid #333333;
+  position: fixed;
+  left: 0;
+  bottom: 40rpx;
 }
 
 
 .recharge-confirm button {
   line-height: 100rpx;
-  width: 250rpx;
+  width: 270rpx;
   height: 100rpx;
   /*background: linear-gradient(to bottom, #e34c55 0%,#e30715 100%);*/
   background: #FF952D;
   color: #ffffff;
   font-size: 32rpx;
   border-radius: 20rpx;
-  margin-right:50rpx;
+  margin-right:30rpx;
   margin-top: 10rpx;
 }
 
@@ -393,22 +395,19 @@ line-height: 20rpx;
 	display: flex;
 	flex-direction: column;
 	justify-content: space-around;
-	border-top: 1rpx solid #eee;
-	border-bottom: 1rpx solid #eee;
 	line-height: 1.5;
-  width:100%;
-  background: #fff;
-  font-size: 28rpx;
+  width:58%;
+  font-size: 26rpx;
 }
 
 .select-and-amount {
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: left;
   font-size: 24rpx;
   color: #999999;
   width:92%;
-  margin: 15rpx auto;
+  margin: 15rpx 0rpx 15rpx 30rpx;
 }
 
 .coupons-list {
@@ -500,11 +499,8 @@ line-height: 20rpx;
   height: 50rpx;
   line-height: 50rpx;
 }
-
-.recharge-confirm text {
-  width: 250rpx;
-  color: #444;
-  padding: 10rpx;
-  margin-left: 60rpx;
-  font-size: 28rpx;
+.footer {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }

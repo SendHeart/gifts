@@ -11,10 +11,12 @@
   content:'\e6d5';
 }
 page {
-  background: #f5f5f5;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
+  padding: 0rpx;
+  
+  background: #1d1d1d;
 }
 /* 隐藏滚动条 */
 ::-webkit-scrollbar {
@@ -47,12 +49,11 @@ page {
 
 .container {
   width: 100%;
-  overflow: auto;
-  overflow-x: hidden;
   margin: 0 auto;
-  box-sizing: border-box;
   z-index: 1;
   scrollbar-width: 0;
+  border-radius: 24rpx 24rpx 0 0;
+  background: #fff;
 }
 ::-webkit-scrollbar {
 width: 0 !important;
@@ -84,7 +85,7 @@ scroll-view {
   line-height: 30px;
   font-size: 14px;
   position: relative; 
-  margin:7px 5px;
+  margin:0px 0px 4px 5px;
 }
 
 .userinfo-avatar {
@@ -185,8 +186,8 @@ modal {
 }
 .banner {
   width: 100%;
-  height: 200px;
-  background: linear-gradient(0deg, #f2f2f2 50%, #1d1d1d 50%);
+  height: 200px;/* 
+  background: linear-gradient(0deg, #f2f2f2 50%, #1d1d1d 50%); */
   align-content: center;
   z-index: 9;
   padding: 16rpx 0;
@@ -225,21 +226,21 @@ modal {
   margin-bottom: 2rpx;
 }
 .swiper-box .wx-swiper-dot{
- width:24rpx;
+ width:20rpx;
  display: inline-flex;
- height: 6rpx;
+ height: 4rpx;
  margin-left: 0rpx;
  justify-content:space-around;
 }
 /* 修改dot之间的间距 */
 .wx-swiper-dots .wx-swiper-dot:nth-of-type(n+2) {
-  margin-left: -6rpx;
+  margin-left: -10rpx;
 }
 .swiper-box .wx-swiper-dot::before{
  content: '';
  flex-grow: 1; 
  background: rgba(255,255,255,0.25);
- border-radius: 6rpx
+ /* border-radius: 6rpx */
 }
 .swiper-box .wx-swiper-dot-active::before{
  background:rgba(0,0,0,0.25);   
@@ -1132,10 +1133,11 @@ modal {
 .price-now {
   text-indent: 0;
   color: #e34c55;
-  font-size: 30rpx;
+  font-size: 28rpx;
   margin-right: 24rpx;
   line-height: 1.8;
   font-weight:bold;
+  letter-spacing: -1rpx;
 }
 
 .price-now .sfont {
@@ -1455,13 +1457,13 @@ modal {
     display:flex;
     flex-direction: row;
     flex-wrap:wrap;
-    color: #eeeeee;
+    color: #111111;
     text-align: left;
      margin-bottom: 30rpx;
      padding: 10rpx ;
   } 
   .all-classify-item {
-    color: #eeeeee;
+    color: #111111;
     width: 150rpx;
     height: 50rpx;
     text-align: center;
@@ -1481,18 +1483,18 @@ modal {
     width: 100%;
     position: relative;
     padding-top: 0rpx;
-    background: #1d1d1d; 
+    background: #ffffff; 
     z-index: 99;
   }
   .classify-banner-fix {
     width: 100%;
     padding-top: 0rpx;
-    background: #1d1d1d; 
+    background: #fff; 
     z-index: 9999;
     position: fixed;
     top: 0;
     left: 0;
-    transition:opacity 0.5s;
+    border-bottom: 1rpx solid #eeeeee;
   }
   .top-bar-list{  
     display: flex;
@@ -1508,25 +1510,25 @@ modal {
     width: 100%;
     height: 30px;
     overflow-y: hidden;
-    background: #1D1D1D; 
+    background: #fff; 
     z-index:99;
     margin: 4px 10px;
   }
 
   .top-bar-item {
     display:inline-block;
-    color: #ffffff;
+    color: #111111;
     text-align: center;
-    line-height: 30px;
+    line-height: 28px;
     font-size: 30rpx;
-    font-weight: 500;
+    font-weight: 600;
     padding: 0 20rpx;
   }
   .top-bar-active {
     color: #fff!important;
     /* background: linear-gradient(180deg, #1d1d1d 94%, #FFFFFF 6%); */
     border-radius: 20rpx;
-    background-color: #000000;
+    background-color: #1d1d1d;
     
   }
   .top-bar-image {
@@ -1560,7 +1562,7 @@ modal {
   margin-right: 4rpx;
 }
 .price-num {
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 .middle-banner {
   display: flex;
@@ -1579,7 +1581,7 @@ modal {
 .middle-banner-title {
   position: absolute;
   left:0;
-  top: 4rpx;
+  top: 12rpx;
   display: flex;
   flex-direction: row;
   justify-content: center;

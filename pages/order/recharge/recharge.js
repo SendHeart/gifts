@@ -25,7 +25,7 @@ Page({
     selectedAllStatus: false,
     selectedAgreeStatus: false,
     recharge_selected:'2',
-    recharge_note:'勾选此选项并购买会籍资格时，即代表您已阅读、理解并接受',
+    recharge_note:'勾选此选项即代表您已阅读、理解并接受',
     recharge_note2 :'注意: 电子版会员卡将在购买成功后，被同时关联至您的微信账户和个人手机号，而会员卡号将作为唯一账户识别号',
     discountpay:0, //折扣差额
     payamount:0, //实际支付金额

@@ -1,9 +1,9 @@
 
   <!-- 自定义头部 -->
-  <view class="nav"  style='height:45px;'>
+  <view class="nav"  style='height:38px;'>
     <view class="nav-title" >
       <view class="userinfo">
-        <view style="height:45px;display:flex;text-align:center;align-items:center;">
+        <view style="height:38px;display:flex;text-align:center;align-items:center;">
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover" bindtap="userTapTag" />
         </view>
         <!-- <view style="height:{{navH/2}}px;line-height:{{navH/2}}px;">
@@ -15,7 +15,7 @@
         <icon class="INsearchicon" type="search" size="12" />
         <input class="weui-input" placeholder="搜索我的品质生活" bindtap='searchTapTag' disabled="disable" />       
       </view>
-      <view style="height:35px;line-height:35px;width:20%;" catchtap="messagesTapTag">
+      <view style="height:36px;line-height:28px;width:17%;" catchtap="messagesTapTag">
         <text class="toptips">了解会员制</text>
       </view> 
     </view>

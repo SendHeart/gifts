@@ -191,7 +191,6 @@ page {
   color: #E34C55;
   font-weight: 600;
   font-size: 36rpx;
-  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 } 
 .price-real::before {
   content: '¥';

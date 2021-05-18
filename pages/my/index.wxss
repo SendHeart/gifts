@@ -159,7 +159,7 @@ page {
   width: 30%;
 }
 .cards-id{
-  color: #ffffff;
+  color: #FFCA4B;
   font-size: 22rpx;
   font-weight: normal;
   line-height: 22rpx;
