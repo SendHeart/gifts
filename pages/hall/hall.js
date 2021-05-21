@@ -30,7 +30,8 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var navList = [
     { id: "is_recommend", title: "推荐"  ,value:"1"},
 ]
-const innerAudioContext = wx.createInnerAudioContext()
+//const innerAudioContext = wx.createInnerAudioContext()
+const bgMusic = wx.getBackgroundAudioManager()
 
 Page({
     data: {
@@ -561,9 +562,9 @@ goTop: function (e) {  // 一键回到顶部
             bg_muisc:app.globalData.playing
         })
         if(app.globalData.playing){
-            innerAudioContext.play()//播放
+            bgMusic.play();//播放
         }else{
-            innerAudioContext.pause()//停止播放
+            bgMusic.pause();//停止播放
         }
         
         /*
@@ -1604,26 +1605,94 @@ goTop: function (e) {  // 一键回到顶部
             var bgmusic_list = res.data.result;
             if (!bgmusic_list) {          
               return
-            }     
+            } 
+            for (var i = 0; i < bgmusic_list.length;i++){
+                bgmusic_list[i]['downloadURL'] =  bgmusic_list[i]['downloadURL']+'?rand='+Math.random()*100
+            }    
             app.globalData.musicLib.music = bgmusic_list
-            that.play_bgmusic()
+            setTimeout(function () {
+                if(app.globalData.musicLib.music.length>0){
+                    //that.play_bgmusic()
+                    that.listenerButtonPlay()
+                }else{
+                    console.log('背景音乐列表为空 hall/hall get_bgmusic_list() bgmusit list:', app.globalData.musicLib.music)
+                }                
+              }, 500)
           }
         })
     },
+    // 播放
+    listenerButtonPlay: function() {
+        var that = this
+        //bug ios 播放时必须加title 不然会报错导致音乐不播放
+        bgMusic.title = '此时此刻'  
+        bgMusic.epname = '此时此刻'   
+        console.log('hall/hall listenerButtonPlay() 播放 index:' + app.globalData.bg_index);    
+        bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
+        bgMusic.onTimeUpdate(() => { 
+            var duration = bgMusic.duration; 
+            var offset = bgMusic.currentTime;  
+            var currentTime = parseInt(bgMusic.currentTime);
+            var min = "0" + parseInt(currentTime / 60);
+            var max = parseInt(bgMusic.duration);
+            var sec = currentTime % 60;
+            if (sec < 10) {
+                sec = "0" + sec;
+            };
+            var starttime = min + ':' + sec;   /*  00:00  */
+            that.setData({
+                offset: currentTime,
+                starttime: starttime,
+                max: max,
+                changePlay: true
+            })
+        })
+        //播放结束
+        bgMusic.onEnded(() => {
+            that.setData({
+                starttime: '00:00',
+                isOpen: false,
+                offset: 0
+            })
+            console.log("音乐播放结束");
+            app.globalData.bg_index++;
+            if(app.globalData.bg_index > app.globalData.musicLib.music.length-1){
+                app.globalData.bg_index = 0
+            }
+        })
+        bgMusic.play();
+    },
 
-    play_bgmusic: function (e) {
+  //暂停播放
+    listenerButtonPause:function(){
+        var that = this
+        bgMusic.pause()
+    },
+    listenerButtonStop:function(){
+        var that = this
+        bgMusic.stop()
+    },
+    // 进度条拖拽
+    sliderChange:function(e) {
+        var that = this
+        var offset = parseInt(e.detail.value);
+        bgMusic.play();
+        bgMusic.seek(offset);
+    },
+    /*
+    play_bgmusic: function () {
         var that = this          
         innerAudioContext.autoplay = true
         innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL
         innerAudioContext.onPlay(() => {
-            console.log('hall/hall onReady() 开始播放背景音乐')
+            console.log('hall/hall play_bgmusic() 开始播放背景音乐'+innerAudioContext.src)
         })
         innerAudioContext.onEnded(() => {
             app.globalData.bg_index++;
             if(app.globalData.bg_index > app.globalData.musicLib.music.length-1){
                 app.globalData.bg_index = 0
             }
-		    console.log('播放结束 index:' + app.globalData.bg_index);
+		    console.log('hall/hall play_bgmusic() 播放结束 index:' + app.globalData.bg_index);
             innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL
             innerAudioContext.play()		    
         })
@@ -1632,6 +1701,8 @@ goTop: function (e) {  // 一键回到顶部
             console.log(res.errCode)
         })
     },
+    */
+   
     onLoad: function (options) {
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
@@ -1666,7 +1737,7 @@ goTop: function (e) {  // 一键回到顶部
         })
         app.globalData.is_task = task
         that.get_menubar()
-        that.get_bgmusic_list()
+        
         //自定义头部方法
         this.setData({
             navH: app.globalData.navHeight,
@@ -1789,6 +1860,7 @@ goTop: function (e) {  // 一键回到顶部
         that.query_cart()
         that.get_project_gift_para()
         that.query_friends()
+        that.get_bgmusic_list()
         that.setData({
             userInfo: userInfo
         })
