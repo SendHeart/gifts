@@ -16,6 +16,7 @@ Page({
     town: [],
     title_name: '收到礼物',
     title_logo: '../../../images/footer-icon-05.png',
+    img_gift:weburl+'/uploads/gift.gif?rand='+Math.random()*100,
     shop_type:shop_type,
     orders: [],
     orderskus:[],

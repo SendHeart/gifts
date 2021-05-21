@@ -1884,7 +1884,8 @@ Page({
         let time_now = new Date().getTime()
         let is_card_overdue = Math.floor((time_now - parseInt(time_due_end)) / 1000)>0?true:false 
         */
-        console.log('my index login 用户基本信息:',res.data.result) 
+        var userauth = JSON.parse(res.data.result['userauth'])
+        console.log('my index login 用户基本信息:',res.data.result,' user auth:',userauth) 
         let recharge_type = res.data.result['card_no']?2:1    
         that.setData({
           token: res.data.result['token'],
@@ -1899,10 +1900,9 @@ Page({
           is_card_overdue:res.data.result['is_card_overdue']?res.data.result['is_card_overdue']:false,
           user_name:res.data.result['user_name'],
           user_gender:res.data.result['user_gender'],
+          userauth:userauth[0],
         })
 
-          
-        var userauth = JSON.parse(res.data.result['userauth'])
         wx.setStorageSync('token', res.data.result['token'])
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
         wx.setStorageSync('username', res.data.result['username'])
@@ -1911,7 +1911,7 @@ Page({
         wx.setStorageSync('user_name', res.data.result['user_name'])
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
-        wx.setStorageSync('userauth', userauth)
+        wx.setStorageSync('userauth', userauth[0])
         wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
         wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
         wx.setStorageSync('card_name', res.data.result['card_name'])

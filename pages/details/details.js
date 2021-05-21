@@ -1731,6 +1731,17 @@ Page({
               'Accept': 'application/json'
             },
             success: function (res) {
+              if(!res.data.result) {
+                wx.showToast({
+                  title: '商品已下架',
+                  icon: 'loading',
+                  duration: 3000
+                })
+                setTimeout(function () {
+                  wx.navigateBack()
+                }, 1500)
+                return
+              }
               var goods_info = res.data.result
               var ret_info = res.data.info
               console.log('获取单个产品信息 res.data:',res.data,' goods info:',goods_info);
@@ -1838,7 +1849,18 @@ Page({
             'Content-Type': 'application/x-www-form-urlencoded',
             'Accept': 'application/json'
           },
-          success: function (res) {
+          success: function (res) {            
+            if(!res.data.result) {
+              wx.showToast({
+                title: '商品已下架',
+                icon: 'loading',
+                duration: 3000
+              })
+              setTimeout(function () {
+                wx.navigateBack()
+              }, 1500)  
+              return
+            } 
             var goodsPicsInfo = res.data.result
             console.log('get_goodsdesc_list goodsPicsInfo:', goodsPicsInfo, ' template id:', goodsPicsInfo.image[0]['template_id'])
             var k = image?1:0
@@ -1891,8 +1913,19 @@ Page({
           },
           success: function (res) {
             console.log('商品goods_sku:',res.data.result);
-            var attrValueList = res.data.result.spec_select_list ? res.data.result.spec_select_list:'';
-            var commodityAttr = res.data.result.sku_list ? res.data.result.sku_list:'{}';
+            if (!res.data.result) {
+              wx.showToast({
+                title: '商品已下架',
+                icon: 'loading',
+                duration: 3000
+              })
+              setTimeout(function () {
+                wx.navigateBack()
+              }, 1500)
+              return; 
+            } 
+            var attrValueList = ( res.data.result.spec_select_list) ? res.data.result.spec_select_list:'';
+            var commodityAttr = ( res.data.result.sku_list) ? res.data.result.sku_list:'{}';
             if (!commodityAttr) return; 
             for (var i = 0; i < commodityAttr.length; i++) {
               if (commodityAttr[i].attrValueStatus) {

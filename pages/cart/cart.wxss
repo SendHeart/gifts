@@ -1,4 +1,4 @@
-@import "../../lib/style/font.wxss";
+/*@import "../../lib/style/font.wxss";*/
 page{ 
   background: #f2f2f2;
   overflow-x: hidden;

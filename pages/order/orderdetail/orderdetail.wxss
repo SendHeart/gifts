@@ -1,4 +1,4 @@
-@import "../../../lib/style/font.wxss";
+/*@import "../../../lib/style/font.wxss";*/
 
 page {
 	background: #f2f2f2;
@@ -72,7 +72,7 @@ page {
 	padding: 10rpx 20rpx;
   display: flex;
   flex-direction: row;
-  border-top: 1rpx solid #F2f2f2;
+  border-top: 2rpx solid #F2f2f2;
 }
 
 /*接受方微信头像*/
@@ -423,7 +423,7 @@ background-color: #E34C55;
   background-color: #ffffff;
   display: inline-block;
   font-size: 26rpx;
-  border: 1rpx solid #999999;
+  border: 2rpx solid #999999;
 }
 button::after {
   border: none!important;

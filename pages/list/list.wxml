@@ -26,8 +26,8 @@
     </view>
 </view>
 <view class="banner">
-    <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
-    <template is="nav2" data="{{navList2, activeIndex2, updown,startBarHeight2}}" />
+  <template is="nav" data="{{navList, activeIndex,toView,startBarHeight,is_all_category}}" />
+  <template is="nav2" data="{{navList2, activeIndex2, updown,startBarHeight2,img_arrow_down,img_arrow_up}}" />   
 </view>
   <!-- 
 <view class="search" style='height:30rpx;'>
@@ -104,9 +104,9 @@
   </view>
 
   <!-- loading -->
-  <view class="loading-show" hidden="{{!is_goodslist_loading}}">
-    <view style="margin-right:2em;">{{loading_note}}</view>   
+  <view class="loading-show" hidden="{{!is_goodslist_loading}}">    
     <template is="loading" />
+    <view style="margin-right:2em;">{{loading_note}}</view>   
   </view>
 </scroll-view>
 <view class='goTop' hidden='{{!floorstatus}}' bindtap="goTop">

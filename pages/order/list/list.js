@@ -20,6 +20,7 @@ Page({
     hiddenmore:true,
     shop_type:shop_type,
     modalHiddenMember:true,
+    loading_note:"加载中",
 	},
 
   callphone: function (e) {
@@ -162,7 +163,9 @@ Page({
     var page = that.data.page
     var pagesize = that.data.pagesize
     console.log('reloadData shop_type:',that.data.shop_type)
-    
+    that.setData({
+      hiddenmore: false,
+    })
     //从服务器获取订单列表
     wx.request({
       url: weburl + '/api/client/query_order_interaction',

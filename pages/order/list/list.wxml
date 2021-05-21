@@ -1,4 +1,5 @@
 <import src="../../common/nav_order.wxml"/>
+<import src="../../common/loading.wxml"/>
 <!--   
 <view class="banner"> 
  <template is="nav_order" data="{{navList_order, activeIndex2}}"/>
@@ -75,7 +76,7 @@
     </view>
   </modal>
 </view>
-
-<view class="sentbtn" hidden="{{hiddenmore}}">
-  <button bindtap="getMoreOrdersTapTag">加载更多</button>
+<view class="loading-show" hidden="{{hiddenmore}}">    
+  <template is="loading" />
+  <view style="margin-right:2em;">{{loading_note}}</view> 
 </view>

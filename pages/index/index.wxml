@@ -1,11 +1,11 @@
 <import src="../common/nav_order.wxml" />
-
+<import src="../common/loading.wxml" />
 <!-- <template is="nav_order" data="{{navList_order, activeIndex2,gift_send,gift_rcv,navgationHeight,startBarHeight}}" />
 <view style="height:{{dkheight}}px;margin-top:80rpx;scroll-y"><!--  bindtouchstart = "handletouchtart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" -->
 
-<view wx:if="!hidddensearch" hidden='{{hidddensearch}}' class="search">
+<view wx:if="!hidddensearch" class="search">
 		<view class="wx-input">
-    <input name="search" value="{{keyword}}" placeholder="搜索订单"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="orderSearch"/>
+    <input name="search" value="{{keyword}}" placeholder="搜索订单"  bindinput='search_goodsnameTapTag' focus="{{inputShowed}}" maxlength='10' confirm-type="search" bindconfirm="orderSearch" />
     <image bindtap='orderSearch' src="../../images/search-btn.png"></image>
     </view>
    <!--> <text class='searchcancel' bindtap='searchTagTap'>取消</text>-->
@@ -103,9 +103,9 @@
       
     </view>
     <view class="order-footer">
-        <view style="width:70%">
-          <text style="width:22%">{{item.order_sku_num}}件{{item.buy_num>1?' (份数:'+item.buy_num+')':''}}</text>
-          <text >实付:￥{{item.order_price}}</text>
+        <view>
+          <text>{{item.order_sku_num}}件{{item.buy_num>1?' (份数:'+item.buy_num+')':''}}</text>
+          <text> 金额:￥{{item.order_price}}</text>
           <text bindtap="pay" data-object-id="{{item.order_no}}" data-total-fee="{{item.order_price}}" class="{{(((item.status==1 && item.gift_status==2)||(item.status==1 && item.gift_status==0 && item.shape == 8 ) ||(item.status==2 && item.payment_status==2)) && (item.rcv_openid || item.rcv_id) && giftflag==0) ? '': 'hidden'}} smallbtn" >去支付</text>
           <text bindtap="cancel_order" data-object-id="{{item.order_no}}" data-index="{{order_idx}}" class="{{(item.status==1 && item.gift_status==0 && giftflag==0) ? '': 'hidden'}} smallbtn">取消</text>
           <view bindtap="comment" data-sku-id="{{mapping.id}}" data-goods-id="{{mapping.goods_id}}" data-goods-skuid="{{mapping.sku_id}}" class="{{((item.status==4 || item.status==5) && item.gift_status==2) ? '': 'hidden'}} commbtn">写评论</view>
@@ -128,24 +128,19 @@
     </view>
   </block>
   <view wx:if="{{all_rows == 0}}" class="noneresult">
-<text>您当前还没有该类订单</text>
-<button type="default" bindtap="goBack">返回首页选购</button>
+    <text>您当前还没有该类订单</text> 
+    <button type="default" bindtap="goBack">返回首页选购</button>
   </view>
-  <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap=""></view>
-  <!-- 
-   <view class="loadingbtn" hidden="{{hiddenmore}}" bindtap="getMoreOrdersTapTag">
-    <text >查看更多</text>
+  <view class="loading-show" hidden="{{!is_loading}}">
+    <template is="loading" />
+    <view style="margin-right:2em;">{{loading_note}}</view>   
   </view>
-</view>
--->
- 
+</scroll-view>
 <view class="goTop" hidden="{{!floorstatus}}" bindtap="goTop">
     <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow"></icon>
     <view class="" style="margin-top:-20rpx;font-size:22rpx;">TOP</view>
     <!--<view class='' style="margin-top:-25rpx;font-size:26rpx;">{{page}}/{{all_rows}}</view>-->
 </view>
-</scroll-view>
-
 <modal class="modalbox" height="90%" hidden="{{hiddenmodalput}}" title="确定要把礼物折现回收?" confirm-text="确认" cancel-text="取消" bindcancel="cancel_buyin" bindconfirm="confirm_buyin">
   <view class="buyin_title">
     <text>获得金额:</text>
@@ -158,8 +153,3 @@
     <text class="buyin_text">3. 折现后的金额会全部自动转到您的[黑贝会钱包]账户中，您可以在“我的-钱包”中查询并提现到微信钱包。</text>
   </view>
 </modal>
-<!--
-<loading hidden="{{loadingHidden}}">
-    加载中...
-</loading>
--->

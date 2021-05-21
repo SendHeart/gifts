@@ -54,9 +54,10 @@ page {
   margin-left: 20rpx;
 }
 .container {
-  margin-top: 10rpx;
+  margin: 100rpx 0 10rpx 0;
   height: 100%;
   overflow-x: hidden;
+  
 }
 
 .order-item {
@@ -73,7 +74,7 @@ page {
   padding: 6rpx 20rpx 10rpx 20rpx;
   display: flex;
   flex-direction: row;
-  height:50rpx;
+  height:100rpx;
 }
 
 .order-footer text {
@@ -129,7 +130,6 @@ page {
   border-radius: 8rpx;
   text-align:center;
   z-index: 99;
-  height: 40rpx;
   width: 90rpx;
 }
 /*接受方微信头像*/
@@ -564,4 +564,16 @@ radio .wx-radio-input.wx-radio-input-checked::before{
   margin: 10px;
   font-size: 26rpx;
   color: #999;
+}
+.loading-show {
+  width: 100%;
+  height: 50rpx;
+  line-height: 50rpx;
+  display:none;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 30rpx;
+  color: #f2f2f2;
+  margin-bottom:50rpx;
+  z-index: 1000;
 }

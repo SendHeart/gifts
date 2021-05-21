@@ -319,11 +319,32 @@ Page({
               }         
             })           
           }else{
+            /* 
             wx.showToast({
               title: res.data.info,
               icon: 'none',
               duration: 1000
             })
+            */
+
+            wx.showModal({
+              title: '系统信息',
+              content: res.data.info,
+              showCancel: false,//是否显示取消按钮
+              cancelText:"否",//默认是“取消”
+              cancelColor:'skyblue',//取消文字的颜色
+              confirmText:"返回",//默认是“确定”
+              confirmColor: 'skyblue',//确定文字的颜色
+              success: function (res) {
+                 if (res.cancel) {
+                    //点击取消,默认隐藏弹框
+                 } else {
+                    //点击确定                     
+                 }
+              },
+              fail: function (res) { },//接口调用失败的回调函数
+              complete: function (res) { },//接口调用结束的回调函数（调用成功、失败都会执行）
+           })
           }
         }
       }

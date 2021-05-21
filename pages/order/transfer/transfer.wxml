@@ -16,7 +16,7 @@
 <view class="order-item" style="width:{{windowWidth*0.85}}px;margin-left:{{windowWidth*0.07}}px;margin-right:{{windowWidth*0.07}}px;height:{{windowHeight*0.85}}px;">
   <view class="order-item-banner" >
   <view>
-  <image src="../../../images/gift.gif" style='width:378rpx;height:252rpx;' mode='aspectFill'></image>
+  <image src="{{img_gift}}" style='width:378rpx;height:252rpx;' mode='aspectFill'></image>
   </view>
    <view class="userinfo">
       <image class="userinfo-avatar" src="{{headimg}}"  background-size="cover" />

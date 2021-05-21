@@ -15,6 +15,8 @@ Page({
     title_name: '搜索商品',
     title_logo: '../../../images/footer-icon-05.png',
     img_discount: '../../../images/discount.png',
+    img_arrow_up:weburl + '/uploads/arrow-up.png',
+    img_arrow_down:weburl + '/uploads/arrow-down.png',
     default_img: weburl + '/uploads/default_goods_image.png',
     activeIndex: 0,
     activeIndex2: 0,

@@ -10,6 +10,7 @@ Page({
   data: {
     title_name: '礼物送出',
     title_logo: '../../../images/footer-icon-05.png',
+    img_gift:weburl+'/uploads/gift.gif?rand='+Math.random()*100,
     orders: [],
     orderskus:[],
     page: 1,

@@ -140,7 +140,7 @@
 <view  wx:if="{{is_buymyself==0 && order_shape!=5 && order_shape!=4}}" class="order-item">
   <view class="order-item-banner">
     <view>
-      <image src="../../../images/gift.gif" style='width:378rpx;height:202rpx;' mode='aspectFill'></image>
+      <image src="{{img_gift}}" style='width:378rpx;height:202rpx;' mode='aspectFill'></image>
     </view>
     <view class="userinfo">
       <image class="userinfo-avatar" src="{{headimg}}" background-size="cover" />

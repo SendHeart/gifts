@@ -1,4 +1,4 @@
-@import "../../lib/style/font.wxss";
+/*@import "../../lib/style/font.wxss";*/
 .Hui-iconfont {
   font-family: "Hui-iconfont";
   font-size:30rpx;

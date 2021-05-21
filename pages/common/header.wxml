@@ -16,7 +16,10 @@
         <input class="weui-input" placeholder="搜索我的品质生活" bindtap='searchTapTag' disabled="disable" />       
       </view>
       <view style="height:36px;line-height:28px;width:17%;" catchtap="messagesTapTag">
-        <text class="toptips">了解会员制</text>
-      </view> 
+        <view class="toptips">了解会员制 </view>       
+      </view>
+      <view style="height:36px;line-height:28px;width:10%;" bindtap="musicTapTag">
+        <image class="background-music-image" src="{{bg_muisc?img_music:img_no_music}}" background-size="cover"  />
+      </view>
     </view>
   </view>

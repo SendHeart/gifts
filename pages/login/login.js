@@ -341,7 +341,7 @@ Page({
         wx.setStorageSync('user_name', res.data.result['user_name'])
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type'])
-        wx.setStorageSync('userauth', userauth)
+        wx.setStorageSync('userauth', userauth[0])
         wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
         wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
         setTimeout(function () {

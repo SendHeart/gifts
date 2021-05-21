@@ -30,6 +30,7 @@ var navList2 = wx.getStorageSync('navList2') ? wx.getStorageSync('navList2') : [
 var navList = [
     { id: "is_recommend", title: "推荐"  ,value:"1"},
 ]
+const innerAudioContext = wx.createInnerAudioContext()
 
 Page({
     data: {
@@ -49,6 +50,9 @@ Page({
         img_service2: weburl + '/uploads/service2.png?rand='+Math.random()*100,
         default_img : weburl + '/uploads/default_goods_image.png?rand='+Math.random()*100,
         default_avatar: weburl + '/uploads/avatar.png?rand='+Math.random()*100,
+        bg_muisc:app.globalData.playing,
+        img_music: '../../images/music.png?rand='+Math.random()*100,
+        img_no_music: '../../images/music_no.png?rand='+Math.random()*100,
         platform:'',
         pagesize: pagesize,
         pageoffset:0,
@@ -276,20 +280,20 @@ goTop: function (e) {  // 一键回到顶部
     }
   },
 
-videoPlayer: function (e) {
+    videoPlayer: function (e) {
         var that = this;
         wx.navigateTo({
             url: '/pages/live/live?streamaname='
         })
     },
-searchTapTag: function (e) {
+    searchTapTag: function (e) {
         var that = this;
         //console.log('搜索关键字：' + that.data.search_goodsname)
         wx.navigateTo({
             url: '/pages/goods/list/list?search=1'
         })
     },
-query_message:function(){
+    query_message:function(){
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
@@ -549,6 +553,28 @@ query_message:function(){
         }, 500)
         
     },
+
+    musicTapTag: function () {
+        var that = this        
+        app.globalData.playing = !app.globalData.playing
+        that.setData({
+            bg_muisc:app.globalData.playing
+        })
+        if(app.globalData.playing){
+            innerAudioContext.play()//播放
+        }else{
+            innerAudioContext.pause()//停止播放
+        }
+        
+        /*
+        app.globalData.from_page = '/pages/hall/hall'
+        wx.navigateTo({
+          url: '/pages/music/music',
+        })
+        */
+    },
+
+
     userTapTag: function () {
         app.globalData.from_page = '/pages/hall/hall'
         wx.switchTab({
@@ -1556,6 +1582,26 @@ query_message:function(){
         })
     },
 
+    onReady: function (e) {
+        var that = this          
+        innerAudioContext.autoplay = true
+        innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL
+        innerAudioContext.onPlay(() => {
+            console.log('hall/hall onReady() 开始播放背景音乐')
+        })
+        innerAudioContext.onEnded(() => {
+            app.globalData.bg_index++;
+            if(app.globalData.bg_index > app.globalData.musicLib.music.length-1){
+                app.globalData.bg_index = 0
+            }
+		    console.log('播放结束 index:' + app.globalData.bg_index);
+		    innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL		    
+        })
+        innerAudioContext.onError((res) => {
+            console.log(res.errMsg)
+            console.log(res.errCode)
+        })
+    },
     onLoad: function (options) {
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';

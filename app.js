@@ -61,7 +61,22 @@ App({
 				{name : 'ng14' , url : '13.jpg'} , 
 				{name : 'ng15' , url : '14.gif'} , 
 			]
-		} , 
+    } ,
+    musicLib: {
+      "music": [
+        {
+            "name": "背景音乐",
+            "singer": "Black Shell",
+            "time": 235,
+            "downloadURL": weburl+'/uploads/background_music.mp3?rand='+Math.random()*100,
+            "lrc": "",
+            "pic": ""
+        },
+        
+    ]
+    }, //音乐库
+    bg_index: 0, //播放序号
+    playing: true, //背景音乐是否正在播放 
   },
  
   onLaunch: function() {
@@ -216,7 +231,6 @@ App({
           }
         })
       }
-
   },
   location: function () {
     var that = this

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "音乐播放" ,
+  "usingComponents": {
+    "action-sheet": "../common/actionsheet/actionsheet"
+  }
+}

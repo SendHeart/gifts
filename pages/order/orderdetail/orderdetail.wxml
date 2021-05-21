@@ -11,19 +11,18 @@
 </view> -->
 <view class='container'>
   <view wx:if="{{order_shape!=5 && order_shape!=7 && order_shape!=8}}" class="delivery-detail">
-    
     <!-- <view class="delivery-detail-text" bindtap="address_update"> 订单地址暂不可修改（仅待支付状态下可修改） -->
     <view class="delivery-detail-text">
-      <view class="addr-label"><image class="addr-icon" style="" src="../../../images/icon_address.png"></image></view>
-      
+      <view class="addr-label">
+        <image class="addr-icon" style="" src="../../../images/icon_address.png"></image>
+      </view>
       <view class="addr-content">
-      <text class="addr-title">{{fullname?fullname:''}} {{tel?tel:''}}</text>
-      <text class="addr-text">收货地址: {{orderaddress?orderaddress:''}}</text>
+        <text class="addr-title">{{fullname?fullname:''}} {{tel?tel:''}}</text>
+        <text class="addr-text">收货地址: {{orderaddress?orderaddress:''}}</text>
       <!-- <text class="smallbtn3">修改</text> 订单地址暂不可修改（仅待支付状态下可修改）-->
-    </view>
+      </view>
     </view>
   </view>
-
 
   <view class="order-item" wx:for="{{orders}}" wx:key="id">
     <!-- 厂家logo缩略图 -->
@@ -85,7 +84,7 @@
         </view>
         <view class="order-price">
           <text></text>
-          <text>实付金额: <text style="color:#FF952D;">{{item.amountpay<item.order_price?'￥'+item.amountpay:''}}</text></text>
+          <text>实付金额: <text style="color:#FF952D;">{{item.amountpay>0?'￥'+item.amountpay:'￥0'}}</text></text>
         </view>
     </view>
     <view class="order-footer">
@@ -120,12 +119,10 @@
       <text>{{sendtime?sendtime:''}}</text>
     </view> -->
     <view class="order-detail-text">
-      <text class="labeltext">下单时间:</text>
-      <text class="labeltext3">{{rcvtime?rcvtime:'对方未接受'}}{{gift_status=='1'?'':''}}</text>
+      <text class="labeltext">下单时间:</text>      
+      <text class="labeltext3">{{rcvtime?rcvtime:''}}{{gift_status=='1'?'':''}}</text>
     </view>
   </view>
-
-  
 
   <view wx:if="{{order_shape!=5 && order_shape!=7 && order_shape!=8}}" class="delivery-detail">
     <view class="delivery-detail-text">
@@ -136,10 +133,10 @@
       <text class="labeltext">运单号:</text>
       <text class="labeltext3">{{deliverycode?deliverycode:'暂无信息'}}</text>
     </view>
-    <view class="order-footer">
+    <view class="order-footer" style="{{delivery_status.length>0?'':'margin-bottom:150rpx'}}">
       <form bindsubmit="formSubmit"  data-name='express' report-submit="true" hidden="{{(currentPages_length>1 && order_shape!=5)?false:true}}" >
-      <button class="button-group" formType="submit" >物流跟踪</button>
-    </form>
+        <button class="button-group" formType="submit" >物流跟踪</button>
+      </form>
     </view>
     <!--
     <view class="delivery-detail-text" style='margin-bottom:15rpx;'>
@@ -172,13 +169,12 @@
   </view>
 </view>
 <view class="footer">
-  <view class="opt-buttons" >
-    
-    <form bindsubmit="formSubmit"  data-name='goBack' report-submit="true" hidden="{{(currentPages_length>1&&order_shape!=5)?true:false}}" >
+    <view class="opt-buttons" >
+      <form bindsubmit="formSubmit"  data-name='goBack' report-submit="true" hidden="{{(currentPages_length>1&&order_shape!=5)?true:false}}" >
       <button class="button-group" formType="submit" >返回</button>
-    </form>
-    <form bindsubmit="formSubmit"  data-name='express' report-submit="true" >
-      <button open-type='contact' class="button-group">咨询客服</button>
-    </form>
-  </view>
+      </form>
+      <form bindsubmit="formSubmit"  data-name='express' report-submit="true" >
+        <button open-type='contact' class="button-group">咨询客服</button>
+      </form>
+    </view>
 </view>

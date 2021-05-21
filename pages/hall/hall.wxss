@@ -1602,3 +1602,8 @@ modal {
   font-weight:800;
   color: #111111;
 }
+
+.background-music-image {
+  height:22rpx;
+  width: 22rpx;
+}

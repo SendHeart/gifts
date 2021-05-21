@@ -38,13 +38,13 @@ Page({
     page_num: 0, 
     hiddenmodalput: true,
     hidddensearch: true,
-    hiddenmore:true,
     modalHiddenUserName:true,
     modalHiddenPhone:true,
     currenttime:now?parseInt(now/1000):0,
     navList2: navList2,
     buyin_rate:90,  //礼物折现率
     loadingHidden: true, // loading
+    loading_note:"加载中",
     scrollTop: 0,
     is_loading:false,
     lastX: 0,          //滑动开始x轴位置
@@ -157,7 +157,7 @@ Page({
     var that = this
     console.log('orderSearch keyword:', that.data.keyword)
     that.setData({
-      page: 0,
+      page: 1,
     })
     that.reloadData()
   },
@@ -372,7 +372,6 @@ Page({
       orders_prev:[],
       orders_next:[],
       loadingHidden: true,
-      hiddenmore: true,
       giftflag: giftflag,
       all_rows:0,
       page:1,
@@ -380,11 +379,6 @@ Page({
     })
     console.log('tab:' + tab, ' giftflag:', giftflag)
     if (that.data.orders_show.length==0) {
-      wx.showToast({
-        title: '',
-        icon: 'loading',
-        duration: 600
-      })
       that.reloadData()
     }
   },
@@ -429,16 +423,8 @@ goTop: function (e) {  // 一键回到顶部
         icon: 'none',
         duration: 1500
       })
-      that.setData({
-        hiddenmore: true,
-      })
       return
     }else{
-      wx.showToast({
-        title: '',
-        icon: 'loading',
-        duration: 600
-      })
       that.setData({
         page: page + 1,
       })
@@ -719,11 +705,6 @@ goTop: function (e) {  // 一键回到顶部
       })
     } else {
       if (orders_show.length==0){
-        wx.showToast({
-          title: '',
-          icon: 'loading',
-          duration: 600
-        })
         that.reloadData()
       }
     }
@@ -764,7 +745,12 @@ goTop: function (e) {  // 一键回到顶部
       })
       return
     }
-    if (page > page_num && page_num>0) return
+    if(page > page_num && page_num>0) return
+    if(page == 1) {
+      that.setData({
+        orders_show:[],
+      }) 
+    }
     that.setData({
       is_loading:true,
     })
@@ -810,8 +796,6 @@ goTop: function (e) {  // 一键回到顶部
             orders: [],
             orders_show: [],
             all_rows: 0,
-            hiddenmore:true,
-            
           })
         } else {
           // 存储地址字段
@@ -856,7 +840,7 @@ goTop: function (e) {  // 一键回到顶部
             //if (page > 1 && orderObjects) {
               //向后合拼
             //}
-            orders = orders.concat(orderObjects)
+            //orders = orders.concat(orderObjects)
             var gift_send = that.data.gift_send
             var gift_rcv = that.data.gift_rcv
             var page_num = that.data.page_num
@@ -878,18 +862,16 @@ goTop: function (e) {  // 一键回到顶部
             }
             */
             that.setData({
-              orders: orders,
+              //orders: orders,
               ["orders_show[" + (page<1?0:page-1) + "]"]: orderObjects,
               all_rows: all_rows,
               gift_send: gift_send,
               gift_rcv: gift_rcv,
-              page_num: page_num.toFixed(0),
-             
+              page_num: page_num.toFixed(0),             
             },function(){
               that.setData({
-                hiddenmore: false,
                 is_loading: false,
-                loadingHidden: false,
+                loadingHidden: true,
               })
               //wx.hideLoading()
               /*

@@ -1,4 +1,4 @@
-@import "../../../lib/style/font.wxss";
+/*@import "../../../lib/style/font.wxss";*/
 
 ::-webkit-scrollbar {
   width: 0;

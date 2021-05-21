@@ -30,10 +30,10 @@
       <textarea bindblur="bindTextAreaBlur" value="{{content}}" placeholder="评论内容" maxlength="140" />
     </view>
     <view class="upimage" >
-      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="" >      
+      <block wx:for="{{img_arr}}" wx:for-item="upimg" wx:key="id" >      
          <image data-id="{{index}}" bindtap="cancel_upimg"  src="{{upimg}}" mode='aspectFit'></image>       
       </block>
-      <block wx:for="{{new_img_arr}}" wx:for-item="upimg_new" wx:key="" >      
+      <block wx:for="{{new_img_arr}}" wx:for-item="upimg_new" wx:key="id" >      
          <image data-id="{{index}}" bindtap="cancel_new_upimg"  src="{{upimg_new}}" mode='aspectFit'></image>       
       </block>
     </view>

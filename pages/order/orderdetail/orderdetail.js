@@ -64,10 +64,10 @@ Page({
  
   formSubmit: function (e) {
     var that = this
-    var formId = e.detail.formId;
+    //var formId = e.detail.formId;
     var form_name = e.currentTarget.dataset.name
     var order_shape = that.data.order_shape
-    console.log('formSubmit() formID：', formId, ' form name:', form_name)
+    console.log('formSubmit() form name:', form_name)
     if (form_name == 'express') {
       that.expressTapTag()
     } else if (form_name == 'goBack') {
@@ -83,7 +83,7 @@ Page({
         that.goBack()
       }
     }
-    if(formId) that.submintFromId(formId)
+    //if(formId) that.submintFromId(formId)
   },
 
   //提交formId，让服务器保存到数据库里
@@ -363,6 +363,7 @@ Page({
             // 存储地址字段
             for (var i = 0; i < orderObjects.length; i++) {
               orderObjects[i]['order_price'] = orderObjects[i]['order_price'].toFixed(2)
+              orderObjects[i]['amountpay'] = orderObjects[i]['amountpay'].toFixed(2)
               if (orderObjects[i]['logo'].indexOf("http") < 0) {
                 orderObjects[i]['logo'] = weburl + '/' + orderObjects[i]['logo']
               }

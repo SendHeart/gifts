@@ -15,6 +15,7 @@
     "pages/order/list/list",
     "pages/classify/index",
     "pages/player/player",
+    "pages/music/music",
     "pages/member/task/task",
     "pages/member/share/share",
     "pages/member/account/account",
@@ -91,6 +92,9 @@
       "desc": "你的位置信息将用于小程序位置接口的效果展示"
     }
   },
+  "requiredBackgroundModes": [
+    "audio"
+  ],
   "debug": true,
   "sitemapLocation": "sitemap.json"
 }

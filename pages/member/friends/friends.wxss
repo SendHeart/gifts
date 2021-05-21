@@ -1,4 +1,4 @@
-@import "../../../lib/style/font.wxss";
+/*@import "../../../lib/style/font.wxss";*/
 
 page {
   background: #1d1d1d;
