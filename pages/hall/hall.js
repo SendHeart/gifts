@@ -1582,7 +1582,36 @@ goTop: function (e) {  // 一键回到顶部
         })
     },
 
-    onReady: function (e) {
+    get_bgmusic_list: function () {
+        var that = this
+        var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+        var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+        var shop_type = app.globalData.shop_type;       
+        wx.request({
+          url: weburl + '/api/client/get_bgmusic_list',
+          method: 'POST',
+          data: {
+            username:username,
+            access_token:token,
+            shop_type:shop_type,
+          },
+          header: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Accept': 'application/json'
+          },
+          success: function (res) {
+            console.log('获取背景音乐列表 hall/hall get_bgmusic_list() res:', res.data.result)
+            var bgmusic_list = res.data.result;
+            if (!bgmusic_list) {          
+              return
+            }     
+            app.globalData.musicLib.music = bgmusic_list
+            that.play_bgmusic()
+          }
+        })
+    },
+
+    play_bgmusic: function (e) {
         var that = this          
         innerAudioContext.autoplay = true
         innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL
@@ -1595,7 +1624,8 @@ goTop: function (e) {  // 一键回到顶部
                 app.globalData.bg_index = 0
             }
 		    console.log('播放结束 index:' + app.globalData.bg_index);
-		    innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL		    
+            innerAudioContext.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL
+            innerAudioContext.play()		    
         })
         innerAudioContext.onError((res) => {
             console.log(res.errMsg)
@@ -1636,7 +1666,7 @@ goTop: function (e) {  // 一键回到顶部
         })
         app.globalData.is_task = task
         that.get_menubar()
-
+        that.get_bgmusic_list()
         //自定义头部方法
         this.setData({
             navH: app.globalData.navHeight,

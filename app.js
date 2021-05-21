@@ -63,17 +63,7 @@ App({
 			]
     } ,
     musicLib: {
-      "music": [
-        {
-            "name": "背景音乐",
-            "singer": "Black Shell",
-            "time": 235,
-            "downloadURL": weburl+'/uploads/background_music.mp3?rand='+Math.random()*100,
-            "lrc": "",
-            "pic": ""
-        },
-        
-    ]
+      "music": [],
     }, //音乐库
     bg_index: 0, //播放序号
     playing: true, //背景音乐是否正在播放 
@@ -204,6 +194,7 @@ App({
       }
     })
   },
+
   getUserInfo: function (cb) {
       var that = this
       if (that.globalData.userInfo) {
