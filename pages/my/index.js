@@ -1241,6 +1241,11 @@ Page({
       url: '../member/shopowner/shopowner?'
     })
   },
+  navigateToMusic: function (e) {
+    wx.navigateTo({
+      url: '/pages/music/music?'
+    })
+  },
   navigateToCelebration: function (e) {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''

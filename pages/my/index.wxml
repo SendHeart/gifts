@@ -114,7 +114,10 @@
 		  <image src="../../images/iconfont-shouhuodizhi.png" />
 		  <text>我的位置</text>
 	  </view>
-	 
+    <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToMusic" class="order">
+		  <image src="../../images/icon_music.png" />
+		  <text>听音乐</text>
+    </view>
     <view wx:if="{{userauth.celebration == 1}}" bindtap="navigateToCelebration" class="order">
 		  <image src="../../images/wish.png" />
 		  <text>我的祝福</text>
@@ -123,7 +126,7 @@
 		  <image src="../../images/u621.png" />
 		  <text>黑贝会文章</text>
 	  </view>
-     <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToShopowner" class="order">
+    <view wx:if="{{userauth.shoper==1}}" bindtap="navigateToShopowner" class="order">
 		  <image src="../../images/u633.png" />
 		  <text>我是店长</text>
     </view>

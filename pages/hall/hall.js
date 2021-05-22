@@ -1650,12 +1650,7 @@ goTop: function (e) {  // 一键回到顶部
         })
         //播放结束
         bgMusic.onEnded(() => {
-            that.setData({
-                starttime: '00:00',
-                isOpen: false,
-                offset: 0
-            })
-            console.log("音乐播放结束");
+            console.log("hall/hall listenerButtonPlay() 音乐播放结束");
             app.globalData.bg_index++;
             if(app.globalData.bg_index > app.globalData.musicLib.music.length-1){
                 that.get_bgmusic_list()
