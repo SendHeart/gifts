@@ -1625,8 +1625,8 @@ goTop: function (e) {  // 一键回到顶部
     listenerButtonPlay: function() {
         var that = this
         //bug ios 播放时必须加title 不然会报错导致音乐不播放
-        bgMusic.title = '此时此刻'  
-        bgMusic.epname = '此时此刻'   
+        bgMusic.title = app.globalData.musicLib.music[app.globalData.bg_index].name  
+        bgMusic.epname = app.globalData.musicLib.music[app.globalData.bg_index].name   
         console.log('hall/hall listenerButtonPlay() 播放 index:' + app.globalData.bg_index);    
         bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
         bgMusic.onTimeUpdate(() => { 
