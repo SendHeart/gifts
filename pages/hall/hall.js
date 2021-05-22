@@ -555,27 +555,6 @@ goTop: function (e) {  // 一键回到顶部
         
     },
 
-    musicTapTag: function () {
-        var that = this        
-        app.globalData.playing = !app.globalData.playing
-        that.setData({
-            bg_muisc:app.globalData.playing
-        })
-        if(app.globalData.playing){
-            bgMusic.play();//播放
-        }else{
-            bgMusic.pause();//停止播放
-        }
-        
-        /*
-        app.globalData.from_page = '/pages/hall/hall'
-        wx.navigateTo({
-          url: '/pages/music/music',
-        })
-        */
-    },
-
-
     userTapTag: function () {
         app.globalData.from_page = '/pages/hall/hall'
         wx.switchTab({
@@ -1621,46 +1600,48 @@ goTop: function (e) {  // 一键回到顶部
           }
         })
     },
+
+    musicTapTag: function () {
+        var that = this        
+        app.globalData.playing = !app.globalData.playing
+        that.setData({
+            bg_muisc:app.globalData.playing
+        })
+        if(app.globalData.playing){
+            that.listenerButtonPlay();//播放
+        }else{
+            that.listenerButtonStop();//停止播放
+        }
+        
+        /*
+        app.globalData.from_page = '/pages/hall/hall'
+        wx.navigateTo({
+          url: '/pages/music/music',
+        })
+        */
+    },
+
     // 播放
     listenerButtonPlay: function() {
-        var that = this
-        
+        var that = this        
         //bug ios 播放时必须加title 不然会报错导致音乐不播放
         bgMusic.title = app.globalData.musicLib.music[app.globalData.bg_index].name  
         bgMusic.epname = app.globalData.musicLib.music[app.globalData.bg_index].name   
         console.log('hall/hall listenerButtonPlay() 播放 index:' + app.globalData.bg_index);    
-        
-        bgMusic.onTimeUpdate(() => { 
-            var duration = bgMusic.duration; 
-            var offset = bgMusic.currentTime;  
-            var currentTime = parseInt(bgMusic.currentTime);
-            var min = "0" + parseInt(currentTime / 60);
-            var max = parseInt(bgMusic.duration);
-            var sec = currentTime % 60;
-            if (sec < 10) {
-                sec = "0" + sec;
-            };
-            var starttime = min + ':' + sec;   /*  00:00  */
-            that.setData({
-                offset: currentTime,
-                starttime: starttime,
-                max: max,
-                changePlay: true
-            })
-        })
+        bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
         //播放结束
         bgMusic.onEnded(() => {
-            console.log("hall/hall listenerButtonPlay() 音乐播放结束");
+            console.log("hall/hall listenerButtonPlay() 音乐单曲播放结束"+app.globalData.bg_index);
             app.globalData.bg_index++;
             if(app.globalData.bg_index > app.globalData.musicLib.music.length-1){
-                that.get_bgmusic_list()
                 app.globalData.bg_index = 0
+                that.get_bgmusic_list()                
             }else{
                 bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
                 bgMusic.play(); 
             } 
         })
-        bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
+        
         bgMusic.play();   
     },
 
