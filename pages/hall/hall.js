@@ -1613,10 +1613,7 @@ goTop: function (e) {  // 一键回到顶部
             app.globalData.musicLib.music = bgmusic_list
             setTimeout(function () {
                 if(app.globalData.musicLib.music.length>0){
-                    //that.play_bgmusic()
-                    if(bg_muisc){
-                        //that.listenerButtonPlay()
-                    }                    
+                    that.listenerButtonPlay()                                       
                 }else{
                     console.log('背景音乐列表为空 hall/hall get_bgmusic_list() bgmusit list:', app.globalData.musicLib.music)
                 }                
@@ -1865,7 +1862,10 @@ goTop: function (e) {  // 一键回到顶部
         that.query_cart()
         that.get_project_gift_para()
         that.query_friends()
-        that.get_bgmusic_list()
+        if(app.globalData.musicLib.music.length==0){
+            that.get_bgmusic_list()
+        }
+        
         that.setData({
             userInfo: userInfo
         })
