@@ -1615,7 +1615,7 @@ goTop: function (e) {  // 一键回到顶部
                 if(app.globalData.musicLib.music.length>0){
                     //that.play_bgmusic()
                     if(bg_muisc){
-                        that.listenerButtonPlay()
+                        //that.listenerButtonPlay()
                     }                    
                 }else{
                     console.log('背景音乐列表为空 hall/hall get_bgmusic_list() bgmusit list:', app.globalData.musicLib.music)
