@@ -1658,8 +1658,12 @@ goTop: function (e) {  // 一键回到顶部
             console.log("音乐播放结束");
             app.globalData.bg_index++;
             if(app.globalData.bg_index > app.globalData.musicLib.music.length-1){
+                that.get_bgmusic_list()
                 app.globalData.bg_index = 0
-            }
+            }else{
+                bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
+                bgMusic.play(); 
+            } 
         })
         bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
         bgMusic.play();   
