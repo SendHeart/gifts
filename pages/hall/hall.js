@@ -1587,7 +1587,8 @@ goTop: function (e) {  // 一键回到顶部
         var that = this
         var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
         var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-        var shop_type = app.globalData.shop_type;       
+        var shop_type = app.globalData.shop_type;   
+        var bg_muisc = that.data.bg_muisc    
         wx.request({
           url: weburl + '/api/client/get_bgmusic_list',
           method: 'POST',
@@ -1613,7 +1614,9 @@ goTop: function (e) {  // 一键回到顶部
             setTimeout(function () {
                 if(app.globalData.musicLib.music.length>0){
                     //that.play_bgmusic()
-                    that.listenerButtonPlay()
+                    if(bg_muisc){
+                        that.listenerButtonPlay()
+                    }                    
                 }else{
                     console.log('背景音乐列表为空 hall/hall get_bgmusic_list() bgmusit list:', app.globalData.musicLib.music)
                 }                
@@ -1624,11 +1627,12 @@ goTop: function (e) {  // 一键回到顶部
     // 播放
     listenerButtonPlay: function() {
         var that = this
+        
         //bug ios 播放时必须加title 不然会报错导致音乐不播放
         bgMusic.title = app.globalData.musicLib.music[app.globalData.bg_index].name  
         bgMusic.epname = app.globalData.musicLib.music[app.globalData.bg_index].name   
         console.log('hall/hall listenerButtonPlay() 播放 index:' + app.globalData.bg_index);    
-        bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
+        
         bgMusic.onTimeUpdate(() => { 
             var duration = bgMusic.duration; 
             var offset = bgMusic.currentTime;  
@@ -1660,7 +1664,8 @@ goTop: function (e) {  // 一键回到顶部
                 app.globalData.bg_index = 0
             }
         })
-        bgMusic.play();
+        bgMusic.src = app.globalData.musicLib.music[app.globalData.bg_index].downloadURL;
+        bgMusic.play();   
     },
 
   //暂停播放
