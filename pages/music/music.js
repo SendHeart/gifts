@@ -203,7 +203,7 @@ Page({
     that.setData({
       lrc:arr,
       lrcArr:lrcArr
-    })
+    })    
   },
 
   dowloadLRC:function(file_url=''){
@@ -330,8 +330,9 @@ Page({
 
   //上一首
   lastMusic: function() {
-    let audioIndex = this.data.audioIndex > 0 ? this.data.audioIndex - 1 : this.data.audioList.length - 1;
-    this.setData({
+    var that = this
+    let audioIndex = that.data.audioIndex > 0 ? that.data.audioIndex - 1 : that.data.audioList.length - 1;
+    that.setData({
       audioIndex: audioIndex,
       playStatus: false,
       progress: 0,
@@ -339,8 +340,8 @@ Page({
       durationText: "00:00"
     })
     setTimeout(function() {
-      this.playMusic();
-    }.bind(this), 1000);
+      that.playMusic();
+    }.bind(that), 1000);
   },
   //下一首
   nextMusic: function() {
@@ -445,7 +446,7 @@ Page({
         lrc: []
       })
     }   
-   
+    that.updateLRC()
     bgMusic.onPlay(function() {
       console.log("======onPlay======");
       that.setData({
