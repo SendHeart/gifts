@@ -8,7 +8,9 @@ var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
 var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
 var userInfo = wx.getStorageSync('userInfo') ? wx.getStorageSync('userInfo') : ''
 var user_group_id = wx.getStorageSync('useruser_group_idInfo') ? wx.getStorageSync('user_group_id') : '0'
-
+var timeId='';//定时器
+var lineTimeId='';//水平线定时器
+var isDelete=false;//是否删除开启的定时器
 const bgMusic = wx.getBackgroundAudioManager()
  
 Page({
@@ -28,14 +30,16 @@ Page({
     current_scrollTop:0,
     page_num:0,
     all_rows:0,
-
-    lrcDir: '',
-      //文稿数组，转化完成用来在wxml中使用
-    storyContent:[],
-      //文稿滚动距离
-    marginTop:0,
-      //当前正在第几行
-    currentIndex222:0,
+    isSlider:false,//是否正在拖动进度条
+    //以下歌词
+    isLrc:true,//是否显示歌词
+    lrcArr:[],//歌词定位数组
+    location:0,//歌词滚动位置
+    locationIndex:0,//
+    locationValue:0,//歌词滚动具体位置
+    locationTime:0,//歌词定位时间
+    locationShowTime:'00:00',//歌词定位显示时间
+    isScroll:false,//滚动显示水平线
   },
   // 播放
   /*
@@ -122,8 +126,166 @@ Page({
     bgMusic.stop()
   },
   */
+
+  //歌词触碰开始
+  touchstart(e){
+    console.log("触摸开始",e);
+    this.setData({
+      isScroll:true
+    });
+    isDelete=false;
+    if(lineTimeId){
+      clearTimeout(lineTimeId);
+      lineTimeId='';
+    }
+  },
+  //歌词触碰结束
+  touchend(e){
+    isDelete=true;
+    console.log("触摸结束",e);
+    if(lineTimeId!='')return;
+    lineTimeId=setTimeout(()=>{
+      if(isDelete===true){
+        this.setData({
+          isScroll:false
+        });
+        lineTimeId='';
+      }
+    },4000);
+  },
+  //歌词滚动
+  scroll:function(e){
+    var that = this
+    if(that.data.isScroll){
+      let i=parseInt(e.detail.scrollTop/27);
+      if(!that.data.lrcArr[i])return;//空白区域，没有时间不执行
+      console.log("滚动",e.detail.scrollTop,that.data.lrcArr[i]);//歌词的间隔区间为27
+      that.setData({
+        locationTime:that.data.lrcArr[i],
+        locationShowTime:dayjs(that.data.lrcArr[i]*1000).format("mm:ss")
+      });
+    }
+  },
+  
+  //切换是否显示歌词
+  isLrc:function(e){
+    this.setData({
+      isLrc:!this.data.isLrc
+    });
+  },
+  lrc:function(lrc){
+    var that = this 
+    //console.log("歌曲歌词 ："+lrc);
+    let str=lrc;
+    let lrcArr=[];
+    let arr=[];
+    str=str.split(/\n/g);
+    str.map(item=>{
+      let i=item.match(new RegExp("\\[[0-9]*:[0-9]*.[0-9]*\\]","g"));
+      if(i){
+        i=i[0].replace('[','').replace(']','')
+        let time=Number(i.split(':')[0]*60)+Number(i.split(':')[1].split('.')[0]);//毫秒：+Number(i.split(':')[1].split('.')[1]);         01:12.232  ['01','12.232'] ['12','232'] 
+        // console.log(time,dayjs(time).format('mm:ss')); 
+        lrcArr.push(time);
+        arr.push(item.replace(new RegExp("\\[(.*)\\]","g"),""));
+      }
+    });
+    //去空
+    let a1=[],a2=[];
+    for(let i=0;i<arr.length;i++){
+      if(arr[i]&&lrcArr[i]){//当前是否有歌词
+        a1.push(arr[i]);
+        a2.push(lrcArr[i]);
+      }
+    }
+    arr=a1,lrcArr=a2
+    //console.log('lrc() arr:'+arr+' lrcArr:'+lrcArr);
+    that.setData({
+      lrc:arr,
+      lrcArr:lrcArr
+    })
+  },
+
+  dowloadLRC:function(file_url=''){
+    var that = this
+    
+    if(file_url!=''){
+      wx.downloadFile({
+        url: file_url, 
+        success (lrc_res) {
+          //console.log('music/music downloadLRC() file_url:'+file_url+' lrc_res:'+ JSON.stringify(lrc_res))
+          if (lrc_res.statusCode == 200) {
+            var localfile_path = lrc_res.tempFilePath
+            wx.getFileSystemManager().readFile({ //读取文件
+              filePath: localfile_path,
+              encoding: 'utf-8',
+              success: file_res => {
+                var lrc = file_res.data              
+                //console.log('下载歌词完成:'+ lrc)
+                that.lrc(lrc)
+              },
+              fail: console.error
+            })            
+          }
+        },
+        fail(res){
+          console.log('下载歌词失败:'+res)
+        }
+      })
+    }
+  },
+  //歌词定时器更新
+  updateLRC:function(){
+    var that = this
+    var playStatus = that.data.playStatus
+    var isSlider = that.data.isSlider
+    if(isSlider) {
+      console.log('music/music updateLRC() 无法滚动歌词 playStatus:'+playStatus+' isSlider:'+isSlider)
+      return;
+    }
+    let nowTime=bgMusic.currentTime;
+    let totalTime=bgMusic.duration;
+    let value=bgMusic.currentTime;
+    let max=bgMusic.duration;
+    if(nowTime&&totalTime){//都有数据
+      //处理歌词当前位置
+      // let len=0;//歌词排除为空的下标
+      for(let i=0;i<that.data.lrcArr.length;i++){
+        if(nowTime>that.data.lrcArr[that.data.lrcArr.length-1]){//最后的歌词
+          that.setData({
+            location:that.data.lrcArr.length-1
+          });
+          break;
+        }
+        //console.log(nowTime,that.data.lrcArr[i]);
+        if(nowTime>=that.data.lrcArr[i]&&nowTime<that.data.lrcArr[i+1]){
+          //console.log("歌词滚动");
+          that.setData({
+            location:i
+          });
+          break;
+        }
+      }
+
+        //设置滚动
+      if(that.data.isScroll===false){
+        that.setData({
+          locationIndex:that.data.location
+        });
+      }
+      //处理显示
+      //console.log("时间2：",totalTime,nowTime);
+      that.setData({
+        nowTime:that.formatTime(Math.ceil(nowTime)),
+        totalTime:that.formatTime(Math.ceil(totalTime)) ,
+        max:max,
+        value:value
+      })
+      //console.log("时间2：",that.data.totalTime,that.data.nowTime);
+    }
+  },
+
   // 进度条拖拽
- 
   sliderChange:function(e) {
     var that = this
     var offset = parseInt(e.detail.value);
@@ -131,14 +293,22 @@ Page({
     bgMusic.seek(offset);
     that.setData({
       isOpen: true,
+      isSlider: false,    
       progressText: that.formatTime(e.detail.value)
     })
     
     setTimeout(function() {
+      that.updateLRC();
       bgMusic.play();
     }, 1000);
   },
 
+  sliderChanging:function(e) {
+    var that = this
+    that.setData({
+      isSlider: true,       
+    })
+  },
   //循环计时
   countTimeDown: function(that, bgMusic, cancel) {
     if (that.data.playStatus) {
@@ -198,15 +368,14 @@ Page({
         audioIndex: pos,
         showList: false,
         isOpen:true,
-      })     
+      })
+      that.playMusic();     
     } else {
       that.setData({
         showList: false,
         isOpen:true,
       })
     }
-   
-    that.playMusic();
   },
 
   //界面切换
@@ -266,13 +435,17 @@ Page({
     // 设置了 src 之后会自动播放
     bgMusic.src = audio.downloadURL;
     bgMusic.currentTime = 0;
-    //let storyContent = that.parseLyric(audio.lrc)
-    //storyContent = that.sliceNull(storyContent)
-  
-    that.setData({
-      storyContent: ''
-    })
-  
+ 
+    var lrc_url = audio.lrc
+    if(lrc_url!=''){
+      console.log("music/music playMusic() lrc url:"+lrc_url)
+      that.dowloadLRC(lrc_url)
+    } else{
+      that.setData({
+        lrc: []
+      })
+    }   
+   
     bgMusic.onPlay(function() {
       console.log("======onPlay======");
       that.setData({
@@ -414,11 +587,14 @@ Page({
   onShow(){
     var that = this
     that.get_bgmusic_list()
+    timeId=setInterval(()=>{
+      that.updateLRC();
+    },500);
   },
   // 页面卸载时停止播放
   onUnload() {
     var that = this
-    //that.listenerButtonStop()//停止播放
+    clearInterval(timeId);
     bgMusic.stop()//停止播放
     console.log("离开")
   },

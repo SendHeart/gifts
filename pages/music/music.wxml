@@ -18,13 +18,18 @@
       </view>
       <icon class="icon-list Hui-iconfont iconv-list" bindtap='pageChange' />
       <image class='poster {{playStatus?"rotate":"rotate-paused"}}' mode="scaleToFill" src='{{audioList[audioIndex].poster}}'></image>
-      <scroll-view  id="" scroll-y="true" scroll-with-animation='true' scroll-top='{{marginTop}}'>
-        <view class='contentText'>
-           <block wx:for='{{storyContent}}' wx:key="index" wx:for-item="lrc">
-               <text class="{{currentIndex222 == index ? 'currentTime' : ''}}">{{lrc[1]}}</text>
-            </block>
-        </view>
-      </scroll-view>
+      <!--歌词-->
+	    <view wx:if="{{isLrc}}" class="flex-1 flex-center z" style="position:relative;" >
+		    <view class="line flex-box" style="width:100%;color:red;border:1px solid rgba(244,244,244,0.2);">
+			    <view style="margin:0rpx 20rpx;" class="f12 flex-center">{{locationShowTime}}</view>
+			    <view class="flex-1" style="color:#444;height:2rpx;width:100%;background:#f2f2f2;"></view>
+		    </view>
+		    <scroll-view scroll-y style="height:600rpx;" scroll-with-animation scroll-top="{{locationIndex*27}}" bindscroll="scroll" bindtouchstart="touchstart" bindtouchend="touchend">
+			    <view style="height:284rpx;"></view>
+			    <view wx:for="{{lrc}}" wx:key="index" class="f14" style="text-align:center;margin:20rpx 0rpx;color:#ccc;{{location===index?'color:green;':''}}">{{item}}</view>
+			    <view style="height:300rpx;"></view>
+		    </scroll-view>
+	    </view>
     </view>
   </scroll-view>
   <view class="goTop" hidden="{{!floorstatus}}" bindtap="goTop">
@@ -33,7 +38,7 @@
   </view>
   <view class='progress'>
       <text>{{progressText}}</text>
-      <slider class='bar' bindchange="sliderChange" value="{{progress}}" step="1" min='0' max='{{duration}}' activeColor="#1aad19" block-size="12" block-color="#1aad19" />
+      <slider class='bar' bindchange="sliderChange" bindchanging="sliderChanging" value="{{progress}}" step="1" min='0' max='{{duration}}' activeColor="#1aad19" block-size="12" block-color="#1aad19" />
       <text>{{durationText}}</text>
     </view>
   <view class='buttons'>     
