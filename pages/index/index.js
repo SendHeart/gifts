@@ -46,6 +46,7 @@ Page({
     loadingHidden: true, // loading
     loading_note:"加载中",
     scrollTop: 0,
+    dkheight:0,
     is_loading:false,
     lastX: 0,          //滑动开始x轴位置
     lastY: 0,          //滑动开始y轴位置
@@ -399,17 +400,16 @@ Page({
     this.setData({
       current_scrollTop: e.detail.scrollTop
     })
-  
   },
 
 //回到顶部
-goTop: function (e) {  // 一键回到顶部
-  var that = this
-  that.setData({
-    scrollTop: 0,
-  })
-  console.log('goTop:',that.data.scrollTop)
-},
+  goTop: function (e) {  // 一键回到顶部
+    var that = this
+    that.setData({
+      scrollTop: 0,
+    })
+    console.log('goTop:',that.data.scrollTop)
+  },
 
   getMoreOrdersTapTag: function () {
     var that = this

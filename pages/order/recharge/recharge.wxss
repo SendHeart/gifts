@@ -173,7 +173,6 @@ picker {
 }
 
 /*左部图片*/
-
 .carts-image {
   width: 400rpx;
   height: 120rpx; 
@@ -285,13 +284,13 @@ picker {
   font-size: 22rpx;
 }
 
-.recharge_recomment {
+.recharge-recomment {
   width: 96%;
   align-content: center;
   margin: 0 auto;
 }
 
-.recharge_recomment image {
+.recharge-recomment image {
   width: 360px;
   height: 486px;
 }

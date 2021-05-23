@@ -29,7 +29,7 @@
   </view>
   <view class="recharge-info">
     
-    <view class="recharge_recomment">
+    <view class="recharge-recomment">
       <image src="{{recharge_recomment_image}}" background-size="cover" mode="widthFix"></image>
     </view>
     

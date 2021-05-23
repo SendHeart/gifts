@@ -1,63 +1,170 @@
-/**index.wxss**/
-.audiosBox{
-  width: 92%;
-  margin: auto;
-  height: 130rpx;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #f6f7f7;
-  border-radius: 10rpx;
-}
-/*按钮大小  */
-.audioOpen{
-  width: 70rpx;
-  height: 70rpx;
-  border: 0rpx solid #4c9dee;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-left: 20rpx;
-}
+@import "../../lib/style/font.wxss";
+.Hui-iconfont {
+  font-family: "Hui-iconfont";
+  font-size:60rpx;
+  color:#0b7247;
+ }
+ .iconv-uparrow:after {
+   content:'\e6d6';
+ }
  
-.audioOpen image{
+ .iconv-downarrow:after {
+   content:'\e6d5';
+ }
+
+ .iconv-leftarrow:after {
+  content:'\e6db';
+}
+
+.iconv-rightarrow:after {
+  content:'\e6e3';
+}
+
+.iconv-play:after {
+  content:'\e6e6';
+  color: #4e0909;
+}
+
+.iconv-pause:after {
+  content:'\e6e5';
+  color: #4e0909;
+}
+
+.iconv-start:after {
+  content:'\e601';
+}
+
+.iconv-list:after {
+  content:'\e67f';
+}
+
+.item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  height: 100rpx;
+  border: 1rpx solid #eee;
+  padding: 10rpx;
+}
+
+.item-image {
+  width: 80rpx;
+  height:80rpx;
+  border-radius: 50%;
+}
+
+.item-text {
+  margin-left: 10rpx;
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content:space-around;
+  text-align: left;
+}
+
+.item-text-name {
+  font-size: 28rpx;
+  font-weight: bolder;
+}
+.item-text-author {
+  font-size: 20rpx;
+  font-weight: lighter;
+}
+.active {
+  background: #a51515;
+  color: #fff;
+}
+
+.background {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  text-align: center;
+  background: #f5f5f5;
+}
+
+.background .info{
+  position: fixed;
+  top: 140rpx;
+  left: 0;
+  right: 0;
+  font-size: 12pt;
+  color: #353535;
+}
+
+.background .icon-list {
+  position: fixed;
+  right: 40rpx;
+  top: 40rpx;
   width: 60rpx;
   height: 60rpx;
 }
-.image2{
-  margin-left: 10%;
+
+.background .poster {
+  width: 150rpx;
+  height: 150rpx;
+  border-radius: 50%;
+  margin-top: 400rpx;
 }
-/*进度条长度  */
-.slid{
-  flex: 1;
-  position: relative;
+
+.rotate {
+  animation: rotate 10s linear infinite;
 }
-.slid view{
+
+.rotate-paused {
+  animation: rotate 10s linear infinite;
+  animation-play-state: paused;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  50% {
+    transform: rotate(180deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.progress {
+  position: fixed;
+  bottom: 90rpx;
+  left: 50rpx;
+  right: 50rpx;
   display: flex;
-  justify-content: space-between;
-}
-.slid view>text:nth-child(1){
-  color: #4c9dee;
-  margin-left:6rpx; 
-}
-.slid view>text:nth-child(2){
-  margin-right:6rpx; 
-}
-slider{
-  width: 520rpx;
-  margin: 0;
-  margin-left: 35rpx;
-}
-/*横向布局  */
-.times{
-  width: 100rpx;
+  align-items: center;
+  font-size: 10pt;
+  color: rgb(87, 49, 49);
   text-align: center;
-  display: inline-block;
-  font-size: 24rpx;
-  color:#999999;
-  margin-top: 5rpx;
 }
-.title view{
-  text-indent: 2em;
+
+.progress .bar {
+  flex: 1;
+}
+
+.progress text {
+  flex-basis: 90rpx;
+}
+
+.buttons {
+  position: fixed;
+  bottom: 20rpx;
+  left: 50rpx;
+  right: 50rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.buttons .button {
+  width: 70rpx;
+  height: 70rpx;
 }
