@@ -154,7 +154,7 @@ Page({
                  
             }
         }
-        console.log('currentY:'+ currentY + 'scrollHeight:' + scrollHeight)
+        //console.log('currentY:'+ currentY + 'scrollHeight:' + scrollHeight)
         if (currentY > scrollHeight * 2) {
             that.setData({
                floorstatus: true,

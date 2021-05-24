@@ -1,5 +1,5 @@
 <view>
-  <scroll-view style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" bindscrolltolower="getMoreMusicTapTag" > 
+  <view style="height:{{dkheight}}px;" scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" > 
     <view wx:if="{{showList}}" class="show-list">
       <view wx:for="{{audioList}}" wx:key="index" class='item {{audioIndex==index?"active":""}}' bindtap='list_play' data-pos='{{index}}'>
         <view style="display:flex;flex-direction:colum;justify-content:center;align-items:center;text-align:center;">
@@ -45,7 +45,7 @@
     <icon class="Hui-iconfont iconv-rightarrow" bindtap='nextMusic' />
   </view>
     </view>
-  </scroll-view>
+  </view>
   <view class="goTop" hidden="{{!floorstatus}}" bindtap="goTop">
     <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow"></icon>
     <view class="" style="margin-top:-20rpx;font-size:22rpx;">TOP</view>    

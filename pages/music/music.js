@@ -23,7 +23,7 @@ Page({
     duration: 0,
     audioList: [],
     showList: true,
-    dkheight:0,
+    dkheight:500,
     pagesize:10,
     page:1,
     floorstatus:false,
@@ -31,6 +31,8 @@ Page({
     current_scrollTop:0,
     page_num:0,
     all_rows:0,
+    is_reloading:false,
+    scrollHeight: 500,
     isSlider:false,//是否正在拖动进度条
     //以下歌词
     lrc_height:320, //歌词窗口高度
@@ -504,7 +506,11 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
     var page = that.data.page
-    var pagesize = that.data.pagesize      
+    var pagesize = that.data.pagesize 
+    
+    that.setData({
+      is_reloading:true
+    })     
     wx.request({
       url: weburl + '/api/client/get_bgmusic_list',
       method: 'POST',
@@ -538,19 +544,89 @@ Page({
           audioList:audioList,
           all_rows:all_rows,
           page_num:page_num.toFixed(0),
+          
         })
         setTimeout(function () {
             if(that.data.audioList.length>0){
                 //that.playMusic()
             }else{
                 console.log('背景音乐列表为空 hall/hall get_bgmusic_list() bgmusit list:', app.globalData.musicLib.music)
-            }                
+            }
+            that.setData({
+              is_reloading:true
+            })                
           }, 500)
       }
     })
   },
 
+  handletouchstart: function (event) {
+    // console.log(event)
+    this.setData({
+        touchstop: false,
+        lastX:event.touches[0].pageX,
+        lastY:event.touches[0].pageY
+    })
+  },
+  handletouchend: function (event) {
+    var that = this
+    var currentY = that.data.lastY
+    this.setData({
+        touchstop: true,
+    })
+  },
+
+  handletouchmove: function (event) {
+    var that = this
+    var currentX = event.touches[0].pageX
+    var currentY = event.touches[0].pageY
+    var tx = currentX - this.data.lastX
+    var ty = currentY - this.data.lastY
+    var scrollHeight = that.data.scrollHeight
+    var page  = that.data.page
+    var page_num = that.data.page_num
+    var is_reloading = that.data.is_reloading
+
+    if (Math.abs(tx) > Math.abs(ty)) {
+        if (tx < 0) { // text = "向左滑动"
+
+        }
+        else if (tx > 0) {   // text = "向右滑动"
+
+        }
+    } else { //上下方向滑动
+        if (ty < 0 ) {  // text = "向上拉"
+            if (page < page_num && !is_reloading) {
+                //将当前坐标进行保存以进行下一次计算
+                that.getMoreMusicTapTag()                   
+            }                
+        } else if (ty > 0) {  //text = "向下拉"
+             
+        }
+    }
+    //console.log('currentY:'+ currentY + 'scrollHeight:' + scrollHeight)
+    if (currentY > scrollHeight * 2) {
+        that.setData({
+           floorstatus: true,
+           _fixed: true,
+       })
+    } else {                   
+        that.setData({
+           floorstatus: false,
+           _fixed: false,
+        });
+    }  
+    that.setData({
+        //floorstatus: true,
+        lastX:currentX,
+        lastY:currentY
+    })
+    //console.log('hall/hall handletouchmove()  ty:'+ty)      
+  },
+
   // 获取滚动条当前位置
+  /* 
+
   scrolltoupper: function (e) {
     if (e.detail.scrollTop >760) {
       this.setData({
@@ -567,8 +643,9 @@ Page({
       current_scrollTop: e.detail.scrollTop
     })
   },
-
-//回到顶部
+    
+  */
+  //回到顶部
   goTop: function (e) {  // 一键回到顶部
     var that = this
     that.setData({
