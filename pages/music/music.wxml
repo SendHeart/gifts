@@ -1,5 +1,5 @@
-<view class="container">
-  <scroll-view class="container" style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" bindscrolltolower="getMoreMusicTapTag" > 
+<view>
+  <scroll-view style="height:{{dkheight}}px;" scroll-y bindscroll="scrolltoupper" scroll-top="{{scrollTop}}" bindscrolltolower="getMoreMusicTapTag" > 
     <view wx:if="{{showList}}" class="show-list">
       <view wx:for="{{audioList}}" wx:key="index" class='item {{audioIndex==index?"active":""}}' bindtap='list_play' data-pos='{{index}}'>
         <view style="display:flex;flex-direction:colum;justify-content:center;align-items:center;text-align:center;">
@@ -11,41 +11,44 @@
         </view>
       </view>
     </view>
-    <view wx:else class='background'>
+    <view wx:else class='play-song'>
       <view class='info'>
         <view>{{audioList[audioIndex].name||""}}</view>
         <view>{{audioList[audioIndex].author||""}}</view>
       </view>
+    
       <icon class="icon-list Hui-iconfont iconv-list" bindtap='pageChange' />
-      <image class='poster {{playStatus?"rotate":"rotate-paused"}}' mode="scaleToFill" src='{{audioList[audioIndex].poster}}'></image>
+      
+      <image class='poster {{playStatus?"rotate":"rotate-paused"}}' mode="scaleToFill" src='{{audioList[audioIndex].poster}}' bindtap='pageChange' ></image>
       <!--歌词-->
-	    <view wx:if="{{isLrc}}" class="flex-1 flex-center z" style="position:relative;" >
-		    <view class="line flex-box" style="width:100%;color:red;border:1px solid rgba(244,244,244,0.2);">
-			    <view style="margin:0rpx 20rpx;" class="f12 flex-center">{{locationShowTime}}</view>
-			    <view class="flex-1" style="color:#444;height:2rpx;width:100%;background:#f2f2f2;"></view>
+	    <view wx:if="{{isLrc}}" style="position:relative;" >
+		    <view class="lrc-title">
+			    <view style="margin:0rpx 20rpx;">{{(lrc&&lrc.length>0)?'歌词':'暂无歌词'}}</view>
+			    <view style="color:#444;height:2rpx;width:100%;background:#f2f2f2;"></view>
 		    </view>
-		    <scroll-view scroll-y style="height:600rpx;" scroll-with-animation scroll-top="{{locationIndex*27}}" bindscroll="scroll" bindtouchstart="touchstart" bindtouchend="touchend">
-			    <view style="height:284rpx;"></view>
-			    <view wx:for="{{lrc}}" wx:key="index" class="f14" style="text-align:center;margin:20rpx 0rpx;color:#ccc;{{location===index?'color:green;':''}}">{{item}}</view>
+		    <scroll-view scroll-y style="height:{{lrc_height}}px;" scroll-with-animation scroll-top="{{locationIndex*lrc_lineheight}}" bindscroll="scroll" bindtouchstart="touchstart" bindtouchend="touchend">
+			    <view style="height:{{lrc_line_pre}}px;"></view>
+			    <view id="lrc_line" wx:for="{{lrc}}" wx:key="index" class="lrc-line" style="{{location===index?'color:green;':'color:#ccc;'}}">{{item}}</view>
 			    <view style="height:300rpx;"></view>
 		    </scroll-view>
 	    </view>
+      <view class='progress'>
+      <text>{{progressText}}</text>
+      <slider class='bar' bindchange="sliderChange" bindchanging="sliderChanging" value="{{progress}}" step="1" min='0' max='{{duration}}' activeColor="#1aad19" block-size="12" block-color="#1aad19" />
+      <text>{{durationText}}</text>
+    </view>
+  <view class='buttons'>     
+    <icon class="Hui-iconfont iconv-leftarrow" bindtap='lastMusic' />      
+    <icon wx:if="{{playStatus&&isOpen}}" class=" Hui-iconfont iconv-pause" bindtap='playOrpause' />  
+    <icon wx:if="{{!playStatus&&isOpen}}" class=" Hui-iconfont iconv-play" bindtap='playOrpause' />   
+    <icon wx:if="{{!isOpen}}" class=" Hui-iconfont iconv-start" bindtap='playOrpause' />  
+    <icon class="Hui-iconfont iconv-rightarrow" bindtap='nextMusic' />
+  </view>
     </view>
   </scroll-view>
   <view class="goTop" hidden="{{!floorstatus}}" bindtap="goTop">
     <icon style="margin-top:-25rpx;" class="Hui-iconfont iconv-uparrow"></icon>
     <view class="" style="margin-top:-20rpx;font-size:22rpx;">TOP</view>    
   </view>
-  <view class='progress'>
-      <text>{{progressText}}</text>
-      <slider class='bar' bindchange="sliderChange" bindchanging="sliderChanging" value="{{progress}}" step="1" min='0' max='{{duration}}' activeColor="#1aad19" block-size="12" block-color="#1aad19" />
-      <text>{{durationText}}</text>
-    </view>
-  <view class='buttons'>     
-      <icon class="Hui-iconfont iconv-leftarrow" bindtap='lastMusic' />      
-      <icon wx:if="{{playStatus&&isOpen}}" class=" Hui-iconfont iconv-play" bindtap='playOrpause' />  
-      <icon wx:if="{{!playStatus&&isOpen}}" class=" Hui-iconfont iconv-pause" bindtap='playOrpause' />   
-      <icon wx:if="{{!isOpen}}" class=" Hui-iconfont iconv-start" bindtap='playOrpause' />  
-      <icon class="Hui-iconfont iconv-rightarrow" bindtap='nextMusic' />
-    </view>
+  
 </view>

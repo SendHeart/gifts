@@ -76,7 +76,7 @@
   color: #fff;
 }
 
-.background {
+.play-song {
   position: fixed;
   left: 0;
   top: 0;
@@ -86,28 +86,28 @@
   background: #f5f5f5;
 }
 
-.background .info{
+.play-song .info{
   position: fixed;
-  top: 40rpx;
+  top: 15rpx;
   left: 0;
   right: 0;
   font-size: 12pt;
   color: #353535;
 }
 
-.background .icon-list {
-  position: fixed;
+.play-song .icon-list {
+  position: absolute;
   right: 40rpx;
-  top: 40rpx;
+  top: 10rpx;
   width: 60rpx;
   height: 60rpx;
 }
 
-.background .poster {
+.play-song .poster {
   width: 150rpx;
   height: 150rpx;
   border-radius: 50%;
-  margin-top: 150rpx;
+  margin-top: 120rpx;
 }
 
 .rotate {
@@ -167,4 +167,13 @@
 .buttons .button {
   width: 70rpx;
   height: 70rpx;
+}
+.lrc-title{
+  width:100%;
+  color:gray;
+  border:1px solid rgba(244,244,244,0.2);
+}
+.lrc-line{
+  text-align:center;
+  margin:20rpx 0rpx;
 }

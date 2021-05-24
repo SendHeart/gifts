@@ -12,7 +12,8 @@ var timeId='';//定时器
 var lineTimeId='';//水平线定时器
 var isDelete=false;//是否删除开启的定时器
 const bgMusic = wx.getBackgroundAudioManager()
- 
+//const query = wx.createSelectorQuery()
+
 Page({
   data: {
     isOpen: false,//播放开关
@@ -32,6 +33,9 @@ Page({
     all_rows:0,
     isSlider:false,//是否正在拖动进度条
     //以下歌词
+    lrc_height:320, //歌词窗口高度
+    lrc_lineheight:35,  //歌词行高度
+    lrc_line_pre:200, //前导空行高度
     isLrc:true,//是否显示歌词
     lrcArr:[],//歌词定位数组
     location:0,//歌词滚动位置
@@ -143,7 +147,7 @@ Page({
   touchend(e){
     isDelete=true;
     console.log("触摸结束",e);
-    if(lineTimeId!='')return;
+    if(lineTimeId!='') return;
     lineTimeId=setTimeout(()=>{
       if(isDelete===true){
         this.setData({
@@ -160,9 +164,10 @@ Page({
       let i=parseInt(e.detail.scrollTop/27);
       if(!that.data.lrcArr[i])return;//空白区域，没有时间不执行
       console.log("滚动",e.detail.scrollTop,that.data.lrcArr[i]);//歌词的间隔区间为27
+      let locationShowTime = that.formatTime(that.data.lrcArr[i])
       that.setData({
         locationTime:that.data.lrcArr[i],
-        locationShowTime:dayjs(that.data.lrcArr[i]*1000).format("mm:ss")
+        locationShowTime:locationShowTime
       });
     }
   },
@@ -175,6 +180,8 @@ Page({
   },
   lrc:function(lrc){
     var that = this 
+    var lrc_lineheight = that.data.lrc_lineheight
+    var lrc_height = that.data.lrc_height
     //console.log("歌曲歌词 ："+lrc);
     let str=lrc;
     let lrcArr=[];
@@ -202,13 +209,28 @@ Page({
     //console.log('lrc() arr:'+arr+' lrcArr:'+lrcArr);
     that.setData({
       lrc:arr,
-      lrcArr:lrcArr
-    })    
+      lrcArr:lrcArr,
+    },function(){
+      const query = wx.createSelectorQuery()
+      query.select('#lrc_line').boundingClientRect()
+      query.selectViewport().scrollOffset()
+      query.exec(function (res) {       
+        let lrc_lineheight = res[0].height*1.4
+        let lrc_height = res[0].height*13
+        let lrc_line_pre = lrc_lineheight * 4
+        that.setData({
+          lrc_height:lrc_height,
+          lrc_lineheight: lrc_lineheight,
+          lrc_line_pre:lrc_line_pre, //前导空行高度
+        })
+        console.log('歌词行高度 lrc() lrc line height:'+lrc_lineheight+' lrc_height:'+lrc_height+' res:'+JSON.stringify(res)); 
+      })
+    })
+    
   },
 
   dowloadLRC:function(file_url=''){
     var that = this
-    
     if(file_url!=''){
       wx.downloadFile({
         url: file_url, 
@@ -258,7 +280,7 @@ Page({
           break;
         }
         //console.log(nowTime,that.data.lrcArr[i]);
-        if(nowTime>=that.data.lrcArr[i]&&nowTime<that.data.lrcArr[i+1]){
+        if(nowTime>=that.data.lrcArr[i] && nowTime<that.data.lrcArr[i+1]){
           //console.log("歌词滚动");
           that.setData({
             location:i
@@ -443,7 +465,12 @@ Page({
       that.dowloadLRC(lrc_url)
     } else{
       that.setData({
-        lrc: []
+        lrc: [],
+        lrcArr:[],//歌词定位数组
+        location:0,//歌词滚动位置
+        locationIndex:0,//
+        locationValue:0,//歌词滚动具体位置
+        locationTime:0,//歌词定位时间
       })
     }   
     that.updateLRC()
@@ -589,8 +616,9 @@ Page({
     var that = this
     that.get_bgmusic_list()
     timeId=setInterval(()=>{
-      that.updateLRC();
-    },500);
+      that.updateLRC()     
+    },500)
+         
   },
   // 页面卸载时停止播放
   onUnload() {
