@@ -418,6 +418,7 @@ Page({
     var subscribe_tmpl_id = []
     var subscribe_tmpl_name = []
     //var subscribe_tmpl = that.data.subscribe_tmpl
+    var res_info = ''
     if (!subscribe_tmpl_list) {
       console.log('订阅消息模板ID为空')
       return
@@ -427,24 +428,23 @@ Page({
         subscribe_tmpl_name[i] = subscribe_tmpl_list[i]['name']
       }
     }
-    console.log('订阅消息模板列表:', subscribe_tmpl_list)
+    console.log('订阅消息模板列表 tmplIds:', subscribe_tmpl_id)
     return new Promise((resolve, reject) => {
       wx.requestSubscribeMessage({
         tmplIds: subscribe_tmpl_id,
         success: (res) => {
+          console.log('订阅消息模板成功: res:', res)          
           for (let i = 0; i < subscribe_tmpl_id.length;i++){
             if (res[subscribe_tmpl_id[i]] === 'accept') {
-              wx.showToast({
-                title: subscribe_tmpl_name[i]+'订阅OK！',
-                icon:'none',
-                duration: 1500,
-                success(data) {
-                  //成功
-                  resolve()
-                }
-              })
+              res_info = res_info+subscribe_tmpl_name[i]+' '
             }
           }
+          wx.showToast({
+            title: res_info+'订阅OK！',
+            icon:'none',
+            duration: 1500,
+          })
+          resolve()
         },
         fail(err) {//失败
           console.error(err);
@@ -469,8 +469,7 @@ Page({
     var shop_type = app.globalData.shop_type;
     var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
-    var message_type = that.data.message_type?that.data.message_type:0 //0订单类消息
-    
+    var message_type = that.data.message_type?that.data.message_type:0 //0订单类消息    
    
     wx.request({
       url: weburl + '/api/client/get_subscribe_tmpl',
@@ -490,27 +489,22 @@ Page({
         console.log('订阅消息 my subscribeMessage:',res.data)
         if (res.data.status == 'y') {
           var subscribe_tmpl_list = res.data.result
+          var subscribe_tmpl = []   
           var info_content=''
           wx.setStorageSync('subscribe_tmpl_list', subscribe_tmpl_list)
-          if (subscribe_tmpl_list) {
-
-            var subscribe_tmpl = []
-            for (let i = 0; i < subscribe_tmpl_list.length; i++) {
-              if (i % 4 == 0) {
-                subscribe_tmpl = []
-                info_content = ''
-              }
+          if (subscribe_tmpl_list) {                    
+            for (let i = 0; i < subscribe_tmpl_list.length; i++) {              
               info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
-              subscribe_tmpl[i%4] = subscribe_tmpl_list[i]
-              if (i%4 == 3) {
-                that.requestSubscribeMessage(subscribe_tmpl)
-                wx.showToast({
-                  title: info_content + "订阅完成" ,
-                  icon: 'none',
-                  duration: 5000,
-                })
-              }
+              subscribe_tmpl[i] = subscribe_tmpl_list[i]                         
             }
+            that.requestSubscribeMessage(subscribe_tmpl) 
+            /*
+            wx.showToast({
+              title: info_content + "订阅完成" ,
+              icon: 'none',
+              duration: 5000,
+            })
+            */
           }
         }
       }
