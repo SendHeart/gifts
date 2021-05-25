@@ -41,6 +41,9 @@
  <form bindsubmit="formSubmit" data-name='pay' report-submit="true" wx:if="{{is_buymyself==1||received==1}}" style='width:100%;' >  
   <button class='btnpay' type="primary" formType="submit" >微信支付</button> <!-- bindtap="pay"    -->
 </form>
+<modal class="modalbox" title="订阅消息"  hidden="{{modalHiddesubscribe}}" confirm-text="我要订阅" no-cancel  bindconfirm="subscribeMessage">
+	<view class="modalbox-text">订单确认、订单发货、订单签收</view>  
+</modal>
 <!--
 <view  wx:if="{{is_buymyself==1||received==1}}" class="pay_recomment" style='margin-top:10rpx;'>
    <image src="{{navList2[6].img}}" background-size="cover" mode="widthFix"></image>

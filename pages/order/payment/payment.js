@@ -20,6 +20,8 @@ Page({
     is_buymyself:0,
     order_shape:0,
     is_checkout:0,
+    sub_type:0,
+    modalHiddesubscribe:true,
 	},
   setNavigation: function () {
     let startBarHeight = 20
@@ -162,6 +164,7 @@ Page({
       },
       success: function (res) {
         console.log('payment onload:',res.data.result)
+        
         var orderObjects = res.data.result
         var sku_id = that.data.sku_id
         if (!res.data.info) {
@@ -386,7 +389,10 @@ Page({
               success (res) {
                 if (res.confirm) {
                   console.log('用户点击确定')
-                  wx.navigateBack();
+                  that.setData({
+                    modalHiddesubscribe:false
+                  })
+                  //wx.navigateBack();
                 } else if (res.cancel) {
                   console.log('用户点击取消')
                   return
@@ -440,6 +446,106 @@ Page({
               }
             })
           }
+        }
+      }
+    })
+  },
+
+  requestSubscribeMessage: function (subscribe_tmpl_list) {
+    var that = this
+    var subscribe_tmpl_id = []
+    var subscribe_tmpl_name = []
+    var res_info = ''
+    //var subscribe_tmpl = that.data.subscribe_tmpl
+    if (!subscribe_tmpl_list) {
+      console.log('订阅消息模板ID为空')
+      return
+    }else{
+      for (let i = 0; i < subscribe_tmpl_list.length;i++){
+        subscribe_tmpl_id[i] = subscribe_tmpl_list[i]['id']
+        subscribe_tmpl_name[i] = subscribe_tmpl_list[i]['name']
+      }
+    }
+    console.log('订阅消息模板列表:', subscribe_tmpl_list)
+    return new Promise((resolve, reject) => {
+      wx.requestSubscribeMessage({
+        tmplIds: subscribe_tmpl_id,
+        success: (res) => {
+          console.log('订阅消息模板成功: res:', res)          
+          for (let i = 0; i < subscribe_tmpl_id.length;i++){
+            if (res[subscribe_tmpl_id[i]] === 'accept') {
+              res_info = res_info+subscribe_tmpl_name[i]+' '
+            }
+          }
+          wx.showToast({
+            title: res_info+'订阅OK！',
+            icon:'none',
+            duration: 1500,
+          })
+          resolve()          
+        },
+        fail(err) {//失败
+          console.error(err);
+          reject()
+        },
+        /*
+        complete: fin => {
+          console.log(fin)
+          // resolve(fin)
+          reject(fin)
+        },
+        */
+      })
+    })
+  },
+
+  //获取订阅模板信息
+  subscribeMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var openid = wx.getStorageSync('openid') ? wx.getStorageSync('openid') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var sub_type = that.data.sub_type?that.data.sub_type:0 //0订单类消息    
+   
+    wx.request({
+      url: weburl + '/api/client/get_subscribe_tmpl',
+      method: 'POST',
+      data: {
+        username: username ? username : openid,
+        access_token: token,
+        m_id: m_id,
+        shop_type: shop_type,
+        message_type: sub_type
+      },
+      header: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'Accept': 'application/json'
+      },
+      success: function (res) {
+        console.log('订阅消息 my subscribeMessage:',res.data)
+        if (res.data.status == 'y') {
+          var subscribe_tmpl_list = res.data.result
+          var info_content=''
+          wx.setStorageSync('subscribe_tmpl_list', subscribe_tmpl_list)
+          if (subscribe_tmpl_list) {
+            var subscribe_tmpl = []
+            for (let i = 0; i < subscribe_tmpl_list.length; i++) {
+              if (i % 4 == 0) {
+                subscribe_tmpl = []
+                info_content = ''
+              }
+              info_content = info_content + '[' + subscribe_tmpl_list[i]['name'] + '] '
+              subscribe_tmpl[i%4] = subscribe_tmpl_list[i]             
+            }
+            that.requestSubscribeMessage(subscribe_tmpl)             
+          }
+          that.setData({
+            modalHiddesubscribe:true,
+          })
+          
+          that.goBack()
         }
       }
     })
@@ -620,5 +726,4 @@ Page({
       }
     })
   },
-
 })
