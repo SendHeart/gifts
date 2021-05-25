@@ -19,7 +19,7 @@
         <view class="toptips">了解会员制 </view>       
       </view>
       <view style="height:36px;line-height:28px;width:10%;" bindtap="musicTapTag">
-        <image class="background-music-image" src="{{bg_muisc?img_music:img_no_music}}" background-size="cover"  />
+        <image class="{{bg_muisc?'background-music-image' : 'background-music-image-no'}}" src="{{bg_muisc?img_music:img_no_music}}" background-size="cover"  />
       </view>
     </view>
   </view>
