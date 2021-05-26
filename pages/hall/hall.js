@@ -32,6 +32,7 @@ var navList = [
 ]
 //const innerAudioContext = wx.createInnerAudioContext()
 const bgMusic = wx.getBackgroundAudioManager()
+bgMusic.volumn = 0.1
 
 Page({
     data: {
