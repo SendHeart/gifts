@@ -208,10 +208,15 @@ Page({
       }
     }
     arr=a1,lrcArr=a2
-    //console.log('lrc() arr:'+arr+' lrcArr:'+lrcArr);
+    console.log('lrc() arr:'+arr+' lrcArr:'+lrcArr);
     that.setData({
       lrc:arr,
       lrcArr:lrcArr,
+      location:0, 
+      locationIndex:0, 
+      locationValue:0, 
+      locationTime:0, 
+      locationShowTime:'00:00', 
     },function(){
       const query = wx.createSelectorQuery()
       query.select('#lrc_line').boundingClientRect()
@@ -246,6 +251,7 @@ Page({
               success: file_res => {
                 var lrc = file_res.data              
                 //console.log('下载歌词完成:'+ lrc)
+                
                 that.lrc(lrc)
               },
               fail: console.error

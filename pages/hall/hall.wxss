@@ -1606,13 +1606,13 @@ modal {
 .background-music-image {
   height:50rpx;
   width: 50rpx;
-  margin-top: 4rpx;
+  margin: 8rpx 0;
   animation: headRotate 6s linear infinite
 }
 .background-music-image-no {
   height:50rpx;
   width: 50rpx;
-  margin-top: 4rpx;
+  margin: 8rpx 0;
 }
 /* 旋转效果  */
 @keyframes headRotate{
