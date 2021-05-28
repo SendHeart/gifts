@@ -1899,7 +1899,7 @@ Page({
           is_card_overdue:res.data.result['is_card_overdue']?res.data.result['is_card_overdue']:false,
           user_name:res.data.result['user_name']?res.data.result['user_name']:'',
           user_gender:res.data.result?res.data.result['user_gender']:1,
-          userauth:userauth[0]?userauth[0]:'',
+          userauth:userauth&&userauth[0]?userauth[0]:'',
         })
 
         wx.setStorageSync('token', res.data.result['token']?res.data.result['token']:'')
@@ -1910,7 +1910,7 @@ Page({
         wx.setStorageSync('user_name', res.data.result['user_name']?res.data.result['user_name']:'')
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
         wx.setStorageSync('user_type', res.data.result['user_type']?res.data.result['user_type']:'')
-        wx.setStorageSync('userauth', userauth[0]? userauth[0]:'')
+        wx.setStorageSync('userauth', userauth&&userauth[0]? userauth[0]:'')
         wx.setStorageSync('user_group_id', res.data.result['member_group_id']?res.data.result['member_group_id']:'')
         wx.setStorageSync('user_group_name', res.data.result['member_group_name']?res.data.result['member_group_name']:'')
         wx.setStorageSync('card_name', res.data.result['card_name']?res.data.result['card_name']:'')
