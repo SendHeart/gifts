@@ -171,7 +171,7 @@ Page({
             //wx.navigateBack();
           }, 500);
         } else {
-          if (res.data.result['status_list'].length<2){
+          if (res.data.result['status_list'] && res.data.result['status_list'].length<2){
             wx.showToast({
               title:'暂无轨迹信息',
               icon: 'loading',

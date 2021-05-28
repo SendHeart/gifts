@@ -924,7 +924,7 @@ Page({
       },
       success: function (res) {
         console.log('文章信息：',res.data.result)
-        if (!res.data.result.info){
+        if (!res.data.info){
           var article = res.data.result
           that.setData({
             article: article,
@@ -1652,7 +1652,7 @@ Page({
         })
       } else if (isReadAgreement == 0 && username && userInfo && art_id == 0) { //已登录未阅读用户购买协议
         that.setData({
-          frompage: '/pages/my/index',
+          frompage: '/pages/my/index/index',
         })
         app.globalData.from_page = ''        
         that.navigateToAgreement()
@@ -1709,7 +1709,7 @@ Page({
   login: function () { 
     var that = this
     wx.navigateTo({
-      url: '/pages/login/login?frompage=/pages/my/index'
+      url: '/pages/login/login?frompage=/pages/my/index/index'
     })
   },
 
@@ -1887,35 +1887,35 @@ Page({
         console.log('my index login 用户基本信息:',res.data.result,' user auth:',userauth) 
         let recharge_type = res.data.result['card_no']?2:1    
         that.setData({
-          token: res.data.result['token'],
-          user_group_id:res.data.result['member_group_id'],
-          user_group_name:res.data.result['member_group_name'],
-          card_name:res.data.result['card_name'],
+          token: res.data.result['token']?res.data.result['token']:'',
+          user_group_id:res.data.result['member_group_id']?res.data.result['member_group_id']:'',
+          user_group_name:res.data.result['member_group_name']?res.data.result['member_group_name']:'',
+          card_name:res.data.result['card_name']?res.data.result['card_name']:'',
           card_logo:res.data.result['card_logo']?res.data.result['card_logo']:that.data.default_card_logo,
           card_no:res.data.result['card_no']?res.data.result['card_no']:'',
-          card_due_start:res.data.result['card_due_start'],
-          card_due_end:res.data.result['card_due_end'],
+          card_due_start:res.data.result['card_due_start']?res.data.result['card_due_start']:'',
+          card_due_end:res.data.result['card_due_end']?res.data.result['card_due_end']:'',
           recharge_type:res.data.result['card_due_end']=='终身'?0:recharge_type,
           is_card_overdue:res.data.result['is_card_overdue']?res.data.result['is_card_overdue']:false,
-          user_name:res.data.result['user_name'],
-          user_gender:res.data.result['user_gender'],
-          userauth:userauth[0],
+          user_name:res.data.result['user_name']?res.data.result['user_name']:'',
+          user_gender:res.data.result?res.data.result['user_gender']:1,
+          userauth:userauth[0]?userauth[0]:0,
         })
 
-        wx.setStorageSync('token', res.data.result['token'])
+        wx.setStorageSync('token', res.data.result['token']?res.data.result['token']:'')
         wx.setStorageSync('extensionCode', res.data.result['extensionCode'])
-        wx.setStorageSync('username', res.data.result['username'])
-        wx.setStorageSync('m_id', res.data.result['m_id'])
-        wx.setStorageSync('user_phone', res.data.result['user_phone'])
-        wx.setStorageSync('user_name', res.data.result['user_name'])
+        wx.setStorageSync('username', res.data.result['username']?res.data.result['username']:'')
+        wx.setStorageSync('m_id', res.data.result['m_id']?res.data.result['m_id']:'')
+        wx.setStorageSync('user_phone', res.data.result['user_phone']?res.data.result['user_phone']:'')
+        wx.setStorageSync('user_name', res.data.result['user_name']?res.data.result['user_name']:'')
         wx.setStorageSync('user_gender', res.data.result['user_gender'])
-        wx.setStorageSync('user_type', res.data.result['user_type'])
-        wx.setStorageSync('userauth', userauth[0])
-        wx.setStorageSync('user_group_id', res.data.result['member_group_id'])
-        wx.setStorageSync('user_group_name', res.data.result['member_group_name'])
-        wx.setStorageSync('card_name', res.data.result['card_name'])
-        wx.setStorageSync('card_logo', res.data.result['card_logo'])
-        wx.setStorageSync('card_no', res.data.result['card_no'])
+        wx.setStorageSync('user_type', res.data.result['user_type']?res.data.result['user_type']:'')
+        wx.setStorageSync('userauth', userauth[0]? userauth[0]:'')
+        wx.setStorageSync('user_group_id', res.data.result['member_group_id']?res.data.result['member_group_id']:'')
+        wx.setStorageSync('user_group_name', res.data.result['member_group_name']?res.data.result['member_group_name']:'')
+        wx.setStorageSync('card_name', res.data.result['card_name']?res.data.result['card_name']:'')
+        wx.setStorageSync('card_logo', res.data.result['card_logo']?res.data.result['card_logo']:'')
+        wx.setStorageSync('card_no', res.data.result['card_due_start']?res.data.result['card_no']:'')
         wx.setStorageSync('card_due_start', res.data.result['card_due_start'])
         wx.setStorageSync('card_due_end', res.data.result['card_due_end'])
       },
@@ -1935,7 +1935,7 @@ Page({
       title: share_art_title,
       desc: share_art_title,
       imageUrl: share_art_image,
-      path: '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&image=' + share_art_image + '&refer_id=' + m_id,
+      path: '/pages/my/index/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&image=' + share_art_image + '&refer_id=' + m_id,
       // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
