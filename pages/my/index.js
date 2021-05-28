@@ -1652,7 +1652,7 @@ Page({
         })
       } else if (isReadAgreement == 0 && username && userInfo && art_id == 0) { //已登录未阅读用户购买协议
         that.setData({
-          frompage: '/pages/my/index/index',
+          frompage: '/pages/my/index',
         })
         app.globalData.from_page = ''        
         that.navigateToAgreement()
@@ -1709,7 +1709,7 @@ Page({
   login: function () { 
     var that = this
     wx.navigateTo({
-      url: '/pages/login/login?frompage=/pages/my/index/index'
+      url: '/pages/login/login?frompage=/pages/my/index'
     })
   },
 
@@ -1899,7 +1899,7 @@ Page({
           is_card_overdue:res.data.result['is_card_overdue']?res.data.result['is_card_overdue']:false,
           user_name:res.data.result['user_name']?res.data.result['user_name']:'',
           user_gender:res.data.result?res.data.result['user_gender']:1,
-          userauth:userauth[0]?userauth[0]:0,
+          userauth:userauth[0]?userauth[0]:'',
         })
 
         wx.setStorageSync('token', res.data.result['token']?res.data.result['token']:'')
@@ -1935,7 +1935,7 @@ Page({
       title: share_art_title,
       desc: share_art_title,
       imageUrl: share_art_image,
-      path: '/pages/my/index/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&image=' + share_art_image + '&refer_id=' + m_id,
+      path: '/pages/my/index?art_id=' + share_art_id + '&art_cat_id=' + share_art_cat_id + '&image=' + share_art_image + '&refer_id=' + m_id,
       // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
