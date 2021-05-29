@@ -394,7 +394,7 @@ Page({
     let audio_index = that.data.audioIndex
     let pos = e.currentTarget.dataset.pos;
     console.log('music/music list_play() pos:'+pos+' audio_index:'+audio_index) 
-    if (pos != audio_index) {
+    if (pos != audio_index || pos==0) {
       that.setData({
         audioIndex: pos,
         showList: false,
