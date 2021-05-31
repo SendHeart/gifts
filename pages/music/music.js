@@ -336,7 +336,7 @@ Page({
   sliderChanging:function(e) {
     var that = this
     that.setData({
-      isSlider: true,       
+      isSlider: true,        
     })
   },
   //循环计时

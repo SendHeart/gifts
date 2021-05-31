@@ -74,6 +74,8 @@ Page({
     cur_img_id: 0,
     image: '',
     image_pic: [],
+    isVideoPlay:false,
+    videoPlayIcon:'/images/icon_play.png',  // 视频播放icon
     hideviewgoodsinfo: true,
     hideviewgoodspara: true,
     dkheight: 300,
@@ -1214,11 +1216,19 @@ Page({
   },
   //点击播放按钮，封面图片隐藏,播放视频
   bindplay: function (e) {
-    console.log('detail bindplay 响应失败', e)
+    console.log('detail bindplay e:', e)
     this.setData({
-      tab_image: "none"
+      isVideoPlay: true,
     }),
-      this.videoContext.play()
+    this.videoContext.play()
+  },
+
+  // 监听播放到末尾时触发
+  bindended(e){
+    console.log('detail bindplay bindended e:',e)
+    this.setData({
+      isVideoPlay: false
+    })
   },
 
   myblessing: function () {
@@ -1665,7 +1675,7 @@ Page({
             var video_init = {
               id: 0,
               url: image,
-              activity_image: activity_image,
+              url_cover:activity_image,
             }
             image_video.push(video_init)
             that.setData({
@@ -1866,6 +1876,10 @@ Page({
             var k = image?1:0
             for (var i = k; i < goodsPicsInfo.image.length;i++){
               if (goodsPicsInfo.image[i]['ext'] == 'mp4'){
+                if (goodsPicsInfo.image[i]['url_cover'] && goodsPicsInfo.image[i]['url_cover'].indexOf("http") < 0) {
+                  goodsPicsInfo.image[i]['url_cover'] = weburl + '/' + goodsPicsInfo.image[i]['url_cover']
+                }
+                goodsPicsInfo.image[i]['url_cover'] = goodsPicsInfo.image[i]['url_cover']?goodsPicsInfo.image[i]['url_cover']:goodsPicsInfo.image[0]['url']
                 image_video.push(goodsPicsInfo.image[i])
               }else{
                 if (goodsPicsInfo.image[i]['url'] && goodsPicsInfo.image[i]['url'].indexOf("http") < 0) {
@@ -2610,7 +2624,7 @@ Page({
     this.videoContext = wx.createVideoContext('myVideo')
    // this.videoContext.seek(1)
     this.setData({
-      tab_image: "block"
+      isVideoPlay: false
     })
   },
   

@@ -35,16 +35,12 @@
       <swiper class="swiper-box" bindchange="swiperchange" indicator-dots="{{indicatorDots}}" indicator-color="rgba(0,0,0,0.1)" indicator-active-color="rgba(0,0,0,0.3)" vertical="{{vertical}}" autoplay="{{autoplay}}" interval="{{interval}}" duration="{{duration}}" circular="{{circular}}" style="height:{{card_image_height}}rpx;">
         <block wx:for="{{image_video}}" wx:for-item="video" wx:key="id">
           <swiper-item>
-            <video id="myVideo" class="slide-image" src="{{video.url}}"  controls="true" poster="{{!is_apple?video.activity_image:''}}" custom-cache="{{false}}" autoplay="true" muted="{{false}}" show-mute-btn="{{true}}" objectFit="contain">
-            <!-- 
-              <cover-view wx:if="{{!is_apple}}" class="controls" mode="aspecFit" style="display:{{tab_image}};z-index:2">
-              <cover-image class="" style="height:90%;" src="{{video.activity_image}}" />
-              </cover-view>
-              <cover-view  wx:if="{{!is_apple}}" class="play" style="display:{{tab_image}};z-index:2;">
-              <cover-image bindtap="bindplay" src="../../images/play.png" style="width:160rpx;" />
-              </cover-view>
-              -->
-            </video>           
+            <video wx:if='{{isVideoPlay}}' id="myVideo" class="slide-image" src="{{video.url}}" controls custom-cache="{{false}}" muted="{{true}}" show-mute-btn="{{true}}" objectFit="contain" autoplay="false" auto-pause-if-navigate auto-pause-if-open-native show-play-btn bindended="bindended">       
+            </video>
+            <image class='video-cover' style="height:{{card_image_height}}rpx;" src='{{video.url_cover}}' wx:if='{{!isVideoPlay}}'  bindtap='bindplay'></image>
+            <view class='video-icon-play' wx:if='{{!isVideoPlay}}' bindtap='bindplay'>
+              <image src='../../images/icon_play.png' />
+            </view>                    
           </swiper-item>
         </block>
         <block wx:for="{{image_pic}}" wx:for-item="pic" wx:key='id'>

@@ -1117,3 +1117,21 @@ border: none;
 .selectSku {
   padding: 0 10rpx;
 }
+.video-cover{
+  width: 100%;
+  border-radius: 20rpx;
+  position: absolute;
+  left: 0rpx;
+}
+.video-icon-play{
+  position: absolute;
+  left: 30rpx;
+  bottom: 50rpx;
+  color: white;
+  font-size: 33rpx;
+}
+.video-icon-play image{
+  width:50rpx;
+  height:50rpx;
+  z-index:200;
+} 
