@@ -1488,7 +1488,6 @@ modal {
   }
   .classify-banner-fix {
     width: 100%;
-    padding-top: 0rpx;
     background: #fff; 
     z-index: 9999;
     position: fixed;

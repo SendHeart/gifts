@@ -1,9 +1,8 @@
-
-  <!-- 自定义头部 -->
+<!-- 自定义头部 -->
   <view class="nav"  style='height:38px;'>
-    <view class="nav-title" >
+    <view class="nav-title">
       <view class="userinfo">
-        <view style="height:38px;display:flex;text-align:center;align-items:center;">
+        <view style="display:flex;text-align:center;align-items:center;">
           <image class="userinfo-avatar" src="{{userInfo.avatarUrl?userInfo.avatarUrl:default_avatar}}" background-size="cover" bindtap="userTapTag" />
         </view>
         <!-- <view style="height:{{navH/2}}px;line-height:{{navH/2}}px;">
