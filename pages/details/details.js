@@ -2646,17 +2646,18 @@ Page({
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
     var share_goods_id = that.data.goodsid
     var share_goods_image = that.data.image_pic[0]['url']
     var share_goods_title = that.data.share_title
-    var share_goods_desc = that.data.share_desc
-    var m_id = that.data.m_id > 0 ? that.data.m_id:0
-    var scene = 'goodsid='+that.data.goodsid +'&mid='+m_id
+    var share_goods_desc = that.data.share_desc   
+    //var scene = 'goodsid='+that.data.goodsid +'&mid='+m_id
+    m_id = that.data.m_id > 0 ? that.data.m_id:m_id
     return {
       title: share_goods_title,
       desc: share_goods_desc,
       imageUrl: share_goods_image,  
-      path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username,
+      path: '/pages/details/details?id=' + share_goods_id + '&image=' + share_goods_image+'&refername='+username+'&mid='+m_id,
      // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
