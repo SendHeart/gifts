@@ -1699,6 +1699,7 @@ goTop: function (e) {  // 一键回到顶部
         var receive = options.receive ? options.receive:0
         var refername = options.refername ? options.refername : ''
         var task = options.task ? options.task : 0
+        var refer_mid = options.mid ? options.mid : 0
         var liveid = options.liveid ? options.liveid : 0
         var msg_id = options.msg_id ? options.msg_id : 0
         var art_id = options.art_id ? options.art_id : 0
@@ -1719,6 +1720,10 @@ goTop: function (e) {  // 一键回到顶部
             }
         })
         app.globalData.is_task = task
+        if(refer_mid>0){
+            wx.setStorageSync('refer_mid', refer_mid)
+        }
+       
         that.get_menubar()
         
         //自定义头部方法
@@ -1740,6 +1745,7 @@ goTop: function (e) {  // 一键回到顶部
             user_group_id:user_group_id,
             message: JSON.stringify(message_info),
             refername: refername,
+            refer_mid:refer_mid,
             scene: scene,
             msg_id: msg_id,
             art_id: art_id,
@@ -1747,6 +1753,12 @@ goTop: function (e) {  // 一键回到顶部
             art_title: art_title,
             page_type: page_type,
         })
+      
+        if (scene.indexOf("actid=") >= 0 ) { //活动推广
+            wx.navigateTo({
+                url: '/pages/activity/activity?' + scene
+            })
+        }
         if (scene.indexOf("activity=") >= 0 || scene.indexOf("activity_id=") >= 0 ) {
             wx.navigateTo({
                 url: '/pages/member/mylocation/mylocation?' + scene
@@ -1761,8 +1773,8 @@ goTop: function (e) {  // 一键回到顶部
             var scene_artcatid = scene.match(artcatidReg)[0]
             art_cat_id = scene_artcatid ? scene_artcatid.substring(6, scene_artcatid.length) : art_cat_id
             var scene_mid = scene.match(midReg) ? scene.match(midReg)[0] : 0
-            refer_mid = scene_mid ? scene_mid.substring(5, scene_mid.length) : refer_mid
-            console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', refer_mid)//输出
+            let act_smid = scene_mid ? scene_mid.substring(5, scene_mid.length) : 0
+            console.log('scene_art_id:', scene_artid, 'scene_art_cat_id:', scene_artcatid, 'refer_id:', act_smid)//输出
         }
         if (art_id > 0 || art_cat_id > 0) {
             wx.navigateTo({
@@ -1963,10 +1975,11 @@ goTop: function (e) {  // 一键回到顶部
     },
 
     onShareAppMessage: function () {
+        let m_id = wx.getStorageSync('m_id')?wx.getStorageSync('m_id'):0
         return {
             title: '黑贝会是一家高端会员制购物平台，100%正品保证，全网最低价！',
             desc: '加入黑贝会，可随时获得独家提供全球158个国家地区最流行和优惠的商品，并获得最贴心和专业服务.',
-            path: '/pages/hall/hall?refername='+username+'&mainpage=1'
+            path: '/pages/hall/hall?refername='+username+'&mainpage=1&mid='+m_id
         }
     },
     BuyModeChange:function(e) {

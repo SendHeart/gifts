@@ -208,6 +208,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
+    var refer_mid = wx.getStorageSync('refer_mid') ? wx.getStorageSync('refer_mid') : '0'
     var liveid = that.data.liveid ? that.data.liveid:0
     var order_num = that.data.order_num>0?that.data.order_num:1    
     var is_buymyself = that.data.is_buymyself //自购
@@ -251,6 +252,7 @@ Page({
         username: username,
         access_token: token,
         shop_type: shop_type,
+        refer_mid:refer_mid,
         liveid: liveid,
         sku_id: cartIds,
         buy_type: 'cart',

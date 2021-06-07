@@ -1661,7 +1661,7 @@ Page({
             goodsid = scene_goodsid ? scene_goodsid.substring(8,scene_goodsid.length):goodsid
             //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
             var scene_mid = scene.match(midReg) ? scene.match(midReg)[0]: 0
-            refer_mid = scene_mid?scene_mid.substring(5, scene_mid.length):refer_mid
+            refer_mid = scene_mid?scene_mid.substring(5, scene_mid.length):refer_mid            
           }
         }
         if (image){
@@ -1716,10 +1716,14 @@ Page({
           m_id:m_id,
           share_goods_qrcode: share_goods_qrcode,
         })
+        if(refer_mid>0){
+          wx.setStorageSync('refer_mid', refer_mid)
+        }
+
         that.image_save(share_goods_qrcode, 'goods_qrcode_cache_' + goodsid)
-   // console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
+        //console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
   
-    //console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
+        //console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){
           if (share_goods_image){

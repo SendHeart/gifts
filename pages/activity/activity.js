@@ -360,14 +360,30 @@ Page({
     var act_id = options.act_id ? options.act_id:''
     var coupons = options.coupons ? options.coupons:''
     var receive = options.receive ? options.receive:''
-
+    var refer_act_mid = options.mid ? options.mid : 0
+    var scene = decodeURIComponent(options.scene)
     that.setData({
       act_id: act_id,
       page_type: page_type,
       order_no: order_no,
       coupons: coupons,
       receive: receive,
+      refer_act_mid:refer_act_mid,
     })
+    if(scene){
+      if (scene.indexOf("actid=") >= 0) {
+        var actidReg = new RegExp(/(?=actid=).*?(?=\&)/)
+        var midReg = new RegExp(/\&mid=(.*)/)
+        var scene_actid = scene.match(actidReg)[0]
+        act_id = scene_actid ? scene_actid.substring(6,scene_actid.length):act_id
+        //m_id = scene.match(/mid=(.*)/)[1] //取 mid=后面所有字符串
+        var scene_mid = scene.match(midReg) ? scene.match(midReg)[0]: 0
+        refer_act_mid = scene_mid?scene_mid.substring(5, scene_mid.length):refer_act_mid            
+      }
+    }
+    if(refer_act_mid>0){
+      wx.setStorageSync('refer_act_mid', refer_act_mid)
+    }
     //that.setNavigation()
     console.log('activity page_type:', page_type, ' order_no:', order_no, ' receive:', receive, ' act_id:', act_id)
     if(page_type==2){ //收到礼物
