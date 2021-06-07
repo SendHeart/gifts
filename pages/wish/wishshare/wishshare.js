@@ -672,7 +672,7 @@ Page({
 
   eventDraw: function () {
     var that = this
-    var m_id = that.data.m_id
+    var m_id   = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '0';
     var wechat_share = that.data.wechat_share ? that.data.wechat_share:that.data.task_image 
     var shop_type = that.data.shop_type
     var qr_type = 'wishshare' 
@@ -1473,8 +1473,7 @@ Page({
  
   onShareAppMessage: function (options) {
     var that = this
-    var res
-    var m_id = that.data.m_id
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : '0';
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : '';
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1';
     var nickname = that.data.nickname

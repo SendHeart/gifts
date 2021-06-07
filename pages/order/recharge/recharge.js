@@ -417,8 +417,8 @@ Page({
     var cartIds = that.data.cartIds
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    // = that.data.selectedAgreeStatus
     var shop_type = app.globalData.shop_type;
+    var refer_mid = wx.getStorageSync('refer_mid') ? wx.getStorageSync('refer_mid') : '0'
     var amount = parseFloat(that.data.amount).toFixed(2)
     var buy_num = amount*100 
     var order_type = that.data.order_type?that.data.order_type:'gift'
@@ -434,6 +434,7 @@ Page({
         username: username,
         access_token: token,
         shop_type: shop_type,
+        refer_mid:refer_mid,
         liveid: liveid,
         sku_id: cartIds,
         buy_type: 'sku',
@@ -451,7 +452,7 @@ Page({
         'Accept': 'application/json'
       },
       success: function (res) {
-        console.log('提交订单:',res.data.result,' order_shape:',order_shape);
+        console.log('提交订单:',res.data.result,' order_shape:',order_shape,' refer_mid:',refer_mid);
         var order_data = res.data.result;
         if (!res.data.info) {
           /*wx.showToast({

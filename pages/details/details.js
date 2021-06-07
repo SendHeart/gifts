@@ -1719,10 +1719,9 @@ Page({
         if(refer_mid>0){
           wx.setStorageSync('refer_mid', refer_mid)
         }
-
+        console.log('detail onLoad goodsid:', goodsid, ' refer_mid:', wx.getStorageSync('refer_mid'))
         that.image_save(share_goods_qrcode, 'goods_qrcode_cache_' + goodsid)
-        //console.log('商品分享二维码下载缓存 goods_qrcode_cache_'+goodsid, 'share_goods_image:', share_goods_image)
-  
+        
         //console.log('detail onLoad goodsid:', goodsid, ' share_goods_image:', share_goods_image, ' goodsname:', goodsname, ' goodsinfo:', goodsinfo, 'scene:', scene);
         //that.setNavigation()
         if (goodsid>0){

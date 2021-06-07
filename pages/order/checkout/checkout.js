@@ -244,7 +244,7 @@ Page({
     var card_love_info = JSON.stringify(that.data.card_love_info)
     var card_template = JSON.stringify(that.data.card_template)
     if (!order_note) order_note = '送你一份礼物，愿你喜欢!'; //默认祝福
-    console.log('order_type:', order_type, 'order_shape:', order_shape, 'card_template:', card_template, ' card_cele_info:', card_cele_info)
+    console.log('order/checkout confirmorder() order_type:', order_type, 'order_shape:', order_shape, 'card_template:', card_template, ' refer_mid:', refer_mid)
     wx.request({
       url: weburl + '/api/client/add_order',
       method: 'POST',

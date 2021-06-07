@@ -1733,7 +1733,7 @@ goTop: function (e) {  // 一键回到顶部
             startBarHeight2:30,//app.globalData.navHeight+30
         });
 
-        console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' username:', username)
+        console.log('hall onload scene:', scene, ' task:', app.globalData.is_task, ' refer_mid:', refer_mid)
         var message_info = {
             addtime: myDate,
             username: username,
