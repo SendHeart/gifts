@@ -88,6 +88,10 @@
 		  <image src="../../images/message.png" />
 		  <text>消息</text>
 	  </view>
+    <view bindtap="navigateToSharePlan" class="order" data-art-title="分享金计划" >
+		  <image src="../../images/youhuiquan.png" />
+		  <text>分享金计划</text>
+	  </view>
     <view bindtap="navigateToMyCoupon" class="order" style="display:none;">
 		  <image src="../../images/youhuiquan.png" />
 		  <text>贝金券</text>
@@ -96,7 +100,7 @@
 		  <image src="../../images/account.png" />
 		  <text>钱包</text>
 	  </view>
-	  <view bindtap="navigateToAgreement" class="order">
+	  <view bindtap="navigateToAgreement" class="order" data-art-title="会籍协议">
 		  <image src="../../images/xieyi.png" />
 		  <text>会籍协议</text>
 	  </view>
@@ -314,7 +318,7 @@
 <button bindtap="logout" type="warn" class="logout">退出</button>
 -->
 <view>
-<modal class="modalbox" title="用户协议" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
+<modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenAgreement}}" confirm-text="同意并确认" cancel-text="返回" bindconfirm="modalBindconfirmAgreement" bindcancel="modalBindcancelAgreement" no-cancel >
     <view class="prd-detail">
       <view class='wxParse' style="height:{{dkheight-40}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent1.nodes}}" />
@@ -322,14 +326,14 @@
     </view>
 </modal>
 
-  <modal class="modalbox" title="什么是会员制" hidden="{{modalHiddenPlaysx}}" confirm-text="已了解" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
+  <modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenPlaysx}}" confirm-text="已了解" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
     <view class="prd-detail">
       <view class='wxParse' style="height:{{dkheight-40}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
       </view> 
     </view>
 </modal>
-<modal class="modalbox" title="{{artTitle}}" hidden="{{modalHiddenArtInfo}}" confirm-text="返回" cancel-text="分享" bindconfirm="modalBindconfirmArtInfo" bindcancel="modalBindShareArtInfo" >
+<modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenArtInfo}}" confirm-text="返回" cancel-text="分享" bindconfirm="modalBindconfirmArtInfo" bindcancel="modalBindShareArtInfo" >
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />

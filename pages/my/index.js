@@ -32,6 +32,7 @@ Page({
     agreementinfoshowflag: 0,
     playsxinfoshowflag: 0,
     artinfoshowflag: 0,
+    art_title:'',
     scrollTop: 0,
     scrollTop_init: 10,
     scrollLeft:0,
@@ -519,7 +520,9 @@ Page({
     app.globalData.from_page = ''
     app.globalData.art_id = 0
     that.setData({
-      frompage: '',            
+      frompage: '',   
+      art_title:'',   
+      art_cat_id:0,      
     })
     console.log('my/index goBack() frompage:', frompage,' userInfo:',userInfo,' pages length:',pages.length)
     if (userInfo){
@@ -827,16 +830,20 @@ Page({
     })
     wx.setStorageSync('user_gender', user_gender)
   },
-  navigateToAgreement:function(){
+  navigateToAgreement:function(e){
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
-    var art_id = '29'  //21黑贝会用户协议 29会员规则和权益协议
+    var art_id = '29'  //21黑贝会用户协议 29会员规则和权益协议 30分享金计划
     var art_cat_id = '9'  //黑贝会协议类
-    var shop_type = that.data.shop_type
+    var art_title = e?e.currentTarget.dataset.artTitle:that.data.art_title
+  
+    that.setData({    
+      art_title:art_title,
+    })
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
-    
+    console.log('navigateToAgreement() agreementinfoshowflag:'+agreementinfoshowflag+' art_title:', that.data.art_title)
     if (agreementinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -856,9 +863,10 @@ Page({
           that.setData({
             agreementInfo: res.data.result,
             art_id:0,
+            art_title:res.data.result?res.data.result[0].title:that.data.art_title,
           })
           app.globalData.art_id = 0
-          console.log('黑贝会协议:', that.data.agreementInfo)
+          console.log('navigateToAgreement():', that.data.agreementInfo)
           that.showAgreementinfo()
         }
       })
@@ -866,16 +874,61 @@ Page({
       that.showAgreementinfo()
     }
   },
+
+  navigateToSharePlan:function(e){
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
+    var shop_type = app.globalData.shop_type;
+    var art_id = that.data.art_id ? that.data.art_id:'30'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议 30分享金计划
+    var art_title = e?e.currentTarget.dataset.artTitle:that.data.art_title   
+    var art_cat_id = '9'  //黑贝会协议类
+    var playsxinfoshowflag = that.data.playsxinfoshowflag
+    that.setData({    
+      art_title:art_title,
+    })
+    console.log('分享金计划 art_id:', art_id)
+    if (playsxinfoshowflag == 0) {
+      wx.request({
+        url: weburl + '/api/client/query_art',
+        method: 'POST',
+        data: {
+          username: username,
+          access_token: token,
+          art_id: art_id,
+          art_cat_id: art_cat_id,
+        },
+        header: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+          'Accept': 'application/json'
+        },
+        success: function (res) {
+          that.setData({
+            playsxInfo: res.data.result, 
+            art_title:res.data.result?res.data.result[0].title:that.data.art_title,         
+          })
+          app.globalData.art_id = 0
+          console.log('navigateToSharePlan():', that.data.playsxInfo)
+          that.showPlaysxinfo()
+        }
+      })
+    } else {
+      that.showPlaysxinfo()
+    }
+  },
   navigateToPlaysx: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
-    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议
-    var art_cat_id = that.data.art_cat_id ? that.data.art_cat_id:'9'  //黑贝会协议类
-    var art_title = that.data.art_title ? art_title = that.data.art_title :'如何玩转黑贝会'
+    var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议 30分享金计划
+    var art_title = that.data.art_title ? that.data.art_title :''
+    var art_cat_id = '9'  //黑贝会协议类
     var playsxinfoshowflag = that.data.playsxinfoshowflag
-    console.log('黑贝会协议 art_id:', art_id)
+    that.setData({    
+      art_title:art_title,
+    })
+    console.log('art title:' +art_title  + ' art_id:', art_id)
     if (playsxinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -893,9 +946,10 @@ Page({
         success: function (res) {
           that.setData({
             playsxInfo: res.data.result,
+            art_title:res.data.result?res.data.result[0].title:that.data.art_title,
           })
           app.globalData.art_id = 0
-          console.log('玩转黑贝会:', that.data.playsxInfo)
+          console.log('navigateToPlaysx():', that.data.playsxInfo)
           that.showPlaysxinfo()
         }
       })
@@ -962,9 +1016,11 @@ Page({
           })
         }
       })
+      /*
       winPage.setData({
         agreementinfoshowflag: 1,
       })
+      */
       wxparse.wxParse('dkcontent1', 'html', winPage.data.agreementInfo[0]['desc'], winPage, 5)
     }
   },
@@ -1587,15 +1643,14 @@ Page({
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var frompage = app.globalData.from_page ? app.globalData.from_page:options.frompage
     var scene = options.scene?decodeURIComponent(options.scene):''
-    var art_id = options.art_id ? options.art_id:0
-    
+    var art_id = options.art_id ? options.art_id:0    
     var art_cat_id = options.art_cat_id ? options.art_cat_id:0
-    var art_title = options.art_title ? options.art_title:''
+    var art_title = options.art_title ? options.art_title:that.data.art_title
     var refer_id = options.mid ? options.mid : 0
     var userInfo = wx.getStorageSync('userInfo')  
     var userauth = wx.getStorageSync('userauth')  
     //var my_index = app.globalData.my_index //1跳转传参
-
+    
     that.get_project_gift_para()
     that.setData({
         scene:scene,
