@@ -326,12 +326,8 @@
     </view>
 </modal>
 
-<<<<<<< HEAD
 <!--
 <modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenPlaysx}}" confirm-text="已了解" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
-=======
-  <modal class="modalbox" title="" hidden="{{modalHiddenPlaysx}}" confirm-text="开始赚钱" cancel-text="放弃" bindconfirm='modalBindconfirmPlaysx'  bindcancel='modalBindcancelPlaysx' >
->>>>>>> d063b141505a1668aba70a06d0709102fd66eb14
     <view class="prd-detail">
       <view class='wxParse' style="height:{{dkheight-40}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
