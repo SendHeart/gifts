@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="{{!modalHiddenPlaysx?'position:fixed;opacity:0.7;':''}}">
+<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="{{(!modalHiddenPlaysx)?'position:fixed;opacity:0.7;':''}}">
   <view class="memcard">
     <view class="userinfo-cards-info">
       <image class="userinfo-cards-logo" src="{{card_logo!=''?card_logo:default_card_logo}}" mode="aspectFill" />
@@ -336,7 +336,7 @@
 </modal>
 -->
   
-<mymodal show="{{!modalHiddenPlaysx}}" title="{{art_title}}" single='true' height='60%' bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' confirmtext="已了解" canceltext="取消">
+<mymodal show="{{!modalHiddenPlaysx}}" title="{{art_title}}" height='60%' bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' confirmtext="已了解" canceltext="取消">
 　　<view class='modal-content'> 
   　  <view class="prd-detail">
         <view class='wxParse' style="height:{{dkheight-40}}px">

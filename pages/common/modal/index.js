@@ -13,6 +13,10 @@ Component({
       type: Boolean,
       value: false 
     },
+    title:{
+      type: String,
+      value: '' 
+    },
     confirmtext:{
       type: String,
       value: '' 
