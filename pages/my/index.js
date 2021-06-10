@@ -46,6 +46,7 @@ Page({
     modalHiddenArtInfo:true,
     modalHiddenPhone:true,
     modalHiddenUserName: true,
+    items:[{ label: '请输入姓名', name: 'name' }],
     shop_type:shop_type,
     index: 0,
     art_index:0,

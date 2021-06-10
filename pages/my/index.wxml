@@ -1,5 +1,5 @@
 <import src="../../wxParse/wxParse.wxml" />
-<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend">
+<view scroll-y scroll-x="false" bindtouchstart="handletouchstart" bindtouchmove="handletouchmove" bindtouchend="handletouchend" style="{{!modalHiddenPlaysx?'position:fixed;opacity:0.7;':''}}">
   <view class="memcard">
     <view class="userinfo-cards-info">
       <image class="userinfo-cards-logo" src="{{card_logo!=''?card_logo:default_card_logo}}" mode="aspectFill" />
@@ -326,13 +326,26 @@
     </view>
 </modal>
 
-  <modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenPlaysx}}" confirm-text="已了解" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
+<!--
+<modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenPlaysx}}" confirm-text="已了解" cancel-text="取消" bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' no-cancel >
     <view class="prd-detail">
       <view class='wxParse' style="height:{{dkheight-40}}px">
         <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
       </view> 
     </view>
 </modal>
+-->
+  
+<mymodal show="{{!modalHiddenPlaysx}}" title="{{art_title}}" single='true' height='60%' bindcancel="modalBindcancelPlaysx" bindconfirm='modalBindconfirmPlaysx' confirmtext="已了解" canceltext="取消">
+　　<view class='modal-content'> 
+  　  <view class="prd-detail">
+        <view class='wxParse' style="height:{{dkheight-40}}px">
+          <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
+        </view> 
+      </view>
+　　</view>
+</mymodal>
+
 <modal class="modalbox" title="{{art_title}}" hidden="{{modalHiddenArtInfo}}" confirm-text="返回" cancel-text="分享" bindconfirm="modalBindconfirmArtInfo" bindcancel="modalBindShareArtInfo" >
     <view class="prd-detail">
       <view class='wxParse'  style="height:{{dkheight}}px">

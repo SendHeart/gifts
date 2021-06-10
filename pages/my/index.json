@@ -2,6 +2,7 @@
   "navigationBarTitleText": "我的",
   "backgroundColor": "#FDFEFE",
   "usingComponents": {
-    "imageloader": "../common/imageloader/imageloader"
+    "imageloader": "../common/imageloader/imageloader",
+    "mymodal": "../common/modal/index"  
   }
 }
