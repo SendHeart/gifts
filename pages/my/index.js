@@ -1540,7 +1540,9 @@ Page({
       art_cat_id: 0,
       playsxinfoshowflag: 0,
     })
-    that.goBack()
+    wx.navigateTo({
+      url: '/pages/goods/list/list?goods_type_value=1&middle_title= 新人福利'
+    })
   },
   //取消按钮点击事件 会员制说明
   modalBindcancelPlaysx: function () {
@@ -1550,7 +1552,7 @@ Page({
       art_cat_id: 0,
       playsxinfoshowflag: 0,
     })
-    
+    that.goBack()
   },  
   
   get_project_gift_para: function () {
