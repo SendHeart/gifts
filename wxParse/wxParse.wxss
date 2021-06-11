@@ -16,6 +16,7 @@
     color: #666;
     line-height: 0.9;
     scrollbar-width: 0;
+    z-index: 1;
 }
 view{
     word-break:break-all; overflow-x:hidden;

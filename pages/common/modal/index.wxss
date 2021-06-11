@@ -17,10 +17,9 @@
   display: flex;
   flex-direction: column;
   width: 80%;
-  background-color: #fff;
-  border-radius: 10rpx;
-  padding: 20rpx;
+  border-radius: 20rpx;
   text-align: center;
+  background: #F2F2F2;
 }
 /*中间内容*/
 .main-content{
@@ -35,8 +34,7 @@
   flex-direction: row;
   height: 80rpx;
   line-height: 80rpx;
-  border-top: 2rpx solid #D2D3D5;
-  margin-top: 30rpx;
+  border-top: 2rpx solid #eeeeee;
 }
 .cancel-btn, .confirm-btn{
   flex: 1;
@@ -46,9 +44,9 @@
   font-size: 32rpx;
 }
 .cancel-btn{
-  color: #000;
-  border-right: 2rpx solid #D2D3D5;
+  color: #999999;
+  border-right: 2rpx solid #eeeeee;
 }
 .confirm-btn {
-  color: #09BA07
+  color: #FF952D;
 }
