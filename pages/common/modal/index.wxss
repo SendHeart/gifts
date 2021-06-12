@@ -16,9 +16,9 @@
 .modal-content{
   display: flex;
   flex-direction: column;
-  width: 80%;
-  border-radius: 20rpx;
   text-align: center;
+  width: 80%;
+  border-radius: 20rpx;  
   background: #F2F2F2;
 }
 /*中间内容*/
@@ -27,6 +27,7 @@
   height: 100%;
   overflow-y: hidden; 
   max-height: 80vh; /* 内容高度最高80vh 以免内容太多溢出*/
+  padding: 0rpx;
 }
 /*底部按钮*/
 .modal-footer{

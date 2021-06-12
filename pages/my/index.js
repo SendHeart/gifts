@@ -33,6 +33,8 @@ Page({
     playsxinfoshowflag: 0,
     artinfoshowflag: 0,
     art_title:'',
+    confirmtext:'确定',
+    conceltext:'取消',
     scrollTop: 0,
     scrollTop_init: 10,
     scrollLeft:0,
@@ -888,6 +890,8 @@ Page({
     that.setData({    
       art_title:art_title,
       art_id:art_id,
+      confirmtext:'开始赚钱',
+      conceltext:'放弃',
     })
     console.log('分享金计划 art_id:', art_id)
     if (playsxinfoshowflag == 0) {
@@ -1031,11 +1035,11 @@ Page({
   showPlaysxinfo: function () {
     let winPage = this
     //var hideviewagreementinfo = winPage.data.hideviewagreementinfo
-    var modalHiddenPlaysx = winPage.data.modalHiddenPlaysx
+    //var modalHiddenPlaysx = winPage.data.modalHiddenPlaysx
     var playsxinfoshowflag = winPage.data.playsxinfoshowflag
     winPage.setData({
       //hideviewagreementinfo: !hideviewagreementinfo,
-      modalHiddenPlaysx: !modalHiddenPlaysx,
+      modalHiddenPlaysx: false,
     })
 
     if (!winPage.data.modalHiddenPlaysx && playsxinfoshowflag == 0) {
@@ -1555,8 +1559,9 @@ Page({
   },
   //取消按钮点击事件 会员制说明
   modalBindcancelPlaysx: function () {
-    this.setData({
-      modalHiddenPlaysx: !this.data.modalHiddenPlaysx,
+    var that = this
+    that.setData({
+      modalHiddenPlaysx: !that.data.modalHiddenPlaysx,
       art_id: 0,
       art_cat_id: 0,
       playsxinfoshowflag: 0,
@@ -1745,6 +1750,13 @@ Page({
       if (art_id>0){
         if(art_id == 29){
           that.navigateToAgreement()
+        } else if(art_id==28){
+          that.setData({
+            confirmtext:'已了解',
+            conceltext:'',
+          },function(){
+            that.navigateToPlaysx()
+          })         
         }else{
           that.navigateToPlaysx()
         }

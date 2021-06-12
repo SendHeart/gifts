@@ -41,7 +41,7 @@ Component({
     // 点击modal的回调函数
     clickMask() {
       // 点击modal背景关闭遮罩层，如果不需要注释掉即可
-      this.setData({show: false})
+      //this.setData({show: false})
     },
    // 点击取消按钮的回调函数
     cancel() {

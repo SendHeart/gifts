@@ -336,7 +336,7 @@
 </modal>
 -->
   
-<mymodal show="{{!modalHiddenPlaysx}}" title="" height='60%' bindcancel="modalBindcancelPlaysx" bindconfirm="modalBindconfirmPlaysx" confirmtext="开始赚钱" conceltext="放弃">
+<mymodal show="{{!modalHiddenPlaysx}}" title="" height='60%' bindcancel="modalBindcancelPlaysx" bindconfirm="modalBindconfirmPlaysx" confirmtext="{{confirmtext}}" conceltext="{{conceltext}}">
         <view class='wxParse' style="height:{{dkheight}}px">
           <template is="wxParse" data="{{wxParseData:dkcontent2.nodes}}" />
         </view> 
