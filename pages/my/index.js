@@ -1767,7 +1767,8 @@ Page({
         that.goTop()
       }
       that.query_user_info()
-      that.reloadData() 
+      that.reloadData()
+      that.navigateToSharePlan()
     }
   },
   /*

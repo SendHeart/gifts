@@ -1172,7 +1172,7 @@ icon {
   height: 28px;
   line-height: 28px;
   font-size: 14px;
-  color: #eeeeee;
+  color: #666666;
 }
 
 .weui-icon-clear {

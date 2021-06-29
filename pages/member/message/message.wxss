@@ -44,8 +44,8 @@ page {
   margin: 30rpx 6rpx 0 0;
  }
 .container{
-  margin-bottom: 50rpx;
-  margin-top: 10rpx;
+  padding-bottom: 50rpx;
+  padding-top: 10rpx;
   overflow: hidden;
 }
 
@@ -65,7 +65,7 @@ page {
 	width:96%;
   text-align: left;
   align-items: left;
-  background-color: #fff;
+  background-color: #2D2D2D;
   border-radius: 10rpx;
   padding-bottom: 20rpx;
   margin-bottom: 15rpx;
@@ -90,7 +90,6 @@ page {
 	padding: 0;
   text-align: left;
   align-items: left;
-  background-color: #fff;
   margin: 0 auto;
 }
 .msg-item-image {
@@ -98,6 +97,7 @@ page {
   height:100rpx;
   text-align: center;
   align-items: center;
+  background: #2D2D2D;
 }
 
 .msg-item-content {
@@ -115,7 +115,7 @@ page {
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #444;
+  color: #808080;
 }
 .msg-item-text2{
   margin-left:20rpx;
@@ -124,13 +124,13 @@ page {
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #444;
+  color: #dcdcdc;
 }
 .msg-item-text3{
   margin-right:20rpx;
   font-size:28rpx;
   font-weight: bold;
-  color: #444;
+  color: #dcdcdc;
 }
 
 .msg-content-footer {

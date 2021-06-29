@@ -156,7 +156,7 @@ Page({
             }
         }
         //console.log('currentY:'+ currentY + 'scrollHeight:' + scrollHeight)
-        if (currentY > scrollHeight * 2) {
+        /* if (currentY > scrollHeight * 2) {
             that.setData({
                floorstatus: true,
                _fixed: true,
@@ -166,7 +166,7 @@ Page({
                floorstatus: false,
                _fixed: false,
             });
-        }  
+        }   */
         that.setData({
             //floorstatus: true,
             lastX:currentX,
@@ -270,10 +270,10 @@ goTop: function (e) {  // 一键回到顶部
         scrollTop: 0,  // 滚动到页面的目标位置，单位 px
         duration: 300, // 滚动动画的时长，单位 ms       
       })
-      this.setData({
+      /* this.setData({
         floorstatus:false,
         _fixed:false,
-    });
+    }); */
     } else {
       wx.showModal({
         title: '提示',
@@ -1313,7 +1313,7 @@ goTop: function (e) {  // 一键回到顶部
     },
 
     // 获取滚动条当前位置
-    scrolltoupper: function (e) {
+   /*  scrolltoupper: function (e) {
         //console.log('获取滚动条当前位置:', e.detail.scrollTop)
         if (e.detail.scrollTop > 1280) {
           this.setData({
@@ -1328,7 +1328,7 @@ goTop: function (e) {  // 一键回到顶部
             scrollTop: e.detail.scrollTop,
           })
         }
-    },
+    }, */
     /*
    
    */
@@ -1855,9 +1855,9 @@ goTop: function (e) {  // 一键回到顶部
         that.query_cart()
         that.get_project_gift_para()
         that.query_friends()
-        if(app.globalData.musicLib.music.length==0){
+       /*  if(app.globalData.musicLib.music.length==0){
             that.get_bgmusic_list()
-        }
+        } */
         
         that.setData({
             userInfo: userInfo

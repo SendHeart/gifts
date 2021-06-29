@@ -1,12 +1,11 @@
 @import "../../../lib/style/font.wxss";
 
 page {
-  background-color:#f2f2f2;
+  background-color:#1D1D1D;
   overflow-x: hidden;
   width: 100%;
   height: 100%;
 }
-
 .Hui-iconfont {
   font-family: "Hui-iconfont";
   font-size: 30rpx;
@@ -174,7 +173,7 @@ page {
   flex-direction: row;
   justify-content: center;
   height: 60rpx;
-  background: #f2f2f2; 
+  background: #2d2d2d; 
   width:100%;
 }
 .top-bar-item2 {
@@ -182,7 +181,7 @@ page {
   flex-direction: row;
   justify-content: center;
   width: 33.3%;
-  color: #444444;
+  color: #dcdcdc;
   text-align: center;
   height: 60rpx;
   line-height: 60rpx;
@@ -202,7 +201,7 @@ page {
 
 .venues_item {
   margin-bottom:20rpx;
-  background: #ffffff;
+  background: #2d2d2d;
   border-radius: 10rpx;
   padding-bottom: 10rpx;
   box-sizing: border-box;
@@ -242,7 +241,7 @@ page {
 .goods-tags {
   color: #fff;
   font-size: 22rpx;
-  background: #FF952D;
+  background: #000000;
   text-align: center;
   padding: 4rpx 8rpx;
   border-radius: 6rpx;
@@ -267,7 +266,7 @@ page {
   margin-right: 8rpx;
 }
 .goods-name {
-  color: #111111;
+  color: #dcdcdc;
   font-size: 28rpx;
   padding-top:10rpx;
 }
@@ -286,7 +285,7 @@ page {
 }
 .venues_item .goods_prom {
   display: block;
-  color: #999999;
+  color: #808080;
   font-size: 24rpx;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -314,7 +313,7 @@ page {
 }
 .price-now {
   text-indent: 0;
-  color: #e34c55;
+  color: #FF952D;
   font-size: 30rpx;
   margin-right: 24rpx;
   line-height: 1.8;
@@ -327,8 +326,8 @@ page {
 
 .membericon {
   padding: 2rpx 6rpx;
-  background: #444444;
-  color: #fff;
+  background: #333333;
+  color: #dcdcdc;
   font-size: 22rpx;
   font-weight: normal;
   border-radius: 8rpx;
@@ -337,7 +336,7 @@ page {
 .left-tag {
   height: 32rpx;
   line-height: 32rpx;
-  color: #999999;
+  color: #808080;
   font-size: 24rpx;
   text-align: center;
   padding: 2rpx 6rpx;
