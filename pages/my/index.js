@@ -1768,7 +1768,6 @@ Page({
       }
       that.query_user_info()
       that.reloadData()
-      that.navigateToSharePlan()
     }
   },
   /*
