@@ -20,7 +20,7 @@
     box-sizing: border-box;
     align-items: center;
     padding: 0rpx;
-    background: #1d1d1d;
+    background: #F5F5F5;
 }
 
 .color1{
@@ -99,8 +99,7 @@ header - wxss
   top: 0;
   left: 0;
   z-index: 999;
-  background: #1d1d1d;
-  padding: 0rpx;
+  background: #F5F5F5
 }
 .nav-title{
   width: 100%;
@@ -115,7 +114,7 @@ header - wxss
   left: 0;
   font-size:36rpx;
   letter-spacing:2px;
-  background: #1d1d1d;
+  background: #f5f5f5;
 }
 .nav .back{
   width: 22px;
@@ -140,7 +139,7 @@ header - wxss
 .INinputheader{
   width:66%;
   height:30px;
-  background:rgb(0, 0, 0);
+  background:#EEEEEE;
   border-radius:30px;
   font-size: 14px;
   position: relative; 
@@ -150,6 +149,7 @@ header - wxss
 .INsearchicon{
   position: absolute;
   left:12px;
+  top:2px;
 }
 .weui-input{
   height: 30px;

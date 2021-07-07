@@ -3,9 +3,11 @@
     <view class="top-bar2" style='margin-top:{{startBarHeight2}}px'>
       <block wx:for="{{navList2}}" wx:key="id">
         <view id="v_{{index}}" data-index="{{index}}" data-title="{{item.title}}" data-tabid="{{item.id}}" class="top-bar-item2 {{index == activeIndex2 ? 'top-bar-active2' : ''}}" catchtap="onTapTag2">
+          <view class="btnwrap">
           <view>{{item.title}}</view>
           <icon class="Hui-iconfont iconv-uparrow" wx:if="{{updown==0 && index == activeIndex2}}" style="width:30rpx;heigth:30rpx;padding:-8rpx;"></icon>
           <icon class="Hui-iconfont iconv-downarrow" wx:if="{{updown==1 && index == activeIndex2}}" style="width:30rpx;heigth:30rpx;padding:-8rpx;"></icon>
+        </view>
         </view>
       </block>
     </view>

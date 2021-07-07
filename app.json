@@ -46,19 +46,19 @@
     "pages/wechat/wechatlist/wechatlist"
   ],
   "window": {
-    "backgroundTextStyle": "light",
-    "navigationBarTextStyle": "white",
+    "backgroundTextStyle": "dark",
+    "navigationBarTextStyle": "black",
     "navigationBarTitleText": "黑贝会",
-    "navigationBarBackgroundColor": "#1d1d1d",
-    "backgroundColor": "#1d1d1d",
+    "navigationBarBackgroundColor": "#F5F5F5",
+    "backgroundColor": "#F5F5F5",
     "navigationStyle": "default",
     "enablePullDownRefresh": false
   },
   "tabBar": {
-    "color": "#EEEEEE",
-    "selectedColor": "#FFFFFF",
-    "borderStyle": "black",
-    "backgroundColor": "#1d1d1d",
+    "color": "#1D1D1D",
+    "selectedColor": "#000000",
+    "borderStyle": "white",
+    "backgroundColor": "#FFFFFF",
     "list": [
       {
         "pagePath": "pages/hall/hall",

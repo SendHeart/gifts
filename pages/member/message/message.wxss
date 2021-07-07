@@ -65,7 +65,7 @@ page {
 	width:96%;
   text-align: left;
   align-items: left;
-  background-color: #2D2D2D;
+  background-color: #FFFFFF;
   border-radius: 10rpx;
   padding-bottom: 20rpx;
   margin-bottom: 15rpx;
@@ -115,7 +115,7 @@ page {
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #808080;
+  color: #1D1D1D;
 }
 .msg-item-text2{
   margin-left:20rpx;
@@ -124,13 +124,13 @@ page {
   overflow:hidden;  
   text-overflow:ellipsis;  
   white-space:wrap; 
-  color: #dcdcdc;
+  color: #1D1D1D;
 }
 .msg-item-text3{
   margin-right:20rpx;
   font-size:28rpx;
+  color: #333333;
   font-weight: bold;
-  color: #dcdcdc;
 }
 
 .msg-content-footer {

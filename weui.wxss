@@ -1130,7 +1130,7 @@ icon {
   display: -webkit-flex;
   display: flex;
   box-sizing: border-box;
-  background-color: #1d1d1d;
+  background-color: #ffffff;
 }
 
 .weui-icon-search {
@@ -1155,7 +1155,7 @@ icon {
   -webkit-box-flex: 1;
   -webkit-flex: auto;
   flex: auto;
-  border-radius: 5px;
+  border-radius: 30px;
 }
 
 .weui-search-bar__box {
@@ -1165,7 +1165,7 @@ icon {
   width: 100%;
   box-sizing: border-box;
   z-index: 1;
-  background: #000;
+  background: #eeeeee;
 }
 
 .weui-search-bar__input {

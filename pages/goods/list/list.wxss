@@ -158,9 +158,9 @@ page {
 
 .banner {
 	width: 100%;
-	height: 60rpx;
+	height: 80rpx;
   z-index:99;
-	/*margin-left: 15rpx;*/
+  /*margin-left: 15rpx;*/
 }
 
 .banner .swiper_box {
@@ -172,27 +172,37 @@ page {
   display:flex;
   flex-direction: row;
   justify-content: center;
-  height: 60rpx;
-  background: #2d2d2d; 
+  height: 80rpx;
+  background: #ffffff; 
   width:100%;
+  z-index: 999;
 }
 .top-bar-item2 {
   display:flex;
   flex-direction: row;
   justify-content: center;
   width: 33.3%;
-  color: #dcdcdc;
+  color: #1d1d1d;
   text-align: center;
   height: 60rpx;
   line-height: 60rpx;
   font-size: 24rpx;
 }
 .top-bar-active2 {
-  color: #FF952D;
+  color: #ffffff;
+  
 }
-
+.top-bar-active2 .btnwrap {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  background: #1D1D1D;
+  border-radius: 20rpx;
+  width:auto;
+  padding: 0 20rpx;
+}
 .venues_box {
-  margin: 10rpx auto;
+  margin: 20rpx auto;
   width: 96%;
   padding-bottom: 60rpx;
   overflow: hidden;

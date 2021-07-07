@@ -282,8 +282,8 @@
       <text class='more'>更多</text>
     </view>
   -->
-<!--瀑布流列表-->
-    <view wx:if="{{is_category}}" class="venues-box">
+<!--双瀑布流列表-->
+    <view class="venues-box">
       <view class="box-left">
         <block wx:for="{{recommentslist_show}}" wx:for-item="recommentslist_show" wx:for-index="recommIndex"
           wx:key="id">
@@ -342,16 +342,16 @@
       </view>
     </view>
 <!-- 单列表 -->
-    <view wx:if="{{!is_category}}" class="venues-box">
+   <!-- <view wx:if="{{!is_category}}" class="venues-box">
       <block wx:for="{{recommentslist_show}}" wx:key="id" wx:for-item="recommentslist_show" wx:for-index="recommIndex">
         <block wx:for="{{recommentslist_show}}" wx:key="{{item.id}}" wx:key="id">
           <view class="venues-item-main" bindtap="showGoods" data-object-id="{{item.id}}" data-goods-id="{{item.id}}"
             data-goods-info="{{item.act_info}}" data-goods-org="{{item.goods_org}}"
             data-image="{{item.activity_image?item.activity_image:item.image}}" data-goods-name="{{item.name}}"
             data-sale="{{item.sale}}" data-goods-price="{{item.sell_price}}" hidden="{{item.hidden==1?true:false}}">
-            <!--
+            
         <image class="main-mainpic" src="{{item.activity_image?item.activity_image:item.image}}"></image>
-      -->
+      
             <imageloader default-image='{{default_img}}' mode='aspectFill'
               original-image='{{item.activity_image?item.activity_image:item.image}}' width="300rpx" height="300rpx"
               display="block" class="prd-img" />
@@ -371,7 +371,7 @@
           </view>
         </block>
       </block>
-    </view>
+    </view>-->
   </view>
   <!-- loading -->
   <view class="loading-show" hidden="{{!is_reloading}}">
