@@ -1,4 +1,7 @@
 {
-  "navigationBarTitleText": "加入黑贝会"
-
+  "backgroundTextStyle": "dark",
+    "navigationBarTextStyle": "white",
+    "navigationBarTitleText": "加入黑贝会",
+    "navigationBarBackgroundColor": "#1D1D1D",
+    "navigationStyle": "default"
 }

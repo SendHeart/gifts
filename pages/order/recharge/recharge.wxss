@@ -135,6 +135,7 @@ picker {
   justify-content: space-between;
   box-sizing: border-box;
   z-index: 1;
+  background:#1d1d1d;
 }
 
 /*整体列表*/
