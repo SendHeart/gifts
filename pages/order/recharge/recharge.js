@@ -674,7 +674,7 @@ Page({
       title: share_title,
       desc: share_desc,
       imageUrl: share_image,  
-      path: '/pages/order/recharge/recharge?recharge_selected=2&mid='+mid,
+      path: '/pages/order/recharge/recharge?recharge_selected=2&mid='+m_id,
      // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
