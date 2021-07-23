@@ -838,7 +838,7 @@ Page({
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var shop_type = app.globalData.shop_type;
-    var art_id = '29'  //21黑贝会用户协议 29会员规则和权益协议 30分享金计划
+    var art_id = that.data.art_id  //21黑贝会用户协议 29会员规则和权益协议 30分享金计划
     var art_cat_id = '9'  //黑贝会协议类
     var art_title = e?e.currentTarget.dataset.artTitle:that.data.art_title
   
@@ -846,7 +846,7 @@ Page({
       art_title:art_title,
     })
     var agreementinfoshowflag = that.data.agreementinfoshowflag ? that.data.agreementinfoshowflag:0
-    console.log('navigateToAgreement() agreementinfoshowflag:'+agreementinfoshowflag+' art_title:', that.data.art_title)
+    console.log('navigateToAgreement() agreementinfoshowflag:'+agreementinfoshowflag+' art_title:'+ that.data.art_title+' art_id:'+art_id+' frompage:'+that.data.frompage)
     if (agreementinfoshowflag == 0) {
       wx.request({
         url: weburl + '/api/client/query_art',
@@ -931,7 +931,7 @@ Page({
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
     var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
-    var shop_type = app.globalData.shop_type;
+    var shop_type = app.globalData.shop_type
     var art_id = that.data.art_id ? that.data.art_id:'28'  //22玩转黑贝会 28什么是会员制 29会员规则和权益协议 30分享金计划
     var art_title = that.data.art_title ? that.data.art_title :''
     var art_cat_id = '9'  //黑贝会协议类
@@ -1529,13 +1529,15 @@ Page({
   //确定按钮点击事件  用户协议
   modalBindconfirmAgreement: function () {
     var that = this
+    var art_id = that.data.art_id
+    console.log('modalBindconfirmAgreement art_id:'+art_id)
     that.setData({
       modalHiddenAgreement: !that.data.modalHiddenAgreement,
       art_id:0,
     })
     app.globalData.art_id = 0
     wx.setStorageSync('isReadAgreement', 1) //协议阅读标志
-    
+    that.goBack()    
   },
   //取消按钮点击事件  用户协议
   modalBindcancelAgreement: function () {
@@ -1691,7 +1693,7 @@ Page({
         token:token,
         openid:openid,
     })
-    console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth))
+    console.log("my index onload options:", options, 'scene:', scene, ' userauth:', JSON.stringify(userauth)+'from_page:'+that.data.frompage)
           
     if(!username || !userInfo){   
       that.login()
@@ -1704,17 +1706,19 @@ Page({
     var user_phone = wx.getStorageSync('user_phone') ? wx.getStorageSync('user_phone') : ''
     var user_name = wx.getStorageSync('user_name') ? wx.getStorageSync('user_name') : ''
     var art_id =  app.globalData.art_id>0?app.globalData.art_id:that.data.art_id
+    var frompage = that.data.frompage?that.data.frompage:app.globalData.from_page
     var scene = that.data.scene
     var modalHiddenPhone = that.data.modalHiddenPhone
     var modalHiddenUserName = that.data.modalHiddenUserName
     var userInfo = wx.getStorageSync('userInfo') 
     var isReadAgreement = wx.getStorageSync('isReadAgreement') ? wx.getStorageSync('isReadAgreement') : 0
     user_type = parseInt(user_type)
-    console.log('my index onShow() user info:', userInfo, 'art_id:', art_id)
+    console.log('my index onShow() frompage:'+ frompage+ 'art_id:'+ art_id)
     var pages = getCurrentPages()
     if (pages.length > 1) {
       that.setData({
         title_logo: '../../../images/left_arrow.png',
+        frompage:frompage,
       })
     }
  
@@ -1765,22 +1769,21 @@ Page({
           },function(){
             that.navigateToPlaysx()
           })         
-        } 
-        
-        else{
+        } else{
           that.navigateToPlaysx()
-        }
-          
+        }  
+      }else{
+        that.navigateToSharePlan()
       }
 
-      console.log('my index user_type:',that.data.user_type)
+      console.log('my index user_type:'+that.data.user_type+' art_id:'+that.data.art_id)
       if(that.data.scrollTop == 0){
         that.goTop()
       }
       that.query_user_info()
       that.reloadData()
     }
-    that.navigateToSharePlan()
+    
   },
   /*
   chooseImage: function () {

@@ -6,6 +6,9 @@ Page({
 	data: {
     title_name: '加入黑贝会',
     title_logo: '../../images/footer-icon-05.png',
+    share_title:'',
+    share_desc:'',
+    share_image:'',
     amount : 0,
     liveid:0,
 		carts: [],
@@ -240,6 +243,9 @@ Page({
           order_voice: result.order_voice?result.order_voice:'',
           order_voicetime: result.order_voicetime?result.order_voicetime:'',
           order_color:result.order_color?result.order_color:'',
+          share_desc:result.share_desc?result.share_desc:'',
+          share_image:result.share_image?result.share_image:'',
+          share_title:result.share_title?result.share_title:'',
         },function(){
           that.queryCart()
         })
@@ -646,7 +652,7 @@ Page({
     app.globalData.my_index = 1 //1系统消息
     app.globalData.art_id = 29 // 29 会员规则和权益协议
     app.globalData.from_page = '/pages/order/recharge/recharge?recharge_options='+ JSON.stringify(that.data.recharge_options)
-   
+    console.log('bindRechargeRule:'+app.globalData.from_page)
     setTimeout(function () {
       wx.switchTab({
         url: '/pages/my/index'
@@ -657,18 +663,18 @@ Page({
   onShareAppMessage: function () {
     var that = this
     var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var token = wx.getStorageSync('token') ? wx.getStorageSync('token') : '1'
     var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
-    var share_goods_id = that.data.goodsid
-    var share_goods_image = that.data.image_pic[0]['url']
-    var share_goods_title = that.data.share_title
-    var share_goods_desc = that.data.share_desc   
+    var share_image = that.data.share_image?that.data.share_image:''
+    var share_title = that.data.share_title?that.data.share_title:'加入黑贝会会籍'
+    var share_desc = that.data.share_desc?that.data.share_desc:'年费会员7折热推中，更有体验会员只要68元' 
     //var scene = 'goodsid='+that.data.goodsid +'&mid='+m_id
     m_id = that.data.m_id > 0 ? that.data.m_id:m_id
     return {
-      title: '加入黑贝会会籍',
-      desc: '年费会员7折热推中，更有体验会员只要68元',
-      imageUrl: share_goods_image,  
-      path: '/pages/order/recharge/recharge?recharge_selected=2',
+      title: share_title,
+      desc: share_desc,
+      imageUrl: share_image,  
+      path: '/pages/order/recharge/recharge?recharge_selected=2&mid='+mid,
      // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
     }
   }
