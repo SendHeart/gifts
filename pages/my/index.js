@@ -887,12 +887,15 @@ Page({
     var art_title = e?e.currentTarget.dataset.artTitle:that.data.art_title   
     var art_cat_id = '9'  //黑贝会协议类
     var playsxinfoshowflag = that.data.playsxinfoshowflag
-    that.setData({    
-      art_title:art_title,
-      art_id:art_id,
-      confirmtext:'开始赚钱',
-      conceltext:'放弃',
-    })
+    if (art_id==30){
+      that.setData({    
+        art_title:art_title,
+        art_id:art_id,
+        confirmtext:'开始赚钱',
+        conceltext:'放弃',
+      })
+    }
+    
     console.log('分享金计划 art_id:', art_id)
     if (playsxinfoshowflag == 0) {
       wx.request({
@@ -915,6 +918,7 @@ Page({
             art_title:res.data.result?res.data.result[0].title:that.data.art_title,         
           })
           app.globalData.art_id = 0
+          
           console.log('navigateToSharePlan() art_id:', that.data.art_id)
           that.showPlaysxinfo()
         }
@@ -1761,11 +1765,14 @@ Page({
           },function(){
             that.navigateToPlaysx()
           })         
-        }else{
+        } 
+        
+        else{
           that.navigateToPlaysx()
         }
+          
       }
-      
+
       console.log('my index user_type:',that.data.user_type)
       if(that.data.scrollTop == 0){
         that.goTop()
@@ -1773,6 +1780,7 @@ Page({
       that.query_user_info()
       that.reloadData()
     }
+    that.navigateToSharePlan()
   },
   /*
   chooseImage: function () {

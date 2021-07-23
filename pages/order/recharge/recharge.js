@@ -653,4 +653,23 @@ Page({
       })
     }, 300)
   },
+
+  onShareAppMessage: function () {
+    var that = this
+    var username = wx.getStorageSync('username') ? wx.getStorageSync('username') : ''
+    var m_id = wx.getStorageSync('m_id') ? wx.getStorageSync('m_id') : ''
+    var share_goods_id = that.data.goodsid
+    var share_goods_image = that.data.image_pic[0]['url']
+    var share_goods_title = that.data.share_title
+    var share_goods_desc = that.data.share_desc   
+    //var scene = 'goodsid='+that.data.goodsid +'&mid='+m_id
+    m_id = that.data.m_id > 0 ? that.data.m_id:m_id
+    return {
+      title: '加入黑贝会会籍',
+      desc: '年费会员7折热推中，更有体验会员只要68元',
+      imageUrl: share_goods_image,  
+      path: '/pages/order/recharge/recharge?recharge_selected=2',
+     // path: '/pages/details/details?scene=' + encodeURIComponent(scene)
+    }
+  }
 })
